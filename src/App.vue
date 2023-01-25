@@ -177,15 +177,8 @@
 </template>
 
 <script>
-import NavElt from "@/components/main/NavElt"
-import FootElt from "@/components/main/FootElt"
-
 export default {
   name: 'App',
-  components: {
-    NavElt,
-    FootElt
-  },
 
   data() {
     return {
