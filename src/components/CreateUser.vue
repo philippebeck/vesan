@@ -1,0 +1,160 @@
+<template>
+  <form 
+    method="post"
+    enctype="multipart/form-data"
+    class="form width-lg container-60lg-50wd">
+    <ul>
+      <li>
+        <FieldElt
+          id="name"
+          v-model:value="name"
+          info="Indicate the user name"
+          @keyup.enter="validateNewUser()"
+          :min="parseInt('2')">
+          <template #legend>
+            Name
+          </template>
+          <template #label>
+            Pseudo or first name
+          </template>
+        </FieldElt>
+      </li>
+
+      <li>
+        <FieldElt
+          id="email"
+          v-model:value="email"
+          info="Indicate the user email"
+          @keyup.enter="validateNewUser()"
+          type="email">
+          <template #legend>
+            Email
+          </template>
+          <template #label>
+            A valid email please
+          </template>
+        </FieldElt>
+      </li>
+      
+      <li>
+        <FieldElt
+          id="image"
+          v-model:value="image"
+          info="Provide user image"
+          type="file">
+          <template #legend>
+            Image
+          </template>
+          <template #label>
+            An image file please
+          </template>
+        </FieldElt>
+      </li>
+
+      <li>
+        <FieldElt
+          id="pass"
+          v-model:value="pass"
+          info="Indicate the user password"
+          @keyup.enter="validateNewUser()"
+          type="password">
+          <template #legend>
+            Password
+          </template>
+          <template #label>
+            8 to 50 characters with upper & lower, 1 number mini & no space
+          </template>
+        </FieldElt>
+      </li>
+    </ul>
+
+    <BtnElt
+      type="button"
+      content="Create"
+      @click="validateNewUser()" 
+      class="btn-green"/>
+  </form>
+</template>
+
+<script>
+export default {
+  name: "CreateUser",
+
+  data() {
+    return {
+      name: "",
+      image:"",
+      email: "",
+      pass: ""
+    }
+  },
+
+  methods: {
+    /**
+     * VALIDATE NEW USER IF DATA ARE VALID
+     */
+    validateNewUser() {
+      if (this.$serve.checkName(this.name) && 
+        this.$serve.checkEmail(this.email) && 
+        this.$serve.checkPass(this.pass)) {
+
+        if (typeof document.getElementById('image').files[0] !== "undefined") {
+          this.checkNewUser();
+
+        } else {
+          alert("Une photo de l'utilisateur doit être uploadée !");
+        }
+      }
+    },
+
+    /**
+     * CHECK NEW USER IF NAME | EMAIL ARE REFERENCED
+     */
+    checkNewUser() {
+      this.$serve.getData("/api/users")
+        .then((users) => {
+          let isReferenced = false;
+
+          for (let i = 0; i < users.length; i++) {
+
+            if (users[i].name === this.name) {
+              alert(this.name + " is not available !");
+              isReferenced = true;
+            }
+
+            if (users[i].email === this.email) {
+              alert(this.email + " is already referenced !");
+              isReferenced = true;
+            }
+          }
+
+          this.createUser(isReferenced);
+        })
+        .catch(err => { console.log(err) });
+    },
+
+    /**
+     * CREATE USER IF NO INFO IS REFERENCED
+     * @param {boolean} isReferenced 
+     */
+    createUser(isReferenced) {
+      if (!isReferenced) {
+        let user  = new FormData();
+        let image = document.getElementById('image').files[0];
+
+        user.append("name", this.name);
+        user.append("email", this.email);
+        user.append("image", image);
+        user.append("pass", this.pass);
+
+        this.$serve.postData("/api/users", user)
+          .then(() => {
+            alert(user.get("name") + " created !");
+            this.$router.go();
+          })
+          .catch(err => { console.log(err) });
+      }
+    }
+  }
+}
+</script>
