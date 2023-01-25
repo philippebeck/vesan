@@ -1,0 +1,43 @@
+{
+  "name": "vesan",
+  "description": "CMS with Vue-Elt, Servidio, Animadio & NemJS",
+  "keywords": [
+    "cms",
+    "vue",
+    "vue-elt",
+    "sfc",
+    "javascript",
+    "axios",
+    "sass",
+    "scss",
+    "node",
+    "express",
+    "mongo"
+  ],
+  "scripts": {
+    "start": "nodemon server"
+  },
+  "license": "Apache-2.0 License",
+  "main": "server.js",
+  "repository": "github:philippebeck/vesan",
+  "bugs": "https://github.com/philippebeck/vesan/issues",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.17.2",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^6.7.0",
+    "formidable": "^2.1.1",
+    "helmet": "^5.0.2",
+    "mongoose": "^6.2.1",
+    "mongoose-unique-validator": "^3.0.0",
+    "nemjs": "^0.5.1",
+    "remove-accents": "^0.4.4"
+  },
+  "author": {
+    "name": "Philippe Beck",
+    "email": "philippe@philippebeck.net",
+    "url": "https://philippebeck.net"
+  }
+}
