@@ -119,6 +119,13 @@
             Servidio
           </a>
         </li>
+        <li>
+          <a
+            href="https://www.npmjs.com/package/servidio"
+            title="Vuejs SFC Library">
+            Vue-Elt
+          </a>
+        </li>
       </ul>
     </template>
 
