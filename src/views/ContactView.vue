@@ -1,4 +1,6 @@
 <template>
+
+  <!-- CONTACT PAGE -->
   <CardElt>
     <template #header>
       <i class="blue fa-solid fa-at fa-2x"></i>

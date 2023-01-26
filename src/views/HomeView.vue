@@ -11,16 +11,17 @@
         </template>
       </SliderElt>
 
+      <!-- Main Title -->
       <h1 class="blue shatex-blur-sm anima-slideB">
         Vesan
       </h1>
+    </template>
+
+    <!-- Main Content -->
+    <template #body>
       <strong class="gray">
         CMS with Vue-Elt, Servidio, Animadio & NemJS
       </strong>
-    </template>
-
-    <template #body>
-      Welcome & I wish you to create wonderful websites !
     </template>
   </CardElt>
 </template>

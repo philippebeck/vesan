@@ -1,12 +1,13 @@
 <template>
-  <form 
-    method="post"
+
+  <!-- USER CREATION ADMIN -->
+  <form method="post"
     enctype="multipart/form-data"
     class="form width-lg container-60lg-50wd">
     <ul>
       <li>
-        <FieldElt
-          id="name"
+        <!-- User Name -->
+        <FieldElt id="name"
           v-model:value="name"
           info="Indicate the user name"
           @keyup.enter="validateNewUser()"
@@ -21,8 +22,8 @@
       </li>
 
       <li>
-        <FieldElt
-          id="email"
+        <!-- User Email -->
+        <FieldElt id="email"
           v-model:value="email"
           info="Indicate the user email"
           @keyup.enter="validateNewUser()"
@@ -37,8 +38,8 @@
       </li>
       
       <li>
-        <FieldElt
-          id="image"
+        <!-- User Image -->
+        <FieldElt id="image"
           v-model:value="image"
           info="Provide user image"
           type="file">
@@ -52,8 +53,8 @@
       </li>
 
       <li>
-        <FieldElt
-          id="pass"
+        <!-- User Pass -->
+        <FieldElt id="pass"
           v-model:value="pass"
           info="Indicate the user password"
           @keyup.enter="validateNewUser()"
@@ -68,8 +69,8 @@
       </li>
     </ul>
 
-    <BtnElt
-      type="button"
+    <!-- Create Button -->
+    <BtnElt type="button"
       content="Create"
       @click="validateNewUser()" 
       class="btn-green"/>

@@ -1,4 +1,6 @@
 <template>
+
+  <!-- LOGIN PAGE -->
   <CardElt v-if="isLogin">
     <template #header>
       <i class="violet anima-shrink fa-solid fa-sign-in-alt fa-2x"></i>
@@ -9,8 +11,8 @@
       <form class="form">
         <ul>
           <li>
-            <FieldElt
-              id="email"
+            <!-- User Email -->
+            <FieldElt id="email"
               v-model:value="email"
               info="Indicate your Email"
               @keyup.enter="login()"
@@ -24,8 +26,8 @@
             </FieldElt>
           </li>
           <li>
-            <FieldElt
-              id="pass"
+            <!-- User Pass -->
+            <FieldElt id="pass"
               v-model:value="pass"
               info="Indicate your Password"
               @keyup.enter="login()"
@@ -38,23 +40,22 @@
               </template>
             </FieldElt>
           </li>
-        </ul>
-        <ul>
           <li>
-            <div 
-              id="recaptcha"
+            <!-- Security -->
+            <div id="recaptcha"
               class="g-recaptcha"
               data-sitekey="">
             </div>
           </li>
           <li>
-            <BtnElt
-              type="button"
+            <!-- Toggle Button to Forgot Password Page -->
+            <BtnElt type="button"
               content="Forgot Password"
               @click="toggleFormType()"
               class="btn-orange"/>
-            <BtnElt
-              type="button"
+
+            <!-- Login Button -->
+            <BtnElt type="button"
               content="Login"
               @click="login()"
               class="btn-green"/>
@@ -64,6 +65,7 @@
     </template>
   </CardElt>
 
+  <!-- FORGOT PASSWORD PAGE -->
   <CardElt v-else>
     <template #header>
       <i class="violet anima-grow fa-solid fa-key fa-2x"></i>
@@ -72,8 +74,8 @@
 
     <template #body>
       <form>
-        <FieldElt
-          id="email"
+        <!-- User Email -->
+        <FieldElt id="email"
           v-model:value="email"
           info="Indicate your Email"
           @keyup.enter="forgotPass()"
@@ -88,20 +90,21 @@
         </FieldElt>
         <ul>
           <li>
-            <div 
-              id="recaptcha"
+            <!-- Security -->
+            <div id="recaptcha"
               class="g-recaptcha"
               data-sitekey="">
             </div>
           </li>
           <li>
-            <BtnElt
-              type="button"
+            <!-- Toggle Button to Login Page -->
+            <BtnElt type="button"
               content="Login"
               @click="toggleFormType()"
               class="btn-green"/>
-            <BtnElt
-              type="button"
+
+            <!-- Send Password Button -->
+            <BtnElt type="button"
               content="Send"
               @click="forgotPass()"
               class="btn-orange"/>

@@ -1,35 +1,36 @@
 <template>
-  <form
-    method="post"
+
+  <!-- USER ADMIN MANAGER -->
+  <form method="post"
     enctype="multipart/form-data">
-    <TableElt 
-      :items="users"
+    <TableElt :items="users"
       id="users">
 
+      <!-- Last Table Head -->
       <template #head>
         up/del
       </template>
 
+      <!-- Current User Image -->
       <template #cell-_id="slotProps">
-        <MediaElt
-          :src="'/img/users/' + users[slotProps.index].image"
+        <MediaElt :src="'/img/users/' + users[slotProps.index].image"
           :alt="'Photo de ' + users[slotProps.index].name"
           :title="users[slotProps.index].image">
         </MediaElt>
       </template>
 
+      <!-- User Name -->
       <template #cell-name="slotProps">
-        <FieldElt
-          :id="'name-' + users[slotProps.index]._id"
+        <FieldElt :id="'name-' + users[slotProps.index]._id"
           v-model:value="getUsers()[slotProps.index].name"
           info="Update the user name"
           @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)">
         </FieldElt>
       </template>
 
+      <!-- User Email -->
       <template #cell-email="slotProps">
-        <FieldElt
-          :id="'email-' + users[slotProps.index]._id"
+        <FieldElt :id="'email-' + users[slotProps.index]._id"
           type="email"
           v-model:value="getUsers()[slotProps.index].email"
           info="Update the user email"
@@ -37,17 +38,17 @@
         </FieldElt>
       </template>
 
+      <!-- User Image -->
       <template #cell-image="slotProps">
-        <FieldElt
-          :id="'image-' + users[slotProps.index]._id"
+        <FieldElt :id="'image-' + users[slotProps.index]._id"
           type="file"
           info="Update the user image">
         </FieldElt>
       </template>
 
+      <!-- User Pass -->
       <template #cell-pass="slotProps">
-        <FieldElt
-          :id="'pass-' + users[slotProps.index]._id"
+        <FieldElt :id="'pass-' + users[slotProps.index]._id"
           type="password"
           v-model:value="pass"
           info="Update the user password"
@@ -56,8 +57,9 @@
       </template>
 
       <template #body="slotProps">
-        <BtnElt
-          type="button"
+
+      <!-- Update Button -->
+      <BtnElt type="button"
           @click="validateUpdatedUser(users[slotProps.index]._id)" 
           class="btn-sky"
           :title="'Update ' + users[slotProps.index].name">
@@ -66,8 +68,8 @@
           </template>
         </BtnElt>
 
-        <BtnElt
-          type="button"
+        <!-- Delete Button -->
+        <BtnElt type="button"
           @click="deleteUser(users[slotProps.index]._id)" 
           class="btn-red"
           :title="'Delete ' + users[slotProps.index].name">
