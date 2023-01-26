@@ -4,9 +4,10 @@
   <form method="post"
     enctype="multipart/form-data"
     class="form width-lg container-60lg-50wd">
-    <ul>
-      <li>
-        <!-- User Name -->
+    <ListElt :items="['name', 'email', 'image', 'pass']">
+
+      <!-- User Name -->
+      <template #items-1>
         <FieldElt id="name"
           v-model:value="name"
           info="Indicate the user name"
@@ -19,10 +20,10 @@
             Pseudo or first name
           </template>
         </FieldElt>
-      </li>
+      </template>
 
-      <li>
-        <!-- User Email -->
+      <!-- User Email -->
+      <template #items-2>
         <FieldElt id="email"
           v-model:value="email"
           info="Indicate the user email"
@@ -35,10 +36,10 @@
             A valid email please
           </template>
         </FieldElt>
-      </li>
+      </template>
       
-      <li>
-        <!-- User Image -->
+      <!-- User Image -->
+      <template #items-3>
         <FieldElt id="image"
           v-model:value="image"
           info="Provide user image"
@@ -50,10 +51,10 @@
             An image file please
           </template>
         </FieldElt>
-      </li>
+      </template>
 
-      <li>
-        <!-- User Pass -->
+      <!-- User Pass -->
+      <template #items-4>
         <FieldElt id="pass"
           v-model:value="pass"
           info="Indicate the user password"
@@ -66,8 +67,8 @@
             8 to 50 characters with upper & lower, 1 number mini & no space
           </template>
         </FieldElt>
-      </li>
-    </ul>
+      </template>
+    </ListElt>
 
     <!-- Create Button -->
     <BtnElt type="button"
