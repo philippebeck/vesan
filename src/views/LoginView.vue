@@ -9,58 +9,52 @@
 
     <template #body>
       <form class="form">
-        <ul>
-          <li>
-            <!-- User Email -->
-            <FieldElt id="email"
-              v-model:value="email"
-              info="Indicate your Email"
-              @keyup.enter="login()"
-              type="email">
-              <template #legend>
-                Email
-              </template>
-              <template #label>
-                This email must have been registered before
-              </template>
-            </FieldElt>
-          </li>
-          <li>
-            <!-- User Pass -->
-            <FieldElt id="pass"
-              v-model:value="pass"
-              info="Indicate your Password"
-              @keyup.enter="login()"
-              type="password">
-              <template #legend>
-                Password
-              </template>
-              <template #label>
-                You can use the Forgot Password feature if needed
-              </template>
-            </FieldElt>
-          </li>
-          <li>
-            <!-- Security -->
-            <div id="recaptcha"
-              class="g-recaptcha"
-              data-sitekey="">
-            </div>
-          </li>
-          <li>
-            <!-- Toggle Button to Forgot Password Page -->
-            <BtnElt type="button"
-              content="Forgot Password"
-              @click="toggleFormType()"
-              class="btn-orange"/>
 
-            <!-- Login Button -->
-            <BtnElt type="button"
-              content="Login"
-              @click="login()"
-              class="btn-green"/>
-          </li>
-        </ul>
+        <!-- User Email -->
+        <FieldElt id="email"
+          v-model:value="email"
+          info="Indicate your Email"
+          @keyup.enter="login()"
+          type="email">
+          <template #legend>
+            Email
+          </template>
+          <template #label>
+            This email must have been registered before
+          </template>
+        </FieldElt>
+
+      <!-- User Pass -->
+        <FieldElt id="pass"
+          v-model:value="pass"
+          info="Indicate your Password"
+          @keyup.enter="login()"
+          type="password">
+          <template #legend>
+            Password
+          </template>
+          <template #label>
+            You can use the Forgot Password feature if needed
+          </template>
+        </FieldElt>
+
+        <!-- Security -->
+        <div id="recaptcha"
+          class="g-recaptcha"
+          data-sitekey="">
+        </div>
+
+        <!-- Toggle Button to Forgot Password Page -->
+        <BtnElt type="button"
+          content="Forgot Password"
+          @click="toggleFormType()"
+          class="btn-orange"/>
+
+        <!-- Login Button -->
+        <BtnElt type="button"
+          content="Login"
+          @click="login()"
+          class="btn-green"/>
       </form>
     </template>
   </CardElt>
@@ -88,28 +82,24 @@
             This email must have been registered before
           </template>
         </FieldElt>
-        <ul>
-          <li>
-            <!-- Security -->
-            <div id="recaptcha"
-              class="g-recaptcha"
-              data-sitekey="">
-            </div>
-          </li>
-          <li>
-            <!-- Toggle Button to Login Page -->
-            <BtnElt type="button"
-              content="Login"
-              @click="toggleFormType()"
-              class="btn-green"/>
 
-            <!-- Send Password Button -->
-            <BtnElt type="button"
-              content="Send"
-              @click="forgotPass()"
-              class="btn-orange"/>
-          </li>
-        </ul>
+        <!-- Security -->
+        <div id="recaptcha"
+          class="g-recaptcha"
+          data-sitekey="">
+        </div>
+
+        <!-- Toggle Button to Login Page -->
+        <BtnElt type="button"
+          content="Login"
+          @click="toggleFormType()"
+          class="btn-green"/>
+
+        <!-- Send Password Button -->
+        <BtnElt type="button"
+          content="Send"
+          @click="forgotPass()"
+          class="btn-orange"/>
       </form>
     </template>
   </CardElt>
