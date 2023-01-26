@@ -1,4 +1,6 @@
 <template>
+
+  <!-- CONTACT PAGE -->
   <CardElt>
     <template #header>
       <i class="blue fa-solid fa-at fa-2x"></i>
@@ -9,10 +11,11 @@
 
     <template #body>
       <form class="anima-grow">
-        <ul>
-          <li>
-            <FieldElt
-              id="email"
+        <ListElt :items="['email', 'subject', 'text']">
+
+          <!-- User Email -->
+          <template #items-1>
+            <FieldElt id="email"
               v-model:value="email"
               info="An email to answer you ?"
               @keyup.enter="send()"
@@ -24,10 +27,11 @@
                 A functional email please!
               </template>
             </FieldElt>
-          </li>
-          <li>
-            <FieldElt
-              id="subject"
+          </template>
+
+          <!-- Message Subject -->
+          <template #items-2>
+            <FieldElt id="subject"
               v-model:value="subject"
               info="The subject of your message ?"
               @keyup.enter="send()">
@@ -38,10 +42,11 @@
                 Be brief and precise!
               </template>
             </FieldElt>
-          </li>
-          <li>
-            <FieldElt
-              id="text"
+          </template>
+
+          <!-- Message Content -->
+          <template #items-3>
+            <FieldElt id="text"
               v-model:value="text"
               info="The text of your message ?"
               @keyup.enter="send()"
@@ -54,22 +59,20 @@
                 What can I do for you ?
               </template>
             </FieldElt>
-          </li>
-          <li>
-            <div 
-              id="recaptcha" 
-              class="g-recaptcha" 
-              data-sitekey="">
-            </div>
-          </li>
-          <li>
-            <BtnElt
-              type="button"
-              content="Envoyer"
-              @click="send()" 
-              class="btn-green"/>
-          </li>
-        </ul>
+          </template>
+        </ListElt>
+
+        <!-- Security -->
+        <div id="recaptcha" 
+          class="g-recaptcha" 
+          data-sitekey="">
+        </div>
+
+        <!-- Send Button -->
+        <BtnElt type="button"
+          content="Envoyer"
+          @click="send()" 
+          class="btn-green"/>
       </form>
     </template>
   </CardElt>

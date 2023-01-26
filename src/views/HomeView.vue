@@ -1,8 +1,11 @@
 <template>
-  <CardElt id="top">
+
+  <!-- HOME PAGE -->
+  <CardElt>
     <template #header>
 
-      <SliderElt :slides="['html5', 'css3', 'js', 'vuejs', 'node-js']">
+      <!-- Slider -->
+      <SliderElt :slides="['html5', 'css3', 'sass', 'js', 'vuejs', 'node-js']">
         <template #slide="slotProps">
           <i :class="`fa-brands fa-${slotProps.slide.toLowerCase()} fa-10x blue`"></i>
         </template>
@@ -11,16 +14,17 @@
         </template>
       </SliderElt>
 
+      <!-- Main Title -->
       <h1 class="blue shatex-blur-sm anima-slideB">
         Vesan
       </h1>
+    </template>
+
+    <!-- Main Content -->
+    <template #body>
       <strong class="gray">
         CMS with Vue-Elt, Servidio, Animadio & NemJS
       </strong>
-    </template>
-
-    <template #body>
-      Welcome & I wish you to create wonderful websites !
     </template>
   </CardElt>
 </template>

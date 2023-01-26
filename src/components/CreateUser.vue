@@ -1,12 +1,14 @@
 <template>
-  <form 
-    method="post"
+
+  <!-- USER CREATION ADMIN -->
+  <form method="post"
     enctype="multipart/form-data"
     class="form width-lg container-60lg-50wd">
-    <ul>
-      <li>
-        <FieldElt
-          id="name"
+    <ListElt :items="['name', 'email', 'image', 'pass']">
+
+      <!-- User Name -->
+      <template #items-1>
+        <FieldElt id="name"
           v-model:value="name"
           info="Indicate the user name"
           @keyup.enter="validateNewUser()"
@@ -18,11 +20,11 @@
             Pseudo or first name
           </template>
         </FieldElt>
-      </li>
+      </template>
 
-      <li>
-        <FieldElt
-          id="email"
+      <!-- User Email -->
+      <template #items-2>
+        <FieldElt id="email"
           v-model:value="email"
           info="Indicate the user email"
           @keyup.enter="validateNewUser()"
@@ -34,11 +36,11 @@
             A valid email please
           </template>
         </FieldElt>
-      </li>
+      </template>
       
-      <li>
-        <FieldElt
-          id="image"
+      <!-- User Image -->
+      <template #items-3>
+        <FieldElt id="image"
           v-model:value="image"
           info="Provide user image"
           type="file">
@@ -49,11 +51,11 @@
             An image file please
           </template>
         </FieldElt>
-      </li>
+      </template>
 
-      <li>
-        <FieldElt
-          id="pass"
+      <!-- User Pass -->
+      <template #items-4>
+        <FieldElt id="pass"
           v-model:value="pass"
           info="Indicate the user password"
           @keyup.enter="validateNewUser()"
@@ -65,11 +67,11 @@
             8 to 50 characters with upper & lower, 1 number mini & no space
           </template>
         </FieldElt>
-      </li>
-    </ul>
+      </template>
+    </ListElt>
 
-    <BtnElt
-      type="button"
+    <!-- Create Button -->
+    <BtnElt type="button"
       content="Create"
       @click="validateNewUser()" 
       class="btn-green"/>
