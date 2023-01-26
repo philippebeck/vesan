@@ -93,6 +93,18 @@
     <template #foot2>
       <ul>
         <li>
+          <a href="https://www.npmjs.com/package/servidio"
+            title="Vuejs SFC Library">
+            Vue-Elt
+          </a>
+        </li>
+        <li>
+          <a href="https://www.npmjs.com/package/servidio"
+            title="JavaScript Frontend Services">
+            Servidio
+          </a>
+        </li>
+        <li>
           <a href="https://www.npmjs.com/package/animadio"
             title="Animadio CSS Library">
             Animadio
@@ -105,15 +117,9 @@
           </a>
         </li>
         <li>
-          <a href="https://www.npmjs.com/package/servidio"
-            title="JavaScript Frontend Services">
-            Servidio
-          </a>
-        </li>
-        <li>
-          <a href="https://www.npmjs.com/package/servidio"
-            title="Vuejs SFC Library">
-            Vue-Elt
+          <a href="https://www.npmjs.com/package/vesan"
+            title="CMS with Vue-Elt, Servidio, Animadio & NemJS">
+            Vesan
           </a>
         </li>
       </ul>
