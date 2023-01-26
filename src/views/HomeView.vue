@@ -1,8 +1,11 @@
 <template>
-  <CardElt id="top">
+
+  <!-- HOME PAGE -->
+  <CardElt>
     <template #header>
 
-      <SliderElt :slides="['html5', 'css3', 'js', 'vuejs', 'node-js']">
+      <!-- Slider -->
+      <SliderElt :slides="['html5', 'css3', 'sass', 'js', 'vuejs', 'node-js']">
         <template #slide="slotProps">
           <i :class="`fa-brands fa-${slotProps.slide.toLowerCase()} fa-10x blue`"></i>
         </template>
