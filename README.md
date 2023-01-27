@@ -15,10 +15,12 @@ CMS with Vue-Elt, Servidio, Animadio & NemJS
 ## Overview
 
 Vesan is a Content Manager System, where you can find 4 "homemade" packages complementary :
--  Vue-Elt, as the components  
--  Servidio, as the frontend service  
--  Animadio, as the design  
--  Nemjs, as the backend service  
+-  Vue-Elt, for the SFC components, as the main structure  
+-  Servidio, for Axios calls & front securities, as the frontend services  
+-  Animadio, a CSS library built with Sass, as the design  
+-  Nemjs, for JWT, Nodemailer, Sharp & back securities, as the backend services  
+
+Vesan uses many other well-known packages, like ExpressJS, Mongoose, Axios, etc...
 
 ## Summary
 
