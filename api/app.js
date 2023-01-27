@@ -6,7 +6,10 @@ const helmet    = require("helmet");
 const sanitize  = require("express-mongo-sanitize");
 const rateLimit = require("express-rate-limit");
 const cors      = require("cors");
-const userRoute = require("./route/UserRoute");
+
+const postRoute     = require("./route/PostRoute");
+const commentRoute  = require("./route/CommentRoute");
+const userRoute     = require("./route/UserRoute");
 
 require("dotenv").config();
 
@@ -40,6 +43,8 @@ const limiter = rateLimit({
 /**
  * ROUTES
  */
+app.use(process.env.ROUTE_POST, postRoute, limiter);
+app.use(process.env.ROUTE_COMMENT, commentRoute, limiter);
 app.use(process.env.ROUTE_USER, userRoute, limiter);
 
 module.exports = app;
