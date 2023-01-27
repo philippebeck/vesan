@@ -1,7 +1,7 @@
 <template>
 
   <!-- NAVBAR -->
-  <NavElt :items="['home', 'contact']">
+  <NavElt :items="['home', 'shop', 'blog', 'contact']">
 
     <!-- Brand Logo -->
     <template #brand>
@@ -13,6 +13,12 @@
     <!-- Main Part -->
     <template #home>
       <i class="fa-solid fa-home fa-fw"></i>
+    </template>
+    <template #shop>
+      <i class="fa-solid fa-shop fa-fw"></i>
+    </template>
+    <template #blog>
+      <i class="fa-solid fa-blog fa-fw"></i>
     </template>
     <template #contact>
       <i class="fa-brands fa-at fa-fw"></i>
