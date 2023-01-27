@@ -30,7 +30,7 @@
     "core-js": "^3.8.3",
     "servidio": "^0.4.0",
     "vue": "^3.2.45",
-    "vue-elt": "^0.5.0",
+    "vue-elt": "^0.5.2",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
