@@ -22,43 +22,50 @@
     <template #admin>
 
       <!-- Visitor -->
-      <ul v-if="!userId">
-        <li>
+      <ListElt v-if="!userId"
+        :items="['paypal', 'github', 'login']">
+
+        <template #item-1>
           <a href="https://paypal.me/philippebeck"
             title="Donation">
             <i class="fa-brands fa-paypal fa-fw"></i>
           </a>
-        </li>
-        <li>
+        </template>
+
+        <template #item-2>
           <a href="https://github.com/sponsors/philippebeck"
             title="Sponsor">
             <i class="fa-regular fa-heart fa-fw"></i>
           </a>
-        </li>
-        <li>
+        </template>
+
+        <template #item-3>
           <a href="/login"
             title="Login">
             <i class="fa-solid fa-sign-in-alt fa-fw"></i>
           </a>
-        </li>
-      </ul>
+        </template>
+      </ListElt>
 
       <!-- Admin -->
-      <ul v-else>
-        <li>
+      <ListElt v-else
+        :items="['admin', 'logout']">
+
+        <template #item-1>
           <a href="/admin"
             title="Admin">
             <i class="fa-solid fa-user-ninja fa-fw"></i>
           </a>
-        </li>
-        <li>
+        </template>
+
+        <template #item-2>
           <button type="button"
             @click="logout()"
             title="Logout">
             <i class="fa-solid fa-sign-out-alt fa-fw"></i>
           </button>
-        </li>
-      </ul>
+        </template>
+      </ListElt>
     </template>
   </NavElt>
 
@@ -73,104 +80,104 @@
 
     <!-- Websites -->
     <template #foot1>
-      <ul>
-        <li>
+      <ListElt :items="['Asperger', 'Astronomy']">
+        <template #item-1>
           <a href="https://asperger.philippebeck.net"
             title="Tests for Asperger's Syndrome">
             Asperger
           </a>
-        </li>
-        <li>
+        </template>
+        <template #item-2>
           <a href="https://astronomy.philippebeck.net"
             title="NASA & CDS APIs">
             Astronomy
           </a>
-        </li>
-      </ul>
+        </template>
+      </ListElt>
     </template>
 
     <!-- Tools -->
     <template #foot2>
-      <ul>
-        <li>
+      <ListElt :items="['Vue-Elt', 'Servidio', 'Animadio', 'NemJS', 'Vesan']">
+        <template #item-1>
           <a href="https://www.npmjs.com/package/servidio"
             title="Vuejs SFC Library">
             Vue-Elt
           </a>
-        </li>
-        <li>
+        </template>
+        <template #item-2>
           <a href="https://www.npmjs.com/package/servidio"
             title="JavaScript Frontend Services">
             Servidio
           </a>
-        </li>
-        <li>
+        </template>
+        <template #item-3>
           <a href="https://www.npmjs.com/package/animadio"
             title="Animadio CSS Library">
             Animadio
           </a>
-        </li>
-        <li>
+        </template>
+        <template #item-4>
           <a href="https://www.npmjs.com/package/nemjs"
             title="JavaScript Backend Services">
             Nemjs
           </a>
-        </li>
-        <li>
+        </template>
+        <template #item-5>
           <a href="https://www.npmjs.com/package/vesan"
             title="CMS with Vue-Elt, Servidio, Animadio & NemJS">
             Vesan
           </a>
-        </li>
-      </ul>
+        </template>
+      </ListElt>
     </template>
 
     <!-- Links -->
     <template #foot3>
-      <ul>
-        <li>
+      <ListElt :items="['Links2Code', 'Philippe Beck']">
+        <template #item-1>
           <a href="https://links2code.philippebeck.net"
             title="Links For Coding">
             Links2Code
           </a>
-        </li>
-        <li>
+        </template>
+        <template #item-2>
           <a href="https://philippebeck.net"
             title="Portal">
             Philippe Beck
           </a>
-        </li>
-      </ul>
+        </template>
+      </ListElt>
     </template>
 
     <!-- Social Networks -->
     <template #foot>
-      <ul>
-        <li>
+      <ListElt :items="['GitHub', 'Twitter', 'LinkedIn', 'CodePen']">
+        <template #item-1>
           <a href="https://github.com/philippebeck"
             title="Philippe Beck @GitHub">
             <i class="fa-brands fa-github fa-2x fa-fw black"></i>
           </a>
-        </li>
-        <li>
+        </template>
+        <template #item-2>
           <a href="https://twitter.com/ph_beck"
             title="Philippe Beck @Twitter">
             <i class="fa-brands fa-twitter fa-2x fa-fw sky"></i>
           </a>
-        </li>
-        <li>
+        </template>
+        <template #item-3>
           <a href="https://www.linkedin.com/in/philippebeck"
             title="Philippe Beck @LinkedIn">
             <i class="fa-brands fa-linkedin-in fa-2x fa-fw blue"></i>
           </a>
-        </li>
-        <li>
+        </template>
+        <template #item-4>
           <a href="https://codepen.io/philippebeck"
             title="Philippe Beck @CodePen">
             <i class="fa-brands fa-codepen fa-2x fa-fw black"></i>
           </a>
-        </li>
-      </ul>
+        </template>
+      </ListElt>
     </template>
   </FootElt>
 </template>

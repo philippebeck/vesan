@@ -5,7 +5,7 @@
     <template #header>
 
       <!-- Slider -->
-      <SliderElt :slides="['html5', 'css3', 'sass', 'js', 'vuejs', 'node-js']">
+      <SliderElt :slides="['vuejs', 'sass', 'node-js', 'html5', 'js', 'css3']">
         <template #slide="slotProps">
           <i :class="`fa-brands fa-${slotProps.slide.toLowerCase()} fa-10x blue`"></i>
         </template>
