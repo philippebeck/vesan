@@ -14,7 +14,7 @@
         <ListElt :items="['email', 'subject', 'text']">
 
           <!-- User Email -->
-          <template #items-1>
+          <template #item-1>
             <FieldElt id="email"
               v-model:value="email"
               info="An email to answer you ?"
@@ -30,7 +30,7 @@
           </template>
 
           <!-- Message Subject -->
-          <template #items-2>
+          <template #item-2>
             <FieldElt id="subject"
               v-model:value="subject"
               info="The subject of your message ?"
@@ -45,7 +45,7 @@
           </template>
 
           <!-- Message Content -->
-          <template #items-3>
+          <template #item-3>
             <FieldElt id="text"
               v-model:value="text"
               info="The text of your message ?"

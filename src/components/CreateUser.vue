@@ -7,7 +7,7 @@
     <ListElt :items="['name', 'email', 'image', 'pass']">
 
       <!-- User Name -->
-      <template #items-1>
+      <template #item-1>
         <FieldElt id="name"
           v-model:value="name"
           info="Indicate the user name"
@@ -23,7 +23,7 @@
       </template>
 
       <!-- User Email -->
-      <template #items-2>
+      <template #item-2>
         <FieldElt id="email"
           v-model:value="email"
           info="Indicate the user email"
@@ -39,7 +39,7 @@
       </template>
       
       <!-- User Image -->
-      <template #items-3>
+      <template #item-3>
         <FieldElt id="image"
           v-model:value="image"
           info="Provide user image"
@@ -54,7 +54,7 @@
       </template>
 
       <!-- User Pass -->
-      <template #items-4>
+      <template #item-4>
         <FieldElt id="pass"
           v-model:value="pass"
           info="Indicate the user password"
