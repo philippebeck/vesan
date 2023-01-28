@@ -12,14 +12,15 @@ const PostModel = mongoose.Schema(
     },
     text: { 
       type: String, 
-      required: true
+      required: true,
+      unique: true
     },
     image: { 
       type: String, 
       required: true,
       unique: true
     },
-    user: { 
+    author: { 
       type: String, 
       required: true
     }
