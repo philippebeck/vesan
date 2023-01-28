@@ -50,9 +50,11 @@
       <template #cell-price="slotProps">
         <FieldElt :id="'price-' + articles[slotProps.index]._id"
           type="number"
-          v-model:value="price"
+          v-model:value="getArticles()[slotProps.index].price"
+          @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
           info="Update the article price"
-          @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)">
+          :min="1"
+          :max="1000">
         </FieldElt>
       </template>
 

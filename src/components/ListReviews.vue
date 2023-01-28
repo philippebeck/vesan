@@ -14,8 +14,8 @@
       <template #cell-text="slotProps">
         <FieldElt :id="'text-' + reviews[slotProps.index]._id"
           v-model:value="getReviews()[slotProps.index].text"
-          info="Update the review text"
-          @keyup.enter="updateReview(reviews[slotProps.index]._id)">
+          @keyup.enter="updateReview(reviews[slotProps.index]._id)"
+          info="Update the review text">
         </FieldElt>
       </template>
 
@@ -24,8 +24,10 @@
         <FieldElt :id="'score-' + reviews[slotProps.index]._id"
           type="number"
           v-model:value="getReviews()[slotProps.index].score"
+          @keyup.enter="updateReview(reviews[slotProps.index]._id)"
           info="Update the review score"
-          @keyup.enter="updateReview(reviews[slotProps.index]._id)">
+          :min="0"
+          :max="5">
         </FieldElt>
       </template>
 

@@ -31,10 +31,10 @@
       <!-- Post Text -->
       <template #cell-text="slotProps">
         <FieldElt :id="'text-' + posts[slotProps.index]._id"
-          type="text"
+          type="textarea"
           v-model:value="getPosts()[slotProps.index].text"
-          info="Update the post text"
-          @keyup.enter="validateUpdatedPost(posts[slotProps.index]._id)">
+          @keyup.enter="validateUpdatedPost(posts[slotProps.index]._id)"
+          info="Update the post text">
         </FieldElt>
       </template>
 
@@ -49,9 +49,9 @@
       <!-- Post Author -->
       <template #cell-author="slotProps">
         <FieldElt :id="'author-' + posts[slotProps.index]._id"
-          v-model:value="author"
-          info="Update the post authorword"
-          @keyup.enter="validateUpdatedPost(posts[slotProps.index]._id)">
+          v-model:value="getPosts()[slotProps.index].author"
+          @keyup.enter="validateUpdatedPost(posts[slotProps.index]._id)"
+          info="Update the post author">
         </FieldElt>
       </template>
 

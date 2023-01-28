@@ -10,8 +10,8 @@
       <template #item-1>
         <FieldElt id="article-name"
           v-model:value="name"
-          info="My beautiful article"
           @keyup.enter="validateNewArticle()"
+          info="My beautiful article"
           :min="parseInt('2')">
           <template #legend>
             Name
@@ -25,10 +25,10 @@
       <!-- Article Description -->
       <template #item-2>
         <FieldElt id="article-description"
+          type="textarea"
           v-model:value="description"
-          info="This article is wonderful !"
           @keyup.enter="validateNewArticle()"
-          type="textarea">
+          info="This article is wonderful !">
           <template #legend>
             Description
           </template>
@@ -56,10 +56,12 @@
       <!-- Article Price -->
       <template #item-4>
         <FieldElt id="article-price"
+          type="number"
           v-model:value="price"
-          info="100 €"
           @keyup.enter="validateNewArticle()"
-          type="number">
+          info="100 €"
+          :min="1"
+          :max="1000">
           <template #legend>
             Price
           </template>
