@@ -32,7 +32,7 @@
     "helmet": "^5.0.2",
     "mongoose": "^6.2.1",
     "mongoose-unique-validator": "^3.0.0",
-    "nemjs": "^0.5.1",
+    "nemjs": "^0.6.0",
     "remove-accents": "^0.4.4"
   },
   "author": {

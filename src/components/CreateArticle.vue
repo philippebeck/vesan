@@ -1,44 +1,44 @@
 <template>
 
-  <!-- USER CREATION ADMIN -->
+  <!-- ARTICLE CREATION ADMIN -->
   <form method="post"
     enctype="multipart/form-data"
     class="form width-lg container-60lg-50wd">
-    <ListElt :items="['name', 'email', 'image', 'pass']">
+    <ListElt :items="['name', 'description', 'image', 'price']">
 
-      <!-- User Name -->
+      <!-- Article Name -->
       <template #item-1>
         <FieldElt id="name"
           v-model:value="name"
-          info="John Doe"
-          @keyup.enter="validateNewUser()"
+          info="My beautiful article"
+          @keyup.enter="validateNewArticle()"
           :min="parseInt('2')">
           <template #legend>
             Name
           </template>
           <template #label>
-            Indicate the user name
+            Indicate the article name
           </template>
         </FieldElt>
       </template>
 
-      <!-- User Email -->
+      <!-- Article Description -->
       <template #item-2>
-        <FieldElt id="email"
-          v-model:value="email"
-          info="john@doe.com"
-          @keyup.enter="validateNewUser()"
-          type="email">
+        <FieldElt id="description"
+          v-model:value="description"
+          info="This article is wonderful !"
+          @keyup.enter="validateNewArticle()"
+          type="textarea">
           <template #legend>
-            Email
+            Description
           </template>
           <template #label>
-            Indicate the user email
+            Indicate the article description
           </template>
         </FieldElt>
       </template>
       
-      <!-- User Image -->
+      <!-- Article Image -->
       <template #item-3>
         <FieldElt id="image"
           v-model:value="image"
@@ -48,23 +48,23 @@
             Image
           </template>
           <template #label>
-            Provide user image
+            Provide article image
           </template>
         </FieldElt>
       </template>
 
-      <!-- User Pass -->
+      <!-- Article Price -->
       <template #item-4>
-        <FieldElt id="pass"
-          v-model:value="pass"
-          info="********"
-          @keyup.enter="validateNewUser()"
-          type="password">
+        <FieldElt id="price"
+          v-model:value="price"
+          info="100 €"
+          @keyup.enter="validateNewArticle()"
+          type="number">
           <template #legend>
-            Password
+            Price
           </template>
           <template #label>
-            8 to 50 characters with upper & lower, 1 number mini & no space
+            Indicate the article price
           </template>
         </FieldElt>
       </template>
@@ -73,35 +73,33 @@
     <!-- Create Button -->
     <BtnElt type="button"
       content="Create"
-      @click="validateNewUser()" 
+      @click="validateNewArticle()" 
       class="btn-green"/>
   </form>
 </template>
 
 <script>
 export default {
-  name: "CreateUser",
+  name: "CreateArticle",
 
   data() {
     return {
       name: "",
-      email: "",
-      image:"",
-      pass: ""
+      description:"",
+      image: "",
+      price: ""
     }
   },
 
   methods: {
     /**
-     * VALIDATE NEW USER IF DATA ARE VALID
+     * VALIDATE NEW ARTICLE IF DATA ARE VALID
      */
-    validateNewUser() {
-      if (this.$serve.checkName(this.name) && 
-        this.$serve.checkEmail(this.email) && 
-        this.$serve.checkPass(this.pass)) {
+    validateNewArticle() {
+      if (this.$serve.checkName(this.name)) {
 
         if (typeof document.getElementById('image').files[0] !== "undefined") {
-          this.checkNewUser();
+          this.checkNewArticle();
 
         } else {
           alert("Une photo de l'utilisateur doit être uploadée !");
@@ -110,48 +108,48 @@ export default {
     },
 
     /**
-     * CHECK NEW USER IF NAME | EMAIL ARE REFERENCED
+     * CHECK NEW ARTICLE IF NAME | DESCRIPTION ARE REFERENCED
      */
-    checkNewUser() {
-      this.$serve.getData("/api/users")
-        .then((users) => {
+    checkNewArticle() {
+      this.$serve.getData("/api/articles")
+        .then((articles) => {
           let isReferenced = false;
 
-          for (let i = 0; i < users.length; i++) {
+          for (let i = 0; i < articles.length; i++) {
 
-            if (users[i].name === this.name) {
+            if (articles[i].name === this.name) {
               alert(this.name + " is not available !");
               isReferenced = true;
             }
 
-            if (users[i].email === this.email) {
-              alert(this.email + " is already referenced !");
+            if (articles[i].description === this.description) {
+              alert(this.description + " is already referenced !");
               isReferenced = true;
             }
           }
 
-          this.createUser(isReferenced);
+          this.createArticle(isReferenced);
         })
         .catch(err => { console.log(err) });
     },
 
     /**
-     * CREATE USER IF NO INFO IS REFERENCED
+     * CREATE ARTICLE IF NO INFO IS REFERENCED
      * @param {boolean} isReferenced 
      */
-    createUser(isReferenced) {
+    createArticle(isReferenced) {
       if (!isReferenced) {
-        let user  = new FormData();
+        let article  = new FormData();
         let image = document.getElementById('image').files[0];
 
-        user.append("name", this.name);
-        user.append("email", this.email);
-        user.append("image", image);
-        user.append("pass", this.pass);
+        article.append("name", this.name);
+        article.append("description", this.description);
+        article.append("image", image);
+        article.append("price", this.price);
 
-        this.$serve.postData("/api/users", user)
+        this.$serve.postData("/api/articles", article)
           .then(() => {
-            alert(user.get("name") + " created !");
+            alert(article.get("name") + " created !");
             this.$router.go();
           })
           .catch(err => { console.log(err) });

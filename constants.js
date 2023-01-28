@@ -22,7 +22,7 @@ export default {
   TOKEN : JSON.parse(localStorage.getItem("userToken")),
   USER_ID : JSON.parse(localStorage.getItem("userId")),
 
-  /* APP */
+  /* VESAN */
 
   FORGOT_CONFIRM : "Do you confirm sending a new password ?",
   FORGOT_SUBJECT : "New Password",
