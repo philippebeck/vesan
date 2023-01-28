@@ -102,7 +102,7 @@ export default {
           this.checkNewPost();
 
         } else {
-          alert("Une photo de l'utilisateur doit être uploadée !");
+          alert("A photo of the post must be uploaded !");
         }
       }
     },

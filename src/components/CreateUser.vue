@@ -104,7 +104,7 @@ export default {
           this.checkNewUser();
 
         } else {
-          alert("Une photo de l'utilisateur doit être uploadée !");
+          alert("A photo of the user must be uploaded !");
         }
       }
     },

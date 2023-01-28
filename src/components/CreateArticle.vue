@@ -102,7 +102,7 @@ export default {
           this.checkNewArticle();
 
         } else {
-          alert("Une photo de l'utilisateur doit être uploadée !");
+          alert("A photo of the article must be uploaded !");
         }
       }
     },
