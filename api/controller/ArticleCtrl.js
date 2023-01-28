@@ -69,7 +69,7 @@ exports.createArticle = (req, res, next) => {
       return;
     }
 
-    let image = this.getImgName(fields.title);
+    let image = this.getImgName(fields.name);
     nem.createImage(files.image.newFilename, image);
 
     let article = new ArticleModel(this.getArticle(fields.name, fields.description, image, fields.price));
