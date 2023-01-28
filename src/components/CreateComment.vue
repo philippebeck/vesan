@@ -2,7 +2,6 @@
 
   <!-- COMMENT CREATION ADMIN -->
   <form method="post"
-    enctype="multipart/form-data"
     class="form width-lg container-60lg-50wd">
     <ListElt :items="['text', 'post', 'user']">
 
