@@ -70,7 +70,7 @@ exports.createPost = (req, res, next) => {
     }
 
     let image = this.getImgName(fields.title);
-    nem.createImage(files.image.newFilename, image);
+    nem.createImage("posts/" + files.image.newFilename, "posts/" + image);
 
     let post = new PostModel(this.getPost(fields.title, fields.text, image));
 
@@ -101,7 +101,7 @@ exports.updatePost = (req, res, next) => {
 
     if (Object.keys(files).length !== 0) {
       image = this.getImgName(fields.title);
-      nem.createImage(files.image.newFilename, image);
+      nem.createImage("posts/" + files.image.newFilename, "posts/" + image);
 
       PostModel
         .findOne({ _id: req.params.id })

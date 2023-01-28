@@ -70,7 +70,7 @@ exports.createArticle = (req, res, next) => {
     }
 
     let image = this.getImgName(fields.name);
-    nem.createImage(files.image.newFilename, image);
+    nem.createImage("articles/" + files.image.newFilename, "articles/" + image);
 
     let article = new ArticleModel(this.getArticle(fields.name, fields.description, image, fields.price));
 
@@ -101,7 +101,7 @@ exports.updateArticle = (req, res, next) => {
 
     if (Object.keys(files).length !== 0) {
       image = this.getImgName(fields.name);
-      nem.createImage(files.image.newFilename, image);
+      nem.createImage("articles/" + files.image.newFilename, "articles/" + image);
 
       ArticleModel
         .findOne({ _id: req.params.id })
