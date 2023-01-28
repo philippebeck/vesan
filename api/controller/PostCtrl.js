@@ -74,8 +74,6 @@ exports.createPost = (req, res, next) => {
 
     let post = new PostModel(this.getPost(fields.title, fields.text, image, fields.author));
 
-    console.log(post);
-
     fs.unlink(process.env.IMG_URL + "posts/" + files.image.newFilename, () => {
       post
         .save()
