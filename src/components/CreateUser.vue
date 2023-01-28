@@ -12,7 +12,7 @@
           v-model:value="name"
           info="John Doe"
           @keyup.enter="validateNewUser()"
-          :min="parseInt('2')">
+          :min="2">
           <template #legend>
             Name
           </template>

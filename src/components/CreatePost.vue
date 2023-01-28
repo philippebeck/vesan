@@ -12,7 +12,7 @@
           v-model:value="title"
           info="My new post"
           @keyup.enter="validateNewPost()"
-          :min="parseInt('2')">
+          :min="2">
           <template #legend>
             Title
           </template>

@@ -12,7 +12,7 @@
           v-model:value="text"
           info="Thanks for this article !"
           @keyup.enter="createReview()"
-          :min="parseInt('2')">
+          :min="2">
           <template #legend>
             Text
           </template>
