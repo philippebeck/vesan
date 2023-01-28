@@ -36,7 +36,7 @@ exports.checkCredentials = (email, pass, res) => {
  */
 exports.getImgName = (name) => {
 
-  return accents.remove(name).toLowerCase() + "-" + Date.now() + "." + process.env.IMG_EXT;
+  return accents.remove(name).replace(/ /g, "-").toLowerCase() + "-" + Date.now() + "." + process.env.IMG_EXT;
 }
 
 /**
@@ -165,7 +165,7 @@ exports.createUser = (req, res, next) => {
 
     this.checkCredentials(fields.email, fields.pass, res);
     let image = this.getImgName(fields.name);
-    nem.createImage(files.image.newFilename, image);
+    nem.createImage("users/" + files.image.newFilename, "users/" + image);
 
     bcrypt
       .hash(fields.pass, 10)
@@ -202,7 +202,7 @@ exports.updateUser = (req, res, next) => {
 
     if (Object.keys(files).length !== 0) {
       image = this.getImgName(fields.name);
-      nem.createImage(files.image.newFilename, image);
+      nem.createImage("users/" + files.image.newFilename, "users/" + image);
 
       UserModel
         .findOne({ _id: req.params.id })

@@ -20,7 +20,7 @@ const form = formidable({
  */
 exports.getImgName = (name) => {
 
-  return accents.remove(name).replace(" ", "-").toLowerCase() + "-" + Date.now() + "." + process.env.IMG_EXT;
+  return accents.remove(name).replace(/ /g, "-").toLowerCase() + "-" + Date.now() + "." + process.env.IMG_EXT;
 }
 
 /**
@@ -70,7 +70,7 @@ exports.createArticle = (req, res, next) => {
     }
 
     let image = this.getImgName(fields.name);
-    nem.createImage(files.image.newFilename, image);
+    nem.createImage("articles/" + files.image.newFilename, "articles/" + image);
 
     let article = new ArticleModel(this.getArticle(fields.name, fields.description, image, fields.price));
 
@@ -90,7 +90,7 @@ exports.createArticle = (req, res, next) => {
  * @param {function} next 
  */
 exports.updateArticle = (req, res, next) => {
-  form.parse(req, (err, fields) => {
+  form.parse(req, (err, fields, files) => {
 
     if (err) {
       next(err);
@@ -101,7 +101,7 @@ exports.updateArticle = (req, res, next) => {
 
     if (Object.keys(files).length !== 0) {
       image = this.getImgName(fields.name);
-      nem.createImage(files.image.newFilename, image);
+      nem.createImage("articles/" + files.image.newFilename, "articles/" + image);
 
       ArticleModel
         .findOne({ _id: req.params.id })

@@ -8,10 +8,10 @@
 
       <!-- Article Name -->
       <template #item-1>
-        <FieldElt id="name"
+        <FieldElt id="article-name"
           v-model:value="name"
-          info="My beautiful article"
           @keyup.enter="validateNewArticle()"
+          info="My beautiful article"
           :min="parseInt('2')">
           <template #legend>
             Name
@@ -24,11 +24,11 @@
 
       <!-- Article Description -->
       <template #item-2>
-        <FieldElt id="description"
+        <FieldElt id="article-description"
+          type="area"
           v-model:value="description"
-          info="This article is wonderful !"
           @keyup.enter="validateNewArticle()"
-          type="textarea">
+          info="This article is wonderful !">
           <template #legend>
             Description
           </template>
@@ -40,7 +40,7 @@
       
       <!-- Article Image -->
       <template #item-3>
-        <FieldElt id="image"
+        <FieldElt id="article-image"
           v-model:value="image"
           info="Image file only"
           type="file">
@@ -55,11 +55,13 @@
 
       <!-- Article Price -->
       <template #item-4>
-        <FieldElt id="price"
+        <FieldElt id="article-price"
+          type="number"
           v-model:value="price"
-          info="100 €"
           @keyup.enter="validateNewArticle()"
-          type="number">
+          info="100 €"
+          :min="1"
+          :max="1000">
           <template #legend>
             Price
           </template>
@@ -98,11 +100,11 @@ export default {
     validateNewArticle() {
       if (this.$serve.checkName(this.name)) {
 
-        if (typeof document.getElementById('image').files[0] !== "undefined") {
+        if (typeof document.getElementById('article-image').files[0] !== "undefined") {
           this.checkNewArticle();
 
         } else {
-          alert("Une photo de l'utilisateur doit être uploadée !");
+          alert("A photo of the article must be uploaded !");
         }
       }
     },
@@ -140,7 +142,7 @@ export default {
     createArticle(isReferenced) {
       if (!isReferenced) {
         let article  = new FormData();
-        let image = document.getElementById('image').files[0];
+        let image = document.getElementById('article-image').files[0];
 
         article.append("name", this.name);
         article.append("description", this.description);

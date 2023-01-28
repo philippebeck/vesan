@@ -3,8 +3,7 @@
   <!-- ARTICLE ADMIN MANAGER -->
   <form method="post"
     enctype="multipart/form-data">
-    <TableElt :items="articles"
-      id="articles">
+    <TableElt :items="articles">
 
       <!-- Last Table Head -->
       <template #head>
@@ -14,7 +13,7 @@
       <!-- Current Article Image -->
       <template #cell-_id="slotProps">
         <MediaElt :src="'/img/articles/' + articles[slotProps.index].image"
-          :alt="'Photo de ' + articles[slotProps.index].name"
+          :alt="articles[slotProps.index].name"
           :title="articles[slotProps.index].image">
         </MediaElt>
       </template>
@@ -31,7 +30,7 @@
       <!-- Article Description -->
       <template #cell-description="slotProps">
         <FieldElt :id="'description-' + articles[slotProps.index]._id"
-          type="textarea"
+          type="area"
           v-model:value="getArticles()[slotProps.index].description"
           info="Update the article description"
           @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)">
@@ -50,9 +49,11 @@
       <template #cell-price="slotProps">
         <FieldElt :id="'price-' + articles[slotProps.index]._id"
           type="number"
-          v-model:value="price"
+          v-model:value="getArticles()[slotProps.index].price"
+          @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
           info="Update the article price"
-          @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)">
+          :min="1"
+          :max="1000">
         </FieldElt>
       </template>
 
@@ -156,7 +157,7 @@ export default {
         article.append("name", this.articles[i].name);
         article.append("description", this.articles[i].description);
         article.append("image", image);
-        article.append("price", this.price);
+        article.append("price", this.articles[i].price);
 
         this.$serve.putData(`/api/articles/${article.get("id")}`, article)
           .then(() => {

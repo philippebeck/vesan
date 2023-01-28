@@ -3,8 +3,7 @@
   <!-- POST ADMIN MANAGER -->
   <form method="post"
     enctype="multipart/form-data">
-    <TableElt :items="posts"
-      id="posts">
+    <TableElt :items="posts">
 
       <!-- Last Table Head -->
       <template #head>
@@ -14,7 +13,7 @@
       <!-- Current Post Image -->
       <template #cell-_id="slotProps">
         <MediaElt :src="'/img/posts/' + posts[slotProps.index].image"
-          :alt="'Photo de ' + posts[slotProps.index].title"
+          :alt="posts[slotProps.index].title"
           :title="posts[slotProps.index].image">
         </MediaElt>
       </template>
@@ -31,10 +30,10 @@
       <!-- Post Text -->
       <template #cell-text="slotProps">
         <FieldElt :id="'text-' + posts[slotProps.index]._id"
-          type="text"
+          type="area"
           v-model:value="getPosts()[slotProps.index].text"
-          info="Update the post text"
-          @keyup.enter="validateUpdatedPost(posts[slotProps.index]._id)">
+          @keyup.enter="validateUpdatedPost(posts[slotProps.index]._id)"
+          info="Update the post text">
         </FieldElt>
       </template>
 
@@ -49,9 +48,9 @@
       <!-- Post Author -->
       <template #cell-author="slotProps">
         <FieldElt :id="'author-' + posts[slotProps.index]._id"
-          v-model:value="author"
-          info="Update the post authorword"
-          @keyup.enter="validateUpdatedPost(posts[slotProps.index]._id)">
+          v-model:value="getPosts()[slotProps.index].author"
+          @keyup.enter="validateUpdatedPost(posts[slotProps.index]._id)"
+          info="Update the post author">
         </FieldElt>
       </template>
 
@@ -83,7 +82,7 @@
 
 <script>
 export default {
-  title: "ListPosts",
+  name: "ListPosts",
   props: ["posts"],
 
   methods: {

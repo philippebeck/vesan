@@ -2,8 +2,7 @@
 
   <!-- REVIEW ADMIN MANAGER -->
   <form method="post">
-    <TableElt :items="reviews"
-      id="reviews">
+    <TableElt :items="reviews">
 
       <!-- Last Table Head -->
       <template #head>
@@ -13,9 +12,10 @@
       <!-- Review Text -->
       <template #cell-text="slotProps">
         <FieldElt :id="'text-' + reviews[slotProps.index]._id"
+          type="area"
           v-model:value="getReviews()[slotProps.index].text"
-          info="Update the review text"
-          @keyup.enter="updateReview(reviews[slotProps.index]._id)">
+          @keyup.enter="updateReview(reviews[slotProps.index]._id)"
+          info="Update the review text">
         </FieldElt>
       </template>
 
@@ -24,8 +24,10 @@
         <FieldElt :id="'score-' + reviews[slotProps.index]._id"
           type="number"
           v-model:value="getReviews()[slotProps.index].score"
+          @keyup.enter="updateReview(reviews[slotProps.index]._id)"
           info="Update the review score"
-          @keyup.enter="updateReview(reviews[slotProps.index]._id)">
+          :min="0"
+          :max="5">
         </FieldElt>
       </template>
 
@@ -35,7 +37,7 @@
       <BtnElt type="button"
           @click="updateReview(reviews[slotProps.index]._id)" 
           class="btn-sky"
-          :title="'Update ' + reviews[slotProps.index].text">
+          :title="'Update review #' + reviews[slotProps.index]._id">
           <template #btn>
             <i class="fa-solid fa-edit"></i>
           </template>
@@ -45,7 +47,7 @@
         <BtnElt type="button"
           @click="deleteReview(reviews[slotProps.index]._id)" 
           class="btn-red"
-          :title="'Delete ' + reviews[slotProps.index].text">
+          :title="'Delete review #' + reviews[slotProps.index]._id">
           <template #btn>
             <i class="fa-solid fa-trash-alt"></i>
           </template>

@@ -20,7 +20,7 @@ Vesan is a Content Manager System, where you can find 4 "homemade" packages comp
 -  Animadio, a CSS library built with Sass, as the design  
 -  Nemjs, for JWT, Nodemailer, Sharp & back securities, as the backend services  
 
-Vesan uses many other well-known packages, like ExpressJS, Mongoose, Axios, etc...
+Vesan uses many other well-known packages, like ExpressJS, Mongoose, etc...
 
 ## Summary
 
@@ -73,7 +73,7 @@ Available Views (UNDER CONSTRUCTION) :
 -   **PostView** *(Post of Blog)*  
 -   **ContactView** *(Contact)*  
 -   **LoginView** *(Login & Forgot Password)*  
--   **AdminView** *(Admin with the 2 Components)*  
+-   **AdminView** *(Admin with all local Components)*  
 -   **ErrorView** *(Error)*  
 
 Available Components (UNDER CONSTRUCTION) :  

@@ -20,7 +20,7 @@ const form = formidable({
  */
 exports.getImgName = (name) => {
 
-  return accents.remove(name).toLowerCase() + "-" + Date.now() + "." + process.env.IMG_EXT;
+  return accents.remove(name).replace(/ /g, "-").toLowerCase() + "-" + Date.now() + "." + process.env.IMG_EXT;
 }
 
 /**
@@ -28,14 +28,16 @@ exports.getImgName = (name) => {
  * @param {string} title 
  * @param {string} text 
  * @param {string} image 
+ * @param {string} author 
  * @returns 
  */
-exports.getPost = (title, text, image) => {
+exports.getPost = (title, text, image, author) => {
 
   return {
     title: title,
     text: text,
-    image: image
+    image: image,
+    author: author
   }
 }
 
@@ -68,9 +70,9 @@ exports.createPost = (req, res, next) => {
     }
 
     let image = this.getImgName(fields.title);
-    nem.createImage(files.image.newFilename, image);
+    nem.createImage("posts/" + files.image.newFilename, "posts/" + image);
 
-    let post = new PostModel(this.getPost(fields.title, fields.text, image));
+    let post = new PostModel(this.getPost(fields.title, fields.text, image, fields.author));
 
     fs.unlink(process.env.IMG_URL + "posts/" + files.image.newFilename, () => {
       post
@@ -88,7 +90,7 @@ exports.createPost = (req, res, next) => {
  * @param {function} next 
  */
 exports.updatePost = (req, res, next) => {
-  form.parse(req, (err, fields) => {
+  form.parse(req, (err, fields, files) => {
 
     if (err) {
       next(err);
@@ -99,7 +101,7 @@ exports.updatePost = (req, res, next) => {
 
     if (Object.keys(files).length !== 0) {
       image = this.getImgName(fields.title);
-      nem.createImage(files.image.newFilename, image);
+      nem.createImage("posts/" + files.image.newFilename, "posts/" + image);
 
       PostModel
         .findOne({ _id: req.params.id })

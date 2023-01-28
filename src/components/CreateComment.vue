@@ -7,11 +7,12 @@
 
       <!-- Comment Text -->
       <template #item-1>
-        <FieldElt id="text"
+        <FieldElt id="comment-text"
+          type="area"
           v-model:value="text"
           info="Thanks for this post !"
-          @keyup.enter="validateNewComment()"
-          :min="parseInt('2')">
+          @keyup.enter="createComment()"
+          :min="2">
           <template #legend>
             Text
           </template>
@@ -23,10 +24,10 @@
 
       <!-- Comment Post -->
       <template #item-2>
-        <FieldElt id="post"
+        <FieldElt id="comment-post"
           v-model:value="post"
           info=""
-          @keyup.enter="validateNewComment()">
+          @keyup.enter="createComment()">
           <template #legend>
             Post
           </template>
@@ -38,7 +39,7 @@
       
       <!-- Comment User -->
       <template #item-3>
-        <FieldElt id="user"
+        <FieldElt id="comment-user"
           v-model:value="user"
           info="">
           <template #legend>
@@ -54,7 +55,7 @@
     <!-- Create Button -->
     <BtnElt type="button"
       content="Create"
-      @click="validateNewComment()" 
+      @click="createComment()" 
       class="btn-green"/>
   </form>
 </template>
@@ -66,77 +67,28 @@ export default {
   data() {
     return {
       text: "",
-      user:"",
-      post: "",
-      pass: ""
+      post:"",
+      user: ""
     }
   },
 
   methods: {
     /**
-     * VALIDATE NEW COMMENT IF DATA ARE VALID
+     * CREATE COMMENT
      */
-    validateNewComment() {
-      if (this.$serve.checkText(this.text) && 
-        this.$serve.checkPost(this.post) && 
-        this.$serve.checkPass(this.pass)) {
+    createComment() {
+      let comment  = new FormData();
 
-        if (typeof document.getElementById('user').files[0] !== "undefined") {
-          this.checkNewComment();
+      comment.append("text", this.text);
+      comment.append("post", this.post);
+      comment.append("user", this.user);
 
-        } else {
-          alert("Une photo de l'utilisateur doit être uploadée !");
-        }
-      }
-    },
-
-    /**
-     * CHECK NEW COMMENT IF NAME | EMAIL ARE REFERENCED
-     */
-    checkNewComment() {
-      this.$serve.getData("/api/comments")
-        .then((comments) => {
-          let isReferenced = false;
-
-          for (let i = 0; i < comments.length; i++) {
-
-            if (comments[i].text === this.text) {
-              alert(this.text + " is not available !");
-              isReferenced = true;
-            }
-
-            if (comments[i].post === this.post) {
-              alert(this.post + " is already referenced !");
-              isReferenced = true;
-            }
-          }
-
-          this.createComment(isReferenced);
+      this.$serve.postData("/api/comments", comment)
+        .then(() => {
+          alert("New comment created !");
+          this.$router.go();
         })
         .catch(err => { console.log(err) });
-    },
-
-    /**
-     * CREATE COMMENT IF NO INFO IS REFERENCED
-     * @param {boolean} isReferenced 
-     */
-    createComment(isReferenced) {
-      if (!isReferenced) {
-        let comment  = new FormData();
-        let user = document.getElementById('user').files[0];
-
-        comment.append("text", this.text);
-        comment.append("post", this.post);
-        comment.append("user", user);
-        comment.append("pass", this.pass);
-
-        this.$serve.postData("/api/comments", comment)
-          .then(() => {
-            alert(comment.get("text") + " created !");
-            this.$router.go();
-          })
-          .catch(err => { console.log(err) });
-      }
     }
   }
 }

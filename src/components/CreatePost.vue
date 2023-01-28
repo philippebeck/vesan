@@ -8,11 +8,11 @@
 
       <!-- Post Title -->
       <template #item-1>
-        <FieldElt id="title"
+        <FieldElt id="post-title"
           v-model:value="title"
           info="My new post"
           @keyup.enter="validateNewPost()"
-          :min="parseInt('2')">
+          :min="2">
           <template #legend>
             Title
           </template>
@@ -24,11 +24,11 @@
 
       <!-- Post Text -->
       <template #item-2>
-        <FieldElt id="text"
+        <FieldElt id="post-text"
           v-model:value="text"
           info="Once upon a time..."
           @keyup.enter="validateNewPost()"
-          type="textarea">
+          type="area">
           <template #legend>
             Text
           </template>
@@ -40,7 +40,7 @@
       
       <!-- Post Image -->
       <template #item-3>
-        <FieldElt id="image"
+        <FieldElt id="post-image"
           v-model:value="image"
           info="Image file only"
           type="file">
@@ -55,7 +55,7 @@
 
       <!-- Post Author -->
       <template #item-4>
-        <FieldElt id="author"
+        <FieldElt id="post-author"
           v-model:value="author"
           info="John Doe"
           @keyup.enter="validateNewPost()">
@@ -95,14 +95,13 @@ export default {
      * VALIDATE NEW POST IF DATA ARE VALID
      */
     validateNewPost() {
-      if (this.$serve.checkName(this.title) &&
-        this.$serve.checkName(this.author)) {
+      if (this.$serve.checkName(this.title)) {
 
-        if (typeof document.getElementById('image').files[0] !== "undefined") {
+        if (typeof document.getElementById('post-image').files[0] !== "undefined") {
           this.checkNewPost();
 
         } else {
-          alert("Une photo de l'utilisateur doit être uploadée !");
+          alert("A photo of the post must be uploaded !");
         }
       }
     },
@@ -140,7 +139,7 @@ export default {
     createPost(isReferenced) {
       if (!isReferenced) {
         let post  = new FormData();
-        let image = document.getElementById('image').files[0];
+        let image = document.getElementById('post-image').files[0];
 
         post.append("title", this.title);
         post.append("text", this.text);

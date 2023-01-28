@@ -2,8 +2,7 @@
 
   <!-- COMMENT ADMIN MANAGER -->
   <form method="post">
-    <TableElt :items="comments"
-      id="comments">
+    <TableElt :items="comments">
 
       <!-- Last Table Head -->
       <template #head>
@@ -13,6 +12,7 @@
       <!-- Comment Text -->
       <template #cell-text="slotProps">
         <FieldElt :id="'text-' + comments[slotProps.index]._id"
+          type="area"
           v-model:value="getComments()[slotProps.index].text"
           info="Update the comment text"
           @keyup.enter="updateComment(comments[slotProps.index]._id)">
@@ -25,7 +25,7 @@
       <BtnElt type="button"
           @click="updateComment(comments[slotProps.index]._id)" 
           class="btn-sky"
-          :title="'Update ' + comments[slotProps.index].text">
+          :title="'Update comment #' + comments[slotProps.index]._id">
           <template #btn>
             <i class="fa-solid fa-edit"></i>
           </template>
@@ -35,7 +35,7 @@
         <BtnElt type="button"
           @click="deleteComment(comments[slotProps.index]._id)" 
           class="btn-red"
-          :title="'Delete ' + comments[slotProps.index].text">
+          :title="'Delete comment #' + comments[slotProps.index]._id">
           <template #btn>
             <i class="fa-solid fa-trash-alt"></i>
           </template>
