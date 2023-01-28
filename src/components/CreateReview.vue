@@ -11,7 +11,7 @@
           type="textarea"
           v-model:value="text"
           info="Thanks for this article !"
-          @keyup.enter="validateNewReview()"
+          @keyup.enter="createReview()"
           :min="parseInt('2')">
           <template #legend>
             Text
@@ -25,10 +25,12 @@
       <!-- Review Score -->
       <template #item-2>
         <FieldElt id="review-score"
+          type="number"
           v-model:value="score"
+          @keyup.enter="createReview()"
           info=""
-          @keyup.enter="validateNewReview()"
-          type="number">
+          :min="0"
+          :max="5">
           <template #legend>
             Score
           </template>
@@ -43,7 +45,7 @@
         <FieldElt id="review-article"
           v-model:value="article"
           info=""
-          @keyup.enter="validateNewReview()">
+          @keyup.enter="createReview()">
           <template #legend>
             Article
           </template>
@@ -55,7 +57,7 @@
       
       <!-- Review User -->
       <template #item-4>
-        <FieldElt id="user"
+        <FieldElt id="review-user"
           v-model:value="user"
           info="">
           <template #legend>
@@ -71,7 +73,7 @@
     <!-- Create Button -->
     <BtnElt type="button"
       content="Create"
-      @click="validateNewReview()" 
+      @click="createReview()" 
       class="btn-green"/>
   </form>
 </template>
@@ -91,69 +93,23 @@ export default {
 
   methods: {
     /**
-     * VALIDATE NEW REVIEW IF DATA ARE VALID
+     * CREATE REVIEW
      */
-    validateNewReview() {
-      if (this.$serve.checkName(this.text) && 
-        this.$serve.checkArticle(this.article) && 
-        this.$serve.checkPass(this.pass)) {
+    createReview() {
+      let review  = new FormData();
 
-        if (typeof document.getElementById('user').files[0] !== "undefined") {
-          this.checkNewReview();
+      review.append("text", this.text);
+      review.append("score", this.score);
+      review.append("article", this.article);
+      review.append("user", this.user);
 
-        } else {
-          alert("Une photo de l'utilisateur doit être uploadée !");
-        }
-      }
-    },
-
-    /**
-     * CHECK NEW REVIEW IF NAME | EMAIL ARE REFERENCED
-     */
-    checkNewReview() {
-      this.$serve.getData("/api/reviews")
-        .then((reviews) => {
-          let isReferenced = false;
-
-          for (let i = 0; i < reviews.length; i++) {
-
-            if (reviews[i].text === this.text) {
-              alert(this.text + " is not available !");
-              isReferenced = true;
-            }
-
-            if (reviews[i].article === this.article) {
-              alert(this.article + " is already referenced !");
-              isReferenced = true;
-            }
-          }
-
-          this.createReview(isReferenced);
+      this.$serve.postData("/api/reviews", review)
+        .then(() => {
+          alert("New review created !");
+          this.$router.go();
         })
         .catch(err => { console.log(err) });
-    },
 
-    /**
-     * CREATE REVIEW IF NO INFO IS REFERENCED
-     * @param {boolean} isReferenced 
-     */
-    createReview(isReferenced) {
-      if (!isReferenced) {
-        let review  = new FormData();
-        let user = document.getElementById('user').files[0];
-
-        review.append("text", this.text);
-        review.append("article", this.article);
-        review.append("user", user);
-        review.append("pass", this.pass);
-
-        this.$serve.articleData("/api/reviews", review)
-          .then(() => {
-            alert(review.get("text") + " created !");
-            this.$router.go();
-          })
-          .catch(err => { console.log(err) });
-      }
     }
   }
 }
