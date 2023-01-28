@@ -25,7 +25,7 @@
       <BtnElt type="button"
           @click="updateComment(comments[slotProps.index]._id)" 
           class="btn-sky"
-          :title="'Update ' + comments[slotProps.index].text">
+          :title="'Update comment #' + comments[slotProps.index]._id">
           <template #btn>
             <i class="fa-solid fa-edit"></i>
           </template>
@@ -35,7 +35,7 @@
         <BtnElt type="button"
           @click="deleteComment(comments[slotProps.index]._id)" 
           class="btn-red"
-          :title="'Delete ' + comments[slotProps.index].text">
+          :title="'Delete comment #' + comments[slotProps.index]._id">
           <template #btn>
             <i class="fa-solid fa-trash-alt"></i>
           </template>

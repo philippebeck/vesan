@@ -35,7 +35,7 @@
       <BtnElt type="button"
           @click="updateReview(reviews[slotProps.index]._id)" 
           class="btn-sky"
-          :title="'Update ' + reviews[slotProps.index].text">
+          :title="'Update review #' + reviews[slotProps.index]._id">
           <template #btn>
             <i class="fa-solid fa-edit"></i>
           </template>
@@ -45,7 +45,7 @@
         <BtnElt type="button"
           @click="deleteReview(reviews[slotProps.index]._id)" 
           class="btn-red"
-          :title="'Delete ' + reviews[slotProps.index].text">
+          :title="'Delete review #' + reviews[slotProps.index]._id">
           <template #btn>
             <i class="fa-solid fa-trash-alt"></i>
           </template>
