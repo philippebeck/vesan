@@ -8,8 +8,9 @@ const rateLimit = require("express-rate-limit");
 const cors      = require("cors");
 
 const articleRoute  = require("./route/ArticleRoute");
-const commentRoute  = require("./route/CommentRoute");
+const reviewRoute   = require("./route/ReviewRoute");
 const postRoute     = require("./route/PostRoute");
+const commentRoute  = require("./route/CommentRoute");
 const userRoute     = require("./route/UserRoute");
 
 require("dotenv").config();
@@ -46,8 +47,9 @@ const limiter = rateLimit({
  * ROUTES
  */
 app.use(process.env.ROUTE_ARTICLE, articleRoute, limiter);
-app.use(process.env.ROUTE_COMMENT, commentRoute, limiter);
+app.use(process.env.ROUTE_REVIEW, reviewRoute, limiter);
 app.use(process.env.ROUTE_POST, postRoute, limiter);
+app.use(process.env.ROUTE_COMMENT, commentRoute, limiter);
 app.use(process.env.ROUTE_USER, userRoute, limiter);
 
 module.exports = app;
