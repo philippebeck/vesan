@@ -60,21 +60,34 @@ Yarn : `yarn add vesan`
 
 ## Content
 
-Available API Files :
--   **UserModel** *(Schema MongoDB)*  
--   **UserCtrl** *(Controller)*  
--   **UserRoute** *(Route)*  
+Available API Files (UNDER CONSTRUCTION) :
+-   **ArticleModel, ReviewModel, PostModel, CommentModel, UserModel** *(Schemas MongoDB)*  
+-   **ArticleCtrl, ReviewCtrl, PostCtrl, CommentCtrl, UserCtrl** *(Controllers)*  
+-   **ArticleRoute, ReviewRoute, PostRoute, CommentRoute, UserRoute** *(Routes)*  
 
-Available Views :  
+Available Views (UNDER CONSTRUCTION) :  
 -   **HomeView** *(Home)*  
+-   **ShopView** *(Shop)*  
+-   **ArticleView** *(Article of Shop)*  
+-   **BlogView** *(Blog)*  
+-   **PostView** *(Post of Blog)*  
 -   **ContactView** *(Contact)*  
 -   **LoginView** *(Login & Forgot Password)*  
 -   **AdminView** *(Admin with the 2 Components)*  
 -   **ErrorView** *(Error)*  
 
-Available Components :  
+Available Components (UNDER CONSTRUCTION) :  
+-   **CreateArticle** *(Create Article)*  
+-   **ListArticles** *(Update & Delete Article)*  
+-   **CreateReview** *(Create Review)*  
+-   **ListReviews** *(Update & Delete Review)*  
+-   **CreatePost** *(Create Post)*  
+-   **ListPosts** *(Update & Delete Post)*  
+-   **CreateComment** *(Create Comment)*  
+-   **ListComments** *(Update & Delete Comment)*  
 -   **CreateUser** *(Create User)*  
 -   **ListUsers** *(Update & Delete User)*  
+
 ---
 
 ## Documentation
