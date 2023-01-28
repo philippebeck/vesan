@@ -28,7 +28,7 @@
           v-model:value="text"
           info="Once upon a time..."
           @keyup.enter="validateNewPost()"
-          type="textarea">
+          type="area">
           <template #legend>
             Text
           </template>

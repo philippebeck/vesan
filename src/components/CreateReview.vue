@@ -8,7 +8,7 @@
       <!-- Review Text -->
       <template #item-1>
         <FieldElt id="review-text"
-          type="textarea"
+          type="area"
           v-model:value="text"
           info="Thanks for this article !"
           @keyup.enter="createReview()"

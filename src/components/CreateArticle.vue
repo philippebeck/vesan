@@ -25,7 +25,7 @@
       <!-- Article Description -->
       <template #item-2>
         <FieldElt id="article-description"
-          type="textarea"
+          type="area"
           v-model:value="description"
           @keyup.enter="validateNewArticle()"
           info="This article is wonderful !">

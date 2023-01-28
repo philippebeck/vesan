@@ -30,7 +30,7 @@
       <!-- Post Text -->
       <template #cell-text="slotProps">
         <FieldElt :id="'text-' + posts[slotProps.index]._id"
-          type="textarea"
+          type="area"
           v-model:value="getPosts()[slotProps.index].text"
           @keyup.enter="validateUpdatedPost(posts[slotProps.index]._id)"
           info="Update the post text">
