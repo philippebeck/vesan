@@ -83,7 +83,7 @@
 
 <script>
 export default {
-  title: "ListPosts",
+  name: "ListPosts",
   props: ["posts"],
 
   methods: {
