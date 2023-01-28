@@ -13,41 +13,21 @@
       <!-- Sidebar -->
       <NavElt class="sidebar">
         <template #first>
-          <a href="#article"
-            title="Create an article">
-            <i class="fas fa-basket-shopping fa-fw"></i>
-          </a>
           <a href="#articles"
             title="Manage articles">
             <i class="fas fa-cart-shopping fa-fw"></i>
-          </a>
-          <a href="#review"
-            title="Create a review">
-            <i class="fas fa-check fa-fw"></i>
           </a>
           <a href="#reviews"
             title="Manage reviews">
             <i class="fas fa-list-check fa-fw"></i>
           </a>
-          <a href="#post"
-            title="Create a post">
-            <i class="fas fa-envelope fa-fw"></i>
-          </a>
           <a href="#posts"
             title="Manage posts">
             <i class="fas fa-envelopes-bulk fa-fw"></i>
           </a>
-          <a href="#comment"
-            title="Create a comment">
-            <i class="fas fa-comment fa-fw"></i>
-          </a>
           <a href="#comments"
             title="Manage comments">
             <i class="fas fa-comments fa-fw"></i>
-          </a>
-          <a href="#user"
-            title="Create a user">
-            <i class="fas fa-user fa-fw"></i>
           </a>
           <a href="#users"
             title="Manage users">
@@ -67,7 +47,7 @@
       <CardElt>
         <template #header>
           <i class="fa-solid fa-cart-shopping fa-2x"></i>
-          <h2 id="article">
+          <h2 id="articles">
             Articles
           </h2>
         </template>
@@ -76,7 +56,6 @@
           <CreateArticle />
 
           <ListArticles v-if="articles.length > 0"
-            id="articles"
             :articles="articles"/>
         </template>
       </CardElt>
@@ -87,7 +66,7 @@
       <CardElt>
         <template #header>
           <i class="fa-solid fa-list-check fa-2x"></i>
-          <h2 id="review">
+          <h2 id="reviews">
             Reviews
           </h2>
         </template>
@@ -96,7 +75,6 @@
           <CreateReview />
 
           <ListReviews v-if="reviews.length > 0"
-            id="reviews"
             :reviews="reviews"/>
         </template>
       </CardElt>
@@ -107,7 +85,7 @@
       <CardElt>
         <template #header>
           <i class="fa-solid fa-envelopes-bulk fa-2x"></i>
-          <h2 id="post">
+          <h2 id="posts">
             Posts
           </h2>
         </template>
@@ -116,7 +94,6 @@
           <CreatePost />
 
           <ListPosts v-if="posts.length > 0"
-            id="posts"
             :posts="posts"/>
         </template>
       </CardElt>
@@ -127,7 +104,7 @@
       <CardElt>
         <template #header>
           <i class="fa-solid fa-comments fa-2x"></i>
-          <h2 id="comment">
+          <h2 id="comments">
             Comments
           </h2>
         </template>
@@ -136,7 +113,6 @@
           <CreateComment />
 
           <ListComments v-if="comments.length > 0"
-            id="comments"
             :comments="comments"/>
         </template>
       </CardElt>
@@ -147,7 +123,7 @@
       <CardElt>
         <template #header>
           <i class="fa-solid fa-users fa-2x"></i>
-          <h2 id="user">
+          <h2 id="users">
             Users
           </h2>
         </template>
@@ -156,7 +132,6 @@
           <CreateUser />
 
           <ListUsers v-if="users.length > 0"
-            id="users"
             :users="users"/>
         </template>
       </CardElt>
