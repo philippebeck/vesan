@@ -20,7 +20,7 @@ const form = formidable({
  */
 exports.getImgName = (name) => {
 
-  return accents.remove(name).toLowerCase() + "-" + Date.now() + "." + process.env.IMG_EXT;
+  return accents.remove(name).replace(" ", "-").toLowerCase() + "-" + Date.now() + "." + process.env.IMG_EXT;
 }
 
 /**
