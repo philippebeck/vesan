@@ -157,7 +157,7 @@ export default {
         article.append("name", this.articles[i].name);
         article.append("description", this.articles[i].description);
         article.append("image", image);
-        article.append("price", this.price);
+        article.append("price", this.articles[i].price);
 
         this.$serve.putData(`/api/articles/${article.get("id")}`, article)
           .then(() => {
