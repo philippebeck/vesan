@@ -14,7 +14,7 @@
       <!-- Current User Image -->
       <template #cell-_id="slotProps">
         <MediaElt :src="'/img/users/' + users[slotProps.index].image"
-          :alt="'Photo de ' + users[slotProps.index].name"
+          :alt="users[slotProps.index].name"
           :title="users[slotProps.index].image">
         </MediaElt>
       </template>

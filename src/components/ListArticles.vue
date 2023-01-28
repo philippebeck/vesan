@@ -14,7 +14,7 @@
       <!-- Current Article Image -->
       <template #cell-_id="slotProps">
         <MediaElt :src="'/img/articles/' + articles[slotProps.index].image"
-          :alt="'Photo de ' + articles[slotProps.index].name"
+          :alt="articles[slotProps.index].name"
           :title="articles[slotProps.index].image">
         </MediaElt>
       </template>
