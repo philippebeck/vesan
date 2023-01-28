@@ -1,9 +1,10 @@
 "use strict";
 
-const express   = require("express");
-const router    = express.Router();
-const nem       = require("nemjs");
-const UserCtrl  = require("../controller/UserCtrl");
+const express = require("express");
+const router  = express.Router();
+const nem     = require("nemjs");
+
+const UserCtrl = require("../controller/UserCtrl");
 
 router.get("/", nem.checkAuth, UserCtrl.listUsers);
 router.post("/login", UserCtrl.loginUser);
