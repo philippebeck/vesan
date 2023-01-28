@@ -90,7 +90,7 @@ exports.createArticle = (req, res, next) => {
  * @param {function} next 
  */
 exports.updateArticle = (req, res, next) => {
-  form.parse(req, (err, fields) => {
+  form.parse(req, (err, fields, files) => {
 
     if (err) {
       next(err);
