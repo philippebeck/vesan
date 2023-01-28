@@ -95,8 +95,7 @@ export default {
      * VALIDATE NEW POST IF DATA ARE VALID
      */
     validateNewPost() {
-      if (this.$serve.checkName(this.title) &&
-        this.$serve.checkName(this.author)) {
+      if (this.$serve.checkName(this.title)) {
 
         if (typeof document.getElementById('post-image').files[0] !== "undefined") {
           this.checkNewPost();
