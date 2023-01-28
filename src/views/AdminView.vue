@@ -7,6 +7,8 @@
       <h1 class="blue anima-slideB">
         Admin
       </h1>
+      
+      <p>Under construction !</p>
 
       <!-- Sidebar -->
       <NavElt class="sidebar">
