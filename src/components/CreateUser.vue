@@ -100,7 +100,7 @@ export default {
         this.$serve.checkEmail(this.email) && 
         this.$serve.checkPass(this.pass)) {
 
-        if (typeof document.getElementById('image').files[0] !== "undefined") {
+        if (typeof document.getElementById('user-image').files[0] !== "undefined") {
           this.checkNewUser();
 
         } else {
@@ -142,7 +142,7 @@ export default {
     createUser(isReferenced) {
       if (!isReferenced) {
         let user  = new FormData();
-        let image = document.getElementById('image').files[0];
+        let image = document.getElementById('user-image').files[0];
 
         user.append("name", this.name);
         user.append("email", this.email);

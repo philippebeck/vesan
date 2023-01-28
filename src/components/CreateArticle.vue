@@ -98,7 +98,7 @@ export default {
     validateNewArticle() {
       if (this.$serve.checkName(this.name)) {
 
-        if (typeof document.getElementById('image').files[0] !== "undefined") {
+        if (typeof document.getElementById('article-image').files[0] !== "undefined") {
           this.checkNewArticle();
 
         } else {
@@ -140,7 +140,7 @@ export default {
     createArticle(isReferenced) {
       if (!isReferenced) {
         let article  = new FormData();
-        let image = document.getElementById('image').files[0];
+        let image = document.getElementById('article-image').files[0];
 
         article.append("name", this.name);
         article.append("description", this.description);

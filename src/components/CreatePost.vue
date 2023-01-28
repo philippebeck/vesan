@@ -98,7 +98,7 @@ export default {
       if (this.$serve.checkName(this.title) &&
         this.$serve.checkName(this.author)) {
 
-        if (typeof document.getElementById('image').files[0] !== "undefined") {
+        if (typeof document.getElementById('post-image').files[0] !== "undefined") {
           this.checkNewPost();
 
         } else {
@@ -140,7 +140,7 @@ export default {
     createPost(isReferenced) {
       if (!isReferenced) {
         let post  = new FormData();
-        let image = document.getElementById('image').files[0];
+        let image = document.getElementById('post-image').files[0];
 
         post.append("title", this.title);
         post.append("text", this.text);
