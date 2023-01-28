@@ -3,8 +3,7 @@
   <!-- POST ADMIN MANAGER -->
   <form method="post"
     enctype="multipart/form-data">
-    <TableElt :items="posts"
-      id="posts">
+    <TableElt :items="posts">
 
       <!-- Last Table Head -->
       <template #head>

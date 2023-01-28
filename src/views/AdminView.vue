@@ -76,9 +76,12 @@
           <CreateArticle />
 
           <ListArticles v-if="articles.length > 0"
+            id="articles"
             :articles="articles"/>
         </template>
       </CardElt>
+
+      <hr>
 
       <!-- Review Part -->
       <CardElt>
@@ -93,9 +96,12 @@
           <CreateReview />
 
           <ListReviews v-if="reviews.length > 0"
+            id="reviews"
             :reviews="reviews"/>
         </template>
       </CardElt>
+
+      <hr>
 
       <!-- Post Part -->
       <CardElt>
@@ -110,9 +116,12 @@
           <CreatePost />
 
           <ListPosts v-if="posts.length > 0"
+            id="posts"
             :posts="posts"/>
         </template>
       </CardElt>
+
+      <hr>
 
       <!-- Comment Part -->
       <CardElt>
@@ -127,9 +136,12 @@
           <CreateComment />
 
           <ListComments v-if="comments.length > 0"
+            id="comments"
             :comments="comments"/>
         </template>
       </CardElt>
+
+      <hr>
 
       <!-- User Part -->
       <CardElt>
@@ -144,6 +156,7 @@
           <CreateUser />
 
           <ListUsers v-if="users.length > 0"
+            id="users"
             :users="users"/>
         </template>
       </CardElt>

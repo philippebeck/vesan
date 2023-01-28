@@ -3,8 +3,7 @@
   <!-- USER ADMIN MANAGER -->
   <form method="post"
     enctype="multipart/form-data">
-    <TableElt :items="users"
-      id="users">
+    <TableElt :items="users">
 
       <!-- Last Table Head -->
       <template #head>

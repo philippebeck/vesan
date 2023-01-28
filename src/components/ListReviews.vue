@@ -2,8 +2,7 @@
 
   <!-- REVIEW ADMIN MANAGER -->
   <form method="post">
-    <TableElt :items="reviews"
-      id="reviews">
+    <TableElt :items="reviews">
 
       <!-- Last Table Head -->
       <template #head>

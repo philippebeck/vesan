@@ -2,8 +2,7 @@
 
   <!-- COMMENT ADMIN MANAGER -->
   <form method="post">
-    <TableElt :items="comments"
-      id="comments">
+    <TableElt :items="comments">
 
       <!-- Last Table Head -->
       <template #head>
