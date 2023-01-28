@@ -36,7 +36,7 @@ exports.checkCredentials = (email, pass, res) => {
  */
 exports.getImgName = (name) => {
 
-  return accents.remove(name).toLowerCase() + "-" + Date.now() + "." + process.env.IMG_EXT;
+  return accents.remove(name).replace(/ /g, "-").toLowerCase() + "-" + Date.now() + "." + process.env.IMG_EXT;
 }
 
 /**

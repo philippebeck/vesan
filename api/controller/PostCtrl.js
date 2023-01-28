@@ -20,7 +20,7 @@ const form = formidable({
  */
 exports.getImgName = (name) => {
 
-  return accents.remove(name).toLowerCase() + "-" + Date.now() + "." + process.env.IMG_EXT;
+  return accents.remove(name).replace(/ /g, "-").toLowerCase() + "-" + Date.now() + "." + process.env.IMG_EXT;
 }
 
 /**
@@ -28,14 +28,16 @@ exports.getImgName = (name) => {
  * @param {string} title 
  * @param {string} text 
  * @param {string} image 
+ * @param {string} author 
  * @returns 
  */
-exports.getPost = (title, text, image) => {
+exports.getPost = (title, text, image, author) => {
 
   return {
     title: title,
     text: text,
-    image: image
+    image: image,
+    author: author
   }
 }
 
