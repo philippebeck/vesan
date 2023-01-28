@@ -8,7 +8,7 @@
 
       <!-- Article Name -->
       <template #item-1>
-        <FieldElt id="name"
+        <FieldElt id="article-name"
           v-model:value="name"
           info="My beautiful article"
           @keyup.enter="validateNewArticle()"
@@ -24,7 +24,7 @@
 
       <!-- Article Description -->
       <template #item-2>
-        <FieldElt id="description"
+        <FieldElt id="article-description"
           v-model:value="description"
           info="This article is wonderful !"
           @keyup.enter="validateNewArticle()"
@@ -40,7 +40,7 @@
       
       <!-- Article Image -->
       <template #item-3>
-        <FieldElt id="image"
+        <FieldElt id="article-image"
           v-model:value="image"
           info="Image file only"
           type="file">
@@ -55,7 +55,7 @@
 
       <!-- Article Price -->
       <template #item-4>
-        <FieldElt id="price"
+        <FieldElt id="article-price"
           v-model:value="price"
           info="100 €"
           @keyup.enter="validateNewArticle()"

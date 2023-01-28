@@ -8,7 +8,7 @@
 
       <!-- Post Title -->
       <template #item-1>
-        <FieldElt id="title"
+        <FieldElt id="post-title"
           v-model:value="title"
           info="My new post"
           @keyup.enter="validateNewPost()"
@@ -24,7 +24,7 @@
 
       <!-- Post Text -->
       <template #item-2>
-        <FieldElt id="text"
+        <FieldElt id="post-text"
           v-model:value="text"
           info="Once upon a time..."
           @keyup.enter="validateNewPost()"
@@ -40,7 +40,7 @@
       
       <!-- Post Image -->
       <template #item-3>
-        <FieldElt id="image"
+        <FieldElt id="post-image"
           v-model:value="image"
           info="Image file only"
           type="file">
@@ -55,7 +55,7 @@
 
       <!-- Post Author -->
       <template #item-4>
-        <FieldElt id="author"
+        <FieldElt id="post-author"
           v-model:value="author"
           info="John Doe"
           @keyup.enter="validateNewPost()">

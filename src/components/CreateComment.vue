@@ -7,7 +7,7 @@
 
       <!-- Comment Text -->
       <template #item-1>
-        <FieldElt id="text"
+        <FieldElt id="comment-text"
           v-model:value="text"
           info="Thanks for this post !"
           @keyup.enter="validateNewComment()"
@@ -23,7 +23,7 @@
 
       <!-- Comment Post -->
       <template #item-2>
-        <FieldElt id="post"
+        <FieldElt id="comment-post"
           v-model:value="post"
           info=""
           @keyup.enter="validateNewComment()">
@@ -38,7 +38,7 @@
       
       <!-- Comment User -->
       <template #item-3>
-        <FieldElt id="user"
+        <FieldElt id="comment-user"
           v-model:value="user"
           info="">
           <template #legend>

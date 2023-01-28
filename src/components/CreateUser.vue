@@ -8,7 +8,7 @@
 
       <!-- User Name -->
       <template #item-1>
-        <FieldElt id="name"
+        <FieldElt id="user-name"
           v-model:value="name"
           info="John Doe"
           @keyup.enter="validateNewUser()"
@@ -24,7 +24,7 @@
 
       <!-- User Email -->
       <template #item-2>
-        <FieldElt id="email"
+        <FieldElt id="user-email"
           v-model:value="email"
           info="john@doe.com"
           @keyup.enter="validateNewUser()"
@@ -40,7 +40,7 @@
       
       <!-- User Image -->
       <template #item-3>
-        <FieldElt id="image"
+        <FieldElt id="user-image"
           v-model:value="image"
           info="Image file only"
           type="file">
@@ -55,7 +55,7 @@
 
       <!-- User Pass -->
       <template #item-4>
-        <FieldElt id="pass"
+        <FieldElt id="user-pass"
           v-model:value="pass"
           info="********"
           @keyup.enter="validateNewUser()"

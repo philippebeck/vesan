@@ -7,7 +7,7 @@
 
       <!-- Review Text -->
       <template #item-1>
-        <FieldElt id="text"
+        <FieldElt id="review-text"
           type="textarea"
           v-model:value="text"
           info="Thanks for this article !"
@@ -24,7 +24,7 @@
 
       <!-- Review Score -->
       <template #item-2>
-        <FieldElt id="score"
+        <FieldElt id="review-score"
           v-model:value="score"
           info=""
           @keyup.enter="validateNewReview()"
@@ -40,7 +40,7 @@
 
       <!-- Review Article -->
       <template #item-3>
-        <FieldElt id="article"
+        <FieldElt id="review-article"
           v-model:value="article"
           info=""
           @keyup.enter="validateNewReview()">
