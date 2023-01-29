@@ -101,6 +101,7 @@ export default {
   data() {
     return {
       title: "",
+      cat: "",
       text:"",
       image: "",
       author: ""
@@ -159,6 +160,7 @@ export default {
         let image = document.getElementById('post-image').files[0];
 
         post.append("title", this.title);
+        post.append("cat", this.cat);
         post.append("text", this.text);
         post.append("image", image);
         post.append("author", this.author);

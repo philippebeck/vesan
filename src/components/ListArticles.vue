@@ -117,7 +117,6 @@ export default {
         if (this.articles[i]._id === id) {
 
           if (this.$serve.checkName(this.articles[i].name)) {
-
             this.checkUpdatedArticle(i);
           }
         }
@@ -171,6 +170,7 @@ export default {
 
         article.append("id", this.articles[i]._id);
         article.append("name", this.articles[i].name);
+        article.append("cat", this.articles[i].cat);
         article.append("description", this.articles[i].description);
         article.append("image", image);
         article.append("price", this.articles[i].price);
