@@ -84,6 +84,18 @@ exports.createPost = (req, res, next) => {
 };
 
 /**
+ * READ A POST
+ * @param {object} req 
+ * @param {object} res 
+ */
+exports.readPost = (req, res) => {
+  PostModel
+  .findOne({ _id: req.params.id })
+  .then((post) => res.status(200).json(post))
+  .catch((error) => res.status(400).json({ error }));
+}
+
+/**
  * UPDATE POST
  * @param {object} req 
  * @param {object} res 
