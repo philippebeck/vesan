@@ -26,12 +26,13 @@ exports.getImgName = (name) => {
 /**
  * GET ARTICLE
  * @param {string} name 
+ * @param {string} cat 
  * @param {string} description 
  * @param {string} image 
  * @param {number} price 
  * @returns 
  */
-exports.getArticle = (name, description, image, price) => {
+exports.getArticle = (name, cat, description, image, price) => {
 
   return {
     name: name,
@@ -71,7 +72,7 @@ exports.createArticle = (req, res, next) => {
     }
 
     let image   = this.getImgName(fields.name);
-    let article = new ArticleModel(this.getArticle(fields.name, fields.description, image, fields.price));
+    let article = new ArticleModel(this.getArticle(fields.name, fields.cat, fields.description, image, fields.price));
 
     nem.createImage("articles/" + files.image.newFilename, "articles/" + image);
 
@@ -127,7 +128,13 @@ exports.updateArticle = (req, res, next) => {
         )
     }
 
-    let article = this.getArticle(fields.name, fields.description, image, fields.price);
+    let article = this.getArticle(
+      fields.name, 
+      fields.cat, 
+      fields.description, 
+      image, 
+      fields.price
+    );
 
     ArticleModel
       .updateOne({ _id: req.params.id }, { ...article, _id: req.params.id })
