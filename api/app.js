@@ -46,10 +46,10 @@ const limiter = rateLimit({
 /**
  * ROUTES
  */
-app.use(process.env.ROUTE_ARTICLE, articleRoute, limiter);
-app.use(process.env.ROUTE_REVIEW, reviewRoute, limiter);
-app.use(process.env.ROUTE_POST, postRoute, limiter);
-app.use(process.env.ROUTE_COMMENT, commentRoute, limiter);
-app.use(process.env.ROUTE_USER, userRoute, limiter);
+app.use(process.env.ROUTE_ARTICLE, articleRoute);
+app.use(process.env.ROUTE_REVIEW, reviewRoute);
+app.use(process.env.ROUTE_POST, postRoute);
+app.use(process.env.ROUTE_COMMENT, commentRoute);
+app.use(process.env.ROUTE_USER, userRoute);
 
 module.exports = app;
