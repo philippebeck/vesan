@@ -1,12 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import HomeView from "../views/HomeView";
-import ShopView from "../views/ShopView";
+import AdminView from "../views/AdminView";
+import ArticleView from "../views/ArticleView";
 import BlogView from "../views/BlogView";
 import ContactView from "../views/ContactView";
-import LoginView from "../views/LoginView";
-import AdminView from "../views/AdminView";
 import ErrorView from "../views/ErrorView";
+import HomeView from "../views/HomeView";
+import LoginView from "../views/LoginView";
+import PostView from "../views/PostView";
+import ShopView from "../views/ShopView";
 
 const routes = [
   {
@@ -18,22 +20,38 @@ const routes = [
   {
     path: "/shop",
     name: "shop",
-    component: ShopView
+    component: ShopView,
+    alias: ["/articles"]
+  },
+  {
+    path: "/shop/:id",
+    name: "article",
+    component: ArticleView,
+    alias: ["/article/:id"]
   },
   {
     path: "/blog",
     name: "blog",
-    component: BlogView
+    component: BlogView,
+    alias: ["/posts"]
+  },
+  {
+    path: "/blog/:id",
+    name: "post",
+    component: PostView,
+    alias: ["/post/:id"]
   },
   {
     path: "/contact",
     name: "contact",
-    component: ContactView
+    component: ContactView,
+    alias: ["/message"]
   },
   {
     path: "/login",
     name: "login",
-    component: LoginView
+    component: LoginView,
+    alias: ["/connection"]
   },
   {
     path: "/admin",
