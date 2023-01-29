@@ -12,7 +12,7 @@
       <!-- Comment Text -->
       <template #cell-text="slotProps">
         <FieldElt :id="'text-' + comments[slotProps.index]._id"
-          type="area"
+          type="textarea"
           v-model:value="getComments()[slotProps.index].text"
           info="Update the comment text"
           @keyup.enter="updateComment(comments[slotProps.index]._id)">

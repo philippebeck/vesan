@@ -50,7 +50,7 @@
               v-model:value="text"
               info="The text of your message ?"
               @keyup.enter="send()"
-              type="area"
+              type="textarea"
               :max="100">
               <template #legend>
                 Text

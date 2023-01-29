@@ -8,7 +8,7 @@
       <!-- Comment Text -->
       <template #item-1>
         <FieldElt id="comment-text"
-          type="area"
+          type="textarea"
           v-model:value="text"
           info="Thanks for this post !"
           @keyup.enter="createComment()"
