@@ -28,7 +28,7 @@
           type="list"
           v-model:value="cat"
           info="Choose a category"
-          @keyup.enter="validateNewLink()"
+          @keyup.enter="validateNewArticle()"
           :list="['sauce']">
           <template #legend>
             Category

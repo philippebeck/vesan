@@ -33,7 +33,7 @@
           type="list"
           v-model:value="getArticles()[slotProps.index].cat"
           info="Update the category"
-          @keyup.enter="validateUpdatedLink(articles[slotProps.index]._id)"
+          @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
           :list="['sauce']">
           {{ value }}
         </FieldElt>
