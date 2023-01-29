@@ -166,12 +166,22 @@ exports.createUser = (req, res, next) => {
 
     this.checkCredentials(fields.email, fields.pass, res);
     let image = this.getImgName(fields.name);
-    nem.createImage("users/" + files.image.newFilename, "users/" + image);
+
+    nem.createImage(
+      "users/" + files.image.newFilename, 
+      "users/" + image
+    );
 
     bcrypt
       .hash(fields.pass, 10)
       .then((hash) => {
-        let user = new UserModel(this.getUser(fields.name, fields.email, image, hash));
+        let user = new UserModel(
+          this.getUser(
+            fields.name, 
+            fields.email, 
+            image, 
+            hash
+          ));
 
         fs.unlink(usersUrl + files.image.newFilename, () => {
           user
@@ -203,7 +213,11 @@ exports.updateUser = (req, res, next) => {
 
     if (Object.keys(files).length !== 0) {
       image = this.getImgName(fields.name);
-      nem.createImage("users/" + files.image.newFilename, "users/" + image);
+
+      nem.createImage(
+        "users/" + files.image.newFilename, 
+        "users/" + image
+      );
 
       UserModel
         .findOne({ _id: req.params.id })
@@ -219,7 +233,12 @@ exports.updateUser = (req, res, next) => {
     bcrypt
       .hash(fields.pass, 10)
       .then((hash) => {
-        let user = this.getUser(fields.name, fields.email, image, hash);
+        let user = this.getUser(
+          fields.name, 
+          fields.email, 
+          image, 
+          hash
+        );
 
         UserModel
           .updateOne({ _id: req.params.id }, { ...user, _id: req.params.id })

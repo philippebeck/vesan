@@ -72,10 +72,21 @@ exports.createArticle = (req, res, next) => {
       return;
     }
 
-    let image   = this.getImgName(fields.name);
-    let article = new ArticleModel(this.getArticle(fields.name, fields.cat, fields.description, image, fields.price));
+    let image = this.getImgName(fields.name);
 
-    nem.createImage("articles/" + files.image.newFilename, "articles/" + image);
+    let article = new ArticleModel(
+      this.getArticle(
+        fields.name, 
+        fields.cat, 
+        fields.description, 
+        image, 
+        fields.price
+      ));
+
+    nem.createImage(
+      "articles/" + files.image.newFilename, 
+      "articles/" + image
+    );
 
     fs.unlink(articlesUrl + files.image.newFilename, () => {
       article
@@ -116,7 +127,11 @@ exports.updateArticle = (req, res, next) => {
 
     if (Object.keys(files).length !== 0) {
       image = this.getImgName(fields.name);
-      nem.createImage("articles/" + files.image.newFilename, "articles/" + image);
+  
+      nem.createImage(
+        "articles/" + files.image.newFilename, 
+        "articles/" + image
+      );
 
       ArticleModel
         .findOne({ _id: req.params.id })

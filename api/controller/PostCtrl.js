@@ -73,9 +73,19 @@ exports.createPost = (req, res, next) => {
     }
 
     let image = this.getImgName(fields.title);
-    let post  = new PostModel(this.getPost(fields.title, fields.cat, fields.text, image, fields.author));
 
-    nem.createImage("posts/" + files.image.newFilename, "posts/" + image);
+    let post  = new PostModel(this.getPost(
+      fields.title, 
+      fields.cat, 
+      fields.text, 
+      image, 
+      fields.author
+    ));
+
+    nem.createImage(
+      "posts/" + files.image.newFilename, 
+      "posts/" + image
+    );
 
     fs.unlink(postsUrl + files.image.newFilename, () => {
       post
@@ -116,7 +126,11 @@ exports.updatePost = (req, res, next) => {
 
     if (Object.keys(files).length !== 0) {
       image = this.getImgName(fields.title);
-      nem.createImage("posts/" + files.image.newFilename, "posts/" + image);
+
+      nem.createImage(
+        "posts/" + files.image.newFilename, 
+        "posts/" + image
+      );
 
       PostModel
         .findOne({ _id: req.params.id })
@@ -129,7 +143,13 @@ exports.updatePost = (req, res, next) => {
         )
     }
 
-    let post = this.getPost(fields.title, fields.cat, fields.text, image, fields.author);
+    let post = this.getPost(
+      fields.title, 
+      fields.cat, 
+      fields.text, 
+      image, 
+      fields.author
+    );
 
     PostModel
       .updateOne({ _id: req.params.id }, { ...post, _id: req.params.id })
