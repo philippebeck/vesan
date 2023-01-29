@@ -9,8 +9,9 @@ const PostModel = require("../model/PostModel");
 
 require("dotenv").config();
 
+const postsUrl = process.env.IMG_URL + "posts/";
 const form = formidable({ 
-  uploadDir: process.env.IMG_URL + "posts/", 
+  uploadDir: postsUrl, 
   keepExtensions: true 
 });
 
@@ -76,7 +77,7 @@ exports.createPost = (req, res, next) => {
 
     nem.createImage("posts/" + files.image.newFilename, "posts/" + image);
 
-    fs.unlink(process.env.IMG_URL + "posts/" + files.image.newFilename, () => {
+    fs.unlink(postsUrl + files.image.newFilename, () => {
       post
         .save()
         .then(() => res.status(201).json({ message: process.env.POST_CREATED }))
@@ -120,8 +121,8 @@ exports.updatePost = (req, res, next) => {
       PostModel
         .findOne({ _id: req.params.id })
         .then((post) => 
-          fs.unlink(process.env.IMG_URL + "posts/" + post.image, () => {
-            fs.unlink(process.env.IMG_URL + "posts/" + files.image.newFilename, () => {
+          fs.unlink(postsUrl + post.image, () => {
+            fs.unlink(postsUrl + files.image.newFilename, () => {
               console.log("Image ok !");
             })
           })
@@ -146,7 +147,7 @@ exports.deletePost = (req, res) => {
   PostModel
     .findOne({ _id: req.params.id })
     .then(post => {
-      fs.unlink(process.env.IMG_URL + "posts/" + post.image, () => {
+      fs.unlink(postsUrl + post.image, () => {
         PostModel
           .deleteOne({ _id: req.params.id })
           .then(() => res.status(200).json({ message: process.env.POST_DELETED }))
