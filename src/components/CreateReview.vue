@@ -26,7 +26,7 @@
       <template #item-2>
         <FieldElt id="review-score"
           type="number"
-          v-model:value="score"
+          v-model:number="score"
           @keyup.enter="createReview()"
           info=""
           :min="0"
@@ -85,7 +85,7 @@ export default {
   data() {
     return {
       text: "",
-      score: "",
+      score: null,
       article:"",
       user: ""
     }

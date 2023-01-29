@@ -74,7 +74,7 @@
       <template #item-5>
         <FieldElt id="article-price"
           type="number"
-          v-model:value="price"
+          v-model:number="price"
           @keyup.enter="validateNewArticle()"
           info="100 €"
           :min="1"
@@ -107,7 +107,7 @@ export default {
       cat: "",
       description:"",
       image: "",
-      price: ""
+      price: null
     }
   },
 

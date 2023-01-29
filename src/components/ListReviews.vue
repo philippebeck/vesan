@@ -23,7 +23,7 @@
       <template #cell-score="slotProps">
         <FieldElt :id="'score-' + reviews[slotProps.index]._id"
           type="number"
-          v-model:value="getReviews()[slotProps.index].score"
+          v-model:number="getReviews()[slotProps.index].score"
           @keyup.enter="updateReview(reviews[slotProps.index]._id)"
           info="Update the review score"
           :min="0"
