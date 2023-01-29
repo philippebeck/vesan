@@ -88,9 +88,8 @@ exports.createArticle = (req, res, next) => {
  * READ AN ARTICLE
  * @param {object} req 
  * @param {object} res 
- * @param {function} next 
  */
-exports.readArticle = (req, res, next) => {
+exports.readArticle = (req, res) => {
   ArticleModel
   .findOne({ _id: req.params.id })
   .then((article) => res.status(200).json(article))
