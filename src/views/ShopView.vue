@@ -17,6 +17,7 @@
       <strong class="gray">
         Articles to buy !
       </strong>
+      <p>Under construction !</p>
     </template>
 
     <template #body>
@@ -30,7 +31,7 @@
         <template #nested="slotProps">
           <a :href="`shop/${slotProps.value._id}`">
             <MediaElt :src="`img/articles/${slotProps.value.image}`" 
-              :alt="`${slotProps.value.name}`" 
+              :alt="`${slotProps.value.description}`" 
               :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`">
 
               <template #figcaption>
