@@ -85,6 +85,19 @@ exports.createArticle = (req, res, next) => {
 };
 
 /**
+ * READ AN ARTICLE
+ * @param {object} req 
+ * @param {object} res 
+ * @param {function} next 
+ */
+exports.readArticle = (req, res, next) => {
+  ArticleModel
+  .findOne({ _id: req.params.id })
+  .then((article) => res.status(200).json(article))
+  .catch((error) => res.status(400).json({ error }));
+}
+
+/**
  * UPDATE ARTICLE
  * @param {object} req 
  * @param {object} res 
