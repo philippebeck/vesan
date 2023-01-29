@@ -4,9 +4,6 @@
     :items="cats"
     class="sidebar">
 
-    <template #items>
-    </template>
-
     <template #top>
       <i class="fa-solid fa-chevron-circle-up fa-fw"></i>
     </template>
@@ -14,19 +11,6 @@
 
   <CardElt id="top">
     <template #header>
-
-      <!--<SliderElt :slides="getArticles()">
-        <template #slide="slotProps">
-          <img :src="`img/articles/${slotProps.slide.image}`" 
-            :alt="`${slotProps.slide.name}`">
-        </template>
-
-        <template #gallery="slotProps">
-          <img :src="`img/articles/${slotProps.slide.image}`" 
-            :alt="`${slotProps.slide.name}`">
-        </template>
-      </SliderElt>-->
-
       <h1 class="blue shatex-blur-sm anima-slideB">
         Shop
       </h1>
@@ -44,17 +28,19 @@
         </template>
 
         <template #nested="slotProps">
-          <MediaElt :src="`img/articles/${slotProps.value.image}`" 
-            :alt="`${slotProps.value.name}`" 
-            :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`">
+          <a :href="`shop/${slotProps.value._id}`">
+            <MediaElt :src="`img/articles/${slotProps.value.image}`" 
+              :alt="`${slotProps.value.name}`" 
+              :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`">
 
-            <template #figcaption>
-              <h3>{{ slotProps.value.name }}</h3>
-              <p>{{ slotProps.value.description }}</p>
-              <b>{{ slotProps.value.price }} €</b>
-            </template>
+              <template #figcaption>
+                <h3>{{ slotProps.value.name }}</h3>
+                <p>{{ slotProps.value.description }}</p>
+                <b>{{ slotProps.value.price }} €</b>
+              </template>
 
-          </MediaElt>
+            </MediaElt>
+          </a>
         </template>
       </ListElt>
     </template>
@@ -64,6 +50,7 @@
 <script>
 export default {
   name: "ShopView",
+
   data() {
     return {
       articles: []
@@ -77,23 +64,14 @@ export default {
   },
 
   computed: {
-
     cats() {
       const cats = new Set();
       this.articles.forEach(article => cats.add(article.cat));
       return Array.from(cats); 
     }
   },
+
   methods: {
-
-    /**
-     * GET ALL ARTICLES
-     */
-    getArticles() {
-      console.log(this.articles);
-      return this.articles;
-    },
-
     /**
      * GET ITEMS BY CATEGORY
      * @param {*} items 
