@@ -9,8 +9,9 @@ const UserModel   = require("../model/UserModel");
 
 require("dotenv").config();
 
+const usersUrl = process.env.IMG_URL + "users/";
 const form = formidable({ 
-  uploadDir: process.env.IMG_URL + "users/", 
+  uploadDir: usersUrl, 
   keepExtensions: true 
 });
 
@@ -172,7 +173,7 @@ exports.createUser = (req, res, next) => {
       .then((hash) => {
         let user = new UserModel(this.getUser(fields.name, fields.email, image, hash));
 
-        fs.unlink(process.env.IMG_URL + "users/" + files.image.newFilename, () => {
+        fs.unlink(usersUrl + files.image.newFilename, () => {
           user
             .save()
             .then(() => res.status(201).json({ message: process.env.USER_CREATED }))
@@ -207,8 +208,8 @@ exports.updateUser = (req, res, next) => {
       UserModel
         .findOne({ _id: req.params.id })
         .then((user) => 
-          fs.unlink(process.env.IMG_URL + "users/" + user.image, () => {
-            fs.unlink(process.env.IMG_URL + "users/" + files.image.newFilename, () => {
+          fs.unlink(usersUrl + user.image, () => {
+            fs.unlink(usersUrl + files.image.newFilename, () => {
               console.log("Image ok !");
             })
           })
@@ -237,7 +238,7 @@ exports.deleteUser = (req, res) => {
   UserModel
     .findOne({ _id: req.params.id })
     .then(user => {
-      fs.unlink(process.env.IMG_URL + "users/" + user.image, () => {
+      fs.unlink(usersUrl + user.image, () => {
         UserModel
           .deleteOne({ _id: req.params.id })
           .then(() => res.status(200).json({ message: process.env.USER_DELETED }))
