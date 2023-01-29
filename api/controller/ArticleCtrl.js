@@ -9,8 +9,9 @@ const ArticleModel = require("../model/ArticleModel");
 
 require("dotenv").config();
 
+const articlesUrl = process.env.IMG_URL + "articles/";
 const form = formidable({ 
-  uploadDir: process.env.IMG_URL + "articles/", 
+  uploadDir: articlesUrl, 
   keepExtensions: true 
 });
 
@@ -26,12 +27,13 @@ exports.getImgName = (name) => {
 /**
  * GET ARTICLE
  * @param {string} name 
+ * @param {string} cat 
  * @param {string} description 
  * @param {string} image 
  * @param {number} price 
  * @returns 
  */
-exports.getArticle = (name, description, image, price) => {
+exports.getArticle = (name, cat, description, image, price) => {
 
   return {
     name: name,
@@ -70,12 +72,23 @@ exports.createArticle = (req, res, next) => {
       return;
     }
 
-    let image   = this.getImgName(fields.name);
-    let article = new ArticleModel(this.getArticle(fields.name, fields.description, image, fields.price));
+    let image = this.getImgName(fields.name);
 
-    nem.createImage("articles/" + files.image.newFilename, "articles/" + image);
+    let article = new ArticleModel(
+      this.getArticle(
+        fields.name, 
+        fields.cat, 
+        fields.description, 
+        image, 
+        fields.price
+      ));
 
-    fs.unlink(process.env.IMG_URL + "articles/" + files.image.newFilename, () => {
+    nem.createImage(
+      "articles/" + files.image.newFilename, 
+      "articles/" + image
+    );
+
+    fs.unlink(articlesUrl + files.image.newFilename, () => {
       article
         .save()
         .then(() => res.status(201).json({ message: process.env.ARTICLE_CREATED }))
@@ -114,20 +127,30 @@ exports.updateArticle = (req, res, next) => {
 
     if (Object.keys(files).length !== 0) {
       image = this.getImgName(fields.name);
-      nem.createImage("articles/" + files.image.newFilename, "articles/" + image);
+  
+      nem.createImage(
+        "articles/" + files.image.newFilename, 
+        "articles/" + image
+      );
 
       ArticleModel
         .findOne({ _id: req.params.id })
         .then((article) => 
-          fs.unlink(process.env.IMG_URL + "articles/" + article.image, () => {
-            fs.unlink(process.env.IMG_URL + "articles/" + files.image.newFilename, () => {
+          fs.unlink(articlesUrl + article.image, () => {
+            fs.unlink(articlesUrl + files.image.newFilename, () => {
               console.log("Image ok !");
             })
           })
         )
     }
 
-    let article = this.getArticle(fields.name, fields.description, image, fields.price);
+    let article = this.getArticle(
+      fields.name, 
+      fields.cat, 
+      fields.description, 
+      image, 
+      fields.price
+    );
 
     ArticleModel
       .updateOne({ _id: req.params.id }, { ...article, _id: req.params.id })
@@ -145,7 +168,7 @@ exports.deleteArticle = (req, res) => {
   ArticleModel
     .findOne({ _id: req.params.id })
     .then(article => {
-      fs.unlink(process.env.IMG_URL + "articles/" + article.image, () => {
+      fs.unlink(articlesUrl + article.image, () => {
         ArticleModel
           .deleteOne({ _id: req.params.id })
           .then(() => res.status(200).json({ message: process.env.ARTICLE_DELETED }))

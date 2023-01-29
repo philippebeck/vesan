@@ -164,9 +164,10 @@ export default {
 
         post.append("id", this.posts[i]._id);
         post.append("title", this.posts[i].title);
+        post.append("cat", this.posts[i].cat);
         post.append("text", this.posts[i].text);
         post.append("image", image);
-        post.append("author", this.author);
+        post.append("author", this.posts[i].author);
 
         this.$serve.putData(`/api/posts/${post.get("id")}`, post)
           .then(() => {

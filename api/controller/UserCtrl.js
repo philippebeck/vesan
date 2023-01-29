@@ -9,8 +9,9 @@ const UserModel   = require("../model/UserModel");
 
 require("dotenv").config();
 
+const usersUrl = process.env.IMG_URL + "users/";
 const form = formidable({ 
-  uploadDir: process.env.IMG_URL + "users/", 
+  uploadDir: usersUrl, 
   keepExtensions: true 
 });
 
@@ -165,14 +166,24 @@ exports.createUser = (req, res, next) => {
 
     this.checkCredentials(fields.email, fields.pass, res);
     let image = this.getImgName(fields.name);
-    nem.createImage("users/" + files.image.newFilename, "users/" + image);
+
+    nem.createImage(
+      "users/" + files.image.newFilename, 
+      "users/" + image
+    );
 
     bcrypt
       .hash(fields.pass, 10)
       .then((hash) => {
-        let user = new UserModel(this.getUser(fields.name, fields.email, image, hash));
+        let user = new UserModel(
+          this.getUser(
+            fields.name, 
+            fields.email, 
+            image, 
+            hash
+          ));
 
-        fs.unlink(process.env.IMG_URL + "users/" + files.image.newFilename, () => {
+        fs.unlink(usersUrl + files.image.newFilename, () => {
           user
             .save()
             .then(() => res.status(201).json({ message: process.env.USER_CREATED }))
@@ -202,13 +213,17 @@ exports.updateUser = (req, res, next) => {
 
     if (Object.keys(files).length !== 0) {
       image = this.getImgName(fields.name);
-      nem.createImage("users/" + files.image.newFilename, "users/" + image);
+
+      nem.createImage(
+        "users/" + files.image.newFilename, 
+        "users/" + image
+      );
 
       UserModel
         .findOne({ _id: req.params.id })
         .then((user) => 
-          fs.unlink(process.env.IMG_URL + "users/" + user.image, () => {
-            fs.unlink(process.env.IMG_URL + "users/" + files.image.newFilename, () => {
+          fs.unlink(usersUrl + user.image, () => {
+            fs.unlink(usersUrl + files.image.newFilename, () => {
               console.log("Image ok !");
             })
           })
@@ -218,7 +233,12 @@ exports.updateUser = (req, res, next) => {
     bcrypt
       .hash(fields.pass, 10)
       .then((hash) => {
-        let user = this.getUser(fields.name, fields.email, image, hash);
+        let user = this.getUser(
+          fields.name, 
+          fields.email, 
+          image, 
+          hash
+        );
 
         UserModel
           .updateOne({ _id: req.params.id }, { ...user, _id: req.params.id })
@@ -237,7 +257,7 @@ exports.deleteUser = (req, res) => {
   UserModel
     .findOne({ _id: req.params.id })
     .then(user => {
-      fs.unlink(process.env.IMG_URL + "users/" + user.image, () => {
+      fs.unlink(usersUrl + user.image, () => {
         UserModel
           .deleteOne({ _id: req.params.id })
           .then(() => res.status(200).json({ message: process.env.USER_DELETED }))

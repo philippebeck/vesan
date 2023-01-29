@@ -9,8 +9,9 @@ const PostModel = require("../model/PostModel");
 
 require("dotenv").config();
 
+const postsUrl = process.env.IMG_URL + "posts/";
 const form = formidable({ 
-  uploadDir: process.env.IMG_URL + "posts/", 
+  uploadDir: postsUrl, 
   keepExtensions: true 
 });
 
@@ -26,12 +27,13 @@ exports.getImgName = (name) => {
 /**
  * GET POST
  * @param {string} title 
+ * @param {string} cat 
  * @param {string} text 
  * @param {string} image 
  * @param {string} author 
  * @returns 
  */
-exports.getPost = (title, text, image, author) => {
+exports.getPost = (title, cat, text, image, author) => {
 
   return {
     title: title,
@@ -71,11 +73,21 @@ exports.createPost = (req, res, next) => {
     }
 
     let image = this.getImgName(fields.title);
-    let post  = new PostModel(this.getPost(fields.title, fields.cat, fields.text, image, fields.author));
 
-    nem.createImage("posts/" + files.image.newFilename, "posts/" + image);
+    let post  = new PostModel(this.getPost(
+      fields.title, 
+      fields.cat, 
+      fields.text, 
+      image, 
+      fields.author
+    ));
 
-    fs.unlink(process.env.IMG_URL + "posts/" + files.image.newFilename, () => {
+    nem.createImage(
+      "posts/" + files.image.newFilename, 
+      "posts/" + image
+    );
+
+    fs.unlink(postsUrl + files.image.newFilename, () => {
       post
         .save()
         .then(() => res.status(201).json({ message: process.env.POST_CREATED }))
@@ -114,20 +126,30 @@ exports.updatePost = (req, res, next) => {
 
     if (Object.keys(files).length !== 0) {
       image = this.getImgName(fields.title);
-      nem.createImage("posts/" + files.image.newFilename, "posts/" + image);
+
+      nem.createImage(
+        "posts/" + files.image.newFilename, 
+        "posts/" + image
+      );
 
       PostModel
         .findOne({ _id: req.params.id })
         .then((post) => 
-          fs.unlink(process.env.IMG_URL + "posts/" + post.image, () => {
-            fs.unlink(process.env.IMG_URL + "posts/" + files.image.newFilename, () => {
+          fs.unlink(postsUrl + post.image, () => {
+            fs.unlink(postsUrl + files.image.newFilename, () => {
               console.log("Image ok !");
             })
           })
         )
     }
 
-    let post = this.getPost(fields.title, fields.cat, fields.text, image, fields.author);
+    let post = this.getPost(
+      fields.title, 
+      fields.cat, 
+      fields.text, 
+      image, 
+      fields.author
+    );
 
     PostModel
       .updateOne({ _id: req.params.id }, { ...post, _id: req.params.id })
@@ -145,7 +167,7 @@ exports.deletePost = (req, res) => {
   PostModel
     .findOne({ _id: req.params.id })
     .then(post => {
-      fs.unlink(process.env.IMG_URL + "posts/" + post.image, () => {
+      fs.unlink(postsUrl + post.image, () => {
         PostModel
           .deleteOne({ _id: req.params.id })
           .then(() => res.status(200).json({ message: process.env.POST_DELETED }))

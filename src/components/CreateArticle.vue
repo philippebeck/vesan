@@ -163,6 +163,7 @@ export default {
         let image = document.getElementById('article-image').files[0];
 
         article.append("name", this.name);
+        article.append("cat", this.cat);
         article.append("description", this.description);
         article.append("image", image);
         article.append("price", this.price);
