@@ -10,6 +10,10 @@ const ArticleModel = mongoose.Schema(
       required: true,
       unique: true
     },
+    cat: { 
+      type: String, 
+      required: true
+    },
     description: { 
       type: String, 
       required: true,

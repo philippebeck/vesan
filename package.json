@@ -1,6 +1,6 @@
 {
   "name": "vesan",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "CMS with Vue-Elt, Servidio, Animadio & NemJS",
   "keywords": [
     "cms",

@@ -35,6 +35,7 @@ exports.getPost = (title, text, image, author) => {
 
   return {
     title: title,
+    cat: cat,
     text: text,
     image: image,
     author: author
@@ -70,9 +71,9 @@ exports.createPost = (req, res, next) => {
     }
 
     let image = this.getImgName(fields.title);
-    nem.createImage("posts/" + files.image.newFilename, "posts/" + image);
+    let post  = new PostModel(this.getPost(fields.title, fields.cat, fields.text, image, fields.author));
 
-    let post = new PostModel(this.getPost(fields.title, fields.text, image, fields.author));
+    nem.createImage("posts/" + files.image.newFilename, "posts/" + image);
 
     fs.unlink(process.env.IMG_URL + "posts/" + files.image.newFilename, () => {
       post
@@ -82,6 +83,18 @@ exports.createPost = (req, res, next) => {
     });
   })
 };
+
+/**
+ * READ A POST
+ * @param {object} req 
+ * @param {object} res 
+ */
+exports.readPost = (req, res) => {
+  PostModel
+  .findOne({ _id: req.params.id })
+  .then((post) => res.status(200).json(post))
+  .catch((error) => res.status(400).json({ error }));
+}
 
 /**
  * UPDATE POST
@@ -114,7 +127,7 @@ exports.updatePost = (req, res, next) => {
         )
     }
 
-    let post = this.getPost(fields.title, fields.text, image);
+    let post = this.getPost(fields.title, fields.cat, fields.text, image, fields.author);
 
     PostModel
       .updateOne({ _id: req.params.id }, { ...post, _id: req.params.id })

@@ -10,6 +10,10 @@ const PostModel = mongoose.Schema(
       required: true,
       unique: true
     },
+    cat: { 
+      type: String, 
+      required: true
+    },
     text: { 
       type: String, 
       required: true,

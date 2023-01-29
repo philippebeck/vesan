@@ -35,6 +35,7 @@ exports.getArticle = (name, description, image, price) => {
 
   return {
     name: name,
+    cat: cat,
     description: description,
     image: image,
     price: price
@@ -69,10 +70,10 @@ exports.createArticle = (req, res, next) => {
       return;
     }
 
-    let image = this.getImgName(fields.name);
-    nem.createImage("articles/" + files.image.newFilename, "articles/" + image);
-
+    let image   = this.getImgName(fields.name);
     let article = new ArticleModel(this.getArticle(fields.name, fields.description, image, fields.price));
+
+    nem.createImage("articles/" + files.image.newFilename, "articles/" + image);
 
     fs.unlink(process.env.IMG_URL + "articles/" + files.image.newFilename, () => {
       article
@@ -82,6 +83,18 @@ exports.createArticle = (req, res, next) => {
     });
   })
 };
+
+/**
+ * READ AN ARTICLE
+ * @param {object} req 
+ * @param {object} res 
+ */
+exports.readArticle = (req, res) => {
+  ArticleModel
+  .findOne({ _id: req.params.id })
+  .then((article) => res.status(200).json(article))
+  .catch((error) => res.status(400).json({ error }));
+}
 
 /**
  * UPDATE ARTICLE

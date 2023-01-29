@@ -4,7 +4,7 @@
   <form method="post"
     enctype="multipart/form-data"
     class="form width-lg container-60lg-50wd">
-    <ListElt :items="['name', 'description', 'image', 'price']">
+    <ListElt :items="['name', 'cat', 'description', 'image', 'price']">
 
       <!-- Article Name -->
       <template #item-1>
@@ -12,7 +12,7 @@
           v-model:value="name"
           @keyup.enter="validateNewArticle()"
           info="My beautiful article"
-          :min="parseInt('2')">
+          :min="2">
           <template #legend>
             Name
           </template>
@@ -22,8 +22,25 @@
         </FieldElt>
       </template>
 
-      <!-- Article Description -->
+      <!-- Article Category -->
       <template #item-2>
+        <FieldElt id="article-cat"
+          type="list"
+          v-model:value="cat"
+          info="Choose a category"
+          @keyup.enter="validateNewArticle()"
+          :list="['sauce']">
+          <template #legend>
+            Category
+          </template>
+          <template #label>
+            
+          </template>
+        </FieldElt>
+      </template>
+
+      <!-- Article Description -->
+      <template #item-3>
         <FieldElt id="article-description"
           type="area"
           v-model:value="description"
@@ -39,7 +56,7 @@
       </template>
       
       <!-- Article Image -->
-      <template #item-3>
+      <template #item-4>
         <FieldElt id="article-image"
           v-model:value="image"
           info="Image file only"
@@ -54,7 +71,7 @@
       </template>
 
       <!-- Article Price -->
-      <template #item-4>
+      <template #item-5>
         <FieldElt id="article-price"
           type="number"
           v-model:value="price"
@@ -87,6 +104,7 @@ export default {
   data() {
     return {
       name: "",
+      cat: "",
       description:"",
       image: "",
       price: ""
