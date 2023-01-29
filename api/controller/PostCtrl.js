@@ -26,12 +26,13 @@ exports.getImgName = (name) => {
 /**
  * GET POST
  * @param {string} title 
+ * @param {string} cat 
  * @param {string} text 
  * @param {string} image 
  * @param {string} author 
  * @returns 
  */
-exports.getPost = (title, text, image, author) => {
+exports.getPost = (title, cat, text, image, author) => {
 
   return {
     title: title,
