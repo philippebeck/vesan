@@ -70,9 +70,9 @@ exports.createPost = (req, res, next) => {
     }
 
     let image = this.getImgName(fields.title);
-    nem.createImage("posts/" + files.image.newFilename, "posts/" + image);
+    let post  = new PostModel(this.getPost(fields.title, fields.text, image, fields.author));
 
-    let post = new PostModel(this.getPost(fields.title, fields.text, image, fields.author));
+    nem.createImage("posts/" + files.image.newFilename, "posts/" + image);
 
     fs.unlink(process.env.IMG_URL + "posts/" + files.image.newFilename, () => {
       post
