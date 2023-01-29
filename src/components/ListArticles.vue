@@ -27,6 +27,18 @@
         </FieldElt>
       </template>
 
+      <!-- Article Category -->
+      <template #cell-cat="slotProps">
+        <FieldElt :id="'cat-' + articles[slotProps.index]._id"
+          type="list"
+          v-model:value="getArticles()[slotProps.index].cat"
+          info="Update the category"
+          @keyup.enter="validateUpdatedLink(articles[slotProps.index]._id)"
+          :list="['sauce']">
+          {{ value }}
+        </FieldElt>
+      </template>
+
       <!-- Article Description -->
       <template #cell-description="slotProps">
         <FieldElt :id="'description-' + articles[slotProps.index]._id"
@@ -96,6 +108,10 @@ export default {
       return this.articles;
     },
 
+    /**
+     * VALIDATE UPDATED ARTICLE
+     * @param {string} id 
+     */
     validateUpdatedArticle(id) {
       for (let i = 0; i < this.articles.length; i++ ) {
         if (this.articles[i]._id === id) {
