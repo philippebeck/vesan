@@ -74,6 +74,11 @@ exports.createArticle = (req, res, next) => {
 
     let image = this.getImgName(fields.name);
 
+    nem.createImage(
+      "articles/" + files.image.newFilename, 
+      "articles/" + image
+    );
+
     let article = new ArticleModel(
       this.getArticle(
         fields.name, 
@@ -82,11 +87,6 @@ exports.createArticle = (req, res, next) => {
         image, 
         fields.price
       ));
-
-    nem.createImage(
-      "articles/" + files.image.newFilename, 
-      "articles/" + image
-    );
 
     fs.unlink(articlesUrl + files.image.newFilename, () => {
       article

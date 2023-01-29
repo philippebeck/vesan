@@ -74,6 +74,11 @@ exports.createPost = (req, res, next) => {
 
     let image = this.getImgName(fields.title);
 
+    nem.createImage(
+      "posts/" + files.image.newFilename, 
+      "posts/" + image
+    );
+
     let post  = new PostModel(this.getPost(
       fields.title, 
       fields.cat, 
@@ -81,11 +86,6 @@ exports.createPost = (req, res, next) => {
       image, 
       fields.author
     ));
-
-    nem.createImage(
-      "posts/" + files.image.newFilename, 
-      "posts/" + image
-    );
 
     fs.unlink(postsUrl + files.image.newFilename, () => {
       post
