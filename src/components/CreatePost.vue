@@ -4,7 +4,7 @@
   <form method="post"
     enctype="multipart/form-data"
     class="form width-lg container-60lg-50wd">
-    <ListElt :items="['title', 'text', 'image', 'author']">
+    <ListElt :items="['title', 'cat', 'text', 'image', 'author']">
 
       <!-- Post Title -->
       <template #item-1>
@@ -22,8 +22,25 @@
         </FieldElt>
       </template>
 
-      <!-- Post Text -->
+      <!-- Post Category -->
       <template #item-2>
+        <FieldElt id="post-cat"
+          type="list"
+          v-model:value="cat"
+          info="Choose a category"
+          @keyup.enter="validateNewPost()"
+          :list="['sport']">
+          <template #legend>
+            Category
+          </template>
+          <template #label>
+            
+          </template>
+        </FieldElt>
+      </template>
+
+      <!-- Post Text -->
+      <template #item-3>
         <FieldElt id="post-text"
           v-model:value="text"
           info="Once upon a time..."
@@ -39,7 +56,7 @@
       </template>
       
       <!-- Post Image -->
-      <template #item-3>
+      <template #item-4>
         <FieldElt id="post-image"
           v-model:value="image"
           info="Image file only"
@@ -54,7 +71,7 @@
       </template>
 
       <!-- Post Author -->
-      <template #item-4>
+      <template #item-5>
         <FieldElt id="post-author"
           v-model:value="author"
           info="John Doe"

@@ -27,6 +27,18 @@
         </FieldElt>
       </template>
 
+      <!-- Post Category -->
+      <template #cell-cat="slotProps">
+        <FieldElt :id="'cat-' + posts[slotProps.index]._id"
+          type="list"
+          v-model:value="getPosts()[slotProps.index].cat"
+          info="Update the category"
+          @keyup.enter="validateUpdatedPost(posts[slotProps.index]._id)"
+          :list="['sport']">
+          {{ value }}
+        </FieldElt>
+      </template>
+
       <!-- Post Text -->
       <template #cell-text="slotProps">
         <FieldElt :id="'text-' + posts[slotProps.index]._id"
