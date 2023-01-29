@@ -35,6 +35,7 @@ exports.getArticle = (name, description, image, price) => {
 
   return {
     name: name,
+    cat: cat,
     description: description,
     image: image,
     price: price
