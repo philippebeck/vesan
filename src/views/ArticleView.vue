@@ -12,7 +12,8 @@
         <template #figcaption>
           <h2>{{ article.name }}</h2>
           <p>{{ article.description }}</p>
-          <b>{{ article.price }}</b>
+          <b>{{ article.price }} €</b>
+          <p>Last update : {{ article.date }}</p>
         </template>
       </MediaElt>
     </template>

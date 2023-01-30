@@ -174,6 +174,7 @@ export default {
         article.append("description", this.articles[i].description);
         article.append("image", image);
         article.append("price", this.articles[i].price);
+        article.append("date", Date.now());
 
         this.$serve.putData(`/api/articles/${article.get("id")}`, article)
           .then(() => {

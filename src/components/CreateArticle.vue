@@ -107,7 +107,8 @@ export default {
       cat: "",
       description:"",
       image: "",
-      price: null
+      price: null,
+      date: ""
     }
   },
 
@@ -167,6 +168,7 @@ export default {
         article.append("description", this.description);
         article.append("image", image);
         article.append("price", this.price);
+        article.append("date", Date.now());
 
         this.$serve.postData("/api/articles", article)
           .then(() => {
