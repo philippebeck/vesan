@@ -88,12 +88,13 @@ exports.createArticle = (req, res, next) => {
         fields.price
       ));
 
-    fs.unlink(articlesUrl + files.image.newFilename, () => {
-      article
-        .save()
-        .then(() => res.status(201).json({ message: process.env.ARTICLE_CREATED }))
-        .catch((error) => res.status(400).json({ error }));
-    });
+    article
+      .save()
+      .then(() => fs.unlink(articlesUrl + files.image.newFilename, () => {
+        console.log("image ok !") 
+      }))
+      .then(() => res.status(201).json({ message: process.env.ARTICLE_CREATED }))
+      .catch((error) => res.status(400).json({ error }));
   })
 };
 
