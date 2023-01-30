@@ -103,7 +103,8 @@ export default {
       cat: "",
       text:"",
       image: "",
-      author: ""
+      author: "",
+      date: ""
     }
   },
 
@@ -163,6 +164,7 @@ export default {
         post.append("text", this.text);
         post.append("image", image);
         post.append("author", this.author);
+        post.append("date", Date.now());
 
         this.$serve.postData("/api/posts", post)
           .then(() => {

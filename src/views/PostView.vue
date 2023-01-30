@@ -12,6 +12,7 @@
         <template #figcaption>
           <h2>{{ post.title }}</h2>
           <p>{{ post.text }}</p>
+          <p>Last update {{ post.date }}</p>
         </template>
       </MediaElt>
     </template>

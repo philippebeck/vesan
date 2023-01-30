@@ -31,16 +31,18 @@ exports.getImgName = (name) => {
  * @param {string} text 
  * @param {string} image 
  * @param {string} author 
+ * @param {string} date 
  * @returns 
  */
-exports.getPost = (title, cat, text, image, author) => {
+exports.getPost = (title, cat, text, image, author, date) => {
 
   return {
     title: title,
     cat: cat,
     text: text,
     image: image,
-    author: author
+    author: author,
+    date: date
   }
 }
 
@@ -84,7 +86,8 @@ exports.createPost = (req, res, next) => {
       fields.cat, 
       fields.text, 
       image, 
-      fields.author
+      fields.author,
+      fields.date
     ));
 
     post
@@ -149,7 +152,8 @@ exports.updatePost = (req, res, next) => {
       fields.cat, 
       fields.text, 
       image, 
-      fields.author
+      fields.author,
+      fields.date
     );
 
     PostModel
