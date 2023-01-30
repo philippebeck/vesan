@@ -82,6 +82,7 @@ export default {
           review.append("id", this.reviews[i]._id);
           review.append("text", this.reviews[i].text);
           review.append("score", this.reviews[i].score);
+          review.append("date", Date.now());
 
           this.$serve.putData(`/api/reviews/${id}`, review)
             .then(() => {

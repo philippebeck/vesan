@@ -86,7 +86,8 @@ export default {
       text: "",
       score: null,
       article:"",
-      user: ""
+      user: "",
+      date: ""
     }
   },
 
@@ -101,6 +102,7 @@ export default {
       review.append("score", this.score);
       review.append("article", this.article);
       review.append("user", this.user);
+      review.append("date", Date.now());
 
       this.$serve.postData("/api/reviews", review)
         .then(() => {
