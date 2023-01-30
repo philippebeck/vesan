@@ -1,7 +1,7 @@
 <template>
   <CardElt id="top">
     <template #header>
-      <i class="blue fa-solid fa-cogs fa-3x"></i>
+      <i class="blue fa-solid fa-cogs fa-4x"></i>
       <h1 class="blue anima-slideB">
         Admin
       </h1>
@@ -34,7 +34,7 @@
       <!-- Shop Part -->
       <CardElt>
         <template #header>
-          <i class="fa-solid fa-shop fa-2x"></i>
+          <i class="fa-solid fa-shop fa-3x"></i>
           <h2 id="shop">
             Shop
           </h2>
@@ -56,7 +56,7 @@
       <!-- Blog Part -->
       <CardElt>
         <template #header>
-          <i class="fa-solid fa-blog fa-2x"></i>
+          <i class="fa-solid fa-blog fa-3x"></i>
           <h2 id="blog">
             Blog
           </h2>
@@ -78,7 +78,7 @@
       <!-- Users Part -->
       <CardElt>
         <template #header>
-          <i class="fa-solid fa-users fa-2x"></i>
+          <i class="fa-solid fa-users fa-3x"></i>
           <h2 id="users">
             Users
           </h2>

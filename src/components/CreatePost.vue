@@ -1,7 +1,7 @@
 <template>
   <CardElt>
     <template #header>
-      <i class="fa-regular fa-newspaper"></i>
+      <i class="fa-regular fa-newspaper fa-2x"></i>
       <h3>Create Post</h3>
     </template>
 

@@ -1,6 +1,7 @@
 <template>
   <CardElt>
     <template #header>
+      <i class="fa-solid fa-basket-shopping fa-2x"></i>
       <h3>Create Article</h3>
     </template>
 
