@@ -19,7 +19,7 @@
           </a>
           <a href="#users"
             title="Manage users">
-            <i class="fa-solid fa-user-ninja fa-fw"></i>
+            <i class="fa-solid fa-user-astronaut fa-fw"></i>
           </a>
         </template>
 
@@ -78,7 +78,7 @@
       <!-- Users Part -->
       <CardElt>
         <template #header>
-          <i class="fa-solid fa-users fa-3x"></i>
+          <i class="fa-solid fa-user-astronaut fa-3x"></i>
           <h2 id="users">
             Users
           </h2>
