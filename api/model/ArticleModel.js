@@ -10,10 +10,6 @@ const ArticleModel = mongoose.Schema(
       required: true,
       unique: true
     },
-    cat: { 
-      type: String, 
-      required: true
-    },
     description: { 
       type: String, 
       required: true,
@@ -24,11 +20,23 @@ const ArticleModel = mongoose.Schema(
       required: true,
       unique: true
     },
+    alt: { 
+      type: String, 
+      required: true
+    },
     price: { 
       type: Number, 
       required: true
     },
-    date: {
+    cat: { 
+      type: String, 
+      required: true
+    },
+    createdDate: {
+      type: Date,
+      required: true
+    },
+    updatedDate: {
       type: Date,
       required: true
     }
