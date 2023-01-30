@@ -69,6 +69,7 @@ export default {
           let comment = new FormData();
           comment.append("id", id);
           comment.append("text", this.comments[i].text);
+          comment.append("date", Date.now());
 
           this.$serve.putData(`/api/comments/${id}`, comment)
             .then(() => {

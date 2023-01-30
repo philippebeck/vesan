@@ -67,7 +67,8 @@ export default {
     return {
       text: "",
       post:"",
-      user: ""
+      user: "",
+      date: ""
     }
   },
 
@@ -81,6 +82,7 @@ export default {
       comment.append("text", this.text);
       comment.append("post", this.post);
       comment.append("user", this.user);
+      comment.append("date", Date.now());
 
       this.$serve.postData("/api/comments", comment)
         .then(() => {

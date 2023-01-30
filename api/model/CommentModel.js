@@ -16,6 +16,10 @@ const CommentModel = mongoose.Schema(
     user: { 
       type: String, 
       required: true
+    },
+    date: { 
+      type: Date, 
+      required: true
     }
   },
   {
