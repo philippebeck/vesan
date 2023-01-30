@@ -1,11 +1,14 @@
 <template>
+  <CardElt>
+    <template #header>
+      <i class="fa-solid fa-check fa-2x"></i>
+      <h2>Create Review</h2>
+    </template>
 
-  <!-- REVIEW CREATION ADMIN -->
-  <form method="post">
-    <ListElt :items="['text', 'score', 'article', 'user']">
+    <template #body>
+      <form method="post">
 
-      <!-- Review Text -->
-      <template #item-1>
+        <!-- Review Text -->
         <FieldElt id="review-text"
           type="textarea"
           v-model:value="text"
@@ -19,10 +22,8 @@
             Indicate the review text
           </template>
         </FieldElt>
-      </template>
 
-      <!-- Review Score -->
-      <template #item-2>
+        <!-- Review Score -->
         <FieldElt id="review-score"
           type="number"
           v-model:value="score"
@@ -37,57 +38,27 @@
             Indicate the review score
           </template>
         </FieldElt>
-      </template>
 
-      <!-- Review Article -->
-      <template #item-3>
-        <FieldElt id="review-article"
-          v-model:value="article"
-          info=""
-          @keyup.enter="createReview()">
-          <template #legend>
-            Article
-          </template>
-          <template #label>
-            Choose the linked article
-          </template>
-        </FieldElt>
-      </template>
-      
-      <!-- Review User -->
-      <template #item-4>
-        <FieldElt id="review-user"
-          v-model:value="user"
-          info="">
-          <template #legend>
-            User
-          </template>
-          <template #label>
-            Choose the linked user
-          </template>
-        </FieldElt>
-      </template>
-    </ListElt>
-
-    <!-- Create Button -->
-    <BtnElt type="button"
-      content="Create"
-      @click="createReview()" 
-      class="btn-green"/>
-  </form>
+        <!-- Create Button -->
+        <BtnElt type="button"
+          content="Create"
+          @click="createReview()" 
+          class="btn-green"/>
+      </form>
+    </template>
+  </CardElt>
 </template>
 
 <script>
+import constants from "/constants";
+
 export default {
   name: "CreateReview",
 
   data() {
     return {
       text: "",
-      score: null,
-      article:"",
-      user: "",
-      date: ""
+      score: null
     }
   },
 
@@ -100,9 +71,10 @@ export default {
 
       review.append("text", this.text);
       review.append("score", this.score);
-      review.append("article", this.article);
-      review.append("user", this.user);
-      review.append("date", Date.now());
+      review.append("articleId", this.$route.params.id);
+      review.append("userId", constants.USER_ID);
+      review.append("createdDate", Date.now());
+      review.append("updatedDate", Date.now());
 
       this.$serve.postData("/api/reviews", review)
         .then(() => {
