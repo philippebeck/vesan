@@ -29,7 +29,7 @@
         </template>
 
         <template #nested="slotProps">
-          <a :href="`blog/${slotProps.value._id}`">
+          <a :href="`post/${slotProps.value._id}`">
             <MediaElt :src="`img/posts/${slotProps.value.image}`" 
               :alt="`${slotProps.value.title}`" 
               :id="`${slotProps.value.title.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`">
