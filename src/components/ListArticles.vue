@@ -74,7 +74,7 @@
           <!-- Article Category -->
           <template #cell-cat="slotProps">
             <FieldElt :id="'cat-' + articles[slotProps.index]._id"
-              type="list"
+              type="select"
               v-model:value="getArticles()[slotProps.index].cat"
               info="Update the category"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
