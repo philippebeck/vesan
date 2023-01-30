@@ -1,48 +1,55 @@
 <template>
+  <CardElt>
+    <template #header>
+      <i class="fa-regular fa-comments fa-2x"></i>
+      <h3>List Comments</h3>
+    </template>
 
-  <!-- COMMENT ADMIN MANAGER -->
-  <form method="post">
-    <TableElt :items="comments">
+    <template #body>
+      <form method="post">
+        <TableElt :items="comments">
 
-      <!-- Last Table Head -->
-      <template #head>
-        up/del
-      </template>
-
-      <!-- Comment Text -->
-      <template #cell-text="slotProps">
-        <FieldElt :id="'text-' + comments[slotProps.index]._id"
-          type="textarea"
-          v-model:value="getComments()[slotProps.index].text"
-          info="Update the comment text"
-          @keyup.enter="updateComment(comments[slotProps.index]._id)">
-        </FieldElt>
-      </template>
-
-      <template #body="slotProps">
-
-      <!-- Update Button -->
-      <BtnElt type="button"
-          @click="updateComment(comments[slotProps.index]._id)" 
-          class="btn-sky"
-          :title="'Update comment #' + comments[slotProps.index]._id">
-          <template #btn>
-            <i class="fa-solid fa-edit"></i>
+          <!-- Last Table Head -->
+          <template #head>
+            up/del
           </template>
-        </BtnElt>
 
-        <!-- Delete Button -->
-        <BtnElt type="button"
-          @click="deleteComment(comments[slotProps.index]._id)" 
-          class="btn-red"
-          :title="'Delete comment #' + comments[slotProps.index]._id">
-          <template #btn>
-            <i class="fa-solid fa-trash-alt"></i>
+          <!-- Comment Text -->
+          <template #cell-text="slotProps">
+            <FieldElt :id="'text-' + comments[slotProps.index]._id"
+              type="textarea"
+              v-model:value="getComments()[slotProps.index].text"
+              info="Update the comment text"
+              @keyup.enter="updateComment(comments[slotProps.index]._id)">
+            </FieldElt>
           </template>
-        </BtnElt>
-      </template>
-    </TableElt>
-  </form>
+
+          <template #body="slotProps">
+
+          <!-- Update Button -->
+          <BtnElt type="button"
+              @click="updateComment(comments[slotProps.index]._id)" 
+              class="btn-sky"
+              :title="'Update comment #' + comments[slotProps.index]._id">
+              <template #btn>
+                <i class="fa-solid fa-edit"></i>
+              </template>
+            </BtnElt>
+
+            <!-- Delete Button -->
+            <BtnElt type="button"
+              @click="deleteComment(comments[slotProps.index]._id)" 
+              class="btn-red"
+              :title="'Delete comment #' + comments[slotProps.index]._id">
+              <template #btn>
+                <i class="fa-solid fa-trash-alt"></i>
+              </template>
+            </BtnElt>
+          </template>
+        </TableElt>
+      </form>
+    </template>
+  </CardElt>
 </template>
 
 <script>
@@ -69,7 +76,10 @@ export default {
           let comment = new FormData();
           comment.append("id", id);
           comment.append("text", this.comments[i].text);
-          comment.append("date", Date.now());
+          comment.append("postId", this.comments[i].postId);
+          comment.append("userId", this.comments[i].userId);
+          comment.append("createdDate", this.comments[i].createdDate);
+          comment.append("updatedDate", Date.now());
 
           this.$serve.putData(`/api/comments/${id}`, comment)
             .then(() => {
