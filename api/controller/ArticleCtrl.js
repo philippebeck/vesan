@@ -31,16 +31,18 @@ exports.getImgName = (name) => {
  * @param {string} description 
  * @param {string} image 
  * @param {number} price 
+ * @param {string} date 
  * @returns 
  */
-exports.getArticle = (name, cat, description, image, price) => {
+exports.getArticle = (name, cat, description, image, price, date) => {
 
   return {
     name: name,
     cat: cat,
     description: description,
     image: image,
-    price: price
+    price: price,
+    date: date
   }
 }
 
@@ -85,7 +87,8 @@ exports.createArticle = (req, res, next) => {
         fields.cat, 
         fields.description, 
         image, 
-        fields.price
+        fields.price,
+        fields.date
       ));
 
     article
