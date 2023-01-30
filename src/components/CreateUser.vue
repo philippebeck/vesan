@@ -87,7 +87,8 @@ export default {
       name: "",
       email: "",
       image:"",
-      pass: ""
+      pass: "",
+      date: ""
     }
   },
 
@@ -148,6 +149,7 @@ export default {
         user.append("email", this.email);
         user.append("image", image);
         user.append("pass", this.pass);
+        user.append("date", Date.now());
 
         this.$serve.postData("/api/users", user)
           .then(() => {

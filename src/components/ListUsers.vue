@@ -164,6 +164,7 @@ export default {
         user.append("email", this.users[i].email);
         user.append("image", image);
         user.append("pass", this.pass);
+        user.append("date", this.users[i].date);
 
         this.$serve.putData(`/api/users/${user.get("id")}`, user)
           .then(() => {
