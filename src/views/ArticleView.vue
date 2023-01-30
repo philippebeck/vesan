@@ -1,40 +1,50 @@
 <template>
   <CardElt>
     <template #header>
-      <h1>Article View</h1>
-      <p>Under construction !</p>
+      <h1>{{ article.name }}</h1>
+      <strong>{{ article.cat }}</strong>
     </template>
 
     <template #body>
       <MediaElt :src="`/img/articles/${article.image}`"
-        :alt="article.description">
+        :alt="article.alt">
 
         <template #figcaption>
-          <h2>{{ article.name }}</h2>
           <p>{{ article.description }}</p>
           <b>{{ article.price }} €</b>
-          <p>Last update : {{ article.date }}</p>
+          <p>Created: {{ article.createdDate }}</p>
+          <p>Updated: {{ article.updatedDate }}</p>
         </template>
       </MediaElt>
+
+      <CreateReview />
     </template>
   </CardElt>
-
-  
 </template>
 
 <script>
+import CreateReview from "@/components/CreateReview"
+
 export default {
   name: "ArticleView",
+  components: {
+    CreateReview
+  },
 
   data() {
     return {
-      article: {}
+      article: {},
+      reviews: []
     }
   },
 
   mounted () {
     this.$serve.getData(`/api/articles/${this.$route.params.id}`)
       .then(res => { this.article = res })
+      .catch(err => { console.log(err) });
+
+    this.$serve.getData("/api/reviews")
+      .then(res => { this.reviews = res })
       .catch(err => { console.log(err) });
   }
 }
