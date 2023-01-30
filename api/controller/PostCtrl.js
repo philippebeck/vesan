@@ -27,22 +27,30 @@ exports.getImgName = (name) => {
 /**
  * GET POST
  * @param {string} title 
- * @param {string} cat 
  * @param {string} text 
  * @param {string} image 
- * @param {string} author 
- * @param {string} date 
+ * @param {string} alt 
+ * @param {string} cat 
+ * @param {string} userId 
+ * @param {string} createdDate 
+ * @param {string} updatedDate 
+ * @param {number} likes 
+ * @param {array} usersLiked 
  * @returns 
  */
-exports.getPost = (title, cat, text, image, author, date) => {
+exports.getPost = (title, text, image, alt, cat, userId, createdDate, updatedDate, likes, usersLiked) => {
 
   return {
     title: title,
-    cat: cat,
     text: text,
     image: image,
-    author: author,
-    date: date
+    alt: alt,
+    cat: cat,
+    userId: userId,
+    createdDate: createdDate,
+    updatedDate: updatedDate,
+    likes: likes,
+    usersLiked: usersLiked
   }
 }
 
@@ -83,11 +91,15 @@ exports.createPost = (req, res, next) => {
 
     let post  = new PostModel(this.getPost(
       fields.title, 
-      fields.cat, 
       fields.text, 
       image, 
-      fields.author,
-      fields.date
+      fields.alt, 
+      fields.cat, 
+      fields.userId,
+      fields.createdDate,
+      fields.updatedDate,
+      fields.likes,
+      fields.usersLiked,
     ));
 
     post
@@ -149,11 +161,15 @@ exports.updatePost = (req, res, next) => {
 
     let post = this.getPost(
       fields.title, 
-      fields.cat, 
       fields.text, 
       image, 
-      fields.author,
-      fields.date
+      fields.alt, 
+      fields.cat, 
+      fields.userId,
+      fields.createdDate,
+      fields.updatedDate,
+      fields.likes,
+      fields.usersLiked
     );
 
     PostModel
