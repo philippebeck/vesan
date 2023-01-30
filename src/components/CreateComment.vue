@@ -1,8 +1,7 @@
 <template>
 
   <!-- COMMENT CREATION ADMIN -->
-  <form method="post"
-    class="form width-lg container-60lg-50wd">
+  <form method="post">
     <ListElt :items="['text', 'post', 'user']">
 
       <!-- Comment Text -->

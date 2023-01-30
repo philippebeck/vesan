@@ -1,8 +1,7 @@
 <template>
 
   <!-- REVIEW CREATION ADMIN -->
-  <form method="post"
-    class="form width-lg container-60lg-50wd">
+  <form method="post">
     <ListElt :items="['text', 'score', 'article', 'user']">
 
       <!-- Review Text -->

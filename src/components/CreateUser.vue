@@ -2,8 +2,7 @@
 
   <!-- USER CREATION ADMIN -->
   <form method="post"
-    enctype="multipart/form-data"
-    class="form width-lg container-60lg-50wd">
+    enctype="multipart/form-data">
     <ListElt :items="['name', 'email', 'image', 'pass']">
 
       <!-- User Name -->
