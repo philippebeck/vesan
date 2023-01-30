@@ -1,74 +1,47 @@
 <template>
+  <CardElt>
+    <template #header>
+      <i class="fa-regular fa-comment fa-2x"></i>
+      <h2>Create Comment</h2>
+    </template>
 
-  <!-- COMMENT CREATION ADMIN -->
-  <form method="post"
-    class="form width-lg container-60lg-50wd">
-    <ListElt :items="['text', 'post', 'user']">
+    <template #body>
+      <form method="post">
 
       <!-- Comment Text -->
-      <template #item-1>
-        <FieldElt id="comment-text"
-          type="textarea"
-          v-model:value="text"
-          info="Thanks for this post !"
-          @keyup.enter="createComment()"
-          :min="2">
-          <template #legend>
-            Text
-          </template>
-          <template #label>
-            Indicate the comment text
-          </template>
-        </FieldElt>
-      </template>
+      <FieldElt id="comment-text"
+        type="textarea"
+        v-model:value="text"
+        @keyup.enter="createComment()"
+        info="Thanks for this post !"
+        :min="2">
+        <template #legend>
+          Text
+        </template>
+        <template #label>
+          Indicate the comment text
+        </template>
+      </FieldElt>
 
-      <!-- Comment Post -->
-      <template #item-2>
-        <FieldElt id="comment-post"
-          v-model:value="post"
-          info=""
-          @keyup.enter="createComment()">
-          <template #legend>
-            Post
-          </template>
-          <template #label>
-            Choose the linked post
-          </template>
-        </FieldElt>
-      </template>
-      
-      <!-- Comment User -->
-      <template #item-3>
-        <FieldElt id="comment-user"
-          v-model:value="user"
-          info="">
-          <template #legend>
-            User
-          </template>
-          <template #label>
-            Choose the linked user
-          </template>
-        </FieldElt>
-      </template>
-    </ListElt>
-
-    <!-- Create Button -->
-    <BtnElt type="button"
-      content="Create"
-      @click="createComment()" 
-      class="btn-green"/>
-  </form>
+      <!-- Create Button -->
+      <BtnElt type="button"
+        content="Create"
+        @click="createComment()" 
+        class="btn-green"/>
+      </form>
+    </template>
+  </CardElt>
 </template>
 
 <script>
+import constants from "/constants";
+
 export default {
   name: "CreateComment",
 
   data() {
     return {
-      text: "",
-      post:"",
-      user: ""
+      text: ""
     }
   },
 
@@ -80,8 +53,10 @@ export default {
       let comment  = new FormData();
 
       comment.append("text", this.text);
-      comment.append("post", this.post);
-      comment.append("user", this.user);
+      comment.append("postId", this.$route.params.id);
+      comment.append("userId", constants.USER_ID);
+      comment.append("createdDate", Date.now());
+      comment.append("updatedDate", Date.now());
 
       this.$serve.postData("/api/comments", comment)
         .then(() => {

@@ -106,7 +106,7 @@
     <template #foot2>
       <ListElt :items="['Vue-Elt', 'Servidio', 'Animadio', 'NemJS', 'Vesan']">
         <template #item-1>
-          <a href="https://www.npmjs.com/package/servidio"
+          <a href="https://www.npmjs.com/package/vue-elt"
             title="Vuejs SFC Library">
             Vue-Elt
           </a>

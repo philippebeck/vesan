@@ -24,10 +24,10 @@ const routes = [
     alias: ["/articles"]
   },
   {
-    path: "/shop/:id",
+    path: "/article/:id",
     name: "article",
     component: ArticleView,
-    alias: ["/article/:id"]
+    alias: ["/shop/:id"]
   },
   {
     path: "/blog",
@@ -36,10 +36,10 @@ const routes = [
     alias: ["/posts"]
   },
   {
-    path: "/blog/:id",
+    path: "/post/:id",
     name: "post",
     component: PostView,
-    alias: ["/post/:id"]
+    alias: ["/blog/:id"]
   },
   {
     path: "/contact",

@@ -1,37 +1,25 @@
 <template>
-
-  <!-- ADMIN PAGE -->
   <CardElt id="top">
     <template #header>
-      <i class="blue fa-solid fa-cogs fa-2x"></i>
+      <i class="blue fa-solid fa-cogs fa-4x"></i>
       <h1 class="blue anima-slideB">
         Admin
       </h1>
-      
-      <p>Under construction !</p>
 
       <!-- Sidebar -->
       <NavElt class="sidebar">
         <template #first>
-          <a href="#articles"
-            title="Manage articles">
-            <i class="fas fa-cart-shopping fa-fw"></i>
+          <a href="#shop"
+            title="Manage articles & reviews">
+            <i class="fa-solid fa-shop fa-fw"></i>
           </a>
-          <a href="#reviews"
-            title="Manage reviews">
-            <i class="fas fa-list-check fa-fw"></i>
-          </a>
-          <a href="#posts"
-            title="Manage posts">
-            <i class="fas fa-envelopes-bulk fa-fw"></i>
-          </a>
-          <a href="#comments"
-            title="Manage comments">
-            <i class="fas fa-comments fa-fw"></i>
+          <a href="#blog"
+            title="Manage posts & comments">
+            <i class="fa-solid fa-blog fa-fw"></i>
           </a>
           <a href="#users"
             title="Manage users">
-            <i class="fas fa-users fa-fw"></i>
+            <i class="fa-solid fa-user-astronaut fa-fw"></i>
           </a>
         </template>
 
@@ -43,12 +31,12 @@
 
     <template #body>
 
-      <!-- Article Part -->
+      <!-- Shop Part -->
       <CardElt>
         <template #header>
-          <i class="fa-solid fa-cart-shopping fa-2x"></i>
-          <h2 id="articles">
-            Articles
+          <i class="fa-solid fa-shop fa-3x"></i>
+          <h2 id="shop">
+            Shop
           </h2>
         </template>
 
@@ -57,22 +45,6 @@
 
           <ListArticles v-if="articles.length > 0"
             :articles="articles"/>
-        </template>
-      </CardElt>
-
-      <hr>
-
-      <!-- Review Part -->
-      <CardElt>
-        <template #header>
-          <i class="fa-solid fa-list-check fa-2x"></i>
-          <h2 id="reviews">
-            Reviews
-          </h2>
-        </template>
-
-        <template #body>
-          <CreateReview />
 
           <ListReviews v-if="reviews.length > 0"
             :reviews="reviews"/>
@@ -81,12 +53,12 @@
 
       <hr>
 
-      <!-- Post Part -->
+      <!-- Blog Part -->
       <CardElt>
         <template #header>
-          <i class="fa-solid fa-envelopes-bulk fa-2x"></i>
-          <h2 id="posts">
-            Posts
+          <i class="fa-solid fa-blog fa-3x"></i>
+          <h2 id="blog">
+            Blog
           </h2>
         </template>
 
@@ -95,22 +67,6 @@
 
           <ListPosts v-if="posts.length > 0"
             :posts="posts"/>
-        </template>
-      </CardElt>
-
-      <hr>
-
-      <!-- Comment Part -->
-      <CardElt>
-        <template #header>
-          <i class="fa-solid fa-comments fa-2x"></i>
-          <h2 id="comments">
-            Comments
-          </h2>
-        </template>
-
-        <template #body>
-          <CreateComment />
 
           <ListComments v-if="comments.length > 0"
             :comments="comments"/>
@@ -119,10 +75,10 @@
 
       <hr>
 
-      <!-- User Part -->
+      <!-- Users Part -->
       <CardElt>
         <template #header>
-          <i class="fa-solid fa-users fa-2x"></i>
+          <i class="fa-solid fa-user-astronaut fa-3x"></i>
           <h2 id="users">
             Users
           </h2>
@@ -142,12 +98,10 @@
 <script>
 import CreateArticle from "@/components/CreateArticle"
 import ListArticles from "@/components/ListArticles"
-import CreateReview from "@/components/CreateReview"
 import ListReviews from "@/components/ListReviews"
-import CreateComment from "@/components/CreateComment"
-import ListComments from "@/components/ListComments"
 import CreatePost from "@/components/CreatePost"
 import ListPosts from "@/components/ListPosts"
+import ListComments from "@/components/ListComments"
 import CreateUser from "@/components/CreateUser"
 import ListUsers from "@/components/ListUsers"
 
@@ -156,12 +110,10 @@ export default {
   components: {
     CreateArticle,
     ListArticles,
-    CreateReview,
     ListReviews,
-    CreateComment,
-    ListComments,
     CreatePost,
     ListPosts,
+    ListComments,
     CreateUser,
     ListUsers
   },
@@ -170,8 +122,8 @@ export default {
     return {
       articles: [],
       reviews: [],
-      comments: [],
       posts: [],
+      comments: [],
       users: []
     }
   },
@@ -186,13 +138,13 @@ export default {
       this.$serve.getData("/api/reviews")
         .then(res => { this.reviews = res })
         .catch(err => { console.log(err) });
-      
-      this.$serve.getData("/api/comments")
-        .then(res => { this.comments = res })
-        .catch(err => { console.log(err) });
 
       this.$serve.getData("/api/posts")
         .then(res => { this.posts = res })
+        .catch(err => { console.log(err) });
+      
+      this.$serve.getData("/api/comments")
+        .then(res => { this.comments = res })
         .catch(err => { console.log(err) });
 
       this.$serve.getData("/api/users")

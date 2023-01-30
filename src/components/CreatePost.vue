@@ -1,110 +1,118 @@
 <template>
+  <CardElt>
+    <template #header>
+      <i class="fa-regular fa-envelope fa-2x"></i>
+      <h3>Create Post</h3>
+    </template>
 
-  <!-- POST CREATION ADMIN -->
-  <form method="post"
-    enctype="multipart/form-data"
-    class="form width-lg container-60lg-50wd">
-    <ListElt :items="['title', 'cat', 'text', 'image', 'author']">
+    <template #body>
+      <form method="post"
+        enctype="multipart/form-data">
+        <ListElt :items="['title', 'text', 'image', 'alt', 'cat']">
 
-      <!-- Post Title -->
-      <template #item-1>
-        <FieldElt id="post-title"
-          v-model:value="title"
-          info="My new post"
-          @keyup.enter="validateNewPost()"
-          :min="2">
-          <template #legend>
-            Title
+          <!-- Post Title -->
+          <template #item-1>
+            <FieldElt id="post-title"
+              v-model:value="title"
+              info="My new post"
+              @keyup.enter="validateNewPost()"
+              :min="2">
+              <template #legend>
+                Title
+              </template>
+              <template #label>
+                Indicate the post title
+              </template>
+            </FieldElt>
           </template>
-          <template #label>
-            Indicate the post title
-          </template>
-        </FieldElt>
-      </template>
 
-      <!-- Post Category -->
-      <template #item-2>
-        <FieldElt id="post-cat"
-          type="select"
-          v-model:value="cat"
-          info="Choose a category"
-          @keyup.enter="validateNewPost()"
-          :list="['sport']">
-          <template #legend>
-            Category
+          <!-- Post Text -->
+          <template #item-2>
+            <FieldElt id="post-text"
+              v-model:value="text"
+              info="Once upon a time..."
+              @keyup.enter="validateNewPost()"
+              type="textarea">
+              <template #legend>
+                Text
+              </template>
+              <template #label>
+                Indicate the post text
+              </template>
+            </FieldElt>
           </template>
-          <template #label>
-            
+          
+          <!-- Post Image -->
+          <template #item-3>
+            <FieldElt id="post-image"
+              v-model:value="image"
+              info="Image file only"
+              type="file">
+              <template #legend>
+                Image
+              </template>
+              <template #label>
+                Provide post image
+              </template>
+            </FieldElt>
           </template>
-        </FieldElt>
-      </template>
 
-      <!-- Post Text -->
-      <template #item-3>
-        <FieldElt id="post-text"
-          v-model:value="text"
-          info="Once upon a time..."
-          @keyup.enter="validateNewPost()"
-          type="textarea">
-          <template #legend>
-            Text
+          <!-- Post Author -->
+          <template #item-4>
+            <FieldElt id="post-alt"
+              v-model:value="alt"
+              info="Alternative text"
+              @keyup.enter="validateNewPost()">
+              <template #legend>
+                Alt
+              </template>
+              <template #label>
+                Indicate the post alt
+              </template>
+            </FieldElt>
           </template>
-          <template #label>
-            Indicate the post text
-          </template>
-        </FieldElt>
-      </template>
-      
-      <!-- Post Image -->
-      <template #item-4>
-        <FieldElt id="post-image"
-          v-model:value="image"
-          info="Image file only"
-          type="file">
-          <template #legend>
-            Image
-          </template>
-          <template #label>
-            Provide post image
-          </template>
-        </FieldElt>
-      </template>
 
-      <!-- Post Author -->
-      <template #item-5>
-        <FieldElt id="post-author"
-          v-model:value="author"
-          info="John Doe"
-          @keyup.enter="validateNewPost()">
-          <template #legend>
-            Author
+          <!-- Post Category -->
+          <template #item-5>
+            <FieldElt id="post-cat"
+              type="select"
+              v-model:value="cat"
+              info="Choose a category"
+              @keyup.enter="validateNewPost()"
+              :list="['sport']">
+              <template #legend>
+                Category
+              </template>
+              <template #label>
+                
+              </template>
+            </FieldElt>
           </template>
-          <template #label>
-            Indicate the post author
-          </template>
-        </FieldElt>
-      </template>
-    </ListElt>
+        </ListElt>
 
-    <!-- Create Button -->
-    <BtnElt type="button"
-      content="Create"
-      @click="validateNewPost()" 
-      class="btn-green"/>
-  </form>
+        <!-- Create Button -->
+        <BtnElt type="button"
+          content="Create"
+          @click="validateNewPost()" 
+          class="btn-green"/>
+      </form>
+    </template>
+  </CardElt>
 </template>
 
 <script>
+import constants from "/constants"
+
 export default {
   name: "CreatePost",
 
   data() {
     return {
       title: "",
-      cat: "",
       text:"",
       image: "",
-      author: ""
+      alt: "",
+      cat: ""
     }
   },
 
@@ -160,10 +168,15 @@ export default {
         let image = document.getElementById('post-image').files[0];
 
         post.append("title", this.title);
-        post.append("cat", this.cat);
         post.append("text", this.text);
         post.append("image", image);
-        post.append("author", this.author);
+        post.append("alt", this.alt);
+        post.append("cat", this.cat);
+        post.append("userId", constants.USER_ID);
+        post.append("createdDate", Date.now());
+        post.append("updatedDate", Date.now());
+        post.append("likes", 0);
+        post.append("usersLiked", []);
 
         this.$serve.postData("/api/posts", post)
           .then(() => {

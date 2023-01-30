@@ -10,10 +10,6 @@ const PostModel = mongoose.Schema(
       required: true,
       unique: true
     },
-    cat: { 
-      type: String, 
-      required: true
-    },
     text: { 
       type: String, 
       required: true,
@@ -24,8 +20,32 @@ const PostModel = mongoose.Schema(
       required: true,
       unique: true
     },
-    author: { 
+    alt: { 
       type: String, 
+      required: true
+    },
+    cat: { 
+      type: String, 
+      required: true
+    },
+    userId: { 
+      type: String, 
+      required: true
+    },
+    createdDate: { 
+      type: Date, 
+      required: true
+    },
+    updatedDate: { 
+      type: Date, 
+      required: true
+    },
+    likes: {
+      type: Number,
+      required: true
+    },
+    usersLiked: {
+      type: Array,
       required: true
     }
   },
