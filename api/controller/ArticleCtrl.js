@@ -27,22 +27,26 @@ exports.getImgName = (name) => {
 /**
  * GET ARTICLE
  * @param {string} name 
- * @param {string} cat 
  * @param {string} description 
  * @param {string} image 
+ * @param {string} alt 
  * @param {number} price 
- * @param {string} date 
+ * @param {string} cat 
+ * @param {string} createdDate 
+ * @param {string} updatedDate 
  * @returns 
  */
-exports.getArticle = (name, cat, description, image, price, date) => {
+exports.getArticle = (name, description, image, alt, price, cat, createdDate, updatedDate) => {
 
   return {
     name: name,
-    cat: cat,
     description: description,
     image: image,
+    alt: alt,
     price: price,
-    date: date
+    cat: cat,
+    createdDate: createdDate,
+    updatedDate: updatedDate
   }
 }
 
@@ -84,11 +88,13 @@ exports.createArticle = (req, res, next) => {
     let article = new ArticleModel(
       this.getArticle(
         fields.name, 
-        fields.cat, 
         fields.description, 
         image, 
+        fields.alt,
         fields.price,
-        fields.date
+        fields.cat, 
+        fields.createdDate,
+        fields.updatedDate
       ));
 
     article
@@ -150,10 +156,13 @@ exports.updateArticle = (req, res, next) => {
 
     let article = this.getArticle(
       fields.name, 
-      fields.cat, 
       fields.description, 
       image, 
-      fields.price
+      fields.alt,
+      fields.price,
+      fields.cat, 
+      fields.createdDate,
+      fields.updatedDate
     );
 
     ArticleModel
