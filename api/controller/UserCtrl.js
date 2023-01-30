@@ -46,15 +46,19 @@ exports.getImgName = (name) => {
  * @param {string} email 
  * @param {string} image 
  * @param {string} pass 
+ * @param {string} date 
  * @returns 
  */
-exports.getUser = (name, email, image, pass) => {
+exports.getUser = (name, email, image, pass, date) => {
+
+  console.log(typeof date);
 
   return {
     name: name,
     email: email,
     image: image,
-    pass: pass
+    pass: pass,
+    date: date
   }
 }
 
@@ -135,7 +139,13 @@ exports.forgotPass = (req, res, next) => {
         bcrypt
           .hash(pass, 10)
           .then((hash) => {
-            let newUser = this.getUser(user.name, user.email, user.image, hash);
+            let newUser = this.getUser(
+              user.name, 
+              user.email, 
+              user.image, 
+              hash,
+              user.date
+            );
 
             UserModel
               .updateOne({ _id: user._id }, { ...newUser, _id: user._id })
@@ -180,7 +190,8 @@ exports.createUser = (req, res, next) => {
             fields.name, 
             fields.email, 
             image, 
-            hash
+            hash,
+            fields.date
           ));
 
         fs.unlink(usersUrl + files.image.newFilename, () => {
@@ -237,7 +248,8 @@ exports.updateUser = (req, res, next) => {
           fields.name, 
           fields.email, 
           image, 
-          hash
+          hash,
+          fields.date
         );
 
         UserModel

@@ -23,6 +23,10 @@ const UserModel = mongoose.Schema(
     pass: { 
       type: String, 
       required: true 
+    },
+    date: { 
+      type: Date, 
+      required: true 
     }
   },
   {
