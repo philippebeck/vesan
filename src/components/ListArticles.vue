@@ -1,98 +1,114 @@
 <template>
+  <CardElt>
+    <template #header>
+      <i class="fa-solid fa-shopping-cart fa-2x"></i>
+      <h3>List Articles</h3>
+    </template>
 
-  <!-- ARTICLE ADMIN MANAGER -->
-  <form method="post"
-    enctype="multipart/form-data">
-    <TableElt :items="articles">
+    <template #body>
+      <form method="post"
+        enctype="multipart/form-data">
+        <TableElt :items="articles">
 
-      <!-- Last Table Head -->
-      <template #head>
-        up/del
-      </template>
-
-      <!-- Current Article Image -->
-      <template #cell-_id="slotProps">
-        <MediaElt :src="'/img/articles/' + articles[slotProps.index].image"
-          :alt="articles[slotProps.index].name"
-          :title="articles[slotProps.index].image">
-        </MediaElt>
-      </template>
-
-      <!-- Article Name -->
-      <template #cell-name="slotProps">
-        <FieldElt :id="'name-' + articles[slotProps.index]._id"
-          v-model:value="getArticles()[slotProps.index].name"
-          info="Update the article name"
-          @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)">
-        </FieldElt>
-      </template>
-
-      <!-- Article Category -->
-      <template #cell-cat="slotProps">
-        <FieldElt :id="'cat-' + articles[slotProps.index]._id"
-          type="list"
-          v-model:value="getArticles()[slotProps.index].cat"
-          info="Update the category"
-          @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-          :list="['sauce']">
-          {{ value }}
-        </FieldElt>
-      </template>
-
-      <!-- Article Description -->
-      <template #cell-description="slotProps">
-        <FieldElt :id="'description-' + articles[slotProps.index]._id"
-          type="textarea"
-          v-model:value="getArticles()[slotProps.index].description"
-          info="Update the article description"
-          @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)">
-        </FieldElt>
-      </template>
-
-      <!-- Article Image -->
-      <template #cell-image="slotProps">
-        <FieldElt :id="'image-' + articles[slotProps.index]._id"
-          type="file"
-          info="Update the article image">
-        </FieldElt>
-      </template>
-
-      <!-- Article Price -->
-      <template #cell-price="slotProps">
-        <FieldElt :id="'price-' + articles[slotProps.index]._id"
-          type="number"
-          v-model:value="getArticles()[slotProps.index].price"
-          @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-          info="Update the article price"
-          :min="1"
-          :max="1000">
-        </FieldElt>
-      </template>
-
-      <template #body="slotProps">
-
-      <!-- Update Button -->
-      <BtnElt type="button"
-          @click="validateUpdatedArticle(articles[slotProps.index]._id)" 
-          class="btn-sky"
-          :title="'Update ' + articles[slotProps.index].name">
-          <template #btn>
-            <i class="fa-solid fa-edit"></i>
+          <!-- Last Table Head -->
+          <template #head>
+            up/del
           </template>
-        </BtnElt>
 
-        <!-- Delete Button -->
-        <BtnElt type="button"
-          @click="deleteArticle(articles[slotProps.index]._id)" 
-          class="btn-red"
-          :title="'Delete ' + articles[slotProps.index].name">
-          <template #btn>
-            <i class="fa-solid fa-trash-alt"></i>
+          <!-- Current Article Image -->
+          <template #cell-_id="slotProps">
+            <MediaElt :src="'/img/articles/' + articles[slotProps.index].image"
+              :alt="articles[slotProps.index].name"
+              :title="articles[slotProps.index].image">
+            </MediaElt>
           </template>
-        </BtnElt>
-      </template>
-    </TableElt>
-  </form>
+
+          <!-- Article Name -->
+          <template #cell-name="slotProps">
+            <FieldElt :id="'name-' + articles[slotProps.index]._id"
+              v-model:value="getArticles()[slotProps.index].name"
+              info="Update the article name"
+              @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)">
+            </FieldElt>
+          </template>
+
+          <!-- Article Description -->
+          <template #cell-description="slotProps">
+            <FieldElt :id="'description-' + articles[slotProps.index]._id"
+              type="textarea"
+              v-model:value="getArticles()[slotProps.index].description"
+              info="Update the article description"
+              @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)">
+            </FieldElt>
+          </template>
+
+          <!-- Article Image -->
+          <template #cell-image="slotProps">
+            <FieldElt :id="'image-' + articles[slotProps.index]._id"
+              type="file"
+              info="Update the article image">
+            </FieldElt>
+          </template>
+
+          <!-- Article Alt -->
+          <template #cell-alt="slotProps">
+            <FieldElt :id="'alt-' + articles[slotProps.index]._id"
+              v-model:value="getArticles()[slotProps.index].alt"
+              info="Update the article alt"
+              @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)">
+            </FieldElt>
+          </template>
+
+          <!-- Article Price -->
+          <template #cell-price="slotProps">
+            <FieldElt :id="'price-' + articles[slotProps.index]._id"
+              type="number"
+              v-model:value="getArticles()[slotProps.index].price"
+              @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
+              info="Update the article price"
+              :min="1"
+              :max="1000">
+            </FieldElt>
+          </template>
+
+          <!-- Article Category -->
+          <template #cell-cat="slotProps">
+            <FieldElt :id="'cat-' + articles[slotProps.index]._id"
+              type="list"
+              v-model:value="getArticles()[slotProps.index].cat"
+              info="Update the category"
+              @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
+              :list="['sauce']">
+              {{ value }}
+            </FieldElt>
+          </template>
+
+          <template #body="slotProps">
+
+            <!-- Update Button -->
+            <BtnElt type="button"
+              @click="validateUpdatedArticle(articles[slotProps.index]._id)" 
+              class="btn-sky"
+              :title="'Update ' + articles[slotProps.index].name">
+              <template #btn>
+                <i class="fa-solid fa-edit"></i>
+              </template>
+            </BtnElt>
+
+            <!-- Delete Button -->
+            <BtnElt type="button"
+              @click="deleteArticle(articles[slotProps.index]._id)" 
+              class="btn-red"
+              :title="'Delete ' + articles[slotProps.index].name">
+              <template #btn>
+                <i class="fa-solid fa-trash-alt"></i>
+              </template>
+            </BtnElt>
+          </template>
+        </TableElt>
+      </form>
+    </template>
+  </CardElt>
 </template>
 
 <script>
@@ -170,11 +186,13 @@ export default {
 
         article.append("id", this.articles[i]._id);
         article.append("name", this.articles[i].name);
-        article.append("cat", this.articles[i].cat);
         article.append("description", this.articles[i].description);
         article.append("image", image);
+        article.append("alt", this.articles[i].alt);
         article.append("price", this.articles[i].price);
-        article.append("date", Date.now());
+        article.append("cat", this.articles[i].cat);
+        article.append("createdDate", this.articles[i].createdDate);
+        article.append("updatedDate", Date.now());
 
         this.$serve.putData(`/api/articles/${article.get("id")}`, article)
           .then(() => {
