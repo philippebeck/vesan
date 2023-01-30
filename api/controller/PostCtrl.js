@@ -74,6 +74,11 @@ exports.createPost = (req, res, next) => {
 
     let image = this.getImgName(fields.title);
 
+    nem.createImage(
+      "posts/" + files.image.newFilename, 
+      "posts/" + image
+    );
+
     let post  = new PostModel(this.getPost(
       fields.title, 
       fields.cat, 
@@ -82,17 +87,13 @@ exports.createPost = (req, res, next) => {
       fields.author
     ));
 
-    nem.createImage(
-      "posts/" + files.image.newFilename, 
-      "posts/" + image
-    );
-
-    fs.unlink(postsUrl + files.image.newFilename, () => {
-      post
-        .save()
-        .then(() => res.status(201).json({ message: process.env.POST_CREATED }))
-        .catch((error) => res.status(400).json({ error }));
-    });
+    post
+      .save()
+      .then(() => fs.unlink(postsUrl + files.image.newFilename, () => {
+        console.log("image ok !");
+      }))
+      .then(() => res.status(201).json({ message: process.env.POST_CREATED }))
+      .catch((error) => res.status(400).json({ error }));
   })
 };
 

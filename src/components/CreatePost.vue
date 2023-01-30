@@ -25,7 +25,7 @@
       <!-- Post Category -->
       <template #item-2>
         <FieldElt id="post-cat"
-          type="list"
+          type="select"
           v-model:value="cat"
           info="Choose a category"
           @keyup.enter="validateNewPost()"
@@ -45,7 +45,7 @@
           v-model:value="text"
           info="Once upon a time..."
           @keyup.enter="validateNewPost()"
-          type="area">
+          type="textarea">
           <template #legend>
             Text
           </template>

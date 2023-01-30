@@ -25,7 +25,7 @@
       <!-- Article Category -->
       <template #item-2>
         <FieldElt id="article-cat"
-          type="list"
+          type="select"
           v-model:value="cat"
           info="Choose a category"
           @keyup.enter="validateNewArticle()"
@@ -42,7 +42,7 @@
       <!-- Article Description -->
       <template #item-3>
         <FieldElt id="article-description"
-          type="area"
+          type="textarea"
           v-model:value="description"
           @keyup.enter="validateNewArticle()"
           info="This article is wonderful !">
@@ -107,7 +107,7 @@ export default {
       cat: "",
       description:"",
       image: "",
-      price: ""
+      price: null
     }
   },
 

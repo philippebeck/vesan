@@ -42,7 +42,7 @@
       <!-- Article Description -->
       <template #cell-description="slotProps">
         <FieldElt :id="'description-' + articles[slotProps.index]._id"
-          type="area"
+          type="textarea"
           v-model:value="getArticles()[slotProps.index].description"
           info="Update the article description"
           @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)">

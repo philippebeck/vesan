@@ -12,7 +12,7 @@
       <!-- Review Text -->
       <template #cell-text="slotProps">
         <FieldElt :id="'text-' + reviews[slotProps.index]._id"
-          type="area"
+          type="textarea"
           v-model:value="getReviews()[slotProps.index].text"
           @keyup.enter="updateReview(reviews[slotProps.index]._id)"
           info="Update the review text">

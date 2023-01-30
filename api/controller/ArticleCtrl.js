@@ -74,6 +74,11 @@ exports.createArticle = (req, res, next) => {
 
     let image = this.getImgName(fields.name);
 
+    nem.createImage(
+      "articles/" + files.image.newFilename, 
+      "articles/" + image
+    );
+
     let article = new ArticleModel(
       this.getArticle(
         fields.name, 
@@ -83,17 +88,13 @@ exports.createArticle = (req, res, next) => {
         fields.price
       ));
 
-    nem.createImage(
-      "articles/" + files.image.newFilename, 
-      "articles/" + image
-    );
-
-    fs.unlink(articlesUrl + files.image.newFilename, () => {
-      article
-        .save()
-        .then(() => res.status(201).json({ message: process.env.ARTICLE_CREATED }))
-        .catch((error) => res.status(400).json({ error }));
-    });
+    article
+      .save()
+      .then(() => fs.unlink(articlesUrl + files.image.newFilename, () => {
+        console.log("image ok !") 
+      }))
+      .then(() => res.status(201).json({ message: process.env.ARTICLE_CREATED }))
+      .catch((error) => res.status(400).json({ error }));
   })
 };
 
