@@ -6,7 +6,25 @@
     </template>
 
     <template #body>
-      <form method="post">
+
+      <ListElt v-if="this.$route.params.id"
+        :dynamic="true"
+        :items="comments">
+
+        <template #items="slotProps">
+          <blockquote class="container-90sm-80md-70lg-60xl-50wd bord bord-sky blue">
+            {{ slotProps.item.text }}
+          </blockquote>
+          
+          <p class="silver">
+            Created: {{ new Date(slotProps.item.createdDate).toLocaleDateString() }}
+            (Updated: {{ new Date(slotProps.item.updatedDate).toLocaleDateString() }})
+          </p>
+        </template>
+      </ListElt>
+
+      <form v-else
+        method="post">
         <TableElt :items="comments">
 
           <!-- Last Table Head -->
@@ -22,6 +40,16 @@
               info="Update the comment text"
               @keyup.enter="updateComment(comments[slotProps.index]._id)">
             </FieldElt>
+          </template>
+
+          <!-- Comment Created -->
+          <template #cell-createdDate="slotProps">
+            {{ new Date(getComments()[slotProps.index].createdDate).toLocaleString() }}
+          </template>
+
+          <!-- Comment Updated -->
+          <template #cell-updatedDate="slotProps">
+            {{ new Date(getComments()[slotProps.index].updatedDate).toLocaleString() }}
           </template>
 
           <template #body="slotProps">
@@ -72,8 +100,8 @@ export default {
     updateComment(id) {
       for (let i = 0; i < this.comments.length; i++ ) {
         if (this.comments[i]._id === id) {
-
           let comment = new FormData();
+
           comment.append("id", id);
           comment.append("text", this.comments[i].text);
           comment.append("postId", this.comments[i].postId);
