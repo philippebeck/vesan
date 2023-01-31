@@ -12,8 +12,10 @@
         <template #figcaption>
           <p>{{ article.description }}</p>
           <b>{{ article.price }} €</b>
-          <p>Created: {{ new Date(article.createdDate).toLocaleString() }}</p>
-          <p>Updated: {{ new Date(article.updatedDate).toLocaleString() }}</p>
+          <p class="silver">
+            Created: {{ new Date(article.createdDate).toLocaleDateString() }}
+            (Updated: {{ new Date(article.updatedDate).toLocaleDateString() }})
+          </p>
         </template>
       </MediaElt>
 
