@@ -47,7 +47,9 @@
             :articles="articles"/>
 
           <ListReviews v-if="reviews.length > 0"
-            :reviews="reviews"/>
+            :reviews="reviews"
+            :articles="articles"
+            :users="users"/>
         </template>
       </CardElt>
 
@@ -66,10 +68,13 @@
           <CreatePost />
 
           <ListPosts v-if="posts.length > 0"
-            :posts="posts"/>
+            :posts="posts"
+            :users="users"/>
 
           <ListComments v-if="comments.length > 0"
-            :comments="comments"/>
+            :comments="comments"
+            :posts="posts"
+            :users="users"/>
         </template>
       </CardElt>
 
