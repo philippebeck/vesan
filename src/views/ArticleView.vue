@@ -20,7 +20,8 @@
       <CreateReview />
 
       <ListReviews v-if="reviews.length > 0"
-        :reviews="getArticleReviews()"/>
+        :reviews="getArticleReviews()"
+        :users="users"/>
     </template>
   </CardElt>
 </template>
@@ -39,7 +40,8 @@ export default {
   data() {
     return {
       article: {},
-      reviews: []
+      reviews: [],
+      users: []
     }
   },
 
@@ -63,6 +65,10 @@ export default {
 
     this.$serve.getData("/api/reviews")
       .then(res => { this.reviews = res })
+      .catch(err => { console.log(err) });
+
+    this.$serve.getData("/api/users")
+      .then(res => { this.users = res })
       .catch(err => { console.log(err) });
   }
 }

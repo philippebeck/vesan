@@ -26,7 +26,8 @@
       <CreateComment />
 
       <ListComments v-if="comments.length > 0"
-        :comments="getPostComments()"/>
+        :comments="getPostComments()"
+        :users="users"/>
     </template>
   </CardElt>
 </template>
@@ -46,7 +47,7 @@ export default {
     return {
       post: {},
       comments: [],
-      user: {}
+      users: []
     }
   },
 
@@ -70,6 +71,10 @@ export default {
 
     this.$serve.getData("/api/comments")
       .then(res => { this.comments = res })
+      .catch(err => { console.log(err) });
+
+    this.$serve.getData("/api/users")
+      .then(res => { this.users = res })
       .catch(err => { console.log(err) });
   }
 }
