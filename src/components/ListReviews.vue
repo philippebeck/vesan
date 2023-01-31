@@ -106,6 +106,8 @@
 </template>
 
 <script>
+import constants from "/constants";
+
 export default {
   name: "ListReviews",
   props: ["reviews", "article", "articles", "users"],
@@ -158,7 +160,7 @@ export default {
           review.append("text", this.reviews[i].text);
           review.append("score", this.reviews[i].score);
           review.append("articleId", this.reviews[i].articleId);
-          review.append("userId", this.reviews[i].userId);
+          review.append("userId", constants.USER_ID);
           review.append("createdDate", this.reviews[i].createdDate);
           review.append("updatedDate", Date.now());
 

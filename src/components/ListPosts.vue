@@ -124,6 +124,8 @@
 </template>
 
 <script>
+import constants from "/constants";
+
 export default {
   name: "ListPosts",
   props: ["posts", "users"],
@@ -210,7 +212,7 @@ export default {
         post.append("image", image);
         post.append("alt", this.posts[i].alt);
         post.append("cat", this.posts[i].cat);
-        post.append("userId", this.posts[i].userId);
+        post.append("userId", constants.USER_ID);
         post.append("createdDate", this.posts[i].createdDate);
         post.append("updatedDate", Date.now());
         post.append("likes", this.posts[i].likes);

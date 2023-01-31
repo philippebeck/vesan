@@ -91,6 +91,8 @@
 </template>
 
 <script>
+import constants from "/constants";
+
 export default {
   name: "ListComments",
   props: ["comments", "post", "posts", "users"],
@@ -141,7 +143,7 @@ export default {
           comment.append("id", id);
           comment.append("text", this.comments[i].text);
           comment.append("postId", this.comments[i].postId);
-          comment.append("userId", this.comments[i].userId);
+          comment.append("userId", constants.USER_ID);
           comment.append("createdDate", this.comments[i].createdDate);
           comment.append("updatedDate", Date.now());
 
