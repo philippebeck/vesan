@@ -15,7 +15,7 @@
           <blockquote class="container-90sm-80md-70lg-60xl-50wd bord bord-sky blue">
             {{ slotProps.item.text }}
           </blockquote>
-          
+          <p>by {{ getCommentUser(slotProps.item.userId) }}</p>
           <p class="silver">
             Created: {{ new Date(slotProps.item.createdDate).toLocaleDateString() }}
             (Updated: {{ new Date(slotProps.item.updatedDate).toLocaleDateString() }})
@@ -40,6 +40,16 @@
               info="Update the comment text"
               @keyup.enter="updateComment(comments[slotProps.index]._id)">
             </FieldElt>
+          </template>
+
+          <!-- Comment Post -->
+          <template #cell-postId="slotProps">
+            {{ getCommentPost(getComments()[slotProps.index].postId) }}
+          </template>
+
+          <!-- Comment User -->
+          <template #cell-userId="slotProps">
+            {{ getCommentUser(getComments()[slotProps.index].userId) }}
           </template>
 
           <!-- Comment Created -->
@@ -83,7 +93,7 @@
 <script>
 export default {
   name: "ListComments",
-  props: ["comments"],
+  props: ["comments", "post", "posts", "users"],
 
   methods: {
     /**
@@ -91,6 +101,32 @@ export default {
      */
     getComments() {
       return this.comments;
+    },
+    
+    /**
+     * GET COMMENT POST
+     * @param {string} postId 
+     */
+    getCommentPost(postId) {
+      for (let i = 0; i < this.posts.length; i++ ) {
+        if (postId === this.posts[i]._id) {
+
+          return this.posts[i].title;
+        }
+      }
+    },
+
+    /**
+     * GET COMMENT USER
+     * @param {string} userId 
+     */
+    getCommentUser(userId) {
+      for (let i = 0; i < this.users.length; i++ ) {
+        if (userId === this.users[i]._id) {
+
+          return this.users[i].name;
+        }
+      }
     },
 
     /**
