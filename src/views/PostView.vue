@@ -12,24 +12,34 @@
         :alt="post.alt">
 
         <template #figcaption>
-          <p>{{ post.text }}</p>
-          <p>Created: {{ post.createdDate }}</p>
-          <p>Updated: {{ post.updatedDate }}</p>
+          <blockquote class="container width-sm bord bord-sky blue">
+            {{ post.text }}
+          </blockquote>
+          
+          <p class="silver">
+            Created: {{ new Date(post.createdDate).toLocaleDateString() }} 
+            (Updated: {{ new Date(post.updatedDate).toLocaleDateString() }})
+          </p>
         </template>
       </MediaElt>
 
       <CreateComment />
+
+      <ListComments v-if="comments.length > 0"
+        :comments="getPostComments()"/>
     </template>
   </CardElt>
 </template>
 
 <script>
 import CreateComment from "@/components/CreateComment"
+import ListComments from "@/components/ListComments"
 
 export default {
   name: "PostView",
   components: {
-    CreateComment
+    CreateComment,
+    ListComments
   },
 
   data() {
@@ -40,6 +50,19 @@ export default {
     }
   },
 
+  methods: {
+    getPostComments() {
+      let postComments = [];
+
+      for (let i = 0 ; i < this.comments.length ; i++) {
+        if (this.$route.params.id === this.comments[i].postId) {
+          postComments.push(this.comments[i]);
+        }
+      }
+      return postComments;
+    }
+  },
+
   mounted () {
     this.$serve.getData(`/api/posts/${this.$route.params.id}`)
       .then(res => { this.post = res })
@@ -47,10 +70,6 @@ export default {
 
     this.$serve.getData("/api/comments")
       .then(res => { this.comments = res })
-      .catch(err => { console.log(err) });
-
-    this.$serve.getData("/api/users/" + this.post.userId)
-      .then(res => { this.user = res })
       .catch(err => { console.log(err) });
   }
 }
