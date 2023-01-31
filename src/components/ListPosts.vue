@@ -80,6 +80,16 @@
             </FieldElt>
           </template>
 
+          <!-- Post Created -->
+          <template #cell-createdDate="slotProps">
+            {{ new Date(getPosts()[slotProps.index].createdDate).toLocaleString() }}
+          </template>
+
+          <!-- Post Updated -->
+          <template #cell-updatedDate="slotProps">
+            {{ new Date(getPosts()[slotProps.index].updatedDate).toLocaleString() }}
+          </template>
+
           <template #body="slotProps">
 
           <!-- Update Button -->

@@ -83,6 +83,16 @@
             </FieldElt>
           </template>
 
+          <!-- Article Created -->
+          <template #cell-createdDate="slotProps">
+            {{ new Date(getArticles()[slotProps.index].createdDate).toLocaleString() }}
+          </template>
+
+          <!-- Article Updated -->
+          <template #cell-updatedDate="slotProps">
+            {{ new Date(getArticles()[slotProps.index].updatedDate).toLocaleString() }}
+          </template>
+
           <template #body="slotProps">
 
             <!-- Update Button -->
