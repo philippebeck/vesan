@@ -6,7 +6,27 @@
     </template>
 
     <template #body>
-      <form method="post">
+
+      <ListElt v-if="this.$route.params.id"
+        :dynamic="true"
+        :items="reviews">
+        <template #items="slotProps">
+          <blockquote class="container-90sm-80md-70lg-60xl-50wd bord bord-sky blue">
+            {{ slotProps.item.text }}
+          </blockquote>
+          <p class="violet">
+            {{ slotProps.item.score }}
+            <i class="fa-solid fa-star"></i>
+          </p>
+          <p class="silver">
+            Created: {{ new Date(slotProps.item.createdDate).toLocaleDateString() }}
+            (Updated: {{ new Date(slotProps.item.updatedDate).toLocaleDateString() }})
+          </p>
+        </template>
+      </ListElt>
+
+      <form v-else
+        method="post">
         <TableElt :items="reviews">
 
           <!-- Last Table Head -->
@@ -34,6 +54,16 @@
               :min="0"
               :max="5">
             </FieldElt>
+          </template>
+
+          <!-- Review Created -->
+          <template #cell-createdDate="slotProps">
+            {{ new Date(getReviews()[slotProps.index].createdDate).toLocaleString() }}
+          </template>
+
+          <!-- Review Updated -->
+          <template #cell-updatedDate="slotProps">
+            {{ new Date(getReviews()[slotProps.index].updatedDate).toLocaleString() }}
           </template>
 
           <template #body="slotProps">
