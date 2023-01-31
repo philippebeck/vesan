@@ -164,7 +164,6 @@ export default {
               isReferenced = true;
             }
           }
-
           this.updateUser(isReferenced, i);
         })
         .catch(err => { console.log(err) });

@@ -173,7 +173,6 @@ export default {
               isReferenced = true;
             }
           }
-
           this.updateArticle(isReferenced, i);
         })
         .catch(err => { console.log(err) });
