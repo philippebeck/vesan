@@ -14,6 +14,7 @@
           <blockquote class="container-90sm-80md-70lg-60xl-50wd bord bord-sky blue">
             {{ slotProps.item.text }}
           </blockquote>
+          <p>by {{ getReviewUser(slotProps.item.userId) }}</p>
           <p class="violet">
             {{ slotProps.item.score }}
             <i class="fa-solid fa-star"></i>
@@ -54,6 +55,16 @@
               :min="0"
               :max="5">
             </FieldElt>
+          </template>
+
+          <!-- Review Article -->
+          <template #cell-articleId="slotProps">
+            {{ getReviewArticle(getReviews()[slotProps.index].articleId) }}
+          </template>
+
+          <!-- Review User -->
+          <template #cell-userId="slotProps">
+            {{ getReviewUser(getReviews()[slotProps.index].userId) }}
           </template>
 
           <!-- Review Created -->
@@ -97,7 +108,7 @@
 <script>
 export default {
   name: "ListReviews",
-  props: ["reviews"],
+  props: ["reviews", "article", "articles", "users"],
 
   methods: {
     /**
@@ -105,6 +116,32 @@ export default {
      */
     getReviews() {
       return this.reviews;
+    },
+    
+    /**
+     * GET REVIEW ARTICLE
+     * @param {string} articleId 
+     */
+    getReviewArticle(articleId) {
+      for (let i = 0; i < this.articles.length; i++ ) {
+        if (articleId === this.articles[i]._id) {
+
+          return this.articles[i].name;
+        }
+      }
+    },
+
+    /**
+     * GET REVIEW USER
+     * @param {string} userId 
+     */
+    getReviewUser(userId) {
+      for (let i = 0; i < this.users.length; i++ ) {
+        if (userId === this.users[i]._id) {
+
+          return this.users[i].name;
+        }
+      }
     },
 
     /**
