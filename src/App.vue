@@ -29,23 +29,30 @@
 
       <!-- Visitor -->
       <ListElt v-if="!userId"
-        :items="['paypal', 'github', 'login']">
+        :items="['basket', 'donation', 'sponsor', 'login']">
 
         <template #item-1>
+          <a href="/basket"
+            title="Basket">
+            <i class="fa-solid fa-basket-shopping fa-fw"></i>
+          </a>
+        </template>
+
+        <template #item-2>
           <a href="https://paypal.me/philippebeck"
             title="Donation">
             <i class="fa-brands fa-paypal fa-fw"></i>
           </a>
         </template>
 
-        <template #item-2>
+        <template #item-3>
           <a href="https://github.com/sponsors/philippebeck"
             title="Sponsor">
             <i class="fa-regular fa-heart fa-fw"></i>
           </a>
         </template>
 
-        <template #item-3>
+        <template #item-4>
           <a href="/login"
             title="Login">
             <i class="fa-solid fa-sign-in-alt fa-fw"></i>
@@ -55,16 +62,23 @@
 
       <!-- Admin -->
       <ListElt v-else
-        :items="['admin', 'logout']">
+        :items="['basket', 'admin', 'logout']">
 
         <template #item-1>
+          <a href="/basket"
+            title="Basket">
+            <i class="fa-solid fa-basket-shopping fa-fw"></i>
+          </a>
+        </template>
+
+        <template #item-2>
           <a href="/admin"
             title="Admin">
             <i class="fa-solid fa-user-ninja fa-fw"></i>
           </a>
         </template>
 
-        <template #item-2>
+        <template #item-3>
           <button type="button"
             @click="logout()"
             title="Logout">

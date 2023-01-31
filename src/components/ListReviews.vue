@@ -6,7 +6,28 @@
     </template>
 
     <template #body>
-      <form method="post">
+
+      <ListElt v-if="this.$route.params.id"
+        :dynamic="true"
+        :items="reviews">
+        <template #items="slotProps">
+          <blockquote class="container-90sm-80md-70lg-60xl-50wd bord bord-sky blue">
+            {{ slotProps.item.text }}
+          </blockquote>
+          <p>by {{ getReviewUser(slotProps.item.userId) }}</p>
+          <p class="violet">
+            {{ slotProps.item.score }}
+            <i class="fa-solid fa-star"></i>
+          </p>
+          <p class="silver">
+            Created: {{ new Date(slotProps.item.createdDate).toLocaleDateString() }}
+            (Updated: {{ new Date(slotProps.item.updatedDate).toLocaleDateString() }})
+          </p>
+        </template>
+      </ListElt>
+
+      <form v-else
+        method="post">
         <TableElt :items="reviews">
 
           <!-- Last Table Head -->
@@ -34,6 +55,26 @@
               :min="0"
               :max="5">
             </FieldElt>
+          </template>
+
+          <!-- Review Article -->
+          <template #cell-articleId="slotProps">
+            {{ getReviewArticle(getReviews()[slotProps.index].articleId) }}
+          </template>
+
+          <!-- Review User -->
+          <template #cell-userId="slotProps">
+            {{ getReviewUser(getReviews()[slotProps.index].userId) }}
+          </template>
+
+          <!-- Review Created -->
+          <template #cell-createdDate="slotProps">
+            {{ new Date(getReviews()[slotProps.index].createdDate).toLocaleString() }}
+          </template>
+
+          <!-- Review Updated -->
+          <template #cell-updatedDate="slotProps">
+            {{ new Date(getReviews()[slotProps.index].updatedDate).toLocaleString() }}
           </template>
 
           <template #body="slotProps">
@@ -65,9 +106,11 @@
 </template>
 
 <script>
+import constants from "/constants";
+
 export default {
   name: "ListReviews",
-  props: ["reviews"],
+  props: ["reviews", "article", "articles", "users"],
 
   methods: {
     /**
@@ -75,6 +118,32 @@ export default {
      */
     getReviews() {
       return this.reviews;
+    },
+    
+    /**
+     * GET REVIEW ARTICLE
+     * @param {string} articleId 
+     */
+    getReviewArticle(articleId) {
+      for (let i = 0; i < this.articles.length; i++ ) {
+        if (articleId === this.articles[i]._id) {
+
+          return this.articles[i].name;
+        }
+      }
+    },
+
+    /**
+     * GET REVIEW USER
+     * @param {string} userId 
+     */
+    getReviewUser(userId) {
+      for (let i = 0; i < this.users.length; i++ ) {
+        if (userId === this.users[i]._id) {
+
+          return this.users[i].name;
+        }
+      }
     },
 
     /**
@@ -91,7 +160,7 @@ export default {
           review.append("text", this.reviews[i].text);
           review.append("score", this.reviews[i].score);
           review.append("articleId", this.reviews[i].articleId);
-          review.append("userId", this.reviews[i].userId);
+          review.append("userId", constants.USER_ID);
           review.append("createdDate", this.reviews[i].createdDate);
           review.append("updatedDate", Date.now());
 

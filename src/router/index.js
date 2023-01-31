@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import AdminView from "../views/AdminView";
 import ArticleView from "../views/ArticleView";
+import BasketView from "../views/BasketView";
 import BlogView from "../views/BlogView";
 import ContactView from "../views/ContactView";
 import ErrorView from "../views/ErrorView";
@@ -28,6 +29,12 @@ const routes = [
     name: "article",
     component: ArticleView,
     alias: ["/shop/:id"]
+  },
+  {
+    path: "/basket",
+    name: "basket",
+    component: BasketView,
+    alias: ["/cart"]
   },
   {
     path: "/blog",

@@ -80,6 +80,21 @@
             </FieldElt>
           </template>
 
+          <!-- Post User -->
+          <template #cell-userId="slotProps">
+            {{ getPostUser(getPosts()[slotProps.index].userId) }}
+          </template>
+
+          <!-- Post Created -->
+          <template #cell-createdDate="slotProps">
+            {{ new Date(getPosts()[slotProps.index].createdDate).toLocaleString() }}
+          </template>
+
+          <!-- Post Updated -->
+          <template #cell-updatedDate="slotProps">
+            {{ new Date(getPosts()[slotProps.index].updatedDate).toLocaleString() }}
+          </template>
+
           <template #body="slotProps">
 
           <!-- Update Button -->
@@ -109,9 +124,11 @@
 </template>
 
 <script>
+import constants from "/constants";
+
 export default {
   name: "ListPosts",
-  props: ["posts"],
+  props: ["posts", "users"],
 
   methods: {
     /**
@@ -121,12 +138,24 @@ export default {
       return this.posts;
     },
 
+    /**
+     * GET POST USER
+     * @param {string} userId 
+     */
+    getPostUser(userId) {
+      for (let i = 0; i < this.users.length; i++ ) {
+        if (userId === this.users[i]._id) {
+
+          return this.users[i].name;
+        }
+      }
+    },
+
     validateUpdatedPost(id) {
       for (let i = 0; i < this.posts.length; i++ ) {
         if (this.posts[i]._id === id) {
 
           if (this.$serve.checkName(this.posts[i].title)) {
-
             this.checkUpdatedPost(i);
           }
         }
@@ -157,7 +186,6 @@ export default {
               isReferenced = true;
             }
           }
-
           this.updatePost(isReferenced, i);
         })
         .catch(err => { console.log(err) });
@@ -184,7 +212,7 @@ export default {
         post.append("image", image);
         post.append("alt", this.posts[i].alt);
         post.append("cat", this.posts[i].cat);
-        post.append("userId", this.posts[i].userId);
+        post.append("userId", constants.USER_ID);
         post.append("createdDate", this.posts[i].createdDate);
         post.append("updatedDate", Date.now());
         post.append("likes", this.posts[i].likes);

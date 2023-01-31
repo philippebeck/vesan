@@ -69,6 +69,16 @@
             </FieldElt>
           </template>
 
+          <!-- User Created -->
+          <template #cell-createdDate="slotProps">
+            {{ new Date(getUsers()[slotProps.index].createdDate).toLocaleString() }}
+          </template>
+
+          <!-- User Updated -->
+          <template #cell-updatedDate="slotProps">
+            {{ new Date(getUsers()[slotProps.index].updatedDate).toLocaleString() }}
+          </template>
+
           <template #body="slotProps">
 
           <!-- Update Button -->
@@ -154,7 +164,6 @@ export default {
               isReferenced = true;
             }
           }
-
           this.updateUser(isReferenced, i);
         })
         .catch(err => { console.log(err) });

@@ -1,6 +1,5 @@
 <template>
 
-  <!-- LOGIN PAGE -->
   <CardElt v-if="isLogin">
     <template #header>
       <i class="violet anima-shrink fa-solid fa-sign-in-alt fa-2x"></i>
@@ -24,7 +23,7 @@
           </template>
         </FieldElt>
 
-      <!-- User Pass -->
+        <!-- User Pass -->
         <FieldElt id="pass"
           v-model:value="pass"
           info="Indicate your Password"

@@ -12,29 +12,51 @@
         <template #figcaption>
           <p>{{ article.description }}</p>
           <b>{{ article.price }} €</b>
-          <p>Created: {{ article.createdDate }}</p>
-          <p>Updated: {{ article.updatedDate }}</p>
+          <p class="silver">
+            Created: {{ new Date(article.createdDate).toLocaleDateString() }}
+            (Updated: {{ new Date(article.updatedDate).toLocaleDateString() }})
+          </p>
         </template>
       </MediaElt>
 
       <CreateReview />
+
+      <ListReviews v-if="reviews.length > 0"
+        :reviews="getArticleReviews()"
+        :users="users"/>
     </template>
   </CardElt>
 </template>
 
 <script>
 import CreateReview from "@/components/CreateReview"
+import ListReviews from "@/components/ListReviews"
 
 export default {
   name: "ArticleView",
   components: {
-    CreateReview
+    CreateReview,
+    ListReviews
   },
 
   data() {
     return {
       article: {},
-      reviews: []
+      reviews: [],
+      users: []
+    }
+  },
+
+  methods: {
+    getArticleReviews() {
+      let articleReviews = [];
+
+      for (let i = 0 ; i < this.reviews.length ; i++) {
+        if (this.$route.params.id === this.reviews[i].articleId) {
+          articleReviews.push(this.reviews[i]);
+        }
+      }
+      return articleReviews;
     }
   },
 
@@ -45,6 +67,10 @@ export default {
 
     this.$serve.getData("/api/reviews")
       .then(res => { this.reviews = res })
+      .catch(err => { console.log(err) });
+
+    this.$serve.getData("/api/users")
+      .then(res => { this.users = res })
       .catch(err => { console.log(err) });
   }
 }
