@@ -12,29 +12,47 @@
         <template #figcaption>
           <p>{{ article.description }}</p>
           <b>{{ article.price }} €</b>
-          <p>Created: {{ article.createdDate }}</p>
-          <p>Updated: {{ article.updatedDate }}</p>
+          <p>Created: {{ new Date(article.createdDate).toLocaleString() }}</p>
+          <p>Updated: {{ new Date(article.updatedDate).toLocaleString() }}</p>
         </template>
       </MediaElt>
 
       <CreateReview />
+
+      <ListReviews v-if="reviews.length > 0"
+        :reviews="getArticleReviews()"/>
     </template>
   </CardElt>
 </template>
 
 <script>
 import CreateReview from "@/components/CreateReview"
+import ListReviews from "@/components/ListReviews"
 
 export default {
   name: "ArticleView",
   components: {
-    CreateReview
+    CreateReview,
+    ListReviews
   },
 
   data() {
     return {
       article: {},
       reviews: []
+    }
+  },
+
+  methods: {
+    getArticleReviews() {
+      let articleReviews = [];
+
+      for (let i = 0 ; i < this.reviews.length ; i++) {
+        if (this.$route.params.id === this.reviews[i].articleId) {
+          articleReviews.push(this.reviews[i]);
+        }
+      }
+      return articleReviews;
     }
   },
 
