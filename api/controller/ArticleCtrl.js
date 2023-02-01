@@ -32,11 +32,11 @@ exports.getImgName = (name) => {
  * @param {string} alt 
  * @param {number} price 
  * @param {string} cat 
- * @param {string} createdDate 
- * @param {string} updatedDate 
+ * @param {string} created 
+ * @param {string} updated 
  * @returns 
  */
-exports.getArticle = (name, description, image, alt, price, cat, createdDate, updatedDate) => {
+exports.getArticle = (name, description, image, alt, price, cat, created, updated) => {
 
   return {
     name: name,
@@ -45,8 +45,8 @@ exports.getArticle = (name, description, image, alt, price, cat, createdDate, up
     alt: alt,
     price: price,
     cat: cat,
-    createdDate: createdDate,
-    updatedDate: updatedDate
+    created: created,
+    updated: updated
   }
 }
 
@@ -93,8 +93,8 @@ exports.createArticle = (req, res, next) => {
         fields.alt,
         fields.price,
         fields.cat, 
-        fields.createdDate,
-        fields.updatedDate
+        fields.created,
+        fields.updated
       ));
 
     article
@@ -161,8 +161,8 @@ exports.updateArticle = (req, res, next) => {
       fields.alt,
       fields.price,
       fields.cat, 
-      fields.createdDate,
-      fields.updatedDate
+      fields.created,
+      fields.updated
     );
 
     ArticleModel

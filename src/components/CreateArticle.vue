@@ -189,8 +189,8 @@ export default {
         article.append("alt", this.alt);
         article.append("price", this.price);
         article.append("cat", this.cat);
-        article.append("createdDate", Date.now());
-        article.append("updatedDate", Date.now());
+        article.append("created", Date.now());
+        article.append("updated", Date.now());
 
         this.$serve.postData("/api/articles", article)
           .then(() => {

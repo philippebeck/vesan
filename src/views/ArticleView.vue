@@ -13,8 +13,8 @@
           <p>{{ article.description }}</p>
           <b>{{ article.price }} €</b>
           <p class="silver">
-            Created: {{ new Date(article.createdDate).toLocaleDateString() }}
-            (Updated: {{ new Date(article.updatedDate).toLocaleDateString() }})
+            Created: {{ new Date(article.created).toLocaleDateString() }}
+            (Updated: {{ new Date(article.updated).toLocaleDateString() }})
           </p>
         </template>
       </MediaElt>
@@ -52,7 +52,7 @@ export default {
       let articleReviews = [];
 
       for (let i = 0 ; i < this.reviews.length ; i++) {
-        if (this.$route.params.id === this.reviews[i].articleId) {
+        if (this.$route.params.id === this.reviews[i].article) {
           articleReviews.push(this.reviews[i]);
         }
       }

@@ -84,13 +84,13 @@
           </template>
 
           <!-- Article Created -->
-          <template #cell-createdDate="slotProps">
-            {{ new Date(getArticles()[slotProps.index].createdDate).toLocaleString() }}
+          <template #cell-created="slotProps">
+            {{ new Date(getArticles()[slotProps.index].created).toLocaleString() }}
           </template>
 
           <!-- Article Updated -->
-          <template #cell-updatedDate="slotProps">
-            {{ new Date(getArticles()[slotProps.index].updatedDate).toLocaleString() }}
+          <template #cell-updated="slotProps">
+            {{ new Date(getArticles()[slotProps.index].updated).toLocaleString() }}
           </template>
 
           <template #body="slotProps">
@@ -200,8 +200,8 @@ export default {
         article.append("alt", this.articles[i].alt);
         article.append("price", this.articles[i].price);
         article.append("cat", this.articles[i].cat);
-        article.append("createdDate", this.articles[i].createdDate);
-        article.append("updatedDate", Date.now());
+        article.append("created", this.articles[i].created);
+        article.append("updated", Date.now());
 
         this.$serve.putData(`/api/articles/${article.get("id")}`, article)
           .then(() => {
