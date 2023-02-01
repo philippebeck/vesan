@@ -133,7 +133,7 @@ export default {
       for (let review of this.reviews) {
 
         if (sumData[review.article]) {
-          sumData[review.article].sum = sumData[review.article].sum + review.score;
+          sumData[review.article].sum += review.score;
           sumData[review.article].n++;
 
         } else {
