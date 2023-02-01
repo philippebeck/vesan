@@ -19,11 +19,13 @@
         </template>
       </MediaElt>
 
-      <CreateReview />
-
       <ListReviews v-if="reviews.length > 0"
         :reviews="getArticleReviews()"
         :users="users"/>
+    </template>
+
+    <template #aside  v-if="userId">
+      <CreateReview />
     </template>
   </CardElt>
 </template>
@@ -43,7 +45,8 @@ export default {
     return {
       article: {},
       reviews: [],
-      users: []
+      users: [],
+      userId: null
     }
   },
 
@@ -72,6 +75,10 @@ export default {
     this.$serve.getData("/api/users")
       .then(res => { this.users = res })
       .catch(err => { console.log(err) });
+
+    if (localStorage.userId) {
+      this.userId = JSON.parse(localStorage.userId);
+    }
   }
 }
 </script>
