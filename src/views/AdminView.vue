@@ -41,8 +41,6 @@
         </template>
 
         <template #body>
-          <CreateArticle />
-
           <ListArticles v-if="articles.length > 0"
             :articles="articles"/>
 
@@ -101,7 +99,6 @@
 </template>
 
 <script>
-import CreateArticle from "@/components/CreateArticle"
 import ListArticles from "@/components/ListArticles"
 import ListReviews from "@/components/ListReviews"
 import CreatePost from "@/components/CreatePost"
@@ -113,7 +110,6 @@ import ListUsers from "@/components/ListUsers"
 export default {
   name: "AdminView",
   components: {
-    CreateArticle,
     ListArticles,
     ListReviews,
     CreatePost,

@@ -4,6 +4,13 @@
     :items="cats"
     class="sidebar">
 
+    <template #last>
+      <a href="#create-article"
+        title="Create an article">
+        <i class="fa-solid fa-basket-shopping fa-fw"></i>
+      </a>
+    </template>
+
     <template #top>
       <i class="fa-solid fa-chevron-circle-up fa-fw"></i>
     </template>
@@ -20,12 +27,16 @@
       <p>Under construction !</p>
     </template>
 
+    <template #aside v-if="userId">
+      <CreateArticle />
+    </template>
+
     <template #body>
       <ListElt :items="itemsByCat(articles)"
         :dynamic="true">
 
         <template #items="slotProps">
-          <h2>{{ slotProps.item[0].cat }}</h2>
+          <h2 :id="slotProps.item[0].cat">{{ slotProps.item[0].cat }}</h2>
         </template>
 
         <template #nested="slotProps">
@@ -43,18 +54,25 @@
             </MediaElt>
           </a>
         </template>
+
       </ListElt>
     </template>
   </CardElt>
 </template>
 
 <script>
+import CreateArticle from "@/components/CreateArticle"
+
 export default {
   name: "ShopView",
+  components: {
+    CreateArticle
+  },
 
   data() {
     return {
-      articles: []
+      articles: [],
+      userId: null
     }
   },
 
@@ -62,6 +80,10 @@ export default {
     this.$serve.getData("/api/articles")
       .then(res => { this.articles = res })
       .catch(err => { console.log(err) });
+
+    if (localStorage.userId) {
+      this.userId = JSON.parse(localStorage.userId);
+    }
   },
 
   computed: {
