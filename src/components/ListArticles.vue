@@ -80,7 +80,7 @@
               v-model:value="getArticles()[slotProps.index].cat"
               info="Update the category"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              :list="['sauce']">
+              :list="cats">
               {{ value }}
             </FieldElt>
           </template>
@@ -127,6 +127,14 @@
 export default {
   name: "ListArticles",
   props: ["articles"],
+
+  computed: {
+    cats() {
+      const cats = new Set();
+      this.articles.forEach(article => cats.add(article.cat));
+      return Array.from(cats); 
+    }
+  },
 
   methods: {
     /**

@@ -76,7 +76,7 @@
               type="select"
               v-model:value="getPosts()[slotProps.index].cat"
               @keyup.enter="validateUpdatedPost(posts[slotProps.index]._id)"
-              :list="['sport']"
+              :list="cats"
               info="Update the category">
               {{ value }}
             </FieldElt>
@@ -131,6 +131,14 @@ import constants from "/constants";
 export default {
   name: "ListPosts",
   props: ["posts", "users"],
+
+  computed: {
+    cats() {
+      const cats = new Set();
+      this.posts.forEach(post => cats.add(post.cat));
+      return Array.from(cats); 
+    }
+  },
 
   methods: {
     /**

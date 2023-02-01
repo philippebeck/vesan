@@ -66,7 +66,7 @@
             <FieldElt :id="'role-' + users[slotProps.index]._id"
               type="select"
               v-model:value="getUsers()[slotProps.index].role"
-              :list="['user', 'author', 'admin']"
+              :list="roles"
               info="Update the user role"
               @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)">
               {{ value }}
@@ -129,6 +129,15 @@ export default {
   data() {
     return {
       pass: ""
+    }
+  },
+
+  computed: {
+    roles() {
+      const roles = new Set();
+      this.users.forEach(user => roles.add(user.role));
+
+      return Array.from(roles); 
     }
   },
 
