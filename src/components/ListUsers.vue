@@ -15,14 +15,6 @@
             up/del
           </template>
 
-          <!-- Current User Image -->
-          <template #cell-_id="slotProps">
-            <MediaElt :src="'/img/users/' + users[slotProps.index].image"
-              :alt="users[slotProps.index].name"
-              :title="users[slotProps.index].image">
-            </MediaElt>
-          </template>
-
           <!-- User Name -->
           <template #cell-name="slotProps">
             <FieldElt :id="'name-' + users[slotProps.index]._id"
@@ -44,6 +36,10 @@
 
           <!-- User Image -->
           <template #cell-image="slotProps">
+            <MediaElt :src="'/img/users/' + users[slotProps.index].image"
+              :alt="users[slotProps.index].name"
+              :title="users[slotProps.index].image">
+            </MediaElt>
             <FieldElt :id="'image-' + users[slotProps.index]._id"
               type="file"
               info="Update the user image">
@@ -53,6 +49,7 @@
           <!-- User Alt -->
           <template #cell-alt="slotProps">
             <FieldElt :id="'alt-' + users[slotProps.index]._id"
+              type="textarea"
               v-model:value="getUsers()[slotProps.index].alt"
               info="Update the user alt"
               @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)">

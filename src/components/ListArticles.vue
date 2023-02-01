@@ -15,14 +15,6 @@
             up/del
           </template>
 
-          <!-- Current Article Image -->
-          <template #cell-_id="slotProps">
-            <MediaElt :src="'/img/articles/' + articles[slotProps.index].image"
-              :alt="articles[slotProps.index].name"
-              :title="articles[slotProps.index].image">
-            </MediaElt>
-          </template>
-
           <!-- Article Name -->
           <template #cell-name="slotProps">
             <FieldElt :id="'name-' + articles[slotProps.index]._id"
@@ -44,6 +36,10 @@
 
           <!-- Article Image -->
           <template #cell-image="slotProps">
+            <MediaElt :src="'/img/articles/' + articles[slotProps.index].image"
+              :alt="articles[slotProps.index].name"
+              :title="articles[slotProps.index].image">
+            </MediaElt>
             <FieldElt :id="'image-' + articles[slotProps.index]._id"
               type="file"
               info="Update the article image">
@@ -53,6 +49,7 @@
           <!-- Article Alt -->
           <template #cell-alt="slotProps">
             <FieldElt :id="'alt-' + articles[slotProps.index]._id"
+              type="textarea"
               v-model:value="getArticles()[slotProps.index].alt"
               info="Update the article alt"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)">

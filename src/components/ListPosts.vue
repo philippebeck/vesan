@@ -15,14 +15,6 @@
             up/del
           </template>
 
-          <!-- Current Post Image -->
-          <template #cell-_id="slotProps">
-            <MediaElt :src="'/img/posts/' + posts[slotProps.index].image"
-              :alt="posts[slotProps.index].title"
-              :title="posts[slotProps.index].image">
-            </MediaElt>
-          </template>
-
           <!-- Post Title -->
           <template #cell-title="slotProps">
             <FieldElt :id="'title-' + posts[slotProps.index]._id"
@@ -44,6 +36,10 @@
 
           <!-- Post Image -->
           <template #cell-image="slotProps">
+            <MediaElt :src="'/img/posts/' + posts[slotProps.index].image"
+              :alt="posts[slotProps.index].title"
+              :title="posts[slotProps.index].image">
+            </MediaElt>
             <FieldElt :id="'image-' + posts[slotProps.index]._id"
               type="file"
               info="Update the post image">
@@ -53,6 +49,7 @@
           <!-- Post Alt -->
           <template #cell-alt="slotProps">
             <FieldElt :id="'alt-' + posts[slotProps.index]._id"
+              type="textarea"
               v-model:value="getPosts()[slotProps.index].alt"
               @keyup.enter="validateUpdatedPost(posts[slotProps.index]._id)"
               info="Update the post title">
