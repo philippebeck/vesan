@@ -60,6 +60,7 @@
           <!-- Article Alt -->
           <template #item-4>
             <FieldElt id="article-alt"
+              type="textarea"
               v-model:value="alt"
               info="Alternative text">
               <template #legend>

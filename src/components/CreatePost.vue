@@ -60,6 +60,7 @@
           <!-- Post Author -->
           <template #item-4>
             <FieldElt id="post-alt"
+              type="textarea"
               v-model:value="alt"
               info="Alternative text"
               @keyup.enter="validateNewPost()">

@@ -60,6 +60,7 @@
           <!-- User Name -->
           <template #item-4>
             <FieldElt id="user-alt"
+              type="textarea"
               v-model:value="alt"
               @keyup.enter="validateNewUser()"
               info="Alternative text">
