@@ -70,13 +70,13 @@
           </template>
 
           <!-- User Created -->
-          <template #cell-createdDate="slotProps">
-            {{ new Date(getUsers()[slotProps.index].createdDate).toLocaleString() }}
+          <template #cell-created="slotProps">
+            {{ new Date(getUsers()[slotProps.index].created).toLocaleString() }}
           </template>
 
           <!-- User Updated -->
-          <template #cell-updatedDate="slotProps">
-            {{ new Date(getUsers()[slotProps.index].updatedDate).toLocaleString() }}
+          <template #cell-updated="slotProps">
+            {{ new Date(getUsers()[slotProps.index].updated).toLocaleString() }}
           </template>
 
           <template #body="slotProps">
@@ -190,8 +190,8 @@ export default {
         user.append("image", image);
         user.append("alt", this.users[i].alt);
         user.append("pass", this.pass);
-        user.append("createdDate", this.users[i].createdDate);
-        user.append("updatedDate", Date.now());
+        user.append("created", this.users[i].created);
+        user.append("updated", Date.now());
 
         this.$serve.putData(`/api/users/${user.get("id")}`, user)
           .then(() => {

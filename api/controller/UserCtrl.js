@@ -47,11 +47,11 @@ exports.getImgName = (name) => {
  * @param {string} image 
  * @param {string} alt 
  * @param {string} pass 
- * @param {string} createdDate 
- * @param {string} updatedDate 
+ * @param {string} created 
+ * @param {string} updated 
  * @returns 
  */
-exports.getUser = (name, email, image, alt, pass, createdDate, updatedDate) => {
+exports.getUser = (name, email, image, alt, pass, created, updated) => {
 
   return {
     name: name,
@@ -59,8 +59,8 @@ exports.getUser = (name, email, image, alt, pass, createdDate, updatedDate) => {
     image: image,
     alt: alt,
     pass: pass,
-    createdDate: createdDate,
-    updatedDate: updatedDate
+    created: created,
+    updated: updated
   }
 }
 
@@ -147,8 +147,8 @@ exports.forgotPass = (req, res, next) => {
               user.image, 
               user.alt, 
               hash,
-              user.createdDate,
-              user.updatedDate
+              user.created,
+              user.updated
             );
 
             UserModel
@@ -196,8 +196,8 @@ exports.createUser = (req, res, next) => {
             image, 
             fields.alt, 
             hash,
-            fields.createdDate, 
-            fields.updatedDate
+            fields.created, 
+            fields.updated
           ));
 
         fs.unlink(usersUrl + files.image.newFilename, () => {
@@ -256,8 +256,8 @@ exports.updateUser = (req, res, next) => {
           image, 
           fields.alt, 
           hash,
-          fields.createdDate, 
-          fields.updatedDate
+          fields.created, 
+          fields.updated
         );
 
         UserModel
