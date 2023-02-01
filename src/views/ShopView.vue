@@ -47,6 +47,10 @@
 
               <template #figcaption>
                 <h3>{{ slotProps.value.name }}</h3>
+                <p>
+                  {{ calculateScoresAverage(slotProps.value._id) }}
+                  <i class="fa-solid fa-star"></i>
+                </p>
                 <p>{{ slotProps.value.description }}</p>
                 <b>{{ slotProps.value.price }} €</b>
               </template>
@@ -72,6 +76,8 @@ export default {
   data() {
     return {
       articles: [],
+      reviews: [],
+      scores: [],
       userId: null
     }
   },
@@ -79,6 +85,10 @@ export default {
   mounted () {
     this.$serve.getData("/api/articles")
       .then(res => { this.articles = res })
+      .catch(err => { console.log(err) });
+
+    this.$serve.getData("/api/reviews")
+      .then(res => { this.reviews = res })
       .catch(err => { console.log(err) });
 
     if (localStorage.userId) {
@@ -109,6 +119,44 @@ export default {
         itemsByCat[item.cat].sort((a, b) => (a.name > b.name) ? 1 : -1);
       });
       return itemsByCat;
+    },
+
+    /** 
+     * CALCULATE SCORES AVERAGE
+     * @returns
+     */
+    calculateScoresAverage(articleId) {
+      let sumData = {};
+
+      for (let review of this.reviews) {
+
+          if (sumData[review.article]) {
+              sumData[review.article].sum = sumData[review.article].sum + review.score;
+              sumData[review.article].n++;
+
+          } else {
+              sumData[review.article] = {
+                  sum: review.score,
+                  n: 1
+              };
+          }
+      }
+
+      let averageData = [];
+
+      for (let element of Object.keys(sumData)) {
+          averageData.push({
+            article: element,
+              score: sumData[element].sum / sumData[element].n
+          });
+      }
+
+      for (let data of averageData) {
+        if (articleId === data.article) {
+
+          return data.score;
+        }
+      }
     }
   }
 }
