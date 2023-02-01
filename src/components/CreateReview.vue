@@ -2,7 +2,7 @@
   <CardElt>
     <template #header>
       <i class="fa-solid fa-check fa-2x"></i>
-      <h2>Create Review</h2>
+      <h3>Create Review</h3>
     </template>
 
     <template #body>

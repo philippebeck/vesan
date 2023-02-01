@@ -2,7 +2,7 @@
   <CardElt>
     <template #header>
       <i class="fa-regular fa-comment fa-2x"></i>
-      <h2>Create Comment</h2>
+      <h3>Create Comment</h3>
     </template>
 
     <template #body>
