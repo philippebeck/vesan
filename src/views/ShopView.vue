@@ -126,23 +126,22 @@ export default {
      * @returns
      */
     calculateScoresAverage(articleId) {
-      let sumData = {};
+      let sumData     = {};
+      let averageData = [];
 
       for (let review of this.reviews) {
 
-          if (sumData[review.article]) {
-              sumData[review.article].sum = sumData[review.article].sum + review.score;
-              sumData[review.article].n++;
+        if (sumData[review.article]) {
+          sumData[review.article].sum = sumData[review.article].sum + review.score;
+          sumData[review.article].n++;
 
-          } else {
-              sumData[review.article] = {
-                  sum: review.score,
-                  n: 1
-              };
-          }
+        } else {
+          sumData[review.article] = {
+            sum: review.score,
+            n: 1
+          };
+        }
       }
-
-      let averageData = [];
 
       for (let element of Object.keys(sumData)) {
           averageData.push({
