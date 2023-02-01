@@ -61,15 +61,6 @@
             </FieldElt>
           </template>
 
-          <!-- Post Author -->
-          <template #cell-author="slotProps">
-            <FieldElt :id="'author-' + posts[slotProps.index]._id"
-              v-model:value="getPosts()[slotProps.index].author"
-              @keyup.enter="validateUpdatedPost(posts[slotProps.index]._id)"
-              info="Update the post author">
-            </FieldElt>
-          </template>
-
           <!-- Post Category -->
           <template #cell-cat="slotProps">
             <FieldElt :id="'cat-' + posts[slotProps.index]._id"
