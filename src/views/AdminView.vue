@@ -63,8 +63,6 @@
         </template>
 
         <template #body>
-          <CreatePost />
-
           <ListPosts v-if="posts.length > 0"
             :posts="posts"
             :users="users"/>
@@ -101,7 +99,6 @@
 <script>
 import ListArticles from "@/components/ListArticles"
 import ListReviews from "@/components/ListReviews"
-import CreatePost from "@/components/CreatePost"
 import ListPosts from "@/components/ListPosts"
 import ListComments from "@/components/ListComments"
 import CreateUser from "@/components/CreateUser"
@@ -112,7 +109,6 @@ export default {
   components: {
     ListArticles,
     ListReviews,
-    CreatePost,
     ListPosts,
     ListComments,
     CreateUser,

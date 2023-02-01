@@ -1,5 +1,5 @@
 <template>
-  <CardElt>
+  <CardElt id="create-post">
     <template #header>
       <i class="fa-regular fa-envelope fa-2x"></i>
       <h3>Create Post</h3>

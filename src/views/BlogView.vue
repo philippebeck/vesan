@@ -4,6 +4,13 @@
     :items="cats"
     class="sidebar">
 
+    <template #last>
+      <a href="#create-post"
+        title="Create a post">
+        <i class="fa-regular fa-envelope fa-fw"></i>
+      </a>
+    </template>
+
     <template #top>
       <i class="fa-solid fa-chevron-circle-up fa-fw"></i>
     </template>
@@ -18,6 +25,10 @@
         Posts to read !
       </strong>
       <p>Under construction !</p>
+    </template>
+
+    <template #aside v-if="userId">
+      <CreatePost />
     </template>
 
     <template #body>
@@ -42,18 +53,25 @@
             </MediaElt>
           </a>
         </template>
+
       </ListElt>
     </template>
   </CardElt>
 </template>
 
 <script>
+import CreatePost from "@/components/CreatePost"
+
 export default {
   name: "BlogView",
+  components: {
+    CreatePost
+  },
 
   data() {
     return {
-      posts: []
+      posts: [],
+      userId: null
     }
   },
 
@@ -61,6 +79,10 @@ export default {
     this.$serve.getData("/api/posts")
       .then(res => { this.posts = res })
       .catch(err => { console.log(err) });
+
+    if (localStorage.userId) {
+      this.userId = JSON.parse(localStorage.userId);
+    }
   },
 
   computed: {
