@@ -13,19 +13,19 @@ const ReviewModel = mongoose.Schema(
       type: Number, 
       required: true
     },
-    articleId: { 
+    article: { 
       type: String, 
       required: true
     },
-    userId: { 
+    user: { 
       type: String, 
       required: true
     },
-    createdDate: { 
+    created: { 
       type: Date, 
       required: true
     },
-    updatedDate: { 
+    updated: { 
       type: Date, 
       required: true
     }

@@ -71,10 +71,10 @@ export default {
 
       review.append("text", this.text);
       review.append("score", this.score);
-      review.append("articleId", this.$route.params.id);
-      review.append("userId", constants.USER_ID);
-      review.append("createdDate", Date.now());
-      review.append("updatedDate", Date.now());
+      review.append("article", this.$route.params.id);
+      review.append("user", constants.USER_ID);
+      review.append("created", Date.now());
+      review.append("updated", Date.now());
 
       this.$serve.postData("/api/reviews", review)
         .then(() => {
