@@ -86,10 +86,10 @@
         </template>
 
         <template #body>
-          <CreateUser />
-
           <ListUsers v-if="users.length > 0"
             :users="users"/>
+
+          <CreateUser />
         </template>
       </CardElt>
     </template>
@@ -101,8 +101,8 @@ import ListArticles from "@/components/ListArticles"
 import ListReviews from "@/components/ListReviews"
 import ListPosts from "@/components/ListPosts"
 import ListComments from "@/components/ListComments"
-import CreateUser from "@/components/CreateUser"
 import ListUsers from "@/components/ListUsers"
+import CreateUser from "@/components/CreateUser"
 
 export default {
   name: "AdminView",
@@ -111,8 +111,8 @@ export default {
     ListReviews,
     ListPosts,
     ListComments,
-    CreateUser,
-    ListUsers
+    ListUsers,
+    CreateUser
   },
 
   data() {
