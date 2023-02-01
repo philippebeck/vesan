@@ -1,15 +1,14 @@
 <template>
-  <CardElt>
+  <CardElt v-if="this.$route.params.id">
     <template #header>
       <i class="fa-solid fa-list-check fa-2x"></i>
-      <h3>List Reviews</h3>
+      <h2>List Reviews</h2>
     </template>
 
     <template #body>
 
-      <ListElt v-if="this.$route.params.id"
-        :dynamic="true"
-        :items="reviews">
+      <ListElt :items="reviews"
+        :dynamic="true">
         <template #items="slotProps">
           <blockquote class="container-90sm-80md-70lg-60xl-50wd bord bord-sky blue">
             {{ slotProps.item.text }}
@@ -25,9 +24,17 @@
           </p>
         </template>
       </ListElt>
+    </template>
+  </CardElt>
 
-      <form v-else
-        method="post">
+  <CardElt v-else>
+    <template #header>
+      <i class="fa-solid fa-list-check fa-2x"></i>
+      <h2>List Reviews</h2>
+    </template>
+
+    <template #body>
+      <form method="post">
         <TableElt :items="reviews">
 
           <!-- Last Table Head -->
@@ -78,9 +85,8 @@
           </template>
 
           <template #body="slotProps">
-
-          <!-- Update Button -->
-          <BtnElt type="button"
+            <!-- Update Button -->
+            <BtnElt type="button"
               @click="updateReview(reviews[slotProps.index]._id)" 
               class="btn-sky"
               :title="'Update review #' + reviews[slotProps.index]._id">
@@ -99,6 +105,7 @@
               </template>
             </BtnElt>
           </template>
+
         </TableElt>
       </form>
     </template>

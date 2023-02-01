@@ -1,15 +1,14 @@
 <template>
-  <CardElt>
+  <CardElt v-if="this.$route.params.id">
     <template #header>
       <i class="fa-regular fa-comments fa-2x"></i>
-      <h3>List Comments</h3>
+      <h2>List Comments</h2>
     </template>
 
     <template #body>
 
-      <ListElt v-if="this.$route.params.id"
-        :dynamic="true"
-        :items="comments">
+      <ListElt :items="comments"
+        :dynamic="true">
 
         <template #items="slotProps">
           <blockquote class="container-90sm-80md-70lg-60xl-50wd bord bord-sky blue">
@@ -22,9 +21,18 @@
           </p>
         </template>
       </ListElt>
+    </template>
+  </CardElt>
 
-      <form v-else
-        method="post">
+  <CardElt v-else>
+    <template #header>
+      <i class="fa-regular fa-comments fa-2x"></i>
+      <h3>List Comments</h3>
+    </template>
+
+    <template #body>
+
+      <form method="post">
         <TableElt :items="comments">
 
           <!-- Last Table Head -->
