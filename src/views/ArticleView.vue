@@ -10,6 +10,10 @@
         :alt="article.alt">
 
         <template #figcaption>
+          <p>
+            {{ calculateScoresAverage(article._id) }}
+            <i class="fa-solid fa-star"></i>
+          </p>
           <p>{{ article.description }}</p>
           <b>{{ article.price }} €</b>
           <p class="silver">
@@ -36,6 +40,7 @@ import ListReviews from "@/components/ListReviews"
 
 export default {
   name: "ArticleView",
+
   components: {
     CreateReview,
     ListReviews
@@ -47,19 +52,6 @@ export default {
       reviews: [],
       users: [],
       userId: null
-    }
-  },
-
-  methods: {
-    getArticleReviews() {
-      let articleReviews = [];
-
-      for (let i = 0 ; i < this.reviews.length ; i++) {
-        if (this.$route.params.id === this.reviews[i].article) {
-          articleReviews.push(this.reviews[i]);
-        }
-      }
-      return articleReviews;
     }
   },
 
@@ -78,6 +70,61 @@ export default {
 
     if (localStorage.userId) {
       this.userId = JSON.parse(localStorage.userId);
+    }
+  },
+
+  methods: {
+    /** 
+     * CALCULATE SCORES AVERAGE
+     * @returns
+     */
+    calculateScoresAverage(articleId) {
+      let sumData = {};
+
+      for (let review of this.reviews) {
+
+          if (sumData[review.article]) {
+              sumData[review.article].sum = sumData[review.article].sum + review.score;
+              sumData[review.article].n++;
+
+          } else {
+              sumData[review.article] = {
+                  sum: review.score,
+                  n: 1
+              };
+          }
+      }
+
+      let averageData = [];
+
+      for (let element of Object.keys(sumData)) {
+          averageData.push({
+            article: element,
+              score: sumData[element].sum / sumData[element].n
+          });
+      }
+
+      for (let data of averageData) {
+        if (articleId === data.article) {
+
+          return data.score;
+        }
+      }
+    },
+
+    /**
+     * GET ARTICLE REVIEWS
+     * @returns
+     */
+    getArticleReviews() {
+      let articleReviews = [];
+
+      for (let i = 0 ; i < this.reviews.length ; i++) {
+        if (this.$route.params.id === this.reviews[i].article) {
+          articleReviews.push(this.reviews[i]);
+        }
+      }
+      return articleReviews;
     }
   }
 }
