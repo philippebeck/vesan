@@ -172,9 +172,9 @@ export default {
         post.append("image", image);
         post.append("alt", this.alt);
         post.append("cat", this.cat);
-        post.append("userId", constants.USER_ID);
-        post.append("createdDate", Date.now());
-        post.append("updatedDate", Date.now());
+        post.append("user", constants.USER_ID);
+        post.append("created", Date.now());
+        post.append("updated", Date.now());
         post.append("likes", 0);
         post.append("usersLiked", []);
 

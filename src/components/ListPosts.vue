@@ -81,18 +81,18 @@
           </template>
 
           <!-- Post User -->
-          <template #cell-userId="slotProps">
-            {{ getPostUser(getPosts()[slotProps.index].userId) }}
+          <template #cell-user="slotProps">
+            {{ getPostUser(getPosts()[slotProps.index].user) }}
           </template>
 
           <!-- Post Created -->
-          <template #cell-createdDate="slotProps">
-            {{ new Date(getPosts()[slotProps.index].createdDate).toLocaleString() }}
+          <template #cell-created="slotProps">
+            {{ new Date(getPosts()[slotProps.index].created).toLocaleString() }}
           </template>
 
           <!-- Post Updated -->
-          <template #cell-updatedDate="slotProps">
-            {{ new Date(getPosts()[slotProps.index].updatedDate).toLocaleString() }}
+          <template #cell-updated="slotProps">
+            {{ new Date(getPosts()[slotProps.index].updated).toLocaleString() }}
           </template>
 
           <template #body="slotProps">
@@ -212,9 +212,9 @@ export default {
         post.append("image", image);
         post.append("alt", this.posts[i].alt);
         post.append("cat", this.posts[i].cat);
-        post.append("userId", constants.USER_ID);
-        post.append("createdDate", this.posts[i].createdDate);
-        post.append("updatedDate", Date.now());
+        post.append("user", constants.USER_ID);
+        post.append("created", this.posts[i].created);
+        post.append("updated", Date.now());
         post.append("likes", this.posts[i].likes);
         post.append("usersLiked", this.posts[i].usersLiked);
 

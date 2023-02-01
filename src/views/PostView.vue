@@ -17,8 +17,8 @@
           </blockquote>
           
           <p class="silver">
-            Created: {{ new Date(post.createdDate).toLocaleDateString() }} 
-            (Updated: {{ new Date(post.updatedDate).toLocaleDateString() }})
+            Created: {{ new Date(post.created).toLocaleDateString() }} 
+            (Updated: {{ new Date(post.updated).toLocaleDateString() }})
           </p>
         </template>
       </MediaElt>
@@ -56,7 +56,7 @@ export default {
       let postComments = [];
 
       for (let i = 0 ; i < this.comments.length ; i++) {
-        if (this.$route.params.id === this.comments[i].postId) {
+        if (this.$route.params.id === this.comments[i].post) {
           postComments.push(this.comments[i]);
         }
       }

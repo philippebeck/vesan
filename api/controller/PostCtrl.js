@@ -31,14 +31,14 @@ exports.getImgName = (name) => {
  * @param {string} image 
  * @param {string} alt 
  * @param {string} cat 
- * @param {string} userId 
- * @param {string} createdDate 
- * @param {string} updatedDate 
+ * @param {string} user 
+ * @param {string} created 
+ * @param {string} updated 
  * @param {number} likes 
  * @param {array} usersLiked 
  * @returns 
  */
-exports.getPost = (title, text, image, alt, cat, userId, createdDate, updatedDate, likes, usersLiked) => {
+exports.getPost = (title, text, image, alt, cat, user, created, updated, likes, usersLiked) => {
 
   return {
     title: title,
@@ -46,9 +46,9 @@ exports.getPost = (title, text, image, alt, cat, userId, createdDate, updatedDat
     image: image,
     alt: alt,
     cat: cat,
-    userId: userId,
-    createdDate: createdDate,
-    updatedDate: updatedDate,
+    user: user,
+    created: created,
+    updated: updated,
     likes: likes,
     usersLiked: usersLiked
   }
@@ -95,9 +95,9 @@ exports.createPost = (req, res, next) => {
       image, 
       fields.alt, 
       fields.cat, 
-      fields.userId,
-      fields.createdDate,
-      fields.updatedDate,
+      fields.user,
+      fields.created,
+      fields.updated,
       fields.likes,
       fields.usersLiked,
     ));
@@ -165,9 +165,9 @@ exports.updatePost = (req, res, next) => {
       image, 
       fields.alt, 
       fields.cat, 
-      fields.userId,
-      fields.createdDate,
-      fields.updatedDate,
+      fields.user,
+      fields.created,
+      fields.updated,
       fields.likes,
       fields.usersLiked
     );
