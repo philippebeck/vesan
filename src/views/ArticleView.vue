@@ -10,20 +10,26 @@
         :alt="article.alt">
 
         <template #figcaption>
+          <p>
+            {{ calculateScoresAverage(article._id) }}
+            <i class="fa-solid fa-star"></i>
+          </p>
           <p>{{ article.description }}</p>
           <b>{{ article.price }} €</b>
           <p class="silver">
-            Created: {{ new Date(article.createdDate).toLocaleDateString() }}
-            (Updated: {{ new Date(article.updatedDate).toLocaleDateString() }})
+            Created: {{ new Date(article.created).toLocaleDateString() }}
+            (Updated: {{ new Date(article.updated).toLocaleDateString() }})
           </p>
         </template>
       </MediaElt>
 
-      <CreateReview />
-
       <ListReviews v-if="reviews.length > 0"
         :reviews="getArticleReviews()"
         :users="users"/>
+    </template>
+
+    <template #aside  v-if="userId">
+      <CreateReview />
     </template>
   </CardElt>
 </template>
@@ -34,6 +40,7 @@ import ListReviews from "@/components/ListReviews"
 
 export default {
   name: "ArticleView",
+
   components: {
     CreateReview,
     ListReviews
@@ -43,20 +50,8 @@ export default {
     return {
       article: {},
       reviews: [],
-      users: []
-    }
-  },
-
-  methods: {
-    getArticleReviews() {
-      let articleReviews = [];
-
-      for (let i = 0 ; i < this.reviews.length ; i++) {
-        if (this.$route.params.id === this.reviews[i].articleId) {
-          articleReviews.push(this.reviews[i]);
-        }
-      }
-      return articleReviews;
+      users: [],
+      userId: null
     }
   },
 
@@ -72,6 +67,64 @@ export default {
     this.$serve.getData("/api/users")
       .then(res => { this.users = res })
       .catch(err => { console.log(err) });
+
+    if (localStorage.userId) {
+      this.userId = JSON.parse(localStorage.userId);
+    }
+  },
+
+  methods: {
+    /** 
+     * CALCULATE SCORES AVERAGE
+     * @returns
+     */
+    calculateScoresAverage(articleId) {
+      let sumData     = {};
+      let averageData = [];
+
+      for (let review of this.reviews) {
+
+        if (sumData[review.article]) {
+          sumData[review.article].sum = sumData[review.article].sum + review.score;
+          sumData[review.article].n++;
+
+        } else {
+          sumData[review.article] = {
+            sum: review.score,
+            n: 1
+          };
+        }
+      }
+
+      for (let element of Object.keys(sumData)) {
+          averageData.push({
+            article: element,
+              score: sumData[element].sum / sumData[element].n
+          });
+      }
+
+      for (let data of averageData) {
+        if (articleId === data.article) {
+
+          return data.score;
+        }
+      }
+    },
+
+    /**
+     * GET ARTICLE REVIEWS
+     * @returns
+     */
+    getArticleReviews() {
+      let articleReviews = [];
+
+      for (let i = 0 ; i < this.reviews.length ; i++) {
+        if (this.$route.params.id === this.reviews[i].article) {
+          articleReviews.push(this.reviews[i]);
+        }
+      }
+      return articleReviews;
+    }
   }
 }
 </script>

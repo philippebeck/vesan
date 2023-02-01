@@ -15,12 +15,9 @@
             up/del
           </template>
 
-          <!-- Current User Image -->
+          <!-- User Id -->
           <template #cell-_id="slotProps">
-            <MediaElt :src="'/img/users/' + users[slotProps.index].image"
-              :alt="users[slotProps.index].name"
-              :title="users[slotProps.index].image">
-            </MediaElt>
+            {{ slotProps.index + 1 }}
           </template>
 
           <!-- User Name -->
@@ -44,6 +41,10 @@
 
           <!-- User Image -->
           <template #cell-image="slotProps">
+            <MediaElt :src="'/img/users/' + users[slotProps.index].image"
+              :alt="users[slotProps.index].name"
+              :title="users[slotProps.index].image">
+            </MediaElt>
             <FieldElt :id="'image-' + users[slotProps.index]._id"
               type="file"
               info="Update the user image">
@@ -53,9 +54,22 @@
           <!-- User Alt -->
           <template #cell-alt="slotProps">
             <FieldElt :id="'alt-' + users[slotProps.index]._id"
+              type="textarea"
               v-model:value="getUsers()[slotProps.index].alt"
               info="Update the user alt"
               @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)">
+            </FieldElt>
+          </template>
+
+          <!-- User Role -->
+          <template #cell-role="slotProps">
+            <FieldElt :id="'role-' + users[slotProps.index]._id"
+              type="select"
+              v-model:value="getUsers()[slotProps.index].role"
+              :list="roles"
+              info="Update the user role"
+              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)">
+              {{ value }}
             </FieldElt>
           </template>
 
@@ -70,13 +84,13 @@
           </template>
 
           <!-- User Created -->
-          <template #cell-createdDate="slotProps">
-            {{ new Date(getUsers()[slotProps.index].createdDate).toLocaleString() }}
+          <template #cell-created="slotProps">
+            {{ new Date(getUsers()[slotProps.index].created).toLocaleString() }}
           </template>
 
           <!-- User Updated -->
-          <template #cell-updatedDate="slotProps">
-            {{ new Date(getUsers()[slotProps.index].updatedDate).toLocaleString() }}
+          <template #cell-updated="slotProps">
+            {{ new Date(getUsers()[slotProps.index].updated).toLocaleString() }}
           </template>
 
           <template #body="slotProps">
@@ -115,6 +129,15 @@ export default {
   data() {
     return {
       pass: ""
+    }
+  },
+
+  computed: {
+    roles() {
+      const roles = new Set();
+      this.users.forEach(user => roles.add(user.role));
+
+      return Array.from(roles); 
     }
   },
 
@@ -189,9 +212,10 @@ export default {
         user.append("email", this.users[i].email);
         user.append("image", image);
         user.append("alt", this.users[i].alt);
+        user.append("role", this.users[i].role);
         user.append("pass", this.pass);
-        user.append("createdDate", this.users[i].createdDate);
-        user.append("updatedDate", Date.now());
+        user.append("created", this.users[i].created);
+        user.append("updated", Date.now());
 
         this.$serve.putData(`/api/users/${user.get("id")}`, user)
           .then(() => {

@@ -41,8 +41,6 @@
         </template>
 
         <template #body>
-          <CreateArticle />
-
           <ListArticles v-if="articles.length > 0"
             :articles="articles"/>
 
@@ -65,8 +63,6 @@
         </template>
 
         <template #body>
-          <CreatePost />
-
           <ListPosts v-if="posts.length > 0"
             :posts="posts"
             :users="users"/>
@@ -90,10 +86,10 @@
         </template>
 
         <template #body>
-          <CreateUser />
-
           <ListUsers v-if="users.length > 0"
             :users="users"/>
+
+          <CreateUser />
         </template>
       </CardElt>
     </template>
@@ -101,26 +97,22 @@
 </template>
 
 <script>
-import CreateArticle from "@/components/CreateArticle"
 import ListArticles from "@/components/ListArticles"
 import ListReviews from "@/components/ListReviews"
-import CreatePost from "@/components/CreatePost"
 import ListPosts from "@/components/ListPosts"
 import ListComments from "@/components/ListComments"
-import CreateUser from "@/components/CreateUser"
 import ListUsers from "@/components/ListUsers"
+import CreateUser from "@/components/CreateUser"
 
 export default {
   name: "AdminView",
   components: {
-    CreateArticle,
     ListArticles,
     ListReviews,
-    CreatePost,
     ListPosts,
     ListComments,
-    CreateUser,
-    ListUsers
+    ListUsers,
+    CreateUser
   },
 
   data() {

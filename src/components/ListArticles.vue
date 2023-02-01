@@ -15,12 +15,9 @@
             up/del
           </template>
 
-          <!-- Current Article Image -->
+          <!-- Article Id -->
           <template #cell-_id="slotProps">
-            <MediaElt :src="'/img/articles/' + articles[slotProps.index].image"
-              :alt="articles[slotProps.index].name"
-              :title="articles[slotProps.index].image">
-            </MediaElt>
+            {{ slotProps.index + 1 }}
           </template>
 
           <!-- Article Name -->
@@ -44,6 +41,10 @@
 
           <!-- Article Image -->
           <template #cell-image="slotProps">
+            <MediaElt :src="'/img/articles/' + articles[slotProps.index].image"
+              :alt="articles[slotProps.index].name"
+              :title="articles[slotProps.index].image">
+            </MediaElt>
             <FieldElt :id="'image-' + articles[slotProps.index]._id"
               type="file"
               info="Update the article image">
@@ -53,6 +54,7 @@
           <!-- Article Alt -->
           <template #cell-alt="slotProps">
             <FieldElt :id="'alt-' + articles[slotProps.index]._id"
+              type="textarea"
               v-model:value="getArticles()[slotProps.index].alt"
               info="Update the article alt"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)">
@@ -78,19 +80,19 @@
               v-model:value="getArticles()[slotProps.index].cat"
               info="Update the category"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              :list="['sauce']">
+              :list="cats">
               {{ value }}
             </FieldElt>
           </template>
 
           <!-- Article Created -->
-          <template #cell-createdDate="slotProps">
-            {{ new Date(getArticles()[slotProps.index].createdDate).toLocaleString() }}
+          <template #cell-created="slotProps">
+            {{ new Date(getArticles()[slotProps.index].created).toLocaleString() }}
           </template>
 
           <!-- Article Updated -->
-          <template #cell-updatedDate="slotProps">
-            {{ new Date(getArticles()[slotProps.index].updatedDate).toLocaleString() }}
+          <template #cell-updated="slotProps">
+            {{ new Date(getArticles()[slotProps.index].updated).toLocaleString() }}
           </template>
 
           <template #body="slotProps">
@@ -125,6 +127,14 @@
 export default {
   name: "ListArticles",
   props: ["articles"],
+
+  computed: {
+    cats() {
+      const cats = new Set();
+      this.articles.forEach(article => cats.add(article.cat));
+      return Array.from(cats); 
+    }
+  },
 
   methods: {
     /**
@@ -200,8 +210,8 @@ export default {
         article.append("alt", this.articles[i].alt);
         article.append("price", this.articles[i].price);
         article.append("cat", this.articles[i].cat);
-        article.append("createdDate", this.articles[i].createdDate);
-        article.append("updatedDate", Date.now());
+        article.append("created", this.articles[i].created);
+        article.append("updated", Date.now());
 
         this.$serve.putData(`/api/articles/${article.get("id")}`, article)
           .then(() => {

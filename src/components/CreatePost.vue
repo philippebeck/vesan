@@ -1,5 +1,5 @@
 <template>
-  <CardElt>
+  <CardElt id="create-post">
     <template #header>
       <i class="fa-regular fa-envelope fa-2x"></i>
       <h3>Create Post</h3>
@@ -60,6 +60,7 @@
           <!-- Post Author -->
           <template #item-4>
             <FieldElt id="post-alt"
+              type="textarea"
               v-model:value="alt"
               info="Alternative text"
               @keyup.enter="validateNewPost()">
@@ -79,7 +80,7 @@
               v-model:value="cat"
               info="Choose a category"
               @keyup.enter="validateNewPost()"
-              :list="['sport']">
+              :list="cats">
               <template #legend>
                 Category
               </template>
@@ -105,6 +106,9 @@ import constants from "/constants"
 
 export default {
   name: "CreatePost",
+  props: {
+    cats: {}
+  },
 
   data() {
     return {
@@ -172,9 +176,9 @@ export default {
         post.append("image", image);
         post.append("alt", this.alt);
         post.append("cat", this.cat);
-        post.append("userId", constants.USER_ID);
-        post.append("createdDate", Date.now());
-        post.append("updatedDate", Date.now());
+        post.append("user", constants.USER_ID);
+        post.append("created", Date.now());
+        post.append("updated", Date.now());
         post.append("likes", 0);
         post.append("usersLiked", []);
 

@@ -2,7 +2,7 @@
   <CardElt>
     <template #header>
       <i class="fa-regular fa-comment fa-2x"></i>
-      <h2>Create Comment</h2>
+      <h3>Create Comment</h3>
     </template>
 
     <template #body>
@@ -53,10 +53,10 @@ export default {
       let comment  = new FormData();
 
       comment.append("text", this.text);
-      comment.append("postId", this.$route.params.id);
-      comment.append("userId", constants.USER_ID);
-      comment.append("createdDate", Date.now());
-      comment.append("updatedDate", Date.now());
+      comment.append("post", this.$route.params.id);
+      comment.append("user", constants.USER_ID);
+      comment.append("created", Date.now());
+      comment.append("updated", Date.now());
 
       this.$serve.postData("/api/comments", comment)
         .then(() => {

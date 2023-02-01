@@ -15,12 +15,9 @@
             up/del
           </template>
 
-          <!-- Current Post Image -->
+          <!-- Post Id -->
           <template #cell-_id="slotProps">
-            <MediaElt :src="'/img/posts/' + posts[slotProps.index].image"
-              :alt="posts[slotProps.index].title"
-              :title="posts[slotProps.index].image">
-            </MediaElt>
+            {{ slotProps.index + 1 }}
           </template>
 
           <!-- Post Title -->
@@ -44,6 +41,10 @@
 
           <!-- Post Image -->
           <template #cell-image="slotProps">
+            <MediaElt :src="'/img/posts/' + posts[slotProps.index].image"
+              :alt="posts[slotProps.index].title"
+              :title="posts[slotProps.index].image">
+            </MediaElt>
             <FieldElt :id="'image-' + posts[slotProps.index]._id"
               type="file"
               info="Update the post image">
@@ -53,18 +54,10 @@
           <!-- Post Alt -->
           <template #cell-alt="slotProps">
             <FieldElt :id="'alt-' + posts[slotProps.index]._id"
+              type="textarea"
               v-model:value="getPosts()[slotProps.index].alt"
               @keyup.enter="validateUpdatedPost(posts[slotProps.index]._id)"
               info="Update the post title">
-            </FieldElt>
-          </template>
-
-          <!-- Post Author -->
-          <template #cell-author="slotProps">
-            <FieldElt :id="'author-' + posts[slotProps.index]._id"
-              v-model:value="getPosts()[slotProps.index].author"
-              @keyup.enter="validateUpdatedPost(posts[slotProps.index]._id)"
-              info="Update the post author">
             </FieldElt>
           </template>
 
@@ -74,25 +67,25 @@
               type="select"
               v-model:value="getPosts()[slotProps.index].cat"
               @keyup.enter="validateUpdatedPost(posts[slotProps.index]._id)"
-              :list="['sport']"
+              :list="cats"
               info="Update the category">
               {{ value }}
             </FieldElt>
           </template>
 
           <!-- Post User -->
-          <template #cell-userId="slotProps">
-            {{ getPostUser(getPosts()[slotProps.index].userId) }}
+          <template #cell-user="slotProps">
+            {{ getPostUser(getPosts()[slotProps.index].user) }}
           </template>
 
           <!-- Post Created -->
-          <template #cell-createdDate="slotProps">
-            {{ new Date(getPosts()[slotProps.index].createdDate).toLocaleString() }}
+          <template #cell-created="slotProps">
+            {{ new Date(getPosts()[slotProps.index].created).toLocaleString() }}
           </template>
 
           <!-- Post Updated -->
-          <template #cell-updatedDate="slotProps">
-            {{ new Date(getPosts()[slotProps.index].updatedDate).toLocaleString() }}
+          <template #cell-updated="slotProps">
+            {{ new Date(getPosts()[slotProps.index].updated).toLocaleString() }}
           </template>
 
           <template #body="slotProps">
@@ -129,6 +122,14 @@ import constants from "/constants";
 export default {
   name: "ListPosts",
   props: ["posts", "users"],
+
+  computed: {
+    cats() {
+      const cats = new Set();
+      this.posts.forEach(post => cats.add(post.cat));
+      return Array.from(cats); 
+    }
+  },
 
   methods: {
     /**
@@ -212,9 +213,9 @@ export default {
         post.append("image", image);
         post.append("alt", this.posts[i].alt);
         post.append("cat", this.posts[i].cat);
-        post.append("userId", constants.USER_ID);
-        post.append("createdDate", this.posts[i].createdDate);
-        post.append("updatedDate", Date.now());
+        post.append("user", constants.USER_ID);
+        post.append("created", this.posts[i].created);
+        post.append("updated", Date.now());
         post.append("likes", this.posts[i].likes);
         post.append("usersLiked", this.posts[i].usersLiked);
 

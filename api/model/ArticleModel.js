@@ -32,11 +32,11 @@ const ArticleModel = mongoose.Schema(
       type: String, 
       required: true
     },
-    createdDate: {
+    created: {
       type: Date,
       required: true
     },
-    updatedDate: {
+    updated: {
       type: Date,
       required: true
     }

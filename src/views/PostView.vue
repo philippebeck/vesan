@@ -17,17 +17,19 @@
           </blockquote>
           
           <p class="silver">
-            Created: {{ new Date(post.createdDate).toLocaleDateString() }} 
-            (Updated: {{ new Date(post.updatedDate).toLocaleDateString() }})
+            Created: {{ new Date(post.created).toLocaleDateString() }} 
+            (Updated: {{ new Date(post.updated).toLocaleDateString() }})
           </p>
         </template>
       </MediaElt>
 
-      <CreateComment />
-
       <ListComments v-if="comments.length > 0"
         :comments="getPostComments()"
         :users="users"/>
+    </template>
+
+    <template #aside  v-if="userId">
+      <CreateComment />
     </template>
   </CardElt>
 </template>
@@ -47,7 +49,8 @@ export default {
     return {
       post: {},
       comments: [],
-      users: []
+      users: [],
+      userId: null
     }
   },
 
@@ -56,7 +59,7 @@ export default {
       let postComments = [];
 
       for (let i = 0 ; i < this.comments.length ; i++) {
-        if (this.$route.params.id === this.comments[i].postId) {
+        if (this.$route.params.id === this.comments[i].post) {
           postComments.push(this.comments[i]);
         }
       }
@@ -76,6 +79,10 @@ export default {
     this.$serve.getData("/api/users")
       .then(res => { this.users = res })
       .catch(err => { console.log(err) });
+
+    if (localStorage.userId) {
+      this.userId = JSON.parse(localStorage.userId);
+    }
   }
 }
 </script>

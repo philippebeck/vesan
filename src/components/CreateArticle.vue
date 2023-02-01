@@ -1,5 +1,5 @@
 <template>
-  <CardElt>
+  <CardElt id="create-article">
     <template #header>
       <i class="fa-solid fa-basket-shopping fa-2x"></i>
       <h3>Create Article</h3>
@@ -60,6 +60,7 @@
           <!-- Article Alt -->
           <template #item-4>
             <FieldElt id="article-alt"
+              type="textarea"
               v-model:value="alt"
               info="Alternative text">
               <template #legend>
@@ -96,7 +97,7 @@
               v-model:value="cat"
               info="Choose a category"
               @keyup.enter="validateNewArticle()"
-              :list="['sauce']">
+              :list="cats">
               <template #legend>
                 Category
               </template>
@@ -120,6 +121,9 @@
 <script>
 export default {
   name: "CreateArticle",
+  props: {
+    cats: {}
+  },
 
   data() {
     return {
@@ -189,8 +193,8 @@ export default {
         article.append("alt", this.alt);
         article.append("price", this.price);
         article.append("cat", this.cat);
-        article.append("createdDate", Date.now());
-        article.append("updatedDate", Date.now());
+        article.append("created", Date.now());
+        article.append("updated", Date.now());
 
         this.$serve.postData("/api/articles", article)
           .then(() => {

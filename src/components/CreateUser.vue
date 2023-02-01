@@ -60,6 +60,7 @@
           <!-- User Name -->
           <template #item-4>
             <FieldElt id="user-alt"
+              type="textarea"
               v-model:value="alt"
               @keyup.enter="validateNewUser()"
               info="Alternative text">
@@ -170,9 +171,10 @@ export default {
         user.append("email", this.email);
         user.append("image", image);
         user.append("alt", this.alt);
+        user.append("role", "user");
         user.append("pass", this.pass);
-        user.append("createdDate", Date.now());
-        user.append("updatedDate", Date.now());
+        user.append("created", Date.now());
+        user.append("updated", Date.now());
 
         this.$serve.postData("/api/users", user)
           .then(() => {

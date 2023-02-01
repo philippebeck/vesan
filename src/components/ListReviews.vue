@@ -1,38 +1,50 @@
 <template>
-  <CardElt>
+  <CardElt v-if="this.$route.params.id">
     <template #header>
       <i class="fa-solid fa-list-check fa-2x"></i>
-      <h3>List Reviews</h3>
+      <h2>List Reviews</h2>
     </template>
 
     <template #body>
 
-      <ListElt v-if="this.$route.params.id"
-        :dynamic="true"
-        :items="reviews">
+      <ListElt :items="reviews"
+        :dynamic="true">
         <template #items="slotProps">
           <blockquote class="container-90sm-80md-70lg-60xl-50wd bord bord-sky blue">
             {{ slotProps.item.text }}
           </blockquote>
-          <p>by {{ getReviewUser(slotProps.item.userId) }}</p>
+          <p>by {{ getReviewUser(slotProps.item.user) }}</p>
           <p class="violet">
             {{ slotProps.item.score }}
             <i class="fa-solid fa-star"></i>
           </p>
           <p class="silver">
-            Created: {{ new Date(slotProps.item.createdDate).toLocaleDateString() }}
-            (Updated: {{ new Date(slotProps.item.updatedDate).toLocaleDateString() }})
+            Created: {{ new Date(slotProps.item.created).toLocaleDateString() }}
+            (Updated: {{ new Date(slotProps.item.updated).toLocaleDateString() }})
           </p>
         </template>
       </ListElt>
+    </template>
+  </CardElt>
 
-      <form v-else
-        method="post">
+  <CardElt v-else>
+    <template #header>
+      <i class="fa-solid fa-list-check fa-2x"></i>
+      <h2>List Reviews</h2>
+    </template>
+
+    <template #body>
+      <form method="post">
         <TableElt :items="reviews">
 
           <!-- Last Table Head -->
           <template #head>
             up/del
+          </template>
+
+          <!-- Review Id -->
+          <template #cell-_id="slotProps">
+            {{ slotProps.index + 1 }}
           </template>
 
           <!-- Review Text -->
@@ -58,29 +70,28 @@
           </template>
 
           <!-- Review Article -->
-          <template #cell-articleId="slotProps">
-            {{ getReviewArticle(getReviews()[slotProps.index].articleId) }}
+          <template #cell-article="slotProps">
+            {{ getReviewArticle(getReviews()[slotProps.index].article) }}
           </template>
 
           <!-- Review User -->
-          <template #cell-userId="slotProps">
-            {{ getReviewUser(getReviews()[slotProps.index].userId) }}
+          <template #cell-user="slotProps">
+            {{ getReviewUser(getReviews()[slotProps.index].user) }}
           </template>
 
           <!-- Review Created -->
-          <template #cell-createdDate="slotProps">
-            {{ new Date(getReviews()[slotProps.index].createdDate).toLocaleString() }}
+          <template #cell-created="slotProps">
+            {{ new Date(getReviews()[slotProps.index].created).toLocaleString() }}
           </template>
 
           <!-- Review Updated -->
-          <template #cell-updatedDate="slotProps">
-            {{ new Date(getReviews()[slotProps.index].updatedDate).toLocaleString() }}
+          <template #cell-updated="slotProps">
+            {{ new Date(getReviews()[slotProps.index].updated).toLocaleString() }}
           </template>
 
           <template #body="slotProps">
-
-          <!-- Update Button -->
-          <BtnElt type="button"
+            <!-- Update Button -->
+            <BtnElt type="button"
               @click="updateReview(reviews[slotProps.index]._id)" 
               class="btn-sky"
               :title="'Update review #' + reviews[slotProps.index]._id">
@@ -99,6 +110,7 @@
               </template>
             </BtnElt>
           </template>
+
         </TableElt>
       </form>
     </template>
@@ -159,10 +171,10 @@ export default {
           review.append("id", this.reviews[i]._id);
           review.append("text", this.reviews[i].text);
           review.append("score", this.reviews[i].score);
-          review.append("articleId", this.reviews[i].articleId);
-          review.append("userId", constants.USER_ID);
-          review.append("createdDate", this.reviews[i].createdDate);
-          review.append("updatedDate", Date.now());
+          review.append("article", this.reviews[i].article);
+          review.append("user", constants.USER_ID);
+          review.append("created", this.reviews[i].created);
+          review.append("updated", Date.now());
 
           this.$serve.putData(`/api/reviews/${id}`, review)
             .then(() => {

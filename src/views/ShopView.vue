@@ -4,6 +4,13 @@
     :items="cats"
     class="sidebar">
 
+    <template #last v-if="userId">
+      <a href="#create-article"
+        title="Create an article">
+        <i class="fa-solid fa-basket-shopping fa-fw"></i>
+      </a>
+    </template>
+
     <template #top>
       <i class="fa-solid fa-chevron-circle-up fa-fw"></i>
     </template>
@@ -20,12 +27,17 @@
       <p>Under construction !</p>
     </template>
 
+    <template #aside v-if="userId">
+      <CreateArticle 
+        :cats="cats"/>
+    </template>
+
     <template #body>
       <ListElt :items="itemsByCat(articles)"
         :dynamic="true">
 
         <template #items="slotProps">
-          <h2>{{ slotProps.item[0].cat }}</h2>
+          <h2 :id="slotProps.item[0].cat">{{ slotProps.item[0].cat }}</h2>
         </template>
 
         <template #nested="slotProps">
@@ -36,6 +48,10 @@
 
               <template #figcaption>
                 <h3>{{ slotProps.value.name }}</h3>
+                <p>
+                  {{ calculateScoresAverage(slotProps.value._id) }}
+                  <i class="fa-solid fa-star"></i>
+                </p>
                 <p>{{ slotProps.value.description }}</p>
                 <b>{{ slotProps.value.price }} €</b>
               </template>
@@ -43,18 +59,27 @@
             </MediaElt>
           </a>
         </template>
+
       </ListElt>
     </template>
   </CardElt>
 </template>
 
 <script>
+import CreateArticle from "@/components/CreateArticle"
+
 export default {
   name: "ShopView",
+  components: {
+    CreateArticle
+  },
 
   data() {
     return {
-      articles: []
+      articles: [],
+      reviews: [],
+      scores: [],
+      userId: null
     }
   },
 
@@ -62,6 +87,14 @@ export default {
     this.$serve.getData("/api/articles")
       .then(res => { this.articles = res })
       .catch(err => { console.log(err) });
+
+    this.$serve.getData("/api/reviews")
+      .then(res => { this.reviews = res })
+      .catch(err => { console.log(err) });
+
+    if (localStorage.userId) {
+      this.userId = JSON.parse(localStorage.userId);
+    }
   },
 
   computed: {
@@ -87,6 +120,43 @@ export default {
         itemsByCat[item.cat].sort((a, b) => (a.name > b.name) ? 1 : -1);
       });
       return itemsByCat;
+    },
+
+    /** 
+     * CALCULATE SCORES AVERAGE
+     * @returns
+     */
+    calculateScoresAverage(articleId) {
+      let sumData     = {};
+      let averageData = [];
+
+      for (let review of this.reviews) {
+
+        if (sumData[review.article]) {
+          sumData[review.article].sum = sumData[review.article].sum + review.score;
+          sumData[review.article].n++;
+
+        } else {
+          sumData[review.article] = {
+            sum: review.score,
+            n: 1
+          };
+        }
+      }
+
+      for (let element of Object.keys(sumData)) {
+          averageData.push({
+            article: element,
+              score: sumData[element].sum / sumData[element].n
+          });
+      }
+
+      for (let data of averageData) {
+        if (articleId === data.article) {
+
+          return data.score;
+        }
+      }
     }
   }
 }
