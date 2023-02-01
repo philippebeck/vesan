@@ -28,7 +28,8 @@
     </template>
 
     <template #aside v-if="userId">
-      <CreateArticle />
+      <CreateArticle 
+        :cats="cats"/>
     </template>
 
     <template #body>

@@ -97,7 +97,7 @@
               v-model:value="cat"
               info="Choose a category"
               @keyup.enter="validateNewArticle()"
-              :list="['sauce']">
+              :list="cats">
               <template #legend>
                 Category
               </template>
@@ -121,6 +121,9 @@
 <script>
 export default {
   name: "CreateArticle",
+  props: {
+    cats: {}
+  },
 
   data() {
     return {

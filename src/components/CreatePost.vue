@@ -80,7 +80,7 @@
               v-model:value="cat"
               info="Choose a category"
               @keyup.enter="validateNewPost()"
-              :list="['sport']">
+              :list="cats">
               <template #legend>
                 Category
               </template>
@@ -106,6 +106,9 @@ import constants from "/constants"
 
 export default {
   name: "CreatePost",
+  props: {
+    cats: {}
+  },
 
   data() {
     return {
