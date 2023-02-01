@@ -56,6 +56,18 @@
             </FieldElt>
           </template>
 
+          <!-- User Role -->
+          <template #cell-role="slotProps">
+            <FieldElt :id="'role-' + users[slotProps.index]._id"
+              type="select"
+              v-model:value="getUsers()[slotProps.index].role"
+              :list="['user', 'author', 'admin']"
+              info="Update the user role"
+              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)">
+              {{ value }}
+            </FieldElt>
+          </template>
+
           <!-- User Pass -->
           <template #cell-pass="slotProps">
             <FieldElt :id="'pass-' + users[slotProps.index]._id"
@@ -186,6 +198,7 @@ export default {
         user.append("email", this.users[i].email);
         user.append("image", image);
         user.append("alt", this.users[i].alt);
+        user.append("role", this.users[i].role);
         user.append("pass", this.pass);
         user.append("created", this.users[i].created);
         user.append("updated", Date.now());
