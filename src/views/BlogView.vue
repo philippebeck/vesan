@@ -4,7 +4,7 @@
     :items="cats"
     class="sidebar">
 
-    <template #last>
+    <template #last  v-if="userId">
       <a href="#create-post"
         title="Create a post">
         <i class="fa-regular fa-envelope fa-fw"></i>
