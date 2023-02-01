@@ -15,6 +15,11 @@
             up/del
           </template>
 
+          <!-- User Id -->
+          <template #cell-_id="slotProps">
+            {{ slotProps.index + 1 }}
+          </template>
+
           <!-- User Name -->
           <template #cell-name="slotProps">
             <FieldElt :id="'name-' + users[slotProps.index]._id"

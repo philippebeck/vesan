@@ -40,6 +40,11 @@
             up/del
           </template>
 
+          <!-- Comment Id -->
+          <template #cell-_id="slotProps">
+            {{ slotProps.index + 1 }}
+          </template>
+
           <!-- Comment Text -->
           <template #cell-text="slotProps">
             <FieldElt :id="'text-' + comments[slotProps.index]._id"

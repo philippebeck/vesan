@@ -42,6 +42,11 @@
             up/del
           </template>
 
+          <!-- Review Id -->
+          <template #cell-_id="slotProps">
+            {{ slotProps.index + 1 }}
+          </template>
+
           <!-- Review Text -->
           <template #cell-text="slotProps">
             <FieldElt :id="'text-' + reviews[slotProps.index]._id"

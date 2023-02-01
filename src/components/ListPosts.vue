@@ -15,6 +15,11 @@
             up/del
           </template>
 
+          <!-- Post Id -->
+          <template #cell-_id="slotProps">
+            {{ slotProps.index + 1 }}
+          </template>
+
           <!-- Post Title -->
           <template #cell-title="slotProps">
             <FieldElt :id="'title-' + posts[slotProps.index]._id"
