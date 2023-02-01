@@ -15,10 +15,10 @@
           <blockquote class="container-90sm-80md-70lg-60xl-50wd bord bord-sky blue">
             {{ slotProps.item.text }}
           </blockquote>
-          <p>by {{ getCommentUser(slotProps.item.userId) }}</p>
+          <p>by {{ getCommentUser(slotProps.item.user) }}</p>
           <p class="silver">
-            Created: {{ new Date(slotProps.item.createdDate).toLocaleDateString() }}
-            (Updated: {{ new Date(slotProps.item.updatedDate).toLocaleDateString() }})
+            Created: {{ new Date(slotProps.item.created).toLocaleDateString() }}
+            (Updated: {{ new Date(slotProps.item.updated).toLocaleDateString() }})
           </p>
         </template>
       </ListElt>
@@ -43,23 +43,23 @@
           </template>
 
           <!-- Comment Post -->
-          <template #cell-postId="slotProps">
-            {{ getCommentPost(getComments()[slotProps.index].postId) }}
+          <template #cell-post="slotProps">
+            {{ getCommentPost(getComments()[slotProps.index].post) }}
           </template>
 
           <!-- Comment User -->
-          <template #cell-userId="slotProps">
-            {{ getCommentUser(getComments()[slotProps.index].userId) }}
+          <template #cell-user="slotProps">
+            {{ getCommentUser(getComments()[slotProps.index].user) }}
           </template>
 
           <!-- Comment Created -->
-          <template #cell-createdDate="slotProps">
-            {{ new Date(getComments()[slotProps.index].createdDate).toLocaleString() }}
+          <template #cell-created="slotProps">
+            {{ new Date(getComments()[slotProps.index].created).toLocaleString() }}
           </template>
 
           <!-- Comment Updated -->
-          <template #cell-updatedDate="slotProps">
-            {{ new Date(getComments()[slotProps.index].updatedDate).toLocaleString() }}
+          <template #cell-updated="slotProps">
+            {{ new Date(getComments()[slotProps.index].updated).toLocaleString() }}
           </template>
 
           <template #body="slotProps">
@@ -142,10 +142,10 @@ export default {
 
           comment.append("id", id);
           comment.append("text", this.comments[i].text);
-          comment.append("postId", this.comments[i].postId);
-          comment.append("userId", constants.USER_ID);
-          comment.append("createdDate", this.comments[i].createdDate);
-          comment.append("updatedDate", Date.now());
+          comment.append("post", this.comments[i].post);
+          comment.append("user", constants.USER_ID);
+          comment.append("created", this.comments[i].created);
+          comment.append("updated", Date.now());
 
           this.$serve.putData(`/api/comments/${id}`, comment)
             .then(() => {

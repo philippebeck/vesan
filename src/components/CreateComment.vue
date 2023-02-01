@@ -53,10 +53,10 @@ export default {
       let comment  = new FormData();
 
       comment.append("text", this.text);
-      comment.append("postId", this.$route.params.id);
-      comment.append("userId", constants.USER_ID);
-      comment.append("createdDate", Date.now());
-      comment.append("updatedDate", Date.now());
+      comment.append("post", this.$route.params.id);
+      comment.append("user", constants.USER_ID);
+      comment.append("created", Date.now());
+      comment.append("updated", Date.now());
 
       this.$serve.postData("/api/comments", comment)
         .then(() => {
