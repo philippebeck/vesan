@@ -3,7 +3,7 @@
   <!-- CONTACT PAGE -->
   <CardElt>
     <template #header>
-      <i class="blue fa-solid fa-at fa-2x"></i>
+      <i class="blue fa-solid fa-at fa-4x"></i>
       <h1 class="blue anima-slideB">
         Contact
       </h1>
@@ -70,9 +70,14 @@
 
         <!-- Send Button -->
         <BtnElt type="button"
-          content="Envoyer"
+          content="Send"
           @click="send()" 
-          class="btn-green"/>
+          class="btn-green"
+          title="Send a Message">
+          <template #btn>
+            <i class="fa-regular fa-paper-plane fa-lg"></i>
+          </template>
+        </BtnElt>
       </form>
     </template>
   </CardElt>

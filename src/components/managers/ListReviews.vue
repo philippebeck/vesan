@@ -13,11 +13,13 @@
           <blockquote class="container-90sm-80md-70lg-60xl-50wd bord bord-sky blue">
             {{ slotProps.item.text }}
           </blockquote>
-          <p>by {{ getReviewUser(slotProps.item.user) }}</p>
+
           <p class="violet">
             {{ slotProps.item.score }}
             <i class="fa-solid fa-star"></i>
           </p>
+          
+          <p>by {{ getReviewUser(slotProps.item.user) }}</p>
           <p class="silver">
             Created: {{ new Date(slotProps.item.created).toLocaleDateString() }}
             (Updated: {{ new Date(slotProps.item.updated).toLocaleDateString() }})
@@ -44,7 +46,8 @@
 
           <!-- Review Id -->
           <template #cell-_id="slotProps">
-            {{ slotProps.index + 1 }}
+            <b>#{{ slotProps.index + 1 }}</b>
+            ({{ reviews[slotProps.index]._id }})
           </template>
 
           <!-- Review Text -->
@@ -71,22 +74,24 @@
 
           <!-- Review Article -->
           <template #cell-article="slotProps">
-            {{ getReviewArticle(getReviews()[slotProps.index].article) }}
+            <b>{{ getReviewArticle(reviews[slotProps.index].article) }}</b>
+            ({{ reviews[slotProps.index].article }})
           </template>
 
           <!-- Review User -->
           <template #cell-user="slotProps">
-            {{ getReviewUser(getReviews()[slotProps.index].user) }}
+            <b>{{ getReviewUser(reviews[slotProps.index].user) }}</b>
+            ({{ reviews[slotProps.index].user }})
           </template>
 
           <!-- Review Created -->
           <template #cell-created="slotProps">
-            {{ new Date(getReviews()[slotProps.index].created).toLocaleString() }}
+            {{ new Date(reviews[slotProps.index].created).toLocaleString() }}
           </template>
 
           <!-- Review Updated -->
           <template #cell-updated="slotProps">
-            {{ new Date(getReviews()[slotProps.index].updated).toLocaleString() }}
+            {{ new Date(reviews[slotProps.index].updated).toLocaleString() }}
           </template>
 
           <template #body="slotProps">

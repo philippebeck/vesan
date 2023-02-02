@@ -159,6 +159,12 @@ exports.updatePost = (req, res, next) => {
         )
     }
 
+    let usersLiked = fields.usersLiked.split(",");
+
+    if (usersLiked[0] === "") {
+      usersLiked.shift();
+    }
+
     let post = this.getPost(
       fields.title, 
       fields.text, 
@@ -169,7 +175,7 @@ exports.updatePost = (req, res, next) => {
       fields.created,
       fields.updated,
       fields.likes,
-      fields.usersLiked
+      usersLiked
     );
 
     PostModel

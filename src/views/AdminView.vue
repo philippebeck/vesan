@@ -97,12 +97,13 @@
 </template>
 
 <script>
-import ListArticles from "@/components/ListArticles"
-import ListReviews from "@/components/ListReviews"
-import ListPosts from "@/components/ListPosts"
-import ListComments from "@/components/ListComments"
-import ListUsers from "@/components/ListUsers"
-import CreateUser from "@/components/CreateUser"
+import ListArticles from "@/components/managers/ListArticles"
+import ListReviews from "@/components/managers/ListReviews"
+import ListPosts from "@/components/managers/ListPosts"
+import ListComments from "@/components/managers/ListComments"
+import ListUsers from "@/components/managers/ListUsers"
+
+import CreateUser from "@/components/creators/CreateUser"
 
 export default {
   name: "AdminView",

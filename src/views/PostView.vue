@@ -6,7 +6,30 @@
     </template>
 
     <template #body>
-      <i class="fa-regular fa-thumbs-up"></i>
+
+      <BtnElt v-if="checkLikes() === false"
+        id="likes"
+        type="button"
+        @click="addLike()"
+        class="btn-blue"
+        :title="`Like ${post.title} ?`">
+        <template #btn>
+          <i class="fa-regular fa-thumbs-up fa-lg"></i>
+          {{ post.likes }}
+        </template>
+      </BtnElt>
+
+      <BtnElt v-else-if="checkLikes() === true"
+        id="likes"
+        type="button"
+        @click="addLike()"
+        class="btn-sky"
+        :title="`Dislike ${post.title} ?`">
+        <template #btn>
+          <i class="fa-solid fa-thumbs-up fa-lg"></i>
+          {{ post.likes }}
+        </template>
+      </BtnElt>
 
       <MediaElt :src="`/img/posts/${post.image}`"
         :alt="post.alt">
@@ -35,8 +58,10 @@
 </template>
 
 <script>
-import CreateComment from "@/components/CreateComment"
-import ListComments from "@/components/ListComments"
+import constants from "/constants"
+
+import CreateComment from "@/components/creators/CreateComment"
+import ListComments from "@/components/managers/ListComments"
 
 export default {
   name: "PostView",
@@ -54,20 +79,7 @@ export default {
     }
   },
 
-  methods: {
-    getPostComments() {
-      let postComments = [];
-
-      for (let i = 0 ; i < this.comments.length ; i++) {
-        if (this.$route.params.id === this.comments[i].post) {
-          postComments.push(this.comments[i]);
-        }
-      }
-      return postComments;
-    }
-  },
-
-  mounted () {
+  created () {
     this.$serve.getData(`/api/posts/${this.$route.params.id}`)
       .then(res => { this.post = res })
       .catch(err => { console.log(err) });
@@ -82,6 +94,75 @@ export default {
 
     if (localStorage.userId) {
       this.userId = JSON.parse(localStorage.userId);
+    }
+  },
+
+  methods: {
+    /**
+     * GET POST COMMENTS
+     * @returns
+     */
+    getPostComments() {
+      let postComments = [];
+
+      for (let i = 0 ; i < this.comments.length ; i++) {
+        if (this.$route.params.id === this.comments[i].post) {
+          postComments.push(this.comments[i]);
+        }
+      }
+      return postComments;
+    },
+
+    /**
+     * CHECK LIKES
+     * @returns
+     */
+    checkLikes() {
+      let usersLiked = this.post.usersLiked;
+
+      for (let i = 0; i < usersLiked.length; i++) {
+        if (constants.USER_ID === usersLiked[i]) {
+          return true;
+        }
+      }
+      return false;
+    },
+
+    /**
+     * ADD LIKE
+     */
+    addLike() {
+      let hasLiked = false;
+      let usersLiked = this.post.usersLiked;
+
+      for (let i = 0; i < usersLiked.length; i++) {
+        if (constants.USER_ID === usersLiked[i]) {
+          hasLiked = true;
+          this.post.likes -= 1;
+          usersLiked.splice(i, 1);
+        }
+      }
+
+      if (hasLiked === false) {
+        this.post.likes += 1;
+        usersLiked.push(constants.USER_ID);
+      }
+
+      let post = new FormData();
+      post.append("id", this.post._id);
+      post.append("title", this.post.title);
+      post.append("likes", this.post.likes);
+      post.append("usersLiked", usersLiked);
+
+      this.$serve.putData(`/api/posts/${post.get("id")}`, post)
+        .then(() => {
+          if (hasLiked === true) {
+            alert(post.get("title") + " disliked !");
+          } else {
+            alert(post.get("title") + " liked !");
+          }
+        })
+        .catch(err => { console.log(err) });
     }
   }
 }

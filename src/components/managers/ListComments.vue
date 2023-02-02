@@ -42,7 +42,8 @@
 
           <!-- Comment Id -->
           <template #cell-_id="slotProps">
-            {{ slotProps.index + 1 }}
+            <b>#{{ slotProps.index + 1 }}</b>
+            ({{ comments[slotProps.index]._id }})
           </template>
 
           <!-- Comment Text -->
@@ -57,22 +58,24 @@
 
           <!-- Comment Post -->
           <template #cell-post="slotProps">
-            {{ getCommentPost(getComments()[slotProps.index].post) }}
+            <b>{{ getCommentPost(comments[slotProps.index].post) }}</b>
+            ({{ comments[slotProps.index].post }})
           </template>
 
           <!-- Comment User -->
           <template #cell-user="slotProps">
-            {{ getCommentUser(getComments()[slotProps.index].user) }}
+            <b>{{ getCommentUser(comments[slotProps.index].user) }}</b>
+            ({{ comments[slotProps.index].user }})
           </template>
 
           <!-- Comment Created -->
           <template #cell-created="slotProps">
-            {{ new Date(getComments()[slotProps.index].created).toLocaleString() }}
+            {{ new Date(comments[slotProps.index].created).toLocaleString() }}
           </template>
 
           <!-- Comment Updated -->
           <template #cell-updated="slotProps">
-            {{ new Date(getComments()[slotProps.index].updated).toLocaleString() }}
+            {{ new Date(comments[slotProps.index].updated).toLocaleString() }}
           </template>
 
           <template #body="slotProps">

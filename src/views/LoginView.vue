@@ -1,120 +1,114 @@
 <template>
-
-  <CardElt v-if="isLogin">
+  <CardElt v-if="type === 'SignUp'">
     <template #header>
       <i class="violet anima-shrink fa-solid fa-sign-in-alt fa-2x"></i>
       <h1 class="violet anima-grow mar-none">Login</h1>
     </template>
 
     <template #body>
-      <form class="form">
+      <SignUp />
 
-        <!-- User Email -->
-        <FieldElt id="email"
-          v-model:value="email"
-          info="Indicate your Email"
-          @keyup.enter="login()"
-          type="email">
-          <template #legend>
-            Email
-          </template>
-          <template #label>
-            This email must have been registered before
-          </template>
-        </FieldElt>
+      <!-- Toggle Button to SignIn Component -->
+      <BtnElt type="button"
+        content="SignIn"
+        @click="setType('SignIn')"
+        class="btn-green">
+        <template #btn>
+          <i class="fa-solid fa-right-to-bracket fa-lg"></i>
+        </template>
+      </BtnElt>
 
-        <!-- User Pass -->
-        <FieldElt id="pass"
-          v-model:value="pass"
-          info="Indicate your Password"
-          @keyup.enter="login()"
-          type="password">
-          <template #legend>
-            Password
-          </template>
-          <template #label>
-            You can use the Forgot Password feature if needed
-          </template>
-        </FieldElt>
-
-        <!-- Security -->
-        <div id="recaptcha"
-          class="g-recaptcha"
-          data-sitekey="">
-        </div>
-
-        <!-- Toggle Button to Forgot Password Page -->
-        <BtnElt type="button"
-          content="Forgot Password"
-          @click="toggleFormType()"
-          class="btn-orange"/>
-
-        <!-- Login Button -->
-        <BtnElt type="button"
-          content="Login"
-          @click="login()"
-          class="btn-green"/>
-      </form>
+      <!-- Toggle Button to Forgot Password Component -->
+      <BtnElt type="button"
+        content="ForgotPass"
+        @click="setType('ForgotPass')"
+        class="btn-orange">
+        <template #btn>
+          <i class="fa-regular fa-paper-plane fa-lg"></i>
+        </template>
+      </BtnElt>
     </template>
   </CardElt>
 
-  <!-- FORGOT PASSWORD PAGE -->
-  <CardElt v-else>
+  <CardElt v-if="type === 'SignIn'">
+    <template #header>
+      <i class="violet anima-shrink fa-solid fa-sign-in-alt fa-2x"></i>
+      <h1 class="violet anima-grow mar-none">Login</h1>
+    </template>
+
+    <template #body>
+      <SignIn />
+
+      <!-- Toggle Button to SignUp Component -->
+      <BtnElt type="button"
+        content="SignUp"
+        @click="setType('SignUp')"
+        class="btn-blue">
+        <template #btn>
+          <i class="fa-solid fa-user-plus fa-lg"></i>
+        </template>
+      </BtnElt>
+
+      <!-- Toggle Button to Forgot Password Component -->
+      <BtnElt type="button"
+        content="ForgotPass"
+        @click="setType('ForgotPass')"
+        class="btn-orange">
+        <template #btn>
+          <i class="fa-regular fa-paper-plane fa-lg"></i>
+        </template>
+      </BtnElt>
+    </template>
+  </CardElt>
+
+  <CardElt v-if="type === 'ForgotPass'">
     <template #header>
       <i class="violet anima-grow fa-solid fa-key fa-2x"></i>
       <h1 class="violet anima-shrink mar-none">Forgot Password</h1>
     </template>
 
     <template #body>
-      <form>
-        <!-- User Email -->
-        <FieldElt id="email"
-          v-model:value="email"
-          info="Indicate your Email"
-          @keyup.enter="forgotPass()"
-          type="email"
-          required>
-          <template #legend>
-            Email
-          </template>
-          <template #label>
-            This email must have been registered before
-          </template>
-        </FieldElt>
+      <ForgotPass />
 
-        <!-- Security -->
-        <div id="recaptcha"
-          class="g-recaptcha"
-          data-sitekey="">
-        </div>
+      <!-- Toggle Button to SignUp Component -->
+      <BtnElt type="button"
+        content="SignUp"
+        @click="setType('SignUp')"
+        class="btn-blue">
+        <template #btn>
+          <i class="fa-solid fa-user-plus fa-lg"></i>
+        </template>
+      </BtnElt>
 
-        <!-- Toggle Button to Login Page -->
-        <BtnElt type="button"
-          content="Login"
-          @click="toggleFormType()"
-          class="btn-green"/>
-
-        <!-- Send Password Button -->
-        <BtnElt type="button"
-          content="Send"
-          @click="forgotPass()"
-          class="btn-orange"/>
-      </form>
+      <!-- Toggle Button to SignIn Component -->
+      <BtnElt type="button"
+        content="SignIn"
+        @click="setType('SignIn')"
+        class="btn-green">
+        <template #btn>
+          <i class="fa-solid fa-right-to-bracket fa-lg"></i>
+        </template>
+      </BtnElt>
     </template>
   </CardElt>
 </template>
 
 <script>
-import constants from "/constants";
+import SignUp from "@/components/connectors/SignUp"
+import SignIn from "@/components/connectors/SignIn"
+import ForgotPass from "@/components/connectors/ForgotPass"
 
 export default {
   name: "LoginView",
+  components: {
+    SignUp,
+    SignIn,
+    ForgotPass
+  },
 
   data() {
     return {
-      email: "",
-      pass: "",
-      isLogin: true
+      type: "SignIn"
     }
   },
 
@@ -128,59 +122,9 @@ export default {
     /**
      * TOGGLE FORM TYPE
      */
-    toggleFormType() {
-      if (this.isLogin) {
-        this.isLogin = false;
-      } else {
-        this.isLogin = true;
-      }
+    setType(type) {
+      this.type = type;
     },
-
-    /**
-     * USER LOGIN
-     */
-    login() {
-      if (this.$serve.checkEmail(this.email) && 
-        this.$serve.checkPass(this.pass)) {
-
-        let auth = new FormData();
-        auth.append("email", this.email);
-        auth.append("pass", this.pass);
-
-        this.$serve.postData("/api/users/login", auth)
-          .then((res) => {
-            let token   = JSON.stringify(res.token);
-            let userId  = JSON.stringify(res.userId);
-
-            localStorage.setItem("userToken", token);
-            localStorage.setItem("userId", userId);
-
-            this.$router.go("/");
-          })
-          .catch(err => { console.log(err) });
-      }
-    },
-
-    /**
-     * FORGOT PASSWORD
-     */
-    forgotPass() {
-      if (this.$serve.checkEmail(this.email) && 
-        confirm(constants.FORGOT_CONFIRM)) {
-
-        let message = new FormData();
-        message.append("email", this.email);
-        message.append("subject", constants.FORGOT_SUBJECT);
-        message.append("text", constants.FORGOT_TEXT);
-
-        this.$serve.postData("/api/users/forgot", message)
-          .then(() => {
-            alert(message.get("subject") + " sended !");
-            this.$router.push("/login");
-          })
-          .catch(err => { console.log(err) });
-      }
-    }
   }
 }
 </script>
