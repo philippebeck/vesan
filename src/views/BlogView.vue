@@ -45,9 +45,10 @@
             id="likes"
             type="button"
             @click="addLike(slotProps.value._id)"
-            class="btn-blue">
+            class="btn-blue"
+            :title="`Like ${slotProps.value.title} ?`">
             <template #btn>
-              <i class="fa-solid fa-thumbs-up fa-lg"></i>
+              <i class="fa-regular fa-thumbs-up fa-lg"></i>
               {{ slotProps.value.likes }}
             </template>
           </BtnElt>
@@ -56,14 +57,16 @@
             id="likes"
             type="button"
             @click="addLike(slotProps.value._id)"
-            class="btn-sky">
+            class="btn-sky"
+            :title="`Dislike ${slotProps.value.title} ?`">
             <template #btn>
-              <i class="fa-regular fa-thumbs-up fa-lg"></i>
+              <i class="fa-solid fa-thumbs-up fa-lg"></i>
               {{ slotProps.value.likes }}
             </template>
           </BtnElt>
 
-          <a :href="`post/${slotProps.value._id}`">
+          <a :href="`post/${slotProps.value._id}`"
+            :title="`Read ${slotProps.value.title}`">
             <MediaElt :src="`img/posts/${slotProps.value.image}`" 
               :alt="`${slotProps.value.title}`" 
               :id="`${slotProps.value.title.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`">

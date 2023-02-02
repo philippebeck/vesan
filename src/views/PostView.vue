@@ -11,9 +11,10 @@
         id="likes"
         type="button"
         @click="addLike()"
-        class="btn-blue">
+        class="btn-blue"
+        :title="`Like ${post.title} ?`">
         <template #btn>
-          <i class="fa-solid fa-thumbs-up fa-lg"></i>
+          <i class="fa-regular fa-thumbs-up fa-lg"></i>
           {{ post.likes }}
         </template>
       </BtnElt>
@@ -22,9 +23,10 @@
         id="likes"
         type="button"
         @click="addLike()"
-        class="btn-sky">
+        class="btn-sky"
+        :title="`Dislike ${post.title} ?`">
         <template #btn>
-          <i class="fa-regular fa-thumbs-up fa-lg"></i>
+          <i class="fa-solid fa-thumbs-up fa-lg"></i>
           {{ post.likes }}
         </template>
       </BtnElt>
