@@ -13,11 +13,13 @@
           <blockquote class="container-90sm-80md-70lg-60xl-50wd bord bord-sky blue">
             {{ slotProps.item.text }}
           </blockquote>
-          <p>by {{ getReviewUser(slotProps.item.user) }}</p>
+
           <p class="violet">
             {{ slotProps.item.score }}
             <i class="fa-solid fa-star"></i>
           </p>
+          
+          <p>by {{ getReviewUser(slotProps.item.user) }}</p>
           <p class="silver">
             Created: {{ new Date(slotProps.item.created).toLocaleDateString() }}
             (Updated: {{ new Date(slotProps.item.updated).toLocaleDateString() }})
