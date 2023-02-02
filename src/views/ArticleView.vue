@@ -6,14 +6,26 @@
     </template>
 
     <template #body>
+      <BtnElt v-if="calculateScoresAverage(article._id) !== undefined" 
+        href="#reviews"
+        class="btn-violet"
+        :title="`Read Reviews about ${article.name}`">
+        <template #btn>
+          {{ calculateScoresAverage(article._id) }}
+        <i class="fa-solid fa-star fa-lg"></i>
+        </template>
+      </BtnElt>
+
+      <BtnElt v-else 
+        href="#review"
+        class="btn-violet"
+        content="Need a Review !"
+        :title="`Be the first to write a Review about ${article.name}`" />
+
       <MediaElt :src="`/img/articles/${article.image}`"
         :alt="article.alt">
 
         <template #figcaption>
-          <p>
-            {{ calculateScoresAverage(article._id) }}
-            <i class="fa-solid fa-star"></i>
-          </p>
           <p>{{ article.description }}</p>
           <b>{{ article.price }} €</b>
           <p class="silver">
@@ -24,12 +36,13 @@
       </MediaElt>
 
       <ListReviews v-if="reviews.length > 0"
+        id="reviews"
         :reviews="getArticleReviews()"
         :users="users"/>
     </template>
 
     <template #aside  v-if="userId">
-      <CreateReview />
+      <CreateReview id="review"/>
     </template>
   </CardElt>
 </template>

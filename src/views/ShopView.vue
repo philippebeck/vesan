@@ -41,17 +41,30 @@
         </template>
 
         <template #nested="slotProps">
-          <a :href="`article/${slotProps.value._id}`">
+          <BtnElt  v-if="calculateScoresAverage(slotProps.value._id) !== undefined"
+            :href="`article/${slotProps.value._id}#reviews`"
+            class="btn-violet"
+            :title="`Read Reviews about ${slotProps.value.name}`">
+            <template #btn>
+              {{ calculateScoresAverage(slotProps.value._id) }}
+              <i class="fa-solid fa-star"></i>
+            </template>
+          </BtnElt>
+
+          <BtnElt v-else 
+            :href="`article/${slotProps.value._id}#review`"
+            class="btn-violet"
+            content="Write a Review !"
+            :title="`Be the first to write a Review about ${slotProps.value.name}`" />
+
+          <a :href="`article/${slotProps.value._id}`"
+            :title="`Watch ${slotProps.value.name}`">
             <MediaElt :src="`img/articles/${slotProps.value.image}`" 
               :alt="`${slotProps.value.description}`" 
               :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`">
 
               <template #figcaption>
                 <h3>{{ slotProps.value.name }}</h3>
-                <p>
-                  {{ calculateScoresAverage(slotProps.value._id) }}
-                  <i class="fa-solid fa-star"></i>
-                </p>
                 <p>{{ slotProps.value.description }}</p>
                 <b>{{ slotProps.value.price }} €</b>
               </template>
