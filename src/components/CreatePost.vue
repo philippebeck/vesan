@@ -95,7 +95,12 @@
         <BtnElt type="button"
           content="Create"
           @click="validateNewPost()" 
-          class="btn-green"/>
+          class="btn-green"
+          title="Create a new Post">
+          <template #btn>
+            <i class="fa-solid fa-square-plus fa-lg"></i>
+          </template>
+        </BtnElt>
       </form>
     </template>
   </CardElt>

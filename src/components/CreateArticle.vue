@@ -112,7 +112,12 @@
         <BtnElt type="button"
           content="Create"
           @click="validateNewArticle()" 
-          class="btn-green"/>
+          class="btn-green"
+          title="Create a new Article">
+          <template #btn>
+            <i class="fa-solid fa-square-plus fa-lg"></i>
+          </template>
+        </BtnElt>
       </form>
     </template>
   </CardElt>
