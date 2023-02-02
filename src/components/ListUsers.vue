@@ -17,7 +17,8 @@
 
           <!-- User Id -->
           <template #cell-_id="slotProps">
-            {{ slotProps.index + 1 }}
+            <b>#{{ slotProps.index + 1 }}</b>
+            ({{ users[slotProps.index]._id }})
           </template>
 
           <!-- User Name -->

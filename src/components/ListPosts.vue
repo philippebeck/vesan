@@ -17,7 +17,8 @@
 
           <!-- Post Id -->
           <template #cell-_id="slotProps">
-            {{ slotProps.index + 1 }}
+            <b>#{{ slotProps.index + 1 }}</b>
+            ({{ posts[slotProps.index]._id }})
           </template>
 
           <!-- Post Title -->
@@ -75,17 +76,18 @@
 
           <!-- Post User -->
           <template #cell-user="slotProps">
-            {{ getPostUser(getPosts()[slotProps.index].user) }}
+            <b>{{ getPostUser(posts[slotProps.index].user) }}</b>
+            ({{ getPosts()[slotProps.index].user }})
           </template>
 
           <!-- Post Created -->
           <template #cell-created="slotProps">
-            {{ new Date(getPosts()[slotProps.index].created).toLocaleString() }}
+            {{ new Date(posts[slotProps.index].created).toLocaleString() }}
           </template>
 
           <!-- Post Updated -->
           <template #cell-updated="slotProps">
-            {{ new Date(getPosts()[slotProps.index].updated).toLocaleString() }}
+            {{ new Date(posts[slotProps.index].updated).toLocaleString() }}
           </template>
 
           <template #body="slotProps">

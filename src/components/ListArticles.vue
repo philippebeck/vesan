@@ -17,7 +17,8 @@
 
           <!-- Article Id -->
           <template #cell-_id="slotProps">
-            {{ slotProps.index + 1 }}
+            <b>#{{ slotProps.index + 1 }}</b>
+            ({{ articles[slotProps.index]._id }})
           </template>
 
           <!-- Article Name -->
@@ -87,12 +88,12 @@
 
           <!-- Article Created -->
           <template #cell-created="slotProps">
-            {{ new Date(getArticles()[slotProps.index].created).toLocaleString() }}
+            {{ new Date(articles[slotProps.index].created).toLocaleString() }}
           </template>
 
           <!-- Article Updated -->
           <template #cell-updated="slotProps">
-            {{ new Date(getArticles()[slotProps.index].updated).toLocaleString() }}
+            {{ new Date(articles[slotProps.index].updated).toLocaleString() }}
           </template>
 
           <template #body="slotProps">
