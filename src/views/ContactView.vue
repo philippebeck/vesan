@@ -70,9 +70,14 @@
 
         <!-- Send Button -->
         <BtnElt type="button"
-          content="Envoyer"
+          content="Send"
           @click="send()" 
-          class="btn-green"/>
+          class="btn-green"
+          title="Send a Message">
+          <template #btn>
+            <i class="fa-regular fa-paper-plane fa-lg"></i>
+          </template>
+        </BtnElt>
       </form>
     </template>
   </CardElt>
