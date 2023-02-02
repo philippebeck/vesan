@@ -18,6 +18,7 @@
 
   <CardElt id="top">
     <template #header>
+      <i class="blue fa-solid fa-shop fa-4x"></i>
       <h1 class="blue shatex-blur-sm anima-slideB">
         Shop
       </h1>
