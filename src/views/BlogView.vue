@@ -96,8 +96,7 @@ export default {
   data() {
     return {
       posts: [],
-      userId: null,
-      hasLiked: false
+      userId: null
     }
   },
 
