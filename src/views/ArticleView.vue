@@ -48,8 +48,8 @@
 </template>
 
 <script>
-import CreateReview from "@/components/CreateReview"
-import ListReviews from "@/components/ListReviews"
+import CreateReview from "@/components/creators/CreateReview"
+import ListReviews from "@/components/managers/ListReviews"
 
 export default {
   name: "ArticleView",

@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import CreateArticle from "@/components/CreateArticle"
+import CreateArticle from "@/components/creators/CreateArticle"
 
 export default {
   name: "ShopView",

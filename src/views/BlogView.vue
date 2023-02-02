@@ -88,7 +88,7 @@
 <script>
 import constants from "/constants"
 
-import CreatePost from "@/components/CreatePost"
+import CreatePost from "@/components/creators/CreatePost"
 
 export default {
   name: "BlogView",

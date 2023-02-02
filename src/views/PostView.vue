@@ -60,8 +60,8 @@
 <script>
 import constants from "/constants"
 
-import CreateComment from "@/components/CreateComment"
-import ListComments from "@/components/ListComments"
+import CreateComment from "@/components/creators/CreateComment"
+import ListComments from "@/components/managers/ListComments"
 
 export default {
   name: "PostView",
