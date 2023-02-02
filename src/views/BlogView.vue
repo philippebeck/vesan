@@ -41,6 +41,28 @@
         </template>
 
         <template #nested="slotProps">
+          <BtnElt v-if="checkLikes(slotProps.key) === false"
+            id="likes"
+            type="button"
+            @click="addLike(slotProps.value._id)"
+            class="btn-blue">
+            <template #btn>
+              <i class="fa-solid fa-thumbs-up fa-lg"></i>
+              {{ slotProps.value.likes }}
+            </template>
+          </BtnElt>
+
+          <BtnElt v-if="checkLikes(slotProps.key) === true"
+            id="likes"
+            type="button"
+            @click="addLike(slotProps.value._id)"
+            class="btn-sky">
+            <template #btn>
+              <i class="fa-regular fa-thumbs-up fa-lg"></i>
+              {{ slotProps.value.likes }}
+            </template>
+          </BtnElt>
+
           <a :href="`post/${slotProps.value._id}`">
             <MediaElt :src="`img/posts/${slotProps.value.image}`" 
               :alt="`${slotProps.value.title}`" 
