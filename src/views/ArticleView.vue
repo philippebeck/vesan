@@ -28,12 +28,22 @@
         <template #figcaption>
           <p>{{ article.description }}</p>
           <b>{{ article.price }} €</b>
+
           <p class="silver">
             Created: {{ new Date(article.created).toLocaleDateString() }}
             (Updated: {{ new Date(article.updated).toLocaleDateString() }})
           </p>
         </template>
       </MediaElt>
+
+      <BtnElt type="button"
+        @click="AddToBasket()"
+        content="Add to Basket"
+        class="btn-green width-sm">
+        <template #btn>
+          <i class="fa-solid fa-basket-shopping fa-lg"></i>
+        </template>
+      </BtnElt>
 
       <ListReviews v-if="reviews.length > 0"
         id="reviews"
