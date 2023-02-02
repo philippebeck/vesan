@@ -6,7 +6,28 @@
     </template>
 
     <template #body>
-      <i class="fa-regular fa-thumbs-up"></i>
+
+      <BtnElt v-if="checkLikes() === false"
+        id="likes"
+        type="button"
+        @click="addLike()"
+        class="btn-blue">
+        <template #btn>
+          <i class="fa-solid fa-thumbs-up fa-lg"></i>
+          {{ post.likes }}
+        </template>
+      </BtnElt>
+
+      <BtnElt v-else-if="checkLikes() === true"
+        id="likes"
+        type="button"
+        @click="addLike()"
+        class="btn-sky">
+        <template #btn>
+          <i class="fa-regular fa-thumbs-up fa-lg"></i>
+          {{ post.likes }}
+        </template>
+      </BtnElt>
 
       <MediaElt :src="`/img/posts/${post.image}`"
         :alt="post.alt">
