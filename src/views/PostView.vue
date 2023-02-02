@@ -56,6 +56,8 @@
 </template>
 
 <script>
+import constants from "/constants"
+
 import CreateComment from "@/components/CreateComment"
 import ListComments from "@/components/ListComments"
 
@@ -75,20 +77,7 @@ export default {
     }
   },
 
-  methods: {
-    getPostComments() {
-      let postComments = [];
-
-      for (let i = 0 ; i < this.comments.length ; i++) {
-        if (this.$route.params.id === this.comments[i].post) {
-          postComments.push(this.comments[i]);
-        }
-      }
-      return postComments;
-    }
-  },
-
-  mounted () {
+  created () {
     this.$serve.getData(`/api/posts/${this.$route.params.id}`)
       .then(res => { this.post = res })
       .catch(err => { console.log(err) });
@@ -103,6 +92,75 @@ export default {
 
     if (localStorage.userId) {
       this.userId = JSON.parse(localStorage.userId);
+    }
+  },
+
+  methods: {
+    /**
+     * GET POST COMMENTS
+     * @returns
+     */
+    getPostComments() {
+      let postComments = [];
+
+      for (let i = 0 ; i < this.comments.length ; i++) {
+        if (this.$route.params.id === this.comments[i].post) {
+          postComments.push(this.comments[i]);
+        }
+      }
+      return postComments;
+    },
+
+    /**
+     * CHECK LIKES
+     * @returns
+     */
+    checkLikes() {
+      let usersLiked = this.post.usersLiked;
+
+      for (let i = 0; i < usersLiked.length; i++) {
+        if (constants.USER_ID === usersLiked[i]) {
+          return true;
+        }
+      }
+      return false;
+    },
+
+    /**
+     * ADD LIKE
+     */
+    addLike() {
+      let hasLiked = false;
+      let usersLiked = this.post.usersLiked;
+
+      for (let i = 0; i < usersLiked.length; i++) {
+        if (constants.USER_ID === usersLiked[i]) {
+          hasLiked = true;
+          this.post.likes -= 1;
+          usersLiked.splice(i, 1);
+        }
+      }
+
+      if (hasLiked === false) {
+        this.post.likes += 1;
+        usersLiked.push(constants.USER_ID);
+      }
+
+      let post = new FormData();
+      post.append("id", this.post._id);
+      post.append("title", this.post.title);
+      post.append("likes", this.post.likes);
+      post.append("usersLiked", usersLiked);
+
+      this.$serve.putData(`/api/posts/${post.get("id")}`, post)
+        .then(() => {
+          if (hasLiked === true) {
+            alert(post.get("title") + " disliked !");
+          } else {
+            alert(post.get("title") + " liked !");
+          }
+        })
+        .catch(err => { console.log(err) });
     }
   }
 }
