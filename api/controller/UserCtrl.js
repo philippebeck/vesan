@@ -9,9 +9,11 @@ const UserModel   = require("../model/UserModel");
 
 require("dotenv").config();
 
-const usersUrl = process.env.IMG_URL + "users/";
+const usersImg    = process.env.IMG_URL + "users/";
+const usersThumb  = process.env.THUMB_URL + "users/";
+
 const form = formidable({ 
-  uploadDir: usersUrl, 
+  uploadDir: usersImg, 
   keepExtensions: true 
 });
 
@@ -29,15 +31,6 @@ exports.checkCredentials = (email, pass, res) => {
   if (!nem.checkPass(pass)) {
     return res.status(401).json({ message: process.env.USER_PASS });
   }
-}
-
-/**
- * GET IMAGE NAME
- * @param {string} name 
- */
-exports.getImgName = (name) => {
-
-  return accents.remove(name).replace(/ /g, "-").toLowerCase() + "-" + Date.now() + "." + process.env.IMG_EXT;
 }
 
 /**
@@ -182,9 +175,9 @@ exports.createUser = (req, res, next) => {
     }
 
     this.checkCredentials(fields.email, fields.pass, res);
-    let image = this.getImgName(fields.name);
+    let image = nem.getImgName(fields.name);
 
-    nem.createImage(
+    nem.createThumbnail(
       "users/" + files.image.newFilename, 
       "users/" + image
     );
@@ -204,7 +197,7 @@ exports.createUser = (req, res, next) => {
             fields.updated
           ));
 
-        fs.unlink(usersUrl + files.image.newFilename, () => {
+        fs.unlink(usersImg + files.image.newFilename, () => {
           user
             .save()
             .then(() => res.status(201).json({ message: process.env.USER_CREATED }))
@@ -233,18 +226,18 @@ exports.updateUser = (req, res, next) => {
     let image = fields.image;
 
     if (Object.keys(files).length !== 0) {
-      image = this.getImgName(fields.name);
+      image = nem.getImgName(fields.name);
 
-      nem.createImage(
+      nem.createThumbnail(
         "users/" + files.image.newFilename, 
         "users/" + image
       );
-
+  
       UserModel
         .findOne({ _id: req.params.id })
         .then((user) => 
-          fs.unlink(usersUrl + user.image, () => {
-            fs.unlink(usersUrl + files.image.newFilename, () => {
+          fs.unlink(usersThumb + user.image, () => {
+            fs.unlink(usersImg + files.image.newFilename, () => {
               console.log("Image ok !");
             })
           })
@@ -282,7 +275,7 @@ exports.deleteUser = (req, res) => {
   UserModel
     .findOne({ _id: req.params.id })
     .then(user => {
-      fs.unlink(usersUrl + user.image, () => {
+      fs.unlink(usersThumb + user.image, () => {
         UserModel
           .deleteOne({ _id: req.params.id })
           .then(() => res.status(200).json({ message: process.env.USER_DELETED }))

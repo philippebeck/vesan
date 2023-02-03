@@ -9,20 +9,13 @@ const ArticleModel = require("../model/ArticleModel");
 
 require("dotenv").config();
 
-const articlesUrl = process.env.IMG_URL + "articles/";
+const articlesImg   = process.env.IMG_URL + "articles/";
+const articlesThumb = process.env.THUMB_URL + "articles/";
+
 const form = formidable({ 
-  uploadDir: articlesUrl, 
+  uploadDir: articlesImg, 
   keepExtensions: true 
 });
-
-/**
- * GET IMAGE NAME
- * @param {string} name 
- */
-exports.getImgName = (name) => {
-
-  return accents.remove(name).replace(/ /g, "-").toLowerCase() + "-" + Date.now() + "." + process.env.IMG_EXT;
-}
 
 /**
  * GET ARTICLE
@@ -80,9 +73,14 @@ exports.createArticle = (req, res, next) => {
       return;
     }
 
-    let image = this.getImgName(fields.name);
+    let image = nem.getImgName(fields.name);
 
     nem.createImage(
+      "articles/" + files.image.newFilename, 
+      "articles/" + image
+    );
+
+    nem.createThumbnail(
       "articles/" + files.image.newFilename, 
       "articles/" + image
     );
@@ -108,7 +106,7 @@ exports.createArticle = (req, res, next) => {
 
     article
       .save()
-      .then(() => fs.unlink(articlesUrl + files.image.newFilename, () => {
+      .then(() => fs.unlink(articlesImg + files.image.newFilename, () => {
         console.log("image ok !") 
       }))
       .then(() => res.status(201).json({ message: process.env.ARTICLE_CREATED }))
@@ -145,19 +143,26 @@ exports.updateArticle = (req, res, next) => {
     let image = fields.image;
 
     if (Object.keys(files).length !== 0) {
-      image = this.getImgName(fields.name);
+      image = nem.getImgName(fields.name);
   
       nem.createImage(
         "articles/" + files.image.newFilename, 
         "articles/" + image
       );
 
+      nem.createThumbnail(
+        "articles/" + files.image.newFilename, 
+        "articles/" + image
+      );
+      
       ArticleModel
         .findOne({ _id: req.params.id })
         .then((article) => 
-          fs.unlink(articlesUrl + article.image, () => {
-            fs.unlink(articlesUrl + files.image.newFilename, () => {
-              console.log("Image ok !");
+          fs.unlink(articlesThumb + article.image, () => {
+            fs.unlink(articlesImg + article.image, () => {
+              fs.unlink(articlesImg + files.image.newFilename, () => {
+                console.log("Image ok !");
+              })
             })
           })
         )
@@ -197,12 +202,14 @@ exports.deleteArticle = (req, res) => {
   ArticleModel
     .findOne({ _id: req.params.id })
     .then(article => {
-      fs.unlink(articlesUrl + article.image, () => {
-        ArticleModel
-          .deleteOne({ _id: req.params.id })
-          .then(() => res.status(200).json({ message: process.env.ARTICLE_DELETED }))
-          .catch((error) => res.status(400).json({ error }));
-      });
+      fs.unlink(articlesThumb + article.image, () => {
+        fs.unlink(articlesImg + article.image, () => {
+          ArticleModel
+            .deleteOne({ _id: req.params.id })
+            .then(() => res.status(200).json({ message: process.env.ARTICLE_DELETED }))
+            .catch((error) => res.status(400).json({ error }));
+        });
+      })
     })
     .catch(error => res.status(500).json({ error }));
 };

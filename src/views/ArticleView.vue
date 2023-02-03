@@ -36,14 +36,46 @@
         </template>
       </MediaElt>
 
-      <BtnElt type="button"
-        @click="AddToBasket()"
-        content="Add to Basket"
-        class="btn-green width-sm">
-        <template #btn>
-          <i class="fa-solid fa-basket-shopping fa-lg"></i>
-        </template>
-      </BtnElt>
+      <form>
+        <FieldElt id="basket-option"
+          type="select"
+          :list="article.options"
+          v-model:value="option"
+          @keyup.enter="addToBasket()"
+          info="Select an option"
+          :min="2">
+          <template #legend>
+            Option
+          </template>
+          <template #label>
+            Indicate the article option
+          </template>
+        </FieldElt>
+
+        <FieldElt id="basket-quantity"
+          type="number"
+          v-model:value="quantity"
+          @keyup.enter="addToBasket()"
+          info="Choose a quantity"
+          :min="1">
+          <template #legend>
+            Quantity
+          </template>
+          <template #label>
+            Indicate the article quantity
+          </template>
+        </FieldElt>
+
+        <BtnElt type="button"
+          @click="addToBasket()"
+          content="Add to Basket"
+          class="btn-green width-sm"
+          :title="`Add ${article.name} to the basket`">
+          <template #btn>
+            <i class="fa-solid fa-basket-shopping fa-lg"></i>
+          </template>
+        </BtnElt>
+      </form>
 
       <ListReviews v-if="reviews.length > 0"
         id="reviews"
@@ -74,6 +106,8 @@ export default {
       article: {},
       reviews: [],
       users: [],
+      option: "",
+      quantity: 1,
       userId: null
     }
   },
