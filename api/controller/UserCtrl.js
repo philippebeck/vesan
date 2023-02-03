@@ -46,21 +46,21 @@ exports.getImgName = (name) => {
  * @param {string} email 
  * @param {string} image 
  * @param {string} alt 
- * @param {string} role 
  * @param {string} pass 
+ * @param {string} role 
  * @param {string} created 
  * @param {string} updated 
  * @returns 
  */
-exports.getUser = (name, email, image, alt, role, pass, created, updated) => {
+exports.getUser = (name, email, image, alt, pass, role, created, updated) => {
 
   return {
     name: name,
     email: email,
     image: image,
     alt: alt,
-    role: role,
     pass: pass,
+    role: role,
     created: created,
     updated: updated
   }
@@ -148,8 +148,8 @@ exports.forgotPass = (req, res, next) => {
               user.email, 
               user.image, 
               user.alt, 
-              user.role,
               hash,
+              user.role,
               user.created,
               user.updated
             );
@@ -198,8 +198,8 @@ exports.createUser = (req, res, next) => {
             fields.email, 
             image, 
             fields.alt, 
-            fields.role, 
             hash,
+            fields.role, 
             fields.created, 
             fields.updated
           ));
@@ -259,8 +259,8 @@ exports.updateUser = (req, res, next) => {
           fields.email, 
           image, 
           fields.alt, 
-          fields.role, 
           hash,
+          fields.role, 
           fields.created, 
           fields.updated
         );
