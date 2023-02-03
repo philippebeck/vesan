@@ -42,7 +42,7 @@
 
           <!-- Post Image -->
           <template #cell-image="slotProps">
-            <MediaElt :src="'/img/posts/' + posts[slotProps.index].image"
+            <MediaElt :src="'/img/thumbnails/posts/' + posts[slotProps.index].image"
               :alt="posts[slotProps.index].title"
               :title="posts[slotProps.index].image">
             </MediaElt>
