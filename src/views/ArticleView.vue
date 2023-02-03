@@ -106,6 +106,8 @@ export default {
       article: {},
       reviews: [],
       users: [],
+      option: "",
+      quantity: 1,
       userId: null
     }
   },
