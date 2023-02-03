@@ -62,6 +62,16 @@
             </FieldElt>
           </template>
 
+          <!-- User Pass -->
+          <template #cell-pass="slotProps">
+            <FieldElt :id="'pass-' + users[slotProps.index]._id"
+              type="password"
+              v-model:value="pass"
+              info="Update the user password"
+              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)">
+            </FieldElt>
+          </template>
+
           <!-- User Role -->
           <template #cell-role="slotProps">
             <FieldElt :id="'role-' + users[slotProps.index]._id"
@@ -71,16 +81,6 @@
               info="Update the user role"
               @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)">
               {{ value }}
-            </FieldElt>
-          </template>
-
-          <!-- User Pass -->
-          <template #cell-pass="slotProps">
-            <FieldElt :id="'pass-' + users[slotProps.index]._id"
-              type="password"
-              v-model:value="pass"
-              info="Update the user password"
-              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)">
             </FieldElt>
           </template>
 
@@ -123,23 +123,21 @@
 </template>
 
 <script>
+import constants from "/constants";
+
 export default {
   name: "ListUsers",
   props: ["users"],
 
   data() {
     return {
-      pass: ""
+      pass: "",
+      roles: []
     }
   },
 
-  computed: {
-    roles() {
-      const roles = new Set();
-      this.users.forEach(user => roles.add(user.role));
-
-      return Array.from(roles); 
-    }
+  mounted() {
+    this.roles = constants.ROLES_USER;
   },
 
   methods: {
