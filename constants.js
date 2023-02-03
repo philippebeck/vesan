@@ -38,6 +38,7 @@ export default {
     "Sports & outdoor gear",
     "Toys & games"
   ],
+
   CATS_POST : [
     "Automotive & transportation",
     "Business & finance", 
@@ -51,6 +52,12 @@ export default {
     "Sports",
     "Technology", 
     "Travel"
+  ],
+
+  ROLES_USER : [
+    "Admin",
+    "Author",
+    "User"
   ],
 
   FORGOT_CONFIRM : "Do you confirm sending a new password ?",
