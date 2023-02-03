@@ -38,12 +38,12 @@
         :dynamic="true">
 
         <template #items="slotProps">
-          <h2>{{ slotProps.item[0].cat }}</h2>
+          <h2 :id="slotProps.item[0].cat">{{ slotProps.item[0].cat }}</h2>
         </template>
 
         <template #nested="slotProps">
-          <BtnElt v-if="checkLikes(slotProps.key) === false"
-            id="likes"
+          <BtnElt v-if="checkLikes(slotProps.value._id) === false"
+            :id="`like-${slotProps.value._id}`"
             type="button"
             @click="addLike(slotProps.value._id)"
             class="btn-blue"
@@ -54,8 +54,8 @@
             </template>
           </BtnElt>
 
-          <BtnElt v-if="checkLikes(slotProps.key) === true"
-            id="likes"
+          <BtnElt v-if="checkLikes(slotProps.value._id) === true"
+            :id="`like-${slotProps.value._id}`"
             type="button"
             @click="addLike(slotProps.value._id)"
             class="btn-sky"
@@ -143,8 +143,14 @@ export default {
      * CHECK LIKES
      * @returns
      */
-    checkLikes(key) {
-      let usersLiked = this.posts[key].usersLiked;
+    checkLikes(id) {
+      let usersLiked;
+
+      for (let i = 0; i < this.posts.length; i++) {
+        if (id === this.posts[i]._id) {
+          usersLiked = this.posts[i].usersLiked;
+        }
+      }
 
       for (let i = 0; i < usersLiked.length; i++) {
         if (constants.USER_ID === usersLiked[i]) {
