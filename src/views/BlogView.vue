@@ -68,7 +68,7 @@
 
           <a :href="`post/${slotProps.value._id}`"
             :title="`Read ${slotProps.value.title}`">
-            <MediaElt :src="`img/posts/${slotProps.value.image}`" 
+            <MediaElt :src="`img/thumbnails/posts/${slotProps.value.image}`" 
               :alt="`${slotProps.value.title}`" 
               :id="`${slotProps.value.title.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`">
 

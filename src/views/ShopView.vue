@@ -60,7 +60,7 @@
 
           <a :href="`article/${slotProps.value._id}`"
             :title="`Watch ${slotProps.value.name}`">
-            <MediaElt :src="`img/articles/${slotProps.value.image}`" 
+            <MediaElt :src="`img/thumbnails/articles/${slotProps.value.image}`" 
               :alt="`${slotProps.value.description}`" 
               :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`">
 
