@@ -87,6 +87,12 @@ exports.createArticle = (req, res, next) => {
       "articles/" + image
     );
 
+    let options = fields.options.split(",");
+
+    if (options[0] === "") {
+      options.shift();
+    }
+
     let article = new ArticleModel(
       this.getArticle(
         fields.name, 
@@ -94,7 +100,7 @@ exports.createArticle = (req, res, next) => {
         image, 
         fields.alt,
         fields.price,
-        fields.options,
+        options,
         fields.cat, 
         fields.created,
         fields.updated
@@ -157,13 +163,19 @@ exports.updateArticle = (req, res, next) => {
         )
     }
 
+    let options = fields.options.split(",");
+
+    if (options[0] === "") {
+      options.shift();
+    }
+
     let article = this.getArticle(
       fields.name, 
       fields.description, 
       image, 
       fields.alt,
       fields.price,
-      fields.options,
+      options,
       fields.cat, 
       fields.created,
       fields.updated
