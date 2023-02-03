@@ -18,15 +18,6 @@ const form = formidable({
 });
 
 /**
- * GET IMAGE NAME
- * @param {string} name 
- */
-exports.getImgName = (name) => {
-
-  return accents.remove(name).replace(/ /g, "-").toLowerCase() + "-" + Date.now() + "." + process.env.IMG_EXT;
-}
-
-/**
  * GET POST
  * @param {string} title 
  * @param {string} text 
@@ -84,7 +75,7 @@ exports.createPost = (req, res, next) => {
       return;
     }
 
-    let image = this.getImgName(fields.title);
+    let image = nem.getImgName(fields.title);
 
     nem.createImage(
       "posts/" + files.image.newFilename, 
@@ -149,7 +140,7 @@ exports.updatePost = (req, res, next) => {
     let image = fields.image;
 
     if (Object.keys(files).length !== 0) {
-      image = this.getImgName(fields.title);
+      image = nem.getImgName(fields.title);
 
       nem.createImage(
         "posts/" + files.image.newFilename, 

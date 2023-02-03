@@ -34,15 +34,6 @@ exports.checkCredentials = (email, pass, res) => {
 }
 
 /**
- * GET IMAGE NAME
- * @param {string} name 
- */
-exports.getImgName = (name) => {
-
-  return accents.remove(name).replace(/ /g, "-").toLowerCase() + "-" + Date.now() + "." + process.env.IMG_EXT;
-}
-
-/**
  * GET USER
  * @param {string} name 
  * @param {string} email 
@@ -184,7 +175,7 @@ exports.createUser = (req, res, next) => {
     }
 
     this.checkCredentials(fields.email, fields.pass, res);
-    let image = this.getImgName(fields.name);
+    let image = nem.getImgName(fields.name);
 
     nem.createThumbnail(
       "users/" + files.image.newFilename, 
@@ -235,7 +226,7 @@ exports.updateUser = (req, res, next) => {
     let image = fields.image;
 
     if (Object.keys(files).length !== 0) {
-      image = this.getImgName(fields.name);
+      image = nem.getImgName(fields.name);
 
       nem.createThumbnail(
         "users/" + files.image.newFilename, 
