@@ -74,6 +74,17 @@
             </FieldElt>
           </template>
 
+          <!-- Article Options -->
+          <template #cell-options="slotProps">
+            <FieldElt :id="'options-' + articles[slotProps.index]._id"
+              type="textarea"
+              v-model:value="getArticles()[slotProps.index].options"
+              @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
+              info="Update the options">
+              {{ value }}
+            </FieldElt>
+          </template>
+
           <!-- Article Category -->
           <template #cell-cat="slotProps">
             <FieldElt :id="'cat-' + articles[slotProps.index]._id"
@@ -214,6 +225,7 @@ export default {
         article.append("image", image);
         article.append("alt", this.articles[i].alt);
         article.append("price", this.articles[i].price);
+        article.append("options", this.articles[i].options);
         article.append("cat", this.articles[i].cat);
         article.append("created", this.articles[i].created);
         article.append("updated", Date.now());
