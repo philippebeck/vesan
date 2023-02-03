@@ -8,7 +8,7 @@
     <template #body>
       <form method="post"
         enctype="multipart/form-data">
-        <ListElt :items="['name', 'description', 'image', 'alt', 'price', 'cat']">
+        <ListElt :items="['name', 'description', 'image', 'alt', 'price', 'options', 'cat']">
 
           <!-- Article Name -->
           <template #item-1>
@@ -90,8 +90,25 @@
             </FieldElt>
           </template>
 
-          <!-- Article Category -->
+          <!-- Article Options -->
           <template #item-6>
+            <FieldElt id="article-options"
+              type="textarea"
+              v-model:value="options"
+              @keyup.enter="validateNewArticle()"
+              info="option-1,option-2,option-3,etc"
+              :max="100">
+              <template #legend>
+                Options
+              </template>
+              <template #label>
+                Indicate the article options
+              </template>
+            </FieldElt>
+          </template>
+
+          <!-- Article Category -->
+          <template #item-7>
             <FieldElt id="article-cat"
               type="select"
               v-model:value="cat"
@@ -124,11 +141,10 @@
 </template>
 
 <script>
+import constants from "/constants"
+
 export default {
   name: "CreateArticle",
-  props: {
-    cats: {}
-  },
 
   data() {
     return {
@@ -137,8 +153,14 @@ export default {
       image: "",
       alt: "",
       price: null,
-      cat: ""
+      options: [],
+      cat: "",
+      cats: []
     }
+  },
+
+  mounted() {
+    this.cats = constants.CATS_ARTICLE;
   },
 
   methods: {
@@ -197,6 +219,7 @@ export default {
         article.append("image", image);
         article.append("alt", this.alt);
         article.append("price", this.price);
+        article.append("options", this.options);
         article.append("cat", this.cat);
         article.append("created", Date.now());
         article.append("updated", Date.now());

@@ -125,12 +125,14 @@ export default {
   name: "ListPosts",
   props: ["posts", "users"],
 
-  computed: {
-    cats() {
-      const cats = new Set();
-      this.posts.forEach(post => cats.add(post.cat));
-      return Array.from(cats); 
+  data() {
+    return {
+      cats: []
     }
+  },
+
+  mounted() {
+    this.cats = constants.CATS_POST;
   },
 
   methods: {

@@ -111,9 +111,6 @@ import constants from "/constants"
 
 export default {
   name: "CreatePost",
-  props: {
-    cats: {}
-  },
 
   data() {
     return {
@@ -121,8 +118,13 @@ export default {
       text:"",
       image: "",
       alt: "",
-      cat: ""
+      cat: "",
+      cats: []
     }
+  },
+
+  mounted() {
+    this.cats = constants.CATS_POST;
   },
 
   methods: {

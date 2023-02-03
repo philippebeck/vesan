@@ -30,27 +30,27 @@ exports.getImgName = (name) => {
  * @param {string} text 
  * @param {string} image 
  * @param {string} alt 
- * @param {string} cat 
  * @param {string} user 
- * @param {string} created 
- * @param {string} updated 
  * @param {number} likes 
  * @param {array} usersLiked 
+ * @param {string} cat 
+ * @param {string} created 
+ * @param {string} updated 
  * @returns 
  */
-exports.getPost = (title, text, image, alt, cat, user, created, updated, likes, usersLiked) => {
+exports.getPost = (title, text, image, alt, user, likes, usersLiked, cat, created, updated) => {
 
   return {
     title: title,
     text: text,
     image: image,
     alt: alt,
-    cat: cat,
     user: user,
-    created: created,
-    updated: updated,
     likes: likes,
-    usersLiked: usersLiked
+    usersLiked: usersLiked,
+    cat: cat,
+    created: created,
+    updated: updated
   }
 }
 
@@ -94,12 +94,13 @@ exports.createPost = (req, res, next) => {
       fields.text, 
       image, 
       fields.alt, 
-      fields.cat, 
       fields.user,
-      fields.created,
-      fields.updated,
       fields.likes,
       fields.usersLiked,
+      fields.cat, 
+      fields.created,
+      fields.updated
+
     ));
 
     post
@@ -170,12 +171,12 @@ exports.updatePost = (req, res, next) => {
       fields.text, 
       image, 
       fields.alt, 
-      fields.cat, 
       fields.user,
-      fields.created,
-      fields.updated,
       fields.likes,
-      usersLiked
+      usersLiked,
+      fields.cat, 
+      fields.created,
+      fields.updated
     );
 
     PostModel

@@ -176,8 +176,8 @@ export default {
         user.append("email", this.email);
         user.append("image", image);
         user.append("alt", this.alt);
-        user.append("role", "user");
         user.append("pass", this.pass);
+        user.append("role", "user");
         user.append("created", Date.now());
         user.append("updated", Date.now());
 

@@ -28,9 +28,13 @@ const ArticleModel = mongoose.Schema(
       type: Number, 
       required: true
     },
+    options: {
+      type: Array,
+      default: []
+    },
     cat: { 
       type: String, 
-      required: true
+      default: "Electronics"
     },
     created: {
       type: Date,

@@ -24,13 +24,21 @@ const PostModel = mongoose.Schema(
       type: String, 
       required: true
     },
-    cat: { 
-      type: String, 
-      required: true
-    },
     user: { 
       type: String, 
       required: true
+    },
+    likes: {
+      type: Number,
+      default: 0
+    },
+    usersLiked: {
+      type: Array,
+      default: []
+    },
+    cat: { 
+      type: String, 
+      default: "news"
     },
     created: { 
       type: Date, 
@@ -38,14 +46,6 @@ const PostModel = mongoose.Schema(
     },
     updated: { 
       type: Date, 
-      required: true
-    },
-    likes: {
-      type: Number,
-      required: true
-    },
-    usersLiked: {
-      type: Array,
       required: true
     }
   },

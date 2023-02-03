@@ -24,6 +24,42 @@ export default {
 
   /* VESAN */
 
+  CATS_ARTICLE : [
+    "Automotive & industrial",
+    "Beauty & personal care",
+    "Books & media",
+    "Clothing & fashion",
+    "Electronics",
+    "Food & grocery",
+    "Furniture & decor",
+    "Health & wellness",
+    "Home & garden",
+    "Pet supplies",
+    "Sports & outdoor gear",
+    "Toys & games"
+  ],
+
+  CATS_POST : [
+    "Automotive & transportation",
+    "Business & finance", 
+    "Culture & entertainment",
+    "Fashion & beauty",
+    "Food & nutrition",
+    "Health",
+    "News",
+    "Politics",
+    "Science",
+    "Sports",
+    "Technology", 
+    "Travel"
+  ],
+
+  ROLES_USER : [
+    "Admin",
+    "Author",
+    "User"
+  ],
+
   FORGOT_CONFIRM : "Do you confirm sending a new password ?",
   FORGOT_SUBJECT : "New Password",
   FORGOT_TEXT : "This is your new Password, keep it safe : ",
