@@ -9,9 +9,11 @@ const ArticleModel = require("../model/ArticleModel");
 
 require("dotenv").config();
 
-const articlesUrl = process.env.IMG_URL + "articles/";
+const articlesImg   = process.env.IMG_URL + "articles/";
+const articlesThumb = process.env.THUMB_URL + "articles/";
+
 const form = formidable({ 
-  uploadDir: articlesUrl, 
+  uploadDir: articlesImg, 
   keepExtensions: true 
 });
 
@@ -87,6 +89,11 @@ exports.createArticle = (req, res, next) => {
       "articles/" + image
     );
 
+    nem.createThumbnail(
+      "articles/" + files.image.newFilename, 
+      "articles/" + image
+    );
+
     let options = fields.options.split(",");
 
     if (options[0] === "") {
@@ -108,7 +115,7 @@ exports.createArticle = (req, res, next) => {
 
     article
       .save()
-      .then(() => fs.unlink(articlesUrl + files.image.newFilename, () => {
+      .then(() => fs.unlink(articlesImg + files.image.newFilename, () => {
         console.log("image ok !") 
       }))
       .then(() => res.status(201).json({ message: process.env.ARTICLE_CREATED }))
@@ -152,12 +159,19 @@ exports.updateArticle = (req, res, next) => {
         "articles/" + image
       );
 
+      nem.createThumbnail(
+        "articles/" + files.image.newFilename, 
+        "articles/" + image
+      );
+      
       ArticleModel
         .findOne({ _id: req.params.id })
         .then((article) => 
-          fs.unlink(articlesUrl + article.image, () => {
-            fs.unlink(articlesUrl + files.image.newFilename, () => {
-              console.log("Image ok !");
+          fs.unlink(articlesThumb + article.image, () => {
+            fs.unlink(articlesImg + article.image, () => {
+              fs.unlink(articlesImg + files.image.newFilename, () => {
+                console.log("Image ok !");
+              })
             })
           })
         )
@@ -197,12 +211,14 @@ exports.deleteArticle = (req, res) => {
   ArticleModel
     .findOne({ _id: req.params.id })
     .then(article => {
-      fs.unlink(articlesUrl + article.image, () => {
-        ArticleModel
-          .deleteOne({ _id: req.params.id })
-          .then(() => res.status(200).json({ message: process.env.ARTICLE_DELETED }))
-          .catch((error) => res.status(400).json({ error }));
-      });
+      fs.unlink(articlesThumb + article.image, () => {
+        fs.unlink(articlesImg + article.image, () => {
+          ArticleModel
+            .deleteOne({ _id: req.params.id })
+            .then(() => res.status(200).json({ message: process.env.ARTICLE_DELETED }))
+            .catch((error) => res.status(400).json({ error }));
+        });
+      })
     })
     .catch(error => res.status(500).json({ error }));
 };
