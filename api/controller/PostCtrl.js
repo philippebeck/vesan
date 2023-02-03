@@ -9,9 +9,11 @@ const PostModel = require("../model/PostModel");
 
 require("dotenv").config();
 
-const postsUrl = process.env.IMG_URL + "posts/";
+const postsImg    = process.env.IMG_URL + "posts/";
+const postsThumb  = process.env.THUMB_URL + "posts/";
+
 const form = formidable({ 
-  uploadDir: postsUrl, 
+  uploadDir: postsImg, 
   keepExtensions: true 
 });
 
@@ -89,6 +91,11 @@ exports.createPost = (req, res, next) => {
       "posts/" + image
     );
 
+    nem.createThumbnail(
+      "posts/" + files.image.newFilename, 
+      "posts/" + image
+    );
+
     let post  = new PostModel(this.getPost(
       fields.title, 
       fields.text, 
@@ -105,7 +112,7 @@ exports.createPost = (req, res, next) => {
 
     post
       .save()
-      .then(() => fs.unlink(postsUrl + files.image.newFilename, () => {
+      .then(() => fs.unlink(postsImg + files.image.newFilename, () => {
         console.log("image ok !");
       }))
       .then(() => res.status(201).json({ message: process.env.POST_CREATED }))
@@ -149,12 +156,19 @@ exports.updatePost = (req, res, next) => {
         "posts/" + image
       );
 
+    nem.createThumbnail(
+      "posts/" + files.image.newFilename, 
+      "posts/" + image
+    );
+
       PostModel
         .findOne({ _id: req.params.id })
         .then((post) => 
-          fs.unlink(postsUrl + post.image, () => {
-            fs.unlink(postsUrl + files.image.newFilename, () => {
-              console.log("Image ok !");
+          fs.unlink(postsThumb + post.image, () => {
+            fs.unlink(postsImg + post.image, () => {
+              fs.unlink(postsImg + files.image.newFilename, () => {
+                console.log("Image ok !");
+              })
             })
           })
         )
@@ -195,12 +209,14 @@ exports.deletePost = (req, res) => {
   PostModel
     .findOne({ _id: req.params.id })
     .then(post => {
-      fs.unlink(postsUrl + post.image, () => {
-        PostModel
-          .deleteOne({ _id: req.params.id })
-          .then(() => res.status(200).json({ message: process.env.POST_DELETED }))
-          .catch((error) => res.status(400).json({ error }));
-      });
+      fs.unlink(postsThumb + post.image, () => {
+        fs.unlink(postsImg + post.image, () => {
+          PostModel
+            .deleteOne({ _id: req.params.id })
+            .then(() => res.status(200).json({ message: process.env.POST_DELETED }))
+            .catch((error) => res.status(400).json({ error }));
+        });
+      })
     })
     .catch(error => res.status(500).json({ error }));
 };
