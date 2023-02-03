@@ -125,16 +125,20 @@
 </template>
 
 <script>
+import constants from "/constants"
+
 export default {
   name: "ListArticles",
   props: ["articles"],
 
-  computed: {
-    cats() {
-      const cats = new Set();
-      this.articles.forEach(article => cats.add(article.cat));
-      return Array.from(cats); 
+  data() {
+    return {
+      cats: []
     }
+  },
+
+  mounted() {
+    this.cats = constants.CATS_ARTICLE;
   },
 
   methods: {

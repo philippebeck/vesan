@@ -124,11 +124,10 @@
 </template>
 
 <script>
+import constants from "/constants"
+
 export default {
   name: "CreateArticle",
-  props: {
-    cats: {}
-  },
 
   data() {
     return {
@@ -137,8 +136,13 @@ export default {
       image: "",
       alt: "",
       price: null,
-      cat: ""
+      cat: "",
+      cats: []
     }
+  },
+
+  mounted() {
+    this.cats = constants.CATS_ARTICLE;
   },
 
   methods: {
