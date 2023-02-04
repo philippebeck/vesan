@@ -249,6 +249,8 @@ export default {
       }
 
       localStorage.setItem("basket", JSON.stringify(this.basket));
+
+      alert(`${this.order.quantity} "${this.product.name}" (${this.order.option}) has been added to the Basket !`);
     }
   }
 }
