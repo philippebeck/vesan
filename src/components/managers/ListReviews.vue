@@ -72,10 +72,10 @@
             </FieldElt>
           </template>
 
-          <!-- Review Article -->
-          <template #cell-article="slotProps">
-            <b>{{ getReviewArticle(reviews[slotProps.index].article) }}</b>
-            ({{ reviews[slotProps.index].article }})
+          <!-- Review Product -->
+          <template #cell-product="slotProps">
+            <b>{{ getReviewProduct(reviews[slotProps.index].product) }}</b>
+            ({{ reviews[slotProps.index].product }})
           </template>
 
           <!-- Review User -->
@@ -127,7 +127,7 @@ import constants from "/constants";
 
 export default {
   name: "ListReviews",
-  props: ["reviews", "article", "articles", "users"],
+  props: ["reviews", "product", "products", "users"],
 
   methods: {
     /**
@@ -138,14 +138,14 @@ export default {
     },
     
     /**
-     * GET REVIEW ARTICLE
-     * @param {string} articleId 
+     * GET REVIEW PRODUCT
+     * @param {string} productId 
      */
-    getReviewArticle(articleId) {
-      for (let i = 0; i < this.articles.length; i++ ) {
-        if (articleId === this.articles[i]._id) {
+    getReviewProduct(productId) {
+      for (let i = 0; i < this.products.length; i++ ) {
+        if (productId === this.products[i]._id) {
 
-          return this.articles[i].name;
+          return this.products[i].name;
         }
       }
     },
@@ -176,7 +176,7 @@ export default {
           review.append("id", this.reviews[i]._id);
           review.append("text", this.reviews[i].text);
           review.append("score", this.reviews[i].score);
-          review.append("article", this.reviews[i].article);
+          review.append("product", this.reviews[i].product);
           review.append("user", constants.USER_ID);
           review.append("created", this.reviews[i].created);
           review.append("updated", Date.now());

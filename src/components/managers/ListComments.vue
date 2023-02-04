@@ -56,10 +56,10 @@
             </FieldElt>
           </template>
 
-          <!-- Comment Post -->
-          <template #cell-post="slotProps">
-            <b>{{ getCommentPost(comments[slotProps.index].post) }}</b>
-            ({{ comments[slotProps.index].post }})
+          <!-- Comment Article -->
+          <template #cell-article="slotProps">
+            <b>{{ getCommentArticle(comments[slotProps.index].article) }}</b>
+            ({{ comments[slotProps.index].article }})
           </template>
 
           <!-- Comment User -->
@@ -111,7 +111,7 @@ import constants from "/constants";
 
 export default {
   name: "ListComments",
-  props: ["comments", "post", "posts", "users"],
+  props: ["comments", "article", "articles", "users"],
 
   methods: {
     /**
@@ -122,14 +122,14 @@ export default {
     },
     
     /**
-     * GET COMMENT POST
-     * @param {string} postId 
+     * GET COMMENT ARTICLE
+     * @param {string} articleId 
      */
-    getCommentPost(postId) {
-      for (let i = 0; i < this.posts.length; i++ ) {
-        if (postId === this.posts[i]._id) {
+    getCommentArticle(articleId) {
+      for (let i = 0; i < this.articles.length; i++ ) {
+        if (articleId === this.articles[i]._id) {
 
-          return this.posts[i].title;
+          return this.articles[i].title;
         }
       }
     },
@@ -158,7 +158,7 @@ export default {
 
           comment.append("id", id);
           comment.append("text", this.comments[i].text);
-          comment.append("post", this.comments[i].post);
+          comment.append("article", this.comments[i].article);
           comment.append("user", constants.USER_ID);
           comment.append("created", this.comments[i].created);
           comment.append("updated", Date.now());
