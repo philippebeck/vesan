@@ -5,12 +5,12 @@ const uniqueValidator = require("mongoose-unique-validator");
 
 const ArticleModel = mongoose.Schema(
   {
-    name: { 
+    title: { 
       type: String, 
       required: true,
       unique: true
     },
-    description: { 
+    text: { 
       type: String, 
       required: true,
       unique: true
@@ -24,24 +24,28 @@ const ArticleModel = mongoose.Schema(
       type: String, 
       required: true
     },
-    price: { 
-      type: Number, 
+    user: { 
+      type: String, 
       required: true
     },
-    options: {
+    likes: {
+      type: Number,
+      default: 0
+    },
+    usersLiked: {
       type: Array,
       default: []
     },
     cat: { 
       type: String, 
-      default: "Electronics"
+      default: "news"
     },
-    created: {
-      type: Date,
+    created: { 
+      type: Date, 
       required: true
     },
-    updated: {
-      type: Date,
+    updated: { 
+      type: Date, 
       required: true
     }
   },
