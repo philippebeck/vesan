@@ -212,14 +212,11 @@ export default {
      */
     getBasket() {
       if (localStorage.getItem("basket") === null) {
-
         localStorage.setItem("basket", []);
-        this.basket = localStorage.getItem("basket");
-        this.basket = this.basket.split();
+        this.basket = localStorage.getItem("basket").split();
 
         } else {
-        this.basket = localStorage.getItem("basket");
-        this.basket = JSON.parse(this.basket);
+        this.basket = JSON.parse(localStorage.getItem("basket"));
         }
     },
 
@@ -230,7 +227,7 @@ export default {
       this.isInBasket = false;
 
       this.basket = this.basket.map(item => {
-        if (item._id === this.order._id && item.option === this.option) {
+        if (item.id === this.order.id && item.option === this.option) {
 
           item.quantity = Number(item.quantity) + Number(this.quantity);
           this.isInBasket = true;
