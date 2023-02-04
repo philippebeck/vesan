@@ -5,7 +5,87 @@
     </template>
 
     <template #body>
+      <h2>Products</h2>
 
+      <form>
+        <TableElt :items="order">
+
+          <template #head>
+            Total
+          </template>
+
+          <!-- Product Name -->
+          <template #cell-name="slotProps">
+            <h3>{{ slotProps.item.name }}</h3>
+          </template>
+
+          <!-- Product Image -->
+          <template #cell-image="slotProps">
+            <MediaElt :src="'img/thumbnails/products/' + slotProps.item.image"
+              :alt="slotProps.item.name"
+              :title="slotProps.item.name">
+            </MediaElt>
+          </template>
+
+          <!-- Product Option -->
+          <template #cell-option="slotProps">
+            <b>{{ slotProps.item.option }}</b>
+          </template>
+
+          <!-- Product Quantity -->
+          <template #cell-quantity="slotProps">
+            <FieldElt :id="`quantity-${slotProps.index}`"
+              type="number"
+              v-model:value="slotProps.item.quantity"
+              @change="updateQuantity(`${slotProps.item.name}`, `${slotProps.item.option}`)"
+              info="Update the product quantity"
+              :min="1"
+              :max="100">
+            </FieldElt>
+          </template>
+
+          <!-- Product Price -->
+          <template #cell-price="slotProps">
+            <b>{{ slotProps.item.price }} €</b>
+          </template>
+
+          <!-- Product Total -->
+          <template #body="slotProps">
+            <p>
+              <b>
+                {{ slotProps.item.price * slotProps.item.quantity }} €
+              </b>
+            </p>
+
+            <BtnElt type="button"
+              @click="deleteItem(`${slotProps.item.name}`, `${slotProps.item.option}`)"
+              class="btn-orange"
+              content="Remove"
+              :title="`Remove ${slotProps.item.name}`">
+            </BtnElt>
+          </template>
+        </TableElt>
+      </form>
+
+      <!-- Basket Total -->
+      <p>The Total of your Basket is <b>{{ total }} €</b></p>
+
+      <!-- Clear Basket -->
+      <BtnElt type="button"
+        @click="clearBasket()"
+        class="btn-red"
+        content="Clear ?"
+        title="Clear the Basket">
+      </BtnElt>
+
+      <!-- Command Product -->
+      <BtnElt type="button"
+        @click="orderProducts()"
+        class="btn-green"
+        content="Order !"
+        title="Order those Products">
+
+      </BtnElt>
     </template>
   </CardElt>
 </template>
@@ -16,7 +96,135 @@ export default {
 
   data() {
     return {
-      basket: []
+      products: [],
+      basket: [],
+      order: [],
+      total: 0
+    }
+  },
+
+  mounted() {
+    this.$serve.getData("/api/products")
+      .then(res => { 
+        this.products = res;
+        this.getBasket();
+        this.setOrder();
+        this.calculateTotal();
+      })
+      .catch(err => { console.log(err) });
+  },
+
+  methods: {
+    /**
+     * GET BASKET
+     */
+    getBasket() {
+      if (localStorage.getItem("basket") !== null) {
+        this.basket = JSON.parse(localStorage.getItem("basket"));
+      }
+    },
+
+    /**
+     * SET ORDER
+     */
+    setOrder() {
+      for (let i = 0; i < this.products.length; i++) {
+        let product = this.products[i];
+        
+        for (let j = 0; j < this.basket.length; j++) {
+          let item = this.basket[j];
+
+          if (product._id === item.id) {
+            let thing = {};
+
+            thing.name      = product.name;
+            thing.image     = product.image;
+            thing.option    = item.option;
+            thing.quantity  = Number(item.quantity);
+            thing.price     = Number(product.price);
+
+            this.order.push(thing);
+          }
+        }
+      }
+    },
+
+    /**
+     * UPDATE QUANTITY
+     * @param {string} name 
+     * @param {string} option 
+     */
+    updateQuantity(name, option) {
+      for (let i = 0; i < this.order.length; i++) {
+        let element = this.order[i];
+
+        if (element.name === name && element.option === option) {
+          for (let j = 0; j < this.basket.length; j++) {
+            let item = this.basket[j];
+
+            if (item.name === element.name && item.option === element.option) {
+              this.basket[j].quantity = Number(element.quantity);
+            }
+          }
+        }
+      }
+      this.calculateTotal();
+      localStorage.setItem("basket", JSON.stringify(this.basket));
+    },
+
+    /**
+     * DELETE ITEM
+     * @param {string} name 
+     * @param {string} option 
+     */
+    deleteItem(name, option) {
+      for (let i = 0; i < this.order.length; i++) {
+        let element = this.order[i];
+
+        if (element.name === name && element.option === option) {
+          this.order.splice(i, 1);
+
+          for (let j = 0; j < this.basket.length; j++) {
+            let item = this.basket[j];
+
+            if (item.name === element.name && item.option === element.option) {
+              this.basket.splice(j, 1);
+            }
+          }
+        }
+      }
+      this.calculateTotal();
+      localStorage.setItem("basket", JSON.stringify(this.basket));
+    },
+
+    /**
+     * CALCULATE TOTAL
+     */
+    calculateTotal() {
+      this.total = 0;
+
+      for (let i = 0; i < this.order.length; i++) {
+        let productTotal = this.order[i].price * this.order[i].quantity
+        this.total += Number(productTotal);
+      }
+    },
+
+    /**
+     * CLEAR BASKET
+     */
+    clearBasket() {
+      if (confirm("Do you want to clear your Basket ?") === true) {
+        localStorage.removeItem("basket");
+        this.$router.go();
+      }
+    },
+
+    /**
+     * TODO : UNDER CONSTRUCTION
+     * ORDER PRODUCTS
+     */
+    orderProducts() {
+      console.log("Order !");
     }
   }
 }

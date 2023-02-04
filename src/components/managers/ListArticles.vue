@@ -43,8 +43,8 @@
           <!-- Article Image -->
           <template #cell-image="slotProps">
             <MediaElt :src="'/img/thumbnails/articles/' + articles[slotProps.index].image"
-              :alt="articles[slotProps.index].title"
-              :title="articles[slotProps.index].image">
+              :alt="articles[slotProps.index].alt"
+              :title="articles[slotProps.index].title">
             </MediaElt>
             <FieldElt :id="'image-' + articles[slotProps.index]._id"
               type="file"

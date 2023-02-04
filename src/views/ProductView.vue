@@ -108,6 +108,9 @@ export default {
       users: [],
       option: "",
       quantity: 1,
+      order: {},
+      basket: [],
+      isInBasket: false,
       userId: null
     }
   },
@@ -187,53 +190,68 @@ export default {
      * ADD TO BASKET
      */
     addToBasket() {
-      let order = {
-        id: this.product._id,
-        option: this.option,
-        quantity: this.quantity
-      };
-
-      this.saveBasket(order);
+      this.createOrder();
+      this.getBasket();
+      this.checkBasket();
+      this.setBasket();
     },
 
     /**
-     * TODO : UNDER CONSTRUCTION !
-     * SAVE BASKET TO STORAGE
-     * @param {object} order 
+     * CREATE ORDER
      */
-    saveBasket(order) {
+    createOrder() {
+      this.order = {
+        id: this.product._id,
+        name: this.product.name,
+        option: this.option,
+        quantity: this.quantity
+      };
+    },
 
-console.log(typeof order, order);
-
+    /**
+     * GET BASKET
+     */
+    getBasket() {
       if (localStorage.getItem("basket") === null) {
         localStorage.setItem("basket", []);
-      }
+        this.basket = localStorage.getItem("basket").split();
 
-      let basket = localStorage.getItem("basket");
+        } else {
+        this.basket = JSON.parse(localStorage.getItem("basket"));
+        }
+    },
 
-console.log(typeof basket, basket);
+    /**
+     * CHECK BASKET
+     */
+    checkBasket() {
+      this.isInBasket = false;
 
-      //basket = JSON.parse(basket);
+      this.basket = this.basket.map(item => {
+        if (item.id === this.order.id && item.option === this.option) {
 
-console.log(typeof basket, basket);
-
-      let isInBasket = false;
-
-      basket = basket.map(item => {
-        if (item._id === order._id && item.option === this.option) {
           item.quantity = Number(item.quantity) + Number(this.quantity);
-          isInBasket = true;
+          this.isInBasket = true;
         }
         return item;
       })
+    },
 
-      if(!isInBasket) {
-          basket.push(order);
+    /**
+     * SET BASKET
+     */
+    setBasket() {
+      if (!this.isInBasket) {
+          this.basket.push(this.order);
       }
 
-console.log(typeof basket, basket);
+      if (this.basket[0] === "") {
+        this.basket.shift();
+      }
 
-      localStorage.setItem("basket", JSON.stringify(basket));
+      localStorage.setItem("basket", JSON.stringify(this.basket));
+
+      alert(`${this.order.quantity} "${this.product.name}" (${this.order.option}) has been added to the Basket !`);
     }
   }
 }
