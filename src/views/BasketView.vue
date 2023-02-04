@@ -6,6 +6,7 @@
 
     <template #body>
       <h2>Products</h2>
+
       <form>
         <TableElt :items="order">
 
@@ -20,7 +21,7 @@
 
           <template #cell-image="slotProps">
             <MediaElt :src="'img/thumbnails/products/' + slotProps.item.image"
-              :alt="slotProps.item.alt"
+              :alt="slotProps.item.name"
               :title="slotProps.item.name">
             </MediaElt>
           </template>
@@ -33,6 +34,7 @@
             <FieldElt :id="'quantity-' + slotProps.item._id"
               type="number"
               v-model:value="slotProps.item.quantity"
+              @change="calculateTotal()"
               info="Update the product quantity"
               :min="1"
               :max="100">
@@ -44,26 +46,22 @@
           </template>
 
           <template #body="slotProps">
-            <b>{{ slotProps.item.price * slotProps.item.quantity }} €</b>
+            <b>
+              {{ slotProps.item.price * slotProps.item.quantity }} €
+            </b>
           </template>
-
-          <template #foot>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>
-                <b>TOTAL QUANTITY</b>
-              </td>
-              <td></td>
-              <td>
-                <b>TOTAL</b>
-              </td>
-            </tr>
-          </template>
-
         </TableElt>
       </form>
+
+      <p>The Total of your Basket is <b>{{ total }} €</b></p>
+
+      <BtnElt type="button"
+        @click="commandProducts()"
+        class="btn-green"
+        content="Command !"
+        title="Command those Products">
+
+      </BtnElt>
     </template>
   </CardElt>
 </template>
@@ -76,16 +74,18 @@ export default {
     return {
       products: [],
       basket: [],
-      order: []
+      order: [],
+      total: 0
     }
   },
 
-  created() {
+  mounted() {
     this.$serve.getData("/api/products")
       .then(res => { 
         this.products = res;
         this.getBasket();
         this.setOrder();
+        this.calculateTotal();
       })
       .catch(err => { console.log(err) });
   },
@@ -120,6 +120,16 @@ export default {
             this.order.push(thing);
           }
         }
+      }
+    },
+
+    calculateTotal() {
+      this.total = 0;
+
+      for (let i = 0; i < this.order.length; i++) {
+
+        let productTotal = this.order[i].price * this.order[i].quantity
+        this.total += Number(productTotal);
       }
     }
   }
