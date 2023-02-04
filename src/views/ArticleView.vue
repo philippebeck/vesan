@@ -1,124 +1,91 @@
 <template>
   <CardElt>
     <template #header>
-      <h1>{{ article.name }}</h1>
+      <h1>{{ article.title }}</h1>
       <strong>{{ article.cat }}</strong>
     </template>
 
     <template #body>
-      <BtnElt v-if="calculateScoresAverage(article._id) !== undefined" 
-        href="#reviews"
-        class="btn-violet"
-        :title="`Read Reviews about ${article.name}`">
+
+      <BtnElt v-if="checkLikes() === false"
+        id="likes"
+        type="button"
+        @click="addLike()"
+        class="btn-blue"
+        :title="`Like ${article.title} ?`">
         <template #btn>
-          {{ calculateScoresAverage(article._id) }}
-        <i class="fa-solid fa-star fa-lg"></i>
+          <i class="fa-regular fa-thumbs-up fa-lg"></i>
+          {{ article.likes }}
         </template>
       </BtnElt>
 
-      <BtnElt v-else 
-        href="#review"
-        class="btn-violet"
-        content="Need a Review !"
-        :title="`Be the first to write a Review about ${article.name}`" />
+      <BtnElt v-else-if="checkLikes() === true"
+        id="likes"
+        type="button"
+        @click="addLike()"
+        class="btn-sky"
+        :title="`Dislike ${article.title} ?`">
+        <template #btn>
+          <i class="fa-solid fa-thumbs-up fa-lg"></i>
+          {{ article.likes }}
+        </template>
+      </BtnElt>
 
       <MediaElt :src="`/img/articles/${article.image}`"
         :alt="article.alt">
 
         <template #figcaption>
-          <p>{{ article.description }}</p>
-          <b>{{ article.price }} €</b>
-
+          <blockquote class="container width-sm bord bord-sky blue">
+            {{ article.text }}
+          </blockquote>
+          
           <p class="silver">
-            Created: {{ new Date(article.created).toLocaleDateString() }}
+            Created: {{ new Date(article.created).toLocaleDateString() }} 
             (Updated: {{ new Date(article.updated).toLocaleDateString() }})
           </p>
         </template>
       </MediaElt>
 
-      <form>
-        <FieldElt id="basket-option"
-          type="select"
-          :list="article.options"
-          v-model:value="option"
-          @keyup.enter="addToBasket()"
-          info="Select an option"
-          :min="2">
-          <template #legend>
-            Option
-          </template>
-          <template #label>
-            Indicate the article option
-          </template>
-        </FieldElt>
-
-        <FieldElt id="basket-quantity"
-          type="number"
-          v-model:value="quantity"
-          @keyup.enter="addToBasket()"
-          info="Choose a quantity"
-          :min="1">
-          <template #legend>
-            Quantity
-          </template>
-          <template #label>
-            Indicate the article quantity
-          </template>
-        </FieldElt>
-
-        <BtnElt type="button"
-          @click="addToBasket()"
-          content="Add to Basket"
-          class="btn-green width-sm"
-          :title="`Add ${article.name} to the basket`">
-          <template #btn>
-            <i class="fa-solid fa-basket-shopping fa-lg"></i>
-          </template>
-        </BtnElt>
-      </form>
-
-      <ListReviews v-if="reviews.length > 0"
-        id="reviews"
-        :reviews="getArticleReviews()"
+      <ListComments v-if="comments.length > 0"
+        :comments="getArticleComments()"
         :users="users"/>
     </template>
 
     <template #aside  v-if="userId">
-      <CreateReview id="review"/>
+      <CreateComment />
     </template>
   </CardElt>
 </template>
 
 <script>
-import CreateReview from "@/components/creators/CreateReview"
-import ListReviews from "@/components/managers/ListReviews"
+import constants from "/constants"
+
+import CreateComment from "@/components/creators/CreateComment"
+import ListComments from "@/components/managers/ListComments"
 
 export default {
   name: "ArticleView",
-
   components: {
-    CreateReview,
-    ListReviews
+    CreateComment,
+    ListComments
   },
 
   data() {
     return {
       article: {},
-      reviews: [],
+      comments: [],
       users: [],
-      option: "",
-      quantity: 1,
       userId: null
     }
   },
 
-  mounted () {
+  created () {
     this.$serve.getData(`/api/articles/${this.$route.params.id}`)
       .then(res => { this.article = res })
       .catch(err => { console.log(err) });
 
-    this.$serve.getData("/api/reviews")
-      .then(res => { this.reviews = res })
+    this.$serve.getData("/api/comments")
+      .then(res => { this.comments = res })
       .catch(err => { console.log(err) });
 
     this.$serve.getData("/api/users")
@@ -131,56 +98,71 @@ export default {
   },
 
   methods: {
-    /** 
-     * CALCULATE SCORES AVERAGE
+    /**
+     * GET ARTICLE COMMENTS
      * @returns
      */
-    calculateScoresAverage(articleId) {
-      let sumData     = {};
-      let averageData = [];
+    getArticleComments() {
+      let articleComments = [];
 
-      for (let review of this.reviews) {
-
-        if (sumData[review.article]) {
-          sumData[review.article].sum += review.score;
-          sumData[review.article].n++;
-
-        } else {
-          sumData[review.article] = {
-            sum: review.score,
-            n: 1
-          };
+      for (let i = 0 ; i < this.comments.length ; i++) {
+        if (this.$route.params.id === this.comments[i].article) {
+          articleComments.push(this.comments[i]);
         }
       }
-
-      for (let element of Object.keys(sumData)) {
-          averageData.push({
-            article: element,
-              score: sumData[element].sum / sumData[element].n
-          });
-      }
-
-      for (let data of averageData) {
-        if (articleId === data.article) {
-
-          return data.score;
-        }
-      }
+      return articleComments;
     },
 
     /**
-     * GET ARTICLE REVIEWS
+     * CHECK LIKES
      * @returns
      */
-    getArticleReviews() {
-      let articleReviews = [];
+    checkLikes() {
+      let usersLiked = this.article.usersLiked;
 
-      for (let i = 0 ; i < this.reviews.length ; i++) {
-        if (this.$route.params.id === this.reviews[i].article) {
-          articleReviews.push(this.reviews[i]);
+      for (let i = 0; i < usersLiked.length; i++) {
+        if (constants.USER_ID === usersLiked[i]) {
+          return true;
         }
       }
-      return articleReviews;
+      return false;
+    },
+
+    /**
+     * ADD LIKE
+     */
+    addLike() {
+      let hasLiked = false;
+      let usersLiked = this.article.usersLiked;
+
+      for (let i = 0; i < usersLiked.length; i++) {
+        if (constants.USER_ID === usersLiked[i]) {
+          hasLiked = true;
+          this.article.likes -= 1;
+          usersLiked.splice(i, 1);
+        }
+      }
+
+      if (hasLiked === false) {
+        this.article.likes += 1;
+        usersLiked.push(constants.USER_ID);
+      }
+
+      let article = new FormData();
+      article.append("id", this.article._id);
+      article.append("title", this.article.title);
+      article.append("likes", this.article.likes);
+      article.append("usersLiked", usersLiked);
+
+      this.$serve.putData(`/api/articles/${article.get("id")}`, article)
+        .then(() => {
+          if (hasLiked === true) {
+            alert(article.get("title") + " disliked !");
+          } else {
+            alert(article.get("title") + " liked !");
+          }
+        })
+        .catch(err => { console.log(err) });
     }
   }
 }

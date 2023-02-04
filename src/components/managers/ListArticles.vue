@@ -1,7 +1,7 @@
 <template>
   <CardElt>
     <template #header>
-      <i class="fa-solid fa-shopping-cart fa-2x"></i>
+      <i class="fa-solid fa-envelopes-bulk fa-2x"></i>
       <h3>List Articles</h3>
     </template>
 
@@ -21,29 +21,29 @@
             ({{ articles[slotProps.index]._id }})
           </template>
 
-          <!-- Article Name -->
-          <template #cell-name="slotProps">
-            <FieldElt :id="'name-' + articles[slotProps.index]._id"
-              v-model:value="getArticles()[slotProps.index].name"
-              info="Update the article name"
-              @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)">
+          <!-- Article Title -->
+          <template #cell-title="slotProps">
+            <FieldElt :id="'title-' + articles[slotProps.index]._id"
+              v-model:value="getArticles()[slotProps.index].title"
+              @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
+              info="Update the article title">
             </FieldElt>
           </template>
 
-          <!-- Article Description -->
-          <template #cell-description="slotProps">
-            <FieldElt :id="'description-' + articles[slotProps.index]._id"
+          <!-- Article Text -->
+          <template #cell-text="slotProps">
+            <FieldElt :id="'text-' + articles[slotProps.index]._id"
               type="textarea"
-              v-model:value="getArticles()[slotProps.index].description"
-              info="Update the article description"
-              @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)">
+              v-model:value="getArticles()[slotProps.index].text"
+              @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
+              info="Update the article text">
             </FieldElt>
           </template>
 
           <!-- Article Image -->
           <template #cell-image="slotProps">
             <MediaElt :src="'/img/thumbnails/articles/' + articles[slotProps.index].image"
-              :alt="articles[slotProps.index].name"
+              :alt="articles[slotProps.index].title"
               :title="articles[slotProps.index].image">
             </MediaElt>
             <FieldElt :id="'image-' + articles[slotProps.index]._id"
@@ -57,31 +57,8 @@
             <FieldElt :id="'alt-' + articles[slotProps.index]._id"
               type="textarea"
               v-model:value="getArticles()[slotProps.index].alt"
-              info="Update the article alt"
-              @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)">
-            </FieldElt>
-          </template>
-
-          <!-- Article Price -->
-          <template #cell-price="slotProps">
-            <FieldElt :id="'price-' + articles[slotProps.index]._id"
-              type="number"
-              v-model:value="getArticles()[slotProps.index].price"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              info="Update the article price"
-              :min="1"
-              :max="1000">
-            </FieldElt>
-          </template>
-
-          <!-- Article Options -->
-          <template #cell-options="slotProps">
-            <FieldElt :id="'options-' + articles[slotProps.index]._id"
-              type="textarea"
-              v-model:value="getArticles()[slotProps.index].options"
-              @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              info="Update the options">
-              {{ value }}
+              info="Update the article title">
             </FieldElt>
           </template>
 
@@ -90,11 +67,17 @@
             <FieldElt :id="'cat-' + articles[slotProps.index]._id"
               type="select"
               v-model:value="getArticles()[slotProps.index].cat"
-              info="Update the category"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              :list="cats">
+              :list="cats"
+              info="Update the category">
               {{ value }}
             </FieldElt>
+          </template>
+
+          <!-- Article User -->
+          <template #cell-user="slotProps">
+            <b>{{ getArticleUser(articles[slotProps.index].user) }}</b>
+            ({{ getArticles()[slotProps.index].user }})
           </template>
 
           <!-- Article Created -->
@@ -109,11 +92,11 @@
 
           <template #body="slotProps">
 
-            <!-- Update Button -->
-            <BtnElt type="button"
+          <!-- Update Button -->
+          <BtnElt type="button"
               @click="validateUpdatedArticle(articles[slotProps.index]._id)" 
               class="btn-sky"
-              :title="'Update ' + articles[slotProps.index].name">
+              :title="'Update ' + articles[slotProps.index].title">
               <template #btn>
                 <i class="fa-solid fa-edit"></i>
               </template>
@@ -123,7 +106,7 @@
             <BtnElt type="button"
               @click="deleteArticle(articles[slotProps.index]._id)" 
               class="btn-red"
-              :title="'Delete ' + articles[slotProps.index].name">
+              :title="'Delete ' + articles[slotProps.index].title">
               <template #btn>
                 <i class="fa-solid fa-trash-alt"></i>
               </template>
@@ -136,11 +119,11 @@
 </template>
 
 <script>
-import constants from "/constants"
+import constants from "/constants";
 
 export default {
   name: "ListArticles",
-  props: ["articles"],
+  props: ["articles", "users"],
 
   data() {
     return {
@@ -161,14 +144,23 @@ export default {
     },
 
     /**
-     * VALIDATE UPDATED ARTICLE
-     * @param {string} id 
+     * GET ARTICLE USER
+     * @param {string} userId 
      */
+    getArticleUser(userId) {
+      for (let i = 0; i < this.users.length; i++ ) {
+        if (userId === this.users[i]._id) {
+
+          return this.users[i].name;
+        }
+      }
+    },
+
     validateUpdatedArticle(id) {
       for (let i = 0; i < this.articles.length; i++ ) {
         if (this.articles[i]._id === id) {
 
-          if (this.$serve.checkName(this.articles[i].name)) {
+          if (this.$serve.checkName(this.articles[i].title)) {
             this.checkUpdatedArticle(i);
           }
         }
@@ -176,7 +168,7 @@ export default {
     },
 
     /**
-     * CHECK UPDATED ARTICLE IF NAME | DESCRIPTION ARE REFERENCED
+     * CHECK UPDATED ARTICLE IF NAME | EMAIL ARE REFERENCED
      * @param {number} i 
      */
     checkUpdatedArticle(i) {
@@ -189,13 +181,13 @@ export default {
               articles.splice(j, 1);
             }
 
-            if (articles[j] && articles[j].name === this.articles[i].name) {
-              alert(this.articles[i].name + " is not available !");
+            if (articles[j] && articles[j].title === this.articles[i].title) {
+              alert(this.articles[i].title + " is not available !");
               isReferenced = true;
             }
 
-            if (articles[j] && articles[j].description === this.articles[i].description) {
-              alert(this.articles[i].description+ " is already referenced !");
+            if (articles[j] && articles[j].text === this.articles[i].text) {
+              alert(this.articles[i].text+ " is already referenced !");
               isReferenced = true;
             }
           }
@@ -220,19 +212,20 @@ export default {
         }
 
         article.append("id", this.articles[i]._id);
-        article.append("name", this.articles[i].name);
-        article.append("description", this.articles[i].description);
+        article.append("title", this.articles[i].title);
+        article.append("text", this.articles[i].text);
         article.append("image", image);
         article.append("alt", this.articles[i].alt);
-        article.append("price", this.articles[i].price);
-        article.append("options", this.articles[i].options);
         article.append("cat", this.articles[i].cat);
+        article.append("user", constants.USER_ID);
         article.append("created", this.articles[i].created);
         article.append("updated", Date.now());
+        article.append("likes", this.articles[i].likes);
+        article.append("usersLiked", this.articles[i].usersLiked);
 
         this.$serve.putData(`/api/articles/${article.get("id")}`, article)
           .then(() => {
-            alert(article.get("name") + " updated !");
+            alert(article.get("title") + " updated !");
             this.$router.go();
           })
           .catch(err => { console.log(err) });
@@ -244,18 +237,18 @@ export default {
      * @param {string} id 
      */
     deleteArticle(id) {
-      let articleName = "";
+      let articleTitle = "";
 
       for (let i = 0; i < this.articles.length; i++ ) {
         if (this.articles[i]._id === id) {
-          articleName = this.articles[i].name;
+          articleTitle = this.articles[i].title;
         }
       }
       
-      if (confirm(`Delete ${articleName} ?`) === true) {
+      if (confirm(`Delete ${articleTitle} ?`) === true) {
         this.$serve.deleteData(`/api/articles/${id}`)
           .then(() => {
-            alert(articleName + " deleted !");
+            alert(articleTitle + " deleted !");
             this.$router.go();
           })
           .catch(err => { console.log(err) });

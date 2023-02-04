@@ -61,28 +61,32 @@ Yarn : `yarn add vesan`
 ## Content
 
 Available API Files (UNDER CONSTRUCTION) :
--   **ArticleModel, ReviewModel, PostModel, CommentModel, UserModel** *(Schemas MongoDB)*  
--   **ArticleCtrl, ReviewCtrl, PostCtrl, CommentCtrl, UserCtrl** *(Controllers)*  
--   **ArticleRoute, ReviewRoute, PostRoute, CommentRoute, UserRoute** *(Routes)*  
+-   **ProductModel, ReviewModel, ArticleModel, CommentModel, UserModel** *(Schemas MongoDB)*  
+-   **ProductCtrl, ReviewCtrl, ArticleCtrl, CommentCtrl, UserCtrl** *(Controllers)*  
+-   **ProductRoute, ReviewRoute, ArticleRoute, CommentRoute, UserRoute** *(Routes)*  
 
 Available Views (UNDER CONSTRUCTION) :  
 -   **HomeView** *(Home)*  
 -   **ShopView** *(Shop)*  
--   **ArticleView** *(Article of Shop)*  
+-   **ProductView** *(Product of Shop)*  
 -   **BlogView** *(Blog)*  
--   **PostView** *(Post of Blog)*  
+-   **ArticleView** *(Article of Blog)*  
 -   **ContactView** *(Contact)*  
--   **LoginView** *(Login & Forgot Password)*  
--   **AdminView** *(Admin with all local Components)*  
+-   **BasketView** *(Basket)*  
+-   **LoginView** *(Login with local Components)*  
+-   **AdminView** *(Admin with local Components)*  
 -   **ErrorView** *(Error)*  
 
 Available Components (UNDER CONSTRUCTION) :  
--   **CreateArticle** *(Create Article)*  
--   **ListArticles** *(Update & Delete Article)*  
+-   **ForgotPass** *(Forgot Password)*  
+-   **SignIn** *(Sign In)*  
+-   **SignUp** *(Sign Up)*  
+-   **CreateProduct** *(Create Product)*  
+-   **ListProducts** *(Update & Delete Product)*  
 -   **CreateReview** *(Create Review)*  
 -   **ListReviews** *(Update & Delete Review)*  
--   **CreatePost** *(Create Post)*  
--   **ListPosts** *(Update & Delete Post)*  
+-   **CreateArticle** *(Create Article)*  
+-   **ListArticles** *(Update & Delete Article)*  
 -   **CreateComment** *(Create Comment)*  
 -   **ListComments** *(Update & Delete Comment)*  
 -   **CreateUser** *(Create User)*  

@@ -9,7 +9,7 @@ const CommentModel = mongoose.Schema(
       type: String, 
       required: true
     },
-    post: { 
+    article: { 
       type: String, 
       required: true
     },

@@ -5,12 +5,13 @@ const fs          = require("fs");
 const nem         = require("nemjs");
 const accents     = require("remove-accents");
 
-const ArticleModel = require("../model/ArticleModel");
+const ArticleModel     = require("../model/ArticleModel");
+const CommentModel  = require("../model/CommentModel");
 
 require("dotenv").config();
 
-const articlesImg   = process.env.IMG_URL + "articles/";
-const articlesThumb = process.env.THUMB_URL + "articles/";
+const articlesImg    = process.env.IMG_URL + "articles/";
+const articlesThumb  = process.env.THUMB_URL + "articles/";
 
 const form = formidable({ 
   uploadDir: articlesImg, 
@@ -19,26 +20,28 @@ const form = formidable({
 
 /**
  * GET ARTICLE
- * @param {string} name 
- * @param {string} description 
+ * @param {string} title 
+ * @param {string} text 
  * @param {string} image 
  * @param {string} alt 
- * @param {number} price 
- * @param {array} options 
+ * @param {string} user 
+ * @param {number} likes 
+ * @param {array} usersLiked 
  * @param {string} cat 
  * @param {string} created 
  * @param {string} updated 
  * @returns 
  */
-exports.getArticle = (name, description, image, alt, price, options, cat, created, updated) => {
+exports.getArticle = (title, text, image, alt, user, likes, usersLiked, cat, created, updated) => {
 
   return {
-    name: name,
-    description: description,
+    title: title,
+    text: text,
     image: image,
     alt: alt,
-    price: price,
-    options: options,
+    user: user,
+    likes: likes,
+    usersLiked: usersLiked,
     cat: cat,
     created: created,
     updated: updated
@@ -73,7 +76,7 @@ exports.createArticle = (req, res, next) => {
       return;
     }
 
-    let image = nem.getImgName(fields.name);
+    let image = nem.getImgName(fields.title);
 
     nem.createImage(
       "articles/" + files.image.newFilename, 
@@ -85,29 +88,24 @@ exports.createArticle = (req, res, next) => {
       "articles/" + image
     );
 
-    let options = fields.options.split(",");
+    let article  = new ArticleModel(this.getArticle(
+      fields.title, 
+      fields.text, 
+      image, 
+      fields.alt, 
+      fields.user,
+      fields.likes,
+      fields.usersLiked,
+      fields.cat, 
+      fields.created,
+      fields.updated
 
-    if (options[0] === "") {
-      options.shift();
-    }
-
-    let article = new ArticleModel(
-      this.getArticle(
-        fields.name, 
-        fields.description, 
-        image, 
-        fields.alt,
-        fields.price,
-        options,
-        fields.cat, 
-        fields.created,
-        fields.updated
-      ));
+    ));
 
     article
       .save()
       .then(() => fs.unlink(articlesImg + files.image.newFilename, () => {
-        console.log("image ok !") 
+        console.log("image ok !");
       }))
       .then(() => res.status(201).json({ message: process.env.ARTICLE_CREATED }))
       .catch((error) => res.status(400).json({ error }));
@@ -115,7 +113,7 @@ exports.createArticle = (req, res, next) => {
 };
 
 /**
- * READ AN ARTICLE
+ * READ A ARTICLE
  * @param {object} req 
  * @param {object} res 
  */
@@ -143,18 +141,18 @@ exports.updateArticle = (req, res, next) => {
     let image = fields.image;
 
     if (Object.keys(files).length !== 0) {
-      image = nem.getImgName(fields.name);
-  
+      image = nem.getImgName(fields.title);
+
       nem.createImage(
         "articles/" + files.image.newFilename, 
         "articles/" + image
       );
 
-      nem.createThumbnail(
-        "articles/" + files.image.newFilename, 
-        "articles/" + image
-      );
-      
+    nem.createThumbnail(
+      "articles/" + files.image.newFilename, 
+      "articles/" + image
+    );
+
       ArticleModel
         .findOne({ _id: req.params.id })
         .then((article) => 
@@ -168,19 +166,20 @@ exports.updateArticle = (req, res, next) => {
         )
     }
 
-    let options = fields.options.split(",");
+    let usersLiked = fields.usersLiked.split(",");
 
-    if (options[0] === "") {
-      options.shift();
+    if (usersLiked[0] === "") {
+      usersLiked.shift();
     }
 
     let article = this.getArticle(
-      fields.name, 
-      fields.description, 
+      fields.title, 
+      fields.text, 
       image, 
-      fields.alt,
-      fields.price,
-      options,
+      fields.alt, 
+      fields.user,
+      fields.likes,
+      usersLiked,
       fields.cat, 
       fields.created,
       fields.updated
@@ -204,10 +203,16 @@ exports.deleteArticle = (req, res) => {
     .then(article => {
       fs.unlink(articlesThumb + article.image, () => {
         fs.unlink(articlesImg + article.image, () => {
-          ArticleModel
-            .deleteOne({ _id: req.params.id })
-            .then(() => res.status(200).json({ message: process.env.ARTICLE_DELETED }))
-            .catch((error) => res.status(400).json({ error }));
+
+          CommentModel
+            .deleteMany({ article: req.params.id })
+            .then(() => 
+              ArticleModel
+                .deleteOne({ _id: req.params.id })
+                .then(() => res.status(200).json({ message: process.env.ARTICLE_DELETED }))
+                .catch((error) => res.status(400).json({ error }))
+            )
+            .catch(error => res.status(500).json({ error }));
         });
       })
     })

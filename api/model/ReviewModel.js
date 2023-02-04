@@ -13,7 +13,7 @@ const ReviewModel = mongoose.Schema(
       type: Number, 
       required: true
     },
-    article: { 
+    product: { 
       type: String, 
       required: true
     },

@@ -5,8 +5,8 @@
     class="sidebar">
 
     <template #last v-if="userId">
-      <a href="#create-article"
-        title="Create an article">
+      <a href="#create-product"
+        title="Create an product">
         <i class="fa-solid fa-basket-shopping fa-fw"></i>
       </a>
     </template>
@@ -23,18 +23,18 @@
         Shop
       </h1>
       <strong class="gray">
-        Articles to buy !
+        Products to buy !
       </strong>
       <p>Under construction !</p>
     </template>
 
     <template #aside v-if="userId">
-      <CreateArticle 
+      <CreateProduct 
         :cats="cats"/>
     </template>
 
     <template #body>
-      <ListElt :items="itemsByCat(articles)"
+      <ListElt :items="itemsByCat(products)"
         :dynamic="true">
 
         <template #items="slotProps">
@@ -43,7 +43,7 @@
 
         <template #nested="slotProps">
           <BtnElt  v-if="calculateScoresAverage(slotProps.value._id) !== undefined"
-            :href="`article/${slotProps.value._id}#reviews`"
+            :href="`product/${slotProps.value._id}#reviews`"
             class="btn-violet"
             :title="`Read Reviews about ${slotProps.value.name}`">
             <template #btn>
@@ -53,14 +53,14 @@
           </BtnElt>
 
           <BtnElt v-else 
-            :href="`article/${slotProps.value._id}#review`"
+            :href="`product/${slotProps.value._id}#review`"
             class="btn-violet"
             content="Write a Review !"
             :title="`Be the first to write a Review about ${slotProps.value.name}`" />
 
-          <a :href="`article/${slotProps.value._id}`"
+          <a :href="`product/${slotProps.value._id}`"
             :title="`Watch ${slotProps.value.name}`">
-            <MediaElt :src="`img/thumbnails/articles/${slotProps.value.image}`" 
+            <MediaElt :src="`img/thumbnails/products/${slotProps.value.image}`" 
               :alt="`${slotProps.value.description}`" 
               :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`">
 
@@ -80,17 +80,17 @@
 </template>
 
 <script>
-import CreateArticle from "@/components/creators/CreateArticle"
+import CreateProduct from "@/components/creators/CreateProduct"
 
 export default {
   name: "ShopView",
   components: {
-    CreateArticle
+    CreateProduct
   },
 
   data() {
     return {
-      articles: [],
+      products: [],
       reviews: [],
       scores: [],
       userId: null
@@ -98,8 +98,8 @@ export default {
   },
 
   mounted () {
-    this.$serve.getData("/api/articles")
-      .then(res => { this.articles = res })
+    this.$serve.getData("/api/products")
+      .then(res => { this.products = res })
       .catch(err => { console.log(err) });
 
     this.$serve.getData("/api/reviews")
@@ -114,7 +114,7 @@ export default {
   computed: {
     cats() {
       const cats = new Set();
-      this.articles.forEach(article => cats.add(article.cat));
+      this.products.forEach(product => cats.add(product.cat));
       return Array.from(cats); 
     }
   },
@@ -140,18 +140,18 @@ export default {
      * CALCULATE SCORES AVERAGE
      * @returns
      */
-    calculateScoresAverage(articleId) {
+    calculateScoresAverage(productId) {
       let sumData     = {};
       let averageData = [];
 
       for (let review of this.reviews) {
 
-        if (sumData[review.article]) {
-          sumData[review.article].sum += review.score;
-          sumData[review.article].n++;
+        if (sumData[review.product]) {
+          sumData[review.product].sum += review.score;
+          sumData[review.product].n++;
 
         } else {
-          sumData[review.article] = {
+          sumData[review.product] = {
             sum: review.score,
             n: 1
           };
@@ -160,13 +160,13 @@ export default {
 
       for (let element of Object.keys(sumData)) {
           averageData.push({
-            article: element,
+            product: element,
               score: sumData[element].sum / sumData[element].n
           });
       }
 
       for (let data of averageData) {
-        if (articleId === data.article) {
+        if (productId === data.product) {
 
           return data.score;
         }

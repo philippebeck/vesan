@@ -5,7 +5,10 @@ const formidable  = require("formidable");
 const fs          = require("fs");
 const nem         = require("nemjs");
 const accents     = require("remove-accents");
-const UserModel   = require("../model/UserModel");
+
+const UserModel     = require("../model/UserModel");
+const CommentModel  = require("../model/CommentModel");
+const ReviewModel   = require("../model/ReviewModel");
 
 require("dotenv").config();
 
@@ -276,11 +279,23 @@ exports.deleteUser = (req, res) => {
     .findOne({ _id: req.params.id })
     .then(user => {
       fs.unlink(usersThumb + user.image, () => {
-        UserModel
-          .deleteOne({ _id: req.params.id })
-          .then(() => res.status(200).json({ message: process.env.USER_DELETED }))
-          .catch((error) => res.status(400).json({ error }));
-      });
+
+        CommentModel
+          .deleteMany({ user: req.params.id })
+          .then(() =>
+            ReviewModel
+              .deleteMany({ user: req.params.id })
+              .then(() => 
+
+                UserModel
+                  .deleteOne({ _id: req.params.id })
+                  .then(() => res.status(200).json({ message: process.env.USER_DELETED }))
+                  .catch((error) => res.status(400).json({ error }))
+              )
+              .catch((error) => res.status(400).json({ error }))
+          )
+          .catch((error) => res.status(400).json({ error }))
+      })
     })
     .catch(error => res.status(500).json({ error }));
 }

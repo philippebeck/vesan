@@ -5,8 +5,8 @@
     class="sidebar">
 
     <template #last  v-if="userId">
-      <a href="#create-post"
-        title="Create a post">
+      <a href="#create-article"
+        title="Create a article">
         <i class="fa-regular fa-envelope fa-fw"></i>
       </a>
     </template>
@@ -23,18 +23,18 @@
         Blog
       </h1>
       <strong class="gray">
-        Posts to read !
+        Articles to read !
       </strong>
       <p>Under construction !</p>
     </template>
 
     <template #aside v-if="userId">
-      <CreatePost 
+      <CreateArticle 
         :cats="cats"/>
     </template>
 
     <template #body>
-      <ListElt :items="itemsByCat(posts)"
+      <ListElt :items="itemsByCat(articles)"
         :dynamic="true">
 
         <template #items="slotProps">
@@ -66,9 +66,9 @@
             </template>
           </BtnElt>
 
-          <a :href="`post/${slotProps.value._id}`"
+          <a :href="`article/${slotProps.value._id}`"
             :title="`Read ${slotProps.value.title}`">
-            <MediaElt :src="`img/thumbnails/posts/${slotProps.value.image}`" 
+            <MediaElt :src="`img/thumbnails/articles/${slotProps.value.image}`" 
               :alt="`${slotProps.value.title}`" 
               :id="`${slotProps.value.title.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`">
 
@@ -89,24 +89,24 @@
 <script>
 import constants from "/constants"
 
-import CreatePost from "@/components/creators/CreatePost"
+import CreateArticle from "@/components/creators/CreateArticle"
 
 export default {
   name: "BlogView",
   components: {
-    CreatePost
+    CreateArticle
   },
 
   data() {
     return {
-      posts: [],
+      articles: [],
       userId: null
     }
   },
 
   mounted () {
-    this.$serve.getData("/api/posts")
-      .then(res => { this.posts = res })
+    this.$serve.getData("/api/articles")
+      .then(res => { this.articles = res })
       .catch(err => { console.log(err) });
 
     if (localStorage.userId) {
@@ -117,7 +117,7 @@ export default {
   computed: {
     cats() {
       const cats = new Set();
-      this.posts.forEach(post => cats.add(post.cat));
+      this.articles.forEach(article => cats.add(article.cat));
       return Array.from(cats); 
     }
   },
@@ -146,9 +146,9 @@ export default {
     checkLikes(id) {
       let usersLiked;
 
-      for (let i = 0; i < this.posts.length; i++) {
-        if (id === this.posts[i]._id) {
-          usersLiked = this.posts[i].usersLiked;
+      for (let i = 0; i < this.articles.length; i++) {
+        if (id === this.articles[i]._id) {
+          usersLiked = this.articles[i].usersLiked;
         }
       }
 
@@ -167,36 +167,36 @@ export default {
     addLike(id) {
       let hasLiked = false;
 
-      for (let i = 0; i < this.posts.length; i++) {
-        if (id === this.posts[i]._id) {
-          let usersLiked = this.posts[i].usersLiked;
+      for (let i = 0; i < this.articles.length; i++) {
+        if (id === this.articles[i]._id) {
+          let usersLiked = this.articles[i].usersLiked;
 
           for (let j = 0; j < usersLiked.length; j++) {
             if (constants.USER_ID === usersLiked[j]) {
 
               hasLiked = true;
-              this.posts[i].likes -= 1;
+              this.articles[i].likes -= 1;
               usersLiked.splice(j, 1);
             }
           }
 
           if (hasLiked === false) {
-            this.posts[i].likes += 1;
+            this.articles[i].likes += 1;
             usersLiked.push(constants.USER_ID);
           }
 
-          let post = new FormData();
-          post.append("id", this.posts[i]._id);
-          post.append("title", this.posts[i].title);
-          post.append("likes", this.posts[i].likes);
-          post.append("usersLiked", usersLiked);
+          let article = new FormData();
+          article.append("id", this.articles[i]._id);
+          article.append("title", this.articles[i].title);
+          article.append("likes", this.articles[i].likes);
+          article.append("usersLiked", usersLiked);
 
-          this.$serve.putData(`/api/posts/${post.get("id")}`, post)
+          this.$serve.putData(`/api/articles/${article.get("id")}`, article)
             .then(() => {
               if (hasLiked === true) {
-                alert(post.get("title") + " disliked !");
+                alert(article.get("title") + " disliked !");
               } else {
-                alert(post.get("title") + " liked !");
+                alert(article.get("title") + " liked !");
               }
             })
             .catch(err => { console.log(err) });

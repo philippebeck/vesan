@@ -7,9 +7,9 @@ const sanitize  = require("express-mongo-sanitize");
 const rateLimit = require("express-rate-limit");
 const cors      = require("cors");
 
-const articleRoute  = require("./route/ArticleRoute");
+const productRoute  = require("./route/ProductRoute");
 const reviewRoute   = require("./route/ReviewRoute");
-const postRoute     = require("./route/PostRoute");
+const articleRoute  = require("./route/ArticleRoute");
 const commentRoute  = require("./route/CommentRoute");
 const userRoute     = require("./route/UserRoute");
 
@@ -46,9 +46,9 @@ const limiter = rateLimit({
 /**
  * ROUTES
  */
-app.use(process.env.ROUTE_ARTICLE, articleRoute);
+app.use(process.env.ROUTE_PRODUCT, productRoute);
 app.use(process.env.ROUTE_REVIEW, reviewRoute);
-app.use(process.env.ROUTE_POST, postRoute);
+app.use(process.env.ROUTE_ARTICLE, articleRoute);
 app.use(process.env.ROUTE_COMMENT, commentRoute);
 app.use(process.env.ROUTE_USER, userRoute);
 

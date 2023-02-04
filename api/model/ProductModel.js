@@ -3,14 +3,14 @@
 const mongoose = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
 
-const PostModel = mongoose.Schema(
+const ProductModel = mongoose.Schema(
   {
-    title: { 
+    name: { 
       type: String, 
       required: true,
       unique: true
     },
-    text: { 
+    description: { 
       type: String, 
       required: true,
       unique: true
@@ -24,28 +24,24 @@ const PostModel = mongoose.Schema(
       type: String, 
       required: true
     },
-    user: { 
-      type: String, 
+    price: { 
+      type: Number, 
       required: true
     },
-    likes: {
-      type: Number,
-      default: 0
-    },
-    usersLiked: {
+    options: {
       type: Array,
       default: []
     },
     cat: { 
       type: String, 
-      default: "news"
+      default: "Electronics"
     },
-    created: { 
-      type: Date, 
+    created: {
+      type: Date,
       required: true
     },
-    updated: { 
-      type: Date, 
+    updated: {
+      type: Date,
       required: true
     }
   },
@@ -54,6 +50,6 @@ const PostModel = mongoose.Schema(
   }
 );
 
-PostModel.plugin(uniqueValidator);
+ProductModel.plugin(uniqueValidator);
 
-module.exports = mongoose.model("Post", PostModel);
+module.exports = mongoose.model("Product", ProductModel);
