@@ -37,7 +37,7 @@
             <FieldElt :id="`quantity-${slotProps.index}`"
               type="number"
               v-model:value="slotProps.item.quantity"
-              @change="updateBasket(`${slotProps.item.name}`, `${slotProps.item.option}`)"
+              @change="updateQuantity(`${slotProps.item.name}`, `${slotProps.item.option}`)"
               info="Update the product quantity"
               :min="1"
               :max="100">
@@ -168,6 +168,7 @@ export default {
           }
         }
       }
+      this.calculateTotal();
       localStorage.setItem("basket", JSON.stringify(this.basket));
     },
 
@@ -192,6 +193,7 @@ export default {
           }
         }
       }
+      this.calculateTotal();
       localStorage.setItem("basket", JSON.stringify(this.basket));
     },
 
@@ -208,15 +210,6 @@ export default {
     },
 
     /**
-     * UPDATE BASKET
-     */
-    updateBasket(name, option) {
-      this.updateQuantity(name, option);
-      this.calculateTotal();
-    },
-
-
-    /**
      * CLEAR BASKET
      */
     clearBasket() {
@@ -226,6 +219,10 @@ export default {
       }
     },
 
+    /**
+     * TODO : UNDER CONSTRUCTION
+     * ORDER PRODUCTS
+     */
     orderProducts() {
       console.log("Order !");
     }
