@@ -1,43 +1,43 @@
 <template>
   <CardElt id="create-article">
     <template #header>
-      <i class="fa-solid fa-basket-shopping fa-2x"></i>
+      <i class="fa-regular fa-envelope fa-2x"></i>
       <h3>Create Article</h3>
     </template>
 
     <template #body>
       <form method="post"
         enctype="multipart/form-data">
-        <ListElt :items="['name', 'description', 'image', 'alt', 'price', 'options', 'cat']">
+        <ListElt :items="['title', 'text', 'image', 'alt', 'cat']">
 
-          <!-- Article Name -->
+          <!-- Article Title -->
           <template #item-1>
-            <FieldElt id="article-name"
-              v-model:value="name"
+            <FieldElt id="article-title"
+              v-model:value="title"
+              info="My new article"
               @keyup.enter="validateNewArticle()"
-              info="My beautiful article"
               :min="2">
               <template #legend>
-                Name
+                Title
               </template>
               <template #label>
-                Indicate the article name
+                Indicate the article title
               </template>
             </FieldElt>
           </template>
 
-          <!-- Article Description -->
+          <!-- Article Text -->
           <template #item-2>
-            <FieldElt id="article-description"
-              type="textarea"
-              v-model:value="description"
+            <FieldElt id="article-text"
+              v-model:value="text"
+              info="Once upon a time..."
               @keyup.enter="validateNewArticle()"
-              info="This article is wonderful !">
+              type="textarea">
               <template #legend>
-                Description
+                Text
               </template>
               <template #label>
-                Indicate the article description
+                Indicate the article text
               </template>
             </FieldElt>
           </template>
@@ -45,9 +45,9 @@
           <!-- Article Image -->
           <template #item-3>
             <FieldElt id="article-image"
-              type="file"
               v-model:value="image"
-              info="Image file only">
+              info="Image file only"
+              type="file">
               <template #legend>
                 Image
               </template>
@@ -56,59 +56,25 @@
               </template>
             </FieldElt>
           </template>
-          
-          <!-- Article Alt -->
+
+          <!-- Article Author -->
           <template #item-4>
             <FieldElt id="article-alt"
               type="textarea"
               v-model:value="alt"
-              info="Alternative text">
+              info="Alternative text"
+              @keyup.enter="validateNewArticle()">
               <template #legend>
                 Alt
               </template>
               <template #label>
-                Provide article alt
-              </template>
-            </FieldElt>
-          </template>
-
-          <!-- Article Price -->
-          <template #item-5>
-            <FieldElt id="article-price"
-              type="number"
-              v-model:value="price"
-              @keyup.enter="validateNewArticle()"
-              info="100 €"
-              :min="1"
-              :max="1000">
-              <template #legend>
-                Price
-              </template>
-              <template #label>
-                Indicate the article price
-              </template>
-            </FieldElt>
-          </template>
-
-          <!-- Article Options -->
-          <template #item-6>
-            <FieldElt id="article-options"
-              type="textarea"
-              v-model:value="options"
-              @keyup.enter="validateNewArticle()"
-              info="option-1,option-2,option-3,etc"
-              :max="100">
-              <template #legend>
-                Options
-              </template>
-              <template #label>
-                Indicate the article options
+                Indicate the article alt
               </template>
             </FieldElt>
           </template>
 
           <!-- Article Category -->
-          <template #item-7>
+          <template #item-5>
             <FieldElt id="article-cat"
               type="select"
               v-model:value="cat"
@@ -148,12 +114,10 @@ export default {
 
   data() {
     return {
-      name: "",
-      description:"",
+      title: "",
+      text:"",
       image: "",
       alt: "",
-      price: null,
-      options: [],
       cat: "",
       cats: []
     }
@@ -168,7 +132,7 @@ export default {
      * VALIDATE NEW ARTICLE IF DATA ARE VALID
      */
     validateNewArticle() {
-      if (this.$serve.checkName(this.name)) {
+      if (this.$serve.checkName(this.title)) {
 
         if (typeof document.getElementById('article-image').files[0] !== "undefined") {
           this.checkNewArticle();
@@ -180,7 +144,7 @@ export default {
     },
 
     /**
-     * CHECK NEW ARTICLE IF NAME | DESCRIPTION ARE REFERENCED
+     * CHECK NEW ARTICLE IF TITLE | TEXT ARE REFERENCED
      */
     checkNewArticle() {
       this.$serve.getData("/api/articles")
@@ -189,13 +153,13 @@ export default {
 
           for (let i = 0; i < articles.length; i++) {
 
-            if (articles[i].name === this.name) {
-              alert(this.name + " is not available !");
+            if (articles[i].title === this.title) {
+              alert(this.title + " is not available !");
               isReferenced = true;
             }
 
-            if (articles[i].description === this.description) {
-              alert(this.description + " is already referenced !");
+            if (articles[i].text === this.text) {
+              alert(this.text + " is already referenced !");
               isReferenced = true;
             }
           }
@@ -214,19 +178,20 @@ export default {
         let article  = new FormData();
         let image = document.getElementById('article-image').files[0];
 
-        article.append("name", this.name);
-        article.append("description", this.description);
+        article.append("title", this.title);
+        article.append("text", this.text);
         article.append("image", image);
         article.append("alt", this.alt);
-        article.append("price", this.price);
-        article.append("options", this.options);
         article.append("cat", this.cat);
+        article.append("user", constants.USER_ID);
         article.append("created", Date.now());
         article.append("updated", Date.now());
+        article.append("likes", 0);
+        article.append("usersLiked", []);
 
         this.$serve.postData("/api/articles", article)
           .then(() => {
-            alert(article.get("name") + " created !");
+            alert(article.get("title") + " created !");
             this.$router.go();
           })
           .catch(err => { console.log(err) });

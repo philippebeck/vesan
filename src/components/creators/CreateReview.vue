@@ -12,7 +12,7 @@
         <FieldElt id="review-text"
           type="textarea"
           v-model:value="text"
-          info="Thanks for this article !"
+          info="Thanks for this product !"
           @keyup.enter="createReview()"
           :min="2">
           <template #legend>
@@ -76,7 +76,7 @@ export default {
 
       review.append("text", this.text);
       review.append("score", this.score);
-      review.append("article", this.$route.params.id);
+      review.append("product", this.$route.params.id);
       review.append("user", constants.USER_ID);
       review.append("created", Date.now());
       review.append("updated", Date.now());

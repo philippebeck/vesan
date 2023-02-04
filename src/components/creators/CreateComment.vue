@@ -13,7 +13,7 @@
         type="textarea"
         v-model:value="text"
         @keyup.enter="createComment()"
-        info="Thanks for this post !"
+        info="Thanks for this article !"
         :min="2">
         <template #legend>
           Text
@@ -58,7 +58,7 @@ export default {
       let comment  = new FormData();
 
       comment.append("text", this.text);
-      comment.append("post", this.$route.params.id);
+      comment.append("article", this.$route.params.id);
       comment.append("user", constants.USER_ID);
       comment.append("created", Date.now());
       comment.append("updated", Date.now());
