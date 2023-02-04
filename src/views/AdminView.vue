@@ -10,11 +10,11 @@
       <NavElt class="sidebar">
         <template #first>
           <a href="#shop"
-            title="Manage articles & reviews">
+            title="Manage products & reviews">
             <i class="fa-solid fa-shop fa-fw"></i>
           </a>
           <a href="#blog"
-            title="Manage posts & comments">
+            title="Manage articles & comments">
             <i class="fa-solid fa-blog fa-fw"></i>
           </a>
           <a href="#users"
@@ -41,12 +41,12 @@
         </template>
 
         <template #body>
-          <ListArticles v-if="articles.length > 0"
-            :articles="articles"/>
+          <ListProducts v-if="products.length > 0"
+            :products="products"/>
 
           <ListReviews v-if="reviews.length > 0"
             :reviews="reviews"
-            :articles="articles"
+            :products="products"
             :users="users"/>
         </template>
       </CardElt>
@@ -63,13 +63,13 @@
         </template>
 
         <template #body>
-          <ListPosts v-if="posts.length > 0"
-            :posts="posts"
+          <ListArticles v-if="articles.length > 0"
+            :articles="articles"
             :users="users"/>
 
           <ListComments v-if="comments.length > 0"
             :comments="comments"
-            :posts="posts"
+            :articles="articles"
             :users="users"/>
         </template>
       </CardElt>
@@ -97,9 +97,9 @@
 </template>
 
 <script>
-import ListArticles from "@/components/managers/ListArticles"
+import ListProducts from "@/components/managers/ListProducts"
 import ListReviews from "@/components/managers/ListReviews"
-import ListPosts from "@/components/managers/ListPosts"
+import ListArticles from "@/components/managers/ListArticles"
 import ListComments from "@/components/managers/ListComments"
 import ListUsers from "@/components/managers/ListUsers"
 
@@ -108,9 +108,9 @@ import CreateUser from "@/components/creators/CreateUser"
 export default {
   name: "AdminView",
   components: {
-    ListArticles,
+    ListProducts,
     ListReviews,
-    ListPosts,
+    ListArticles,
     ListComments,
     ListUsers,
     CreateUser
@@ -118,9 +118,9 @@ export default {
 
   data() {
     return {
-      articles: [],
+      products: [],
       reviews: [],
-      posts: [],
+      articles: [],
       comments: [],
       users: []
     }
@@ -129,16 +129,16 @@ export default {
   beforeMount () {
     if (localStorage.userId) {
 
-      this.$serve.getData("/api/articles")
-        .then(res => { this.articles = res })
+      this.$serve.getData("/api/products")
+        .then(res => { this.products = res })
         .catch(err => { console.log(err) });
 
       this.$serve.getData("/api/reviews")
         .then(res => { this.reviews = res })
         .catch(err => { console.log(err) });
 
-      this.$serve.getData("/api/posts")
-        .then(res => { this.posts = res })
+      this.$serve.getData("/api/articles")
+        .then(res => { this.articles = res })
         .catch(err => { console.log(err) });
       
       this.$serve.getData("/api/comments")
