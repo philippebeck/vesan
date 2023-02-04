@@ -19,6 +19,7 @@
             <h3>{{ slotProps.item.name }}</h3>
           </template>
 
+          <!-- Product Image -->
           <template #cell-image="slotProps">
             <MediaElt :src="'img/thumbnails/products/' + slotProps.item.image"
               :alt="slotProps.item.name"
@@ -26,35 +27,50 @@
             </MediaElt>
           </template>
 
+          <!-- Product Option -->
           <template #cell-option="slotProps">
             <b>{{ slotProps.item.option }}</b>
           </template>
 
+          <!-- Product Quantity -->
           <template #cell-quantity="slotProps">
-            <FieldElt :id="'quantity-' + slotProps.item._id"
+            <FieldElt :id="`quantity-${slotProps.index}`"
               type="number"
               v-model:value="slotProps.item.quantity"
-              @change="calculateTotal()"
+              @change="updateBasket(`${slotProps.item.name}`, `${slotProps.item.option}`)"
               info="Update the product quantity"
               :min="1"
               :max="100">
             </FieldElt>
           </template>
 
+          <!-- Product Price -->
           <template #cell-price="slotProps">
             <b>{{ slotProps.item.price }} €</b>
           </template>
 
+          <!-- Product Total -->
           <template #body="slotProps">
-            <b>
-              {{ slotProps.item.price * slotProps.item.quantity }} €
-            </b>
+            <p>
+              <b>
+                {{ slotProps.item.price * slotProps.item.quantity }} €
+              </b>
+            </p>
+
+            <BtnElt type="button"
+              @click="deleteItem(`${slotProps.item.name}`, `${slotProps.item.option}`)"
+              class="btn-orange"
+              content="Remove"
+              :title="`Remove ${slotProps.item.name}`">
+            </BtnElt>
           </template>
         </TableElt>
       </form>
 
+      <!-- Basket Total -->
       <p>The Total of your Basket is <b>{{ total }} €</b></p>
 
+      <!-- Clear Basket -->
       <BtnElt type="button"
         @click="clearBasket()"
         class="btn-red"
@@ -62,11 +78,12 @@
         title="Clear the Basket">
       </BtnElt>
 
+      <!-- Command Product -->
       <BtnElt type="button"
-        @click="commandProducts()"
+        @click="orderProducts()"
         class="btn-green"
-        content="Command !"
-        title="Command those Products">
+        content="Order !"
+        title="Order those Products">
 
       </BtnElt>
     </template>
@@ -123,13 +140,59 @@ export default {
             thing.name      = product.name;
             thing.image     = product.image;
             thing.option    = item.option;
-            thing.quantity  = item.quantity;
-            thing.price     = product.price;
+            thing.quantity  = Number(item.quantity);
+            thing.price     = Number(product.price);
 
             this.order.push(thing);
           }
         }
       }
+    },
+
+    /**
+     * UPDATE QUANTITY
+     * @param {string} name 
+     * @param {string} option 
+     */
+    updateQuantity(name, option) {
+      for (let i = 0; i < this.order.length; i++) {
+        let element = this.order[i];
+
+        if (element.name === name && element.option === option) {
+          for (let j = 0; j < this.basket.length; j++) {
+            let item = this.basket[j];
+
+            if (item.name === element.name && item.option === element.option) {
+              this.basket[j].quantity = Number(element.quantity);
+            }
+          }
+        }
+      }
+      localStorage.setItem("basket", JSON.stringify(this.basket));
+    },
+
+    /**
+     * DELETE ITEM
+     * @param {string} name 
+     * @param {string} option 
+     */
+    deleteItem(name, option) {
+      for (let i = 0; i < this.order.length; i++) {
+        let element = this.order[i];
+
+        if (element.name === name && element.option === option) {
+          this.order.splice(i, 1);
+
+          for (let j = 0; j < this.basket.length; j++) {
+            let item = this.basket[j];
+
+            if (item.name === element.name && item.option === element.option) {
+              this.basket.splice(j, 1);
+            }
+          }
+        }
+      }
+      localStorage.setItem("basket", JSON.stringify(this.basket));
     },
 
     /**
@@ -145,6 +208,15 @@ export default {
     },
 
     /**
+     * UPDATE BASKET
+     */
+    updateBasket(name, option) {
+      this.updateQuantity(name, option);
+      this.calculateTotal();
+    },
+
+
+    /**
      * CLEAR BASKET
      */
     clearBasket() {
@@ -154,8 +226,8 @@ export default {
       }
     },
 
-    commandProducts() {
-      console.log("Command !");
+    orderProducts() {
+      console.log("Order !");
     }
   }
 }
