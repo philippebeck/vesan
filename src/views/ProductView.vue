@@ -202,6 +202,7 @@ export default {
     createOrder() {
       this.order = {
         id: this.product._id,
+        name: this.product.name,
         option: this.option,
         quantity: this.quantity
       };
