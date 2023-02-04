@@ -25,21 +25,6 @@ export default {
   /* VESAN */
 
   CATS_ARTICLE : [
-    "Beauty",
-    "Electronics",
-    "Fashion",
-    "Food",
-    "Furniture",
-    "Games",
-    "Health",
-    "Home",
-    "Industrial",
-    "Media",
-    "Pet",
-    "Sports",
-  ],
-
-  CATS_POST : [
     "Transportation",
     "Business", 
     "Culture",
@@ -52,6 +37,21 @@ export default {
     "Sports",
     "Technology", 
     "Travel"
+  ],
+
+  CATS_PRODUCT : [
+    "Beauty",
+    "Electronics",
+    "Fashion",
+    "Food",
+    "Furniture",
+    "Games",
+    "Health",
+    "Home",
+    "Industrial",
+    "Media",
+    "Pet",
+    "Sports",
   ],
 
   ROLES_USER : [

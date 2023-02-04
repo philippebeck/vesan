@@ -8,7 +8,7 @@ import ContactView from "../views/ContactView";
 import ErrorView from "../views/ErrorView";
 import HomeView from "../views/HomeView";
 import LoginView from "../views/LoginView";
-import PostView from "../views/PostView";
+import ProductView from "../views/ProductView";
 import ShopView from "../views/ShopView";
 
 const routes = [
@@ -22,12 +22,12 @@ const routes = [
     path: "/shop",
     name: "shop",
     component: ShopView,
-    alias: ["/articles"]
+    alias: ["/products"]
   },
   {
-    path: "/article/:id",
-    name: "article",
-    component: ArticleView,
+    path: "/product/:id",
+    name: "product",
+    component: ProductView,
     alias: ["/shop/:id"]
   },
   {
@@ -40,12 +40,12 @@ const routes = [
     path: "/blog",
     name: "blog",
     component: BlogView,
-    alias: ["/posts"]
+    alias: ["/articles"]
   },
   {
-    path: "/post/:id",
-    name: "post",
-    component: PostView,
+    path: "/article/:id",
+    name: "article",
+    component: ArticleView,
     alias: ["/blog/:id"]
   },
   {
