@@ -56,6 +56,13 @@
       <p>The Total of your Basket is <b>{{ total }} €</b></p>
 
       <BtnElt type="button"
+        @click="clearBasket()"
+        class="btn-red"
+        content="Clear ?"
+        title="Clear the Basket">
+      </BtnElt>
+
+      <BtnElt type="button"
         @click="commandProducts()"
         class="btn-green"
         content="Command !"
@@ -91,16 +98,18 @@ export default {
   },
 
   methods: {
+    /**
+     * GET BASKET
+     */
     getBasket() {
-      if (localStorage.getItem("basket") === null) {
-        localStorage.setItem("basket", []);
-        this.basket = localStorage.getItem("basket").split();
-
-      } else {
+      if (localStorage.getItem("basket") !== null) {
         this.basket = JSON.parse(localStorage.getItem("basket"));
       }
     },
 
+    /**
+     * SET ORDER
+     */
     setOrder() {
       for (let i = 0; i < this.products.length; i++) {
         let product = this.products[i];
@@ -123,14 +132,30 @@ export default {
       }
     },
 
+    /**
+     * CALCULATE TOTAL
+     */
     calculateTotal() {
       this.total = 0;
 
       for (let i = 0; i < this.order.length; i++) {
-
         let productTotal = this.order[i].price * this.order[i].quantity
         this.total += Number(productTotal);
       }
+    },
+
+    /**
+     * CLEAR BASKET
+     */
+    clearBasket() {
+      if (confirm("Do you want to clear your Basket ?") === true) {
+        localStorage.removeItem("basket");
+        this.$router.go();
+      }
+    },
+
+    commandProducts() {
+      console.log("Command !");
     }
   }
 }
