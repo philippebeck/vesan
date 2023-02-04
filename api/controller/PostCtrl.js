@@ -5,7 +5,8 @@ const fs          = require("fs");
 const nem         = require("nemjs");
 const accents     = require("remove-accents");
 
-const PostModel = require("../model/PostModel");
+const PostModel     = require("../model/PostModel");
+const CommentModel  = require("../model/CommentModel");
 
 require("dotenv").config();
 
@@ -202,10 +203,16 @@ exports.deletePost = (req, res) => {
     .then(post => {
       fs.unlink(postsThumb + post.image, () => {
         fs.unlink(postsImg + post.image, () => {
-          PostModel
-            .deleteOne({ _id: req.params.id })
-            .then(() => res.status(200).json({ message: process.env.POST_DELETED }))
-            .catch((error) => res.status(400).json({ error }));
+
+          CommentModel
+            .deleteMany({ post: req.params.id })
+            .then(() => 
+              PostModel
+                .deleteOne({ _id: req.params.id })
+                .then(() => res.status(200).json({ message: process.env.POST_DELETED }))
+                .catch((error) => res.status(400).json({ error }))
+            )
+            .catch(error => res.status(500).json({ error }));
         });
       })
     })
