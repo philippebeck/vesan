@@ -5,7 +5,8 @@ const fs          = require("fs");
 const nem         = require("nemjs");
 const accents     = require("remove-accents");
 
-const ArticleModel = require("../model/ArticleModel");
+const ArticleModel  = require("../model/ArticleModel");
+const ReviewModel   = require("../model/ReviewModel");
 
 require("dotenv").config();
 
@@ -204,12 +205,18 @@ exports.deleteArticle = (req, res) => {
     .then(article => {
       fs.unlink(articlesThumb + article.image, () => {
         fs.unlink(articlesImg + article.image, () => {
-          ArticleModel
-            .deleteOne({ _id: req.params.id })
-            .then(() => res.status(200).json({ message: process.env.ARTICLE_DELETED }))
-            .catch((error) => res.status(400).json({ error }));
-        });
+
+          ReviewModel
+            .deleteMany({ article: req.params.id })
+            .then(() => 
+              ArticleModel
+                .deleteOne({ _id: req.params.id })
+                .then(() => res.status(200).json({ message: process.env.ARTICLE_DELETED }))
+                .catch((error) => res.status(400).json({ error }))
+            )
+            .catch((error) => res.status(400).json({ error }))
+        })
       })
     })
     .catch(error => res.status(500).json({ error }));
-};
+}
