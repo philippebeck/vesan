@@ -183,6 +183,9 @@ export default {
       return productReviews;
     },
 
+    /**
+     * ADD TO BASKET
+     */
     addToBasket() {
       let order = {
         id: this.product._id,
@@ -193,6 +196,11 @@ export default {
       this.saveBasket(order);
     },
 
+    /**
+     * TODO : UNDER CONSTRUCTION !
+     * SAVE BASKET TO STORAGE
+     * @param {object} order 
+     */
     saveBasket(order) {
 
 console.log(typeof order, order);
