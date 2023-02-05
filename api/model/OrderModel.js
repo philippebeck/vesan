@@ -13,6 +13,10 @@ const OrderModel = mongoose.Schema(
       type: Number,
       required: true
     },
+    payment: {
+      type: String,
+      required: true
+    },
     user: { 
       type: String, 
       required: true
