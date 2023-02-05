@@ -83,6 +83,11 @@ exports.setMessage = (fields, res) => {
 
 //! ****************************** PUBLIC ******************************
 
+/**
+ * CHECK USERS
+ * @param {object} req 
+ * @param {object} res 
+ */
 exports.checkUsers = (req, res) => {
   UserModel
     .find()
