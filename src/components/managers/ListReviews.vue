@@ -127,7 +127,7 @@ import constants from "/constants";
 
 export default {
   name: "ListReviews",
-  props: ["reviews", "product", "products", "users"],
+  props: ["reviews", "products", "users"],
 
   methods: {
     /**
