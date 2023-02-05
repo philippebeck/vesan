@@ -96,7 +96,7 @@ exports.checkUsers = (req, res) => {
         for (let i = 0; i < users.length; i++) {
 
           usersChecked.push({
-            id: users[i]._id,
+            _id: users[i]._id,
             name: users[i].name,
             email: users[i].email
           });

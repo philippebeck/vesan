@@ -140,7 +140,7 @@ export default {
      */
     getCommentUser(userId) {
       for (let i = 0; i < this.users.length; i++ ) {
-        if (userId === this.users[i].id) {
+        if (userId === this.users[i]._id) {
 
           return this.users[i].name;
         }
