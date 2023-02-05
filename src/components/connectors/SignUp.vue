@@ -116,7 +116,7 @@ export default {
      * CHECK NEW USER IF NAME | EMAIL ARE REFERENCED
      */
     checkNewUser() {
-      this.$serve.getData("/api/users")
+      this.$serve.getData("/api/users/check")
         .then((users) => {
           let isReferenced = false;
 
