@@ -124,7 +124,7 @@ export default {
       .then(res => { this.reviews = res })
       .catch(err => { console.log(err) });
 
-    this.$serve.getData("/api/users")
+    this.$serve.getData("/api/users/check")
       .then(res => { this.users = res })
       .catch(err => { console.log(err) });
 

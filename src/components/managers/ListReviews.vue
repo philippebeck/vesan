@@ -156,7 +156,7 @@ export default {
      */
     getReviewUser(userId) {
       for (let i = 0; i < this.users.length; i++ ) {
-        if (userId === this.users[i]._id) {
+        if (userId === this.users[i].id) {
 
           return this.users[i].name;
         }
