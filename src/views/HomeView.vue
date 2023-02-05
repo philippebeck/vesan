@@ -15,7 +15,7 @@
       </SliderElt>
 
       <!-- Main Title -->
-      <h1 class="blue shatex-blur-sm anima-slideB">
+      <h1 class="blue anima-grow">
         Vesan
       </h1>
     </template>

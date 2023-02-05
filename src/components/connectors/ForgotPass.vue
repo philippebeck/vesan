@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form class="anima-grow">
     <!-- User Email -->
     <FieldElt id="email"
       v-model:value="email"

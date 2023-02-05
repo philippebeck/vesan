@@ -1,8 +1,8 @@
 <template>
   <CardElt id="top">
     <template #header>
-      <i class="blue fa-solid fa-cogs fa-4x"></i>
-      <h1 class="blue anima-slideB">
+      <i class="blue anima-slideT fa-solid fa-cogs fa-4x"></i>
+      <h1 class="sky anima-slideB">
         Admin
       </h1>
 

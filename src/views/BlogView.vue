@@ -18,8 +18,8 @@
 
   <CardElt id="top">
     <template #header>
-      <i class="blue fa-solid fa-blog fa-4x"></i>
-      <h1 class="blue shatex-blur-sm anima-slideB">
+      <i class="blue anima-grow fa-solid fa-blog fa-4x"></i>
+      <h1 class="sky anima-shrink">
         Blog
       </h1>
       <strong class="gray">

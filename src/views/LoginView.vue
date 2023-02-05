@@ -1,8 +1,8 @@
 <template>
   <CardElt v-if="type === 'SignUp'">
     <template #header>
-      <i class="violet anima-shrink fa-solid fa-sign-in-alt fa-2x"></i>
-      <h1 class="violet anima-grow mar-none">Login</h1>
+      <i class="blue anima-turn3D fa-solid fa-sign-in-alt fa-2x"></i>
+      <h1 class="sky anima-turn">SignUp</h1>
     </template>
 
     <template #body>
@@ -32,8 +32,8 @@
 
   <CardElt v-if="type === 'SignIn'">
     <template #header>
-      <i class="violet anima-shrink fa-solid fa-sign-in-alt fa-2x"></i>
-      <h1 class="violet anima-grow mar-none">Login</h1>
+      <i class="blue anima-turn3D fa-solid fa-sign-in-alt fa-2x"></i>
+      <h1 class="sky anima-turn">Login</h1>
     </template>
 
     <template #body>
@@ -63,8 +63,8 @@
 
   <CardElt v-if="type === 'ForgotPass'">
     <template #header>
-      <i class="violet anima-grow fa-solid fa-key fa-2x"></i>
-      <h1 class="violet anima-shrink mar-none">Forgot Password</h1>
+      <i class="blue anima-turn3D fa-solid fa-key fa-2x"></i>
+      <h1 class="sky anima-turn">Forgot Password</h1>
     </template>
 
     <template #body>
