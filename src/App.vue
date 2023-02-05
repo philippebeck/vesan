@@ -214,7 +214,8 @@ export default {
 
   methods: {
     logout() {
-      localStorage.clear();
+      localStorage.removeItem("userId");
+      localStorage.removeItem("userToken");
       this.$router.go();
     }
   },

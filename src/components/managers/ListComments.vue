@@ -111,7 +111,7 @@ import constants from "/constants";
 
 export default {
   name: "ListComments",
-  props: ["comments", "article", "articles", "users"],
+  props: ["comments", "articles", "users"],
 
   methods: {
     /**

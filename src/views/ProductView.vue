@@ -124,7 +124,7 @@ export default {
       .then(res => { this.reviews = res })
       .catch(err => { console.log(err) });
 
-    this.$serve.getData("/api/users")
+    this.$serve.getData("/api/users/check")
       .then(res => { this.users = res })
       .catch(err => { console.log(err) });
 
@@ -252,6 +252,8 @@ export default {
       localStorage.setItem("basket", JSON.stringify(this.basket));
 
       alert(`${this.order.quantity} "${this.product.name}" (${this.order.option}) has been added to the Basket !`);
+
+      this.$router.push("/shop");
     }
   }
 }
