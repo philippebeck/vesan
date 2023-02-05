@@ -1,22 +1,20 @@
 <template>
   <CardElt>
     <template #header>
-      <h1>Basket</h1>
+      <i class="blue anima-slideT fa-solid fa-basket-shopping fa-2x"></i>
+      <h1 class="sky anima-slideB">Basket</h1>
     </template>
 
     <template #body>
-      <h2>Products</h2>
-
       <form>
         <TableElt :items="order">
-
           <template #head>
             Total
           </template>
 
           <!-- Product Name -->
           <template #cell-name="slotProps">
-            <h3>{{ slotProps.item.name }}</h3>
+            <strong>{{ slotProps.item.name }}</strong>
           </template>
 
           <!-- Product Image -->
@@ -57,35 +55,46 @@
               </b>
             </p>
 
+            <!-- Delete Item -->
             <BtnElt type="button"
               @click="deleteItem(`${slotProps.item.name}`, `${slotProps.item.option}`)"
               class="btn-orange"
               content="Remove"
               :title="`Remove ${slotProps.item.name}`">
+              <template #btn>
+                <i class="fa-solid fa-trash fa-lg"></i>
+              </template>
             </BtnElt>
           </template>
-        </TableElt>
+          </TableElt>
+
+          <!-- Basket Total -->
+          <p class="bord bord-violet black container-60sm-50md">
+          The total of your basket is <b>{{ total }} €</b>
+          </p>
+
+          <!-- Clear Basket -->
+          <BtnElt type="button"
+            @click="clearBasket()"
+            class="btn-red"
+            content="Clear"
+            title="Clear the Basket">
+            <template #btn>
+              <i class="fa-solid fa-trash-can fa-lg"></i>
+            </template>
+          </BtnElt>
+
+          <!-- Order Products -->
+          <BtnElt type="button"
+            @click="orderProducts()"
+            class="btn-green"
+            content="Order"
+            title="Order those Products">
+            <template #btn>
+              <i class="fa-solid fa-cash-register fa-lg"></i>
+            </template>
+          </BtnElt>
       </form>
-
-      <!-- Basket Total -->
-      <p>The Total of your Basket is <b>{{ total }} €</b></p>
-
-      <!-- Clear Basket -->
-      <BtnElt type="button"
-        @click="clearBasket()"
-        class="btn-red"
-        content="Clear ?"
-        title="Clear the Basket">
-      </BtnElt>
-
-      <!-- Command Product -->
-      <BtnElt type="button"
-        @click="orderProducts()"
-        class="btn-green"
-        content="Order !"
-        title="Order those Products">
-
-      </BtnElt>
     </template>
   </CardElt>
 </template>

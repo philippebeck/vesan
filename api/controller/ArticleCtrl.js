@@ -48,6 +48,8 @@ exports.getArticle = (title, text, image, alt, user, likes, usersLiked, cat, cre
   }
 }
 
+//! ****************************** PUBLIC ******************************
+
 /**
  * LIST ARTICLES
  * @param {object} req 
@@ -60,7 +62,19 @@ exports.listArticles = (req, res) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-//! ****************************** CRUD ******************************
+/**
+ * READ A ARTICLE
+ * @param {object} req 
+ * @param {object} res 
+ */
+exports.readArticle = (req, res) => {
+  ArticleModel
+  .findOne({ _id: req.params.id })
+  .then((article) => res.status(200).json(article))
+  .catch((error) => res.status(400).json({ error }));
+}
+
+//! ****************************** PRIVATE ******************************
 
 /**
  * CREATE ARTICLE
@@ -99,7 +113,6 @@ exports.createArticle = (req, res, next) => {
       fields.cat, 
       fields.created,
       fields.updated
-
     ));
 
     article
@@ -111,18 +124,6 @@ exports.createArticle = (req, res, next) => {
       .catch((error) => res.status(400).json({ error }));
   })
 };
-
-/**
- * READ A ARTICLE
- * @param {object} req 
- * @param {object} res 
- */
-exports.readArticle = (req, res) => {
-  ArticleModel
-  .findOne({ _id: req.params.id })
-  .then((article) => res.status(200).json(article))
-  .catch((error) => res.status(400).json({ error }));
-}
 
 /**
  * UPDATE ARTICLE

@@ -81,18 +81,10 @@ exports.setMessage = (fields, res) => {
   })();
 }
 
-//! ****************************** MAIN ******************************
+//! ****************************** PUBLIC ******************************
 
-/**
- * LIST ALL USERS
- * @param {object} req 
- * @param {object} res 
- */
-exports.listUsers = (req, res) => {
-  UserModel
-    .find()
-    .then((users) => res.status(200).json(users))
-    .catch((error) => res.status(400).json({ error }));
+exports.checkUser = () => {
+  
 }
 
 /**
@@ -161,7 +153,37 @@ exports.forgotPass = (req, res, next) => {
   })
 }
 
-//! ****************************** CRUD ******************************
+/**
+ * SEND USER MESSAGE
+ * @param {object} req 
+ * @param {object} res 
+ * @param {function} next 
+ */
+exports.sendMessage = (req, res, next) => {
+  form.parse(req, (err, fields) => {
+
+    if (err) {
+      next(err);
+      return;
+    }
+
+    this.setMessage(fields, res);
+  })
+}
+
+//! ****************************** PRIVATE ******************************
+
+/**
+ * LIST ALL USERS
+ * @param {object} req 
+ * @param {object} res 
+ */
+exports.listUsers = (req, res) => {
+  UserModel
+    .find()
+    .then((users) => res.status(200).json(users))
+    .catch((error) => res.status(400).json({ error }));
+}
 
 /**
  * CREATE USER
@@ -209,6 +231,18 @@ exports.createUser = (req, res, next) => {
       })
       .catch((error) => res.status(500).json({ error }));
   });
+}
+
+/**
+ * READ A USER
+ * @param {object} req 
+ * @param {object} res 
+ */
+exports.readUser = (req, res) => {
+  UserModel
+  .findOne({ _id: req.params.id })
+  .then((user) => res.status(200).json(user))
+  .catch((error) => res.status(400).json({ error }));
 }
 
 /**
@@ -298,24 +332,4 @@ exports.deleteUser = (req, res) => {
       })
     })
     .catch(error => res.status(500).json({ error }));
-}
-
-//! ****************************** MAILER ******************************
-
-/**
- * SEND USER MESSAGE
- * @param {object} req 
- * @param {object} res 
- * @param {function} next 
- */
-exports.sendMessage = (req, res, next) => {
-  form.parse(req, (err, fields) => {
-
-    if (err) {
-      next(err);
-      return;
-    }
-
-    this.setMessage(fields, res);
-  })
 }

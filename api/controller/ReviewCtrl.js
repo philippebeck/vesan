@@ -8,6 +8,8 @@ require("dotenv").config();
 
 const form = formidable();
 
+//! ****************************** PUBLIC ******************************
+
 /**
  * LIST REVIEWS
  * @param {object} req 
@@ -20,7 +22,7 @@ exports.listReviews = (req, res) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-//! ****************************** CRUD ******************************
+//! ****************************** PRIVATE ******************************
 
 /**
  * CREATE REVIEW

@@ -1,5 +1,5 @@
 <template>
-  <form class="form">
+  <form class="anima-grow">
 
     <!-- User Email -->
     <FieldElt id="email"

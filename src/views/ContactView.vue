@@ -3,8 +3,8 @@
   <!-- CONTACT PAGE -->
   <CardElt>
     <template #header>
-      <i class="blue fa-solid fa-at fa-4x"></i>
-      <h1 class="blue anima-slideB">
+      <i class="blue anima-turn3D fa-solid fa-at fa-4x"></i>
+      <h1 class="sky anima-turn">
         Contact
       </h1>
     </template>
