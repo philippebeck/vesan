@@ -61,6 +61,9 @@
               class="btn-orange"
               content="Remove"
               :title="`Remove ${slotProps.item.name}`">
+              <template #btn>
+                <i class="fa-solid fa-trash fa-lg"></i>
+              </template>
             </BtnElt>
           </template>
           </TableElt>
@@ -72,18 +75,24 @@
 
           <!-- Clear Basket -->
           <BtnElt type="button"
-          @click="clearBasket()"
-          class="btn-red"
-          content="Clear ?"
-          title="Clear the Basket">
+            @click="clearBasket()"
+            class="btn-red"
+            content="Clear"
+            title="Clear the Basket">
+            <template #btn>
+              <i class="fa-solid fa-trash-can fa-lg"></i>
+            </template>
           </BtnElt>
 
           <!-- Order Products -->
           <BtnElt type="button"
-          @click="orderProducts()"
-          class="btn-green"
-          content="Order !"
-          title="Order those Products">
+            @click="orderProducts()"
+            class="btn-green"
+            content="Order"
+            title="Order those Products">
+            <template #btn>
+              <i class="fa-solid fa-cash-register fa-lg"></i>
+            </template>
           </BtnElt>
       </form>
     </template>
