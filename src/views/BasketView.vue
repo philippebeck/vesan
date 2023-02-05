@@ -1,22 +1,20 @@
 <template>
   <CardElt>
     <template #header>
+      <i class="fa-solid fa-basket-shopping fa-2x"></i>
       <h1>Basket</h1>
     </template>
 
     <template #body>
-      <h2>Products</h2>
-
       <form>
         <TableElt :items="order">
-
           <template #head>
             Total
           </template>
 
           <!-- Product Name -->
           <template #cell-name="slotProps">
-            <h3>{{ slotProps.item.name }}</h3>
+            <strong>{{ slotProps.item.name }}</strong>
           </template>
 
           <!-- Product Image -->
@@ -57,6 +55,7 @@
               </b>
             </p>
 
+            <!-- Delete Item -->
             <BtnElt type="button"
               @click="deleteItem(`${slotProps.item.name}`, `${slotProps.item.option}`)"
               class="btn-orange"
@@ -64,28 +63,29 @@
               :title="`Remove ${slotProps.item.name}`">
             </BtnElt>
           </template>
-        </TableElt>
+          </TableElt>
+
+          <!-- Basket Total -->
+          <p class="bord bord-violet black container-60sm-50md">
+          The total of your basket is <b>{{ total }} €</b>
+          </p>
+
+          <!-- Clear Basket -->
+          <BtnElt type="button"
+          @click="clearBasket()"
+          class="btn-red"
+          content="Clear ?"
+          title="Clear the Basket">
+          </BtnElt>
+
+          <!-- Order Products -->
+          <BtnElt type="button"
+          @click="orderProducts()"
+          class="btn-green"
+          content="Order !"
+          title="Order those Products">
+          </BtnElt>
       </form>
-
-      <!-- Basket Total -->
-      <p>The Total of your Basket is <b>{{ total }} €</b></p>
-
-      <!-- Clear Basket -->
-      <BtnElt type="button"
-        @click="clearBasket()"
-        class="btn-red"
-        content="Clear ?"
-        title="Clear the Basket">
-      </BtnElt>
-
-      <!-- Command Product -->
-      <BtnElt type="button"
-        @click="orderProducts()"
-        class="btn-green"
-        content="Order !"
-        title="Order those Products">
-
-      </BtnElt>
     </template>
   </CardElt>
 </template>
