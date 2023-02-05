@@ -83,8 +83,23 @@ exports.setMessage = (fields, res) => {
 
 //! ****************************** PUBLIC ******************************
 
-exports.checkUser = () => {
-  
+exports.checkUsers = (req, res) => {
+  UserModel
+    .find()
+    .then((users) => {
+        let usersChecked = [];
+        for (let i = 0; i < users.length; i++) {
+
+          usersChecked.push({
+            id: users[i]._id,
+            name: users[i].name,
+            email: users[i].email
+          });
+        }
+        res.status(200).json(usersChecked);
+      }
+    )
+    .catch((error) => res.status(400).json({ error }));
 }
 
 /**
