@@ -46,6 +46,8 @@ exports.getProduct = (name, description, image, alt, price, options, cat, create
   }
 }
 
+//! ****************************** PUBLIC ******************************
+
 /**
  * LIST PRODUCTS
  * @param {object} req 
@@ -58,7 +60,19 @@ exports.listProducts = (req, res) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-//! ****************************** CRUD ******************************
+/**
+ * READ AN PRODUCT
+ * @param {object} req 
+ * @param {object} res 
+ */
+exports.readProduct = (req, res) => {
+  ProductModel
+  .findOne({ _id: req.params.id })
+  .then((product) => res.status(200).json(product))
+  .catch((error) => res.status(400).json({ error }));
+}
+
+//! ****************************** PRIVATE ******************************
 
 /**
  * CREATE PRODUCT
@@ -114,18 +128,6 @@ exports.createProduct = (req, res, next) => {
       .catch((error) => res.status(400).json({ error }));
   })
 };
-
-/**
- * READ AN PRODUCT
- * @param {object} req 
- * @param {object} res 
- */
-exports.readProduct = (req, res) => {
-  ProductModel
-  .findOne({ _id: req.params.id })
-  .then((product) => res.status(200).json(product))
-  .catch((error) => res.status(400).json({ error }));
-}
 
 /**
  * UPDATE PRODUCT
