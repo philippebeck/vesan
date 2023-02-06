@@ -9,6 +9,7 @@ const cors      = require("cors");
 
 const productRoute  = require("./route/ProductRoute");
 const reviewRoute   = require("./route/ReviewRoute");
+const orderRoute    = require("./route/OrderRoute");
 const articleRoute  = require("./route/ArticleRoute");
 const commentRoute  = require("./route/CommentRoute");
 const userRoute     = require("./route/UserRoute");
@@ -49,6 +50,7 @@ const limiter = rateLimit({
  */
 app.use(process.env.ROUTE_PRODUCT, productRoute);
 app.use(process.env.ROUTE_REVIEW, reviewRoute);
+app.use(process.env.ROUTE_ORDER, orderRoute);
 app.use(process.env.ROUTE_ARTICLE, articleRoute);
 app.use(process.env.ROUTE_COMMENT, commentRoute);
 app.use(process.env.ROUTE_USER, userRoute);
