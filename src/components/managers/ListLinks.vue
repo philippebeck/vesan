@@ -90,6 +90,21 @@ export default {
 
   methods: {
     /**
+     * RETURN AN ARRAY OF ITEMS BY CATEGORY
+     * @param {object} items 
+     */
+    itemsByCat(items) {
+      const itemsByCat = {};
+      items.forEach(item => {
+        if (!itemsByCat[item.cat]) {
+          itemsByCat[item.cat] = [];
+        }
+        itemsByCat[item.cat].push(item);
+        itemsByCat[item.cat].sort((a, b) => (a.name > b.name) ? 1 : -1);
+      });
+      return itemsByCat;
+    },
+    /**
      * VALIDATE UPDATED LINK IF URL IS VALID
      * @param {string} id 
      */
