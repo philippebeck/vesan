@@ -1,8 +1,8 @@
 <template>
   <CardElt id="top">
     <template #header>
-      <i class="blue anima-slideT fa-solid fa-cogs fa-4x"></i>
-      <h1 class="sky anima-slideB">
+      <i class="blue anima-slideB fa-solid fa-cogs fa-4x"></i>
+      <h1 class="sky anima-slideT">
         Admin
       </h1>
 
@@ -10,7 +10,7 @@
       <NavElt class="sidebar">
         <template #first>
           <a href="#shop"
-            title="Manage products & reviews">
+            title="Manage products, reviews & orders">
             <i class="fa-solid fa-shop fa-fw"></i>
           </a>
           <a href="#blog"
@@ -20,6 +20,10 @@
           <a href="#users"
             title="Manage users">
             <i class="fa-solid fa-user-astronaut fa-fw"></i>
+          </a>
+          <a href="#links"
+            title="Manage links">
+            <i class="fa-solid fa-link fa-fw"></i>
           </a>
         </template>
 
@@ -47,6 +51,10 @@
           <ListReviews v-if="reviews.length > 0"
             :reviews="reviews"
             :products="products"
+            :users="users"/>
+
+          <ListOrders v-if="orders.length > 0"
+            :orders="orders"
             :users="users"/>
         </template>
       </CardElt>
@@ -88,8 +96,23 @@
         <template #body>
           <ListUsers v-if="users.length > 0"
             :users="users"/>
+        </template>
+      </CardElt>
 
-          <CreateUser />
+      <hr>
+
+      <!-- Links Part -->
+      <CardElt>
+        <template #header>
+          <i class="fa-solid fa-link fa-3x"></i>
+          <h2 id="links">
+            Links
+          </h2>
+        </template>
+
+        <template #body>
+          <ListLinks v-if="links.length > 0"
+            :links="links"/>
         </template>
       </CardElt>
     </template>
@@ -99,30 +122,33 @@
 <script>
 import ListProducts from "@/components/managers/ListProducts"
 import ListReviews from "@/components/managers/ListReviews"
+import ListOrders from "@/components/managers/ListOrders"
 import ListArticles from "@/components/managers/ListArticles"
 import ListComments from "@/components/managers/ListComments"
 import ListUsers from "@/components/managers/ListUsers"
-
-import CreateUser from "@/components/creators/CreateUser"
+import ListLinks from "@/components/managers/ListLinks"
 
 export default {
   name: "AdminView",
   components: {
     ListProducts,
     ListReviews,
+    ListOrders,
     ListArticles,
     ListComments,
     ListUsers,
-    CreateUser
+    ListLinks
   },
 
   data() {
     return {
       products: [],
       reviews: [],
+      orders: [],
       articles: [],
       comments: [],
-      users: []
+      users: [],
+      links: []
     }
   },
 
@@ -137,6 +163,10 @@ export default {
         .then(res => { this.reviews = res })
         .catch(err => { console.log(err) });
 
+      this.$serve.getData("/api/orders")
+        .then(res => { this.orders = res })
+        .catch(err => { console.log(err) });
+
       this.$serve.getData("/api/articles")
         .then(res => { this.articles = res })
         .catch(err => { console.log(err) });
@@ -147,6 +177,10 @@ export default {
 
       this.$serve.getData("/api/users")
         .then(res => { this.users = res })
+        .catch(err => { console.log(err) });
+
+      this.$serve.getData("/api/links")
+        .then(res => { this.links = res })
         .catch(err => { console.log(err) });
 
     } else {
