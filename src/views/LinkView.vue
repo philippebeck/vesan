@@ -1,7 +1,5 @@
 <template>
-  <NavElt
-    type="sidebar"
-    :items="cats"
+  <NavElt :items="cats"
     class="sidebar">
 
     <template #items="slotProps">
@@ -29,23 +27,20 @@
     </template>
 
     <template #aside v-if="userId">
-      <CreateLink 
-        :cats="cats"/>
+      <CreateLink :cats="cats"/>
     </template>
 
     <template #body>
       <ListElt :items="itemsByCat(links)"
         :dynamic="true">
         <template #items="slotProps">
-          <i 
-            :class="`fa-brands fa-${slotProps.index.toLowerCase()} fa-5x sky shatex-blur-md anima-grow mar-lg`"
-            :id="slotProps.index">
+          <i :id="slotProps.index"
+            :class="`fa-brands fa-${slotProps.index.toLowerCase()} fa-5x sky shatex-blur-md anima-grow mar-lg`">
           </i>
         </template>
 
         <template #nested="slotProps">
-          <BtnElt
-            :content="slotProps.value.name"
+          <BtnElt :content="slotProps.value.name"
             :href="`https://${slotProps.value.url}`" 
             :title="slotProps.value.url"
             class="btn-blue"/>
