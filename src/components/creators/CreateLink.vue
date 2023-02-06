@@ -1,61 +1,70 @@
 <template>
-  <form class="container-60lg-50wd">
-    <ListElt :items="['name', 'url', 'cat']">
+    <CardElt id="create-link">
+    <template #header>
+      <i class="fa-solid fa-link fa-2x"></i>
+      <h3>Create Link</h3>
+    </template>
 
-      <template #item-1>
-        <FieldElt id="name"
-          v-model:value="name"
-          info="GitHub"
-          @keyup.enter="validateNewLink()"
-          :min="parseInt('2')">
-          <template #legend>
-            Name
-          </template>
-          <template #label>
-            Indicate the link name
-          </template>
-        </FieldElt>
-      </template>
+    <template #body>
+      <form>
+        <ListElt :items="['name', 'url', 'cat']">
 
-      <template #item-2>
-        <FieldElt id="url"
-          type="url"
-          v-model:value="url"
-          info="https://"
-          @keyup.enter="validateNewLink()"
-          :min="parseInt('5')"
-          :max="parseInt('100')">
-          <template #legend>
-            URL
+          <template #item-1>
+            <FieldElt id="name"
+              v-model:value="name"
+              info="GitHub"
+              @keyup.enter="validateNewLink()"
+              :min="parseInt('2')">
+              <template #legend>
+                Name
+              </template>
+              <template #label>
+                Indicate the link name
+              </template>
+            </FieldElt>
           </template>
-          <template #label>
-            Indicate the link URL
-          </template>
-        </FieldElt>
-      </template>
-      
-      <template #item-3>
-        <FieldElt id="cat"
-          type="list"
-          v-model:value="cat"
-          info="Choose a category"
-          @keyup.enter="validateNewLink()"
-          :list="['HTML5', 'CSS3', 'JS', 'PHP', 'Python', 'Git', 'Dev']">
-          <template #legend>
-            Category
-          </template>
-          <template #label>
-            Choose Dev if others are not suitable
-          </template>
-        </FieldElt>
-      </template>
-    </ListElt>
 
-    <BtnElt type="button"
-      content="Create"
-      @click="validateNewLink()" 
-      class="btn-green"/>
-  </form>
+          <template #item-2>
+            <FieldElt id="url"
+              type="url"
+              v-model:value="url"
+              info="https://"
+              @keyup.enter="validateNewLink()"
+              :min="parseInt('5')"
+              :max="parseInt('100')">
+              <template #legend>
+                URL
+              </template>
+              <template #label>
+                Indicate the link URL
+              </template>
+            </FieldElt>
+          </template>
+          
+          <template #item-3>
+            <FieldElt id="cat"
+              type="select"
+              v-model:value="cat"
+              info="Choose a category"
+              @keyup.enter="validateNewLink()"
+              :list="['HTML5', 'CSS3', 'JS', 'PHP', 'Python', 'Git', 'Dev']">
+              <template #legend>
+                Category
+              </template>
+              <template #label>
+                Choose Dev if others are not suitable
+              </template>
+            </FieldElt>
+          </template>
+        </ListElt>
+
+        <BtnElt type="button"
+          content="Create"
+          @click="validateNewLink()" 
+          class="btn-green"/>
+      </form>
+    </template>
+  </CardElt>
 </template>
 
 <script>
