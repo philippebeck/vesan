@@ -46,7 +46,13 @@ export default {
     "PHP",
     "Python",
     "Git",
-    "Dev",
+    "Dev"
+  ],
+
+  CATS_ORDER : [
+    "Pending",
+    "Paid",
+    "Done"
   ],
 
   CATS_PRODUCT : [
