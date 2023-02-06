@@ -10,7 +10,7 @@
       <NavElt class="sidebar">
         <template #first>
           <a href="#shop"
-            title="Manage products & reviews">
+            title="Manage products, reviews & orders">
             <i class="fa-solid fa-shop fa-fw"></i>
           </a>
           <a href="#blog"
@@ -52,6 +52,9 @@
             :reviews="reviews"
             :products="products"
             :users="users"/>
+
+          <ListOrders v-if="orders.length > 0"
+            :orders="orders"/>
         </template>
       </CardElt>
 
@@ -92,8 +95,6 @@
         <template #body>
           <ListUsers v-if="users.length > 0"
             :users="users"/>
-
-          <CreateUser />
         </template>
       </CardElt>
 
@@ -120,29 +121,29 @@
 <script>
 import ListProducts from "@/components/managers/ListProducts"
 import ListReviews from "@/components/managers/ListReviews"
+import ListOrders from "@/components/managers/ListOrders"
 import ListArticles from "@/components/managers/ListArticles"
 import ListComments from "@/components/managers/ListComments"
 import ListUsers from "@/components/managers/ListUsers"
 import ListLinks from "@/components/managers/ListLinks"
-
-import CreateUser from "@/components/creators/CreateUser"
 
 export default {
   name: "AdminView",
   components: {
     ListProducts,
     ListReviews,
+    ListOrders,
     ListArticles,
     ListComments,
     ListUsers,
-    ListLinks,
-    CreateUser
+    ListLinks
   },
 
   data() {
     return {
       products: [],
       reviews: [],
+      orders: [],
       articles: [],
       comments: [],
       users: [],
@@ -159,6 +160,10 @@ export default {
 
       this.$serve.getData("/api/reviews")
         .then(res => { this.reviews = res })
+        .catch(err => { console.log(err) });
+
+      this.$serve.getData("/api/orders")
+        .then(res => { this.orders = res })
         .catch(err => { console.log(err) });
 
       this.$serve.getData("/api/articles")
