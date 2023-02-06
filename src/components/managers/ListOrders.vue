@@ -27,12 +27,24 @@
 
           <!-- Order Total -->
           <template #cell-total="slotProps">
-            <b>{{ orders[slotProps.index].total }}</b>
+            <b>{{ orders[slotProps.index].total }} €</b>
           </template>
 
           <!-- Order Payment -->
           <template #cell-payment="slotProps">
             <b>{{ orders[slotProps.index].payment }}</b>
+          </template>
+
+          <!-- Order Status -->
+          <template #cell-status="slotProps">
+            <FieldElt :id="'status-' + orders[slotProps.index]._id"
+              type="select"
+              v-model:value="getOrders()[slotProps.index].status"
+              info="Update the status"
+              @keyup.enter="updateOrder(orders[slotProps.index]._id)"
+              :list="cats">
+              {{ value }}
+            </FieldElt>
           </template>
 
           <!-- Order User -->
@@ -44,6 +56,11 @@
           <!-- Order Created -->
           <template #cell-created="slotProps">
             {{ new Date(orders[slotProps.index].created).toLocaleString() }}
+          </template>
+
+          <!-- Order Updated -->
+          <template #cell-updated="slotProps">
+            {{ new Date(orders[slotProps.index].updated).toLocaleString() }}
           </template>
 
           <template #body="slotProps">
@@ -75,9 +92,21 @@
 </template>
 
 <script>
+import constants from "/constants"
+
 export default {
   name: "ListOrders",
   props: ["orders", "users"],
+
+  data() {
+    return {
+      cats: []
+    }
+  },
+
+  mounted() {
+    this.cats = constants.CATS_ORDER;
+  },
 
   methods: {
     /**
@@ -110,11 +139,13 @@ export default {
           let order = new FormData();
 
           order.append("id", id);
-          order.append("products", this.orders[i].products);
+          order.append("products", JSON.stringify(this.orders[i].products));
           order.append("total", this.orders[i].total);
           order.append("payment", this.orders[i].payment);
+          order.append("status", this.orders[i].status);
           order.append("user", this.orders[i].user);
           order.append("created", this.orders[i].created);
+          order.append("updated", Date.now());
 
           this.$serve.putData(`/api/orders/${id}`, order)
             .then(() => {
