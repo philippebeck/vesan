@@ -18,8 +18,8 @@
 
   <CardElt id="top">
     <template #header>
-      <i class="blue anima-grow fa-solid fa-blog fa-4x"></i>
-      <h1 class="sky anima-shrink">
+      <i class="blue anima-shrink fa-solid fa-blog fa-4x"></i>
+      <h1 class="sky anima-grow">
         Blog
       </h1>
       <strong class="gray">
@@ -80,7 +80,6 @@
             </MediaElt>
           </a>
         </template>
-
       </ListElt>
     </template>
   </CardElt>
