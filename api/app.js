@@ -12,6 +12,7 @@ const reviewRoute   = require("./route/ReviewRoute");
 const articleRoute  = require("./route/ArticleRoute");
 const commentRoute  = require("./route/CommentRoute");
 const userRoute     = require("./route/UserRoute");
+const linkRoute     = require("./route/LinkRoute");
 
 require("dotenv").config();
 
@@ -51,5 +52,6 @@ app.use(process.env.ROUTE_REVIEW, reviewRoute);
 app.use(process.env.ROUTE_ARTICLE, articleRoute);
 app.use(process.env.ROUTE_COMMENT, commentRoute);
 app.use(process.env.ROUTE_USER, userRoute);
+app.use(process.env.ROUTE_LINK, linkRoute);
 
 module.exports = app;
