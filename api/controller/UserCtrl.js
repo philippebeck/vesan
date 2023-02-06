@@ -68,7 +68,7 @@ exports.getUser = (name, email, image, alt, pass, role, created, updated) => {
  * @param {object} res 
  */
 exports.setMessage = (fields, res) => {
-  const mailer  = nem.createMailer();
+  const mailer = nem.createMailer();
 
   (async function(){
     try {

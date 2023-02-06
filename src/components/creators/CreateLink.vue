@@ -47,7 +47,7 @@
               v-model:value="cat"
               info="Choose a category"
               @keyup.enter="validateNewLink()"
-              :list="['HTML5', 'CSS3', 'JS', 'PHP', 'Python', 'Git', 'Dev']">
+              :list="cats">
               <template #legend>
                 Category
               </template>
@@ -68,15 +68,24 @@
 </template>
 
 <script>
+import constants from "/constants"
+
 export default {
   name: "CreateLink",
+
   data() {
     return {
       name: "",
       url: "",
-      cat: ""
+      cat: "",
+      cats: []
     }
   },
+
+  mounted() {
+    this.cats = constants.CATS_LINK;
+  },
+
   methods: {
     /**
      * VALIDATE NEW LINK IF DATA ARE VALID

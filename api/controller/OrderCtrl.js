@@ -1,12 +1,33 @@
 "use strict";
 
-const formidable = require("formidable");
+const formidable  = require("formidable");
+const nem         = require("nemjs");
 
 const OrderModel = require("../model/OrderModel");
+const UserModel = require("../model/UserModel");
 
 require("dotenv").config();
 
 const form = formidable();
+
+/**
+ * SET MESSAGE
+ * @param {string} fields 
+ * @param {object} res 
+ */
+exports.setMessage = (fields, res) => {
+  const mailer = nem.createMailer();
+
+  (async function(){
+    try {
+      let mail = nem.createMessage(fields);
+
+      await mailer.sendMail(mail, function() {
+        res.status(200).json({ message: process.env.USER_MESSAGE });
+      });
+    } catch(e){ console.error(e); }
+  })();
+}
 
 //! ****************************** PRIVATE ******************************
 
@@ -36,10 +57,24 @@ exports.createOrder = (req, res, next) => {
       return;
     }
 
-    let order = new OrderModel(fields);
+    let message = {};
+    message.subject = process.env.ORDER_SUBJECT;
+    message.text    = fields.products;
+
+    fields.products = JSON.parse(fields.products);
+    let order       = new OrderModel(fields);
 
     order
       .save()
+      .then(() => {
+        UserModel
+          .findOne({ _id: fields.user })
+          .then((user) => {
+            message.email = user.email;
+            this.setMessage(message, res);
+          })
+          .catch(err => { console.log(err) });
+      })
       .then(() => res.status(201).json({ message: process.env.ORDER_CREATED }))
       .catch((error) => res.status(400).json({ error }));
   })
@@ -58,6 +93,8 @@ exports.updateOrder = (req, res, next) => {
       next(err);
       return;
     }
+
+    fields.products = JSON.parse(fields.products);
 
     OrderModel
       .updateOne({ _id: req.params.id }, { ...fields, _id: req.params.id })

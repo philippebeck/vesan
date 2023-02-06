@@ -17,11 +17,19 @@ const OrderModel = mongoose.Schema(
       type: String,
       required: true
     },
+    status: {
+      type: String,
+      default: "Pending"
+    },
     user: { 
       type: String, 
       required: true
     },
     created: { 
+      type: Date, 
+      required: true
+    },
+    updated: { 
       type: Date, 
       required: true
     }

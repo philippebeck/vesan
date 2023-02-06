@@ -42,20 +42,27 @@
         </template>
 
         <template #nested="slotProps">
-          <BtnElt  v-if="calculateScoresAverage(slotProps.value._id) !== undefined"
+
+          <BtnElt v-if="calculateScoresAverage(slotProps.value._id) !== undefined"
             :href="`product/${slotProps.value._id}#reviews`"
             class="btn-violet"
-            :title="`Read Reviews about ${slotProps.value.name}`">
+            :title="`Read reviews about ${slotProps.value.name}`">
             <template #btn>
               {{ calculateScoresAverage(slotProps.value._id) }}
               <i class="fa-solid fa-star"></i>
             </template>
           </BtnElt>
 
-          <BtnElt v-else 
+          <BtnElt v-else-if="userId" 
             :href="`product/${slotProps.value._id}#review`"
             class="btn-violet"
-            content="Write a Review !"
+            content="Write a Review"
+            :title="`Be the first to write a review about ${slotProps.value.name}`" />
+
+          <BtnElt v-else 
+            href="/login"
+            class="btn-violet"
+            content="Login to write a review"
             :title="`Be the first to write a Review about ${slotProps.value.name}`" />
 
           <a :href="`product/${slotProps.value._id}`"
