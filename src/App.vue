@@ -100,7 +100,7 @@
 
     <!-- Websites -->
     <template #foot1>
-      <ListElt :items="['Asperger', 'Astronomy']">
+      <ListElt :items="['Asperger', 'Astronomy', 'Philippe Beck']">
         <template #item-1>
           <a href="https://asperger.philippebeck.net"
             title="Tests for Asperger's Syndrome">
@@ -111,6 +111,12 @@
           <a href="https://astronomy.philippebeck.net"
             title="NASA & CDS APIs">
             Astronomy
+          </a>
+        </template>
+        <template #item-3>
+          <a href="https://philippebeck.net"
+            title="Portal">
+            Philippe Beck
           </a>
         </template>
       </ListElt>
@@ -154,17 +160,17 @@
 
     <!-- Links -->
     <template #foot3>
-      <ListElt :items="['Links2Code', 'Philippe Beck']">
+      <ListElt :items="['Links', 'Legal Notice']">
         <template #item-1>
-          <a href="https://links2code.philippebeck.net"
-            title="Links For Coding">
-            Links2Code
+          <a href="/link"
+            title="Find links for coding">
+            Links for dev
           </a>
         </template>
         <template #item-2>
-          <a href="https://philippebeck.net"
-            title="Portal">
-            Philippe Beck
+          <a href="/legal"
+            title="Read the legal notice">
+            Legal Notice
           </a>
         </template>
       </ListElt>
