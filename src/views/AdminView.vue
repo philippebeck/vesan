@@ -1,8 +1,8 @@
 <template>
   <CardElt id="top">
     <template #header>
-      <i class="blue anima-slideT fa-solid fa-cogs fa-4x"></i>
-      <h1 class="sky anima-slideB">
+      <i class="blue anima-slideB fa-solid fa-cogs fa-4x"></i>
+      <h1 class="sky anima-slideT">
         Admin
       </h1>
 
@@ -20,6 +20,10 @@
           <a href="#users"
             title="Manage users">
             <i class="fa-solid fa-user-astronaut fa-fw"></i>
+          </a>
+          <a href="#links"
+            title="Manage links">
+            <i class="fa-solid fa-link fa-fw"></i>
           </a>
         </template>
 
@@ -92,6 +96,23 @@
           <CreateUser />
         </template>
       </CardElt>
+
+      <hr>
+
+      <!-- Links Part -->
+      <CardElt>
+        <template #header>
+          <i class="fa-solid fa-link fa-3x"></i>
+          <h2 id="links">
+            Links
+          </h2>
+        </template>
+
+        <template #body>
+          <ListLinks v-if="links.length > 0"
+            :links="links"/>
+        </template>
+      </CardElt>
     </template>
   </CardElt>
 </template>
@@ -102,6 +123,7 @@ import ListReviews from "@/components/managers/ListReviews"
 import ListArticles from "@/components/managers/ListArticles"
 import ListComments from "@/components/managers/ListComments"
 import ListUsers from "@/components/managers/ListUsers"
+import ListLinks from "@/components/managers/ListLinks"
 
 import CreateUser from "@/components/creators/CreateUser"
 
@@ -113,6 +135,7 @@ export default {
     ListArticles,
     ListComments,
     ListUsers,
+    ListLinks,
     CreateUser
   },
 
@@ -122,7 +145,8 @@ export default {
       reviews: [],
       articles: [],
       comments: [],
-      users: []
+      users: [],
+      links: []
     }
   },
 
@@ -147,6 +171,10 @@ export default {
 
       this.$serve.getData("/api/users")
         .then(res => { this.users = res })
+        .catch(err => { console.log(err) });
+
+      this.$serve.getData("/api/links")
+        .then(res => { this.links = res })
         .catch(err => { console.log(err) });
 
     } else {
