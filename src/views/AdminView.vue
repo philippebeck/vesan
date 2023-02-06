@@ -54,7 +54,8 @@
             :users="users"/>
 
           <ListOrders v-if="orders.length > 0"
-            :orders="orders"/>
+            :orders="orders"
+            :users="users"/>
         </template>
       </CardElt>
 
