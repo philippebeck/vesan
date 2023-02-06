@@ -85,11 +85,22 @@
           </BtnElt>
 
           <!-- Order Products -->
-          <BtnElt type="button"
+          <BtnElt v-if="userId"
+            type="button"
             @click="orderProducts()"
             class="btn-green"
             content="Order"
             title="Order those Products">
+            <template #btn>
+              <i class="fa-solid fa-cash-register fa-lg"></i>
+            </template>
+          </BtnElt>
+
+          <BtnElt v-else
+            href="/login"
+            class="btn-green"
+            content="Order"
+            title="Login to order those Products">
             <template #btn>
               <i class="fa-solid fa-cash-register fa-lg"></i>
             </template>
@@ -110,7 +121,9 @@ export default {
       products: [],
       basket: [],
       order: [],
-      total: 0
+      sale: [],
+      total: 0,
+      userId: null
     }
   },
 
@@ -123,6 +136,10 @@ export default {
         this.calculateTotal();
       })
       .catch(err => { console.log(err) });
+
+    if (localStorage.userId) {
+      this.userId = JSON.parse(localStorage.userId);
+    }
   },
 
   methods: {
@@ -147,6 +164,7 @@ export default {
 
           if (product._id === item.id) {
             let thing = {};
+            let sale  = {};
 
             thing.name      = product.name;
             thing.image     = product.image;
@@ -154,7 +172,13 @@ export default {
             thing.quantity  = Number(item.quantity);
             thing.price     = Number(product.price);
 
+            sale.id       = item.id;
+            sale.option   = item.option;
+            sale.quantity = Number(item.quantity);
+            sale.price    = Number(product.price);
+
             this.order.push(thing);
+            this.sale.push(sale);
           }
         }
       }
@@ -234,13 +258,15 @@ export default {
      * ORDER PRODUCTS
      */
     orderProducts() {
-      let order = new FormData();
+      let order     = new FormData();
 
-      order.append("products", this.order);
+      order.append("products", JSON.stringify(this.sale));
       order.append("total", this.total);
       order.append("payment", "cb");
+      order.append("status", "Pending");
       order.append("user", constants.USER_ID);
       order.append("created", Date.now());
+      order.append("updated", Date.now());
 
       this.$serve.postData("/api/orders", order)
         .then(() => {
