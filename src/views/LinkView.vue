@@ -8,6 +8,13 @@
       <i :class="`fa-brands fa-${slotProps.item.toLowerCase()} fa-fw`"></i>
     </template>
 
+    <template #last  v-if="userId">
+      <a href="#create-link"
+        title="Create a link">
+        <i class="fa-solid fa-link fa-fw"></i>
+      </a>
+    </template>
+
     <template #top>
       <i class="fa-solid fa-chevron-circle-up fa-fw"></i>
     </template>
@@ -19,6 +26,11 @@
       <h1 class="sky anima-slideR">
         Links for dev
       </h1>
+    </template>
+
+    <template #aside v-if="userId">
+      <CreateLink 
+        :cats="cats"/>
     </template>
 
     <template #body>
@@ -44,11 +56,18 @@
 </template>
 
 <script>
+import CreateLink from "@/components/creators/CreateLink"
+
 export default {
   name: "HomeView",
+  components: {
+    CreateLink
+  },
+
   data() {
     return {
-      links: []
+      links: [],
+      userId: null
     }
   },
   computed: {
@@ -76,12 +95,17 @@ export default {
     },
   },
   
-  created () {
+  mounted () {
     this.$serve.getData("/api/links")
       .then(response => {
         this.links = response;
       })
       .catch(err => { console.log(err) });
+
+
+    if (localStorage.userId) {
+      this.userId = JSON.parse(localStorage.userId);
+    }
   }
 }
 </script>
