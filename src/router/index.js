@@ -7,6 +7,8 @@ import BlogView from "../views/BlogView";
 import ContactView from "../views/ContactView";
 import ErrorView from "../views/ErrorView";
 import HomeView from "../views/HomeView";
+import LegalView from "../views/LegalView";
+import LinkView from "../views/LinkView";
 import LoginView from "../views/LoginView";
 import ProductView from "../views/ProductView";
 import ShopView from "../views/ShopView";
@@ -53,6 +55,18 @@ const routes = [
     name: "contact",
     component: ContactView,
     alias: ["/message"]
+  },
+  {
+    path: "/link",
+    name: "link",
+    component: LinkView,
+    alias: ["/links"]
+  },
+  {
+    path: "/legal",
+    name: "legal",
+    component: LegalView,
+    alias: ["/notice"]
   },
   {
     path: "/login",
