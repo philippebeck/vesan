@@ -7,7 +7,18 @@
 
     <template #body>
 
-      <BtnElt v-if="checkLikes() === false"
+      <BtnElt v-if="!userId"
+        id="likes"
+        href="/login"
+        class="btn-blue"
+        :title="`Login to like ${article.title}`">
+        <template #btn>
+          <i class="fa-regular fa-thumbs-up fa-lg"></i>
+          {{ article.likes }}
+        </template>
+      </BtnElt>
+
+      <BtnElt v-else-if="checkLikes() === false"
         id="likes"
         type="button"
         @click="addLike()"
@@ -46,7 +57,7 @@
         </template>
       </MediaElt>
 
-      <ListComments v-if="comments.length > 0"
+      <ListComments v-if="getArticleComments().length > 0"
         :comments="getArticleComments()"
         :users="users"/>
     </template>

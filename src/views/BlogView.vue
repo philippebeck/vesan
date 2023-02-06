@@ -42,7 +42,20 @@
         </template>
 
         <template #nested="slotProps">
-          <BtnElt v-if="checkLikes(slotProps.value._id) === false"
+
+          <BtnElt v-if="!userId"
+            :id="`like-${slotProps.value._id}`"
+            href="/login"
+            class="btn-blue"
+            :title="`Login to like ${slotProps.value.title}`">
+            <template #btn>
+              <i class="fa-regular fa-thumbs-up fa-lg"></i>
+              {{ slotProps.value.likes }}
+            </template>
+
+          </BtnElt>
+
+          <BtnElt v-else-if="checkLikes(slotProps.value._id) === false"
             :id="`like-${slotProps.value._id}`"
             type="button"
             @click="addLike(slotProps.value._id)"
@@ -54,7 +67,7 @@
             </template>
           </BtnElt>
 
-          <BtnElt v-if="checkLikes(slotProps.value._id) === true"
+          <BtnElt v-else-if="checkLikes(slotProps.value._id) === true"
             :id="`like-${slotProps.value._id}`"
             type="button"
             @click="addLike(slotProps.value._id)"
