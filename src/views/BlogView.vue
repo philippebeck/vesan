@@ -52,7 +52,6 @@
               <i class="fa-regular fa-thumbs-up fa-lg"></i>
               {{ slotProps.value.likes }}
             </template>
-
           </BtnElt>
 
           <BtnElt v-else-if="checkLikes(slotProps.value._id) === false"
@@ -89,9 +88,9 @@
                 <h3>{{ slotProps.value.title }}</h3>
                 <blockquote>{{ slotProps.value.text }}</blockquote>
               </template>
-
             </MediaElt>
           </a>
+
         </template>
       </ListElt>
     </template>
