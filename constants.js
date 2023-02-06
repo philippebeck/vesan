@@ -39,6 +39,16 @@ export default {
     "Travel"
   ],
 
+  CATS_LINK : [
+    "HTML5",
+    "CSS3",
+    "JS",
+    "PHP",
+    "Python",
+    "Git",
+    "Dev",
+  ],
+
   CATS_PRODUCT : [
     "Beauty",
     "Electronics",
