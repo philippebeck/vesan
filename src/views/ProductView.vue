@@ -6,6 +6,7 @@
     </template>
 
     <template #body>
+
       <BtnElt v-if="calculateScoresAverage(product._id) !== undefined" 
         href="#reviews"
         class="btn-violet"
@@ -16,11 +17,17 @@
         </template>
       </BtnElt>
 
-      <BtnElt v-else 
+      <BtnElt v-else-if="userId" 
         href="#review"
         class="btn-violet"
         content="Need a Review !"
         :title="`Be the first to write a Review about ${product.name}`" />
+
+      <BtnElt v-else 
+          href="/login"
+          class="btn-violet"
+          content="Login to write a review"
+          :title="`Be the first to write a Review about ${product.name}`" />
 
       <MediaElt :src="`/img/products/${product.image}`"
         :alt="product.alt">
@@ -77,7 +84,7 @@
         </BtnElt>
       </form>
 
-      <ListReviews v-if="reviews.length > 0"
+      <ListReviews v-if="getProductReviews().length > 0"
         id="reviews"
         :reviews="getProductReviews()"
         :users="users"/>
