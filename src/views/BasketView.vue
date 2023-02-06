@@ -100,6 +100,8 @@
 </template>
 
 <script>
+import constants from "/constants"
+
 export default {
   name: "BasketView",
 
@@ -229,11 +231,23 @@ export default {
     },
 
     /**
-     * TODO : UNDER CONSTRUCTION
      * ORDER PRODUCTS
      */
     orderProducts() {
-      console.log("Order !");
+      let order = new FormData();
+
+      order.append("products", this.order);
+      order.append("total", this.total);
+      order.append("payment", "cb");
+      order.append("user", constants.USER_ID);
+      order.append("created", Date.now());
+
+      this.$serve.postData("/api/orders", order)
+        .then(() => {
+          alert("Order created !");
+          this.$router.go();
+        })
+        .catch(err => { console.log(err) });
     }
   }
 }
