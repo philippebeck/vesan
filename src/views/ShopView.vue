@@ -80,8 +80,7 @@
     </template>
 
     <template #aside v-if="checkSession('author')">
-      <CreateProduct 
-        :cats="cats"/>
+      <CreateProduct />
     </template>
   </CardElt>
 </template>

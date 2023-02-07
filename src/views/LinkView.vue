@@ -45,7 +45,7 @@
     </template>
 
     <template #aside v-if="checkSession('author')">
-      <CreateLink :cats="cats"/>
+      <CreateLink />
     </template>
 
   </CardElt>

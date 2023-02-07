@@ -91,8 +91,7 @@
     </template>
 
     <template #aside v-if="checkSession('author')">
-      <CreateArticle 
-        :cats="cats"/>
+      <CreateArticle />
     </template>
   </CardElt>
 </template>
