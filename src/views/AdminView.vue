@@ -153,39 +153,91 @@ export default {
   },
 
   beforeMount () {
-    if (localStorage.userId) {
+    this.$serve.getData("/api/users/check")
+        .then(res => { 
+          this.users = res;
 
-      this.$serve.getData("/api/products")
-        .then(res => { this.products = res })
-        .catch(err => { console.log(err) });
+          if (this.checkSession("admin")) {
 
-      this.$serve.getData("/api/reviews")
-        .then(res => { this.reviews = res })
-        .catch(err => { console.log(err) });
+            this.$serve.getData("/api/products")
+              .then(res => { this.products = res })
+              .catch(err => { console.log(err) });
 
-      this.$serve.getData("/api/orders")
-        .then(res => { this.orders = res })
-        .catch(err => { console.log(err) });
+            this.$serve.getData("/api/reviews")
+              .then(res => { this.reviews = res })
+              .catch(err => { console.log(err) });
 
-      this.$serve.getData("/api/articles")
-        .then(res => { this.articles = res })
-        .catch(err => { console.log(err) });
-      
-      this.$serve.getData("/api/comments")
-        .then(res => { this.comments = res })
-        .catch(err => { console.log(err) });
+            this.$serve.getData("/api/orders")
+              .then(res => { this.orders = res })
+              .catch(err => { console.log(err) });
 
-      this.$serve.getData("/api/users")
-        .then(res => { this.users = res })
-        .catch(err => { console.log(err) });
+            this.$serve.getData("/api/articles")
+              .then(res => { this.articles = res })
+              .catch(err => { console.log(err) });
 
-      this.$serve.getData("/api/links")
-        .then(res => { this.links = res })
-        .catch(err => { console.log(err) });
+            this.$serve.getData("/api/comments")
+              .then(res => { this.comments = res })
+              .catch(err => { console.log(err) });
 
-    } else {
-      alert("Go back Home !");
-      this.$router.push("/");
+            this.$serve.getData("/api/users")
+              .then(res => { this.users = res })
+              .catch(err => { console.log(err) });
+
+            this.$serve.getData("/api/links")
+              .then(res => { this.links = res })
+              .catch(err => { console.log(err) });
+
+            } else {
+            alert("Go back Home !");
+            this.$router.push("/");
+            }
+        })
+        .catch(err => { console.log(err) });
+  },
+  methods: {
+    /**
+     * CHECK SESSION
+     * @param {string} role
+     * @returns
+     */
+    checkSession(role) {
+      if (localStorage.userId) {
+        this.userId = JSON.parse(localStorage.userId);
+
+        for (const user of this.users) {
+          if (this.userId === user._id) {
+            let auth = null;
+
+            switch (user.role) {
+              case "admin":
+                auth = true;
+                break;
+
+              case "author":
+                if (role === "admin") {
+                  auth = false;
+                } else {
+                  auth = true;
+                }
+                break;
+
+              case "user":
+                if (role === "user") {
+                  auth = true;
+                  } else {
+                    auth = false;
+                  }
+                break;
+
+              default:
+                auth = false;
+                break;
+            }
+            return auth;
+          }
+        }
+      }
+      return false;
     }
   }
 }
