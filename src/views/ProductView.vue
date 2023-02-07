@@ -90,7 +90,7 @@
         :users="users"/>
     </template>
 
-    <template #aside  v-if="userId">
+    <template #aside  v-if="checkSession('user')">
       <CreateReview id="review"/>
     </template>
   </CardElt>
@@ -134,13 +134,54 @@ export default {
     this.$serve.getData("/api/users/check")
       .then(res => { this.users = res })
       .catch(err => { console.log(err) });
-
-    if (localStorage.userId) {
-      this.userId = JSON.parse(localStorage.userId);
-    }
   },
 
   methods: {
+    /**
+     * CHECK SESSION
+     * @param {string} role
+     * @returns
+     */
+    checkSession(role) {
+      if (localStorage.userId) {
+        this.userId = JSON.parse(localStorage.userId);
+
+        for (const user of this.users) {
+          if (this.userId === user._id) {
+            let auth = null;
+
+            switch (user.role) {
+              case "admin":
+                auth = true;
+                break;
+
+              case "author":
+                if (role === "admin") {
+                  auth = false;
+                } else {
+                  auth = true;
+                }
+                break;
+
+              case "user":
+                if (role === "user") {
+                  auth = true;
+                  } else {
+                  auth = false;
+                  }
+                break;
+
+              default:
+                auth = false;
+                break;
+            }
+            return auth;
+          }
+        }
+      }
+      return false;
+    },
+
     /** 
      * CALCULATE SCORES AVERAGE
      * @returns

@@ -28,11 +28,6 @@
       <p>Under construction !</p>
     </template>
 
-    <template #aside v-if="userId">
-      <CreateProduct 
-        :cats="cats"/>
-    </template>
-
     <template #body>
       <ListElt :items="itemsByCat(products)"
         :dynamic="true">
@@ -83,6 +78,11 @@
 
       </ListElt>
     </template>
+
+    <template #aside v-if="checkSession('author')">
+      <CreateProduct 
+        :cats="cats"/>
+    </template>
   </CardElt>
 </template>
 
@@ -100,11 +100,16 @@ export default {
       products: [],
       reviews: [],
       scores: [],
+      users: [],
       userId: null
     }
   },
 
   mounted () {
+    this.$serve.getData("/api/users/check")
+      .then(res => { this.users = res })
+      .catch(err => { console.log(err) });
+
     this.$serve.getData("/api/products")
       .then(res => { this.products = res })
       .catch(err => { console.log(err) });
@@ -112,10 +117,6 @@ export default {
     this.$serve.getData("/api/reviews")
       .then(res => { this.reviews = res })
       .catch(err => { console.log(err) });
-
-    if (localStorage.userId) {
-      this.userId = JSON.parse(localStorage.userId);
-    }
   },
 
   computed: {
@@ -127,6 +128,51 @@ export default {
   },
 
   methods: {
+    /**
+     * CHECK SESSION
+     * @param {string} role
+     * @returns
+     */
+    checkSession(role) {
+      if (localStorage.userId) {
+        this.userId = JSON.parse(localStorage.userId);
+
+        for (const user of this.users) {
+          if (this.userId === user._id) {
+            let auth = null;
+
+            switch (user.role) {
+              case "admin":
+                auth = true;
+                break;
+
+              case "author":
+                if (role === "admin") {
+                  auth = false;
+                } else {
+                  auth = true;
+                }
+                break;
+
+              case "user":
+                if (role === "user") {
+                  auth = true;
+                  } else {
+                    auth = false;
+                  }
+                break;
+
+              default:
+                auth = false;
+                break;
+            }
+            return auth;
+          }
+        }
+      }
+      return false;
+    },
+
     /**
      * GET ITEMS BY CATEGORY
      * @param {*} items 
