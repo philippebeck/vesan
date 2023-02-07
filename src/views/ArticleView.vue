@@ -134,14 +134,7 @@ export default {
      * @returns
      */
     checkLikes() {
-      let usersLiked = this.article.usersLiked;
-
-      for (let i = 0; i < usersLiked.length; i++) {
-        if (constants.USER_ID === usersLiked[i]) {
-          return true;
-        }
-      }
-      return false;
+      return this.$serve.checkLikes(this.article.usersLiked);
     },
 
     /**
