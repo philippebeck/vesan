@@ -128,9 +128,11 @@ export default {
     createLink(isReferenced) {
       if (!isReferenced) {
         let link = new FormData();
+
         link.append("name", this.name);
         link.append("url", this.url);
         link.append("cat", this.cat);
+
         this.$serve.postData("/api/links", link)
           .then(() => {
             alert(link.get("name") + " created !");

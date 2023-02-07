@@ -7,7 +7,7 @@
 
     <template #body>
 
-      <BtnElt v-if="!userId"
+      <BtnElt v-if="!checkSession('user')"
         id="likes"
         href="/login"
         class="btn-blue"
@@ -62,7 +62,7 @@
         :users="users"/>
     </template>
 
-    <template #aside  v-if="userId">
+    <template #aside  v-if="checkSession('user')">
       <CreateComment />
     </template>
   </CardElt>
@@ -102,13 +102,54 @@ export default {
     this.$serve.getData("/api/users/check")
       .then(res => { this.users = res })
       .catch(err => { console.log(err) });
-
-    if (localStorage.userId) {
-      this.userId = JSON.parse(localStorage.userId);
-    }
   },
 
   methods: {
+    /**
+     * CHECK SESSION
+     * @param {string} role
+     * @returns
+     */
+    checkSession(role) {
+      if (localStorage.userId) {
+        this.userId = JSON.parse(localStorage.userId);
+
+        for (const user of this.users) {
+          if (this.userId === user._id) {
+            let auth = null;
+
+            switch (user.role) {
+              case "admin":
+                auth = true;
+                break;
+
+              case "author":
+                if (role === "admin") {
+                  auth = false;
+                } else {
+                  auth = true;
+                }
+                break;
+
+              case "user":
+                if (role === "user") {
+                  auth = true;
+                  } else {
+                    auth = false;
+                  }
+                break;
+
+              default:
+                auth = false;
+                break;
+            }
+            return auth;
+          }
+        }
+      }
+      return false;
+    },
+
     /**
      * GET ARTICLE COMMENTS
      * @returns
@@ -168,9 +209,9 @@ export default {
       this.$serve.putData(`/api/articles/${article.get("id")}`, article)
         .then(() => {
           if (hasLiked === true) {
-            alert(article.get("title") + " disliked !");
+            console.log(article.get("title") + " disliked !");
           } else {
-            alert(article.get("title") + " liked !");
+            console.log(article.get("title") + " liked !");
           }
         })
         .catch(err => { console.log(err) });

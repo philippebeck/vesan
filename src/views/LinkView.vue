@@ -6,7 +6,7 @@
       <i :class="`fa-brands fa-${slotProps.item.toLowerCase()} fa-fw`"></i>
     </template>
 
-    <template #last  v-if="userId">
+    <template #last v-if="checkSession('author')">
       <a href="#create-link"
         title="Create a link">
         <i class="fa-solid fa-link fa-fw"></i>
@@ -26,10 +26,6 @@
       </h1>
     </template>
 
-    <template #aside v-if="userId">
-      <CreateLink :cats="cats"/>
-    </template>
-
     <template #body>
       <ListElt :items="itemsByCat(links)"
         :dynamic="true">
@@ -47,6 +43,11 @@
         </template>
       </ListElt>
     </template>
+
+    <template #aside v-if="checkSession('author')">
+      <CreateLink :cats="cats"/>
+    </template>
+
   </CardElt>
 </template>
 
@@ -62,6 +63,7 @@ export default {
   data() {
     return {
       links: [],
+      users: [],
       userId: null
     }
   },
@@ -73,6 +75,51 @@ export default {
     }
   },
   methods: {
+    /**
+     * CHECK SESSION
+     * @param {string} role
+     * @returns
+     */
+    checkSession(role) {
+      if (localStorage.userId) {
+        this.userId = JSON.parse(localStorage.userId);
+
+        for (const user of this.users) {
+          if (this.userId === user._id) {
+            let auth = null;
+
+            switch (user.role) {
+              case "admin":
+                auth = true;
+                break;
+
+              case "author":
+                if (role === "admin") {
+                  auth = false;
+                } else {
+                  auth = true;
+                }
+                break;
+
+              case "user":
+                if (role === "user") {
+                  auth = true;
+                  } else {
+                    auth = false;
+                  }
+                break;
+
+              default:
+                auth = false;
+                break;
+            }
+            return auth;
+          }
+        }
+      }
+      return false;
+    },
+
     /**
      * RETURN AN ARRAY OF ITEMS BY CATEGORY
      * @param {object} items 
@@ -91,16 +138,13 @@ export default {
   },
   
   mounted () {
-    this.$serve.getData("/api/links")
-      .then(response => {
-        this.links = response;
-      })
+    this.$serve.getData("/api/users/check")
+      .then(res => { this.users = res; })
       .catch(err => { console.log(err) });
 
-
-    if (localStorage.userId) {
-      this.userId = JSON.parse(localStorage.userId);
-    }
+    this.$serve.getData("/api/links")
+      .then(res => { this.links = res; })
+      .catch(err => { console.log(err) });
   }
 }
 </script>

@@ -61,36 +61,43 @@ Yarn : `yarn add vesan`
 ## Content
 
 Available API Files (UNDER CONSTRUCTION) :
--   **ProductModel, ReviewModel, ArticleModel, CommentModel, UserModel** *(Schemas MongoDB)*  
--   **ProductCtrl, ReviewCtrl, ArticleCtrl, CommentCtrl, UserCtrl** *(Controllers)*  
--   **ProductRoute, ReviewRoute, ArticleRoute, CommentRoute, UserRoute** *(Routes)*  
+-   **ProductModel, ProductCtrl, ProductRoute** *(Products)*  
+-   **ProductModel, ReviewCtrl, ReviewRoute** *(Product Reviews)*  
+-   **OrderModel, OrderCtrl, OrderRoute** *(Product Orders)*  
+-   **ArticleModel, ArticleCtrl, ArticleRoute** *(Articles)*  
+-   **CommentModel, CommentCtrl, CommentRoute** *(Article Comments)*  
+-   **UserModel, UserCtrl, UserRoute** *(Users)*  
+-   **LinkModel, LinkCtrl, LinkRoute** *(Links)*  
 
 Available Views (UNDER CONSTRUCTION) :  
 -   **HomeView** *(Home)*  
--   **ShopView** *(Shop)*  
--   **ProductView** *(Product of Shop)*  
--   **BlogView** *(Blog)*  
--   **ArticleView** *(Article of Blog)*  
+-   **ShopView** *(Shop with products list)*  
+-   **ProductView** *(Product of the shop)*  
+-   **BlogView** *(Blog with articles list)*  
+-   **ArticleView** *(Article of the blog)*  
 -   **ContactView** *(Contact)*  
--   **BasketView** *(Basket)*  
--   **LoginView** *(Login with local Components)*  
--   **AdminView** *(Admin with local Components)*  
+-   **BasketView** *(Basket & Orders)*  
+-   **LoginView** *(Login with Connectors)*  
+-   **AdminView** *(Admin with Managers)*  
+-   **LinkView** *(Links list)*  
 -   **ErrorView** *(Error)*  
 
 Available Components (UNDER CONSTRUCTION) :  
--   **ForgotPass** *(Forgot Password)*  
--   **SignIn** *(Sign In)*  
--   **SignUp** *(Sign Up)*  
--   **CreateProduct** *(Create Product)*  
--   **ListProducts** *(Update & Delete Product)*  
--   **CreateReview** *(Create Review)*  
--   **ListReviews** *(Update & Delete Review)*  
--   **CreateArticle** *(Create Article)*  
--   **ListArticles** *(Update & Delete Article)*  
--   **CreateComment** *(Create Comment)*  
--   **ListComments** *(Update & Delete Comment)*  
--   **CreateUser** *(Create User)*  
--   **ListUsers** *(Update & Delete User)*  
+-   **ForgotPass** *(Connector)*  
+-   **SignIn** *(Connector*  
+-   **SignUp** *(Connector)*  
+-   **CreateProduct** *(Creator)*  
+-   **CreateReview** *(Creator)*  
+-   **CreateArticle** *(Creator)*  
+-   **CreateComment** *(Creator)*  
+-   **CreateLink** *(Creator)*  
+-   **ListProducts** *(Manager)*  
+-   **ListReviews** *(Manager)*  
+-   **ListOrders** *(Manager)*  
+-   **ListArticles** *(Manager)*  
+-   **ListComments** *(Manager)*  
+-   **ListUsers** *(Manager)*  
+-   **ListLinks** *(Manager)*  
 
 ---
 
