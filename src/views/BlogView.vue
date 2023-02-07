@@ -28,11 +28,6 @@
       <p>Under construction !</p>
     </template>
 
-    <template #aside v-if="userId">
-      <CreateArticle 
-        :cats="cats"/>
-    </template>
-
     <template #body>
       <ListElt :items="itemsByCat(articles)"
         :dynamic="true">
@@ -43,7 +38,7 @@
 
         <template #nested="slotProps">
 
-          <BtnElt v-if="!userId"
+          <BtnElt v-if="!checkSession('user')"
             :id="`like-${slotProps.value._id}`"
             href="/login"
             class="btn-blue"
@@ -94,6 +89,11 @@
         </template>
       </ListElt>
     </template>
+
+    <template #aside v-if="checkSession('author')">
+      <CreateArticle 
+        :cats="cats"/>
+    </template>
   </CardElt>
 </template>
 
@@ -111,18 +111,19 @@ export default {
   data() {
     return {
       articles: [],
+      users: [],
       userId: null
     }
   },
 
   mounted () {
+    this.$serve.getData("/api/users/check")
+      .then(res => { this.users = res })
+      .catch(err => { console.log(err) });
+
     this.$serve.getData("/api/articles")
       .then(res => { this.articles = res })
       .catch(err => { console.log(err) });
-
-    if (localStorage.userId) {
-      this.userId = JSON.parse(localStorage.userId);
-    }
   },
 
   computed: {
@@ -134,6 +135,51 @@ export default {
   },
 
   methods: {
+    /**
+     * CHECK SESSION
+     * @param {string} role
+     * @returns
+     */
+    checkSession(role) {
+      if (localStorage.userId) {
+        this.userId = JSON.parse(localStorage.userId);
+
+        for (const user of this.users) {
+          if (this.userId === user._id) {
+            let auth = null;
+
+            switch (user.role) {
+              case "admin":
+                auth = true;
+                break;
+
+              case "author":
+                if (role === "admin") {
+                  auth = false;
+                } else {
+                  auth = true;
+                }
+                break;
+
+              case "user":
+                if (role === "user") {
+                  auth = true;
+                  } else {
+                    auth = false;
+                  }
+                break;
+
+              default:
+                auth = false;
+                break;
+            }
+            return auth;
+          }
+        }
+      }
+      return false;
+    },
+
     /**
      * GET ITEMS BY CATEGORY
      * @param {*} items 
@@ -205,9 +251,9 @@ export default {
           this.$serve.putData(`/api/articles/${article.get("id")}`, article)
             .then(() => {
               if (hasLiked === true) {
-                alert(article.get("title") + " disliked !");
+                console.log(article.get("title") + " disliked !");
               } else {
-                alert(article.get("title") + " liked !");
+                console.log(article.get("title") + " liked !");
               }
             })
             .catch(err => { console.log(err) });
