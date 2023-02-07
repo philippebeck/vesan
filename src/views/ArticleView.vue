@@ -7,7 +7,7 @@
 
     <template #body>
 
-      <BtnElt v-if="!userId"
+      <BtnElt v-if="!checkUserId()"
         id="likes"
         href="/login"
         class="btn-blue"
@@ -102,13 +102,22 @@ export default {
     this.$serve.getData("/api/users/check")
       .then(res => { this.users = res })
       .catch(err => { console.log(err) });
-
-    if (localStorage.userId) {
-      this.userId = JSON.parse(localStorage.userId);
-    }
   },
 
   methods: {
+    checkUserId() {
+      if (localStorage.userId) {
+        this.userId = JSON.parse(localStorage.userId);
+
+        for (const user of this.users) {
+          if (user._id === this.userId) {
+            return true;
+          }
+        }
+        return false;
+      }
+    },
+
     /**
      * GET ARTICLE COMMENTS
      * @returns
