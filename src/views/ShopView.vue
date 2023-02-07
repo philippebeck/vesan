@@ -1,7 +1,7 @@
 <template>
   <NavElt
     type="sidebar"
-    :items="cats"
+    :items="setCats"
     class="sidebar">
 
     <template #last v-if="checkSession('author')">
@@ -120,10 +120,12 @@ export default {
   },
 
   computed: {
-    cats() {
-      const cats = new Set();
-      this.products.forEach(product => cats.add(product.cat));
-      return Array.from(cats); 
+    /**
+     * SET CATEGORIES
+     * @returns
+     */
+    setCats() {
+      return this.$serve.setCats(this.products);
     }
   },
 

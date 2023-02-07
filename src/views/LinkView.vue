@@ -1,5 +1,5 @@
 <template>
-  <NavElt :items="cats"
+  <NavElt :items="setCats"
     class="sidebar">
 
     <template #items="slotProps">
@@ -68,10 +68,12 @@ export default {
     }
   },
   computed: {
-    cats() {
-      const cats = new Set();
-      this.links.forEach(link => cats.add(link.cat));
-      return Array.from(cats); 
+    /**
+     * SET CATEGORIES
+     * @returns
+     */
+    setCats() {
+      return this.$serve.setCats(this.links);
     }
   },
   methods: {
