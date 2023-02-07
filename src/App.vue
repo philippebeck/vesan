@@ -264,6 +264,9 @@ export default {
       return this.$serve.checkSession(this.users, role);
     },
 
+    /**
+     * LOGOUT
+     */
     logout() {
       localStorage.removeItem("userId");
       localStorage.removeItem("userToken");
