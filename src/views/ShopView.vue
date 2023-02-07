@@ -4,7 +4,7 @@
     :items="cats"
     class="sidebar">
 
-    <template #last v-if="userId">
+    <template #last v-if="checkSession('author')">
       <a href="#create-product"
         title="Create an product">
         <i class="fa-solid fa-basket-shopping fa-fw"></i>

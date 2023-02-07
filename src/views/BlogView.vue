@@ -4,7 +4,7 @@
     :items="cats"
     class="sidebar">
 
-    <template #last  v-if="userId">
+    <template #last  v-if="checkSession('author')">
       <a href="#create-article"
         title="Create a article">
         <i class="fa-regular fa-envelope fa-fw"></i>
