@@ -71,9 +71,9 @@ export default {
   ],
 
   ROLES_USER : [
-    "Admin",
-    "Author",
-    "User"
+    "admin",
+    "author",
+    "user"
   ],
 
   FORGOT_CONFIRM : "Do you confirm sending a new password ?",
