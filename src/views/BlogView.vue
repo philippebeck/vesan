@@ -29,7 +29,7 @@
     </template>
 
     <template #body>
-      <ListElt :items="itemsByCat(articles)"
+      <ListElt :items="sortItemsByCat(articles)"
         :dynamic="true">
 
         <template #items="slotProps">
@@ -145,19 +145,11 @@ export default {
     },
 
     /**
-     * GET ITEMS BY CATEGORY
-     * @param {*} items 
+     * SORT ITEMS BY CATEGORY
+     * @param {array} items 
      */
-    itemsByCat(items) {
-      const itemsByCat = {};
-      items.forEach(item => {
-        if (!itemsByCat[item.cat]) {
-          itemsByCat[item.cat] = [];
-        }
-        itemsByCat[item.cat].push(item);
-        itemsByCat[item.cat].sort((a, b) => (a.name > b.name) ? 1 : -1);
-      });
-      return itemsByCat;
+    sortItemsByCat(items) {
+      return this.$serve.sortItemsByCat(items);
     },
 
     /**
