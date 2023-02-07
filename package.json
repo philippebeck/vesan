@@ -29,7 +29,7 @@
     "animadio": "^5.6.0",
     "core-js": "^3.8.3",
     "pinia": "^2.0.30",
-    "servidio": "^0.4.1",
+    "servidio": "^0.5.0",
     "vue": "^3.2.45",
     "vue-elt": "^0.6.6",
     "vue-router": "^4.1.6"
