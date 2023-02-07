@@ -111,43 +111,7 @@ export default {
      * @returns
      */
     checkSession(role) {
-      if (localStorage.userId) {
-        this.userId = JSON.parse(localStorage.userId);
-
-        for (const user of this.users) {
-          if (this.userId === user._id) {
-            let auth = null;
-
-            switch (user.role) {
-              case "admin":
-                auth = true;
-                break;
-
-              case "author":
-                if (role === "admin") {
-                  auth = false;
-                } else {
-                  auth = true;
-                }
-                break;
-
-              case "user":
-                if (role === "user") {
-                  auth = true;
-                  } else {
-                    auth = false;
-                  }
-                break;
-
-              default:
-                auth = false;
-                break;
-            }
-            return auth;
-          }
-        }
-      }
-      return false;
+      return this.$serve.checkSession(this.users, role);
     },
 
     /**
@@ -170,14 +134,7 @@ export default {
      * @returns
      */
     checkLikes() {
-      let usersLiked = this.article.usersLiked;
-
-      for (let i = 0; i < usersLiked.length; i++) {
-        if (constants.USER_ID === usersLiked[i]) {
-          return true;
-        }
-      }
-      return false;
+      return this.$serve.checkLikes(this.article.usersLiked);
     },
 
     /**

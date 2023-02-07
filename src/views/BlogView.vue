@@ -1,10 +1,10 @@
 <template>
   <NavElt
     type="sidebar"
-    :items="cats"
+    :items="setCats"
     class="sidebar">
 
-    <template #last  v-if="userId">
+    <template #last  v-if="checkSession('author')">
       <a href="#create-article"
         title="Create a article">
         <i class="fa-regular fa-envelope fa-fw"></i>
@@ -29,7 +29,7 @@
     </template>
 
     <template #body>
-      <ListElt :items="itemsByCat(articles)"
+      <ListElt :items="sortItemsByCat(articles)"
         :dynamic="true">
 
         <template #items="slotProps">
@@ -91,8 +91,7 @@
     </template>
 
     <template #aside v-if="checkSession('author')">
-      <CreateArticle 
-        :cats="cats"/>
+      <CreateArticle />
     </template>
   </CardElt>
 </template>
@@ -127,10 +126,12 @@ export default {
   },
 
   computed: {
-    cats() {
-      const cats = new Set();
-      this.articles.forEach(article => cats.add(article.cat));
-      return Array.from(cats); 
+    /**
+     * SET CATEGORIES
+     * @returns
+     */
+    setCats() {
+      return this.$serve.setCats(this.articles);
     }
   },
 
@@ -141,59 +142,15 @@ export default {
      * @returns
      */
     checkSession(role) {
-      if (localStorage.userId) {
-        this.userId = JSON.parse(localStorage.userId);
-
-        for (const user of this.users) {
-          if (this.userId === user._id) {
-            let auth = null;
-
-            switch (user.role) {
-              case "admin":
-                auth = true;
-                break;
-
-              case "author":
-                if (role === "admin") {
-                  auth = false;
-                } else {
-                  auth = true;
-                }
-                break;
-
-              case "user":
-                if (role === "user") {
-                  auth = true;
-                  } else {
-                    auth = false;
-                  }
-                break;
-
-              default:
-                auth = false;
-                break;
-            }
-            return auth;
-          }
-        }
-      }
-      return false;
+      return this.$serve.checkSession(this.users, role);
     },
 
     /**
-     * GET ITEMS BY CATEGORY
-     * @param {*} items 
+     * SORT ITEMS BY CATEGORY
+     * @param {array} items 
      */
-    itemsByCat(items) {
-      const itemsByCat = {};
-      items.forEach(item => {
-        if (!itemsByCat[item.cat]) {
-          itemsByCat[item.cat] = [];
-        }
-        itemsByCat[item.cat].push(item);
-        itemsByCat[item.cat].sort((a, b) => (a.name > b.name) ? 1 : -1);
-      });
-      return itemsByCat;
+    sortItemsByCat(items) {
+      return this.$serve.sortItemsByCat(items);
     },
 
     /**
@@ -201,20 +158,12 @@ export default {
      * @returns
      */
     checkLikes(id) {
-      let usersLiked;
-
       for (let i = 0; i < this.articles.length; i++) {
         if (id === this.articles[i]._id) {
-          usersLiked = this.articles[i].usersLiked;
-        }
-      }
 
-      for (let i = 0; i < usersLiked.length; i++) {
-        if (constants.USER_ID === usersLiked[i]) {
-          return true;
+          return this.$serve.checkLikes(this.articles[i].usersLiked);
         }
       }
-      return false;
     },
 
     /**

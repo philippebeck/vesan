@@ -1,5 +1,5 @@
 <template>
-  <NavElt :items="cats"
+  <NavElt :items="setCats"
     class="sidebar">
 
     <template #items="slotProps">
@@ -27,7 +27,7 @@
     </template>
 
     <template #body>
-      <ListElt :items="itemsByCat(links)"
+      <ListElt :items="sortItemsByCat(links)"
         :dynamic="true">
         <template #items="slotProps">
           <i :id="slotProps.index"
@@ -45,7 +45,7 @@
     </template>
 
     <template #aside v-if="checkSession('author')">
-      <CreateLink :cats="cats"/>
+      <CreateLink />
     </template>
 
   </CardElt>
@@ -68,10 +68,12 @@ export default {
     }
   },
   computed: {
-    cats() {
-      const cats = new Set();
-      this.links.forEach(link => cats.add(link.cat));
-      return Array.from(cats); 
+    /**
+     * SET CATEGORIES
+     * @returns
+     */
+    setCats() {
+      return this.$serve.setCats(this.links);
     }
   },
   methods: {
@@ -81,59 +83,15 @@ export default {
      * @returns
      */
     checkSession(role) {
-      if (localStorage.userId) {
-        this.userId = JSON.parse(localStorage.userId);
-
-        for (const user of this.users) {
-          if (this.userId === user._id) {
-            let auth = null;
-
-            switch (user.role) {
-              case "admin":
-                auth = true;
-                break;
-
-              case "author":
-                if (role === "admin") {
-                  auth = false;
-                } else {
-                  auth = true;
-                }
-                break;
-
-              case "user":
-                if (role === "user") {
-                  auth = true;
-                  } else {
-                    auth = false;
-                  }
-                break;
-
-              default:
-                auth = false;
-                break;
-            }
-            return auth;
-          }
-        }
-      }
-      return false;
+      return this.$serve.checkSession(this.users, role);
     },
 
     /**
-     * RETURN AN ARRAY OF ITEMS BY CATEGORY
-     * @param {object} items 
+     * SORT ITEMS BY CATEGORY
+     * @param {array} items 
      */
-    itemsByCat(items) {
-      const itemsByCat = {};
-      items.forEach(item => {
-        if (!itemsByCat[item.cat]) {
-          itemsByCat[item.cat] = [];
-        }
-        itemsByCat[item.cat].push(item);
-        itemsByCat[item.cat].sort((a, b) => (a.name > b.name) ? 1 : -1);
-      });
-      return itemsByCat;
+    sortItemsByCat(items) {
+      return this.$serve.sortItemsByCat(items);
     },
   },
   

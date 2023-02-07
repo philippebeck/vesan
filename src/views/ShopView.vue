@@ -1,10 +1,10 @@
 <template>
   <NavElt
     type="sidebar"
-    :items="cats"
+    :items="setCats"
     class="sidebar">
 
-    <template #last v-if="userId">
+    <template #last v-if="checkSession('author')">
       <a href="#create-product"
         title="Create an product">
         <i class="fa-solid fa-basket-shopping fa-fw"></i>
@@ -29,7 +29,7 @@
     </template>
 
     <template #body>
-      <ListElt :items="itemsByCat(products)"
+      <ListElt :items="sortItemsByCat(products)"
         :dynamic="true">
 
         <template #items="slotProps">
@@ -80,8 +80,7 @@
     </template>
 
     <template #aside v-if="checkSession('author')">
-      <CreateProduct 
-        :cats="cats"/>
+      <CreateProduct />
     </template>
   </CardElt>
 </template>
@@ -120,10 +119,12 @@ export default {
   },
 
   computed: {
-    cats() {
-      const cats = new Set();
-      this.products.forEach(product => cats.add(product.cat));
-      return Array.from(cats); 
+    /**
+     * SET CATEGORIES
+     * @returns
+     */
+    setCats() {
+      return this.$serve.setCats(this.products);
     }
   },
 
@@ -134,59 +135,15 @@ export default {
      * @returns
      */
     checkSession(role) {
-      if (localStorage.userId) {
-        this.userId = JSON.parse(localStorage.userId);
-
-        for (const user of this.users) {
-          if (this.userId === user._id) {
-            let auth = null;
-
-            switch (user.role) {
-              case "admin":
-                auth = true;
-                break;
-
-              case "author":
-                if (role === "admin") {
-                  auth = false;
-                } else {
-                  auth = true;
-                }
-                break;
-
-              case "user":
-                if (role === "user") {
-                  auth = true;
-                  } else {
-                    auth = false;
-                  }
-                break;
-
-              default:
-                auth = false;
-                break;
-            }
-            return auth;
-          }
-        }
-      }
-      return false;
+      return this.$serve.checkSession(this.users, role);
     },
 
     /**
-     * GET ITEMS BY CATEGORY
-     * @param {*} items 
+     * SORT ITEMS BY CATEGORY
+     * @param {array} items 
      */
-    itemsByCat(items) {
-      const itemsByCat = {};
-      items.forEach(item => {
-        if (!itemsByCat[item.cat]) {
-          itemsByCat[item.cat] = [];
-        }
-        itemsByCat[item.cat].push(item);
-        itemsByCat[item.cat].sort((a, b) => (a.name > b.name) ? 1 : -1);
-      });
-      return itemsByCat;
+    sortItemsByCat(items) {
+      return this.$serve.sortItemsByCat(items);
     },
 
     /** 
