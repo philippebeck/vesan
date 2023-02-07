@@ -114,7 +114,7 @@ export default {
 
     beforeMount() {
     if (localStorage.userId) {
-      this.$router.push("/admin");
+      this.$router.push("/");
     }
   },
 
