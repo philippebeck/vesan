@@ -98,7 +98,8 @@ exports.checkUsers = (req, res) => {
           usersChecked.push({
             _id: users[i]._id,
             name: users[i].name,
-            email: users[i].email
+            email: users[i].email,
+            role: users[i].role
           });
         }
         res.status(200).json(usersChecked);
