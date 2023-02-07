@@ -27,8 +27,69 @@
     <!-- Admin Part -->
     <template #admin>
 
+      <!-- Admin -->
+      <ListElt v-if="checkSession('admin')"
+        :items="['basket', 'admin', 'logout']">
+
+        <template #item-1>
+          <a href="/basket"
+            title="Basket">
+            <i class="fa-solid fa-basket-shopping fa-fw"></i>
+          </a>
+        </template>
+
+        <template #item-2>
+          <a href="/admin"
+            title="Admin">
+            <i class="fa-solid fa-user-ninja fa-fw"></i>
+          </a>
+        </template>
+
+        <template #item-3>
+          <button type="button"
+            @click="logout()"
+            title="Logout">
+            <i class="fa-solid fa-sign-out-alt fa-fw"></i>
+          </button>
+        </template>
+      </ListElt>
+
+      <!-- Author & User -->
+      <ListElt v-else-if="checkSession('author') || checkSession('user')"
+        :items="['basket', 'donation', 'sponsor', 'logout']">
+
+        <template #item-1>
+          <a href="/basket"
+            title="Basket">
+            <i class="fa-solid fa-basket-shopping fa-fw"></i>
+          </a>
+        </template>
+
+        <template #item-2>
+          <a href="https://paypal.me/philippebeck"
+            title="Donation">
+            <i class="fa-brands fa-paypal fa-fw"></i>
+          </a>
+        </template>
+
+        <template #item-3>
+          <a href="https://github.com/sponsors/philippebeck"
+            title="Sponsor">
+            <i class="fa-regular fa-heart fa-fw"></i>
+          </a>
+        </template>
+
+        <template #item-4>
+          <button type="button"
+            @click="logout()"
+            title="Logout">
+            <i class="fa-solid fa-sign-out-alt fa-fw"></i>
+          </button>
+        </template>
+      </ListElt>
+
       <!-- Visitor -->
-      <ListElt v-if="!userId"
+      <ListElt v-else
         :items="['basket', 'donation', 'sponsor', 'login']">
 
         <template #item-1>
@@ -60,32 +121,6 @@
         </template>
       </ListElt>
 
-      <!-- Admin -->
-      <ListElt v-else
-        :items="['basket', 'admin', 'logout']">
-
-        <template #item-1>
-          <a href="/basket"
-            title="Basket">
-            <i class="fa-solid fa-basket-shopping fa-fw"></i>
-          </a>
-        </template>
-
-        <template #item-2>
-          <a href="/admin"
-            title="Admin">
-            <i class="fa-solid fa-user-ninja fa-fw"></i>
-          </a>
-        </template>
-
-        <template #item-3>
-          <button type="button"
-            @click="logout()"
-            title="Logout">
-            <i class="fa-solid fa-sign-out-alt fa-fw"></i>
-          </button>
-        </template>
-      </ListElt>
     </template>
   </NavElt>
 
@@ -214,11 +249,57 @@ export default {
 
   data() {
     return {
+      users: [],
       userId: null
     }
   },
 
   methods: {
+    /**
+     * CHECK SESSION
+     * @param {string} role
+     * @returns
+     */
+    checkSession(role) {
+      if (localStorage.userId) {
+        this.userId = JSON.parse(localStorage.userId);
+
+        for (const user of this.users) {
+          if (this.userId === user._id) {
+            let auth = null;
+
+            switch (user.role) {
+              case "admin":
+                auth = true;
+                break;
+
+              case "author":
+                if (role === "admin") {
+                  auth = false;
+                } else {
+                  auth = true;
+                }
+                break;
+
+              case "user":
+                if (role === "user") {
+                  auth = true;
+                  } else {
+                    auth = false;
+                  }
+                break;
+
+              default:
+                auth = false;
+                break;
+            }
+            return auth;
+          }
+        }
+      }
+      return false;
+    },
+
     logout() {
       localStorage.removeItem("userId");
       localStorage.removeItem("userToken");
@@ -227,9 +308,9 @@ export default {
   },
 
   mounted() {
-    if (localStorage.userId) {
-      this.userId = JSON.parse(localStorage.userId);
-    }
+    this.$serve.getData("/api/users/check")
+      .then(res => { this.users = res })
+      .catch(err => { console.log(err) });
   }
 };
 </script>
