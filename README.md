@@ -58,7 +58,7 @@ or
 
 Yarn : `yarn add vesan`  
 
-**If you choose to get Vesan from NPM or Yarn : you need copy Vesan from *node_modules/vesan* to the root of your App**
+**If you choose to get Vesan from NPM or Yarn : you need to copy Vesan from *node_modules/vesan* to the root of your App**
 
 ---
 
