@@ -223,9 +223,14 @@ export default {
 
   data() {
     return {
-      users: [],
-      userId: null
+      users: []
     }
+  },
+
+  mounted() {
+    this.$serve.getData("/api/users/check")
+      .then(res => { this.users = res })
+      .catch(err => { console.log(err) });
   },
 
   methods: {
@@ -246,12 +251,6 @@ export default {
       localStorage.removeItem("userToken");
       this.$router.go();
     }
-  },
-
-  mounted() {
-    this.$serve.getData("/api/users/check")
-      .then(res => { this.users = res })
-      .catch(err => { console.log(err) });
   }
 };
 </script>
