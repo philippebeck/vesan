@@ -182,12 +182,12 @@ export default {
             }
 
             if (articles[j] && articles[j].title === this.articles[i].title) {
-              alert(this.articles[i].title + " is not available !");
+              alert(this.articles[i].title + constants.CHECK_AVAILABLE);
               isReferenced = true;
             }
 
             if (articles[j] && articles[j].text === this.articles[i].text) {
-              alert(this.articles[i].text+ " is already referenced !");
+              alert(this.articles[i].text+ constants.CHECK_REFERENCE);
               isReferenced = true;
             }
           }

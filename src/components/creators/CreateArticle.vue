@@ -154,12 +154,12 @@ export default {
           for (let i = 0; i < articles.length; i++) {
 
             if (articles[i].title === this.title) {
-              alert(this.title + " is not available !");
+              alert(this.title + constants.CHECK_AVAILABLE);
               isReferenced = true;
             }
 
             if (articles[i].text === this.text) {
-              alert(this.text + " is already referenced !");
+              alert(this.text + constants.CHECK_REFERENCE);
               isReferenced = true;
             }
           }

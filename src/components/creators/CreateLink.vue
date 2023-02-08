@@ -107,13 +107,14 @@ export default {
         .then((links) => {
           let isReferenced = false;
           this.url = this.url.split("//")[1];
+
           for (let i = 0; i < links.length; i++) {
             if (links[i].name === this.name) {
-              alert(this.name + " is not available !");
+              alert(this.name + constants.CHECK_AVAILABLE);
               isReferenced = true;
             }
             if (links[i].url === this.url) {
-              alert(this.url + " is already referenced !");
+              alert(this.url + constants.CHECK_REFERENCE);
               isReferenced = true;
             }
           }

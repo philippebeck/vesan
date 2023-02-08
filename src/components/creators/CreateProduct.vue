@@ -190,12 +190,12 @@ export default {
           for (let i = 0; i < products.length; i++) {
 
             if (products[i].name === this.name) {
-              alert(this.name + " is not available !");
+              alert(this.name + constants.CHECK_AVAILABLE);
               isReferenced = true;
             }
 
             if (products[i].description === this.description) {
-              alert(this.description + " is already referenced !");
+              alert(this.description + constants.CHECK_REFERENCE);
               isReferenced = true;
             }
           }

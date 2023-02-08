@@ -81,6 +81,8 @@
 </template>
 
 <script>
+import constants from "/constants";
+
 export default {
   name: "CreateUser",
 
@@ -123,12 +125,12 @@ export default {
           for (let i = 0; i < users.length; i++) {
 
             if (users[i].name === this.name) {
-              alert(this.name + " is not available !");
+              alert(this.name + constants.CHECK_AVAILABLE);
               isReferenced = true;
             }
 
             if (users[i].email === this.email) {
-              alert(this.email + " is already referenced !");
+              alert(this.email + constants.CHECK_REFERENCE);
               isReferenced = true;
             }
           }

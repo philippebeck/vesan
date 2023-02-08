@@ -177,12 +177,12 @@ export default {
             }
 
             if (users[j] && users[j].name === this.users[i].name) {
-              alert(this.users[i].name + " is not available !");
+              alert(this.users[i].name + constants.CHECK_AVAILABLE);
               isReferenced = true;
             }
 
             if (users[j] && users[j].email === this.users[i].email) {
-              alert(this.users[i].email+ " is already referenced !");
+              alert(this.users[i].email+ constants.CHECK_REFERENCE);
               isReferenced = true;
             }
           }
