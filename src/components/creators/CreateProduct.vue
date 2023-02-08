@@ -169,8 +169,11 @@ export default {
      */
     validateNewProduct() {
       if (this.$serve.checkName(this.name)) {
-
         if (typeof document.getElementById('product-image').files[0] !== "undefined") {
+
+          if (this.cat === "") {
+            this.cat = constants.CAT_PRODUCT;
+          }
           this.checkNewProduct();
 
         } else {

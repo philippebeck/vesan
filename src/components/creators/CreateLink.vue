@@ -94,7 +94,7 @@ export default {
       if (this.$serve.checkName(this.name) &&
         this.$serve.checkUrl(this.url)) {
         if (this.cat === "") {
-          this.cat = "HTML5";
+          this.cat = constants.CAT_LINK;
         }
         this.checkNewLink();
       }

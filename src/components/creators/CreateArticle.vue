@@ -133,8 +133,11 @@ export default {
      */
     validateNewArticle() {
       if (this.$serve.checkName(this.title)) {
-
         if (typeof document.getElementById('article-image').files[0] !== "undefined") {
+
+          if (this.cat === "") {
+            this.cat = constants.CAT_ARTICLE;
+          }
           this.checkNewArticle();
 
         } else {
