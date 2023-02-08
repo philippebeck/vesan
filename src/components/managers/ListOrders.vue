@@ -144,7 +144,6 @@ export default {
           order.append("payment", this.orders[i].payment);
           order.append("status", this.orders[i].status);
           order.append("user", this.orders[i].user);
-          order.append("created", this.orders[i].created);
           order.append("updated", Date.now());
 
           this.$serve.putData(`/api/orders/${id}`, order)

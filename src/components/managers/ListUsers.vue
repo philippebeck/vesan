@@ -202,18 +202,16 @@ export default {
         let user  = new FormData();
         let image = document.getElementById('image-' + this.users[i]._id).files[0];
 
-        if (typeof image === "undefined") {
-          image = this.users[i].image;
+        if (typeof image !== "undefined") {
+          user.append("image", image);
         }
 
         user.append("id", this.users[i]._id);
         user.append("name", this.users[i].name);
         user.append("email", this.users[i].email);
-        user.append("image", image);
         user.append("alt", this.users[i].alt);
         user.append("role", this.users[i].role);
         user.append("pass", this.pass);
-        user.append("created", this.users[i].created);
         user.append("updated", Date.now());
 
         this.$serve.putData(`/api/users/${user.get("id")}`, user)

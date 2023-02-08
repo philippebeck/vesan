@@ -158,9 +158,7 @@ export default {
 
           comment.append("id", id);
           comment.append("text", this.comments[i].text);
-          comment.append("article", this.comments[i].article);
           comment.append("user", constants.USER_ID);
-          comment.append("created", this.comments[i].created);
           comment.append("updated", Date.now());
 
           this.$serve.putData(`/api/comments/${id}`, comment)

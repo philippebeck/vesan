@@ -207,18 +207,16 @@ export default {
         let article  = new FormData();
         let image = document.getElementById('image-' + this.articles[i]._id).files[0];
 
-        if (typeof image === "undefined") {
-          image = this.articles[i].image;
+        if (typeof image !== "undefined") {
+          article.append("image", image);
         }
 
         article.append("id", this.articles[i]._id);
         article.append("title", this.articles[i].title);
         article.append("text", this.articles[i].text);
-        article.append("image", image);
         article.append("alt", this.articles[i].alt);
         article.append("cat", this.articles[i].cat);
         article.append("user", constants.USER_ID);
-        article.append("created", this.articles[i].created);
         article.append("updated", Date.now());
         article.append("likes", this.articles[i].likes);
         article.append("usersLiked", this.articles[i].usersLiked);
