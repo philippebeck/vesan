@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import AdminView from "../views/AdminView";
+import ProfileView from "../views/ProfileView";
 import ArticleView from "../views/ArticleView";
 import BasketView from "../views/BasketView";
 import BlogView from "../views/BlogView";
@@ -33,12 +34,6 @@ const routes = [
     alias: ["/shop/:id"]
   },
   {
-    path: "/basket",
-    name: "basket",
-    component: BasketView,
-    alias: ["/cart"]
-  },
-  {
     path: "/blog",
     name: "blog",
     component: BlogView,
@@ -55,6 +50,18 @@ const routes = [
     name: "contact",
     component: ContactView,
     alias: ["/message"]
+  },
+  {
+    path: "/basket",
+    name: "basket",
+    component: BasketView,
+    alias: ["/cart"]
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    component: ProfileView,
+    alias: ["/account"]
   },
   {
     path: "/link",
