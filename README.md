@@ -86,7 +86,7 @@ To run the frontend server, from the root of your App with Vesan :
 
 Available API Files *(UNDER CONSTRUCTION)* :
 -   **ProductModel, ProductCtrl, ProductRoute** *(Products)*  
--   **ProductModel, ReviewCtrl, ReviewRoute** *(Product Reviews)*  
+-   **ReviewModel, ReviewCtrl, ReviewRoute** *(Product Reviews)*  
 -   **OrderModel, OrderCtrl, OrderRoute** *(Product Orders)*  
 -   **ArticleModel, ArticleCtrl, ArticleRoute** *(Articles)*  
 -   **CommentModel, CommentCtrl, CommentRoute** *(Article Comments)*  
