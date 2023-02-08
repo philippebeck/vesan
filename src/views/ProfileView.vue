@@ -113,6 +113,7 @@ export default {
     return {
       users: [],
       user: {},
+      image: "",
       pass: ""
     }
   },
