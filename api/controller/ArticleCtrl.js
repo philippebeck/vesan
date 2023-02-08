@@ -10,11 +10,11 @@ const CommentModel  = require("../model/CommentModel");
 
 require("dotenv").config();
 
-const articlesImg    = process.env.IMG_URL + "articles/";
-const articlesThumb  = process.env.THUMB_URL + "articles/";
+const ARTICLES_IMG    = process.env.IMG_URL + "articles/";
+const ARTICLES_THUMB  = process.env.THUMB_URL + "articles/";
 
 const form = formidable({ 
-  uploadDir: articlesImg, 
+  uploadDir: ARTICLES_IMG, 
   keepExtensions: true 
 });
 
@@ -117,7 +117,7 @@ exports.createArticle = (req, res, next) => {
 
     article
       .save()
-      .then(() => fs.unlink(articlesImg + files.image.newFilename, () => {
+      .then(() => fs.unlink(ARTICLES_IMG + files.image.newFilename, () => {
         console.log("image ok !");
       }))
       .then(() => res.status(201).json({ message: process.env.ARTICLE_CREATED }))
@@ -157,9 +157,9 @@ exports.updateArticle = (req, res, next) => {
       ArticleModel
         .findOne({ _id: req.params.id })
         .then((article) => 
-          fs.unlink(articlesThumb + article.image, () => {
-            fs.unlink(articlesImg + article.image, () => {
-              fs.unlink(articlesImg + files.image.newFilename, () => {
+          fs.unlink(ARTICLES_THUMB + article.image, () => {
+            fs.unlink(ARTICLES_IMG + article.image, () => {
+              fs.unlink(ARTICLES_IMG + files.image.newFilename, () => {
                 console.log("Image ok !");
               })
             })
@@ -202,8 +202,8 @@ exports.deleteArticle = (req, res) => {
   ArticleModel
     .findOne({ _id: req.params.id })
     .then(article => {
-      fs.unlink(articlesThumb + article.image, () => {
-        fs.unlink(articlesImg + article.image, () => {
+      fs.unlink(ARTICLES_THUMB + article.image, () => {
+        fs.unlink(ARTICLES_IMG + article.image, () => {
 
           CommentModel
             .deleteMany({ article: req.params.id })

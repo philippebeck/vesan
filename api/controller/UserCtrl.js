@@ -12,11 +12,11 @@ const ReviewModel   = require("../model/ReviewModel");
 
 require("dotenv").config();
 
-const usersImg    = process.env.IMG_URL + "users/";
-const usersThumb  = process.env.THUMB_URL + "users/";
+const USERS_IMG   = process.env.IMG_URL + "users/";
+const USERS_THUMB = process.env.THUMB_URL + "users/";
 
 const form = formidable({ 
-  uploadDir: usersImg, 
+  uploadDir: USERS_IMG, 
   keepExtensions: true 
 });
 
@@ -243,7 +243,7 @@ exports.createUser = (req, res, next) => {
             fields.updated
           ));
 
-        fs.unlink(usersImg + files.image.newFilename, () => {
+        fs.unlink(USERS_IMG + files.image.newFilename, () => {
           user
             .save()
             .then(() => res.status(201).json({ message: process.env.USER_CREATED }))
@@ -294,8 +294,8 @@ exports.updateUser = (req, res, next) => {
       UserModel
         .findOne({ _id: req.params.id })
         .then((user) => 
-          fs.unlink(usersThumb + user.image, () => {
-            fs.unlink(usersImg + files.image.newFilename, () => {
+          fs.unlink(USERS_THUMB + user.image, () => {
+            fs.unlink(USERS_IMG + files.image.newFilename, () => {
               console.log("Image ok !");
             })
           })
@@ -333,7 +333,7 @@ exports.deleteUser = (req, res) => {
   UserModel
     .findOne({ _id: req.params.id })
     .then(user => {
-      fs.unlink(usersThumb + user.image, () => {
+      fs.unlink(USERS_THUMB + user.image, () => {
 
         CommentModel
           .deleteMany({ user: req.params.id })

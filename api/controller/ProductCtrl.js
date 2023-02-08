@@ -10,11 +10,11 @@ const ReviewModel   = require("../model/ReviewModel");
 
 require("dotenv").config();
 
-const productsImg   = process.env.IMG_URL + "products/";
-const productsThumb = process.env.THUMB_URL + "products/";
+const PRODUCTS_IMG    = process.env.IMG_URL + "products/";
+const PRODUCTS_THUMB  = process.env.THUMB_URL + "products/";
 
 const form = formidable({ 
-  uploadDir: productsImg, 
+  uploadDir: PRODUCTS_IMG, 
   keepExtensions: true 
 });
 
@@ -121,7 +121,7 @@ exports.createProduct = (req, res, next) => {
 
     product
       .save()
-      .then(() => fs.unlink(productsImg + files.image.newFilename, () => {
+      .then(() => fs.unlink(PRODUCTS_IMG + files.image.newFilename, () => {
         console.log("image ok !") 
       }))
       .then(() => res.status(201).json({ message: process.env.PRODUCT_CREATED }))
@@ -161,9 +161,9 @@ exports.updateProduct = (req, res, next) => {
       ProductModel
         .findOne({ _id: req.params.id })
         .then((product) => 
-          fs.unlink(productsThumb + product.image, () => {
-            fs.unlink(productsImg + product.image, () => {
-              fs.unlink(productsImg + files.image.newFilename, () => {
+          fs.unlink(PRODUCTS_THUMB + product.image, () => {
+            fs.unlink(PRODUCTS_IMG + product.image, () => {
+              fs.unlink(PRODUCTS_IMG + files.image.newFilename, () => {
                 console.log("Image ok !");
               })
             })
@@ -205,8 +205,8 @@ exports.deleteProduct = (req, res) => {
   ProductModel
     .findOne({ _id: req.params.id })
     .then(product => {
-      fs.unlink(productsThumb + product.image, () => {
-        fs.unlink(productsImg + product.image, () => {
+      fs.unlink(PRODUCTS_THUMB + product.image, () => {
+        fs.unlink(PRODUCTS_IMG + product.image, () => {
 
           ReviewModel
             .deleteMany({ product: req.params.id })
