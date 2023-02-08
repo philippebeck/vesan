@@ -39,6 +39,8 @@ export default {
     "Travel"
   ],
 
+  CAT_LINK: "HTML5",
+
   CATS_LINK : [
     "HTML5",
     "CSS3",
@@ -70,13 +72,16 @@ export default {
     "Sports",
   ],
 
+  CHECK_AVAILABLE : " is not available !",
+  CHECK_REFERENCE : " is already referenced !",
+
+  FORGOT_CONFIRM : "Do you confirm sending a new password ?",
+  FORGOT_SUBJECT : "New Password",
+  FORGOT_TEXT : "This is your new Password, keep it safe : ",
+
   ROLES_USER : [
     "admin",
     "author",
     "user"
   ],
-
-  FORGOT_CONFIRM : "Do you confirm sending a new password ?",
-  FORGOT_SUBJECT : "New Password",
-  FORGOT_TEXT : "This is your new Password, keep it safe : ",
 }
