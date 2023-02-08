@@ -24,6 +24,10 @@ export default {
 
   /* VESAN */
 
+  CAT_ARTICLE: "News",
+  CAT_LINK: "HTML5",
+  CAT_PRODUCT: "Home",
+
   CATS_ARTICLE : [
     "Transportation",
     "Business", 
@@ -38,8 +42,6 @@ export default {
     "Technology", 
     "Travel"
   ],
-
-  CAT_LINK: "HTML5",
 
   CATS_LINK : [
     "HTML5",
