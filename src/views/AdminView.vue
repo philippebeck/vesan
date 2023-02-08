@@ -39,9 +39,7 @@
       <CardElt>
         <template #header>
           <i class="fa-solid fa-shop fa-3x"></i>
-          <h2 id="shop">
-            Shop
-          </h2>
+          <h2 id="shop">Shop</h2>
         </template>
 
         <template #body>
@@ -65,9 +63,7 @@
       <CardElt>
         <template #header>
           <i class="fa-solid fa-blog fa-3x"></i>
-          <h2 id="blog">
-            Blog
-          </h2>
+          <h2 id="blog">Blog</h2>
         </template>
 
         <template #body>
@@ -88,9 +84,7 @@
       <CardElt>
         <template #header>
           <i class="fa-solid fa-user-astronaut fa-3x"></i>
-          <h2 id="users">
-            Users
-          </h2>
+          <h2 id="users">Users</h2>
         </template>
 
         <template #body>
@@ -105,9 +99,7 @@
       <CardElt>
         <template #header>
           <i class="fa-solid fa-link fa-3x"></i>
-          <h2 id="links">
-            Links
-          </h2>
+          <h2 id="links">Links</h2>
         </template>
 
         <template #body>

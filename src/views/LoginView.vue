@@ -12,7 +12,8 @@
       <BtnElt type="button"
         content="SignIn"
         @click="setType('SignIn')"
-        class="btn-green">
+        class="btn-green"
+        title="Go to SignIn">
         <template #btn>
           <i class="fa-solid fa-right-to-bracket fa-lg"></i>
         </template>
@@ -22,7 +23,8 @@
       <BtnElt type="button"
         content="ForgotPass"
         @click="setType('ForgotPass')"
-        class="btn-orange">
+        class="btn-orange"
+        title="Go to ForgotPass">
         <template #btn>
           <i class="fa-regular fa-paper-plane fa-lg"></i>
         </template>
@@ -43,7 +45,8 @@
       <BtnElt type="button"
         content="SignUp"
         @click="setType('SignUp')"
-        class="btn-blue">
+        class="btn-blue"
+        title="Go to SignUp">
         <template #btn>
           <i class="fa-solid fa-user-plus fa-lg"></i>
         </template>
@@ -53,7 +56,8 @@
       <BtnElt type="button"
         content="ForgotPass"
         @click="setType('ForgotPass')"
-        class="btn-orange">
+        class="btn-orange"
+        title="Go to ForgotPass">
         <template #btn>
           <i class="fa-regular fa-paper-plane fa-lg"></i>
         </template>
@@ -74,7 +78,8 @@
       <BtnElt type="button"
         content="SignUp"
         @click="setType('SignUp')"
-        class="btn-blue">
+        class="btn-blue"
+        title="Go to SignUp">
         <template #btn>
           <i class="fa-solid fa-user-plus fa-lg"></i>
         </template>
@@ -84,7 +89,8 @@
       <BtnElt type="button"
         content="SignIn"
         @click="setType('SignIn')"
-        class="btn-green">
+        class="btn-green"
+        title="Go to SignIn">
         <template #btn>
           <i class="fa-solid fa-right-to-bracket fa-lg"></i>
         </template>

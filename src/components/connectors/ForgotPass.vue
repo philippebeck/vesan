@@ -25,7 +25,8 @@
     <BtnElt type="button"
       content="Send"
       @click="forgotPass()"
-      class="btn-orange">
+      class="btn-orange"
+      title="Send a new password">
       <template #btn>
         <i class="fa-regular fa-paper-plane fa-lg"></i>
       </template>
