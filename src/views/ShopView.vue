@@ -1,7 +1,5 @@
 <template>
-  <NavElt
-    type="sidebar"
-    :items="setCats"
+  <NavElt :items="setCats"
     class="sidebar">
 
     <template #last v-if="checkSession('author')">
