@@ -69,12 +69,12 @@
 
     <!-- Create Button -->
     <BtnElt type="button"
-      content="SignUp"
+      content="Create"
       @click="validateNewUser()" 
       class="btn-blue"
-      title="SignUp for a new User">
+      title="SignUp a new user">
       <template #btn>
-        <i class="fa-solid fa-square-plus fa-lg"></i>
+        <i class="fa-solid fa-user-plus fa-lg"></i>
       </template>
     </BtnElt>
   </form>

@@ -1,7 +1,7 @@
 <template>
 
   <!-- NAVBAR -->
-  <NavElt :items="['home', 'shop', 'blog', 'contact']">
+  <NavElt :items="['home', 'shop', 'blog', 'contact', 'basket']">
 
     <!-- Brand Logo -->
     <template #brand>
@@ -23,18 +23,21 @@
     <template #contact>
       <i class="fa-brands fa-at fa-fw"></i>
     </template>
+    <template #basket>
+      <i class="fa-solid fa-basket-shopping fa-fw"></i>
+    </template>
 
     <!-- Admin Part -->
     <template #admin>
 
       <!-- Admin -->
       <ListElt v-if="checkSession('admin')"
-        :items="['basket', 'admin', 'logout']">
+        :items="['profile', 'admin', 'logout']">
 
         <template #item-1>
-          <a href="/basket"
-            title="Basket">
-            <i class="fa-solid fa-basket-shopping fa-fw"></i>
+          <a href="/profile"
+            title="Profile">
+            <i class="fa-solid fa-user-gear fa-fw"></i>
           </a>
         </template>
 
@@ -56,30 +59,16 @@
 
       <!-- Author & User -->
       <ListElt v-else-if="checkSession('author') || checkSession('user')"
-        :items="['basket', 'donation', 'sponsor', 'logout']">
+        :items="['profile', 'logout']">
 
         <template #item-1>
-          <a href="/basket"
-            title="Basket">
-            <i class="fa-solid fa-basket-shopping fa-fw"></i>
+          <a href="/profile"
+            title="Profile">
+            <i class="fa-solid fa-user-gear fa-fw"></i>
           </a>
         </template>
 
         <template #item-2>
-          <a href="https://paypal.me/philippebeck"
-            title="Donation">
-            <i class="fa-brands fa-paypal fa-fw"></i>
-          </a>
-        </template>
-
-        <template #item-3>
-          <a href="https://github.com/sponsors/philippebeck"
-            title="Sponsor">
-            <i class="fa-regular fa-heart fa-fw"></i>
-          </a>
-        </template>
-
-        <template #item-4>
           <button type="button"
             @click="logout()"
             title="Logout">
@@ -89,38 +78,11 @@
       </ListElt>
 
       <!-- Visitor -->
-      <ListElt v-else
-        :items="['basket', 'donation', 'sponsor', 'login']">
-
-        <template #item-1>
-          <a href="/basket"
-            title="Basket">
-            <i class="fa-solid fa-basket-shopping fa-fw"></i>
-          </a>
-        </template>
-
-        <template #item-2>
-          <a href="https://paypal.me/philippebeck"
-            title="Donation">
-            <i class="fa-brands fa-paypal fa-fw"></i>
-          </a>
-        </template>
-
-        <template #item-3>
-          <a href="https://github.com/sponsors/philippebeck"
-            title="Sponsor">
-            <i class="fa-regular fa-heart fa-fw"></i>
-          </a>
-        </template>
-
-        <template #item-4>
-          <a href="/login"
-            title="Login">
-            <i class="fa-solid fa-sign-in-alt fa-fw"></i>
-          </a>
-        </template>
-      </ListElt>
-
+      <a v-else
+        href="/login"
+        title="Login">
+        <i class="fa-solid fa-sign-in-alt fa-fw"></i>
+      </a>
     </template>
   </NavElt>
 
@@ -199,7 +161,7 @@
         <template #item-1>
           <a href="/link"
             title="Find links for coding">
-            Links for dev
+            Links for Dev
           </a>
         </template>
         <template #item-2>
@@ -211,9 +173,9 @@
       </ListElt>
     </template>
 
-    <!-- Social Networks -->
+    <!-- Social Networks & Contributions -->
     <template #foot>
-      <ListElt :items="['GitHub', 'Twitter', 'LinkedIn', 'CodePen']">
+      <ListElt :items="['GitHub', 'LinkedIn', 'Sponsor', 'Twitter', 'Donation', 'CodePen']">
         <template #item-1>
           <a href="https://github.com/philippebeck"
             title="Philippe Beck @GitHub">
@@ -221,18 +183,30 @@
           </a>
         </template>
         <template #item-2>
-          <a href="https://twitter.com/ph_beck"
-            title="Philippe Beck @Twitter">
-            <i class="fa-brands fa-twitter fa-2x fa-fw sky"></i>
-          </a>
-        </template>
-        <template #item-3>
           <a href="https://www.linkedin.com/in/philippebeck"
             title="Philippe Beck @LinkedIn">
             <i class="fa-brands fa-linkedin-in fa-2x fa-fw blue"></i>
           </a>
         </template>
+        <template #item-3>
+          <a href="https://github.com/sponsors/philippebeck"
+            title="Sponsor @Philippe Beck">
+            <i class="fa-regular fa-heart fa-2x fa-fw pink"></i>
+          </a>
+        </template>
         <template #item-4>
+          <a href="https://twitter.com/ph_beck"
+            title="Philippe Beck @Twitter">
+            <i class="fa-brands fa-twitter fa-2x fa-fw sky"></i>
+          </a>
+        </template>
+        <template #item-5>
+          <a href="https://paypal.me/philippebeck"
+            title="Donation @Philippe Beck">
+            <i class="fa-brands fa-paypal fa-2x fa-fw blue"></i>
+          </a>
+        </template>
+        <template #item-6>
           <a href="https://codepen.io/philippebeck"
             title="Philippe Beck @CodePen">
             <i class="fa-brands fa-codepen fa-2x fa-fw black"></i>
@@ -249,9 +223,14 @@ export default {
 
   data() {
     return {
-      users: [],
-      userId: null
+      users: []
     }
+  },
+
+  mounted() {
+    this.$serve.getData("/api/users/check")
+      .then(res => { this.users = res })
+      .catch(err => { console.log(err) });
   },
 
   methods: {
@@ -272,12 +251,6 @@ export default {
       localStorage.removeItem("userToken");
       this.$router.go();
     }
-  },
-
-  mounted() {
-    this.$serve.getData("/api/users/check")
-      .then(res => { this.users = res })
-      .catch(err => { console.log(err) });
   }
 };
 </script>

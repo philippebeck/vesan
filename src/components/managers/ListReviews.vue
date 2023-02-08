@@ -176,9 +176,7 @@ export default {
           review.append("id", this.reviews[i]._id);
           review.append("text", this.reviews[i].text);
           review.append("score", this.reviews[i].score);
-          review.append("product", this.reviews[i].product);
           review.append("user", constants.USER_ID);
-          review.append("created", this.reviews[i].created);
           review.append("updated", Date.now());
 
           this.$serve.putData(`/api/reviews/${id}`, review)

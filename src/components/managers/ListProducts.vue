@@ -215,19 +215,17 @@ export default {
         let product  = new FormData();
         let image = document.getElementById('image-' + this.products[i]._id).files[0];
 
-        if (typeof image === "undefined") {
-          image = this.products[i].image;
+        if (typeof image !== "undefined") {
+          product.append("image", image);
         }
 
         product.append("id", this.products[i]._id);
         product.append("name", this.products[i].name);
         product.append("description", this.products[i].description);
-        product.append("image", image);
         product.append("alt", this.products[i].alt);
         product.append("price", this.products[i].price);
         product.append("options", this.products[i].options);
         product.append("cat", this.products[i].cat);
-        product.append("created", this.products[i].created);
         product.append("updated", Date.now());
 
         this.$serve.putData(`/api/products/${product.get("id")}`, product)

@@ -5,7 +5,8 @@
     <template #header>
 
       <!-- Slider -->
-      <SliderElt :slides="['vuejs', 'sass', 'node-js', 'html5', 'js', 'css3']">
+      <SliderElt :slides="['vuejs', 'sass', 'node-js', 'html5', 'js', 'css3']"
+        class="anima-grow">
         <template #slide="slotProps">
           <i :class="`fa-brands fa-${slotProps.slide.toLowerCase()} fa-10x blue`"></i>
         </template>
@@ -15,7 +16,7 @@
       </SliderElt>
 
       <!-- Main Title -->
-      <h1 class="blue anima-grow">
+      <h1 class="blue anima-shrink">
         Vesan
       </h1>
     </template>

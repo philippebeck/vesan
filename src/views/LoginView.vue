@@ -1,8 +1,8 @@
 <template>
   <CardElt v-if="type === 'SignUp'">
     <template #header>
-      <i class="blue anima-turn3D fa-solid fa-sign-in-alt fa-2x"></i>
-      <h1 class="sky anima-turn">SignUp</h1>
+      <i class="blue anima-turnXZ fa-solid fa-sign-in-alt fa-2x"></i>
+      <h1 class="sky anima-turnY">Sign Up</h1>
     </template>
 
     <template #body>
@@ -12,7 +12,8 @@
       <BtnElt type="button"
         content="SignIn"
         @click="setType('SignIn')"
-        class="btn-green">
+        class="btn-green"
+        title="Go to SignIn">
         <template #btn>
           <i class="fa-solid fa-right-to-bracket fa-lg"></i>
         </template>
@@ -22,7 +23,8 @@
       <BtnElt type="button"
         content="ForgotPass"
         @click="setType('ForgotPass')"
-        class="btn-orange">
+        class="btn-orange"
+        title="Go to ForgotPass">
         <template #btn>
           <i class="fa-regular fa-paper-plane fa-lg"></i>
         </template>
@@ -32,8 +34,8 @@
 
   <CardElt v-if="type === 'SignIn'">
     <template #header>
-      <i class="blue anima-turn3D fa-solid fa-sign-in-alt fa-2x"></i>
-      <h1 class="sky anima-turn">Login</h1>
+      <i class="blue anima-turnYZ fa-solid fa-sign-in-alt fa-2x"></i>
+      <h1 class="sky anima-turn">Sign In</h1>
     </template>
 
     <template #body>
@@ -43,7 +45,8 @@
       <BtnElt type="button"
         content="SignUp"
         @click="setType('SignUp')"
-        class="btn-blue">
+        class="btn-blue"
+        title="Go to SignUp">
         <template #btn>
           <i class="fa-solid fa-user-plus fa-lg"></i>
         </template>
@@ -53,7 +56,8 @@
       <BtnElt type="button"
         content="ForgotPass"
         @click="setType('ForgotPass')"
-        class="btn-orange">
+        class="btn-orange"
+        title="Go to ForgotPass">
         <template #btn>
           <i class="fa-regular fa-paper-plane fa-lg"></i>
         </template>
@@ -63,8 +67,8 @@
 
   <CardElt v-if="type === 'ForgotPass'">
     <template #header>
-      <i class="blue anima-turn3D fa-solid fa-key fa-2x"></i>
-      <h1 class="sky anima-turn">Forgot Password</h1>
+      <i class="blue anima-turnXY fa-solid fa-key fa-2x"></i>
+      <h1 class="sky anima-turnX">Forgot Password</h1>
     </template>
 
     <template #body>
@@ -74,7 +78,8 @@
       <BtnElt type="button"
         content="SignUp"
         @click="setType('SignUp')"
-        class="btn-blue">
+        class="btn-blue"
+        title="Go to SignUp">
         <template #btn>
           <i class="fa-solid fa-user-plus fa-lg"></i>
         </template>
@@ -84,7 +89,8 @@
       <BtnElt type="button"
         content="SignIn"
         @click="setType('SignIn')"
-        class="btn-green">
+        class="btn-green"
+        title="Go to SignIn">
         <template #btn>
           <i class="fa-solid fa-right-to-bracket fa-lg"></i>
         </template>

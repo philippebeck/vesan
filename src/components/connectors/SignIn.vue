@@ -1,5 +1,5 @@
 <template>
-  <form class="anima-grow">
+  <form>
 
     <!-- User Email -->
     <FieldElt id="email"
@@ -39,7 +39,8 @@
     <BtnElt type="button"
       content="Enter"
       @click="login()"
-      class="btn-green">
+      class="btn-green"
+      title="SignIn to your account">
       <template #btn>
         <i class="fa-solid fa-right-to-bracket fa-lg"></i>
       </template>

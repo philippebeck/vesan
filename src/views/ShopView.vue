@@ -1,7 +1,5 @@
 <template>
-  <NavElt
-    type="sidebar"
-    :items="setCats"
+  <NavElt :items="setCats"
     class="sidebar">
 
     <template #last v-if="checkSession('author')">
@@ -18,14 +16,9 @@
 
   <CardElt id="top">
     <template #header>
-      <i class="blue anima-grow fa-solid fa-shop fa-4x"></i>
-      <h1 class="sky anima-shrink">
-        Shop
-      </h1>
-      <strong class="gray">
-        Products to buy !
-      </strong>
-      <p>Under construction !</p>
+      <i class="blue anima-openX fa-solid fa-shop fa-4x"></i>
+      <h1 class="sky anima-openY">Shop</h1>
+      <b>Products to buy !</b>
     </template>
 
     <template #body>
@@ -33,7 +26,10 @@
         :dynamic="true">
 
         <template #items="slotProps">
-          <h2 :id="slotProps.item[0].cat">{{ slotProps.item[0].cat }}</h2>
+          <h2 :id="slotProps.item[0].cat"
+            class="anima-openX">
+            {{ slotProps.item[0].cat }}
+          </h2>
         </template>
 
         <template #nested="slotProps">

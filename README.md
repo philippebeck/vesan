@@ -29,6 +29,8 @@ Vesan uses many other well-known packages, like ExpressJS, Mongoose, etc...
   - [Summary](#summary)
   - [Download](#download)
   - [Package](#package)
+  - [Installation](#installation)
+  - [Usage](#usage)
   - [Content](#content)
   - [Documentation](#documentation)
 
@@ -56,11 +58,33 @@ or
 
 Yarn : `yarn add vesan`  
 
+**If you choose to get Vesan from NPM or Yarn : you need copy Vesan from *node_modules/vesan* to the root of your App**
+
+---
+
+## Installation
+
+From the root of your App with Vesan :  
+`$ npm install` *(install frontend dependencies)*  
+`$ cd api`  
+`$ npm install` *(install backend dependencies)*  
+
+---
+
+## Usage
+
+To run the backend server, from the root of your App with Vesan :  
+`$ cd api`  
+`$ npm run start` *(serve backend)*  
+
+To run the frontend server, from the root of your App with Vesan :  
+`$ npm run serve` *(serve frontend)*  
+
 ---
 
 ## Content
 
-Available API Files (UNDER CONSTRUCTION) :
+Available API Files *(UNDER CONSTRUCTION)* :
 -   **ProductModel, ProductCtrl, ProductRoute** *(Products)*  
 -   **ProductModel, ReviewCtrl, ReviewRoute** *(Product Reviews)*  
 -   **OrderModel, OrderCtrl, OrderRoute** *(Product Orders)*  
@@ -69,20 +93,22 @@ Available API Files (UNDER CONSTRUCTION) :
 -   **UserModel, UserCtrl, UserRoute** *(Users)*  
 -   **LinkModel, LinkCtrl, LinkRoute** *(Links)*  
 
-Available Views (UNDER CONSTRUCTION) :  
+Available Views *(UNDER CONSTRUCTION)* :  
 -   **HomeView** *(Home)*  
 -   **ShopView** *(Shop with products list)*  
 -   **ProductView** *(Product of the shop)*  
 -   **BlogView** *(Blog with articles list)*  
 -   **ArticleView** *(Article of the blog)*  
 -   **ContactView** *(Contact)*  
--   **BasketView** *(Basket & Orders)*  
--   **LoginView** *(Login with Connectors)*  
--   **AdminView** *(Admin with Managers)*  
+-   **BasketView** *(Basket & orders)*  
+-   **LoginView** *(Login with connectors)*  
+-   **ProfileView** *(User profile)*  
+-   **AdminView** *(Admin with managers)*  
 -   **LinkView** *(Links list)*  
+-   **LegalView** *(Legal notice)*  
 -   **ErrorView** *(Error)*  
 
-Available Components (UNDER CONSTRUCTION) :  
+Available Components *(UNDER CONSTRUCTION)* :  
 -   **ForgotPass** *(Connector)*  
 -   **SignIn** *(Connector*  
 -   **SignUp** *(Connector)*  
