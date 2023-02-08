@@ -3,22 +3,23 @@
   <!-- CONTACT PAGE -->
   <CardElt>
     <template #header>
-      <i class="blue anima-turn3D fa-solid fa-at fa-4x"></i>
-      <h1 class="sky anima-turn">
+      <i class="blue anima-slideR fa-solid fa-at fa-4x"></i>
+      <h1 class="sky anima-slideL">
         Contact
       </h1>
     </template>
 
     <template #body>
-      <form class="anima-grow">
+      <form>
         <ListElt :items="['email', 'subject', 'text']">
 
           <!-- User Email -->
           <template #item-1>
             <FieldElt id="email"
               v-model:value="email"
-              info="An email to answer you ?"
               @keyup.enter="send()"
+              class="anima-slideR"
+              info="An email to answer you ?"
               type="email">
               <template #legend>
                 Email
@@ -33,8 +34,9 @@
           <template #item-2>
             <FieldElt id="subject"
               v-model:value="subject"
-              info="The subject of your message ?"
-              @keyup.enter="send()">
+              @keyup.enter="send()"
+              class="anima-slideL"
+              info="The subject of your message ?">
               <template #legend>
                 Subject
               </template>
@@ -48,8 +50,9 @@
           <template #item-3>
             <FieldElt id="text"
               v-model:value="text"
-              info="The text of your message ?"
               @keyup.enter="send()"
+              class="anima-slideR"
+              info="The text of your message ?"
               type="textarea"
               :max="100">
               <template #legend>
@@ -72,7 +75,7 @@
         <BtnElt type="button"
           content="Send"
           @click="send()" 
-          class="btn-green"
+          class="btn-green anima-slideL"
           title="Send a Message">
           <template #btn>
             <i class="fa-regular fa-paper-plane fa-lg"></i>

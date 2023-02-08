@@ -18,14 +18,9 @@
 
   <CardElt id="top">
     <template #header>
-      <i class="blue anima-shrink fa-solid fa-blog fa-4x"></i>
-      <h1 class="sky anima-grow">
-        Blog
-      </h1>
-      <strong class="gray">
-        Articles to read !
-      </strong>
-      <p>Under construction !</p>
+      <i class="blue anima-flipX fa-solid fa-blog fa-4x"></i>
+      <h1 class="sky anima-flipY">Blog</h1>
+      <b>Articles to read !</b>
     </template>
 
     <template #body>
@@ -33,7 +28,10 @@
         :dynamic="true">
 
         <template #items="slotProps">
-          <h2 :id="slotProps.item[0].cat">{{ slotProps.item[0].cat }}</h2>
+          <h2 :id="slotProps.item[0].cat"
+            class="anima-flipX">
+            {{ slotProps.item[0].cat }}
+          </h2>
         </template>
 
         <template #nested="slotProps">
