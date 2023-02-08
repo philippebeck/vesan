@@ -91,14 +91,15 @@ export default {
      * VALIDATE NEW LINK IF DATA ARE VALID
      */
     validateNewLink() {
-      if (this.$serve.checkName(this.name) &&
-        this.$serve.checkUrl(this.url)) {
+      if (this.$serve.checkName(this.name) /*&&
+        this.$serve.checkUrl(this.url)*/) {
         if (this.cat === "") {
           this.cat = constants.CAT_LINK;
         }
         this.checkNewLink();
       }
     },
+
     /**
      * CHECK NEW LINK IF NAME | URL ARE REFERENCED
      */
@@ -106,7 +107,6 @@ export default {
       this.$serve.getData("/api/links")
         .then((links) => {
           let isReferenced = false;
-          this.url = this.url.split("//")[1];
 
           for (let i = 0; i < links.length; i++) {
             if (links[i].name === this.name) {
@@ -122,6 +122,7 @@ export default {
         })
         .catch(err => { console.log(err) });
     },
+
     /**
      * CREATE LINK IF NO INFO IS REFERENCED
      * @param {boolean} isReferenced 
