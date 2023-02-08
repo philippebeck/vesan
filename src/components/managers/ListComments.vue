@@ -179,6 +179,7 @@ export default {
      */
     deleteComment(id) {
       if (confirm(`Delete comment #${id} ?`) === true) {
+
         this.$serve.deleteData(`/api/comments/${id}`)
           .then(() => {
             alert(`Comment #${id} deleted !`);

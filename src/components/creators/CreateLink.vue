@@ -52,7 +52,7 @@
                 Category
               </template>
               <template #label>
-                Choose Dev if others are not suitable
+                Choose the link category
               </template>
             </FieldElt>
           </template>
@@ -91,14 +91,15 @@ export default {
      * VALIDATE NEW LINK IF DATA ARE VALID
      */
     validateNewLink() {
-      if (this.$serve.checkName(this.name) &&
-        this.$serve.checkUrl(this.url)) {
+      if (this.$serve.checkName(this.name) /*&&
+        this.$serve.checkUrl(this.url)*/) {
         if (this.cat === "") {
-          this.cat = "HTML5";
+          this.cat = constants.CAT_LINK;
         }
         this.checkNewLink();
       }
     },
+
     /**
      * CHECK NEW LINK IF NAME | URL ARE REFERENCED
      */
@@ -106,14 +107,14 @@ export default {
       this.$serve.getData("/api/links")
         .then((links) => {
           let isReferenced = false;
-          this.url = this.url.split("//")[1];
+
           for (let i = 0; i < links.length; i++) {
             if (links[i].name === this.name) {
-              alert(this.name + " is not available !");
+              alert(this.name + constants.CHECK_AVAILABLE);
               isReferenced = true;
             }
             if (links[i].url === this.url) {
-              alert(this.url + " is already referenced !");
+              alert(this.url + constants.CHECK_REFERENCE);
               isReferenced = true;
             }
           }
@@ -121,6 +122,7 @@ export default {
         })
         .catch(err => { console.log(err) });
     },
+
     /**
      * CREATE LINK IF NO INFO IS REFERENCED
      * @param {boolean} isReferenced 

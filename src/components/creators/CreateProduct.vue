@@ -119,7 +119,7 @@
                 Category
               </template>
               <template #label>
-                
+                Choose the product category
               </template>
             </FieldElt>
           </template>
@@ -169,8 +169,11 @@ export default {
      */
     validateNewProduct() {
       if (this.$serve.checkName(this.name)) {
-
         if (typeof document.getElementById('product-image').files[0] !== "undefined") {
+
+          if (this.cat === "") {
+            this.cat = constants.CAT_PRODUCT;
+          }
           this.checkNewProduct();
 
         } else {
@@ -190,12 +193,12 @@ export default {
           for (let i = 0; i < products.length; i++) {
 
             if (products[i].name === this.name) {
-              alert(this.name + " is not available !");
+              alert(this.name + constants.CHECK_AVAILABLE);
               isReferenced = true;
             }
 
             if (products[i].description === this.description) {
-              alert(this.description + " is already referenced !");
+              alert(this.description + constants.CHECK_REFERENCE);
               isReferenced = true;
             }
           }

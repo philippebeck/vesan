@@ -163,6 +163,7 @@ export default {
      */
     deleteOrder(id) {
       if (confirm(`Delete order #${id} ?`) === true) {
+
         this.$serve.deleteData(`/api/orders/${id}`)
           .then(() => {
             alert(`Order #${id} deleted !`);

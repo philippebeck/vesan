@@ -104,6 +104,7 @@ export default {
     validateUpdatedLink(id) {
       for (let i = 0; i < this.links.length; i++ ) {
         if (this.links[i]._id === id) {
+
           if (this.$serve.checkName(this.links[i].name) && 
             this.$serve.checkUrl(`https://${this.links[i].url}`)) {
             this.checkUpdatedLink(i);
@@ -119,16 +120,19 @@ export default {
       this.$serve.getData("/api/links")
         .then((links) => {
           let isReferenced = false;
+
           for (let j = 0; j < links.length; j++) {
             if (links[j]._id === this.links[i]._id) {
               links.splice(j, 1);
             }
+
             if (links[j] && links[j].name === this.links[i].name) {
-              alert(this.links[i].name + " is not available !");
+              alert(this.links[i].name + constants.CHECK_AVAILABLE);
               isReferenced = true;
             }
+
             if (links[j] && links[j].url === this.links[i].url) {
-              alert(this.links[i].url+ " is already referenced !");
+              alert(this.links[i].url+ constants.CHECK_REFERENCE);
               isReferenced = true;
             }
           }
@@ -170,6 +174,7 @@ export default {
           linkName = this.links[i].name;
         }
       }
+
       if (confirm(`Delete ${linkName} ?`) === true) {
         this.$serve.deleteData(`/api/links/${id}`)
           .then(() => {

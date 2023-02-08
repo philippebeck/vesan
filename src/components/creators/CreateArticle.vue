@@ -85,7 +85,7 @@
                 Category
               </template>
               <template #label>
-                
+                Choose the article category
               </template>
             </FieldElt>
           </template>
@@ -133,8 +133,11 @@ export default {
      */
     validateNewArticle() {
       if (this.$serve.checkName(this.title)) {
-
         if (typeof document.getElementById('article-image').files[0] !== "undefined") {
+
+          if (this.cat === "") {
+            this.cat = constants.CAT_ARTICLE;
+          }
           this.checkNewArticle();
 
         } else {
@@ -154,12 +157,12 @@ export default {
           for (let i = 0; i < articles.length; i++) {
 
             if (articles[i].title === this.title) {
-              alert(this.title + " is not available !");
+              alert(this.title + constants.CHECK_AVAILABLE);
               isReferenced = true;
             }
 
             if (articles[i].text === this.text) {
-              alert(this.text + " is already referenced !");
+              alert(this.text + constants.CHECK_REFERENCE);
               isReferenced = true;
             }
           }

@@ -190,12 +190,12 @@ export default {
             }
 
             if (products[j] && products[j].name === this.products[i].name) {
-              alert(this.products[i].name + " is not available !");
+              alert(this.products[i].name + constants.CHECK_AVAILABLE);
               isReferenced = true;
             }
 
             if (products[j] && products[j].description === this.products[i].description) {
-              alert(this.products[i].description+ " is already referenced !");
+              alert(this.products[i].description+ constants.CHECK_REFERENCE);
               isReferenced = true;
             }
           }
