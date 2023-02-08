@@ -52,7 +52,7 @@
                 Category
               </template>
               <template #label>
-                Choose Dev if others are not suitable
+                Choose the link category
               </template>
             </FieldElt>
           </template>

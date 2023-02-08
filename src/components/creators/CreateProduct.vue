@@ -119,7 +119,7 @@
                 Category
               </template>
               <template #label>
-                
+                Choose the product category
               </template>
             </FieldElt>
           </template>

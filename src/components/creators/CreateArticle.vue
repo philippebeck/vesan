@@ -85,7 +85,7 @@
                 Category
               </template>
               <template #label>
-                
+                Choose the article category
               </template>
             </FieldElt>
           </template>
