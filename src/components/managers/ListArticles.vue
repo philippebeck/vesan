@@ -244,7 +244,7 @@ export default {
           articleTitle = this.articles[i].title;
         }
       }
-      
+
       if (confirm(`Delete ${articleTitle} ?`) === true) {
         this.$serve.deleteData(`/api/articles/${id}`)
           .then(() => {

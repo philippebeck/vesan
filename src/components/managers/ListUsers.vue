@@ -237,7 +237,7 @@ export default {
           userName = this.users[i].name;
         }
       }
-      
+
       if (confirm(`Delete ${userName} ?`) === true) {
         this.$serve.deleteData(`/api/users/${id}`)
           .then(() => {
