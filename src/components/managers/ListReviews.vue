@@ -25,8 +25,7 @@
                 class="violet">
                 <b itemprop="ratingValue">
                   {{ slotProps.item.score }}
-                </b>
-                <i class="fa-solid fa-star"></i>
+                </b> <i class="fa-solid fa-star"></i>
               </p>
 
               <p class="silver">
