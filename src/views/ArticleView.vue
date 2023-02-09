@@ -115,6 +115,19 @@ export default {
     },
 
     /**
+     * GET ARTICLE USER
+     * @param {}  
+     */
+    getArticleUser() {
+      for (let i = 0; i < this.users.length; i++ ) {
+        if (this.article.user === this.users[i]._id) {
+
+          return this.users[i].name;
+        }
+      }
+    },
+
+    /**
      * GET ARTICLE COMMENTS
      * @returns
      */
