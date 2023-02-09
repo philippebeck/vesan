@@ -22,7 +22,7 @@
         </template>
       </BtnElt>
 
-      <BtnElt v-else-if="userId" 
+      <BtnElt v-else-if="checkSession('user')" 
         href="#review"
         class="btn-violet"
         content="Need a Review !"

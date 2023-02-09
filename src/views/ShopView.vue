@@ -57,7 +57,7 @@
                 </template>
               </BtnElt>
 
-              <BtnElt v-else-if="userId" 
+              <BtnElt v-else-if="checkSession('user')" 
                 :href="`product/${slotProps.value._id}#review`"
                 class="btn-violet"
                 content="Write a Review"
