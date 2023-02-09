@@ -155,12 +155,12 @@ export default {
       price: null,
       options: [],
       cat: "",
-      cats: []
+      constants: []
     }
   },
 
   mounted() {
-    this.cats = constants.CATS_PRODUCT;
+    this.constants = constants;
   },
 
   methods: {

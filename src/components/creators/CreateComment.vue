@@ -46,8 +46,13 @@ export default {
 
   data() {
     return {
-      text: ""
+      text: "",
+      constants: []
     }
+  },
+
+  mounted() {
+    this.constants = constants;
   },
 
   methods: {

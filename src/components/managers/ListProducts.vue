@@ -143,12 +143,12 @@ export default {
 
   data() {
     return {
-      cats: []
+      constants: []
     }
   },
 
   mounted() {
-    this.cats = constants.CATS_PRODUCT;
+    this.constants = constants;
   },
 
   methods: {

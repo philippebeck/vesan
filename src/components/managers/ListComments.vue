@@ -126,6 +126,16 @@ export default {
   name: "ListComments",
   props: ["comments", "articles", "users"],
 
+  data() {
+    return {
+      constants: []
+    }
+  },
+
+  mounted() {
+    this.constants = constants;
+  },
+
   methods: {
     /**
      * GET ALL COMMENTS

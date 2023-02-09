@@ -78,12 +78,12 @@ export default {
       name: "",
       url: "",
       cat: "",
-      cats: []
+      constants: []
     }
   },
 
   mounted() {
-    this.cats = constants.CATS_LINK;
+    this.constants = constants;
   },
 
   methods: {

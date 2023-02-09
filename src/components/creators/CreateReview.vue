@@ -63,8 +63,13 @@ export default {
   data() {
     return {
       text: "",
-      score: null
+      score: null,
+      constants: []
     }
+  },
+
+  mounted() {
+    this.constants = constants;
   },
 
   methods: {

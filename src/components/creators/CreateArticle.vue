@@ -119,12 +119,12 @@ export default {
       image: "",
       alt: "",
       cat: "",
-      cats: []
+      constants: []
     }
   },
 
   mounted() {
-    this.cats = constants.CATS_ARTICLE;
+    this.constants = constants;
   },
 
   methods: {

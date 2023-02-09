@@ -131,12 +131,12 @@ export default {
   data() {
     return {
       pass: "",
-      roles: []
+      constants: []
     }
   },
 
   mounted() {
-    this.roles = constants.ROLES_USER;
+    this.constants = constants;
   },
 
   methods: {

@@ -126,12 +126,12 @@ export default {
 
   data() {
     return {
-      cats: []
+      constants: []
     }
   },
 
   mounted() {
-    this.cats = constants.CATS_ARTICLE;
+    this.constants = constants;
   },
 
   methods: {

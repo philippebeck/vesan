@@ -149,6 +149,16 @@ export default {
   name: "ListReviews",
   props: ["reviews", "products", "users"],
 
+  data() {
+    return {
+      constants: []
+    }
+  },
+
+  mounted() {
+    this.constants = constants;
+  },
+
   methods: {
     /**
      * GET ALL REVIEWS

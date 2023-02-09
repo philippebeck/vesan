@@ -99,13 +99,14 @@ export default {
 
   data() {
     return {
-      cats: []
+      constants: []
     }
   },
 
   mounted() {
-    this.cats = constants.CATS_ORDER;
+    this.constants = constants;
   },
+
 
   methods: {
     /**
