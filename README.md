@@ -30,6 +30,7 @@ Vesan uses many other well-known packages, like ExpressJS, Mongoose, etc...
   - [Download](#download)
   - [Package](#package)
   - [Installation](#installation)
+  - [Configuration](#configuration)
   - [Usage](#usage)
   - [Content](#content)
   - [Documentation](#documentation)
@@ -65,20 +66,41 @@ Yarn : `yarn add vesan`
 ## Installation
 
 From the root of your App with Vesan :  
-`$ npm install` *(install frontend dependencies)*  
+
+1. Install the frontend dependencies :  
+`$ npm install`  
+
+2. Install the backend dependencies :  
 `$ cd api`  
-`$ npm install` *(install backend dependencies)*  
+`$ npm install`  
+
+---
+
+## Configuration
+
+From the root of your App with Vesan :  
+
+1. To configure the backend, replace values :  
+`api/.env.example` *(then rename it .env)*
+
+1. To configure the frontend, replace values :  
+`constants.js`
+
+1. To configure the design, replaces values :  
+`src/style/style.css`
 
 ---
 
 ## Usage
 
-To run the backend server, from the root of your App with Vesan :  
-`$ cd api`  
-`$ npm run start` *(serve backend)*  
+From the root of your App with Vesan :  
 
-To run the frontend server, from the root of your App with Vesan :  
-`$ npm run serve` *(serve frontend)*  
+1. To run the backend server :  
+`$ cd api`  
+`$ npm run start`  
+
+2. To run the frontend server :  
+`$ npm run serve`  
 
 ---
 
