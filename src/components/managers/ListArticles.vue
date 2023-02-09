@@ -10,37 +10,36 @@
         enctype="multipart/form-data">
         <TableElt :items="articles">
 
-          <!-- Last Table Head -->
           <template #head>
             up/del
           </template>
 
-          <!-- Article Id -->
+          <!-- Id -->
           <template #cell-_id="slotProps">
             <b>#{{ slotProps.index + 1 }}</b>
             ({{ articles[slotProps.index]._id }})
           </template>
 
-          <!-- Article Title -->
+          <!-- Title -->
           <template #cell-title="slotProps">
             <FieldElt :id="'title-' + articles[slotProps.index]._id"
               v-model:value="getArticles()[slotProps.index].title"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              info="Update the article title">
+              :info="constants.UPDATE_TITLE">
             </FieldElt>
           </template>
 
-          <!-- Article Text -->
+          <!-- Text -->
           <template #cell-text="slotProps">
             <FieldElt :id="'text-' + articles[slotProps.index]._id"
               type="textarea"
               v-model:value="getArticles()[slotProps.index].text"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              info="Update the article text">
+              :info="constants.UPDATE_TEXT">
             </FieldElt>
           </template>
 
-          <!-- Article Image -->
+          <!-- Image -->
           <template #cell-image="slotProps">
             <MediaElt :src="'/img/thumbnails/articles/' + articles[slotProps.index].image"
               :alt="articles[slotProps.index].alt"
@@ -48,51 +47,51 @@
             </MediaElt>
             <FieldElt :id="'image-' + articles[slotProps.index]._id"
               type="file"
-              info="Update the article image">
+              :info="constants.UPDATE_IMAGE">
             </FieldElt>
           </template>
 
-          <!-- Article Alt -->
+          <!-- Alt -->
           <template #cell-alt="slotProps">
             <FieldElt :id="'alt-' + articles[slotProps.index]._id"
               type="textarea"
               v-model:value="getArticles()[slotProps.index].alt"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              info="Update the article title">
+              :info="constants.UPDATE_ALT">
             </FieldElt>
           </template>
 
-          <!-- Article Category -->
+          <!-- Category -->
           <template #cell-cat="slotProps">
             <FieldElt :id="'cat-' + articles[slotProps.index]._id"
               type="select"
               v-model:value="getArticles()[slotProps.index].cat"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              :list="cats"
-              info="Update the category">
+              :list="constants.CATS_ARTICLE"
+              :info="constants.UPDATE_CATEGORY">
               {{ value }}
             </FieldElt>
           </template>
 
-          <!-- Article User -->
+          <!-- User -->
           <template #cell-user="slotProps">
             <b>{{ getArticleUser(articles[slotProps.index].user) }}</b>
             ({{ getArticles()[slotProps.index].user }})
           </template>
 
-          <!-- Article Created -->
+          <!-- Created -->
           <template #cell-created="slotProps">
             {{ new Date(articles[slotProps.index].created).toLocaleString() }}
           </template>
 
-          <!-- Article Updated -->
+          <!-- Updated -->
           <template #cell-updated="slotProps">
             {{ new Date(articles[slotProps.index].updated).toLocaleString() }}
           </template>
 
           <template #body="slotProps">
 
-          <!-- Update Button -->
+          <!-- Update -->
           <BtnElt type="button"
               @click="validateUpdatedArticle(articles[slotProps.index]._id)" 
               class="btn-sky"
@@ -102,7 +101,7 @@
               </template>
             </BtnElt>
 
-            <!-- Delete Button -->
+            <!-- Delete -->
             <BtnElt type="button"
               @click="deleteArticle(articles[slotProps.index]._id)" 
               class="btn-red"
@@ -127,12 +126,12 @@ export default {
 
   data() {
     return {
-      cats: []
+      constants: []
     }
   },
 
   mounted() {
-    this.cats = constants.CATS_ARTICLE;
+    this.constants = constants;
   },
 
   methods: {

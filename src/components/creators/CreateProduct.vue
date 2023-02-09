@@ -2,7 +2,7 @@
   <CardElt id="create-product">
     <template #header>
       <i class="fa-solid fa-basket-shopping fa-2x"></i>
-      <h3>Create Product</h3>
+      <h3>{{ constants.CREATE_PRODUCT }}</h3>
     </template>
 
     <template #body>
@@ -15,13 +15,13 @@
             <FieldElt id="product-name"
               v-model:value="name"
               @keyup.enter="validateNewProduct()"
-              info="My beautiful product"
+              :info="constants.CREATE_NAME"
               :min="2">
               <template #legend>
                 Name
               </template>
               <template #label>
-                Indicate the product name
+                {{ constants.LABEL_NAME }}
               </template>
             </FieldElt>
           </template>
@@ -32,12 +32,12 @@
               type="textarea"
               v-model:value="description"
               @keyup.enter="validateNewProduct()"
-              info="This product is wonderful !">
+              :info="constants.CREATE_DESCRIPTION">
               <template #legend>
                 Description
               </template>
               <template #label>
-                Indicate the product description
+                {{ constants.LABEL_DESCRIPTION }}
               </template>
             </FieldElt>
           </template>
@@ -47,12 +47,12 @@
             <FieldElt id="product-image"
               type="file"
               v-model:value="image"
-              info="Image file only">
+              :info="constants.CREATE_IMAGE">
               <template #legend>
                 Image
               </template>
               <template #label>
-                Provide product image
+                {{ constants.LABEL_IMAGE }}
               </template>
             </FieldElt>
           </template>
@@ -62,12 +62,12 @@
             <FieldElt id="product-alt"
               type="textarea"
               v-model:value="alt"
-              info="Alternative text">
+              :info="constants.CREATE_ALT">
               <template #legend>
                 Alt
               </template>
               <template #label>
-                Provide product alt
+                {{ constants.LABEL_ALT }}
               </template>
             </FieldElt>
           </template>
@@ -78,14 +78,14 @@
               type="number"
               v-model:value="price"
               @keyup.enter="validateNewProduct()"
-              info="100 €"
+              :info="constants.CREATE_PRICE"
               :min="1"
               :max="1000">
               <template #legend>
                 Price
               </template>
               <template #label>
-                Indicate the product price
+                {{ constants.LABEL_PRICE }}
               </template>
             </FieldElt>
           </template>
@@ -96,13 +96,13 @@
               type="textarea"
               v-model:value="options"
               @keyup.enter="validateNewProduct()"
-              info="option-1,option-2,option-3,etc"
+              :info="constants.CREATE_OPTIONS"
               :max="100">
               <template #legend>
                 Options
               </template>
               <template #label>
-                Indicate the product options
+                {{ constants.LABEL_OPTIONS }}
               </template>
             </FieldElt>
           </template>
@@ -112,14 +112,14 @@
             <FieldElt id="product-cat"
               type="select"
               v-model:value="cat"
-              info="Choose a category"
+              :info="constants.CREATE_CATEGORY"
               @keyup.enter="validateNewProduct()"
-              :list="cats">
+              :list="constants.CATS_PRODUCT">
               <template #legend>
                 Category
               </template>
               <template #label>
-                Choose the product category
+                {{ constants.LABEL_CATEGORY }}
               </template>
             </FieldElt>
           </template>
@@ -130,7 +130,7 @@
           content="Create"
           @click="validateNewProduct()" 
           class="btn-green"
-          title="Create a new Product">
+          :title="constants.CREATE_PRODUCT">
           <template #btn>
             <i class="fa-solid fa-square-plus fa-lg"></i>
           </template>
@@ -155,12 +155,12 @@ export default {
       price: null,
       options: [],
       cat: "",
-      cats: []
+      constants: []
     }
   },
 
   mounted() {
-    this.cats = constants.CATS_PRODUCT;
+    this.constants = constants;
   },
 
   methods: {
@@ -177,7 +177,7 @@ export default {
           this.checkNewProduct();
 
         } else {
-          alert("A photo of the product must be uploaded !");
+          alert(constants.PRODUCT_IMG);
         }
       }
     },

@@ -10,37 +10,36 @@
         enctype="multipart/form-data">
         <TableElt :items="products">
 
-          <!-- Last Table Head -->
           <template #head>
             up/del
           </template>
 
-          <!-- Product Id -->
+          <!-- Id -->
           <template #cell-_id="slotProps">
             <b>#{{ slotProps.index + 1 }}</b>
             ({{ products[slotProps.index]._id }})
           </template>
 
-          <!-- Product Name -->
+          <!-- Name -->
           <template #cell-name="slotProps">
             <FieldElt :id="'name-' + products[slotProps.index]._id"
               v-model:value="getProducts()[slotProps.index].name"
-              info="Update the product name"
+              :info="constants.UPDATE_NAME"
               @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)">
             </FieldElt>
           </template>
 
-          <!-- Product Description -->
+          <!-- Description -->
           <template #cell-description="slotProps">
             <FieldElt :id="'description-' + products[slotProps.index]._id"
               type="textarea"
               v-model:value="getProducts()[slotProps.index].description"
-              info="Update the product description"
+              :info="constants.UPDATE_DESCRIPTION"
               @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)">
             </FieldElt>
           </template>
 
-          <!-- Product Image -->
+          <!-- Image -->
           <template #cell-image="slotProps">
             <MediaElt :src="'/img/thumbnails/products/' + products[slotProps.index].image"
               :alt="products[slotProps.index].alt"
@@ -48,68 +47,68 @@
             </MediaElt>
             <FieldElt :id="'image-' + products[slotProps.index]._id"
               type="file"
-              info="Update the product image">
+              :info="constants.UPDATE_IMAGE">
             </FieldElt>
           </template>
 
-          <!-- Product Alt -->
+          <!-- Alt -->
           <template #cell-alt="slotProps">
             <FieldElt :id="'alt-' + products[slotProps.index]._id"
               type="textarea"
               v-model:value="getProducts()[slotProps.index].alt"
-              info="Update the product alt"
+              :info="constants.UPDATE_ALT"
               @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)">
             </FieldElt>
           </template>
 
-          <!-- Product Price -->
+          <!-- Price -->
           <template #cell-price="slotProps">
             <FieldElt :id="'price-' + products[slotProps.index]._id"
               type="number"
               v-model:value="getProducts()[slotProps.index].price"
               @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
-              info="Update the product price"
+              :info="constants.UPDATE_PRICE"
               :min="1"
               :max="1000">
             </FieldElt>
           </template>
 
-          <!-- Product Options -->
+          <!-- Options -->
           <template #cell-options="slotProps">
             <FieldElt :id="'options-' + products[slotProps.index]._id"
               type="textarea"
               v-model:value="getProducts()[slotProps.index].options"
               @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
-              info="Update the options">
+              :info="constants.UPDATE_OPTIONS">
               {{ value }}
             </FieldElt>
           </template>
 
-          <!-- Product Category -->
+          <!-- Category -->
           <template #cell-cat="slotProps">
             <FieldElt :id="'cat-' + products[slotProps.index]._id"
               type="select"
               v-model:value="getProducts()[slotProps.index].cat"
-              info="Update the category"
+              :info="constants.UPDATE_CATEGORY"
               @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
-              :list="cats">
+              :list="constants.CATS_PRODUCT">
               {{ value }}
             </FieldElt>
           </template>
 
-          <!-- Product Created -->
+          <!-- Created -->
           <template #cell-created="slotProps">
             {{ new Date(products[slotProps.index].created).toLocaleString() }}
           </template>
 
-          <!-- Product Updated -->
+          <!-- Updated -->
           <template #cell-updated="slotProps">
             {{ new Date(products[slotProps.index].updated).toLocaleString() }}
           </template>
 
           <template #body="slotProps">
 
-            <!-- Update Button -->
+            <!-- Update -->
             <BtnElt type="button"
               @click="validateUpdatedProduct(products[slotProps.index]._id)" 
               class="btn-sky"
@@ -119,7 +118,7 @@
               </template>
             </BtnElt>
 
-            <!-- Delete Button -->
+            <!-- Delete -->
             <BtnElt type="button"
               @click="deleteProduct(products[slotProps.index]._id)" 
               class="btn-red"
@@ -144,12 +143,12 @@ export default {
 
   data() {
     return {
-      cats: []
+      constants: []
     }
   },
 
   mounted() {
-    this.cats = constants.CATS_PRODUCT;
+    this.constants = constants;
   },
 
   methods: {

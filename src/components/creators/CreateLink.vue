@@ -2,7 +2,7 @@
     <CardElt id="create-link">
     <template #header>
       <i class="fa-solid fa-link fa-2x"></i>
-      <h3>Create Link</h3>
+      <h3>{{ constants.CREATE_LINK }}</h3>
     </template>
 
     <template #body>
@@ -12,14 +12,14 @@
           <template #item-1>
             <FieldElt id="name"
               v-model:value="name"
-              info="GitHub"
+              :info="constants.CREATE_NAME"
               @keyup.enter="validateNewLink()"
               :min="parseInt('2')">
               <template #legend>
                 Name
               </template>
               <template #label>
-                Indicate the link name
+                {{ constants.LABEL_NAME }}
               </template>
             </FieldElt>
           </template>
@@ -28,7 +28,7 @@
             <FieldElt id="url"
               type="url"
               v-model:value="url"
-              info="https://"
+              :info="constants.CREATE_URL"
               @keyup.enter="validateNewLink()"
               :min="parseInt('5')"
               :max="parseInt('100')">
@@ -36,7 +36,7 @@
                 URL
               </template>
               <template #label>
-                Indicate the link URL
+                {{ constants.LABEL_URL }}
               </template>
             </FieldElt>
           </template>
@@ -45,14 +45,14 @@
             <FieldElt id="cat"
               type="select"
               v-model:value="cat"
-              info="Choose a category"
+              :info="constants.CREATE_CATEGORY"
               @keyup.enter="validateNewLink()"
-              :list="cats">
+              :list="constants.CATS_LINK">
               <template #legend>
                 Category
               </template>
               <template #label>
-                Choose the link category
+                {{ constants.LABEL_CATEGORY }}
               </template>
             </FieldElt>
           </template>
@@ -61,7 +61,8 @@
         <BtnElt type="button"
           content="Create"
           @click="validateNewLink()" 
-          class="btn-green"/>
+          class="btn-green"
+          :title="constants.CREATE_LINK"/>
       </form>
     </template>
   </CardElt>
@@ -78,12 +79,12 @@ export default {
       name: "",
       url: "",
       cat: "",
-      cats: []
+      constants: []
     }
   },
 
   mounted() {
-    this.cats = constants.CATS_LINK;
+    this.constants = constants;
   },
 
   methods: {

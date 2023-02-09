@@ -6,7 +6,7 @@
       <i :class="`fa-brands fa-${slotProps.item.toLowerCase()} fa-fw`"></i>
     </template>
 
-    <template #last v-if="checkSession('author')">
+    <template #last v-if="checkSession('admin')">
       <a href="#create-link"
         title="Create a link">
         <i class="fa-solid fa-link fa-fw"></i>
@@ -44,7 +44,7 @@
       </ListElt>
     </template>
 
-    <template #aside v-if="checkSession('author')">
+    <template #aside v-if="checkSession('admin')">
       <CreateLink />
     </template>
 

@@ -2,7 +2,7 @@
   <CardElt>
     <template #header>
       <i class="fa-regular fa-comment fa-2x"></i>
-      <h3>Create Comment</h3>
+      <h3>{{ constants.CREATE_COMMENT }}</h3>
     </template>
 
     <template #body>
@@ -13,13 +13,13 @@
         type="textarea"
         v-model:value="text"
         @keyup.enter="createComment()"
-        info="Thanks for this article !"
+        :info="constants.CREATE_TEXT"
         :min="2">
         <template #legend>
           Text
         </template>
         <template #label>
-          Indicate the comment text
+          {{ constants.LABEL_TEXT }}
         </template>
       </FieldElt>
 
@@ -28,7 +28,7 @@
         content="Create"
         @click="createComment()" 
         class="btn-green"
-        title="Create a new Comment">
+        :title="constants.CREATE_COMMENT">
         <template #btn>
           <i class="fa-solid fa-square-plus fa-lg"></i>
         </template>
@@ -46,8 +46,13 @@ export default {
 
   data() {
     return {
-      text: ""
+      text: "",
+      constants: []
     }
+  },
+
+  mounted() {
+    this.constants = constants;
   },
 
   methods: {

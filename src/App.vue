@@ -31,7 +31,7 @@
     <template #admin>
 
       <!-- Admin -->
-      <ListElt v-if="checkSession('admin')"
+      <ListElt v-if="checkSession('admin') || checkSession('editor')"
         :items="['profile', 'admin', 'logout']">
 
         <template #item-1>
@@ -58,7 +58,7 @@
       </ListElt>
 
       <!-- Author & User -->
-      <ListElt v-else-if="checkSession('author') || checkSession('user')"
+      <ListElt v-else-if="checkSession('user')"
         :items="['profile', 'logout']">
 
         <template #item-1>

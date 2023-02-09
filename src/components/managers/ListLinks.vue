@@ -14,40 +14,45 @@
         up/del
       </template>
 
+      <!-- Id -->
       <template #cell-_id="slotProps">
         {{ slotProps.index + 1 }}
         ({{ slotProps.item._id }})
       </template>
 
+      <!-- Name -->
       <template #cell-name="slotProps">
         <FieldElt :id="'name-' + table[slotProps.index]._id"
           v-model:value="table[slotProps.index].name"
-          info="Update the link name"
+          :info="constants.UPDATE_NAME"
           @keyup.enter="validateUpdatedLink(table[slotProps.index]._id)">
         </FieldElt>
       </template>
 
+      <!-- URL -->
       <template #cell-url="slotProps">
         <FieldElt :id="'url-' + table[slotProps.index]._id"
           type="url"
           v-model:value="table[slotProps.index].url"
-          info="Update the link URL"
+          :info="constants.UPDATE_URL"
           @keyup.enter="validateUpdatedLink(table[slotProps.index]._id)"
           :max="parseInt('100')">
         </FieldElt>
       </template>
 
+      <!-- Category -->
       <template #cell-cat="slotProps">
         <FieldElt :id="'cat-' + table[slotProps.index]._id"
           type="select"
           v-model:value="table[slotProps.index].cat"
-          info="Update the category"
+          :info="constants.UPDATE_CATEGORY"
           @keyup.enter="validateUpdatedLink(table[slotProps.index]._id)"
-          :list="cats">
+          :list="constants.CATS_LINK">
           {{ value }}
         </FieldElt>
       </template>
 
+      <!-- Update -->
       <template #body="slotProps">
         <BtnElt type="button"
           @click="validateUpdatedLink(table[slotProps.index]._id)" 
@@ -58,6 +63,7 @@
           </template>
         </BtnElt>
 
+      <!-- Delete -->
         <BtnElt type="button"
           @click="deleteLink(table[slotProps.index]._id)" 
           class="btn-red"
@@ -80,12 +86,12 @@ export default {
 
   data() {
     return {
-      cats: []
+      constants: []
     }
   },
 
   mounted() {
-    this.cats = constants.CATS_LINK;
+    this.constants = constants;
   },
 
   methods: {

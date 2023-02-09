@@ -10,37 +10,36 @@
         enctype="multipart/form-data">
         <TableElt :items="users">
 
-          <!-- Last Table Head -->
           <template #head>
             up/del
           </template>
 
-          <!-- User Id -->
+          <!-- Id -->
           <template #cell-_id="slotProps">
             <b>#{{ slotProps.index + 1 }}</b>
             ({{ users[slotProps.index]._id }})
           </template>
 
-          <!-- User Name -->
+          <!-- Name -->
           <template #cell-name="slotProps">
             <FieldElt :id="'name-' + users[slotProps.index]._id"
               v-model:value="getUsers()[slotProps.index].name"
-              info="Update the user name"
+              :info="constants.UPDATE_NAME"
               @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)">
             </FieldElt>
           </template>
 
-          <!-- User Email -->
+          <!-- Email -->
           <template #cell-email="slotProps">
             <FieldElt :id="'email-' + users[slotProps.index]._id"
               type="email"
               v-model:value="getUsers()[slotProps.index].email"
-              info="Update the user email"
+              :info="constants.UPDATE_EMAIL"
               @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)">
             </FieldElt>
           </template>
 
-          <!-- User Image -->
+          <!-- Image -->
           <template #cell-image="slotProps">
             <MediaElt :src="'/img/thumbnails/users/' + users[slotProps.index].image"
               :alt="users[slotProps.index].name"
@@ -48,55 +47,55 @@
             </MediaElt>
             <FieldElt :id="'image-' + users[slotProps.index]._id"
               type="file"
-              info="Update the user image">
+              :info="constants.UPDATE_IMAGE">
             </FieldElt>
           </template>
 
-          <!-- User Alt -->
+          <!-- Alt -->
           <template #cell-alt="slotProps">
             <FieldElt :id="'alt-' + users[slotProps.index]._id"
               type="textarea"
               v-model:value="getUsers()[slotProps.index].alt"
-              info="Update the user alt"
+              :info="constants.UPDATE_ALT"
               @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)">
             </FieldElt>
           </template>
 
-          <!-- User Pass -->
+          <!-- Pass -->
           <template #cell-pass="slotProps">
             <FieldElt :id="'pass-' + users[slotProps.index]._id"
               type="password"
               v-model:value="pass"
-              info="Update the user password"
+              :info="constants.UPDATE_PASSWORD"
               @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)">
             </FieldElt>
           </template>
 
-          <!-- User Role -->
+          <!-- Role -->
           <template #cell-role="slotProps">
             <FieldElt :id="'role-' + users[slotProps.index]._id"
               type="select"
               v-model:value="getUsers()[slotProps.index].role"
-              :list="roles"
-              info="Update the user role"
+              :list="constants.ROLES_USER"
+              :info="constants.UPDATE_ROLE"
               @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)">
               {{ value }}
             </FieldElt>
           </template>
 
-          <!-- User Created -->
+          <!-- Created -->
           <template #cell-created="slotProps">
             {{ new Date(getUsers()[slotProps.index].created).toLocaleString() }}
           </template>
 
-          <!-- User Updated -->
+          <!-- Updated -->
           <template #cell-updated="slotProps">
             {{ new Date(getUsers()[slotProps.index].updated).toLocaleString() }}
           </template>
 
           <template #body="slotProps">
 
-          <!-- Update Button -->
+          <!-- Update -->
           <BtnElt type="button"
               @click="validateUpdatedUser(users[slotProps.index]._id)" 
               class="btn-sky"
@@ -106,7 +105,7 @@
               </template>
             </BtnElt>
 
-            <!-- Delete Button -->
+            <!-- Delete -->
             <BtnElt type="button"
               @click="deleteUser(users[slotProps.index]._id)" 
               class="btn-red"
@@ -132,12 +131,12 @@ export default {
   data() {
     return {
       pass: "",
-      roles: []
+      constants: []
     }
   },
 
   mounted() {
-    this.roles = constants.ROLES_USER;
+    this.constants = constants;
   },
 
   methods: {
