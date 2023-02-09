@@ -14,7 +14,8 @@
     </template>
   </NavElt>
 
-  <CardElt id="top">
+  <CardElt id="top"
+      :isArticle="true">
     <template #header>
       <i class="blue anima-flipX fa-solid fa-blog fa-4x"></i>
       <h1 class="sky anima-flipY">Blog</h1>
@@ -34,54 +35,74 @@
 
         <template #nested="slotProps">
 
-          <BtnElt v-if="!checkSession('user')"
-            :id="`like-${slotProps.value._id}`"
-            href="/login"
-            class="btn-blue"
-            :title="`Login to like ${slotProps.value.title}`">
-            <template #btn>
-              <i class="fa-regular fa-thumbs-up fa-lg"></i>
-              {{ slotProps.value.likes }}
+          <CardElt itemscope
+            itemtype="https://schema.org/Article">
+            <template #header>
+              <h3 itemprop="name"
+                class="sky">
+                {{ slotProps.value.title }}
+              </h3>
             </template>
-          </BtnElt>
 
-          <BtnElt v-else-if="checkLikes(slotProps.value._id) === false"
-            :id="`like-${slotProps.value._id}`"
-            type="button"
-            @click="addLike(slotProps.value._id)"
-            class="btn-blue"
-            :title="`Like ${slotProps.value.title} ?`">
-            <template #btn>
-              <i class="fa-regular fa-thumbs-up fa-lg"></i>
-              {{ slotProps.value.likes }}
+            <template #body>
+              <BtnElt v-if="!checkSession('user')"
+                :id="`like-${slotProps.value._id}`"
+                href="/login"
+                class="btn-blue"
+                :title="`Login to like ${slotProps.value.title}`">
+                <template #btn>
+                  <i class="fa-regular fa-thumbs-up fa-lg">
+                  </i> <b itemprop="contentRating">
+                    {{ slotProps.value.likes }}
+                  </b>
+                </template>
+              </BtnElt>
+
+              <BtnElt v-else-if="checkLikes(slotProps.value._id) === false"
+                :id="`like-${slotProps.value._id}`"
+                type="button"
+                @click="addLike(slotProps.value._id)"
+                class="btn-blue"
+                :title="`Like ${slotProps.value.title} ?`">
+                <template #btn>
+                  <i class="fa-regular fa-thumbs-up fa-lg">
+                  </i> <b itemprop="contentRating">
+                    {{ slotProps.value.likes }}
+                  </b>
+                </template>
+              </BtnElt>
+
+              <BtnElt v-else-if="checkLikes(slotProps.value._id) === true"
+                :id="`like-${slotProps.value._id}`"
+                type="button"
+                @click="addLike(slotProps.value._id)"
+                class="btn-sky"
+                :title="`Dislike ${slotProps.value.title} ?`">
+                <template #btn>
+                  <i class="fa-regular fa-thumbs-up fa-lg">
+                  </i> <b itemprop="contentRating">
+                    {{ slotProps.value.likes }}
+                  </b>
+                </template>
+              </BtnElt>
+
+              <a :href="`article/${slotProps.value._id}`"
+                :title="`Read ${slotProps.value.title}`">
+
+                <MediaElt :src="`img/thumbnails/articles/${slotProps.value.image}`" 
+                  :alt="`${slotProps.value.title}`" 
+                  itemprop="image"
+                  :id="`${slotProps.value.title.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`">
+
+                  <template #figcaption>
+                    <blockquote itemprop="text">
+                      {{ slotProps.value.text }}
+                    </blockquote>
+                  </template>
+                </MediaElt>
+              </a>
             </template>
-          </BtnElt>
-
-          <BtnElt v-else-if="checkLikes(slotProps.value._id) === true"
-            :id="`like-${slotProps.value._id}`"
-            type="button"
-            @click="addLike(slotProps.value._id)"
-            class="btn-sky"
-            :title="`Dislike ${slotProps.value.title} ?`">
-            <template #btn>
-              <i class="fa-solid fa-thumbs-up fa-lg"></i>
-              {{ slotProps.value.likes }}
-            </template>
-          </BtnElt>
-
-          <a :href="`article/${slotProps.value._id}`"
-            :title="`Read ${slotProps.value.title}`">
-            <MediaElt :src="`img/thumbnails/articles/${slotProps.value.image}`" 
-              :alt="`${slotProps.value.title}`" 
-              :id="`${slotProps.value.title.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`">
-
-              <template #figcaption>
-                <h3>{{ slotProps.value.title }}</h3>
-                <blockquote>{{ slotProps.value.text }}</blockquote>
-              </template>
-            </MediaElt>
-          </a>
-
+          </CardElt>
         </template>
       </ListElt>
     </template>
