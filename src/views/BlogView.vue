@@ -2,7 +2,7 @@
   <NavElt :items="setCats"
     class="sidebar">
 
-    <template #last  v-if="checkSession('author')">
+    <template #last  v-if="checkSession('editor')">
       <a href="#create-article"
         title="Create a article">
         <i class="fa-regular fa-envelope fa-fw"></i>
@@ -107,7 +107,7 @@
       </ListElt>
     </template>
 
-    <template #aside v-if="checkSession('author')">
+    <template #aside v-if="checkSession('editor')">
       <CreateArticle />
     </template>
   </CardElt>

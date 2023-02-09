@@ -2,7 +2,7 @@
   <NavElt :items="setCats"
     class="sidebar">
 
-    <template #last v-if="checkSession('author')">
+    <template #last v-if="checkSession('editor')">
       <a href="#create-product"
         title="Create an product">
         <i class="fa-solid fa-basket-shopping fa-fw"></i>
@@ -101,7 +101,7 @@
       </ListElt>
     </template>
 
-    <template #aside v-if="checkSession('author')">
+    <template #aside v-if="checkSession('editor')">
       <CreateProduct />
     </template>
   </CardElt>
