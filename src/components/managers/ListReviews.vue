@@ -10,20 +10,41 @@
       <ListElt :items="reviews"
         :dynamic="true">
         <template #items="slotProps">
-          <blockquote class="container-90sm-80md-70lg-60xl-50wd bord bord-sky blue">
-            {{ slotProps.item.text }}
-          </blockquote>
 
-          <p class="violet">
-            {{ slotProps.item.score }}
-            <i class="fa-solid fa-star"></i>
-          </p>
-          
-          <p>by {{ getReviewUser(slotProps.item.user) }}</p>
-          <p class="silver">
-            Created: {{ new Date(slotProps.item.created).toLocaleDateString() }}
-            (Updated: {{ new Date(slotProps.item.updated).toLocaleDateString() }})
-          </p>
+          <figure itemscope
+            itemtype="https://schema.org/Review">
+            <blockquote itemprop="text"
+              class="container-90sm-80md-70lg-60xl-50wd bord bord-sky blue">
+              {{ slotProps.item.text }}
+            </blockquote>
+
+            <figcaption>
+              <p itemprop="reviewRating"
+                itemscope
+                itemtype="https://schema.org/Rating"
+                class="violet">
+                <b itemprop="ratingValue">
+                  {{ slotProps.item.score }}
+                </b>
+                <i class="fa-solid fa-star"></i>
+              </p>
+
+              <p class="silver">
+                Created by
+                <b itemprop="author">
+                  {{ getReviewUser(slotProps.item.user) }}
+                </b>
+                on
+                <i itemprop="dateCreated">
+                  {{ new Date(slotProps.item.created).toLocaleDateString() }}
+                </i>
+                / Updated on
+                <i>
+                  {{ new Date(slotProps.item.updated).toLocaleDateString() }}
+                </i>
+              </p>
+            </figcaption>
+          </figure>
         </template>
       </ListElt>
     </template>
