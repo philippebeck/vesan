@@ -24,7 +24,7 @@
           <template #cell-name="slotProps">
             <FieldElt :id="'name-' + products[slotProps.index]._id"
               v-model:value="getProducts()[slotProps.index].name"
-              info="Update the product name"
+              :info="constants.UPDATE_NAME"
               @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)">
             </FieldElt>
           </template>
@@ -34,7 +34,7 @@
             <FieldElt :id="'description-' + products[slotProps.index]._id"
               type="textarea"
               v-model:value="getProducts()[slotProps.index].description"
-              info="Update the product description"
+              :info="constants.UPDATE_DESCRIPTION"
               @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)">
             </FieldElt>
           </template>
@@ -47,7 +47,7 @@
             </MediaElt>
             <FieldElt :id="'image-' + products[slotProps.index]._id"
               type="file"
-              info="Update the product image">
+              :info="constants.UPDATE_IMAGE">
             </FieldElt>
           </template>
 
@@ -56,7 +56,7 @@
             <FieldElt :id="'alt-' + products[slotProps.index]._id"
               type="textarea"
               v-model:value="getProducts()[slotProps.index].alt"
-              info="Update the product alt"
+              :info="constants.UPDATE_ALT"
               @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)">
             </FieldElt>
           </template>
@@ -67,7 +67,7 @@
               type="number"
               v-model:value="getProducts()[slotProps.index].price"
               @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
-              info="Update the product price"
+              :info="constants.UPDATE_PRICE"
               :min="1"
               :max="1000">
             </FieldElt>
@@ -79,7 +79,7 @@
               type="textarea"
               v-model:value="getProducts()[slotProps.index].options"
               @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
-              info="Update the options">
+              :info="constants.UPDATE_OPTIONS">
               {{ value }}
             </FieldElt>
           </template>
@@ -89,9 +89,9 @@
             <FieldElt :id="'cat-' + products[slotProps.index]._id"
               type="select"
               v-model:value="getProducts()[slotProps.index].cat"
-              info="Update the category"
+              :info="constants.UPDATE_CATEGORY"
               @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
-              :list="cats">
+              :list="constants.CATS_PRODUCT">
               {{ value }}
             </FieldElt>
           </template>

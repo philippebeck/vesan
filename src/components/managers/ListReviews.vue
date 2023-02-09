@@ -75,7 +75,7 @@
               type="textarea"
               v-model:value="getReviews()[slotProps.index].text"
               @keyup.enter="updateReview(reviews[slotProps.index]._id)"
-              info="Update the review text">
+              :info="constants.UPDATE_TEXT">
             </FieldElt>
           </template>
 
@@ -85,7 +85,7 @@
               type="number"
               v-model:value="getReviews()[slotProps.index].score"
               @keyup.enter="updateReview(reviews[slotProps.index]._id)"
-              info="Update the review score"
+              :info="constants.UPDATE_SCORE"
               :min="0"
               :max="5">
             </FieldElt>

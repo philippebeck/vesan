@@ -39,9 +39,9 @@
             <FieldElt :id="'status-' + orders[slotProps.index]._id"
               type="select"
               v-model:value="getOrders()[slotProps.index].status"
-              info="Update the status"
+              :info="constants.UPDATE_STATUS"
               @keyup.enter="updateOrder(orders[slotProps.index]._id)"
-              :list="cats">
+              :list="constants.CATS_ORDER">
               {{ value }}
             </FieldElt>
           </template>

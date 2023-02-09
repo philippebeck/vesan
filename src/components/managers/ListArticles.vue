@@ -25,7 +25,7 @@
             <FieldElt :id="'title-' + articles[slotProps.index]._id"
               v-model:value="getArticles()[slotProps.index].title"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              info="Update the article title">
+              :info="constants.UPDATE_TITLE">
             </FieldElt>
           </template>
 
@@ -35,7 +35,7 @@
               type="textarea"
               v-model:value="getArticles()[slotProps.index].text"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              info="Update the article text">
+              :info="constants.UPDATE_TEXT">
             </FieldElt>
           </template>
 
@@ -47,7 +47,7 @@
             </MediaElt>
             <FieldElt :id="'image-' + articles[slotProps.index]._id"
               type="file"
-              info="Update the article image">
+              :info="constants.UPDATE_IMAGE">
             </FieldElt>
           </template>
 
@@ -57,7 +57,7 @@
               type="textarea"
               v-model:value="getArticles()[slotProps.index].alt"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              info="Update the article title">
+              :info="constants.UPDATE_ALT">
             </FieldElt>
           </template>
 
@@ -67,8 +67,8 @@
               type="select"
               v-model:value="getArticles()[slotProps.index].cat"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              :list="cats"
-              info="Update the category">
+              :list="constants.CATS_ARTICLE"
+              :info="constants.UPDATE_CATEGORY">
               {{ value }}
             </FieldElt>
           </template>

@@ -24,7 +24,7 @@
           <template #cell-name="slotProps">
             <FieldElt :id="'name-' + users[slotProps.index]._id"
               v-model:value="getUsers()[slotProps.index].name"
-              info="Update the user name"
+              :info="constants.UPDATE_NAME"
               @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)">
             </FieldElt>
           </template>
@@ -34,7 +34,7 @@
             <FieldElt :id="'email-' + users[slotProps.index]._id"
               type="email"
               v-model:value="getUsers()[slotProps.index].email"
-              info="Update the user email"
+              :info="constants.UPDATE_EMAIL"
               @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)">
             </FieldElt>
           </template>
@@ -47,7 +47,7 @@
             </MediaElt>
             <FieldElt :id="'image-' + users[slotProps.index]._id"
               type="file"
-              info="Update the user image">
+              :info="constants.UPDATE_IMAGE">
             </FieldElt>
           </template>
 
@@ -56,7 +56,7 @@
             <FieldElt :id="'alt-' + users[slotProps.index]._id"
               type="textarea"
               v-model:value="getUsers()[slotProps.index].alt"
-              info="Update the user alt"
+              :info="constants.UPDATE_ALT"
               @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)">
             </FieldElt>
           </template>
@@ -66,7 +66,7 @@
             <FieldElt :id="'pass-' + users[slotProps.index]._id"
               type="password"
               v-model:value="pass"
-              info="Update the user password"
+              :info="constants.UPDATE_PASSWORD"
               @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)">
             </FieldElt>
           </template>
@@ -76,8 +76,8 @@
             <FieldElt :id="'role-' + users[slotProps.index]._id"
               type="select"
               v-model:value="getUsers()[slotProps.index].role"
-              :list="roles"
-              info="Update the user role"
+              :list="constants.ROLES_USER"
+              :info="constants.UPDATE_ROLE"
               @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)">
               {{ value }}
             </FieldElt>

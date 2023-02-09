@@ -64,7 +64,7 @@
             <FieldElt :id="'text-' + comments[slotProps.index]._id"
               type="textarea"
               v-model:value="getComments()[slotProps.index].text"
-              info="Update the comment text"
+              :info="constants.UPDATE_TEXT"
               @keyup.enter="updateComment(comments[slotProps.index]._id)">
             </FieldElt>
           </template>
