@@ -11,14 +11,28 @@
         :dynamic="true">
 
         <template #items="slotProps">
-          <blockquote class="container-90sm-80md-70lg-60xl-50wd bord bord-sky blue">
-            {{ slotProps.item.text }}
-          </blockquote>
-          <p>by {{ getCommentUser(slotProps.item.user) }}</p>
-          <p class="silver">
-            Created: {{ new Date(slotProps.item.created).toLocaleDateString() }}
-            (Updated: {{ new Date(slotProps.item.updated).toLocaleDateString() }})
-          </p>
+          <figure itemscope
+            itemtype="https://schema.org/Comment">
+            <blockquote itemprop="text"
+              class="container-90sm-80md-70lg-60xl-50wd bord bord-sky blue">
+              {{ slotProps.item.text }}
+            </blockquote>
+            <br>
+            <figcaption class="silver">
+              Created by
+              <b itemprop="author">
+                {{ getCommentUser(slotProps.item.user) }}
+              </b>
+              on 
+              <i itemprop="dateCreated">
+                {{ new Date(slotProps.item.created).toLocaleDateString() }}
+              </i>
+              / Updated on 
+              <i itemprop="dateModified">
+                {{ new Date(slotProps.item.updated).toLocaleDateString() }}
+              </i>
+            </figcaption>
+          </figure>
         </template>
       </ListElt>
     </template>
