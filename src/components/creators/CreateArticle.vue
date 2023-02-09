@@ -2,7 +2,7 @@
   <CardElt id="create-article">
     <template #header>
       <i class="fa-regular fa-envelope fa-2x"></i>
-      <h3>Create Article</h3>
+      <h3>{{ constants.CREATE_ARTICLE }}</h3>
     </template>
 
     <template #body>
@@ -14,14 +14,14 @@
           <template #item-1>
             <FieldElt id="article-title"
               v-model:value="title"
-              info="My new article"
+              :info="constants.CREATE_TITLE"
               @keyup.enter="validateNewArticle()"
               :min="2">
               <template #legend>
                 Title
               </template>
               <template #label>
-                Indicate the article title
+                {{ constants.LABEL_TITLE }}
               </template>
             </FieldElt>
           </template>
@@ -30,14 +30,14 @@
           <template #item-2>
             <FieldElt id="article-text"
               v-model:value="text"
-              info="Once upon a time..."
+              :info="constants.CREATE_TEXT"
               @keyup.enter="validateNewArticle()"
               type="textarea">
               <template #legend>
                 Text
               </template>
               <template #label>
-                Indicate the article text
+                {{ constants.LABEL_TEXT }}
               </template>
             </FieldElt>
           </template>
@@ -46,13 +46,13 @@
           <template #item-3>
             <FieldElt id="article-image"
               v-model:value="image"
-              info="Image file only"
+              :info="constants.CREATE_IMAGE"
               type="file">
               <template #legend>
                 Image
               </template>
               <template #label>
-                Provide article image
+                {{ constants.LABEL_IMAGE }}
               </template>
             </FieldElt>
           </template>
@@ -62,13 +62,13 @@
             <FieldElt id="article-alt"
               type="textarea"
               v-model:value="alt"
-              info="Alternative text"
+              :info="constants.CREATE_ALT"
               @keyup.enter="validateNewArticle()">
               <template #legend>
                 Alt
               </template>
               <template #label>
-                Indicate the article alt
+                {{ constants.LABEL_ALT }}
               </template>
             </FieldElt>
           </template>
@@ -78,14 +78,14 @@
             <FieldElt id="article-cat"
               type="select"
               v-model:value="cat"
-              info="Choose a category"
+              :info="constants.CREATE_CATEGORY"
               @keyup.enter="validateNewArticle()"
-              :list="cats">
+              :list="constants.CATS_ARTICLE">
               <template #legend>
                 Category
               </template>
               <template #label>
-                Choose the article category
+                {{ constants.LABEL_CATEGORY }}
               </template>
             </FieldElt>
           </template>
@@ -96,7 +96,7 @@
           content="Create"
           @click="validateNewArticle()" 
           class="btn-green"
-          title="Create a new Article">
+          :title="constants.CREATE_ARTICLE">
           <template #btn>
             <i class="fa-solid fa-square-plus fa-lg"></i>
           </template>
@@ -141,7 +141,7 @@ export default {
           this.checkNewArticle();
 
         } else {
-          alert("A photo of the article must be uploaded !");
+          alert(constants.ARTICLE_IMG);
         }
       }
     },

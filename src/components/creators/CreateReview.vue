@@ -2,7 +2,7 @@
   <CardElt>
     <template #header>
       <i class="fa-solid fa-check fa-2x"></i>
-      <h3>Create Review</h3>
+      <h3>{{ constants.CREATE_REVIEW }}</h3>
     </template>
 
     <template #body>
@@ -12,14 +12,14 @@
         <FieldElt id="review-text"
           type="textarea"
           v-model:value="text"
-          info="Thanks for this product !"
+          :info="constants.CREATE_TEXT"
           @keyup.enter="createReview()"
           :min="2">
           <template #legend>
             Text
           </template>
           <template #label>
-            Indicate the review text
+            {{ constants.LABEL_TEXT }}
           </template>
         </FieldElt>
 
@@ -28,23 +28,23 @@
           type="number"
           v-model:value="score"
           @keyup.enter="createReview()"
-          info=""
+          :info="constants.CREATE_SCORE"
           :min="0"
           :max="5">
           <template #legend>
             Score
           </template>
           <template #label>
-            Indicate the review score
+            {{ constants.LABEL_SCORE }}
           </template>
         </FieldElt>
 
         <!-- Create Button -->
         <BtnElt type="button"
           content="Create"
-          @click="createReview()" 
+          @click="checkNewReview()" 
           class="btn-green"
-          title="Create a new Review">
+          :title="constants.CREATE_REVIEW">
           <template #btn>
             <i class="fa-solid fa-square-plus fa-lg"></i>
           </template>
