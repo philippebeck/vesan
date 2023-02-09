@@ -73,26 +73,47 @@ export default {
   },
 
   methods: {
-    /**
-     * CREATE REVIEW
+        /**
+     * CHECK NEW PRODUCT IF NAME | DESCRIPTION ARE REFERENCED
      */
-    createReview() {
-      let review  = new FormData();
+    checkNewReview() {
+      this.$serve.getData("/api/reviews")
+        .then((reviews) => {
+          let isReferenced = false;
+          for (let i = 0; i < reviews.length; i++) {
 
-      review.append("text", this.text);
-      review.append("score", this.score);
-      review.append("product", this.$route.params.id);
-      review.append("user", constants.USER_ID);
-      review.append("created", Date.now());
-      review.append("updated", Date.now());
-
-      this.$serve.postData("/api/reviews", review)
-        .then(() => {
-          alert("New review created !");
-          this.$router.go();
+            if (reviews[i].user === constants.USER_ID) {
+              alert(constants.CHECK_REVIEW);
+              isReferenced = true;
+            }
+          }
+          this.createReview(isReferenced);
         })
         .catch(err => { console.log(err) });
+    },
 
+    /**
+     * CREATE REVIEW
+     * @param {boolean} isReferenced 
+     */
+    createReview(isReferenced) {
+      if (!isReferenced) {
+        let review  = new FormData();
+
+        review.append("text", this.text);
+        review.append("score", this.score);
+        review.append("product", this.$route.params.id);
+        review.append("user", constants.USER_ID);
+        review.append("created", Date.now());
+        review.append("updated", Date.now());
+
+        this.$serve.postData("/api/reviews", review)
+          .then(() => {
+            alert("New review created !");
+            this.$router.go();
+          })
+          .catch(err => { console.log(err) });
+      }
     }
   }
 }
