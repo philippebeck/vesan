@@ -8,13 +8,17 @@
 
     <template #body>
 
-      <BtnElt v-if="calculateScoresAverage(product._id) !== undefined" 
+      <BtnElt v-if="calculateScoresAverage(product._id) !== undefined"
+        itemprop="aggregateRating"
+        itemscope
+        itemtype="https://schema.org/AggregateRating" 
         href="#reviews"
         class="btn-violet"
         :title="`Read Reviews about ${product.name}`">
         <template #btn>
-          {{ calculateScoresAverage(product._id) }}
-        <i class="fa-solid fa-star fa-lg"></i>
+          <b itemprop="ratingValue">
+            {{ calculateScoresAverage(product._id) }}
+          </b> <i class="fa-solid fa-star fa-lg"></i>
         </template>
       </BtnElt>
 
@@ -35,7 +39,9 @@
         :alt="product.alt">
 
         <template #figcaption>
-          <p itemprop="description">{{ product.description }}</p>
+          <p itemprop="description">
+            {{ product.description }}
+          </p>
           <p itemprop="offers"
             itemscope
             itemtype="https://schema.org/Offer">

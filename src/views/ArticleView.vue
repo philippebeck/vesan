@@ -14,8 +14,10 @@
         class="btn-blue"
         :title="`Login to like ${article.title}`">
         <template #btn>
-          <i class="fa-regular fa-thumbs-up fa-lg"></i>
-          {{ article.likes }}
+          <i class="fa-regular fa-thumbs-up fa-lg">
+          </i> <b itemprop="contentRating">
+            {{ article.likes }}
+          </b>
         </template>
       </BtnElt>
 
@@ -26,8 +28,10 @@
         class="btn-blue"
         :title="`Like ${article.title} ?`">
         <template #btn>
-          <i class="fa-regular fa-thumbs-up fa-lg"></i>
-          {{ article.likes }}
+          <i class="fa-regular fa-thumbs-up fa-lg">
+          </i> <b itemprop="contentRating">
+            {{ article.likes }}
+          </b>
         </template>
       </BtnElt>
 
@@ -38,8 +42,10 @@
         class="btn-sky"
         :title="`Dislike ${article.title} ?`">
         <template #btn>
-          <i class="fa-solid fa-thumbs-up fa-lg"></i>
-          {{ article.likes }}
+          <i class="fa-regular fa-thumbs-up fa-lg">
+          </i> <b itemprop="contentRating">
+            {{ article.likes }}
+          </b>
         </template>
       </BtnElt>
 
