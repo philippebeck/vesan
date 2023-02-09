@@ -81,6 +81,8 @@ export default {
   FORGOT_SUBJECT : "New Password",
   FORGOT_TEXT : "This is your new Password, keep it safe : ",
 
+  PRICE_CURRENCY : "EUR",
+
   ROLES_USER : [
     "admin",
     "author",

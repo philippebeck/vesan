@@ -1,7 +1,8 @@
 <template>
-  <CardElt>
+  <CardElt itemscope
+    itemtype="https://schema.org/Article">
     <template #header>
-      <h1>{{ article.title }}</h1>
+      <h1 itemprop="name">{{ article.title }}</h1>
       <strong>{{ article.cat }}</strong>
     </template>
 
@@ -13,8 +14,10 @@
         class="btn-blue"
         :title="`Login to like ${article.title}`">
         <template #btn>
-          <i class="fa-regular fa-thumbs-up fa-lg"></i>
-          {{ article.likes }}
+          <i class="fa-regular fa-thumbs-up fa-lg">
+          </i> <b itemprop="contentRating">
+            {{ article.likes }}
+          </b>
         </template>
       </BtnElt>
 
@@ -25,8 +28,10 @@
         class="btn-blue"
         :title="`Like ${article.title} ?`">
         <template #btn>
-          <i class="fa-regular fa-thumbs-up fa-lg"></i>
-          {{ article.likes }}
+          <i class="fa-regular fa-thumbs-up fa-lg">
+          </i> <b itemprop="contentRating">
+            {{ article.likes }}
+          </b>
         </template>
       </BtnElt>
 
@@ -37,22 +42,36 @@
         class="btn-sky"
         :title="`Dislike ${article.title} ?`">
         <template #btn>
-          <i class="fa-solid fa-thumbs-up fa-lg"></i>
-          {{ article.likes }}
+          <i class="fa-regular fa-thumbs-up fa-lg">
+          </i> <b itemprop="contentRating">
+            {{ article.likes }}
+          </b>
         </template>
       </BtnElt>
 
       <MediaElt :src="`/img/articles/${article.image}`"
-        :alt="article.alt">
+        :alt="article.alt"
+        itemprop="image">
 
         <template #figcaption>
-          <blockquote class="container width-sm bord bord-sky blue">
+          <blockquote itemprop="text"
+            class="container width-sm bord bord-sky blue">
             {{ article.text }}
           </blockquote>
           
           <p class="silver">
-            Created: {{ new Date(article.created).toLocaleDateString() }} 
-            (Updated: {{ new Date(article.updated).toLocaleDateString() }})
+            Created by 
+            <b itemprop="author">
+              {{ getArticleUser() }}
+            </b>
+            on 
+            <i itemprop="dateCreated">
+              {{ new Date(article.created).toLocaleDateString() }}
+            </i>
+            / Updated on 
+            <i itemprop="dateModified">
+              {{ new Date(article.updated).toLocaleDateString() }}
+            </i>
           </p>
         </template>
       </MediaElt>
@@ -112,6 +131,19 @@ export default {
      */
     checkSession(role) {
       return this.$serve.checkSession(this.users, role);
+    },
+
+    /**
+     * GET ARTICLE USER
+     * @param {}  
+     */
+    getArticleUser() {
+      for (let i = 0; i < this.users.length; i++ ) {
+        if (this.article.user === this.users[i]._id) {
+
+          return this.users[i].name;
+        }
+      }
     },
 
     /**

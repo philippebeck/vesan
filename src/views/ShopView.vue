@@ -34,44 +34,70 @@
 
         <template #nested="slotProps">
 
-          <BtnElt v-if="calculateScoresAverage(slotProps.value._id) !== undefined"
-            :href="`product/${slotProps.value._id}#reviews`"
-            class="btn-violet"
-            :title="`Read reviews about ${slotProps.value.name}`">
-            <template #btn>
-              {{ calculateScoresAverage(slotProps.value._id) }}
-              <i class="fa-solid fa-star"></i>
+          <CardElt itemscope
+            itemtype="https://schema.org/Product">
+            <template #header>
+                <h3 itemprop="name">
+                  {{ slotProps.value.name }}
+                </h3>
             </template>
-          </BtnElt>
 
-          <BtnElt v-else-if="userId" 
-            :href="`product/${slotProps.value._id}#review`"
-            class="btn-violet"
-            content="Write a Review"
-            :title="`Be the first to write a review about ${slotProps.value.name}`" />
+            <template #body>
+              <BtnElt v-if="calculateScoresAverage(slotProps.value._id) !== undefined"
+                itemprop="aggregateRating"
+                itemscope
+                itemtype="https://schema.org/AggregateRating"
+                :href="`product/${slotProps.value._id}#reviews`"
+                class="btn-violet"
+                :title="`Read reviews about ${slotProps.value.name}`">
+                <template #btn>
+                  <b itemprop="ratingValue">
+                    {{ calculateScoresAverage(slotProps.value._id) }}
+                  </b> <i class="fa-solid fa-star"></i>
+                </template>
+              </BtnElt>
 
-          <BtnElt v-else 
-            href="/login"
-            class="btn-violet"
-            content="Login to write a review"
-            :title="`Be the first to write a Review about ${slotProps.value.name}`" />
+              <BtnElt v-else-if="checkSession('user')" 
+                :href="`product/${slotProps.value._id}#review`"
+                class="btn-violet"
+                content="Write a Review"
+                :title="`Be the first to write a review about ${slotProps.value.name}`" />
 
-          <a :href="`product/${slotProps.value._id}`"
-            :title="`Watch ${slotProps.value.name}`">
-            <MediaElt :src="`img/thumbnails/products/${slotProps.value.image}`" 
-              :alt="`${slotProps.value.description}`" 
-              :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`">
+              <BtnElt v-else 
+                href="/login"
+                class="btn-violet"
+                content="Login to write a review"
+                :title="`Be the first to write a Review about ${slotProps.value.name}`" />
 
-              <template #figcaption>
-                <h3>{{ slotProps.value.name }}</h3>
-                <p>{{ slotProps.value.description }}</p>
-                <b>{{ slotProps.value.price }} €</b>
-              </template>
+              <a :href="`product/${slotProps.value._id}`"
+                :title="`Watch ${slotProps.value.name}`"
+                itemprop="url">
 
-            </MediaElt>
-          </a>
+                <MediaElt itemprop="image"
+                  :src="`img/thumbnails/products/${slotProps.value.image}`" 
+                  :alt="`${slotProps.value.description}`" 
+                  :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`">
+
+                  <template #figcaption>
+                    <p itemprop="description">
+                      {{ slotProps.value.description }}
+                    </p>
+                    <p itemprop="offers"
+                      itemscope
+                      itemtype="https://schema.org/Offer">
+                      <b itemprop="price">
+                        {{ slotProps.value.price }}
+                      </b> <b itemprop="priceCurrency">
+                        {{ this.priceCurrency }}
+                      </b>
+                    </p>
+                  </template>
+
+                </MediaElt>
+              </a>
+            </template>
+          </CardElt>
         </template>
-
       </ListElt>
     </template>
 
@@ -82,6 +108,8 @@
 </template>
 
 <script>
+import constants from "/constants"
+
 import CreateProduct from "@/components/creators/CreateProduct"
 
 export default {
@@ -96,11 +124,14 @@ export default {
       reviews: [],
       scores: [],
       users: [],
+      priceCurrency: "",
       userId: null
     }
   },
 
   mounted () {
+    this.priceCurrency = constants.PRICE_CURRENCY;
+
     this.$serve.getData("/api/users/check")
       .then(res => { this.users = res })
       .catch(err => { console.log(err) });
