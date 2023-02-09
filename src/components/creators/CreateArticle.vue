@@ -10,7 +10,7 @@
         enctype="multipart/form-data">
         <ListElt :items="['title', 'text', 'image', 'alt', 'cat']">
 
-          <!-- Article Title -->
+          <!-- Title -->
           <template #item-1>
             <FieldElt id="article-title"
               v-model:value="title"
@@ -26,7 +26,7 @@
             </FieldElt>
           </template>
 
-          <!-- Article Text -->
+          <!-- Text -->
           <template #item-2>
             <FieldElt id="article-text"
               v-model:value="text"
@@ -42,7 +42,7 @@
             </FieldElt>
           </template>
           
-          <!-- Article Image -->
+          <!-- Image -->
           <template #item-3>
             <FieldElt id="article-image"
               v-model:value="image"
@@ -57,7 +57,7 @@
             </FieldElt>
           </template>
 
-          <!-- Article Author -->
+          <!-- Alternative Text -->
           <template #item-4>
             <FieldElt id="article-alt"
               type="textarea"
@@ -73,7 +73,7 @@
             </FieldElt>
           </template>
 
-          <!-- Article Category -->
+          <!-- Category -->
           <template #item-5>
             <FieldElt id="article-cat"
               type="select"

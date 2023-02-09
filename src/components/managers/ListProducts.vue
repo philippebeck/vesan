@@ -10,18 +10,17 @@
         enctype="multipart/form-data">
         <TableElt :items="products">
 
-          <!-- Last Table Head -->
           <template #head>
             up/del
           </template>
 
-          <!-- Product Id -->
+          <!-- Id -->
           <template #cell-_id="slotProps">
             <b>#{{ slotProps.index + 1 }}</b>
             ({{ products[slotProps.index]._id }})
           </template>
 
-          <!-- Product Name -->
+          <!-- Name -->
           <template #cell-name="slotProps">
             <FieldElt :id="'name-' + products[slotProps.index]._id"
               v-model:value="getProducts()[slotProps.index].name"
@@ -30,7 +29,7 @@
             </FieldElt>
           </template>
 
-          <!-- Product Description -->
+          <!-- Description -->
           <template #cell-description="slotProps">
             <FieldElt :id="'description-' + products[slotProps.index]._id"
               type="textarea"
@@ -40,7 +39,7 @@
             </FieldElt>
           </template>
 
-          <!-- Product Image -->
+          <!-- Image -->
           <template #cell-image="slotProps">
             <MediaElt :src="'/img/thumbnails/products/' + products[slotProps.index].image"
               :alt="products[slotProps.index].alt"
@@ -52,7 +51,7 @@
             </FieldElt>
           </template>
 
-          <!-- Product Alt -->
+          <!-- Alt -->
           <template #cell-alt="slotProps">
             <FieldElt :id="'alt-' + products[slotProps.index]._id"
               type="textarea"
@@ -62,7 +61,7 @@
             </FieldElt>
           </template>
 
-          <!-- Product Price -->
+          <!-- Price -->
           <template #cell-price="slotProps">
             <FieldElt :id="'price-' + products[slotProps.index]._id"
               type="number"
@@ -74,7 +73,7 @@
             </FieldElt>
           </template>
 
-          <!-- Product Options -->
+          <!-- Options -->
           <template #cell-options="slotProps">
             <FieldElt :id="'options-' + products[slotProps.index]._id"
               type="textarea"
@@ -85,7 +84,7 @@
             </FieldElt>
           </template>
 
-          <!-- Product Category -->
+          <!-- Category -->
           <template #cell-cat="slotProps">
             <FieldElt :id="'cat-' + products[slotProps.index]._id"
               type="select"
@@ -97,19 +96,19 @@
             </FieldElt>
           </template>
 
-          <!-- Product Created -->
+          <!-- Created -->
           <template #cell-created="slotProps">
             {{ new Date(products[slotProps.index].created).toLocaleString() }}
           </template>
 
-          <!-- Product Updated -->
+          <!-- Updated -->
           <template #cell-updated="slotProps">
             {{ new Date(products[slotProps.index].updated).toLocaleString() }}
           </template>
 
           <template #body="slotProps">
 
-            <!-- Update Button -->
+            <!-- Update -->
             <BtnElt type="button"
               @click="validateUpdatedProduct(products[slotProps.index]._id)" 
               class="btn-sky"
@@ -119,7 +118,7 @@
               </template>
             </BtnElt>
 
-            <!-- Delete Button -->
+            <!-- Delete -->
             <BtnElt type="button"
               @click="deleteProduct(products[slotProps.index]._id)" 
               class="btn-red"

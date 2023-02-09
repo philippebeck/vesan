@@ -14,11 +14,13 @@
         up/del
       </template>
 
+      <!-- Id -->
       <template #cell-_id="slotProps">
         {{ slotProps.index + 1 }}
         ({{ slotProps.item._id }})
       </template>
 
+      <!-- Name -->
       <template #cell-name="slotProps">
         <FieldElt :id="'name-' + table[slotProps.index]._id"
           v-model:value="table[slotProps.index].name"
@@ -27,6 +29,7 @@
         </FieldElt>
       </template>
 
+      <!-- URL -->
       <template #cell-url="slotProps">
         <FieldElt :id="'url-' + table[slotProps.index]._id"
           type="url"
@@ -37,6 +40,7 @@
         </FieldElt>
       </template>
 
+      <!-- Category -->
       <template #cell-cat="slotProps">
         <FieldElt :id="'cat-' + table[slotProps.index]._id"
           type="select"
@@ -48,6 +52,7 @@
         </FieldElt>
       </template>
 
+      <!-- Update -->
       <template #body="slotProps">
         <BtnElt type="button"
           @click="validateUpdatedLink(table[slotProps.index]._id)" 
@@ -58,6 +63,7 @@
           </template>
         </BtnElt>
 
+      <!-- Delete -->
         <BtnElt type="button"
           @click="deleteLink(table[slotProps.index]._id)" 
           class="btn-red"

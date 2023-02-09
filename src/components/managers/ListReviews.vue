@@ -59,18 +59,17 @@
       <form method="post">
         <TableElt :items="reviews">
 
-          <!-- Last Table Head -->
           <template #head>
             up/del
           </template>
 
-          <!-- Review Id -->
+          <!-- Id -->
           <template #cell-_id="slotProps">
             <b>#{{ slotProps.index + 1 }}</b>
             ({{ reviews[slotProps.index]._id }})
           </template>
 
-          <!-- Review Text -->
+          <!-- Text -->
           <template #cell-text="slotProps">
             <FieldElt :id="'text-' + reviews[slotProps.index]._id"
               type="textarea"
@@ -80,7 +79,7 @@
             </FieldElt>
           </template>
 
-          <!-- Review Score -->
+          <!-- Score -->
           <template #cell-score="slotProps">
             <FieldElt :id="'score-' + reviews[slotProps.index]._id"
               type="number"
@@ -92,30 +91,31 @@
             </FieldElt>
           </template>
 
-          <!-- Review Product -->
+          <!-- Product -->
           <template #cell-product="slotProps">
             <b>{{ getReviewProduct(reviews[slotProps.index].product) }}</b>
             ({{ reviews[slotProps.index].product }})
           </template>
 
-          <!-- Review User -->
+          <!-- User -->
           <template #cell-user="slotProps">
             <b>{{ getReviewUser(reviews[slotProps.index].user) }}</b>
             ({{ reviews[slotProps.index].user }})
           </template>
 
-          <!-- Review Created -->
+          <!-- Created -->
           <template #cell-created="slotProps">
             {{ new Date(reviews[slotProps.index].created).toLocaleString() }}
           </template>
 
-          <!-- Review Updated -->
+          <!-- Updated -->
           <template #cell-updated="slotProps">
             {{ new Date(reviews[slotProps.index].updated).toLocaleString() }}
           </template>
 
           <template #body="slotProps">
-            <!-- Update Button -->
+
+            <!-- Update -->
             <BtnElt type="button"
               @click="updateReview(reviews[slotProps.index]._id)" 
               class="btn-sky"
@@ -125,7 +125,7 @@
               </template>
             </BtnElt>
 
-            <!-- Delete Button -->
+            <!-- Delete -->
             <BtnElt type="button"
               @click="deleteReview(reviews[slotProps.index]._id)" 
               class="btn-red"

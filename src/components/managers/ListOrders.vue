@@ -9,33 +9,32 @@
       <form method="post">
         <TableElt :items="orders">
 
-          <!-- Last Table Head -->
           <template #head>
             up/del
           </template>
 
-          <!-- Order Id -->
+          <!-- Id -->
           <template #cell-_id="slotProps">
             <b>#{{ slotProps.index + 1 }}</b>
             ({{ orders[slotProps.index]._id }})
           </template>
 
-          <!-- Order Products -->
+          <!-- Products -->
           <template #cell-products="slotProps">
             <b>{{ orders[slotProps.index].products }}</b>
               </template>
 
-          <!-- Order Total -->
+          <!-- Total -->
           <template #cell-total="slotProps">
             <b>{{ orders[slotProps.index].total }} €</b>
           </template>
 
-          <!-- Order Payment -->
+          <!-- Payment -->
           <template #cell-payment="slotProps">
             <b>{{ orders[slotProps.index].payment }}</b>
           </template>
 
-          <!-- Order Status -->
+          <!-- Status -->
           <template #cell-status="slotProps">
             <FieldElt :id="'status-' + orders[slotProps.index]._id"
               type="select"
@@ -47,25 +46,25 @@
             </FieldElt>
           </template>
 
-          <!-- Order User -->
+          <!-- User -->
           <template #cell-user="slotProps">
             <b>{{ getOrderUser(orders[slotProps.index].user) }}</b>
             ({{ orders[slotProps.index].user }})
           </template>
 
-          <!-- Order Created -->
+          <!-- Created -->
           <template #cell-created="slotProps">
             {{ new Date(orders[slotProps.index].created).toLocaleString() }}
           </template>
 
-          <!-- Order Updated -->
+          <!-- Updated -->
           <template #cell-updated="slotProps">
             {{ new Date(orders[slotProps.index].updated).toLocaleString() }}
           </template>
 
           <template #body="slotProps">
 
-          <!-- Update Button -->
+          <!-- Update -->
           <BtnElt type="button"
               @click="updateOrder(orders[slotProps.index]._id)" 
               class="btn-sky"
@@ -75,7 +74,7 @@
               </template>
             </BtnElt>
 
-            <!-- Delete Button -->
+            <!-- Delete -->
             <BtnElt type="button"
               @click="deleteOrder(orders[slotProps.index]._id)" 
               class="btn-red"
