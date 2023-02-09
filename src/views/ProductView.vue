@@ -1,8 +1,9 @@
 <template>
-  <CardElt>
+  <CardElt itemscope
+    itemtype="https://schema.org/Product">
     <template #header>
-      <h1>{{ product.name }}</h1>
-      <strong>{{ product.cat }}</strong>
+      <h1 itemprop="name">{{ product.name }}</h1>
+      <strong itemprop="category">{{ product.cat }}</strong>
     </template>
 
     <template #body>
@@ -30,15 +31,31 @@
           :title="`Be the first to write a Review about ${product.name}`" />
 
       <MediaElt :src="`/img/products/${product.image}`"
+        itemprop="image"
         :alt="product.alt">
 
         <template #figcaption>
-          <p>{{ product.description }}</p>
-          <b>{{ product.price }} €</b>
+          <p itemprop="description">{{ product.description }}</p>
+          <p itemprop="offers"
+            itemscope
+            itemtype="https://schema.org/Offer">
+            <b itemprop="price">
+              {{ product.price }}
+            </b> <b itemprop="priceCurrency">
+              {{ this.priceCurrency }}
+            </b>
+          </p>
+          
 
           <p class="silver">
-            Created: {{ new Date(product.created).toLocaleDateString() }}
-            (Updated: {{ new Date(product.updated).toLocaleDateString() }})
+            Release on 
+            <i itemprop="releaseDate">
+              {{ new Date(product.created).toLocaleDateString() }}
+            </i>
+            / Updated on 
+            <i>
+              {{ new Date(product.updated).toLocaleDateString() }}
+            </i>
           </p>
         </template>
       </MediaElt>
@@ -97,6 +114,8 @@
 </template>
 
 <script>
+import constants from "/constants"
+
 import CreateReview from "@/components/creators/CreateReview"
 import ListReviews from "@/components/managers/ListReviews"
 
@@ -110,19 +129,22 @@ export default {
 
   data() {
     return {
-      product: {},
       reviews: [],
       users: [],
-      option: "",
-      quantity: 1,
-      order: {},
       basket: [],
+      product: {},
+      order: {},
+      option: "",
+      priceCurrency: "",
+      quantity: 1,
       isInBasket: false,
       userId: null
     }
   },
 
   mounted () {
+    this.priceCurrency = constants.PRICE_CURRENCY;
+
     this.$serve.getData(`/api/products/${this.$route.params.id}`)
       .then(res => { this.product = res })
       .catch(err => { console.log(err) });
