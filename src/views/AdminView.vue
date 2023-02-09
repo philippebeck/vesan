@@ -17,11 +17,13 @@
             title="Manage articles & comments">
             <i class="fa-solid fa-blog fa-fw"></i>
           </a>
-          <a href="#users"
+          <a  v-if="checkSession('admin')" 
+            href="#users"
             title="Manage users">
             <i class="fa-solid fa-user-astronaut fa-fw"></i>
           </a>
-          <a href="#links"
+          <a  v-if="checkSession('admin')"
+            href="#links"
             title="Manage links">
             <i class="fa-solid fa-link fa-fw"></i>
           </a>
@@ -57,8 +59,6 @@
         </template>
       </CardElt>
 
-      <hr>
-
       <!-- Blog Part -->
       <CardElt>
         <template #header>
@@ -78,10 +78,8 @@
         </template>
       </CardElt>
 
-      <hr>
-
       <!-- Users Part -->
-      <CardElt>
+      <CardElt v-if="checkSession('admin')">
         <template #header>
           <i class="fa-solid fa-user-astronaut fa-3x"></i>
           <h2 id="users">Users</h2>
@@ -93,10 +91,8 @@
         </template>
       </CardElt>
 
-      <hr>
-
       <!-- Links Part -->
-      <CardElt>
+      <CardElt v-if="checkSession('admin')">
         <template #header>
           <i class="fa-solid fa-link fa-3x"></i>
           <h2 id="links">Links</h2>
@@ -149,7 +145,7 @@ export default {
         .then(res => { 
           this.users = res;
 
-          if (this.checkSession("admin")) {
+          if (this.checkSession("editor")) {
 
             this.$serve.getData("/api/products")
               .then(res => { this.products = res })
@@ -171,17 +167,20 @@ export default {
               .then(res => { this.comments = res })
               .catch(err => { console.log(err) });
 
-            this.$serve.getData("/api/users")
+            } else {
+            alert("Go back Home !");
+            this.$router.push("/");
+            }
+
+            if (this.checkSession("admin")) {
+
+              this.$serve.getData("/api/users")
               .then(res => { this.users = res })
               .catch(err => { console.log(err) });
 
             this.$serve.getData("/api/links")
               .then(res => { this.links = res })
               .catch(err => { console.log(err) });
-
-            } else {
-            alert("Go back Home !");
-            this.$router.push("/");
             }
         })
         .catch(err => { console.log(err) });
