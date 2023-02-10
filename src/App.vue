@@ -37,7 +37,7 @@
         <template #item-1>
           <a href="/profile"
             :title="`${user.name} Profile`">
-            <img :src="`img/thumbnails/users/${user.image}`"
+            <img :src="`/img/thumbnails/users/${user.image}`"
               :height="40"
               :width="40"
               class="bord bord-circle">
@@ -67,7 +67,7 @@
         <template #item-1>
           <a href="/profile"
             :title="`${user.name} Profile`">
-            <img :src="`img/thumbnails/users/${user.image}`"
+            <img :src="`/img/thumbnails/users/${user.image}`"
               :height="40"
               :width="40"
               class="bord bord-circle">
