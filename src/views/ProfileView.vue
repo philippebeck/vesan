@@ -45,8 +45,7 @@
           <!-- User Image -->
           <template #item-3>
             <MediaElt :src="'/img/thumbnails/users/' + this.user.image"
-              :alt="this.user.name">
-            </MediaElt>
+              :alt="this.user.alt" />
             <FieldElt id="user-image"
               v-model:value="image"
               info="Image file only"
