@@ -40,23 +40,17 @@ Vesan uses many other well-known packages, like ExpressJS, Mongoose, etc...
 ## Download
 
 [Use this Template](https://github.com/philippebeck/vesan/generate)  
-
-or
-
+or  
+`git clone https://github.com/philippebeck/vesan.git`  
+or  
 [Latest Release](https://github.com/philippebeck/vesan/releases)  
 
-or
-
-`git clone https://github.com/philippebeck/vesan.git`  
-  
 ---
 
 ## Package
 
 NPM : `npm i vesan`  
-
-or
-
+or  
 Yarn : `yarn add vesan`  
 
 **If you choose to get Vesan from NPM or Yarn : you need to copy Vesan from *node_modules/vesan* to the root of your App**
