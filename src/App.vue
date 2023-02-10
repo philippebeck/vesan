@@ -38,8 +38,8 @@
           <a href="/profile"
             :title="`${user.name} Profile`">
             <img :src="`img/thumbnails/users/${user.image}`"
-              :height="50"
-              :width="50"
+              :height="40"
+              :width="40"
               class="bord bord-circle">
           </a>
         </template>
@@ -68,8 +68,8 @@
           <a href="/profile"
             :title="`${user.name} Profile`">
             <img :src="`img/thumbnails/users/${user.image}`"
-              :height="50"
-              :width="50"
+              :height="40"
+              :width="40"
               class="bord bord-circle">
           </a>
         </template>
