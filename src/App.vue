@@ -36,8 +36,11 @@
 
         <template #item-1>
           <a href="/profile"
-            title="Profile">
-            <i class="fa-solid fa-user-gear fa-fw"></i>
+            :title="`${user.name} Profile`">
+            <img :src="`/img/thumbnails/users/${user.image}`"
+              :height="40"
+              :width="40"
+              class="bord bord-circle">
           </a>
         </template>
 
@@ -63,8 +66,11 @@
 
         <template #item-1>
           <a href="/profile"
-            title="Profile">
-            <i class="fa-solid fa-user-gear fa-fw"></i>
+            :title="`${user.name} Profile`">
+            <img :src="`/img/thumbnails/users/${user.image}`"
+              :height="40"
+              :width="40"
+              class="bord bord-circle">
           </a>
         </template>
 
@@ -218,18 +224,32 @@
 </template>
 
 <script>
+import constants from "/constants"
+
 export default {
   name: 'App',
 
   data() {
     return {
-      users: []
+      users: [],
+      user: {}
     }
   },
 
   mounted() {
     this.$serve.getData("/api/users/check")
-      .then(res => { this.users = res })
+      .then(res => { 
+        this.users = res;
+
+        for (const user of this.users) {
+          if (user._id === constants.USER_ID) {
+
+            this.$serve.getData("/api/users/" + user._id)
+              .then(res => { this.user = res; })
+              .catch(err => { console.log(err) });
+          }
+        }
+      })
       .catch(err => { console.log(err) });
   },
 
