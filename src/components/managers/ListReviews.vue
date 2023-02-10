@@ -6,12 +6,67 @@
     </template>
 
     <template #body>
-
       <ListElt :items="reviews"
         :dynamic="true">
         <template #items="slotProps">
 
-          <figure itemscope
+          <form v-if="slotProps.item.user === constants.USER_ID"
+            itemscope
+            itemtype="https://schema.org/Review">
+
+            <FieldElt :id="'text-' + slotProps.item._id"
+              type="textarea"
+              v-model:value="slotProps.item.text"
+              itemprop="text"
+              @keyup.enter="updateReview(slotProps.item._id)"
+              :info="constants.UPDATE_TEXT">
+            </FieldElt>
+
+            <FieldElt :id="'score-' + slotProps.item._id"
+              type="number"
+              v-model:value="slotProps.item.score"
+              @keyup.enter="updateReview(slotProps.item._id)"
+              :info="constants.UPDATE_SCORE"
+              :min="0"
+              :max="5">
+            </FieldElt>
+
+            <BtnElt type="button"
+              @click="updateReview(slotProps.item._id)" 
+              class="btn-sky"
+              :title="'Update review #' + slotProps.item._id">
+              <template #btn>
+                <i class="fa-solid fa-edit"></i>
+              </template>
+            </BtnElt>
+
+            <BtnElt type="button"
+              @click="deleteReview(slotProps.item._id)" 
+              class="btn-red"
+              :title="'Delete review #' + slotProps.item._id">
+              <template #btn>
+                <i class="fa-solid fa-trash-alt"></i>
+              </template>
+            </BtnElt>
+
+            <p class="silver">
+              Created by
+              <b itemprop="author">
+                {{ getReviewUser(slotProps.item.user) }}
+              </b>
+              on
+              <i itemprop="dateCreated">
+                {{ new Date(slotProps.item.created).toLocaleDateString() }}
+              </i>
+              / Updated on
+              <i>
+                {{ new Date(slotProps.item.updated).toLocaleDateString() }}
+              </i>
+            </p>
+          </form>
+
+          <figure v-else
+            itemscope
             itemtype="https://schema.org/Review">
             <blockquote itemprop="text"
               class="container-90sm-80md-70lg-60xl-50wd bord bord-sky blue">
@@ -44,6 +99,7 @@
               </p>
             </figcaption>
           </figure>
+
         </template>
       </ListElt>
     </template>
