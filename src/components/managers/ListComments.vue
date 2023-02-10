@@ -6,12 +6,58 @@
     </template>
 
     <template #body>
-
       <ListElt :items="comments"
         :dynamic="true">
-
         <template #items="slotProps">
-          <figure itemscope
+
+          <form v-if="slotProps.item.user === constants.USER_ID"
+            itemscope
+            itemtype="https://schema.org/Comment">
+
+            <FieldElt :id="'text-' + slotProps.item._id"
+              type="textarea"
+              v-model:value="slotProps.item.text"
+              itemprop="text"
+              :info="constants.UPDATE_TEXT"
+              @keyup.enter="updateComment(slotProps.item._id)">
+            </FieldElt>
+
+            <BtnElt type="button"
+              @click="updateComment(slotProps.item._id)" 
+              class="btn-sky"
+              :title="'Update comment #' + slotProps.item._id">
+              <template #btn>
+                <i class="fa-solid fa-edit"></i>
+              </template>
+            </BtnElt>
+
+            <BtnElt type="button"
+              @click="deleteComment(slotProps.item._id)" 
+              class="btn-red"
+              :title="'Delete comment #' + slotProps.item._id">
+              <template #btn>
+                <i class="fa-solid fa-trash-alt"></i>
+              </template>
+            </BtnElt>
+
+            <p class="silver">
+              Created by
+              <b itemprop="author">
+                {{ getCommentUser(slotProps.item.user) }}
+              </b>
+              on 
+              <i itemprop="dateCreated">
+                {{ new Date(slotProps.item.created).toLocaleDateString() }}
+              </i>
+              / Updated on 
+              <i itemprop="dateModified">
+                {{ new Date(slotProps.item.updated).toLocaleDateString() }}
+              </i>
+            </p>
+          </form>
+
+          <figure v-else
+            itemscope
             itemtype="https://schema.org/Comment">
             <blockquote itemprop="text"
               class="container-90sm-80md-70lg-60xl-50wd bord bord-sky blue">
@@ -33,6 +79,7 @@
               </i>
             </figcaption>
           </figure>
+
         </template>
       </ListElt>
     </template>
@@ -93,8 +140,8 @@
 
           <template #body="slotProps">
 
-          <!-- Update -->
-          <BtnElt type="button"
+            <!-- Update -->
+            <BtnElt type="button"
               @click="updateComment(comments[slotProps.index]._id)" 
               class="btn-sky"
               :title="'Update comment #' + comments[slotProps.index]._id">
