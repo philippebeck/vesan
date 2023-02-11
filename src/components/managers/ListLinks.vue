@@ -173,9 +173,9 @@ export default {
     deleteLink(id) {
       let linkName = "";
       
-      for (let i = 0; i < this.links.length; i++ ) {
-        if (this.links[i]._id === id) {
-          linkName = this.links[i].name;
+      for (let link of this.links) {
+        if (link._id === id) {
+          linkName = link.name;
         }
       }
 

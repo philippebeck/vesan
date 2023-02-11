@@ -134,17 +134,22 @@ export default {
 
     /**
      * GET ARTICLE USER
-     * @param {string} userId 
+     * @param {string} id 
+     * @returns
      */
-    getArticleUser(userId) {
-      for (let i = 0; i < this.users.length; i++ ) {
-        if (userId === this.users[i]._id) {
+    getArticleUser(id) {
+      for (let user of this.users) {
+        if (user._id === id) {
 
-          return this.users[i].name;
+          return user.name;
         }
       }
     },
 
+    /**
+     * VALIDATE UPDATED ARTICLE
+     * @param {string} id 
+     */
     validateUpdatedArticle(id) {
       for (let i = 0; i < this.articles.length; i++ ) {
         if (this.articles[i]._id === id) {
