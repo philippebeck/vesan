@@ -8,10 +8,7 @@
     <template #body>
       <form method="post">
         <TableElt :items="orders">
-
-          <template #head>
-            up/del
-          </template>
+          <template #head>up/del</template>
 
           <!-- Id -->
           <template #cell-_id="slotProps">
@@ -54,9 +51,7 @@
               v-model:value="getOrders()[slotProps.index].status"
               :info="constants.UPDATE_STATUS"
               @keyup.enter="updateOrder(orders[slotProps.index]._id)"
-              :list="constants.CATS_ORDER">
-              {{ value }}
-            </FieldElt>
+              :list="constants.CATS_ORDER"/>
           </template>
 
           <!-- User -->

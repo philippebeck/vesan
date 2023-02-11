@@ -19,8 +19,7 @@
               v-model:value="slotProps.item.text"
               itemprop="text"
               @keyup.enter="updateReview(slotProps.item._id)"
-              :info="constants.UPDATE_TEXT">
-            </FieldElt>
+              :info="constants.UPDATE_TEXT"/>
 
             <FieldElt :id="'score-' + slotProps.item._id"
               type="number"
@@ -28,8 +27,7 @@
               @keyup.enter="updateReview(slotProps.item._id)"
               :info="constants.UPDATE_SCORE"
               :min="0"
-              :max="5">
-            </FieldElt>
+              :max="5"/>
 
             <BtnElt type="button"
               @click="updateReview(slotProps.item._id)" 
@@ -114,10 +112,7 @@
     <template #body>
       <form method="post">
         <TableElt :items="reviews">
-
-          <template #head>
-            up/del
-          </template>
+          <template #head>up/del</template>
 
           <!-- Id -->
           <template #cell-_id="slotProps">
@@ -131,8 +126,7 @@
               type="textarea"
               v-model:value="getReviews()[slotProps.index].text"
               @keyup.enter="updateReview(reviews[slotProps.index]._id)"
-              :info="constants.UPDATE_TEXT">
-            </FieldElt>
+              :info="constants.UPDATE_TEXT"/>
           </template>
 
           <!-- Score -->
@@ -143,8 +137,7 @@
               @keyup.enter="updateReview(reviews[slotProps.index]._id)"
               :info="constants.UPDATE_SCORE"
               :min="0"
-              :max="5">
-            </FieldElt>
+              :max="5"/>
           </template>
 
           <!-- Product -->

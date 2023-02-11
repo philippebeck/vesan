@@ -19,8 +19,7 @@
               v-model:value="slotProps.item.text"
               itemprop="text"
               :info="constants.UPDATE_TEXT"
-              @keyup.enter="updateComment(slotProps.item._id)">
-            </FieldElt>
+              @keyup.enter="updateComment(slotProps.item._id)"/>
 
             <BtnElt type="button"
               @click="updateComment(slotProps.item._id)" 
@@ -92,13 +91,9 @@
     </template>
 
     <template #body>
-
       <form method="post">
         <TableElt :items="comments">
-
-          <template #head>
-            up/del
-          </template>
+          <template #head>up/del</template>
 
           <!-- Id -->
           <template #cell-_id="slotProps">
@@ -112,8 +107,7 @@
               type="textarea"
               v-model:value="getComments()[slotProps.index].text"
               :info="constants.UPDATE_TEXT"
-              @keyup.enter="updateComment(comments[slotProps.index]._id)">
-            </FieldElt>
+              @keyup.enter="updateComment(comments[slotProps.index]._id)"/>
           </template>
 
           <!-- Article -->
