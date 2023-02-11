@@ -8,12 +8,12 @@
     <template #body>
       <form method="post"
         enctype="multipart/form-data">
-        <ListElt :items="['title', 'text', 'image', 'alt', 'cat']">
+        <ListElt :items="['name', 'text', 'image', 'alt', 'cat']">
 
-          <!-- Title -->
+          <!-- Name -->
           <template #item-1>
-            <FieldElt id="article-title"
-              v-model:value="title"
+            <FieldElt id="article-name"
+              v-model:value="name"
               :info="constants.CREATE_TITLE"
               @keyup.enter="validateNewArticle()"
               :min="2">
@@ -114,7 +114,7 @@ export default {
 
   data() {
     return {
-      title: "",
+      name: "",
       text:"",
       image: "",
       alt: "",
@@ -132,7 +132,7 @@ export default {
      * VALIDATE NEW ARTICLE IF DATA ARE VALID
      */
     validateNewArticle() {
-      if (this.$serve.checkName(this.title)) {
+      if (this.$serve.checkName(this.name)) {
         if (typeof document.getElementById('article-image').files[0] !== "undefined") {
 
           if (this.cat === "") {
@@ -156,8 +156,8 @@ export default {
 
           for (let article of articles) {
             
-            if (article.title === this.title) {
-              alert(this.title + constants.CHECK_AVAILABLE);
+            if (article.name === this.name) {
+              alert(this.name + constants.CHECK_AVAILABLE);
               isReferenced = true;
             }
 
@@ -181,7 +181,7 @@ export default {
         let article  = new FormData();
         let image = document.getElementById('article-image').files[0];
 
-        article.append("title", this.title);
+        article.append("name", this.name);
         article.append("text", this.text);
         article.append("image", image);
         article.append("alt", this.alt);
@@ -194,7 +194,7 @@ export default {
 
         this.$serve.postData("/api/articles", article)
           .then(() => {
-            alert(article.get("title") + " created !");
+            alert(article.get("name") + " created !");
             this.$router.go();
           })
           .catch(err => { console.log(err) });
