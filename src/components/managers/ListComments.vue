@@ -128,6 +128,16 @@
             ({{ comments[slotProps.index].user }})
           </template>
 
+          <!-- Moderate -->
+          <template #cell-moderate="slotProps">
+            <FieldElt :id="'text-' + comments[slotProps.index]._id"
+              type="select"
+              v-model:value="getComments()[slotProps.index].moderate"
+              :list="constants.IS_MODERATE"
+              :info="constants.UPDATE_MODERATE"
+              @keyup.enter="updateComment(comments[slotProps.index]._id)"/>
+          </template>
+
           <!-- Created -->
           <template #cell-created="slotProps">
             {{ new Date(comments[slotProps.index].created).toLocaleString() }}

@@ -159,6 +159,16 @@
             ({{ reviews[slotProps.index].user }})
           </template>
 
+          <!-- Moderate -->
+          <template #cell-moderate="slotProps">
+            <FieldElt :id="'text-' + reviews[slotProps.index]._id"
+              type="select"
+              v-model:value="getReviews()[slotProps.index].moderate"
+              @keyup.enter="updateReview(reviews[slotProps.index]._id)"
+              :list="constants.IS_MODERATE"
+              :info="constants.UPDATE_MODERATE"/>
+          </template>
+
           <!-- Created -->
           <template #cell-created="slotProps">
             {{ new Date(reviews[slotProps.index].created).toLocaleString() }}
