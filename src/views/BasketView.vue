@@ -183,6 +183,7 @@ export default {
             thing.price     = Number(product.price);
 
             sale.id       = item.id;
+            sale.name     = product.name;
             sale.option   = item.option;
             sale.quantity = Number(item.quantity);
             sale.price    = Number(product.price);
