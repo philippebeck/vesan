@@ -175,10 +175,10 @@ export default {
      * @returns
      */
     checkLikes(id) {
-      for (let i = 0; i < this.articles.length; i++) {
-        if (id === this.articles[i]._id) {
+      for (let article of this.articles) {
+        if (article._id === id) {
 
-          return this.$serve.checkLikes(this.articles[i].usersLiked);
+          return this.$serve.checkLikes(article.usersLiked);
         }
       }
     },
