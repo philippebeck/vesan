@@ -109,12 +109,13 @@ export default {
         .then((links) => {
           let isReferenced = false;
 
-          for (let i = 0; i < links.length; i++) {
-            if (links[i].name === this.name) {
+          for (let link of links) {
+
+            if (link.name === this.name) {
               alert(this.name + constants.CHECK_AVAILABLE);
               isReferenced = true;
             }
-            if (links[i].url === this.url) {
+            if (link.url === this.url) {
               alert(this.url + constants.CHECK_REFERENCE);
               isReferenced = true;
             }

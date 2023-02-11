@@ -154,14 +154,14 @@ export default {
         .then((articles) => {
           let isReferenced = false;
 
-          for (let i = 0; i < articles.length; i++) {
-
-            if (articles[i].title === this.title) {
+          for (let article of articles) {
+            
+            if (article.title === this.title) {
               alert(this.title + constants.CHECK_AVAILABLE);
               isReferenced = true;
             }
 
-            if (articles[i].text === this.text) {
+            if (article.text === this.text) {
               alert(this.text + constants.CHECK_REFERENCE);
               isReferenced = true;
             }

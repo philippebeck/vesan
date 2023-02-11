@@ -190,14 +190,14 @@ export default {
         .then((products) => {
           let isReferenced = false;
 
-          for (let i = 0; i < products.length; i++) {
+          for (let product of products) {
 
-            if (products[i].name === this.name) {
+            if (product.name === this.name) {
               alert(this.name + constants.CHECK_AVAILABLE);
               isReferenced = true;
             }
 
-            if (products[i].description === this.description) {
+            if (product.description === this.description) {
               alert(this.description + constants.CHECK_REFERENCE);
               isReferenced = true;
             }
