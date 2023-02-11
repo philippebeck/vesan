@@ -122,22 +122,13 @@
 
           <!-- Text -->
           <template #cell-text="slotProps">
-            <FieldElt :id="'text-' + reviews[slotProps.index]._id"
-              type="textarea"
-              v-model:value="getReviews()[slotProps.index].text"
-              @keyup.enter="updateReview(reviews[slotProps.index]._id)"
-              :info="constants.UPDATE_TEXT"/>
+            {{ reviews[slotProps.index].text }}
           </template>
 
           <!-- Score -->
           <template #cell-score="slotProps">
-            <FieldElt :id="'score-' + reviews[slotProps.index]._id"
-              type="number"
-              v-model:value="getReviews()[slotProps.index].score"
-              @keyup.enter="updateReview(reviews[slotProps.index]._id)"
-              :info="constants.UPDATE_SCORE"
-              :min="0"
-              :max="5"/>
+            {{ reviews[slotProps.index].score }}
+            <i class="fa-regular fa-star"></i>
           </template>
 
           <!-- Product -->

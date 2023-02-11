@@ -103,11 +103,7 @@
 
           <!-- Text -->
           <template #cell-text="slotProps">
-            <FieldElt :id="'text-' + comments[slotProps.index]._id"
-              type="textarea"
-              v-model:value="getComments()[slotProps.index].text"
-              :info="constants.UPDATE_TEXT"
-              @keyup.enter="updateComment(comments[slotProps.index]._id)"/>
+            {{ comments[slotProps.index].text }}
           </template>
 
           <!-- Article -->
