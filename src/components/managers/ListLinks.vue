@@ -10,9 +10,7 @@
         <i :class="`fa-brands fa-${table[0].cat.toLowerCase()} fa-5x sky anima-grow`"></i>
       </template>
 
-      <template #head>
-        up/del
-      </template>
+      <template #head>up/del</template>
 
       <!-- Id -->
       <template #cell-_id="slotProps">

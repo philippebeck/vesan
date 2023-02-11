@@ -9,10 +9,7 @@
       <form method="post"
         enctype="multipart/form-data">
         <TableElt :items="users">
-
-          <template #head>
-            up/del
-          </template>
+          <template #head>up/del</template>
 
           <!-- Id -->
           <template #cell-_id="slotProps">
