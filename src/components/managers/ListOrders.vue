@@ -8,10 +8,7 @@
     <template #body>
       <form method="post">
         <TableElt :items="orders">
-
-          <template #head>
-            up/del
-          </template>
+          <template #head>up/del</template>
 
           <!-- Id -->
           <template #cell-_id="slotProps">
@@ -21,8 +18,21 @@
 
           <!-- Products -->
           <template #cell-products="slotProps">
-            <b>{{ orders[slotProps.index].products }}</b>
-              </template>
+            <ul>
+              <li v-for="(item, index) in orders[slotProps.index].products"
+                :key="index">
+                <ul :title="item.id">
+                  <li>
+                    <b>{{ item.name }}</b>
+                  </li>
+                  <li>
+                    <i>({{ item.option }})</i>
+                  </li>
+                  <li class="black">{{ item.quantity }}x {{ item.price }}€</li>
+                </ul>
+              </li>
+            </ul>
+          </template>
 
           <!-- Total -->
           <template #cell-total="slotProps">
@@ -41,9 +51,7 @@
               v-model:value="getOrders()[slotProps.index].status"
               :info="constants.UPDATE_STATUS"
               @keyup.enter="updateOrder(orders[slotProps.index]._id)"
-              :list="constants.CATS_ORDER">
-              {{ value }}
-            </FieldElt>
+              :list="constants.CATS_ORDER"/>
           </template>
 
           <!-- User -->

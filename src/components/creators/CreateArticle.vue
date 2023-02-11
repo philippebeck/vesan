@@ -141,7 +141,7 @@ export default {
           this.checkNewArticle();
 
         } else {
-          alert(constants.ARTICLE_IMG);
+          alert(constants.IMG_ARTICLE);
         }
       }
     },

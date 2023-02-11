@@ -177,7 +177,7 @@ export default {
           this.checkNewProduct();
 
         } else {
-          alert(constants.PRODUCT_IMG);
+          alert(constants.IMG_PRODUCT);
         }
       }
     },

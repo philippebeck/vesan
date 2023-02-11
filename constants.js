@@ -99,6 +99,14 @@ export default {
   FORGOT_SUBJECT : "New Password",
   FORGOT_TEXT : "This is your new Password, keep it safe : ",
 
+  IMG_ARTICLE : "An image of the article must be uploaded !",
+  IMG_PRODUCT : "An image of the product must be uploaded !",
+
+  IS_MODERATE : [
+    "true",
+    "false"
+  ],
+
   LABEL_ALT : "Fill the alternative text",
   LABEL_CATEGORY : "Choose the most appropriate category",
   LABEL_DESCRIPTION : "Fill the description",
@@ -112,9 +120,6 @@ export default {
 
   PRICE_CURRENCY : "EUR",
 
-  ARTICLE_IMG : "An image of the article must be uploaded !",
-  PRODUCT_IMG : "An image of the product must be uploaded !",
-
   ROLES_USER : [
     "admin",
     "editor",
@@ -126,6 +131,7 @@ export default {
   UPDATE_DESCRIPTION : "Update the description",
   UPDATE_EMAIL : "Update the email",
   UPDATE_IMAGE : "Update the image",
+  UPDATE_MODERATE : "Update moderation",
   UPDATE_NAME : "Update the name",
   UPDATE_OPTIONS : "Update the options",
   UPDATE_PASSWORD : "Update the password",

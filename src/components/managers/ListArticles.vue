@@ -9,10 +9,7 @@
       <form method="post"
         enctype="multipart/form-data">
         <TableElt :items="articles">
-
-          <template #head>
-            up/del
-          </template>
+          <template #head>up/del</template>
 
           <!-- Id -->
           <template #cell-_id="slotProps">
@@ -25,8 +22,7 @@
             <FieldElt :id="'title-' + articles[slotProps.index]._id"
               v-model:value="getArticles()[slotProps.index].title"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              :info="constants.UPDATE_TITLE">
-            </FieldElt>
+              :info="constants.UPDATE_TITLE"/>
           </template>
 
           <!-- Text -->
@@ -35,20 +31,17 @@
               type="textarea"
               v-model:value="getArticles()[slotProps.index].text"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              :info="constants.UPDATE_TEXT">
-            </FieldElt>
+              :info="constants.UPDATE_TEXT"/>
           </template>
 
           <!-- Image -->
           <template #cell-image="slotProps">
             <MediaElt :src="'/img/thumbnails/articles/' + articles[slotProps.index].image"
               :alt="articles[slotProps.index].alt"
-              :title="articles[slotProps.index].title">
-            </MediaElt>
+              :title="articles[slotProps.index].title"/>
             <FieldElt :id="'image-' + articles[slotProps.index]._id"
               type="file"
-              :info="constants.UPDATE_IMAGE">
-            </FieldElt>
+              :info="constants.UPDATE_IMAGE"/>
           </template>
 
           <!-- Alt -->
@@ -57,8 +50,7 @@
               type="textarea"
               v-model:value="getArticles()[slotProps.index].alt"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              :info="constants.UPDATE_ALT">
-            </FieldElt>
+              :info="constants.UPDATE_ALT"/>
           </template>
 
           <!-- Category -->
@@ -68,9 +60,7 @@
               v-model:value="getArticles()[slotProps.index].cat"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
               :list="constants.CATS_ARTICLE"
-              :info="constants.UPDATE_CATEGORY">
-              {{ value }}
-            </FieldElt>
+              :info="constants.UPDATE_CATEGORY"/>
           </template>
 
           <!-- User -->
@@ -215,7 +205,6 @@ export default {
         article.append("text", this.articles[i].text);
         article.append("alt", this.articles[i].alt);
         article.append("cat", this.articles[i].cat);
-        article.append("user", constants.USER_ID);
         article.append("updated", Date.now());
         article.append("likes", this.articles[i].likes);
         article.append("usersLiked", this.articles[i].usersLiked);

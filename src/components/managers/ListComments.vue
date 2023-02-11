@@ -19,8 +19,7 @@
               v-model:value="slotProps.item.text"
               itemprop="text"
               :info="constants.UPDATE_TEXT"
-              @keyup.enter="updateComment(slotProps.item._id)">
-            </FieldElt>
+              @keyup.enter="updateComment(slotProps.item._id)"/>
 
             <BtnElt type="button"
               @click="updateComment(slotProps.item._id)" 
@@ -92,13 +91,9 @@
     </template>
 
     <template #body>
-
       <form method="post">
         <TableElt :items="comments">
-
-          <template #head>
-            up/del
-          </template>
+          <template #head>up/del</template>
 
           <!-- Id -->
           <template #cell-_id="slotProps">
@@ -112,8 +107,7 @@
               type="textarea"
               v-model:value="getComments()[slotProps.index].text"
               :info="constants.UPDATE_TEXT"
-              @keyup.enter="updateComment(comments[slotProps.index]._id)">
-            </FieldElt>
+              @keyup.enter="updateComment(comments[slotProps.index]._id)"/>
           </template>
 
           <!-- Article -->
@@ -126,6 +120,16 @@
           <template #cell-user="slotProps">
             <b>{{ getCommentUser(comments[slotProps.index].user) }}</b>
             ({{ comments[slotProps.index].user }})
+          </template>
+
+          <!-- Moderate -->
+          <template #cell-moderate="slotProps">
+            <FieldElt :id="'text-' + comments[slotProps.index]._id"
+              type="select"
+              v-model:value="getComments()[slotProps.index].moderate"
+              :list="constants.IS_MODERATE"
+              :info="constants.UPDATE_MODERATE"
+              @keyup.enter="updateComment(comments[slotProps.index]._id)"/>
           </template>
 
           <!-- Created -->
@@ -228,7 +232,7 @@ export default {
 
           comment.append("id", id);
           comment.append("text", this.comments[i].text);
-          comment.append("user", constants.USER_ID);
+          comment.append("moderate", this.comments[i].moderate);
           comment.append("updated", Date.now());
 
           this.$serve.putData(`/api/comments/${id}`, comment)
