@@ -17,6 +17,10 @@ const CommentModel = mongoose.Schema(
       type: String, 
       required: true
     },
+    moderate: {
+      type: String,
+      default: "false"
+    },
     created: { 
       type: Date, 
       required: true
