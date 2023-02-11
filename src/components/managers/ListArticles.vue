@@ -215,7 +215,6 @@ export default {
         article.append("text", this.articles[i].text);
         article.append("alt", this.articles[i].alt);
         article.append("cat", this.articles[i].cat);
-        article.append("user", constants.USER_ID);
         article.append("updated", Date.now());
         article.append("likes", this.articles[i].likes);
         article.append("usersLiked", this.articles[i].usersLiked);
