@@ -127,6 +127,7 @@ export default {
   methods: {
     /**
      * GET ALL ARTICLES
+     * @returns
      */
     getArticles() {
       return this.articles;

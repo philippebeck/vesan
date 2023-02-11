@@ -84,8 +84,8 @@
 
           <template #body="slotProps">
 
-          <!-- Update -->
-          <BtnElt type="button"
+            <!-- Update -->
+            <BtnElt type="button"
               @click="validateUpdatedUser(users[slotProps.index]._id)" 
               class="btn-sky"
               :title="'Update ' + users[slotProps.index].name">
@@ -131,11 +131,16 @@ export default {
   methods: {
     /**
      * GET ALL USERS
+     * @returns
      */
     getUsers() {
       return this.users;
     },
 
+    /**
+     * VALIDATE UPDATED USER
+     * @param {string} id 
+     */
     validateUpdatedUser(id) {
       for (let i = 0; i < this.users.length; i++ ) {
         if (this.users[i]._id === id) {

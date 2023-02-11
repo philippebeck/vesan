@@ -115,6 +115,7 @@
                 <i class="fa-solid fa-trash-alt"></i>
               </template>
             </BtnElt>
+
           </template>
         </TableElt>
       </form>
@@ -142,6 +143,7 @@ export default {
   methods: {
     /**
      * GET ALL PRODUCTS
+     * @returns
      */
     getProducts() {
       return this.products;

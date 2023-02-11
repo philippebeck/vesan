@@ -112,6 +112,7 @@ export default {
         }
       }
     },
+
     /**
      * CHECK UPDATED LINK IF NAME | URL ARE REFERENCED
      * @param {number} i 
@@ -140,6 +141,7 @@ export default {
         })
         .catch(err => { console.log(err) });
     },
+
     /**
      * UPDATE LINK IF NO INFO IS REFERENCED
      * @param {boolean} isReferenced 
@@ -162,6 +164,7 @@ export default {
           .catch(err => { console.log(err) });
       }
     },
+
     /**
      * DELETE LINK
      * @param {string} id 
