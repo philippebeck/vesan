@@ -19,6 +19,7 @@
               v-model:value="slotProps.item.text"
               itemprop="text"
               :info="constants.UPDATE_TEXT"
+              @change="setModerate(slotProps.item._id)"
               @keyup.enter="updateComment(slotProps.item._id)"/>
 
             <BtnElt type="button"
@@ -42,7 +43,7 @@
             <p class="silver">
               Created by
               <b itemprop="author">
-                {{ getCommentUser(slotProps.item.user) }}
+                {{ getUserName(slotProps.item.user) }}
               </b>
               on 
               <i itemprop="dateCreated">
@@ -66,7 +67,7 @@
             <figcaption class="silver">
               Created by
               <b itemprop="author">
-                {{ getCommentUser(slotProps.item.user) }}
+                {{ getUserName(slotProps.item.user) }}
               </b>
               on 
               <i itemprop="dateCreated">
@@ -103,22 +104,18 @@
 
           <!-- Text -->
           <template #cell-text="slotProps">
-            <FieldElt :id="'text-' + comments[slotProps.index]._id"
-              type="textarea"
-              v-model:value="getComments()[slotProps.index].text"
-              :info="constants.UPDATE_TEXT"
-              @keyup.enter="updateComment(comments[slotProps.index]._id)"/>
+            {{ comments[slotProps.index].text }}
           </template>
 
           <!-- Article -->
           <template #cell-article="slotProps">
-            <b>{{ getCommentArticle(comments[slotProps.index].article) }}</b>
+            <b>{{ getArticleName(comments[slotProps.index].article) }}</b>
             ({{ comments[slotProps.index].article }})
           </template>
 
           <!-- User -->
           <template #cell-user="slotProps">
-            <b>{{ getCommentUser(comments[slotProps.index].user) }}</b>
+            <b>{{ getUserName(comments[slotProps.index].user) }}</b>
             ({{ comments[slotProps.index].user }})
           </template>
 
@@ -190,35 +187,40 @@ export default {
   methods: {
     /**
      * GET ALL COMMENTS
+     * @returns
      */
     getComments() {
       return this.comments;
     },
-    
-    /**
-     * GET COMMENT ARTICLE
-     * @param {string} articleId 
-     */
-    getCommentArticle(articleId) {
-      for (let i = 0; i < this.articles.length; i++ ) {
-        if (articleId === this.articles[i]._id) {
 
-          return this.articles[i].title;
+    /**
+     * SET MODERATE
+     * @param {string} id 
+     */
+    setModerate(id) {
+      for (let comment of this.comments) {
+        if (comment._id === id) {
+          comment.moderate = "false";
         }
       }
     },
+    
+    /**
+     * GET ARTICLE NAME
+     * @param {string} id
+     * @returns
+     */
+    getArticleName(id) {
+      return this.$serve.getItemName(id, this.articles);
+    },
 
     /**
-     * GET COMMENT USER
-     * @param {string} userId 
+     * GET USER NAME
+     * @param {string} id
+     * @returns
      */
-    getCommentUser(userId) {
-      for (let i = 0; i < this.users.length; i++ ) {
-        if (userId === this.users[i]._id) {
-
-          return this.users[i].name;
-        }
-      }
+    getUserName(id) {
+      return this.$serve.getItemName(id, this.users);
     },
 
     /**
@@ -226,16 +228,16 @@ export default {
      * @param {string} id 
      */
     updateComment(id) {
-      for (let i = 0; i < this.comments.length; i++ ) {
-        if (this.comments[i]._id === id) {
-          let comment = new FormData();
+      for (let comment of this.comments) {
+        if (comment._id === id) {
+          let commentData = new FormData();
 
-          comment.append("id", id);
-          comment.append("text", this.comments[i].text);
-          comment.append("moderate", this.comments[i].moderate);
-          comment.append("updated", Date.now());
+          commentData.append("id", id);
+          commentData.append("text", comment.text);
+          commentData.append("moderate", comment.moderate);
+          commentData.append("updated", Date.now());
 
-          this.$serve.putData(`/api/comments/${id}`, comment)
+          this.$serve.putData(`/api/comments/${id}`, commentData)
             .then(() => {
               alert(`Comment #${id} updated !`);
               this.$router.go();

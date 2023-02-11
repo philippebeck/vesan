@@ -18,12 +18,14 @@
               type="textarea"
               v-model:value="slotProps.item.text"
               itemprop="text"
+              @change="setModerate(slotProps.item._id)"
               @keyup.enter="updateReview(slotProps.item._id)"
               :info="constants.UPDATE_TEXT"/>
 
             <FieldElt :id="'score-' + slotProps.item._id"
               type="number"
               v-model:value="slotProps.item.score"
+              @change="setModerate(slotProps.item._id)"
               @keyup.enter="updateReview(slotProps.item._id)"
               :info="constants.UPDATE_SCORE"
               :min="0"
@@ -50,7 +52,7 @@
             <p class="silver">
               Created by
               <b itemprop="author">
-                {{ getReviewUser(slotProps.item.user) }}
+                {{ getUserName(slotProps.item.user) }}
               </b>
               on
               <i itemprop="dateCreated">
@@ -84,7 +86,7 @@
               <p class="silver">
                 Created by
                 <b itemprop="author">
-                  {{ getReviewUser(slotProps.item.user) }}
+                  {{ getUserName(slotProps.item.user) }}
                 </b>
                 on
                 <i itemprop="dateCreated">
@@ -122,33 +124,24 @@
 
           <!-- Text -->
           <template #cell-text="slotProps">
-            <FieldElt :id="'text-' + reviews[slotProps.index]._id"
-              type="textarea"
-              v-model:value="getReviews()[slotProps.index].text"
-              @keyup.enter="updateReview(reviews[slotProps.index]._id)"
-              :info="constants.UPDATE_TEXT"/>
+            {{ reviews[slotProps.index].text }}
           </template>
 
           <!-- Score -->
           <template #cell-score="slotProps">
-            <FieldElt :id="'score-' + reviews[slotProps.index]._id"
-              type="number"
-              v-model:value="getReviews()[slotProps.index].score"
-              @keyup.enter="updateReview(reviews[slotProps.index]._id)"
-              :info="constants.UPDATE_SCORE"
-              :min="0"
-              :max="5"/>
+            {{ reviews[slotProps.index].score }}
+            <i class="fa-regular fa-star"></i>
           </template>
 
           <!-- Product -->
           <template #cell-product="slotProps">
-            <b>{{ getReviewProduct(reviews[slotProps.index].product) }}</b>
+            <b>{{ getProductName(reviews[slotProps.index].product) }}</b>
             ({{ reviews[slotProps.index].product }})
           </template>
 
           <!-- User -->
           <template #cell-user="slotProps">
-            <b>{{ getReviewUser(reviews[slotProps.index].user) }}</b>
+            <b>{{ getUserName(reviews[slotProps.index].user) }}</b>
             ({{ reviews[slotProps.index].user }})
           </template>
 
@@ -225,31 +218,35 @@ export default {
     getReviews() {
       return this.reviews;
     },
-    
-    /**
-     * GET REVIEW PRODUCT
-     * @param {string} productId 
-     */
-    getReviewProduct(productId) {
-      for (let i = 0; i < this.products.length; i++ ) {
-        if (productId === this.products[i]._id) {
 
-          return this.products[i].name;
+    /**
+     * SET MODERATE
+     * @param {string} id 
+     */
+    setModerate(id) {
+      for (let review of this.reviews) {
+        if (review._id === id) {
+          review.moderate = "false";
         }
       }
     },
 
     /**
-     * GET REVIEW USER
-     * @param {string} userId 
+     * GET PRODUCT NAME
+     * @param {string} id 
+     * @returns
      */
-    getReviewUser(userId) {
-      for (let i = 0; i < this.users.length; i++ ) {
-        if (userId === this.users[i]._id) {
+    getProductName(id) {
+      return this.$serve.getItemName(id, this.products);
+    },
 
-          return this.users[i].name;
-        }
-      }
+    /**
+     * GET USER NAME
+     * @param {string} id
+     * @returns 
+     */
+    getUserName(id) {
+      return this.$serve.getItemName(id, this.users);
     },
 
     /**
@@ -257,18 +254,17 @@ export default {
      * @param {string} id 
      */
     updateReview(id) {
-      for (let i = 0; i < this.reviews.length; i++ ) {
+      for (let review of this.reviews) {
+        if (review._id === id) {
+          let reviewData = new FormData();
 
-        if (this.reviews[i]._id === id) {
-          let review = new FormData();
+          reviewData.append("id", id);
+          reviewData.append("text", review.text);
+          reviewData.append("score", review.score);
+          reviewData.append("moderate", review.moderate);
+          reviewData.append("updated", Date.now());
 
-          review.append("id", this.reviews[i]._id);
-          review.append("text", this.reviews[i].text);
-          review.append("score", this.reviews[i].score);
-          review.append("moderate", this.reviews[i].moderate);
-          review.append("updated", Date.now());
-
-          this.$serve.putData(`/api/reviews/${id}`, review)
+          this.$serve.putData(`/api/reviews/${id}`, reviewData)
             .then(() => {
               alert(`Review #${id} updated !`);
               this.$router.go();

@@ -32,22 +32,22 @@
 
       <!-- Admin -->
       <ListElt v-if="checkSession('admin') || checkSession('editor')"
-        :items="['profile', 'admin', 'logout']">
+        :items="['admin', 'profile', 'logout']">
 
         <template #item-1>
+          <a href="/admin"
+            title="Admin">
+            <i class="fa-solid fa-user-ninja fa-fw"></i>
+          </a>
+        </template>
+
+        <template #item-2>
           <a href="/profile"
             :title="`${user.name} Profile`">
             <img :src="`/img/thumbnails/users/${user.image}`"
               :height="40"
               :width="40"
               class="bord bord-circle">
-          </a>
-        </template>
-
-        <template #item-2>
-          <a href="/admin"
-            title="Admin">
-            <i class="fa-solid fa-user-ninja fa-fw"></i>
           </a>
         </template>
 

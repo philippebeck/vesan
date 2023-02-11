@@ -40,7 +40,7 @@
             <template #header>
               <h3 itemprop="name"
                 class="sky">
-                {{ slotProps.value.title }}
+                {{ slotProps.value.name }}
               </h3>
             </template>
 
@@ -49,7 +49,7 @@
                 :id="`like-${slotProps.value._id}`"
                 href="/login"
                 class="btn-blue"
-                :title="`Login to like ${slotProps.value.title}`">
+                :title="`Login to like ${slotProps.value.name}`">
                 <template #btn>
                   <i class="fa-regular fa-thumbs-up fa-lg">
                   </i> <b itemprop="contentRating">
@@ -63,7 +63,7 @@
                 type="button"
                 @click="addLike(slotProps.value._id)"
                 class="btn-blue"
-                :title="`Like ${slotProps.value.title} ?`">
+                :title="`Like ${slotProps.value.name} ?`">
                 <template #btn>
                   <i class="fa-regular fa-thumbs-up fa-lg">
                   </i> <b itemprop="contentRating">
@@ -77,7 +77,7 @@
                 type="button"
                 @click="addLike(slotProps.value._id)"
                 class="btn-sky"
-                :title="`Dislike ${slotProps.value.title} ?`">
+                :title="`Dislike ${slotProps.value.name} ?`">
                 <template #btn>
                   <i class="fa-regular fa-thumbs-up fa-lg">
                   </i> <b itemprop="contentRating">
@@ -87,12 +87,12 @@
               </BtnElt>
 
               <a :href="`article/${slotProps.value._id}`"
-                :title="`Read ${slotProps.value.title}`">
+                :title="`Read ${slotProps.value.name}`">
 
                 <MediaElt :src="`img/thumbnails/articles/${slotProps.value.image}`" 
-                  :alt="`${slotProps.value.title}`" 
+                  :alt="`${slotProps.value.name}`" 
                   itemprop="image"
-                  :id="`${slotProps.value.title.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`">
+                  :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`">
 
                   <template #figcaption>
                     <blockquote itemprop="text">
@@ -175,10 +175,10 @@ export default {
      * @returns
      */
     checkLikes(id) {
-      for (let i = 0; i < this.articles.length; i++) {
-        if (id === this.articles[i]._id) {
+      for (let article of this.articles) {
+        if (article._id === id) {
 
-          return this.$serve.checkLikes(this.articles[i].usersLiked);
+          return this.$serve.checkLikes(article.usersLiked);
         }
       }
     },
@@ -210,16 +210,16 @@ export default {
 
           let article = new FormData();
           article.append("id", this.articles[i]._id);
-          article.append("title", this.articles[i].title);
+          article.append("name", this.articles[i].name);
           article.append("likes", this.articles[i].likes);
           article.append("usersLiked", usersLiked);
 
           this.$serve.putData(`/api/articles/${article.get("id")}`, article)
             .then(() => {
               if (hasLiked === true) {
-                console.log(article.get("title") + " disliked !");
+                console.log(article.get("name") + " disliked !");
               } else {
-                console.log(article.get("title") + " liked !");
+                console.log(article.get("name") + " liked !");
               }
             })
             .catch(err => { console.log(err) });

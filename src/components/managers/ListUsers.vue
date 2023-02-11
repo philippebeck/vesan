@@ -9,10 +9,7 @@
       <form method="post"
         enctype="multipart/form-data">
         <TableElt :items="users">
-
-          <template #head>
-            up/del
-          </template>
+          <template #head>up/del</template>
 
           <!-- Id -->
           <template #cell-_id="slotProps">
@@ -25,8 +22,7 @@
             <FieldElt :id="'name-' + users[slotProps.index]._id"
               v-model:value="getUsers()[slotProps.index].name"
               :info="constants.UPDATE_NAME"
-              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)">
-            </FieldElt>
+              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"/>
           </template>
 
           <!-- Email -->
@@ -35,20 +31,17 @@
               type="email"
               v-model:value="getUsers()[slotProps.index].email"
               :info="constants.UPDATE_EMAIL"
-              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)">
-            </FieldElt>
+              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"/>
           </template>
 
           <!-- Image -->
           <template #cell-image="slotProps">
             <MediaElt :src="'/img/thumbnails/users/' + users[slotProps.index].image"
               :alt="users[slotProps.index].name"
-              :title="users[slotProps.index].image">
-            </MediaElt>
+              :title="users[slotProps.index].image"/>
             <FieldElt :id="'image-' + users[slotProps.index]._id"
               type="file"
-              :info="constants.UPDATE_IMAGE">
-            </FieldElt>
+              :info="constants.UPDATE_IMAGE"/>
           </template>
 
           <!-- Alt -->
@@ -57,8 +50,7 @@
               type="textarea"
               v-model:value="getUsers()[slotProps.index].alt"
               :info="constants.UPDATE_ALT"
-              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)">
-            </FieldElt>
+              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"/>
           </template>
 
           <!-- Pass -->
@@ -67,8 +59,7 @@
               type="password"
               v-model:value="pass"
               :info="constants.UPDATE_PASSWORD"
-              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)">
-            </FieldElt>
+              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"/>
           </template>
 
           <!-- Role -->
@@ -78,9 +69,7 @@
               v-model:value="getUsers()[slotProps.index].role"
               :list="constants.ROLES_USER"
               :info="constants.UPDATE_ROLE"
-              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)">
-              {{ value }}
-            </FieldElt>
+              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"/>
           </template>
 
           <!-- Created -->
@@ -95,8 +84,8 @@
 
           <template #body="slotProps">
 
-          <!-- Update -->
-          <BtnElt type="button"
+            <!-- Update -->
+            <BtnElt type="button"
               @click="validateUpdatedUser(users[slotProps.index]._id)" 
               class="btn-sky"
               :title="'Update ' + users[slotProps.index].name">
@@ -142,11 +131,16 @@ export default {
   methods: {
     /**
      * GET ALL USERS
+     * @returns
      */
     getUsers() {
       return this.users;
     },
 
+    /**
+     * VALIDATE UPDATED USER
+     * @param {string} id 
+     */
     validateUpdatedUser(id) {
       for (let i = 0; i < this.users.length; i++ ) {
         if (this.users[i]._id === id) {

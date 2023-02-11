@@ -2,7 +2,7 @@
   <CardElt itemscope
     itemtype="https://schema.org/Article">
     <template #header>
-      <h1 itemprop="name">{{ article.title }}</h1>
+      <h1 itemprop="name">{{ article.name }}</h1>
       <strong>{{ article.cat }}</strong>
     </template>
 
@@ -12,7 +12,7 @@
         id="likes"
         href="/login"
         class="btn-blue"
-        :title="`Login to like ${article.title}`">
+        :title="`Login to like ${article.name}`">
         <template #btn>
           <i class="fa-regular fa-thumbs-up fa-lg">
           </i> <b itemprop="contentRating">
@@ -26,7 +26,7 @@
         type="button"
         @click="addLike()"
         class="btn-blue"
-        :title="`Like ${article.title} ?`">
+        :title="`Like ${article.name} ?`">
         <template #btn>
           <i class="fa-regular fa-thumbs-up fa-lg">
           </i> <b itemprop="contentRating">
@@ -40,7 +40,7 @@
         type="button"
         @click="addLike()"
         class="btn-sky"
-        :title="`Dislike ${article.title} ?`">
+        :title="`Dislike ${article.name} ?`">
         <template #btn>
           <i class="fa-regular fa-thumbs-up fa-lg">
           </i> <b itemprop="contentRating">
@@ -191,16 +191,16 @@ export default {
 
       let article = new FormData();
       article.append("id", this.article._id);
-      article.append("title", this.article.title);
+      article.append("name", this.article.name);
       article.append("likes", this.article.likes);
       article.append("usersLiked", usersLiked);
 
       this.$serve.putData(`/api/articles/${article.get("id")}`, article)
         .then(() => {
           if (hasLiked === true) {
-            console.log(article.get("title") + " disliked !");
+            console.log(article.get("name") + " disliked !");
           } else {
-            console.log(article.get("title") + " liked !");
+            console.log(article.get("name") + " liked !");
           }
         })
         .catch(err => { console.log(err) });

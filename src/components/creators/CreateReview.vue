@@ -73,16 +73,18 @@ export default {
   },
 
   methods: {
-        /**
+    /**
      * CHECK NEW PRODUCT IF NAME | DESCRIPTION ARE REFERENCED
      */
     checkNewReview() {
       this.$serve.getData("/api/reviews")
         .then((reviews) => {
           let isReferenced = false;
-          for (let i = 0; i < reviews.length; i++) {
 
-            if (reviews[i].user === constants.USER_ID) {
+          for (let review of reviews) {
+            if (review.user === constants.USER_ID && 
+              review.product === this.$route.params.id) {
+
               alert(constants.CHECK_REVIEW);
               isReferenced = true;
             }

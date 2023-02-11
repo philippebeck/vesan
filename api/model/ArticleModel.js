@@ -5,7 +5,7 @@ const uniqueValidator = require("mongoose-unique-validator");
 
 const ArticleModel = mongoose.Schema(
   {
-    title: { 
+    name: { 
       type: String, 
       required: true,
       unique: true

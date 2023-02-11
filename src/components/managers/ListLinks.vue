@@ -10,9 +10,7 @@
         <i :class="`fa-brands fa-${table[0].cat.toLowerCase()} fa-5x sky anima-grow`"></i>
       </template>
 
-      <template #head>
-        up/del
-      </template>
+      <template #head>up/del</template>
 
       <!-- Id -->
       <template #cell-_id="slotProps">
@@ -25,8 +23,7 @@
         <FieldElt :id="'name-' + table[slotProps.index]._id"
           v-model:value="table[slotProps.index].name"
           :info="constants.UPDATE_NAME"
-          @keyup.enter="validateUpdatedLink(table[slotProps.index]._id)">
-        </FieldElt>
+          @keyup.enter="validateUpdatedLink(table[slotProps.index]._id)"/>
       </template>
 
       <!-- URL -->
@@ -36,8 +33,7 @@
           v-model:value="table[slotProps.index].url"
           :info="constants.UPDATE_URL"
           @keyup.enter="validateUpdatedLink(table[slotProps.index]._id)"
-          :max="parseInt('100')">
-        </FieldElt>
+          :max="parseInt('100')"/>
       </template>
 
       <!-- Category -->
@@ -47,9 +43,7 @@
           v-model:value="table[slotProps.index].cat"
           :info="constants.UPDATE_CATEGORY"
           @keyup.enter="validateUpdatedLink(table[slotProps.index]._id)"
-          :list="constants.CATS_LINK">
-          {{ value }}
-        </FieldElt>
+          :list="constants.CATS_LINK"/>
       </template>
 
       <!-- Update -->
@@ -118,6 +112,7 @@ export default {
         }
       }
     },
+
     /**
      * CHECK UPDATED LINK IF NAME | URL ARE REFERENCED
      * @param {number} i 
@@ -146,6 +141,7 @@ export default {
         })
         .catch(err => { console.log(err) });
     },
+
     /**
      * UPDATE LINK IF NO INFO IS REFERENCED
      * @param {boolean} isReferenced 
@@ -168,6 +164,7 @@ export default {
           .catch(err => { console.log(err) });
       }
     },
+
     /**
      * DELETE LINK
      * @param {string} id 
@@ -175,9 +172,9 @@ export default {
     deleteLink(id) {
       let linkName = "";
       
-      for (let i = 0; i < this.links.length; i++ ) {
-        if (this.links[i]._id === id) {
-          linkName = this.links[i].name;
+      for (let link of this.links) {
+        if (link._id === id) {
+          linkName = link.name;
         }
       }
 

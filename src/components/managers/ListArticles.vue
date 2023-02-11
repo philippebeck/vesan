@@ -17,10 +17,10 @@
             ({{ articles[slotProps.index]._id }})
           </template>
 
-          <!-- Title -->
-          <template #cell-title="slotProps">
-            <FieldElt :id="'title-' + articles[slotProps.index]._id"
-              v-model:value="getArticles()[slotProps.index].title"
+          <!-- Name -->
+          <template #cell-name="slotProps">
+            <FieldElt :id="'name-' + articles[slotProps.index]._id"
+              v-model:value="getArticles()[slotProps.index].name"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
               :info="constants.UPDATE_TITLE"/>
           </template>
@@ -38,7 +38,7 @@
           <template #cell-image="slotProps">
             <MediaElt :src="'/img/thumbnails/articles/' + articles[slotProps.index].image"
               :alt="articles[slotProps.index].alt"
-              :title="articles[slotProps.index].title"/>
+              :title="articles[slotProps.index].name"/>
             <FieldElt :id="'image-' + articles[slotProps.index]._id"
               type="file"
               :info="constants.UPDATE_IMAGE"/>
@@ -65,7 +65,7 @@
 
           <!-- User -->
           <template #cell-user="slotProps">
-            <b>{{ getArticleUser(articles[slotProps.index].user) }}</b>
+            <b>{{ getUserName(articles[slotProps.index].user) }}</b>
             ({{ getArticles()[slotProps.index].user }})
           </template>
 
@@ -85,7 +85,7 @@
           <BtnElt type="button"
               @click="validateUpdatedArticle(articles[slotProps.index]._id)" 
               class="btn-sky"
-              :title="'Update ' + articles[slotProps.index].title">
+              :title="'Update ' + articles[slotProps.index].name">
               <template #btn>
                 <i class="fa-solid fa-edit"></i>
               </template>
@@ -95,7 +95,7 @@
             <BtnElt type="button"
               @click="deleteArticle(articles[slotProps.index]._id)" 
               class="btn-red"
-              :title="'Delete ' + articles[slotProps.index].title">
+              :title="'Delete ' + articles[slotProps.index].name">
               <template #btn>
                 <i class="fa-solid fa-trash-alt"></i>
               </template>
@@ -127,29 +127,30 @@ export default {
   methods: {
     /**
      * GET ALL ARTICLES
+     * @returns
      */
     getArticles() {
       return this.articles;
     },
 
     /**
-     * GET ARTICLE USER
-     * @param {string} userId 
+     * GET USER NAME
+     * @param {string} id 
+     * @returns
      */
-    getArticleUser(userId) {
-      for (let i = 0; i < this.users.length; i++ ) {
-        if (userId === this.users[i]._id) {
-
-          return this.users[i].name;
-        }
-      }
+    getUserName(id) {
+      return this.$serve.getItemName(id, this.users);
     },
 
+    /**
+     * VALIDATE UPDATED ARTICLE
+     * @param {string} id 
+     */
     validateUpdatedArticle(id) {
       for (let i = 0; i < this.articles.length; i++ ) {
         if (this.articles[i]._id === id) {
 
-          if (this.$serve.checkName(this.articles[i].title)) {
+          if (this.$serve.checkName(this.articles[i].name)) {
             this.checkUpdatedArticle(i);
           }
         }
@@ -170,8 +171,8 @@ export default {
               articles.splice(j, 1);
             }
 
-            if (articles[j] && articles[j].title === this.articles[i].title) {
-              alert(this.articles[i].title + constants.CHECK_AVAILABLE);
+            if (articles[j] && articles[j].name === this.articles[i].name) {
+              alert(this.articles[i].name + constants.CHECK_AVAILABLE);
               isReferenced = true;
             }
 
@@ -201,7 +202,7 @@ export default {
         }
 
         article.append("id", this.articles[i]._id);
-        article.append("title", this.articles[i].title);
+        article.append("name", this.articles[i].name);
         article.append("text", this.articles[i].text);
         article.append("alt", this.articles[i].alt);
         article.append("cat", this.articles[i].cat);
@@ -211,7 +212,7 @@ export default {
 
         this.$serve.putData(`/api/articles/${article.get("id")}`, article)
           .then(() => {
-            alert(article.get("title") + " updated !");
+            alert(article.get("name") + " updated !");
             this.$router.go();
           })
           .catch(err => { console.log(err) });
@@ -227,7 +228,7 @@ export default {
 
       for (let i = 0; i < this.articles.length; i++ ) {
         if (this.articles[i]._id === id) {
-          articleTitle = this.articles[i].title;
+          articleTitle = this.articles[i].name;
         }
       }
 

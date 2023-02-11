@@ -9,10 +9,7 @@
       <form method="post"
         enctype="multipart/form-data">
         <TableElt :items="products">
-
-          <template #head>
-            up/del
-          </template>
+          <template #head>up/del</template>
 
           <!-- Id -->
           <template #cell-_id="slotProps">
@@ -25,8 +22,7 @@
             <FieldElt :id="'name-' + products[slotProps.index]._id"
               v-model:value="getProducts()[slotProps.index].name"
               :info="constants.UPDATE_NAME"
-              @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)">
-            </FieldElt>
+              @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"/>
           </template>
 
           <!-- Description -->
@@ -35,8 +31,7 @@
               type="textarea"
               v-model:value="getProducts()[slotProps.index].description"
               :info="constants.UPDATE_DESCRIPTION"
-              @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)">
-            </FieldElt>
+              @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"/>
           </template>
 
           <!-- Image -->
@@ -47,8 +42,7 @@
             </MediaElt>
             <FieldElt :id="'image-' + products[slotProps.index]._id"
               type="file"
-              :info="constants.UPDATE_IMAGE">
-            </FieldElt>
+              :info="constants.UPDATE_IMAGE"/>
           </template>
 
           <!-- Alt -->
@@ -57,8 +51,7 @@
               type="textarea"
               v-model:value="getProducts()[slotProps.index].alt"
               :info="constants.UPDATE_ALT"
-              @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)">
-            </FieldElt>
+              @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"/>
           </template>
 
           <!-- Price -->
@@ -69,8 +62,7 @@
               @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
               :info="constants.UPDATE_PRICE"
               :min="1"
-              :max="1000">
-            </FieldElt>
+              :max="1000"/>
           </template>
 
           <!-- Options -->
@@ -79,9 +71,7 @@
               type="textarea"
               v-model:value="getProducts()[slotProps.index].options"
               @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
-              :info="constants.UPDATE_OPTIONS">
-              {{ value }}
-            </FieldElt>
+              :info="constants.UPDATE_OPTIONS"/>
           </template>
 
           <!-- Category -->
@@ -91,9 +81,7 @@
               v-model:value="getProducts()[slotProps.index].cat"
               :info="constants.UPDATE_CATEGORY"
               @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
-              :list="constants.CATS_PRODUCT">
-              {{ value }}
-            </FieldElt>
+              :list="constants.CATS_PRODUCT"/>
           </template>
 
           <!-- Created -->
@@ -127,6 +115,7 @@
                 <i class="fa-solid fa-trash-alt"></i>
               </template>
             </BtnElt>
+
           </template>
         </TableElt>
       </form>
@@ -154,6 +143,7 @@ export default {
   methods: {
     /**
      * GET ALL PRODUCTS
+     * @returns
      */
     getProducts() {
       return this.products;
