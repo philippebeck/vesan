@@ -19,6 +19,7 @@
               v-model:value="slotProps.item.text"
               itemprop="text"
               :info="constants.UPDATE_TEXT"
+              @change="setModerate(slotProps.item._id)"
               @keyup.enter="updateComment(slotProps.item._id)"/>
 
             <BtnElt type="button"
@@ -186,33 +187,48 @@ export default {
   methods: {
     /**
      * GET ALL COMMENTS
+     * @returns
      */
     getComments() {
       return this.comments;
     },
+
+    /**
+     * SET MODERATE
+     * @param {string} id 
+     */
+    setModerate(id) {
+      for (let comment of this.comments) {
+        if (comment._id === id) {
+          comment.moderate = "false";
+        }
+      }
+    },
     
     /**
      * GET COMMENT ARTICLE
-     * @param {string} articleId 
+     * @param {string} id
+     * @returns
      */
-    getCommentArticle(articleId) {
-      for (let i = 0; i < this.articles.length; i++ ) {
-        if (articleId === this.articles[i]._id) {
+    getCommentArticle(id) {
+      for (let article of this.articles) {
+        if (article._id === id) {
 
-          return this.articles[i].title;
+          return article.title;
         }
       }
     },
 
     /**
      * GET COMMENT USER
-     * @param {string} userId 
+     * @param {string} id
+     * @returns
      */
-    getCommentUser(userId) {
-      for (let i = 0; i < this.users.length; i++ ) {
-        if (userId === this.users[i]._id) {
-
-          return this.users[i].name;
+    getCommentUser(id) {
+      for (let user of this.users) {
+        if (user._id === id) {
+          
+          return user.name;
         }
       }
     },
@@ -222,16 +238,16 @@ export default {
      * @param {string} id 
      */
     updateComment(id) {
-      for (let i = 0; i < this.comments.length; i++ ) {
-        if (this.comments[i]._id === id) {
-          let comment = new FormData();
+      for (let comment of this.comments) {
+        if (comment._id === id) {
+          let commentData = new FormData();
 
-          comment.append("id", id);
-          comment.append("text", this.comments[i].text);
-          comment.append("moderate", this.comments[i].moderate);
-          comment.append("updated", Date.now());
+          commentData.append("id", id);
+          commentData.append("text", comment.text);
+          commentData.append("moderate", comment.moderate);
+          commentData.append("updated", Date.now());
 
-          this.$serve.putData(`/api/comments/${id}`, comment)
+          this.$serve.putData(`/api/comments/${id}`, commentData)
             .then(() => {
               alert(`Comment #${id} updated !`);
               this.$router.go();
