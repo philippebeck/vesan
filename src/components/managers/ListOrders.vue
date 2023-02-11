@@ -21,8 +21,21 @@
 
           <!-- Products -->
           <template #cell-products="slotProps">
-            <b>{{ orders[slotProps.index].products }}</b>
-              </template>
+            <ul>
+              <li v-for="(item, index) in orders[slotProps.index].products"
+                :key="index">
+                <ul :title="item.id">
+                  <li>
+                    <b>{{ item.name }}</b>
+                  </li>
+                  <li>
+                    <i>({{ item.option }})</i>
+                  </li>
+                  <li class="black">{{ item.quantity }}x {{ item.price }}€</li>
+                </ul>
+              </li>
+            </ul>
+          </template>
 
           <!-- Total -->
           <template #cell-total="slotProps">
