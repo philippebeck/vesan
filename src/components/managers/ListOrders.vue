@@ -126,13 +126,13 @@ export default {
     
     /**
      * GET ORDER USER
-     * @param {string} userId 
+     * @param {string} id 
      */
-    getOrderUser(userId) {
-      for (let i = 0; i < this.users.length; i++ ) {
-        if (userId === this.users[i]._id) {
+    getOrderUser(id) {
+      for (let user of this.users) {
+        if (user._id === id) {
 
-          return this.users[i].name;
+          return user.name;
         }
       }
     },
@@ -142,19 +142,16 @@ export default {
      * @param {string} id 
      */
     updateOrder(id) {
-      for (let i = 0; i < this.orders.length; i++ ) {
-        if (this.orders[i]._id === id) {
-          let order = new FormData();
+      for (let order of this.orders) {
+        if (order._id === id) {
+          let orderData = new FormData();
 
-          order.append("id", id);
-          order.append("products", JSON.stringify(this.orders[i].products));
-          order.append("total", this.orders[i].total);
-          order.append("payment", this.orders[i].payment);
-          order.append("status", this.orders[i].status);
-          order.append("user", this.orders[i].user);
-          order.append("updated", Date.now());
+          orderData.append("id", id);
+          orderData.append("products", JSON.stringify(order.products));
+          orderData.append("status", order.status);
+          orderData.append("updated", Date.now());
 
-          this.$serve.putData(`/api/orders/${id}`, order)
+          this.$serve.putData(`/api/orders/${id}`, orderData)
             .then(() => {
               alert(`Order #${id} updated !`);
               this.$router.go();
