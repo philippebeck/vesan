@@ -18,12 +18,14 @@
               type="textarea"
               v-model:value="slotProps.item.text"
               itemprop="text"
+              @change="setModerate(slotProps.item._id)"
               @keyup.enter="updateReview(slotProps.item._id)"
               :info="constants.UPDATE_TEXT"/>
 
             <FieldElt :id="'score-' + slotProps.item._id"
               type="number"
               v-model:value="slotProps.item.score"
+              @change="setModerate(slotProps.item._id)"
               @keyup.enter="updateReview(slotProps.item._id)"
               :info="constants.UPDATE_SCORE"
               :min="0"
@@ -216,29 +218,43 @@ export default {
     getReviews() {
       return this.reviews;
     },
-    
+
+    /**
+     * SET MODERATE
+     * @param {string} id 
+     */
+    setModerate(id) {
+      for (let review of this.reviews) {
+        if (review._id === id) {
+          review.moderate = "false";
+        }
+      }
+    },
+
     /**
      * GET REVIEW PRODUCT
-     * @param {string} productId 
+     * @param {string} id 
+     * @returns
      */
-    getReviewProduct(productId) {
-      for (let i = 0; i < this.products.length; i++ ) {
-        if (productId === this.products[i]._id) {
+    getReviewProduct(id) {
+      for (let product of this.products) {
+        if (product._id === id) {
 
-          return this.products[i].name;
+          return product.name;
         }
       }
     },
 
     /**
      * GET REVIEW USER
-     * @param {string} userId 
+     * @param {string} id
+     * @returns 
      */
-    getReviewUser(userId) {
-      for (let i = 0; i < this.users.length; i++ ) {
-        if (userId === this.users[i]._id) {
+    getReviewUser(id) {
+      for (let user of this.users) {
+        if (user._id === id) {
 
-          return this.users[i].name;
+          return user.name;
         }
       }
     },
@@ -248,18 +264,17 @@ export default {
      * @param {string} id 
      */
     updateReview(id) {
-      for (let i = 0; i < this.reviews.length; i++ ) {
+      for (let review of this.reviews) {
+        if (review._id === id) {
+          let reviewData = new FormData();
 
-        if (this.reviews[i]._id === id) {
-          let review = new FormData();
+          reviewData.append("id", id);
+          reviewData.append("text", review.text);
+          reviewData.append("score", review.score);
+          reviewData.append("moderate", review.moderate);
+          reviewData.append("updated", Date.now());
 
-          review.append("id", this.reviews[i]._id);
-          review.append("text", this.reviews[i].text);
-          review.append("score", this.reviews[i].score);
-          review.append("moderate", this.reviews[i].moderate);
-          review.append("updated", Date.now());
-
-          this.$serve.putData(`/api/reviews/${id}`, review)
+          this.$serve.putData(`/api/reviews/${id}`, reviewData)
             .then(() => {
               alert(`Review #${id} updated !`);
               this.$router.go();
