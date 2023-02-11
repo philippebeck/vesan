@@ -20,7 +20,7 @@ const form = formidable({
 
 /**
  * GET ARTICLE
- * @param {string} title 
+ * @param {string} name 
  * @param {string} text 
  * @param {string} image 
  * @param {string} alt 
@@ -32,10 +32,10 @@ const form = formidable({
  * @param {string} updated 
  * @returns 
  */
-exports.getArticle = (title, text, image, alt, user, likes, usersLiked, cat, created, updated) => {
+exports.getArticle = (name, text, image, alt, user, likes, usersLiked, cat, created, updated) => {
 
   return {
-    title: title,
+    name: name,
     text: text,
     image: image,
     alt: alt,
@@ -90,7 +90,7 @@ exports.createArticle = (req, res, next) => {
       return;
     }
 
-    let image = nem.getImgName(fields.title);
+    let image = nem.getImgName(fields.name);
 
     nem.createImage(
       "articles/" + files.image.newFilename, 
@@ -103,7 +103,7 @@ exports.createArticle = (req, res, next) => {
     );
 
     let article  = new ArticleModel(this.getArticle(
-      fields.title, 
+      fields.name, 
       fields.text, 
       image, 
       fields.alt, 
@@ -142,7 +142,7 @@ exports.updateArticle = (req, res, next) => {
     let image = fields.image;
 
     if (Object.keys(files).length !== 0) {
-      image = nem.getImgName(fields.title);
+      image = nem.getImgName(fields.name);
 
       nem.createImage(
         "articles/" + files.image.newFilename, 
@@ -174,7 +174,7 @@ exports.updateArticle = (req, res, next) => {
     }
 
     let article = this.getArticle(
-      fields.title, 
+      fields.name, 
       fields.text, 
       image, 
       fields.alt, 
