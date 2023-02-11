@@ -99,6 +99,9 @@ export default {
   FORGOT_SUBJECT : "New Password",
   FORGOT_TEXT : "This is your new Password, keep it safe : ",
 
+  IMG_ARTICLE : "An image of the article must be uploaded !",
+  IMG_PRODUCT : "An image of the product must be uploaded !",
+
   LABEL_ALT : "Fill the alternative text",
   LABEL_CATEGORY : "Choose the most appropriate category",
   LABEL_DESCRIPTION : "Fill the description",
@@ -111,9 +114,6 @@ export default {
   LABEL_TITLE : "Fill the title",
 
   PRICE_CURRENCY : "EUR",
-
-  ARTICLE_IMG : "An image of the article must be uploaded !",
-  PRODUCT_IMG : "An image of the product must be uploaded !",
 
   ROLES_USER : [
     "admin",
