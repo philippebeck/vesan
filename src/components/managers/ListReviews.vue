@@ -272,7 +272,7 @@ export default {
           review.append("id", this.reviews[i]._id);
           review.append("text", this.reviews[i].text);
           review.append("score", this.reviews[i].score);
-          review.append("user", constants.USER_ID);
+          review.append("moderate", this.reviews[i].moderate);
           review.append("updated", Date.now());
 
           this.$serve.putData(`/api/reviews/${id}`, review)
