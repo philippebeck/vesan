@@ -43,7 +43,7 @@
             <p class="silver">
               Created by
               <b itemprop="author">
-                {{ getCommentUser(slotProps.item.user) }}
+                {{ getUserName(slotProps.item.user) }}
               </b>
               on 
               <i itemprop="dateCreated">
@@ -67,7 +67,7 @@
             <figcaption class="silver">
               Created by
               <b itemprop="author">
-                {{ getCommentUser(slotProps.item.user) }}
+                {{ getUserName(slotProps.item.user) }}
               </b>
               on 
               <i itemprop="dateCreated">
@@ -109,13 +109,13 @@
 
           <!-- Article -->
           <template #cell-article="slotProps">
-            <b>{{ getCommentArticle(comments[slotProps.index].article) }}</b>
+            <b>{{ getArticleName(comments[slotProps.index].article) }}</b>
             ({{ comments[slotProps.index].article }})
           </template>
 
           <!-- User -->
           <template #cell-user="slotProps">
-            <b>{{ getCommentUser(comments[slotProps.index].user) }}</b>
+            <b>{{ getUserName(comments[slotProps.index].user) }}</b>
             ({{ comments[slotProps.index].user }})
           </template>
 
@@ -206,31 +206,21 @@ export default {
     },
     
     /**
-     * GET COMMENT ARTICLE
+     * GET ARTICLE NAME
      * @param {string} id
      * @returns
      */
-    getCommentArticle(id) {
-      for (let article of this.articles) {
-        if (article._id === id) {
-
-          return article.title;
-        }
-      }
+    getArticleName(id) {
+      return this.$serve.getItemName(id, this.articles);
     },
 
     /**
-     * GET COMMENT USER
+     * GET USER NAME
      * @param {string} id
      * @returns
      */
-    getCommentUser(id) {
-      for (let user of this.users) {
-        if (user._id === id) {
-          
-          return user.name;
-        }
-      }
+    getUserName(id) {
+      return this.$serve.getItemName(id, this.users);
     },
 
     /**

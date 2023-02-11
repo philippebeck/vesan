@@ -134,17 +134,12 @@ export default {
     },
 
     /**
-     * GET ARTICLE USER
+     * GET USER NAME
      * @param {string} id 
      * @returns
      */
-    getArticleUser(id) {
-      for (let user of this.users) {
-        if (user._id === id) {
-
-          return user.name;
-        }
-      }
+    getUserName(id) {
+      return this.$serve.getItemName(id, this.users);
     },
 
     /**

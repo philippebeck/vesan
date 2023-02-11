@@ -52,7 +52,7 @@
             <p class="silver">
               Created by
               <b itemprop="author">
-                {{ getReviewUser(slotProps.item.user) }}
+                {{ getUserName(slotProps.item.user) }}
               </b>
               on
               <i itemprop="dateCreated">
@@ -86,7 +86,7 @@
               <p class="silver">
                 Created by
                 <b itemprop="author">
-                  {{ getReviewUser(slotProps.item.user) }}
+                  {{ getUserName(slotProps.item.user) }}
                 </b>
                 on
                 <i itemprop="dateCreated">
@@ -135,13 +135,13 @@
 
           <!-- Product -->
           <template #cell-product="slotProps">
-            <b>{{ getReviewProduct(reviews[slotProps.index].product) }}</b>
+            <b>{{ getProductName(reviews[slotProps.index].product) }}</b>
             ({{ reviews[slotProps.index].product }})
           </template>
 
           <!-- User -->
           <template #cell-user="slotProps">
-            <b>{{ getReviewUser(reviews[slotProps.index].user) }}</b>
+            <b>{{ getUserName(reviews[slotProps.index].user) }}</b>
             ({{ reviews[slotProps.index].user }})
           </template>
 
@@ -232,31 +232,21 @@ export default {
     },
 
     /**
-     * GET REVIEW PRODUCT
+     * GET PRODUCT NAME
      * @param {string} id 
      * @returns
      */
-    getReviewProduct(id) {
-      for (let product of this.products) {
-        if (product._id === id) {
-
-          return product.name;
-        }
-      }
+    getProductName(id) {
+      return this.$serve.getItemName(id, this.products);
     },
 
     /**
-     * GET REVIEW USER
+     * GET USER NAME
      * @param {string} id
      * @returns 
      */
-    getReviewUser(id) {
-      for (let user of this.users) {
-        if (user._id === id) {
-
-          return user.name;
-        }
-      }
+    getUserName(id) {
+      return this.$serve.getItemName(id, this.users);
     },
 
     /**

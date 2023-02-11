@@ -56,7 +56,7 @@
 
           <!-- User -->
           <template #cell-user="slotProps">
-            <b>{{ getOrderUser(orders[slotProps.index].user) }}</b>
+            <b>{{ getUserName(orders[slotProps.index].user) }}</b>
             ({{ orders[slotProps.index].user }})
           </template>
 
@@ -125,16 +125,11 @@ export default {
     },
     
     /**
-     * GET ORDER USER
+     * GET USER NAME
      * @param {string} id 
      */
-    getOrderUser(id) {
-      for (let user of this.users) {
-        if (user._id === id) {
-
-          return user.name;
-        }
-      }
+    getUserName(id) {
+      return this.$serve.getItemName(id, this.users);
     },
 
     /**
