@@ -120,10 +120,10 @@
 </template>
 
 <script>
-import constants from "/constants"
-
+import { mapState, mapActions } from "vuex"
 import CreateReview from "@/components/creators/CreateReview"
 import ListReviews from "@/components/managers/ListReviews"
+import constants from "/constants"
 
 export default {
   name: "ProductView",
@@ -135,10 +135,7 @@ export default {
 
   data() {
     return {
-      reviews: [],
-      users: [],
       basket: [],
-      product: {},
       order: {},
       option: "",
       priceCurrency: "",
@@ -151,20 +148,26 @@ export default {
   mounted () {
     this.priceCurrency = constants.PRICE_CURRENCY;
 
-    this.$serve.getData(`/api/products/${this.$route.params.id}`)
-      .then(res => { this.product = res })
-      .catch(err => { console.log(err) });
+    this.$store.dispatch("getProduct", this.$route.params.id);
+    this.$store.dispatch("listReviews");
+    this.$store.dispatch("checkUsers");
+  },
 
-    this.$serve.getData("/api/reviews")
-      .then(res => { this.reviews = res })
-      .catch(err => { console.log(err) });
-
-    this.$serve.getData("/api/users/check")
-      .then(res => { this.users = res })
-      .catch(err => { console.log(err) });
+  computed: {
+    ...mapState([
+      "product", 
+      "reviews", 
+      "users"
+    ]),
   },
 
   methods: {
+    ...mapActions([
+      "checkUsers", 
+      "getProduct", 
+      "listReviews"
+    ]),
+
     /**
      * CHECK SESSION
      * @param {string} role

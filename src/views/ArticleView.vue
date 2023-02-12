@@ -88,10 +88,10 @@
 </template>
 
 <script>
-import constants from "/constants"
-
+import { mapState, mapActions } from "vuex"
 import CreateComment from "@/components/creators/CreateComment"
 import ListComments from "@/components/managers/ListComments"
+import constants from "/constants"
 
 export default {
   name: "ArticleView",
@@ -102,28 +102,31 @@ export default {
 
   data() {
     return {
-      article: {},
-      comments: [],
-      users: [],
       userId: null
     }
   },
 
-  created () {
-    this.$serve.getData(`/api/articles/${this.$route.params.id}`)
-      .then(res => { this.article = res })
-      .catch(err => { console.log(err) });
+  mounted () {
+    this.$store.dispatch("getArticle", this.$route.params.id);
+    this.$store.dispatch("listComments");
+    this.$store.dispatch("checkUsers");
+},
 
-    this.$serve.getData("/api/comments")
-      .then(res => { this.comments = res })
-      .catch(err => { console.log(err) });
-
-    this.$serve.getData("/api/users/check")
-      .then(res => { this.users = res })
-      .catch(err => { console.log(err) });
+  computed: {
+    ...mapState([
+      "article", 
+      "comments", 
+      "users"
+    ]),
   },
 
   methods: {
+    ...mapActions([
+      "checkUsers", 
+      "getArticle", 
+      "listComments"
+    ]),
+
     /**
      * CHECK SESSION
      * @param {string} role

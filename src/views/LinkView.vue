@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex"
 import CreateLink from "@/components/creators/CreateLink"
 
 export default {
@@ -62,12 +63,21 @@ export default {
 
   data() {
     return {
-      links: [],
-      users: [],
       userId: null
     }
   },
+
+  mounted () {
+    this.$store.dispatch("listLinks");
+    this.$store.dispatch("checkUsers");
+  },
+
   computed: {
+    ...mapState([
+      "links", 
+      "users"
+    ]),
+
     /**
      * SET CATEGORIES
      * @returns
@@ -76,7 +86,13 @@ export default {
       return this.$serve.setCats(this.links);
     }
   },
+
   methods: {
+    ...mapActions([
+      "checkUsers", 
+      "listLinks"
+    ]),
+
     /**
      * CHECK SESSION
      * @param {string} role
@@ -92,17 +108,7 @@ export default {
      */
     sortItemsByCat(items) {
       return this.$serve.sortItemsByCat(items);
-    },
-  },
-  
-  mounted () {
-    this.$serve.getData("/api/users/check")
-      .then(res => { this.users = res; })
-      .catch(err => { console.log(err) });
-
-    this.$serve.getData("/api/links")
-      .then(res => { this.links = res; })
-      .catch(err => { console.log(err) });
+    }
   }
 }
 </script>

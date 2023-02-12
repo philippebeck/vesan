@@ -224,6 +224,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex"
 import constants from "/constants"
 
 export default {
@@ -231,8 +232,7 @@ export default {
 
   data() {
     return {
-      users: [],
-      user: {}
+      users: []
     }
   },
 
@@ -243,17 +243,20 @@ export default {
 
         for (const user of this.users) {
           if (user._id === constants.USER_ID) {
-
-            this.$serve.getData("/api/users/" + user._id)
-              .then(res => { this.user = res; })
-              .catch(err => { console.log(err) });
+            this.$store.dispatch("getUser", user._id);
           }
         }
       })
       .catch(err => { console.log(err) });
   },
 
+  computed: {
+    ...mapState(["user"]),
+  },
+
   methods: {
+    ...mapActions(["getUser"]),
+
     /**
      * CHECK SESSION
      * @param {string} role
