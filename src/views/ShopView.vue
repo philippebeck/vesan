@@ -108,9 +108,9 @@
 </template>
 
 <script>
-import constants from "/constants"
-
+import { mapState, mapActions } from "vuex"
 import CreateProduct from "@/components/creators/CreateProduct"
+import constants from "/constants"
 
 export default {
   name: "ShopView",
@@ -120,10 +120,7 @@ export default {
 
   data() {
     return {
-      products: [],
-      reviews: [],
       scores: [],
-      users: [],
       priceCurrency: "",
       userId: null
     }
@@ -132,20 +129,18 @@ export default {
   mounted () {
     this.priceCurrency = constants.PRICE_CURRENCY;
 
-    this.$serve.getData("/api/users/check")
-      .then(res => { this.users = res })
-      .catch(err => { console.log(err) });
-
-    this.$serve.getData("/api/products")
-      .then(res => { this.products = res })
-      .catch(err => { console.log(err) });
-
-    this.$serve.getData("/api/reviews")
-      .then(res => { this.reviews = res })
-      .catch(err => { console.log(err) });
+    this.$store.dispatch("listProducts");
+    this.$store.dispatch("listReviews");
+    this.$store.dispatch("checkUsers");
   },
 
   computed: {
+    ...mapState([
+      "products", 
+      "reviews", 
+      "users"
+    ]),
+
     /**
      * SET CATEGORIES
      * @returns
@@ -156,6 +151,12 @@ export default {
   },
 
   methods: {
+    ...mapActions([
+      "checkUsers", 
+      "listProducts", 
+      "listReviews"
+    ]),
+
     /**
      * CHECK SESSION
      * @param {string} role

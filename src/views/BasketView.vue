@@ -111,6 +111,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex"
 import constants from "/constants"
 
 export default {
@@ -123,15 +124,12 @@ export default {
       order: [],
       sale: [],
       total: 0,
-      users: [],
       userId: null
     }
   },
 
   mounted() {
-    this.$serve.getData("/api/users/check")
-      .then(res => { this.users = res; })
-      .catch(err => { console.log(err) });
+    this.$store.dispatch("checkUsers");
 
     this.$serve.getData("/api/products")
       .then(res => { 
@@ -143,7 +141,13 @@ export default {
       .catch(err => { console.log(err) });
   },
 
+  computed: {
+    ...mapState(["users"]),
+  },
+
   methods: {
+    ...mapActions(["checkUsers"]),
+
     /**
      * CHECK SESSION
      * @param {string} role
