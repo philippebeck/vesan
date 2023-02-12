@@ -114,9 +114,9 @@
 </template>
 
 <script>
-import constants from "/constants"
-
+import { mapState, mapActions } from "vuex"
 import CreateArticle from "@/components/creators/CreateArticle"
+import constants from "/constants"
 
 export default {
   name: "BlogView",
@@ -126,23 +126,21 @@ export default {
 
   data() {
     return {
-      articles: [],
-      users: [],
       userId: null
     }
   },
 
   mounted () {
-    this.$serve.getData("/api/users/check")
-      .then(res => { this.users = res })
-      .catch(err => { console.log(err) });
-
-    this.$serve.getData("/api/articles")
-      .then(res => { this.articles = res })
-      .catch(err => { console.log(err) });
+    this.$store.dispatch("listArticles");
+    this.$store.dispatch("checkUsers");
   },
 
   computed: {
+    ...mapState([
+      "articles", 
+      "users"
+    ]),
+
     /**
      * SET CATEGORIES
      * @returns
@@ -153,6 +151,11 @@ export default {
   },
 
   methods: {
+    ...mapActions([
+      "listArticles", 
+      "checkUsers"
+    ]),
+
     /**
      * CHECK SESSION
      * @param {string} role
