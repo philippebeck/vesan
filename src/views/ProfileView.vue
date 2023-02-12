@@ -103,6 +103,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex"
 import constants from "/constants";
 
 export default {
@@ -111,7 +112,6 @@ export default {
   data() {
     return {
       users: [],
-      user: {},
       image: "",
       pass: ""
     }
@@ -123,9 +123,7 @@ export default {
         this.users = res;
 
         if (this.checkSession("user")) {
-          this.$serve.getData("/api/users/" + constants.USER_ID)
-            .then(res => { this.user = res })
-            .catch(err => { console.log(err) });
+          this.$store.dispatch("getUser", constants.USER_ID);
 
         } else {
           alert("Go back Home !");
@@ -135,7 +133,13 @@ export default {
       .catch(err => { console.log(err) });
   },
 
+  computed: {
+    ...mapState(["user"]),
+  },
+
   methods: {
+    ...mapActions(["getUser"]),
+
     /**
      * CHECK SESSION
      * @param {string} role

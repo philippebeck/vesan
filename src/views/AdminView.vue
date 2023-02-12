@@ -108,6 +108,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex"
 import ListProducts from "@/components/managers/ListProducts"
 import ListReviews from "@/components/managers/ListReviews"
 import ListOrders from "@/components/managers/ListOrders"
@@ -130,69 +131,67 @@ export default {
 
   data() {
     return {
-      products: [],
-      reviews: [],
-      orders: [],
-      articles: [],
-      comments: [],
-      users: [],
-      links: []
+      usersChecked: []
     }
   },
 
   beforeMount () {
     this.$serve.getData("/api/users/check")
         .then(res => { 
-          this.users = res;
+          this.usersChecked = res;
 
           if (this.checkSession("editor")) {
 
-            this.$serve.getData("/api/products")
-              .then(res => { this.products = res })
-              .catch(err => { console.log(err) });
+            this.$store.dispatch("listArticles");
+            this.$store.dispatch("listComments");
+            this.$store.dispatch("listOrders");
+            this.$store.dispatch("listProducts");
+            this.$store.dispatch("listReviews");
 
-            this.$serve.getData("/api/reviews")
-              .then(res => { this.reviews = res })
-              .catch(err => { console.log(err) });
-
-            this.$serve.getData("/api/orders")
-              .then(res => { this.orders = res })
-              .catch(err => { console.log(err) });
-
-            this.$serve.getData("/api/articles")
-              .then(res => { this.articles = res })
-              .catch(err => { console.log(err) });
-
-            this.$serve.getData("/api/comments")
-              .then(res => { this.comments = res })
-              .catch(err => { console.log(err) });
-
-            } else {
+          } else {
             alert("Go back Home !");
             this.$router.push("/");
-            }
+          }
 
-            if (this.checkSession("admin")) {
+          if (this.checkSession("admin")) {
 
-              this.$serve.getData("/api/users")
-              .then(res => { this.users = res })
-              .catch(err => { console.log(err) });
-
-            this.$serve.getData("/api/links")
-              .then(res => { this.links = res })
-              .catch(err => { console.log(err) });
-            }
+            this.$store.dispatch("listLinks");
+            this.$store.dispatch("listUsers");
+          }
         })
         .catch(err => { console.log(err) });
   },
+
+  computed: {
+    ...mapState([
+      "articles", 
+      "comments", 
+      "links", 
+      "orders",
+      "products", 
+      "reviews", 
+      "users"
+    ]),
+  },
+
   methods: {
+    ...mapActions([
+      "listArticles", 
+      "listComments", 
+      "listLinks", 
+      "listOrders", 
+      "listProducts", 
+      "listReviews", 
+      "listUsers"
+    ]),
+
     /**
      * CHECK SESSION
      * @param {string} role
      * @returns
      */
     checkSession(role) {
-      return this.$serve.checkSession(this.users, role);
+      return this.$serve.checkSession(this.usersChecked, role);
     }
   }
 }
