@@ -85,17 +85,17 @@ export default createStore({
         .catch(err => { console.log(err) });
     },
 
-    async getArticle(context, id) {
+    async readArticle(context, id) {
       app.config.globalProperties.$serve.getData("/api/articles/" + id)
         .then(res => { context.commit("SET_ARTICLE", res) })
         .catch(err => { console.log(err) });
     },
-    async getProduct(context, id) {
+    async readProduct(context, id) {
       app.config.globalProperties.$serve.getData("/api/products/" + id)
         .then(res => { context.commit("SET_PRODUCT", res) })
         .catch(err => { console.log(err) });
     },
-    async getUser(context, id) {
+    async readUser(context, id) {
       app.config.globalProperties.$serve.getData("/api/users/" + id)
         .then(res => { context.commit("SET_USER", res) })
         .catch(err => { console.log(err) });

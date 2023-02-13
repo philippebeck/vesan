@@ -107,7 +107,7 @@ export default {
   },
 
   mounted () {
-    this.$store.dispatch("getArticle", this.$route.params.id);
+    this.$store.dispatch("readArticle", this.$route.params.id);
     this.$store.dispatch("listArticleComments", this.$route.params.id);
     this.$store.dispatch("checkUsers");
 },
@@ -123,7 +123,7 @@ export default {
   methods: {
     ...mapActions([
       "checkUsers", 
-      "getArticle", 
+      "readArticle", 
       "listArticleComments"
     ]),
 

@@ -148,7 +148,7 @@ export default {
   mounted () {
     this.priceCurrency = constants.PRICE_CURRENCY;
 
-    this.$store.dispatch("getProduct", this.$route.params.id);
+    this.$store.dispatch("readProduct", this.$route.params.id);
     this.$store.dispatch("listProductReviews", this.$route.params.id);
     this.$store.dispatch("checkUsers");
   },
@@ -164,7 +164,7 @@ export default {
   methods: {
     ...mapActions([
       "checkUsers", 
-      "getProduct", 
+      "readProduct", 
       "listProductReviews"
     ]),
 
