@@ -48,10 +48,10 @@
           <template #cell-status="slotProps">
             <FieldElt :id="'status-' + orders[slotProps.index]._id"
               type="select"
+              :list="constants.CATS_ORDER"
               v-model:value="getOrders()[slotProps.index].status"
-              :info="constants.UPDATE_STATUS"
               @keyup.enter="updateOrder(orders[slotProps.index]._id)"
-              :list="constants.CATS_ORDER"/>
+              :info="constants.UPDATE_STATUS"/>
           </template>
 
           <!-- User -->
@@ -107,7 +107,7 @@ export default {
 
   data() {
     return {
-      constants: []
+      constants: {}
     }
   },
 

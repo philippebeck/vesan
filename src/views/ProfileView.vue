@@ -15,13 +15,13 @@
             <FieldElt id="user-name"
               v-model:value="user.name"
               @keyup.enter="validateUpdatedUser()"
-              info="John Doe"
+              :info="constants.CREATE_NAME"
               :min="2">
               <template #legend>
                 Name
               </template>
               <template #label>
-                Indicate your name
+                {{ constants.LABEL_NAME }}
               </template>
             </FieldElt>
           </template>
@@ -32,12 +32,12 @@
               type="email"
               v-model:value="user.email"
               @keyup.enter="validateUpdatedUser()"
-              info="john@doe.com">
+              :info="constants.CREATE_EMAIL">
               <template #legend>
                 Email
               </template>
               <template #label>
-                Indicate your email
+                {{ constants.LABEL_EMAIL }}
               </template>
             </FieldElt>
           </template>
@@ -48,13 +48,13 @@
               :alt="user.alt" />
             <FieldElt id="user-image"
               v-model:value="image"
-              info="Image file only"
+              :info="constants.CREATE_IMAGE"
               type="file">
               <template #legend>
                 Image
               </template>
               <template #label>
-                Provide your photo
+                {{ constants.LABEL_IMAGE }}
               </template>
             </FieldElt>
           </template>
@@ -65,12 +65,12 @@
               type="password"
               v-model:value="pass"
               @keyup.enter="validateUpdatedUser()"
-              info="********">
+              :info="constants.CREATE_PASSWORD">
               <template #legend>
                 Password
               </template>
               <template #label>
-                8 to 50 characters with upper & lower, 1 number mini & no space
+                {{ constants.LABEL_PASSWORD }}
               </template>
             </FieldElt>
           </template>
@@ -78,10 +78,10 @@
 
         <!-- Update Button -->
         <BtnElt type="button"
-          content="Update"
           @click="validateUpdatedUser()" 
           class="btn-blue"
-          title="Update your profile">
+          content="Update"
+          :title="constants.UPDATE_PROFILE">
           <template #btn>
             <i class="fa-solid fa-user-pen fa-lg"></i>
           </template>
@@ -89,10 +89,10 @@
 
         <!-- Delete Button -->
         <BtnElt type="button"
-          content="Delete"
           @click="deleteUser()" 
           class="btn-red"
-          title="Delete your account">
+          content="Delete"
+          :title="constants.DELETE_ACCOUNT">
           <template #btn>
             <i class="fa-solid fa-user-slash fa-lg"></i>
           </template>
@@ -165,18 +165,21 @@ export default {
   data() {
     return {
       users: [],
+      constants: {},
       image: "",
       pass: ""
     }
   },
 
   mounted() {
+    this.constants = constants;
+
     this.$serve.getData("/api/users/check")
       .then(res => { 
         this.users = res;
 
         if (this.checkSession("user")) {
-          this.$store.dispatch("getUser", constants.USER_ID);
+          this.$store.dispatch("readUser", constants.USER_ID);
           this.$store.dispatch("listUserOrders", constants.USER_ID);
 
         } else {
@@ -188,12 +191,18 @@ export default {
   },
 
   computed: {
-    ...mapState(["user", "orders"]),
+    ...mapState([
+      "user", 
+      "orders"
+    ]),
 
   },
 
   methods: {
-    ...mapActions(["getUser", "listUserOrders"]),
+    ...mapActions([
+      "readUser", 
+      "listUserOrders"
+    ]),
 
     /**
      * CHECK SESSION

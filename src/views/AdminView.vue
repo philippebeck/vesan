@@ -10,21 +10,21 @@
       <NavElt class="sidebar">
         <template #first>
           <a href="#shop"
-            title="Manage products, reviews & orders">
+            :title="constants.SIDEBAR_SHOP">
             <i class="fa-solid fa-shop fa-fw"></i>
           </a>
           <a href="#blog"
-            title="Manage articles & comments">
+            :title="constants.SIDEBAR_BLOG">
             <i class="fa-solid fa-blog fa-fw"></i>
           </a>
-          <a  v-if="checkSession('admin')" 
+          <a v-if="checkSession('admin')"
             href="#users"
-            title="Manage users">
+            :title="constants.SIDEBAR_USERS">
             <i class="fa-solid fa-user-astronaut fa-fw"></i>
           </a>
-          <a  v-if="checkSession('admin')"
+          <a v-if="checkSession('admin')"
             href="#links"
-            title="Manage links">
+            :title="constants.SIDEBAR_LINKS">
             <i class="fa-solid fa-link fa-fw"></i>
           </a>
         </template>
@@ -109,6 +109,8 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
+import constants from "/constants"
+
 import ListProducts from "@/components/managers/ListProducts"
 import ListReviews from "@/components/managers/ListReviews"
 import ListOrders from "@/components/managers/ListOrders"
@@ -131,17 +133,19 @@ export default {
 
   data() {
     return {
-      usersChecked: []
+      usersChecked: [],
+      constants: {}
     }
   },
 
-  beforeMount () {
+  mounted () {
+    this.constants = constants;
+
     this.$serve.getData("/api/users/check")
         .then(res => { 
           this.usersChecked = res;
 
           if (this.checkSession("editor")) {
-
             this.$store.dispatch("listArticles");
             this.$store.dispatch("listComments");
             this.$store.dispatch("listOrders");
@@ -154,7 +158,6 @@ export default {
           }
 
           if (this.checkSession("admin")) {
-
             this.$store.dispatch("listLinks");
             this.$store.dispatch("listUsers");
           }

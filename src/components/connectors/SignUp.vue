@@ -8,13 +8,13 @@
         <FieldElt id="user-name"
           v-model:value="name"
           @keyup.enter="validateNewUser()"
-          info="John Doe"
+          :info="constants.CREATE_NAME"
           :min="2">
           <template #legend>
             Name
           </template>
           <template #label>
-            Indicate the user name
+            {{ constants.LABEL_NAME }}
           </template>
         </FieldElt>
       </template>
@@ -25,12 +25,12 @@
           type="email"
           v-model:value="email"
           @keyup.enter="validateNewUser()"
-          info="john@doe.com">
+          :info="constants.CREATE_EMAIL">
           <template #legend>
             Email
           </template>
           <template #label>
-            Indicate the user email
+            {{ constants.LABEL_EMAIL }}
           </template>
         </FieldElt>
       </template>
@@ -38,14 +38,14 @@
       <!-- User Image -->
       <template #item-3>
         <FieldElt id="user-image"
+          type="file"
           v-model:value="image"
-          info="Image file only"
-          type="file">
+          :info="constants.CREATE_IMAGE">
           <template #legend>
             Image
           </template>
           <template #label>
-            Provide user image
+            {{ constants.LABEL_IMAGE }}
           </template>
         </FieldElt>
       </template>
@@ -56,12 +56,12 @@
           type="password"
           v-model:value="pass"
           @keyup.enter="validateNewUser()"
-          info="********">
+          :info="constants.CREATE_PASSWORD">
           <template #legend>
             Password
           </template>
           <template #label>
-            8 to 50 characters with upper & lower, 1 number mini & no space
+            {{ constants.LABEL_PASSWORD }}
           </template>
         </FieldElt>
       </template>
@@ -69,10 +69,10 @@
 
     <!-- Create Button -->
     <BtnElt type="button"
-      content="Create"
       @click="validateNewUser()" 
       class="btn-blue"
-      title="SignUp a new user">
+      content="Create"
+      :title="constants.BUTTON_SIGNUP">
       <template #btn>
         <i class="fa-solid fa-user-plus fa-lg"></i>
       </template>
@@ -88,12 +88,17 @@ export default {
 
   data() {
     return {
+      constants: {},
       name: "",
       email: "",
       image:"",
       alt:"",
       pass: ""
     }
+  },
+
+  mounted() {
+    this.constants = constants;
   },
 
   methods: {

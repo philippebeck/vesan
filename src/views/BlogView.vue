@@ -89,10 +89,10 @@
               <a :href="`article/${slotProps.value._id}`"
                 :title="`Read ${slotProps.value.name}`">
 
-                <MediaElt :src="`img/thumbnails/articles/${slotProps.value.image}`" 
+                <MediaElt :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
+                  :src="`img/thumbnails/articles/${slotProps.value.image}`" 
                   :alt="`${slotProps.value.name}`" 
-                  itemprop="image"
-                  :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`">
+                  itemprop="image">
 
                   <template #figcaption>
                     <blockquote itemprop="text">

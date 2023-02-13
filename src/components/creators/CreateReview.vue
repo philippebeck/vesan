@@ -12,8 +12,8 @@
         <FieldElt id="review-text"
           type="textarea"
           v-model:value="text"
-          :info="constants.CREATE_TEXT"
           @keyup.enter="createReview()"
+          :info="constants.CREATE_TEXT"
           :min="2">
           <template #legend>
             Text
@@ -41,9 +41,9 @@
 
         <!-- Create Button -->
         <BtnElt type="button"
-          content="Create"
           @click="checkNewReview()" 
           class="btn-green"
+          content="Create"
           :title="constants.CREATE_REVIEW">
           <template #btn>
             <i class="fa-solid fa-square-plus fa-lg"></i>
@@ -64,7 +64,7 @@ export default {
     return {
       text: "",
       score: null,
-      constants: []
+      constants: {}
     }
   },
 

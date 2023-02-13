@@ -8,7 +8,7 @@
 
     <template #last v-if="checkSession('admin')">
       <a href="#create-link"
-        title="Create a link">
+        :title="constants.SIDEBAR_LINK">
         <i class="fa-solid fa-link fa-fw"></i>
       </a>
     </template>
@@ -22,7 +22,7 @@
     <template #header>
       <i class="blue anima-slideL fa-solid fa-link fa-3x"></i>
       <h1 class="sky anima-slideR">
-        Links for dev
+        {{ constants.TITLE_LINK }}
       </h1>
     </template>
 
@@ -36,10 +36,10 @@
         </template>
 
         <template #nested="slotProps">
-          <BtnElt :content="slotProps.value.name"
-            :href="`https://${slotProps.value.url}`" 
-            :title="slotProps.value.url"
-            class="btn-blue"/>
+          <BtnElt :href="`https://${slotProps.value.url}`" 
+            class="btn-blue"
+            :content="slotProps.value.name"
+            :title="slotProps.value.url"/>
         </template>
       </ListElt>
     </template>
@@ -53,6 +53,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
+import constants from "/constants"
 import CreateLink from "@/components/creators/CreateLink"
 
 export default {
@@ -63,11 +64,13 @@ export default {
 
   data() {
     return {
+      constants: {},
       userId: null
     }
   },
 
   mounted () {
+    this.constants = constants;
     this.$store.dispatch("listLinks");
     this.$store.dispatch("checkUsers");
   },

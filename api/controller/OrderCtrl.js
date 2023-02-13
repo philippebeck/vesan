@@ -109,7 +109,7 @@ exports.updateOrder = (req, res, next) => {
     fields.products = JSON.parse(fields.products);
 
     OrderModel
-      .updateOne({ _id: req.params.id }, { ...fields, _id: req.params.id })
+      .findByIdAndUpdate(req.params.id, { ...fields, _id: req.params.id })
       .then(() => res.status(200).json({ message: process.env.ORDER_UPDATED }))
       .catch((error) => res.status(400).json({ error }));
   })
@@ -122,7 +122,7 @@ exports.updateOrder = (req, res, next) => {
  */
 exports.deleteOrder = (req, res) => {
   OrderModel
-    .deleteOne({ _id: req.params.id })
+    .findByIdAndDelete(req.params.id)
     .then(() => res.status(200).json({ message: process.env.ORDER_DELETED }))
     .catch((error) => res.status(400).json({ error }))
 };

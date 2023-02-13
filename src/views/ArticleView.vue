@@ -89,9 +89,10 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
+import constants from "/constants"
+
 import CreateComment from "@/components/creators/CreateComment"
 import ListComments from "@/components/managers/ListComments"
-import constants from "/constants"
 
 export default {
   name: "ArticleView",
@@ -107,7 +108,7 @@ export default {
   },
 
   mounted () {
-    this.$store.dispatch("getArticle", this.$route.params.id);
+    this.$store.dispatch("readArticle", this.$route.params.id);
     this.$store.dispatch("listArticleComments", this.$route.params.id);
     this.$store.dispatch("checkUsers");
 },
@@ -123,7 +124,7 @@ export default {
   methods: {
     ...mapActions([
       "checkUsers", 
-      "getArticle", 
+      "readArticle", 
       "listArticleComments"
     ]),
 

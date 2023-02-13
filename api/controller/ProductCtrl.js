@@ -67,7 +67,7 @@ exports.listProducts = (req, res) => {
  */
 exports.readProduct = (req, res) => {
   ProductModel
-  .findOne({ _id: req.params.id })
+  .findById(req.params.id)
   .then((product) => res.status(200).json(product))
   .catch((error) => res.status(400).json({ error }));
 }
@@ -159,7 +159,7 @@ exports.updateProduct = (req, res, next) => {
       );
       
       ProductModel
-        .findOne({ _id: req.params.id })
+        .findById(req.params.id)
         .then((product) => 
           fs.unlink(PRODUCTS_THUMB + product.image, () => {
             fs.unlink(PRODUCTS_IMG + product.image, () => {
@@ -190,7 +190,7 @@ exports.updateProduct = (req, res, next) => {
     );
 
     ProductModel
-      .updateOne({ _id: req.params.id }, { ...product, _id: req.params.id })
+      .findByIdAndUpdate(req.params.id, { ...product, _id: req.params.id })
       .then(() => res.status(200).json({ message: process.env.PRODUCT_UPDATED }))
       .catch((error) => res.status(400).json({ error }));
   })
@@ -203,7 +203,7 @@ exports.updateProduct = (req, res, next) => {
  */
 exports.deleteProduct = (req, res) => {
   ProductModel
-    .findOne({ _id: req.params.id })
+    .findById(req.params.id)
     .then(product => {
       fs.unlink(PRODUCTS_THUMB + product.image, () => {
         fs.unlink(PRODUCTS_IMG + product.image, () => {
@@ -212,7 +212,7 @@ exports.deleteProduct = (req, res) => {
             .deleteMany({ product: req.params.id })
             .then(() => 
               ProductModel
-                .deleteOne({ _id: req.params.id })
+                .findByIdAndDelete(req.params.id)
                 .then(() => res.status(200).json({ message: process.env.PRODUCT_DELETED }))
                 .catch((error) => res.status(400).json({ error }))
             )

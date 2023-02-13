@@ -36,7 +36,7 @@
               type="number"
               v-model:value="slotProps.item.quantity"
               @change="updateQuantity(`${slotProps.item.name}`, `${slotProps.item.option}`)"
-              info="Update the product quantity"
+              :info="constants.UPDATE_QUANTITY"
               :min="1"
               :max="100">
             </FieldElt>
@@ -70,7 +70,11 @@
 
           <!-- Basket Total -->
           <p class="bord bord-violet black container-60sm-50md">
-          The total of your basket is <b>{{ total }} €</b>
+            {{ constants.BASKET_TOTAL }}
+            <b>
+              {{ total }}
+              {{ constants.CURRENCY_SYMBOL }}
+            </b>
           </p>
 
           <!-- Clear Basket -->
@@ -78,7 +82,7 @@
             @click="clearBasket()"
             class="btn-red"
             content="Clear"
-            title="Clear the Basket">
+            :title="constants.BASKET_CLEAR">
             <template #btn>
               <i class="fa-solid fa-trash-can fa-lg"></i>
             </template>
@@ -90,7 +94,7 @@
             @click="orderProducts()"
             class="btn-green"
             content="Order"
-            title="Order those Products">
+            :title="constants.BASKET_ORDER">
             <template #btn>
               <i class="fa-solid fa-cash-register fa-lg"></i>
             </template>
@@ -100,7 +104,7 @@
             href="/login"
             class="btn-green"
             content="Order"
-            title="Login to order those Products">
+            :title="constants.BASKET_LOGIN">
             <template #btn>
               <i class="fa-solid fa-cash-register fa-lg"></i>
             </template>
@@ -123,12 +127,14 @@ export default {
       basket: [],
       order: [],
       sale: [],
+      constants: {},
       total: 0,
       userId: null
     }
   },
 
   mounted() {
+    this.constants = constants;
     this.$store.dispatch("checkUsers");
 
     this.$serve.getData("/api/products")
@@ -263,7 +269,7 @@ export default {
      * CLEAR BASKET
      */
     clearBasket() {
-      if (confirm("Do you want to clear your Basket ?") === true) {
+      if (confirm(constants.CONFIRM_BASKET) === true) {
         localStorage.removeItem("basket");
         this.$router.go();
       }
@@ -285,7 +291,7 @@ export default {
 
       this.$serve.postData("/api/orders", order)
         .then(() => {
-          alert("Order created !");
+          alert(constants.ALERT_ORDER);
           this.$router.go();
         })
         .catch(err => { console.log(err) });

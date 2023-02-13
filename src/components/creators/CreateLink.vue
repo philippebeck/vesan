@@ -12,8 +12,8 @@
           <template #item-1>
             <FieldElt id="name"
               v-model:value="name"
-              :info="constants.CREATE_NAME"
               @keyup.enter="validateNewLink()"
+              :info="constants.CREATE_NAME"
               :min="parseInt('2')">
               <template #legend>
                 Name
@@ -28,8 +28,8 @@
             <FieldElt id="url"
               type="url"
               v-model:value="url"
-              :info="constants.CREATE_URL"
               @keyup.enter="validateNewLink()"
+              :info="constants.CREATE_URL"
               :min="parseInt('5')"
               :max="parseInt('100')">
               <template #legend>
@@ -44,10 +44,10 @@
           <template #item-3>
             <FieldElt id="cat"
               type="select"
+              :list="constants.CATS_LINK"
               v-model:value="cat"
-              :info="constants.CREATE_CATEGORY"
               @keyup.enter="validateNewLink()"
-              :list="constants.CATS_LINK">
+              :info="constants.CREATE_CATEGORY">
               <template #legend>
                 Category
               </template>
@@ -59,9 +59,9 @@
         </ListElt>
 
         <BtnElt type="button"
-          content="Create"
           @click="validateNewLink()" 
           class="btn-green"
+          content="Create"
           :title="constants.CREATE_LINK"/>
       </form>
     </template>
@@ -79,7 +79,7 @@ export default {
       name: "",
       url: "",
       cat: "",
-      constants: []
+      constants: {}
     }
   },
 

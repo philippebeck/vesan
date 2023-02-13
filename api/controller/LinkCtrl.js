@@ -71,7 +71,7 @@ exports.updateLink = (req, res, next) => {
     }*/
 
     LinkModel
-      .updateOne({ _id: req.params.id }, { ...fields, _id: req.params.id })
+      .findByIdAndUpdate(req.params.id, { ...fields, _id: req.params.id })
       .then(() => res.status(200).json({ message: process.env.LINK_UPDATED }))
       .catch((error) => res.status(400).json({ error }));
   })
@@ -84,7 +84,7 @@ exports.updateLink = (req, res, next) => {
  */
 exports.deleteLink = (req, res) => {
   LinkModel
-    .deleteOne({ _id: req.params.id })
+    .findByIdAndDelete(req.params.id)
     .then(() => res.status(200).json({ message: process.env.LINK_DELETED }))
     .catch((error) => res.status(400).json({ error }))
 };

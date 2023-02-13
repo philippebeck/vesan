@@ -21,8 +21,8 @@
           <template #cell-name="slotProps">
             <FieldElt :id="'name-' + users[slotProps.index]._id"
               v-model:value="getUsers()[slotProps.index].name"
-              :info="constants.UPDATE_NAME"
-              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"/>
+              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"
+              :info="constants.UPDATE_NAME"/>
           </template>
 
           <!-- Email -->
@@ -30,8 +30,8 @@
             <FieldElt :id="'email-' + users[slotProps.index]._id"
               type="email"
               v-model:value="getUsers()[slotProps.index].email"
-              :info="constants.UPDATE_EMAIL"
-              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"/>
+              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"
+              :info="constants.UPDATE_EMAIL"/>
           </template>
 
           <!-- Image -->
@@ -49,8 +49,8 @@
             <FieldElt :id="'alt-' + users[slotProps.index]._id"
               type="textarea"
               v-model:value="getUsers()[slotProps.index].alt"
-              :info="constants.UPDATE_ALT"
-              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"/>
+              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"
+              :info="constants.UPDATE_ALT"/>
           </template>
 
           <!-- Pass -->
@@ -58,18 +58,18 @@
             <FieldElt :id="'pass-' + users[slotProps.index]._id"
               type="password"
               v-model:value="pass"
-              :info="constants.UPDATE_PASSWORD"
-              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"/>
+              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"
+              :info="constants.UPDATE_PASSWORD"/>
           </template>
 
           <!-- Role -->
           <template #cell-role="slotProps">
             <FieldElt :id="'role-' + users[slotProps.index]._id"
               type="select"
-              v-model:value="getUsers()[slotProps.index].role"
               :list="constants.ROLES_USER"
-              :info="constants.UPDATE_ROLE"
-              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"/>
+              v-model:value="getUsers()[slotProps.index].role"
+              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"
+              :info="constants.UPDATE_ROLE"/>
           </template>
 
           <!-- Created -->
@@ -120,7 +120,7 @@ export default {
   data() {
     return {
       pass: "",
-      constants: []
+      constants: {}
     }
   },
 

@@ -14,8 +14,8 @@
           <template #item-1>
             <FieldElt id="article-name"
               v-model:value="name"
-              :info="constants.CREATE_TITLE"
               @keyup.enter="validateNewArticle()"
+              :info="constants.CREATE_TITLE"
               :min="2">
               <template #legend>
                 Title
@@ -29,10 +29,10 @@
           <!-- Text -->
           <template #item-2>
             <FieldElt id="article-text"
+              type="textarea"
               v-model:value="text"
-              :info="constants.CREATE_TEXT"
               @keyup.enter="validateNewArticle()"
-              type="textarea">
+              :info="constants.CREATE_TEXT">
               <template #legend>
                 Text
               </template>
@@ -45,9 +45,9 @@
           <!-- Image -->
           <template #item-3>
             <FieldElt id="article-image"
+              type="file"
               v-model:value="image"
-              :info="constants.CREATE_IMAGE"
-              type="file">
+              :info="constants.CREATE_IMAGE">
               <template #legend>
                 Image
               </template>
@@ -62,8 +62,8 @@
             <FieldElt id="article-alt"
               type="textarea"
               v-model:value="alt"
-              :info="constants.CREATE_ALT"
-              @keyup.enter="validateNewArticle()">
+              @keyup.enter="validateNewArticle()"
+              :info="constants.CREATE_ALT">
               <template #legend>
                 Alt
               </template>
@@ -77,10 +77,10 @@
           <template #item-5>
             <FieldElt id="article-cat"
               type="select"
+              :list="constants.CATS_ARTICLE"
               v-model:value="cat"
-              :info="constants.CREATE_CATEGORY"
               @keyup.enter="validateNewArticle()"
-              :list="constants.CATS_ARTICLE">
+              :info="constants.CREATE_CATEGORY">
               <template #legend>
                 Category
               </template>
@@ -93,9 +93,9 @@
 
         <!-- Create Button -->
         <BtnElt type="button"
-          content="Create"
           @click="validateNewArticle()" 
           class="btn-green"
+          content="Create"
           :title="constants.CREATE_ARTICLE">
           <template #btn>
             <i class="fa-solid fa-square-plus fa-lg"></i>
@@ -119,7 +119,7 @@ export default {
       image: "",
       alt: "",
       cat: "",
-      constants: []
+      constants: {}
     }
   },
 

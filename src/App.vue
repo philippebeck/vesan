@@ -240,7 +240,7 @@ export default {
 
         for (const user of this.users) {
           if (user._id === constants.USER_ID) {
-            this.$store.dispatch("getUser", user._id);
+            this.$store.dispatch("readUser", user._id);
           }
         }
       })
@@ -252,7 +252,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["getUser"]),
+    ...mapActions(["readUser"]),
 
     /**
      * CHECK SESSION

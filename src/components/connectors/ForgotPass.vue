@@ -2,16 +2,16 @@
   <form>
     <!-- User Email -->
     <FieldElt id="email"
-      v-model:value="email"
-      info="Indicate your Email"
-      @keyup.enter="forgotPass()"
       type="email"
+      v-model:value="email"
+      @keyup.enter="forgotPass()"
+      :info="constants.CREATE_EMAIL"
       required>
       <template #legend>
         Email
       </template>
       <template #label>
-        This email must have been registered before
+        {{ constants.LABEL_EMAIL }}
       </template>
     </FieldElt>
 
@@ -23,10 +23,10 @@
 
     <!-- Send Password Button -->
     <BtnElt type="button"
-      content="Send"
       @click="forgotPass()"
       class="btn-orange"
-      title="Send a new password">
+      content="Send"
+      :title="constants.BUTTON_FORGOT">
       <template #btn>
         <i class="fa-regular fa-paper-plane fa-lg"></i>
       </template>
@@ -42,8 +42,13 @@ export default {
 
   data() {
     return {
+      constants: {},
       email: ""
     }
+  },
+
+  mounted() {
+    this.constants = constants;
   },
 
   methods: {

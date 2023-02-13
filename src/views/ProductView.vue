@@ -9,10 +9,10 @@
     <template #body>
 
       <BtnElt v-if="calculateScoresAverage(product._id) !== undefined"
+        href="#reviews"
         itemprop="aggregateRating"
         itemscope
         itemtype="https://schema.org/AggregateRating" 
-        href="#reviews"
         class="btn-violet"
         :title="`Read Reviews about ${product.name}`">
         <template #btn>
@@ -35,8 +35,8 @@
           :title="`Be the first to write a Review about ${product.name}`" />
 
       <MediaElt :src="`/img/products/${product.image}`"
-        itemprop="image"
-        :alt="product.alt">
+        :alt="product.alt"
+        itemprop="image">
 
         <template #figcaption>
           <p itemprop="description">
@@ -98,8 +98,8 @@
 
         <BtnElt type="button"
           @click="addToBasket()"
-          content="Add to Basket"
           class="btn-green width-sm"
+          content="Add to Basket"
           :title="`Add ${product.name} to the basket`">
           <template #btn>
             <i class="fa-solid fa-basket-shopping fa-lg"></i>
@@ -146,9 +146,9 @@ export default {
   },
 
   mounted () {
-    this.priceCurrency = constants.PRICE_CURRENCY;
+    this.priceCurrency = constants.CURRENCY_ISO;
 
-    this.$store.dispatch("getProduct", this.$route.params.id);
+    this.$store.dispatch("readProduct", this.$route.params.id);
     this.$store.dispatch("listProductReviews", this.$route.params.id);
     this.$store.dispatch("checkUsers");
   },
@@ -164,7 +164,7 @@ export default {
   methods: {
     ...mapActions([
       "checkUsers", 
-      "getProduct", 
+      "readProduct", 
       "listProductReviews"
     ]),
 

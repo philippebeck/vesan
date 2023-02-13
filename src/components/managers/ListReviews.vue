@@ -17,9 +17,9 @@
             <FieldElt :id="'text-' + slotProps.item._id"
               type="textarea"
               v-model:value="slotProps.item.text"
-              itemprop="text"
               @change="setModerate(slotProps.item._id)"
               @keyup.enter="updateReview(slotProps.item._id)"
+              itemprop="text"
               :info="constants.UPDATE_TEXT"/>
 
             <FieldElt :id="'score-' + slotProps.item._id"
@@ -149,9 +149,9 @@
           <template #cell-moderate="slotProps">
             <FieldElt :id="'text-' + reviews[slotProps.index]._id"
               type="select"
+              :list="constants.IS_MODERATE"
               v-model:value="getReviews()[slotProps.index].moderate"
               @keyup.enter="updateReview(reviews[slotProps.index]._id)"
-              :list="constants.IS_MODERATE"
               :info="constants.UPDATE_MODERATE"/>
           </template>
 
@@ -203,7 +203,7 @@ export default {
 
   data() {
     return {
-      constants: []
+      constants: {}
     }
   },
 

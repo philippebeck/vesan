@@ -17,10 +17,10 @@
             <FieldElt :id="'text-' + slotProps.item._id"
               type="textarea"
               v-model:value="slotProps.item.text"
-              itemprop="text"
-              :info="constants.UPDATE_TEXT"
               @change="setModerate(slotProps.item._id)"
-              @keyup.enter="updateComment(slotProps.item._id)"/>
+              @keyup.enter="updateComment(slotProps.item._id)"
+              itemprop="text"
+              :info="constants.UPDATE_TEXT"/>
 
             <BtnElt type="button"
               @click="updateComment(slotProps.item._id)" 
@@ -123,10 +123,10 @@
           <template #cell-moderate="slotProps">
             <FieldElt :id="'text-' + comments[slotProps.index]._id"
               type="select"
-              v-model:value="getComments()[slotProps.index].moderate"
               :list="constants.IS_MODERATE"
-              :info="constants.UPDATE_MODERATE"
-              @keyup.enter="updateComment(comments[slotProps.index]._id)"/>
+              v-model:value="getComments()[slotProps.index].moderate"
+              @keyup.enter="updateComment(comments[slotProps.index]._id)"
+              :info="constants.UPDATE_MODERATE"/>
           </template>
 
           <!-- Created -->
@@ -176,7 +176,7 @@ export default {
 
   data() {
     return {
-      constants: []
+      constants: {}
     }
   },
 
