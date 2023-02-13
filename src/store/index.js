@@ -101,6 +101,16 @@ export default createStore({
         .catch(err => { console.log(err) });
     },
 
+    async listArticleComments(context, id) {
+      app.config.globalProperties.$serve.getData("/api/comments/" + id)
+        .then(res => { context.commit("SET_COMMENTS", res) })
+        .catch(err => { console.log(err) });
+    },
+    async listProductReviews(context, id) {
+      app.config.globalProperties.$serve.getData("/api/reviews/" + id)
+        .then(res => { context.commit("SET_REVIEWS", res) })
+        .catch(err => { console.log(err) });
+    },
     async listUserOrders(context, id) {
       app.config.globalProperties.$serve.getData("/api/orders/" + id)
         .then(res => { context.commit("SET_USER_ORDERS", res) })
