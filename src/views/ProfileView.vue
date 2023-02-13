@@ -15,13 +15,13 @@
             <FieldElt id="user-name"
               v-model:value="user.name"
               @keyup.enter="validateUpdatedUser()"
-              info="John Doe"
+              :info="constants.CREATE_NAME"
               :min="2">
               <template #legend>
                 Name
               </template>
               <template #label>
-                Indicate your name
+                {{ constants.LABEL_NAME }}
               </template>
             </FieldElt>
           </template>
@@ -32,12 +32,12 @@
               type="email"
               v-model:value="user.email"
               @keyup.enter="validateUpdatedUser()"
-              info="john@doe.com">
+              :info="constants.CREATE_EMAIL">
               <template #legend>
                 Email
               </template>
               <template #label>
-                Indicate your email
+                {{ constants.LABEL_EMAIL }}
               </template>
             </FieldElt>
           </template>
@@ -48,13 +48,13 @@
               :alt="user.alt" />
             <FieldElt id="user-image"
               v-model:value="image"
-              info="Image file only"
+              :info="constants.CREATE_IMAGE"
               type="file">
               <template #legend>
                 Image
               </template>
               <template #label>
-                Provide your photo
+                {{ constants.LABEL_IMAGE }}
               </template>
             </FieldElt>
           </template>
@@ -65,12 +65,12 @@
               type="password"
               v-model:value="pass"
               @keyup.enter="validateUpdatedUser()"
-              info="********">
+              :info="constants.CREATE_PASSWORD">
               <template #legend>
                 Password
               </template>
               <template #label>
-                8 to 50 characters with upper & lower, 1 number mini & no space
+                {{ constants.LABEL_PASSWORD }}
               </template>
             </FieldElt>
           </template>
@@ -81,7 +81,7 @@
           @click="validateUpdatedUser()" 
           class="btn-blue"
           content="Update"
-          title="Update your profile">
+          :title="constants.UPDATE_PROFILE">
           <template #btn>
             <i class="fa-solid fa-user-pen fa-lg"></i>
           </template>
@@ -92,7 +92,7 @@
           @click="deleteUser()" 
           class="btn-red"
           content="Delete"
-          title="Delete your account">
+          :title="constants.DELETE_ACCOUNT">
           <template #btn>
             <i class="fa-solid fa-user-slash fa-lg"></i>
           </template>
@@ -165,12 +165,15 @@ export default {
   data() {
     return {
       users: [],
+      constants: {},
       image: "",
       pass: ""
     }
   },
 
   mounted() {
+    this.constants = constants;
+
     this.$serve.getData("/api/users/check")
       .then(res => { 
         this.users = res;

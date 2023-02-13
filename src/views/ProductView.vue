@@ -146,7 +146,7 @@ export default {
   },
 
   mounted () {
-    this.priceCurrency = constants.PRICE_CURRENCY;
+    this.priceCurrency = constants.CURRENCY_ISO;
 
     this.$store.dispatch("readProduct", this.$route.params.id);
     this.$store.dispatch("listProductReviews", this.$route.params.id);

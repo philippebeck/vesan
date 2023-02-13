@@ -3,21 +3,21 @@
   <!-- ERROR PAGE -->
   <CardElt>
     <template #header>
-      <h1>Page Not Found !</h1>
+      <h1>{{ constants.ERROR_TITLE }}</h1>
     </template>
 
     <template #body>
 
       <!-- Image 404 -->
       <MediaElt src="/img/errors/error-404.webp" 
-        alt="Error 404">
+        :alt="constants.ERROR_ALT">
       </MediaElt>
 
       <!-- Link to Home -->
       <BtnElt href="/">
         <template #btn>
           <i class="fa-regular fa-hand-point-right"></i>
-          Go back home ?
+          {{ constants.ERROR_LINK }}
           <i class="fa-regular fa-hand-point-left"></i>
         </template>
       </BtnElt>
@@ -26,7 +26,19 @@
 </template>
 
 <script>
+import constants from "/constants"
+
 export default {
-  name: 'ErrorView'
+  name: 'ErrorView',
+
+  data() {
+    return {
+      constants: {}
+    }
+  },
+
+  mounted() {
+    this.constants = constants;
+  }
 }
 </script>

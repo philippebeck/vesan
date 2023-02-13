@@ -20,12 +20,12 @@
               v-model:value="email"
               @keyup.enter="send()"
               class="anima-slideR"
-              info="An email to answer you ?">
+              :info="constants.CREATE_EMAIL">
               <template #legend>
                 Email
               </template>
               <template #label>
-                A functional email please!
+                {{ constants.LABEL_EMAIL }}
               </template>
             </FieldElt>
           </template>
@@ -36,12 +36,12 @@
               v-model:value="subject"
               @keyup.enter="send()"
               class="anima-slideL"
-              info="The subject of your message ?">
+              :info="constants.CREATE_SUBJECT">
               <template #legend>
                 Subject
               </template>
               <template #label>
-                Be brief and precise!
+                {{ constants.LABEL_SUBJECT }}
               </template>
             </FieldElt>
           </template>
@@ -53,13 +53,13 @@
               v-model:value="text"
               @keyup.enter="send()"
               class="anima-slideR"
-              info="The text of your message ?"
+              :info="constants.CREATE_TEXT"
               :max="100">
               <template #legend>
                 Text
               </template>
               <template #label>
-                What can I do for you ?
+                {{ constants.LABEL_TEXT }}
               </template>
             </FieldElt>
           </template>
@@ -76,7 +76,7 @@
           @click="send()" 
           class="btn-green anima-slideL"
           content="Send"
-          title="Send a Message">
+          :title="constants.BUTTON_MESSAGE">
           <template #btn>
             <i class="fa-regular fa-paper-plane fa-lg"></i>
           </template>
@@ -87,15 +87,22 @@
 </template>
 
 <script>
+import constants from "/constants"
+
 export default {
   name: "ContactView",
 
   data() {
     return {
+      constants: {},
       email: "",
       subject: "",
       text: ""
     }
+  },
+
+  mounted() {
+    this.constants = constants;
   },
 
   methods: {

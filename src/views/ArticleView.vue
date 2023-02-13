@@ -89,9 +89,10 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
+import constants from "/constants"
+
 import CreateComment from "@/components/creators/CreateComment"
 import ListComments from "@/components/managers/ListComments"
-import constants from "/constants"
 
 export default {
   name: "ArticleView",
