@@ -10,9 +10,9 @@
 
       <!-- Toggle Button to SignIn Component -->
       <BtnElt type="button"
-        content="SignIn"
         @click="setType('SignIn')"
         class="btn-green"
+        content="SignIn"
         title="Go to SignIn">
         <template #btn>
           <i class="fa-solid fa-right-to-bracket fa-lg"></i>
@@ -21,9 +21,9 @@
 
       <!-- Toggle Button to Forgot Password Component -->
       <BtnElt type="button"
-        content="ForgotPass"
         @click="setType('ForgotPass')"
         class="btn-orange"
+        content="ForgotPass"
         title="Go to ForgotPass">
         <template #btn>
           <i class="fa-regular fa-paper-plane fa-lg"></i>
@@ -43,9 +43,9 @@
 
       <!-- Toggle Button to SignUp Component -->
       <BtnElt type="button"
-        content="SignUp"
         @click="setType('SignUp')"
         class="btn-blue"
+        content="SignUp"
         title="Go to SignUp">
         <template #btn>
           <i class="fa-solid fa-user-plus fa-lg"></i>
@@ -54,9 +54,9 @@
 
       <!-- Toggle Button to Forgot Password Component -->
       <BtnElt type="button"
-        content="ForgotPass"
         @click="setType('ForgotPass')"
         class="btn-orange"
+        content="ForgotPass"
         title="Go to ForgotPass">
         <template #btn>
           <i class="fa-regular fa-paper-plane fa-lg"></i>
@@ -76,9 +76,9 @@
 
       <!-- Toggle Button to SignUp Component -->
       <BtnElt type="button"
-        content="SignUp"
         @click="setType('SignUp')"
         class="btn-blue"
+        content="SignUp"
         title="Go to SignUp">
         <template #btn>
           <i class="fa-solid fa-user-plus fa-lg"></i>
@@ -87,9 +87,9 @@
 
       <!-- Toggle Button to SignIn Component -->
       <BtnElt type="button"
-        content="SignIn"
         @click="setType('SignIn')"
         class="btn-green"
+        content="SignIn"
         title="Go to SignIn">
         <template #btn>
           <i class="fa-solid fa-right-to-bracket fa-lg"></i>

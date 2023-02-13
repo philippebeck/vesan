@@ -17,12 +17,12 @@
             title="Manage articles & comments">
             <i class="fa-solid fa-blog fa-fw"></i>
           </a>
-          <a  v-if="checkSession('admin')" 
+          <a v-if="checkSession('admin')"
             href="#users"
             title="Manage users">
             <i class="fa-solid fa-user-astronaut fa-fw"></i>
           </a>
-          <a  v-if="checkSession('admin')"
+          <a v-if="checkSession('admin')"
             href="#links"
             title="Manage links">
             <i class="fa-solid fa-link fa-fw"></i>

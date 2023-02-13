@@ -16,11 +16,11 @@
           <!-- User Email -->
           <template #item-1>
             <FieldElt id="email"
+              type="email"
               v-model:value="email"
               @keyup.enter="send()"
               class="anima-slideR"
-              info="An email to answer you ?"
-              type="email">
+              info="An email to answer you ?">
               <template #legend>
                 Email
               </template>
@@ -49,11 +49,11 @@
           <!-- Message Content -->
           <template #item-3>
             <FieldElt id="text"
+              type="textarea"
               v-model:value="text"
               @keyup.enter="send()"
               class="anima-slideR"
               info="The text of your message ?"
-              type="textarea"
               :max="100">
               <template #legend>
                 Text
@@ -73,9 +73,9 @@
 
         <!-- Send Button -->
         <BtnElt type="button"
-          content="Send"
           @click="send()" 
           class="btn-green anima-slideL"
+          content="Send"
           title="Send a Message">
           <template #btn>
             <i class="fa-regular fa-paper-plane fa-lg"></i>

@@ -78,9 +78,9 @@
 
         <!-- Update Button -->
         <BtnElt type="button"
-          content="Update"
           @click="validateUpdatedUser()" 
           class="btn-blue"
+          content="Update"
           title="Update your profile">
           <template #btn>
             <i class="fa-solid fa-user-pen fa-lg"></i>
@@ -89,9 +89,9 @@
 
         <!-- Delete Button -->
         <BtnElt type="button"
-          content="Delete"
           @click="deleteUser()" 
           class="btn-red"
+          content="Delete"
           title="Delete your account">
           <template #btn>
             <i class="fa-solid fa-user-slash fa-lg"></i>

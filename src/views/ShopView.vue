@@ -44,10 +44,10 @@
 
             <template #body>
               <BtnElt v-if="calculateScoresAverage(slotProps.value._id) !== undefined"
+                :href="`product/${slotProps.value._id}#reviews`"
                 itemprop="aggregateRating"
                 itemscope
                 itemtype="https://schema.org/AggregateRating"
-                :href="`product/${slotProps.value._id}#reviews`"
                 class="btn-violet"
                 :title="`Read reviews about ${slotProps.value.name}`">
                 <template #btn>
@@ -70,13 +70,13 @@
                 :title="`Be the first to write a Review about ${slotProps.value.name}`" />
 
               <a :href="`product/${slotProps.value._id}`"
-                :title="`Watch ${slotProps.value.name}`"
-                itemprop="url">
+                itemprop="url"
+                :title="`Watch ${slotProps.value.name}`">
 
-                <MediaElt itemprop="image"
+                <MediaElt :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
                   :src="`img/thumbnails/products/${slotProps.value.image}`" 
                   :alt="`${slotProps.value.description}`" 
-                  :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`">
+                  itemprop="image">
 
                   <template #figcaption>
                     <p itemprop="description">

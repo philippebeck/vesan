@@ -36,10 +36,10 @@
         </template>
 
         <template #nested="slotProps">
-          <BtnElt :content="slotProps.value.name"
-            :href="`https://${slotProps.value.url}`" 
-            :title="slotProps.value.url"
-            class="btn-blue"/>
+          <BtnElt :href="`https://${slotProps.value.url}`" 
+            class="btn-blue"
+            :content="slotProps.value.name"
+            :title="slotProps.value.url"/>
         </template>
       </ListElt>
     </template>
