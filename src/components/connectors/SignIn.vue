@@ -6,12 +6,12 @@
       type="email"
       v-model:value="email"
       @keyup.enter="login()"
-      info="Indicate your Email">
+      :info="constants.CREATE_EMAIL">
       <template #legend>
         Email
       </template>
       <template #label>
-        This email must have been registered before
+        {{ constants.LABEL_EMAIL }}
       </template>
     </FieldElt>
 
@@ -20,12 +20,12 @@
       type="password"
       v-model:value="pass"
       @keyup.enter="login()"
-      info="Indicate your Password">
+      :info="constants.CREATE_PASSWORD">
       <template #legend>
         Password
       </template>
       <template #label>
-        You can use the Forgot Password feature if needed
+        {{ constants.LABEL_PASSWORD }}
       </template>
     </FieldElt>
 
@@ -40,7 +40,7 @@
       @click="login()"
       class="btn-green"
       content="Enter"
-      title="SignIn to your account">
+      :title="constants.BUTTON_SIGNIN">
       <template #btn>
         <i class="fa-solid fa-right-to-bracket fa-lg"></i>
       </template>
@@ -49,14 +49,21 @@
 </template>
 
 <script>
+import constants from "/constants"
+
 export default {
   name: "SignIn",
 
   data() {
     return {
+      constants: {},
       email: "",
       pass: ""
     }
+  },
+
+  mounted() {
+    this.constants = constants;
   },
 
   methods: {
