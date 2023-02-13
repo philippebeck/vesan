@@ -13,7 +13,7 @@
           <!-- User Name -->
           <template #item-1>
             <FieldElt id="user-name"
-              v-model:value="this.user.name"
+              v-model:value="user.name"
               @keyup.enter="validateUpdatedUser()"
               info="John Doe"
               :min="2">
@@ -30,7 +30,7 @@
           <template #item-2>
             <FieldElt id="user-email"
               type="email"
-              v-model:value="this.user.email"
+              v-model:value="user.email"
               @keyup.enter="validateUpdatedUser()"
               info="john@doe.com">
               <template #legend>
@@ -44,8 +44,8 @@
           
           <!-- User Image -->
           <template #item-3>
-            <MediaElt :src="'/img/thumbnails/users/' + this.user.image"
-              :alt="this.user.alt" />
+            <MediaElt :src="'/img/thumbnails/users/' + user.image"
+              :alt="user.alt" />
             <FieldElt id="user-image"
               v-model:value="image"
               info="Image file only"
@@ -98,6 +98,59 @@
           </template>
         </BtnElt>
       </form>
+
+      <TableElt :items="orders">
+        <template #title>Your Orders</template>
+
+        <!-- Id -->
+        <template #cell-_id="slotProps">
+          <b>#{{ slotProps.index + 1 }}</b>
+          ({{ orders[slotProps.index]._id }})
+        </template>
+
+        <!-- Products -->
+        <template #cell-products="slotProps">
+          <ul>
+            <li v-for="(item, index) in orders[slotProps.index].products"
+              :key="index">
+              <ul :title="item.id">
+                <li>
+                  <b>{{ item.name }}</b>
+                </li>
+                <li>
+                  <i>({{ item.option }})</i>
+                </li>
+                <li class="black">{{ item.quantity }}x {{ item.price }}€</li>
+              </ul>
+            </li>
+          </ul>
+        </template>
+
+        <!-- Total -->
+        <template #cell-total="slotProps">
+          <b>{{ orders[slotProps.index].total }} €</b>
+        </template>
+
+        <!-- Payment -->
+        <template #cell-payment="slotProps">
+          <b>{{ orders[slotProps.index].payment }}</b>
+        </template>
+
+        <!-- Status -->
+        <template #cell-status="slotProps">
+          <b>{{ orders[slotProps.index].status }}</b>
+        </template>
+
+        <!-- Created -->
+        <template #cell-created="slotProps">
+          {{ new Date(orders[slotProps.index].created).toLocaleString() }}
+        </template>
+
+        <!-- Updated -->
+        <template #cell-updated="slotProps">
+          {{ new Date(orders[slotProps.index].updated).toLocaleString() }}
+        </template>
+      </TableElt>
     </template>
   </CardElt>
 </template>
@@ -124,6 +177,7 @@ export default {
 
         if (this.checkSession("user")) {
           this.$store.dispatch("getUser", constants.USER_ID);
+          this.$store.dispatch("listUserOrders", constants.USER_ID);
 
         } else {
           alert("Go back Home !");
@@ -134,11 +188,12 @@ export default {
   },
 
   computed: {
-    ...mapState(["user"]),
+    ...mapState(["user", "orders"]),
+
   },
 
   methods: {
-    ...mapActions(["getUser"]),
+    ...mapActions(["getUser", "listUserOrders"]),
 
     /**
      * CHECK SESSION

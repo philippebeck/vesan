@@ -261,7 +261,7 @@ exports.createUser = (req, res, next) => {
  */
 exports.readUser = (req, res) => {
   UserModel
-  .findOne({ _id: req.params.id })
+  .findById(req.params.id)
   .then((user) => res.status(200).json(user))
   .catch((error) => res.status(400).json({ error }));
 }

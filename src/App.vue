@@ -92,11 +92,8 @@
     </template>
   </NavElt>
 
-  <!-- MAIN -->
-  <main>
-    <router-view/>
-  </main>
-  
+  <!-- VIEWS -->
+  <router-view/>
 
   <!-- FOOTER -->
   <FootElt>

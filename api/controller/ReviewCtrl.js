@@ -11,6 +11,20 @@ const form = formidable();
 //! ****************************** PUBLIC ******************************
 
 /**
+ * LIST PRODUCT REVIEWS
+ * @param {object} req 
+ * @param {object} res 
+ */
+exports.listProductReviews = (req, res) => {
+  ReviewModel
+    .find({ product: req.params.id })
+    .then((reviews) => res.status(200).json(reviews))
+    .catch((error) => res.status(400).json({ error }));
+};
+
+//! ****************************** PRIVATE ******************************
+
+/**
  * LIST REVIEWS
  * @param {object} req 
  * @param {object} res 
@@ -21,8 +35,6 @@ exports.listReviews = (req, res) => {
     .then((reviews) => res.status(200).json(reviews))
     .catch((error) => res.status(400).json({ error }));
 };
-
-//! ****************************** PRIVATE ******************************
 
 /**
  * CREATE REVIEW

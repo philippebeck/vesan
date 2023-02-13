@@ -44,6 +44,18 @@ exports.listOrders = (req, res) => {
 };
 
 /**
+ * LIST USER ORDERS
+ * @param {object} req 
+ * @param {object} res 
+ */
+exports.listUserOrders = (req, res) => {
+  OrderModel
+    .find({ user: req.params.id })
+    .then((orders) => res.status(200).json(orders))
+    .catch((error) => res.status(400).json({ error }));
+};
+
+/**
  * CREATE ORDER
  * @param {object} req 
  * @param {object} res 

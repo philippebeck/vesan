@@ -48,6 +48,13 @@ export default createStore({
       state.user = user
     },
 
+    SET_USER_ORDERS(state, orders) {
+      for (let order of orders) {
+        delete order.user;
+      }
+      state.orders = orders
+    },
+
     SET_ARTICLES(state, articles) {
       state.articles = articles
     },
@@ -91,6 +98,22 @@ export default createStore({
     async getUser(context, id) {
       app.config.globalProperties.$serve.getData("/api/users/" + id)
         .then(res => { context.commit("SET_USER", res) })
+        .catch(err => { console.log(err) });
+    },
+
+    async listArticleComments(context, id) {
+      app.config.globalProperties.$serve.getData("/api/comments/" + id)
+        .then(res => { context.commit("SET_COMMENTS", res) })
+        .catch(err => { console.log(err) });
+    },
+    async listProductReviews(context, id) {
+      app.config.globalProperties.$serve.getData("/api/reviews/" + id)
+        .then(res => { context.commit("SET_REVIEWS", res) })
+        .catch(err => { console.log(err) });
+    },
+    async listUserOrders(context, id) {
+      app.config.globalProperties.$serve.getData("/api/orders/" + id)
+        .then(res => { context.commit("SET_USER_ORDERS", res) })
         .catch(err => { console.log(err) });
     },
 

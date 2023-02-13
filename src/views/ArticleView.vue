@@ -76,8 +76,8 @@
         </template>
       </MediaElt>
 
-      <ListComments v-if="getArticleComments().length > 0"
-        :comments="getArticleComments()"
+      <ListComments v-if="comments.length > 0"
+        :comments="comments"
         :users="users"/>
     </template>
 
@@ -108,7 +108,7 @@ export default {
 
   mounted () {
     this.$store.dispatch("getArticle", this.$route.params.id);
-    this.$store.dispatch("listComments");
+    this.$store.dispatch("listArticleComments", this.$route.params.id);
     this.$store.dispatch("checkUsers");
 },
 
@@ -124,7 +124,7 @@ export default {
     ...mapActions([
       "checkUsers", 
       "getArticle", 
-      "listComments"
+      "listArticleComments"
     ]),
 
     /**
@@ -147,21 +147,6 @@ export default {
           return this.users[i].name;
         }
       }
-    },
-
-    /**
-     * GET ARTICLE COMMENTS
-     * @returns
-     */
-    getArticleComments() {
-      let articleComments = [];
-
-      for (let i = 0 ; i < this.comments.length ; i++) {
-        if (this.$route.params.id === this.comments[i].article) {
-          articleComments.push(this.comments[i]);
-        }
-      }
-      return articleComments;
     },
 
     /**

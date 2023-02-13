@@ -107,9 +107,9 @@
         </BtnElt>
       </form>
 
-      <ListReviews v-if="getProductReviews().length > 0"
+      <ListReviews v-if="reviews.length > 0"
         id="reviews"
-        :reviews="getProductReviews()"
+        :reviews="reviews"
         :users="users"/>
     </template>
 
@@ -149,7 +149,7 @@ export default {
     this.priceCurrency = constants.PRICE_CURRENCY;
 
     this.$store.dispatch("getProduct", this.$route.params.id);
-    this.$store.dispatch("listReviews");
+    this.$store.dispatch("listProductReviews", this.$route.params.id);
     this.$store.dispatch("checkUsers");
   },
 
@@ -165,7 +165,7 @@ export default {
     ...mapActions([
       "checkUsers", 
       "getProduct", 
-      "listReviews"
+      "listProductReviews"
     ]),
 
     /**
@@ -212,21 +212,6 @@ export default {
           return data.score;
         }
       }
-    },
-
-    /**
-     * GET PRODUCT REVIEWS
-     * @returns
-     */
-    getProductReviews() {
-      let productReviews = [];
-
-      for (let i = 0 ; i < this.reviews.length ; i++) {
-        if (this.$route.params.id === this.reviews[i].product) {
-          productReviews.push(this.reviews[i]);
-        }
-      }
-      return productReviews;
     },
 
     /**
