@@ -11,6 +11,20 @@ const form = formidable();
 //! ****************************** PUBLIC ******************************
 
 /**
+ * LIST ARTICLE COMMENTS
+ * @param {object} req 
+ * @param {object} res 
+ */
+exports.listArticleComments = (req, res) => {
+  CommentModel
+    .find({ article: req.params.id })
+    .then((comments) => res.status(200).json(comments))
+    .catch((error) => res.status(400).json({ error }));
+};
+
+//! ****************************** PRIVATE ******************************
+
+/**
  * LIST COMMENTS
  * @param {object} req 
  * @param {object} res 
@@ -21,8 +35,6 @@ exports.listComments = (req, res) => {
     .then((comments) => res.status(200).json(comments))
     .catch((error) => res.status(400).json({ error }));
 };
-
-//! ****************************** PRIVATE ******************************
 
 /**
  * CREATE COMMENT
