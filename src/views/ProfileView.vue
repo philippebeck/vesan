@@ -13,7 +13,7 @@
           <!-- User Name -->
           <template #item-1>
             <FieldElt id="user-name"
-              v-model:value="this.user.name"
+              v-model:value="user.name"
               @keyup.enter="validateUpdatedUser()"
               info="John Doe"
               :min="2">
@@ -30,7 +30,7 @@
           <template #item-2>
             <FieldElt id="user-email"
               type="email"
-              v-model:value="this.user.email"
+              v-model:value="user.email"
               @keyup.enter="validateUpdatedUser()"
               info="john@doe.com">
               <template #legend>
@@ -44,8 +44,8 @@
           
           <!-- User Image -->
           <template #item-3>
-            <MediaElt :src="'/img/thumbnails/users/' + this.user.image"
-              :alt="this.user.alt" />
+            <MediaElt :src="'/img/thumbnails/users/' + user.image"
+              :alt="user.alt" />
             <FieldElt id="user-image"
               v-model:value="image"
               info="Image file only"
