@@ -98,6 +98,59 @@
           </template>
         </BtnElt>
       </form>
+
+      <TableElt :items="orders">
+        <template #title>Your Orders</template>
+
+        <!-- Id -->
+        <template #cell-_id="slotProps">
+          <b>#{{ slotProps.index + 1 }}</b>
+          ({{ orders[slotProps.index]._id }})
+        </template>
+
+        <!-- Products -->
+        <template #cell-products="slotProps">
+          <ul>
+            <li v-for="(item, index) in orders[slotProps.index].products"
+              :key="index">
+              <ul :title="item.id">
+                <li>
+                  <b>{{ item.name }}</b>
+                </li>
+                <li>
+                  <i>({{ item.option }})</i>
+                </li>
+                <li class="black">{{ item.quantity }}x {{ item.price }}€</li>
+              </ul>
+            </li>
+          </ul>
+        </template>
+
+        <!-- Total -->
+        <template #cell-total="slotProps">
+          <b>{{ orders[slotProps.index].total }} €</b>
+        </template>
+
+        <!-- Payment -->
+        <template #cell-payment="slotProps">
+          <b>{{ orders[slotProps.index].payment }}</b>
+        </template>
+
+        <!-- Status -->
+        <template #cell-status="slotProps">
+          <b>{{ orders[slotProps.index].status }}</b>
+        </template>
+
+        <!-- Created -->
+        <template #cell-created="slotProps">
+          {{ new Date(orders[slotProps.index].created).toLocaleString() }}
+        </template>
+
+        <!-- Updated -->
+        <template #cell-updated="slotProps">
+          {{ new Date(orders[slotProps.index].updated).toLocaleString() }}
+        </template>
+      </TableElt>
     </template>
   </CardElt>
 </template>
