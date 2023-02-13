@@ -74,7 +74,7 @@ exports.updateReview = (req, res, next) => {
     }
 
     ReviewModel
-      .updateOne({ _id: req.params.id }, { ...fields, _id: req.params.id })
+      .findByIdAndUpdate(req.params.id, { ...fields, _id: req.params.id })
       .then(() => res.status(200).json({ message: process.env.REVIEW_UPDATED }))
       .catch((error) => res.status(400).json({ error }));
   })
@@ -87,7 +87,7 @@ exports.updateReview = (req, res, next) => {
  */
 exports.deleteReview = (req, res) => {
   ReviewModel
-    .deleteOne({ _id: req.params.id })
+    .findByIdAndDelete(req.params.id)
     .then(() => res.status(200).json({ message: process.env.REVIEW_DELETED }))
     .catch((error) => res.status(400).json({ error }))
 };

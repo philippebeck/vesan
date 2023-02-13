@@ -69,7 +69,7 @@ exports.listArticles = (req, res) => {
  */
 exports.readArticle = (req, res) => {
   ArticleModel
-  .findOne({ _id: req.params.id })
+  .findById(req.params.id)
   .then((article) => res.status(200).json(article))
   .catch((error) => res.status(400).json({ error }));
 }
@@ -155,7 +155,7 @@ exports.updateArticle = (req, res, next) => {
     );
 
       ArticleModel
-        .findOne({ _id: req.params.id })
+        .findById(req.params.id)
         .then((article) => 
           fs.unlink(ARTICLES_THUMB + article.image, () => {
             fs.unlink(ARTICLES_IMG + article.image, () => {
@@ -187,7 +187,7 @@ exports.updateArticle = (req, res, next) => {
     );
 
     ArticleModel
-      .updateOne({ _id: req.params.id }, { ...article, _id: req.params.id })
+      .findByIdAndUpdate(req.params.id, { ...article, _id: req.params.id })
       .then(() => res.status(200).json({ message: process.env.ARTICLE_UPDATED }))
       .catch((error) => res.status(400).json({ error }));
   })
@@ -200,7 +200,7 @@ exports.updateArticle = (req, res, next) => {
  */
 exports.deleteArticle = (req, res) => {
   ArticleModel
-    .findOne({ _id: req.params.id })
+    .findById(req.params.id)
     .then(article => {
       fs.unlink(ARTICLES_THUMB + article.image, () => {
         fs.unlink(ARTICLES_IMG + article.image, () => {
@@ -209,7 +209,7 @@ exports.deleteArticle = (req, res) => {
             .deleteMany({ article: req.params.id })
             .then(() => 
               ArticleModel
-                .deleteOne({ _id: req.params.id })
+                .findByIdAndDelete(req.params.id)
                 .then(() => res.status(200).json({ message: process.env.ARTICLE_DELETED }))
                 .catch((error) => res.status(400).json({ error }))
             )

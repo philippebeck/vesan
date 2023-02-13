@@ -93,12 +93,11 @@ exports.checkUsers = (req, res) => {
     .find()
     .then((users) => {
         let usersChecked = [];
-        for (let i = 0; i < users.length; i++) {
 
+        for (let i = 0; i < users.length; i++) {
           usersChecked.push({
             _id: users[i]._id,
             name: users[i].name,
-            email: users[i].email,
             role: users[i].role
           });
         }
@@ -164,7 +163,7 @@ exports.forgotPass = (req, res, next) => {
             );
 
             UserModel
-              .updateOne({ _id: user._id }, { ...newUser, _id: user._id })
+              .findByIdAndUpdate(user._id, { ...newUser, _id: user._id })
               .then(() => { this.setMessage(fields, res) })
               .catch((error) => res.status(500).json({ error }));
           })
@@ -292,7 +291,7 @@ exports.updateUser = (req, res, next) => {
       );
   
       UserModel
-        .findOne({ _id: req.params.id })
+        .findById(req.params.id)
         .then((user) => 
           fs.unlink(USERS_THUMB + user.image, () => {
             fs.unlink(USERS_IMG + files.image.newFilename, () => {
@@ -317,7 +316,7 @@ exports.updateUser = (req, res, next) => {
         );
 
         UserModel
-          .updateOne({ _id: req.params.id }, { ...user, _id: req.params.id })
+          .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
           .then(() => res.status(200).json({ message: process.env.USER_UPDATED }))
       })
       .catch((error) => res.status(400).json({ error }));
@@ -331,7 +330,7 @@ exports.updateUser = (req, res, next) => {
  */
 exports.deleteUser = (req, res) => {
   UserModel
-    .findOne({ _id: req.params.id })
+    .findById(req.params.id)
     .then(user => {
       fs.unlink(USERS_THUMB + user.image, () => {
 
@@ -343,7 +342,7 @@ exports.deleteUser = (req, res) => {
               .then(() => 
 
                 UserModel
-                  .deleteOne({ _id: req.params.id })
+                  .findByIdAndDelete(req.params.id)
                   .then(() => res.status(200).json({ message: process.env.USER_DELETED }))
                   .catch((error) => res.status(400).json({ error }))
               )

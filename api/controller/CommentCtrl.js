@@ -74,7 +74,7 @@ exports.updateComment = (req, res, next) => {
     }
 
     CommentModel
-      .updateOne({ _id: req.params.id }, { ...fields, _id: req.params.id })
+      .findByIdAndUpdate(req.params.id, { ...fields, _id: req.params.id })
       .then(() => res.status(200).json({ message: process.env.COMMENT_UPDATED }))
       .catch((error) => res.status(400).json({ error }));
   })
@@ -87,7 +87,7 @@ exports.updateComment = (req, res, next) => {
  */
 exports.deleteComment = (req, res) => {
   CommentModel
-    .deleteOne({ _id: req.params.id })
+    .findByIdAndDelete(req.params.id)
     .then(() => res.status(200).json({ message: process.env.COMMENT_DELETED }))
     .catch((error) => res.status(400).json({ error }))
 };
