@@ -177,6 +177,7 @@ export default {
 
         if (this.checkSession("user")) {
           this.$store.dispatch("getUser", constants.USER_ID);
+          this.$store.dispatch("listUserOrders", constants.USER_ID);
 
         } else {
           alert("Go back Home !");
@@ -187,11 +188,12 @@ export default {
   },
 
   computed: {
-    ...mapState(["user"]),
+    ...mapState(["user", "orders"]),
+
   },
 
   methods: {
-    ...mapActions(["getUser"]),
+    ...mapActions(["getUser", "listUserOrders"]),
 
     /**
      * CHECK SESSION
