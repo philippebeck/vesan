@@ -176,7 +176,7 @@ export default {
 
   data() {
     return {
-      constants: []
+      constants: {}
     }
   },
 

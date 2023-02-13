@@ -119,7 +119,7 @@ export default {
       image: "",
       alt: "",
       cat: "",
-      constants: []
+      constants: {}
     }
   },
 

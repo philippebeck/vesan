@@ -155,7 +155,7 @@ export default {
       price: null,
       options: [],
       cat: "",
-      constants: []
+      constants: {}
     }
   },
 

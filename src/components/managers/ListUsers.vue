@@ -120,7 +120,7 @@ export default {
   data() {
     return {
       pass: "",
-      constants: []
+      constants: {}
     }
   },
 

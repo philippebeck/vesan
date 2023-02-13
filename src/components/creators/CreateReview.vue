@@ -64,7 +64,7 @@ export default {
     return {
       text: "",
       score: null,
-      constants: []
+      constants: {}
     }
   },
 

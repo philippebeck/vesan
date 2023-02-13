@@ -79,7 +79,7 @@ export default {
       name: "",
       url: "",
       cat: "",
-      constants: []
+      constants: {}
     }
   },
 
