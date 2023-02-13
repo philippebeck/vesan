@@ -56,7 +56,8 @@ export default {
   CATS_ORDER : [
     "Pending",
     "Paid",
-    "Done"
+    "Done",
+    "Canceled"
   ],
 
   CATS_PRODUCT : [
