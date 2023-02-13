@@ -24,9 +24,21 @@ export default {
 
   /* VESAN */
 
-  CAT_ARTICLE: "News",
-  CAT_LINK: "HTML5",
-  CAT_PRODUCT: "Home",
+  ALERT_ORDER : "Order created !",
+
+  BASKET_CLEAR : "Clear the basket",
+  BASKET_LOGIN : "Login to order those Products",
+  BASKET_ORDER : "Order those Products",
+  BASKET_TOTAL : "The total of your basket is",
+
+  BUTTON_FORGOT : "Send a new password",
+  BUTTON_MESSAGE : "Send a message",
+  BUTTON_SIGNIN : "SignIn to your account",
+  BUTTON_SIGNUP : "SignUp a new user",
+
+  CAT_ARTICLE : "News",
+  CAT_LINK : "HTML5",
+  CAT_PRODUCT : "Home",
 
   CATS_ARTICLE : [
     "Transportation",
@@ -79,22 +91,33 @@ export default {
   CHECK_REFERENCE : " is already referenced !",
   CHECK_REVIEW : "You have already written a review for this product, you can edit your old review or delete it",
 
+  CONFIRM_BASKET : "Do you want to clear your basket ?",
+
   CREATE_ALT : "Alternative text",
   CREATE_ARTICLE : "Create article",
   CREATE_CATEGORY : "Choose a category",
   CREATE_COMMENT : "Create comment",
   CREATE_DESCRIPTION : "This is wonderful !",
+  CREATE_EMAIL : "john@doe.com",
   CREATE_IMAGE : "Image file only",
   CREATE_LINK : "Create link",
   CREATE_NAME : "My new name",
   CREATE_OPTIONS : "option-1,option-2,option-3,etc",
+  CREATE_PASSWORD : "********",
   CREATE_PRICE : "100 €",
   CREATE_PRODUCT : "Create product",
   CREATE_REVIEW : "Create review",
   CREATE_SCORE : "From 0 to 5",
+  CREATE_SUBJECT : "The subject of your message ?",
   CREATE_TEXT : "Once upon a time...",
   CREATE_TITLE : "My new title",
   CREATE_URL : "https://",
+
+  DELETE_ACCOUNT : "Delete your account",
+
+  ERROR_ALT : "404 Error",
+  ERROR_TITLE : "Page not found !",
+  ERROR_LINK : "Go back home ?",
 
   FORGOT_CONFIRM : "Do you confirm sending a new password ?",
   FORGOT_SUBJECT : "New Password",
@@ -108,24 +131,36 @@ export default {
     "false"
   ],
 
-  LABEL_ALT : "Fill the alternative text",
+  LABEL_ALT : "Write the alternative text",
   LABEL_CATEGORY : "Choose the most appropriate category",
-  LABEL_DESCRIPTION : "Fill the description",
+  LABEL_DESCRIPTION : "Write the description",
+  LABEL_EMAIL : "Write your email",
   LABEL_IMAGE : "Provide an image",
-  LABEL_NAME : "Fill the name",
-  LABEL_OPTIONS : "Fill the options",
-  LABEL_PRICE : "Fill the price",
-  LABEL_SCORE : "Fill the score",
-  LABEL_TEXT : "Fill the text",
-  LABEL_TITLE : "Fill the title",
+  LABEL_NAME : "Write a name",
+  LABEL_OPTIONS : "Write the options",
+  LABEL_PASSWORD : "8 to 50 characters with upper & lower, 1 number mini & no space",
+  LABEL_PRICE : "Write the price",
+  LABEL_SCORE : "Write the score",
+  LABEL_SUBJECT : "Write the subject",
+  LABEL_TEXT : "Write the text",
+  LABEL_TITLE : "Write the title",
 
-  PRICE_CURRENCY : "EUR",
+  CURRENCY_ISO : "EUR",
+  CURRENCY_SYMBOL : "€",
 
   ROLES_USER : [
     "admin",
     "editor",
     "user"
   ],
+
+  SIDEBAR_SHOP : "Manage products, reviews & orders",
+  SIDEBAR_BLOG : "Manage articles & comments",
+  SIDEBAR_USERS : "Manage users",
+  SIDEBAR_LINK : "Create a link",
+  SIDEBAR_LINKS : "Manage links",
+
+  TITLE_LINK : "Links for dev !",
 
   UPDATE_ALT : "Update the alternative text",
   UPDATE_CATEGORY : "Update the category",
@@ -137,6 +172,8 @@ export default {
   UPDATE_OPTIONS : "Update the options",
   UPDATE_PASSWORD : "Update the password",
   UPDATE_PRICE : "Update the price",
+  UPDATE_PROFILE : "Update your profile",
+  UPDATE_QUANTITY : "Update the quantity",
   UPDATE_ROLE : "Update the role",
   UPDATE_SCORE : "Update the score",
   UPDATE_STATUS : "Update the status",
