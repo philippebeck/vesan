@@ -3,10 +3,10 @@
 
     <!-- User Email -->
     <FieldElt id="email"
+      type="email"
       v-model:value="email"
-      info="Indicate your Email"
       @keyup.enter="login()"
-      type="email">
+      info="Indicate your Email">
       <template #legend>
         Email
       </template>
@@ -17,10 +17,10 @@
 
     <!-- User Pass -->
     <FieldElt id="pass"
+      type="password"
       v-model:value="pass"
-      info="Indicate your Password"
       @keyup.enter="login()"
-      type="password">
+      info="Indicate your Password">
       <template #legend>
         Password
       </template>
@@ -37,9 +37,9 @@
 
     <!-- Login Button -->
     <BtnElt type="button"
-      content="Enter"
       @click="login()"
       class="btn-green"
+      content="Enter"
       title="SignIn to your account">
       <template #btn>
         <i class="fa-solid fa-right-to-bracket fa-lg"></i>

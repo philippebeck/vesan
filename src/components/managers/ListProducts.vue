@@ -21,8 +21,8 @@
           <template #cell-name="slotProps">
             <FieldElt :id="'name-' + products[slotProps.index]._id"
               v-model:value="getProducts()[slotProps.index].name"
-              :info="constants.UPDATE_NAME"
-              @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"/>
+              @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
+              :info="constants.UPDATE_NAME"/>
           </template>
 
           <!-- Description -->
@@ -30,8 +30,8 @@
             <FieldElt :id="'description-' + products[slotProps.index]._id"
               type="textarea"
               v-model:value="getProducts()[slotProps.index].description"
-              :info="constants.UPDATE_DESCRIPTION"
-              @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"/>
+              @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
+              :info="constants.UPDATE_DESCRIPTION"/>
           </template>
 
           <!-- Image -->
@@ -50,8 +50,8 @@
             <FieldElt :id="'alt-' + products[slotProps.index]._id"
               type="textarea"
               v-model:value="getProducts()[slotProps.index].alt"
-              :info="constants.UPDATE_ALT"
-              @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"/>
+              @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
+              :info="constants.UPDATE_ALT"/>
           </template>
 
           <!-- Price -->
@@ -78,10 +78,10 @@
           <template #cell-cat="slotProps">
             <FieldElt :id="'cat-' + products[slotProps.index]._id"
               type="select"
+              :list="constants.CATS_PRODUCT"
               v-model:value="getProducts()[slotProps.index].cat"
-              :info="constants.UPDATE_CATEGORY"
               @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
-              :list="constants.CATS_PRODUCT"/>
+              :info="constants.UPDATE_CATEGORY"/>
           </template>
 
           <!-- Created -->

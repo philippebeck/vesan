@@ -111,10 +111,10 @@
           <template #item-7>
             <FieldElt id="product-cat"
               type="select"
+              :list="constants.CATS_PRODUCT"
               v-model:value="cat"
-              :info="constants.CREATE_CATEGORY"
               @keyup.enter="validateNewProduct()"
-              :list="constants.CATS_PRODUCT">
+              :info="constants.CREATE_CATEGORY">
               <template #legend>
                 Category
               </template>
@@ -127,9 +127,9 @@
 
         <!-- Create Button -->
         <BtnElt type="button"
-          content="Create"
           @click="validateNewProduct()" 
           class="btn-green"
+          content="Create"
           :title="constants.CREATE_PRODUCT">
           <template #btn>
             <i class="fa-solid fa-square-plus fa-lg"></i>

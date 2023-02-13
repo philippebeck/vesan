@@ -25,9 +25,9 @@
 
       <!-- Create Button -->
       <BtnElt type="button"
-        content="Create"
         @click="createComment()" 
         class="btn-green"
+        content="Create"
         :title="constants.CREATE_COMMENT">
         <template #btn>
           <i class="fa-solid fa-square-plus fa-lg"></i>

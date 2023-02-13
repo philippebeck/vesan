@@ -38,9 +38,9 @@
       <!-- User Image -->
       <template #item-3>
         <FieldElt id="user-image"
+          type="file"
           v-model:value="image"
-          info="Image file only"
-          type="file">
+          info="Image file only">
           <template #legend>
             Image
           </template>
@@ -69,9 +69,9 @@
 
     <!-- Create Button -->
     <BtnElt type="button"
-      content="Create"
       @click="validateNewUser()" 
       class="btn-blue"
+      content="Create"
       title="SignUp a new user">
       <template #btn>
         <i class="fa-solid fa-user-plus fa-lg"></i>

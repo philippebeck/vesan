@@ -22,8 +22,8 @@
       <template #cell-name="slotProps">
         <FieldElt :id="'name-' + table[slotProps.index]._id"
           v-model:value="table[slotProps.index].name"
-          :info="constants.UPDATE_NAME"
-          @keyup.enter="validateUpdatedLink(table[slotProps.index]._id)"/>
+          @keyup.enter="validateUpdatedLink(table[slotProps.index]._id)"
+          :info="constants.UPDATE_NAME"/>
       </template>
 
       <!-- URL -->
@@ -31,8 +31,8 @@
         <FieldElt :id="'url-' + table[slotProps.index]._id"
           type="url"
           v-model:value="table[slotProps.index].url"
-          :info="constants.UPDATE_URL"
           @keyup.enter="validateUpdatedLink(table[slotProps.index]._id)"
+          :info="constants.UPDATE_URL"
           :max="parseInt('100')"/>
       </template>
 
@@ -40,10 +40,10 @@
       <template #cell-cat="slotProps">
         <FieldElt :id="'cat-' + table[slotProps.index]._id"
           type="select"
+          :list="constants.CATS_LINK"
           v-model:value="table[slotProps.index].cat"
-          :info="constants.UPDATE_CATEGORY"
           @keyup.enter="validateUpdatedLink(table[slotProps.index]._id)"
-          :list="constants.CATS_LINK"/>
+          :info="constants.UPDATE_CATEGORY"/>
       </template>
 
       <!-- Update -->

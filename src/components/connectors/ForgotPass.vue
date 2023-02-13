@@ -2,10 +2,10 @@
   <form>
     <!-- User Email -->
     <FieldElt id="email"
-      v-model:value="email"
-      info="Indicate your Email"
-      @keyup.enter="forgotPass()"
       type="email"
+      v-model:value="email"
+      @keyup.enter="forgotPass()"
+      info="Indicate your Email"
       required>
       <template #legend>
         Email
@@ -23,9 +23,9 @@
 
     <!-- Send Password Button -->
     <BtnElt type="button"
-      content="Send"
       @click="forgotPass()"
       class="btn-orange"
+      content="Send"
       title="Send a new password">
       <template #btn>
         <i class="fa-regular fa-paper-plane fa-lg"></i>
