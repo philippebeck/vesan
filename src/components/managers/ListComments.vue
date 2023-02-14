@@ -230,19 +230,22 @@ export default {
     updateComment(id) {
       for (let comment of this.comments) {
         if (comment._id === id) {
-          let commentData = new FormData();
 
-          commentData.append("id", id);
-          commentData.append("text", comment.text);
-          commentData.append("moderate", comment.moderate);
-          commentData.append("updated", Date.now());
+          if (this.$serve.checkText(comment.text)) {
+            let commentData = new FormData();
 
-          this.$serve.putData(`/api/comments/${id}`, commentData)
-            .then(() => {
-              alert(`Comment #${id} updated !`);
-              this.$router.go();
-            })
-            .catch(err => { console.log(err) });
+            commentData.append("id", id);
+            commentData.append("text", comment.text);
+            commentData.append("moderate", comment.moderate);
+            commentData.append("updated", Date.now());
+
+            this.$serve.putData(`/api/comments/${id}`, commentData)
+              .then(() => {
+                alert(`Comment #${id} updated !`);
+                this.$router.go();
+              })
+              .catch(err => { console.log(err) });
+          }
         }
       }
     },
