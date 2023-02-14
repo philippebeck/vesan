@@ -178,41 +178,47 @@
 
     <!-- Social Networks & Contributions -->
     <template #foot>
-      <ListElt :items="['GitHub', 'LinkedIn', 'Sponsor', 'Twitter', 'Donation', 'CodePen']">
+      <ListElt :items="['GitHub', 'LinkedIn', 'Sponsor', 'Twitter', 'Medium', 'Donation', 'CodePen']">
         <template #item-1>
           <a href="https://github.com/philippebeck"
             title="Philippe Beck @GitHub">
-            <i class="fa-brands fa-github fa-2x fa-fw black"></i>
+            <i class="fa-brands fa-github fa-lg fa-fw black"></i>
           </a>
         </template>
         <template #item-2>
           <a href="https://www.linkedin.com/in/philippebeck"
             title="Philippe Beck @LinkedIn">
-            <i class="fa-brands fa-linkedin-in fa-2x fa-fw blue"></i>
+            <i class="fa-brands fa-linkedin-in fa-lg fa-fw blue"></i>
           </a>
         </template>
         <template #item-3>
           <a href="https://github.com/sponsors/philippebeck"
             title="Sponsor @Philippe Beck">
-            <i class="fa-regular fa-heart fa-2x fa-fw pink"></i>
+            <i class="fa-regular fa-heart fa-lg fa-fw pink"></i>
           </a>
         </template>
         <template #item-4>
           <a href="https://twitter.com/ph_beck"
             title="Philippe Beck @Twitter">
-            <i class="fa-brands fa-twitter fa-2x fa-fw sky"></i>
+            <i class="fa-brands fa-twitter fa-lg fa-fw sky"></i>
           </a>
         </template>
         <template #item-5>
-          <a href="https://paypal.me/philippebeck"
-            title="Donation @Philippe Beck">
-            <i class="fa-brands fa-paypal fa-2x fa-fw blue"></i>
+          <a href="https://medium.com/@philippebeck"
+            title="Philippe Beck @Medium">
+            <i class="fa-brands fa-medium fa-lg fa-fw green"></i>
           </a>
         </template>
         <template #item-6>
+          <a href="https://paypal.me/philippebeck"
+            title="Donation @Philippe Beck">
+            <i class="fa-brands fa-paypal fa-lg fa-fw blue"></i>
+          </a>
+        </template>
+        <template #item-7>
           <a href="https://codepen.io/philippebeck"
             title="Philippe Beck @CodePen">
-            <i class="fa-brands fa-codepen fa-2x fa-fw black"></i>
+            <i class="fa-brands fa-codepen fa-lg fa-fw black"></i>
           </a>
         </template>
       </ListElt>
