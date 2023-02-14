@@ -199,7 +199,7 @@ export default {
         let article  = new FormData();
         let image = document.getElementById('image-' + this.articles[i]._id).files[0];
 
-        if (typeof image !== "undefined") {
+        if (image !== undefined) {
           article.append("image", image);
         }
 

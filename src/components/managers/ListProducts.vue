@@ -206,7 +206,7 @@ export default {
         let product  = new FormData();
         let image = document.getElementById('image-' + this.products[i]._id).files[0];
 
-        if (typeof image !== "undefined") {
+        if (image !== undefined) {
           product.append("image", image);
         }
 

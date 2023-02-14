@@ -110,7 +110,7 @@ export default {
         this.$serve.checkEmail(this.email) && 
         this.$serve.checkPass(this.pass)) {
 
-        if (typeof document.getElementById('user-image').files[0] !== "undefined") {
+        if (document.getElementById('user-image').files[0] !== undefined) {
           this.checkNewUser();
 
         } else {
