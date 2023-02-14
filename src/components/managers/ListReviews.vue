@@ -256,20 +256,24 @@ export default {
     updateReview(id) {
       for (let review of this.reviews) {
         if (review._id === id) {
-          let reviewData = new FormData();
 
-          reviewData.append("id", id);
-          reviewData.append("text", review.text);
-          reviewData.append("score", review.score);
-          reviewData.append("moderate", review.moderate);
-          reviewData.append("updated", Date.now());
+          if (this.$serve.checkText(review.text) &&
+            review.score !== null) {
+            let reviewData = new FormData();
 
-          this.$serve.putData(`/api/reviews/${id}`, reviewData)
-            .then(() => {
-              alert(`Review #${id} updated !`);
-              this.$router.go();
-            })
-            .catch(err => { console.log(err) });
+            reviewData.append("id", id);
+            reviewData.append("text", review.text);
+            reviewData.append("score", review.score);
+            reviewData.append("moderate", review.moderate);
+            reviewData.append("updated", Date.now());
+
+            this.$serve.putData(`/api/reviews/${id}`, reviewData)
+              .then(() => {
+                alert(`Review #${id} updated !`);
+                this.$router.go();
+              })
+              .catch(err => { console.log(err) });
+          }
         }
       }
     },

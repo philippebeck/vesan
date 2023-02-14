@@ -157,7 +157,9 @@ export default {
       for (let i = 0; i < this.products.length; i++ ) {
         if (this.products[i]._id === id) {
 
-          if (this.$serve.checkName(this.products[i].name)) {
+          if (this.$serve.checkName(this.products[i].name) &&
+            this.$serve.checkText(this.products[i].text)) {
+
             this.checkUpdatedProduct(i);
           }
         }
@@ -204,7 +206,7 @@ export default {
         let product  = new FormData();
         let image = document.getElementById('image-' + this.products[i]._id).files[0];
 
-        if (typeof image !== "undefined") {
+        if (image !== undefined) {
           product.append("image", image);
         }
 

@@ -99,7 +99,8 @@
         </BtnElt>
       </form>
 
-      <TableElt :items="orders">
+      <TableElt v-if="orders.length !== 0"
+        :items="orders">
         <template #title>Your Orders</template>
 
         <!-- Id -->
@@ -113,15 +114,17 @@
           <ul>
             <li v-for="(item, index) in orders[slotProps.index].products"
               :key="index">
-              <ul :title="item.id">
-                <li>
-                  <b>{{ item.name }}</b>
-                </li>
-                <li>
-                  <i>({{ item.option }})</i>
-                </li>
-                <li class="black">{{ item.quantity }}x {{ item.price }}€</li>
-              </ul>
+              <a :href="`/product/${item.id}`">
+                <ul :title="`Go to ${item.name} page`">
+                  <li>
+                    <b>{{ item.name }}</b>
+                  </li>
+                  <li>
+                    <i>({{ item.option }})</i>
+                  </li>
+                  <li class="black">{{ item.quantity }}x {{ item.price }}€</li>
+                </ul>
+              </a>
             </li>
           </ul>
         </template>

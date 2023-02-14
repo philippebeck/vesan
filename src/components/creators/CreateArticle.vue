@@ -132,8 +132,10 @@ export default {
      * VALIDATE NEW ARTICLE IF DATA ARE VALID
      */
     validateNewArticle() {
-      if (this.$serve.checkName(this.name)) {
-        if (typeof document.getElementById('article-image').files[0] !== "undefined") {
+      if (this.$serve.checkName(this.name) &&
+        this.$serve.checkText(this.text)) {
+
+        if (document.getElementById('article-image').files[0] !== undefined) {
 
           if (this.cat === "") {
             this.cat = constants.CAT_ARTICLE;

@@ -150,7 +150,9 @@ export default {
       for (let i = 0; i < this.articles.length; i++ ) {
         if (this.articles[i]._id === id) {
 
-          if (this.$serve.checkName(this.articles[i].name)) {
+          if (this.$serve.checkName(this.articles[i].name) &&
+            this.$serve.checkText(this.articles[i].text)) {
+
             this.checkUpdatedArticle(i);
           }
         }
@@ -197,7 +199,7 @@ export default {
         let article  = new FormData();
         let image = document.getElementById('image-' + this.articles[i]._id).files[0];
 
-        if (typeof image !== "undefined") {
+        if (image !== undefined) {
           article.append("image", image);
         }
 

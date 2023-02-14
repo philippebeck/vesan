@@ -12,7 +12,7 @@
         <FieldElt id="review-text"
           type="textarea"
           v-model:value="text"
-          @keyup.enter="createReview()"
+          @keyup.enter="validateNewReview()"
           :info="constants.CREATE_TEXT"
           :min="2">
           <template #legend>
@@ -27,7 +27,7 @@
         <FieldElt id="review-score"
           type="number"
           v-model:value="score"
-          @keyup.enter="createReview()"
+          @keyup.enter="validateNewReview()"
           :info="constants.CREATE_SCORE"
           :min="0"
           :max="5">
@@ -41,7 +41,7 @@
 
         <!-- Create Button -->
         <BtnElt type="button"
-          @click="checkNewReview()" 
+          @click="validateNewReview()" 
           class="btn-green"
           content="Create"
           :title="constants.CREATE_REVIEW">
@@ -74,7 +74,21 @@ export default {
 
   methods: {
     /**
-     * CHECK NEW PRODUCT IF NAME | DESCRIPTION ARE REFERENCED
+     * VALIDATE NEW REVIEW
+     */
+    validateNewReview() {
+      if (this.$serve.checkText(this.text) &&
+        this.score !== null) {
+
+        this.checkNewReview();
+
+      } else {
+        alert(constants.ALERT_FIELD);
+      }
+    },
+
+    /**
+     * CHECK IF USER HAS MADE A REVIEW FOR THIS PRODUCT
      */
     checkNewReview() {
       this.$serve.getData("/api/reviews")

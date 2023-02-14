@@ -153,7 +153,7 @@ export default {
       image: "",
       alt: "",
       price: null,
-      options: [],
+      options: "",
       cat: "",
       constants: {}
     }
@@ -168,8 +168,10 @@ export default {
      * VALIDATE NEW PRODUCT IF DATA ARE VALID
      */
     validateNewProduct() {
-      if (this.$serve.checkName(this.name)) {
-        if (typeof document.getElementById('product-image').files[0] !== "undefined") {
+      if (this.$serve.checkName(this.name) &&
+        this.$serve.checkText(this.description)) {
+
+        if (document.getElementById('product-image').files[0] !== undefined) {
 
           if (this.cat === "") {
             this.cat = constants.CAT_PRODUCT;

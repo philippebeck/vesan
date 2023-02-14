@@ -60,20 +60,25 @@ export default {
      * CREATE COMMENT
      */
     createComment() {
-      let comment  = new FormData();
+      if (this.$serve.checkText(this.text)) {
+        let comment  = new FormData();
 
-      comment.append("text", this.text);
-      comment.append("article", this.$route.params.id);
-      comment.append("user", constants.USER_ID);
-      comment.append("created", Date.now());
-      comment.append("updated", Date.now());
+        comment.append("text", this.text);
+        comment.append("article", this.$route.params.id);
+        comment.append("user", constants.USER_ID);
+        comment.append("created", Date.now());
+        comment.append("updated", Date.now());
 
-      this.$serve.postData("/api/comments", comment)
-        .then(() => {
-          alert("New comment created !");
-          this.$router.go();
-        })
-        .catch(err => { console.log(err) });
+        this.$serve.postData("/api/comments", comment)
+          .then(() => {
+            alert("New comment created !");
+            this.$router.go();
+          })
+          .catch(err => { console.log(err) });
+
+      } else {
+        alert(constants.ALERT_TEXT);
+      }
     }
   }
 }

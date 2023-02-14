@@ -39,9 +39,9 @@ exports.createLink = (req, res, next) => {
       return;
     }
 
-    /*if (!nem.checkUrl(fields.url)) {
+    if (!nem.checkUrl("https://" + fields.url)) {
       return res.status(401).json({ message: process.env.LINK_URL });
-    }*/
+    }
 
     let link = new LinkModel(fields);
 
@@ -66,9 +66,9 @@ exports.updateLink = (req, res, next) => {
       return;
     }
 
-    /*if (!nem.checkUrl(fields.url)) {
+    if (!nem.checkUrl("https://" + fields.url)) {
       return res.status(401).json({ message: process.env.LINK_URL });
-    }*/
+    }
 
     LinkModel
       .findByIdAndUpdate(req.params.id, { ...fields, _id: req.params.id })
