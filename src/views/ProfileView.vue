@@ -99,7 +99,8 @@
         </BtnElt>
       </form>
 
-      <TableElt :items="orders">
+      <TableElt v-if="orders.length !== 0"
+        :items="orders">
         <template #title>Your Orders</template>
 
         <!-- Id -->
