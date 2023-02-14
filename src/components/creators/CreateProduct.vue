@@ -153,7 +153,7 @@ export default {
       image: "",
       alt: "",
       price: null,
-      options: [],
+      options: "",
       cat: "",
       constants: {}
     }
