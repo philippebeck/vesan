@@ -92,8 +92,12 @@ export default {
      * VALIDATE NEW LINK IF DATA ARE VALID
      */
     validateNewLink() {
-      if (this.$serve.checkName(this.name) /*&&
-        this.$serve.checkUrl(this.url)*/) {
+      if (this.url.startsWith("http")) {
+        this.url = this.url.split('//')[1];
+      }
+
+      if (this.$serve.checkName(this.name) &&
+        this.$serve.checkUrl(`https://${this.url}`)) {
         if (this.cat === "") {
           this.cat = constants.CAT_LINK;
         }

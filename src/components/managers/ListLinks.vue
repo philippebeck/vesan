@@ -90,6 +90,13 @@ export default {
 
   methods: {
     /**
+     * GET LINKS
+     */
+    getLinks() {
+      return this.links;
+    },
+
+    /**
      * SORT ITEMS BY CATEGORY
      * @param {array} items 
      */
@@ -104,6 +111,10 @@ export default {
     validateUpdatedLink(id) {
       for (let i = 0; i < this.links.length; i++ ) {
         if (this.links[i]._id === id) {
+
+          if (this.links[i].url.startsWith("http")) {
+            this.getLinks()[i].url = this.links[i].url.split('//')[1];
+          }
 
           if (this.$serve.checkName(this.links[i].name) && 
             this.$serve.checkUrl(`https://${this.links[i].url}`)) {
