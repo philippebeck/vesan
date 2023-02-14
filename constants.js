@@ -2,15 +2,18 @@
 /* eslint-disable */
 
 export default {
-  /* SERVIDIO */
-
-  ALERT_NAME : "The Name must have between 2 & 50 characters.",
-  ALERT_EMAIL : "Your Email is not a valid address.",
-  ALERT_PASS : "Your Password must have 8 to 50 characters, with uppercase, lowercase, 1 number minimum & no space.",
-  ALERT_URL : "This URL is not a valid path.",
+  /* CONFIG */
 
   API_URL : "http://localhost:3000",
+
+  CAT_ARTICLE : "News",
+  CAT_LINK : "HTML5",
+  CAT_PRODUCT : "Home",
+
   CONTENT_TYPE : "multipart/form-data", 
+
+  CURRENCY_ISO : "EUR",
+  CURRENCY_SYMBOL : "€",
 
   NAME_MIN : 2,
   NAME_MAX : 50,
@@ -19,28 +22,14 @@ export default {
   PASS_MAX : 50,
   PASS_MIN : 8,
 
+  TEXT_MIN : 2,
+
   TOKEN : JSON.parse(localStorage.getItem("userToken")),
   USER_ID : JSON.parse(localStorage.getItem("userId")),
 
-  /* VESAN */
+  /* LISTES */
 
-  ALERT_ORDER : "Order created !",
-
-  BASKET_CLEAR : "Clear the basket",
-  BASKET_LOGIN : "Login to order those Products",
-  BASKET_ORDER : "Order those Products",
-  BASKET_TOTAL : "The total of your basket is",
-
-  BUTTON_FORGOT : "Send a new password",
-  BUTTON_MESSAGE : "Send a message",
-  BUTTON_SIGNIN : "SignIn to your account",
-  BUTTON_SIGNUP : "SignUp a new user",
-
-  CAT_ARTICLE : "News",
-  CAT_LINK : "HTML5",
-  CAT_PRODUCT : "Home",
-
-  CATS_ARTICLE : [
+CATS_ARTICLE : [
     "Transportation",
     "Business", 
     "Culture",
@@ -87,6 +76,37 @@ export default {
     "Sports",
   ],
 
+  IS_MODERATE : [
+    "true",
+    "false"
+  ],
+
+  ROLES_USER : [
+    "admin",
+    "editor",
+    "user"
+  ],
+
+  /* MESSAGES */
+
+  ALERT_NAME : "The Name must have between 2 & 50 characters.",
+  ALERT_EMAIL : "Your Email is not a valid address.",
+  ALERT_FIELD : "Fields cannot be empty !",
+  ALERT_ORDER : "Order created !",
+  ALERT_PASS : "Your Password must have 8 to 50 characters, with uppercase, lowercase, 1 number minimum & no space.",
+  ALERT_URL : "This URL is not a valid path.",
+  ALERT_TEXT : "Text cannot be empty !",
+
+  BASKET_CLEAR : "Clear the basket",
+  BASKET_LOGIN : "Login to order those Products",
+  BASKET_ORDER : "Order those Products",
+  BASKET_TOTAL : "The total of your basket is",
+
+  BUTTON_FORGOT : "Send a new password",
+  BUTTON_MESSAGE : "Send a message",
+  BUTTON_SIGNIN : "SignIn to your account",
+  BUTTON_SIGNUP : "SignUp a new user",
+
   CHECK_AVAILABLE : " is not available !",
   CHECK_REFERENCE : " is already referenced !",
   CHECK_REVIEW : "You have already written a review for this product, you can edit your old review or delete it",
@@ -126,11 +146,6 @@ export default {
   IMG_ARTICLE : "An image of the article must be uploaded !",
   IMG_PRODUCT : "An image of the product must be uploaded !",
 
-  IS_MODERATE : [
-    "true",
-    "false"
-  ],
-
   LABEL_ALT : "Write the alternative text",
   LABEL_CATEGORY : "Choose the most appropriate category",
   LABEL_DESCRIPTION : "Write the description",
@@ -144,15 +159,6 @@ export default {
   LABEL_SUBJECT : "Write the subject",
   LABEL_TEXT : "Write the text",
   LABEL_TITLE : "Write the title",
-
-  CURRENCY_ISO : "EUR",
-  CURRENCY_SYMBOL : "€",
-
-  ROLES_USER : [
-    "admin",
-    "editor",
-    "user"
-  ],
 
   SIDEBAR_SHOP : "Manage products, reviews & orders",
   SIDEBAR_BLOG : "Manage articles & comments",
