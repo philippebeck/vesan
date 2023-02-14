@@ -107,6 +107,7 @@ export default {
 
           if (this.$serve.checkName(this.links[i].name) && 
             this.$serve.checkUrl(`https://${this.links[i].url}`)) {
+
             this.checkUpdatedLink(i);
           }
         }
