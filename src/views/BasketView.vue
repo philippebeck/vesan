@@ -14,20 +14,26 @@
 
           <!-- Product Name -->
           <template #cell-name="slotProps">
-            <strong>{{ slotProps.item.name }}</strong>
+            <a :href="`/product/${sale[slotProps.index].id}`">
+              <strong>{{ slotProps.item.name }}</strong>
+            </a>
           </template>
 
           <!-- Product Image -->
           <template #cell-image="slotProps">
-            <MediaElt :src="'img/thumbnails/products/' + slotProps.item.image"
-              :alt="slotProps.item.name"
-              :title="slotProps.item.name">
-            </MediaElt>
+            <a :href="`/product/${sale[slotProps.index].id}`">
+              <MediaElt :src="'img/thumbnails/products/' + slotProps.item.image"
+                :alt="slotProps.item.name"
+                :title="slotProps.item.name">
+              </MediaElt>
+            </a>
           </template>
 
           <!-- Product Option -->
           <template #cell-option="slotProps">
-            <b>{{ slotProps.item.option }}</b>
+            <a :href="`/product/${sale[slotProps.index].id}`">
+              <b>{{ slotProps.item.option }}</b>
+            </a>
           </template>
 
           <!-- Product Quantity -->
