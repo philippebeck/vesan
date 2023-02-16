@@ -80,6 +80,7 @@ export default {
 
         this.$serve.postData("/api/users/login", auth)
           .then((res) => {
+
             let token   = JSON.stringify(res.token);
             let userId  = JSON.stringify(res.userId);
 
@@ -88,7 +89,7 @@ export default {
 
             this.$router.go("/");
           })
-          .catch(err => { console.log(err) });
+          .catch(() => { alert(constants.FORGOT_CREDENTIALS) });
       }
     }
   }
