@@ -97,8 +97,7 @@ exports.checkUsers = (req, res) => {
         for (let i = 0; i < users.length; i++) {
           usersChecked.push({
             _id: users[i]._id,
-            name: users[i].name,
-            role: users[i].role
+            name: users[i].name
           });
         }
         res.status(200).json(usersChecked);
@@ -108,100 +107,23 @@ exports.checkUsers = (req, res) => {
 }
 
 /**
- * LOGIN USER
- * @param {object} req 
- * @param {object} res 
- * @param {function} next 
- */
-exports.loginUser = (req, res, next) => {
-  form.parse(req, (err, fields) => {
-
-    if (err) {
-      next(err);
-      return;
-    }
-
-    UserModel
-      .findOne({ email: fields.email })
-      .then((user) => { nem.checkLogin(fields.pass, user, res) })
-      .catch((error) => res.status(500).json({ error }));
-  })
-}
-
-/**
- * FORGOT PASSWORD
- * @param {object} req 
- * @param {object} res 
- * @param {function} next 
- */
-exports.forgotPass = (req, res, next) => {
-  form.parse(req, (err, fields) => {
-
-    if (err) {
-      next(err);
-      return;
-    }
-
-    UserModel
-      .findOne({ email: fields.email })
-      .then((user) => { 
-        let pass    = nem.generatePass();
-        fields.text = fields.text + pass;
-
-        bcrypt
-          .hash(pass, 10)
-          .then((hash) => {
-            let newUser = this.getUser(
-              user.name, 
-              user.email, 
-              user.image, 
-              user.alt, 
-              hash,
-              user.role,
-              user.created,
-              user.updated
-            );
-
-            UserModel
-              .findByIdAndUpdate(user._id, { ...newUser, _id: user._id })
-              .then(() => { this.setMessage(fields, res) })
-              .catch((error) => res.status(500).json({ error }));
-          })
-          .catch((error) => res.status(400).json({ error }));
-      })
-      .catch((error) => res.status(500).json({ error }));
-  })
-}
-
-/**
- * SEND USER MESSAGE
- * @param {object} req 
- * @param {object} res 
- * @param {function} next 
- */
-exports.sendMessage = (req, res, next) => {
-  form.parse(req, (err, fields) => {
-
-    if (err) {
-      next(err);
-      return;
-    }
-
-    this.setMessage(fields, res);
-  })
-}
-
-//! ****************************** PRIVATE ******************************
-
-/**
- * LIST ALL USERS
+ * GET AVATAR
  * @param {object} req 
  * @param {object} res 
  */
-exports.listUsers = (req, res) => {
+exports.getAvatar = (req, res) => {
   UserModel
-    .find()
-    .then((users) => res.status(200).json(users))
+    .findById(req.params.id)
+    .then((user) => { 
+      let avatar = {};
+
+      avatar.name   = user.name;
+      avatar.image  = user.image;
+      avatar.alt    = user.alt;
+      avatar.role   = user.role;
+
+      res.status(200).json(avatar) 
+    })
     .catch((error) => res.status(400).json({ error }));
 }
 
@@ -251,6 +173,165 @@ exports.createUser = (req, res, next) => {
       })
       .catch((error) => res.status(500).json({ error }));
   });
+}
+
+/**
+ * CHECK USER
+ * @param {object} req
+ * @param {object} res
+ * @param {function} next
+ */
+exports.checkUser = (req, res, next) => {
+  form.parse(req, (err, fields) => {
+
+    if (err) {
+      next(err);
+      return;
+    }
+
+    UserModel
+      .findOne({ name: fields.name })
+      .then((userByName) => {
+
+        if (userByName === null) {
+          UserModel
+            .findOne({ email: fields.email })
+            .then((userByEmail) => {
+
+              if (userByEmail === null) {
+                res.status(200).json(true);
+
+              } else {
+                res.status(400).json({ message: process.env.EXISTING_EMAIL });
+              }
+            })
+            .catch((error) => res.status(404).json({ error }));
+
+        } else {
+          res.status(400).json({ message: process.env.EXISTING_NAME });
+        }
+      })
+      .catch((error) => { res.status(404).json({ error }) });
+  })
+}
+
+/**
+ * CHECK EMAIL
+ * @param {object} req
+ * @param {object} res
+ * @param {function} next
+ */
+exports.checkEmail = (req, res, next) => {
+  form.parse(req, (err, fields) => {
+
+    if (err) {
+      next(err);
+      return;
+    }
+
+    UserModel
+      .findOne({ email: fields.email })
+      .then((user) => { res.status(200).json(user.name) })
+      .catch((error) => res.status(404).json({ error }));
+  })
+}
+
+/**
+ * FORGOT PASSWORD
+ * @param {object} req 
+ * @param {object} res 
+ * @param {function} next 
+ */
+exports.forgotPass = (req, res, next) => {
+  form.parse(req, (err, fields) => {
+
+    if (err) {
+      next(err);
+      return;
+    }
+
+    UserModel
+      .findOne({ email: fields.email })
+      .then((user) => { 
+        let pass    = nem.generatePass();
+        fields.text = fields.text + pass;
+
+        bcrypt
+          .hash(pass, 10)
+          .then((hash) => {
+            let newUser = this.getUser(
+              user.name, 
+              user.email, 
+              user.image, 
+              user.alt, 
+              hash,
+              user.role,
+              user.created,
+              user.updated
+            );
+
+            UserModel
+              .findByIdAndUpdate(user._id, { ...newUser, _id: user._id })
+              .then(() => { this.setMessage(fields, res) })
+              .catch((error) => res.status(500).json({ error }));
+          })
+          .catch((error) => res.status(400).json({ error }));
+      })
+      .catch((error) => res.status(500).json({ error }));
+  })
+}
+
+/**
+ * LOGIN USER
+ * @param {object} req 
+ * @param {object} res 
+ * @param {function} next 
+ */
+exports.loginUser = (req, res, next) => {
+  form.parse(req, (err, fields) => {
+
+    if (err) {
+      next(err);
+      return;
+    }
+
+    UserModel
+      .findOne({ email: fields.email })
+      .then((user) => { nem.checkLogin(fields.pass, user, res) })
+      .catch((error) => res.status(401).json({ error }));
+  })
+}
+
+/**
+ * SEND USER MESSAGE
+ * @param {object} req 
+ * @param {object} res 
+ * @param {function} next 
+ */
+exports.sendMessage = (req, res, next) => {
+  form.parse(req, (err, fields) => {
+
+    if (err) {
+      next(err);
+      return;
+    }
+
+    this.setMessage(fields, res);
+  })
+}
+
+//! ****************************** PRIVATE ******************************
+
+/**
+ * LIST ALL USERS
+ * @param {object} req 
+ * @param {object} res 
+ */
+exports.listUsers = (req, res) => {
+  UserModel
+    .find()
+    .then((users) => res.status(200).json(users))
+    .catch((error) => res.status(400).json({ error }));
 }
 
 /**
