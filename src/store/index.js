@@ -84,6 +84,11 @@ export default createStore({
         .then(res => { context.commit("SET_USERS", res) })
         .catch(err => { console.log(err) });
     },
+    async getAvatar(context, id) {
+      app.config.globalProperties.$serve.getData("/api/users/avatar/" + id)
+        .then(res => { context.commit("SET_USER", res) })
+        .catch(err => { console.log(err) });
+    },
 
     async readArticle(context, id) {
       app.config.globalProperties.$serve.getData("/api/articles/" + id)
