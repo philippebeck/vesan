@@ -140,7 +140,9 @@ CATS_ARTICLE : [
   ERROR_TITLE : "Page not found !",
   ERROR_LINK : "Go back home ?",
 
-  FORGOT_CONFIRM : "Do you confirm sending a new password ?",
+  FORGOT_CONFIRM : `, do you confirm sending a new password ?`,
+  FORGOT_CREDENTIALS : "Wrong email or password !",
+  FORGOT_EMAIL : "This email is not referenced",
   FORGOT_SUBJECT : "New Password",
   FORGOT_TEXT : "This is your new Password, keep it safe : ",
 
