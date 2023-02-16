@@ -4,7 +4,7 @@
     <FieldElt id="email"
       type="email"
       v-model:value="email"
-      @keyup.enter="forgotPass()"
+      @keyup.enter="checkEmail()"
       :info="constants.CREATE_EMAIL"
       required>
       <template #legend>
@@ -23,7 +23,7 @@
 
     <!-- Send Password Button -->
     <BtnElt type="button"
-      @click="forgotPass()"
+      @click="checkEmail()"
       class="btn-orange"
       content="Send"
       :title="constants.BUTTON_FORGOT">
@@ -53,24 +53,39 @@ export default {
 
   methods: {
     /**
+     * CHECK EMAIL
+     */
+    checkEmail() {
+      if (this.$serve.checkEmail(this.email)) {
+        let email = new FormData();
+        email.append("email", this.email);
+
+        this.$serve.postData("/api/users/email", email)
+          .then((name) => {
+            if (confirm(name + constants.FORGOT_CONFIRM)) {
+              this.forgotPass();
+            }
+          })
+          .catch(() => { alert(constants.FORGOT_EMAIL) });
+      }
+    },
+
+    /**
      * FORGOT PASSWORD
      */
     forgotPass() {
-      if (this.$serve.checkEmail(this.email) && 
-        confirm(constants.FORGOT_CONFIRM)) {
+      let message = new FormData();
 
-        let message = new FormData();
-        message.append("email", this.email);
-        message.append("subject", constants.FORGOT_SUBJECT);
-        message.append("text", constants.FORGOT_TEXT);
+      message.append("email", this.email);
+      message.append("subject", constants.FORGOT_SUBJECT);
+      message.append("text", constants.FORGOT_TEXT);
 
-        this.$serve.postData("/api/users/forgot", message)
-          .then(() => {
-            alert(message.get("subject") + " sended !");
-            this.$router.push("/login");
-          })
-          .catch(err => { console.log(err) });
-      }
+      this.$serve.postData("/api/users/forgot", message)
+        .then(() => {
+          alert(message.get("subject") + " sended !");
+          this.$router.push("/login");
+        })
+        .catch(err => { console.log(err) });
     }
   }
 }
