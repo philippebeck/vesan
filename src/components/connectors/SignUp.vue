@@ -123,24 +123,16 @@ export default {
      * CHECK NEW USER IF NAME | EMAIL ARE REFERENCED
      */
     checkNewUser() {
-      this.$serve.getData("/api/users/check")
-        .then((users) => {
-          let isReferenced = false;
+      let checker = new FormData();
+      checker.append("name", this.name);
+      checker.append("email", this.email);
 
-          for (let i = 0; i < users.length; i++) {
+      this.$serve.postData("/api/users/check", checker)
+        .then((userAvailable) => {
 
-            if (users[i].name === this.name) {
-              alert(this.name + constants.CHECK_AVAILABLE);
-              isReferenced = true;
-            }
-
-            if (users[i].email === this.email) {
-              alert(this.email + constants.CHECK_REFERENCE);
-              isReferenced = true;
-            }
+          if (userAvailable === true) {
+            this.createUser();
           }
-
-          this.createUser(isReferenced);
         })
         .catch(err => { console.log(err) });
     },
@@ -149,27 +141,25 @@ export default {
      * CREATE USER IF NO INFO IS REFERENCED
      * @param {boolean} isReferenced 
      */
-    createUser(isReferenced) {
-      if (!isReferenced) {
-        let user  = new FormData();
-        let image = document.getElementById('user-image').files[0];
+    createUser() {
+      let user  = new FormData();
+      let image = document.getElementById('user-image').files[0];
 
-        user.append("name", this.name);
-        user.append("email", this.email);
-        user.append("image", image);
-        user.append("alt", this.name);
-        user.append("pass", this.pass);
-        user.append("role", "user");
-        user.append("created", Date.now());
-        user.append("updated", Date.now());
+      user.append("name", this.name);
+      user.append("email", this.email);
+      user.append("image", image);
+      user.append("alt", this.name);
+      user.append("pass", this.pass);
+      user.append("role", "user");
+      user.append("created", Date.now());
+      user.append("updated", Date.now());
 
-        this.$serve.postData("/api/users", user)
-          .then(() => {
-            alert(user.get("name") + " created !");
-            this.$router.go();
-          })
-          .catch(err => { console.log(err) });
-      }
+      this.$serve.postData("/api/users", user)
+        .then(() => {
+          alert(user.get("name") + " created !");
+          this.$router.go();
+        })
+        .catch(err => { console.log(err) });
     }
   }
 }
