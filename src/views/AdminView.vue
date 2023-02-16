@@ -141,7 +141,8 @@ export default {
   mounted () {
     this.constants = constants;
 
-    this.$serve.getData("/api/users/avatar/" + constants.USER_ID)
+    if (constants.USER_ID) {
+      this.$serve.getData("/api/users/avatar/" + constants.USER_ID)
         .then((res) => { 
           this.user = res;
 
@@ -151,10 +152,6 @@ export default {
             this.$store.dispatch("listOrders");
             this.$store.dispatch("listProducts");
             this.$store.dispatch("listReviews");
-
-          } else {
-            alert("Go back Home !");
-            this.$router.push("/");
           }
 
           if (this.checkRole("admin")) {
@@ -163,6 +160,11 @@ export default {
           }
         })
         .catch(err => { console.log(err) });
+
+    } else {
+      alert("Go back Home !");
+      this.$router.push("/");
+    }
   },
 
   computed: {
