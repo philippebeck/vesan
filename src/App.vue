@@ -31,7 +31,7 @@
     <template #admin>
 
       <!-- Admin -->
-      <ListElt v-if="checkSession('admin') || checkSession('editor')"
+      <ListElt v-if="checkRole('admin') || checkRole('editor')"
         :items="['admin', 'profile', 'logout']">
 
         <template #item-1>
@@ -45,6 +45,7 @@
           <a href="/profile"
             :title="`${user.name} Profile`">
             <img :src="`/img/thumbnails/users/${user.image}`"
+              :alt="user.alt"
               :height="40"
               :width="40"
               class="bord bord-circle">
@@ -61,13 +62,14 @@
       </ListElt>
 
       <!-- Author & User -->
-      <ListElt v-else-if="checkSession('user')"
+      <ListElt v-else-if="checkRole('user')"
         :items="['profile', 'logout']">
 
         <template #item-1>
           <a href="/profile"
             :title="`${user.name} Profile`">
             <img :src="`/img/thumbnails/users/${user.image}`"
+              :alt="user.alt"
               :height="40"
               :width="40"
               class="bord bord-circle">
@@ -233,24 +235,10 @@ import constants from "/constants"
 export default {
   name: 'App',
 
-  data() {
-    return {
-      users: []
-    }
-  },
-
   mounted() {
-    this.$serve.getData("/api/users/check")
-      .then(res => { 
-        this.users = res;
-
-        for (const user of this.users) {
-          if (user._id === constants.USER_ID) {
-            this.$store.dispatch("readUser", user._id);
-          }
-        }
-      })
-      .catch(err => { console.log(err) });
+    if (constants.USER_ID) {
+      this.$store.dispatch("getAvatar", constants.USER_ID);
+    }
   },
 
   computed: {
@@ -258,15 +246,15 @@ export default {
   },
 
   methods: {
-    ...mapActions(["readUser"]),
+    ...mapActions(["getAvatar"]),
 
     /**
-     * CHECK SESSION
+     * CHECK ROLE
      * @param {string} role
      * @returns
      */
-    checkSession(role) {
-      return this.$serve.checkSession(this.users, role);
+    checkRole(role) {
+      return this.$serve.checkRole(this.user.role, role);
     },
 
     /**
