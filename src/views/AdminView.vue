@@ -17,12 +17,12 @@
             :title="constants.SIDEBAR_BLOG">
             <i class="fa-solid fa-blog fa-fw"></i>
           </a>
-          <a v-if="checkSession('admin')"
+          <a v-if="checkRole('admin')"
             href="#users"
             :title="constants.SIDEBAR_USERS">
             <i class="fa-solid fa-user-astronaut fa-fw"></i>
           </a>
-          <a v-if="checkSession('admin')"
+          <a v-if="checkRole('admin')"
             href="#links"
             :title="constants.SIDEBAR_LINKS">
             <i class="fa-solid fa-link fa-fw"></i>
@@ -79,7 +79,7 @@
       </CardElt>
 
       <!-- Users Part -->
-      <CardElt v-if="checkSession('admin')">
+      <CardElt v-if="checkRole('admin')">
         <template #header>
           <i class="fa-solid fa-user-astronaut fa-3x"></i>
           <h2 id="users">Users</h2>
@@ -92,7 +92,7 @@
       </CardElt>
 
       <!-- Links Part -->
-      <CardElt v-if="checkSession('admin')">
+      <CardElt v-if="checkRole('admin')">
         <template #header>
           <i class="fa-solid fa-link fa-3x"></i>
           <h2 id="links">Links</h2>
@@ -133,7 +133,7 @@ export default {
 
   data() {
     return {
-      usersChecked: [],
+      user: {},
       constants: {}
     }
   },
@@ -141,11 +141,11 @@ export default {
   mounted () {
     this.constants = constants;
 
-    this.$serve.getData("/api/users/check")
-        .then(res => { 
-          this.usersChecked = res;
+    this.$serve.getData("/api/users/avatar/" + constants.USER_ID)
+        .then((res) => { 
+          this.user = res;
 
-          if (this.checkSession("editor")) {
+          if (this.checkRole("editor")) {
             this.$store.dispatch("listArticles");
             this.$store.dispatch("listComments");
             this.$store.dispatch("listOrders");
@@ -157,7 +157,7 @@ export default {
             this.$router.push("/");
           }
 
-          if (this.checkSession("admin")) {
+          if (this.checkRole("admin")) {
             this.$store.dispatch("listLinks");
             this.$store.dispatch("listUsers");
           }
@@ -189,12 +189,12 @@ export default {
     ]),
 
     /**
-     * CHECK SESSION
+     * CHECK ROLE
      * @param {string} role
      * @returns
      */
-    checkSession(role) {
-      return this.$serve.checkSession(this.usersChecked, role);
+    checkRole(role) {
+      return this.$serve.checkRole(this.user.role, role);
     }
   }
 }
