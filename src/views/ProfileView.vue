@@ -167,7 +167,6 @@ export default {
 
   data() {
     return {
-      users: [],
       constants: {},
       image: "",
       pass: ""
@@ -177,20 +176,14 @@ export default {
   mounted() {
     this.constants = constants;
 
-    this.$serve.getData("/api/users/check")
-      .then(res => { 
-        this.users = res;
+    if (constants.USER_ID) {
+      this.$store.dispatch("readUser", constants.USER_ID);
+      this.$store.dispatch("listUserOrders", constants.USER_ID);
 
-        if (this.checkSession("user")) {
-          this.$store.dispatch("readUser", constants.USER_ID);
-          this.$store.dispatch("listUserOrders", constants.USER_ID);
-
-        } else {
-          alert("Go back Home !");
-          this.$router.push("/");
-        }
-      })
-      .catch(err => { console.log(err) });
+    } else {
+      alert("Go back Home !");
+      this.$router.push("/");
+    }
   },
 
   computed: {
@@ -212,8 +205,8 @@ export default {
      * @param {string} role
      * @returns
      */
-    checkSession(role) {
-      return this.$serve.checkSession(this.users, role);
+    checkRole(role) {
+      return this.$serve.checkRole(this.user.role, role);
     },
 
     /**
@@ -232,54 +225,44 @@ export default {
      * CHECK UPDATED USER IF NAME | EMAIL ARE REFERENCED
      */
     checkUpdatedUser() {
-        let isReferenced = false;
+      let checker = new FormData();
+      checker.append("name", this.name);
+      checker.append("email", this.email);
 
-        for (let i = 0; i < this.users.length; i++) {
-          if (this.users[i]._id === this.user._id) {
-            this.users.splice(i, 1);
-          }
+      this.$serve.postData("/api/users/check", checker)
+        .then((userAvailable) => {
 
-          if (this.users[i] && this.users[i].name === this.user.name) {
-            alert(this.users[i].name + constants.CHECK_AVAILABLE);
-            isReferenced = true;
+          if (userAvailable === true) {
+            this.updateUser();
           }
-
-          if (this.users[i] && this.users[i].email === this.user.email) {
-            alert(this.users[i].email+ constants.CHECK_REFERENCE);
-            isReferenced = true;
-          }
-        }
-        this.updateUser(isReferenced);
+        })
+        .catch(err => { console.log(err) });
     },
 
     /**
      * UPDATE USER IF NO INFO IS REFERENCED
-     * @param {boolean} isReferenced 
      */
-    updateUser(isReferenced) {
-      if (!isReferenced) {
+    updateUser() {
+      let user  = new FormData();
+      let image = document.getElementById("user-image").files[0];
 
-        let user  = new FormData();
-        let image = document.getElementById("user-image").files[0];
-
-        if (typeof image === "undefined") {
-          image = this.user.image;
-        }
-
-        user.append("id", this.user._id);
-        user.append("name", this.user.name);
-        user.append("email", this.user.email);
-        user.append("image", image);
-        user.append("pass", this.pass);
-        user.append("updated", Date.now());
-
-        this.$serve.putData(`/api/users/${user.get("id")}`, user)
-          .then(() => {
-            alert(user.get("name") + " updated !");
-            this.$router.go();
-          })
-          .catch(err => { console.log(err) });
+      if (typeof image === "undefined") {
+        image = this.user.image;
       }
+
+      user.append("id", this.user._id);
+      user.append("name", this.user.name);
+      user.append("email", this.user.email);
+      user.append("image", image);
+      user.append("pass", this.pass);
+      user.append("updated", Date.now());
+
+      this.$serve.putData(`/api/users/${user.get("id")}`, user)
+        .then(() => {
+          alert(user.get("name") + " updated !");
+          this.$router.go();
+        })
+        .catch(err => { console.log(err) });
     },
 
     /**
