@@ -1,8 +1,12 @@
 <template>
   <CardElt v-if="this.$route.params.id">
     <template #header>
-      <i class="fa-solid fa-list-check fa-2x"></i>
-      <h2>List Reviews</h2>
+      <h2>
+        <i class="fa-solid fa-list-check fa-lg"
+          aria-hidden="true">
+        </i>
+        List Reviews
+      </h2>
     </template>
 
     <template #body>
@@ -107,8 +111,12 @@
 
   <CardElt v-else>
     <template #header>
-      <i class="fa-solid fa-list-check fa-2x"></i>
-      <h2>List Reviews</h2>
+      <h2>
+        <i class="fa-solid fa-list-check fa-lg"
+          aria-hidden="true">
+        </i>
+        List Reviews
+      </h2>
     </template>
 
     <template #body>
