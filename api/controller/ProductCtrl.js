@@ -3,7 +3,6 @@
 const formidable  = require("formidable");
 const fs          = require("fs");
 const nem         = require("nemjs");
-const accents     = require("remove-accents");
 
 const ProductModel  = require("../model/ProductModel");
 const ReviewModel   = require("../model/ReviewModel");

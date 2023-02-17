@@ -4,7 +4,6 @@ const bcrypt      = require("bcrypt");
 const formidable  = require("formidable");
 const fs          = require("fs");
 const nem         = require("nemjs");
-const accents     = require("remove-accents");
 
 const UserModel     = require("../model/UserModel");
 const CommentModel  = require("../model/CommentModel");
