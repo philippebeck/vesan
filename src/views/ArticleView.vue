@@ -8,7 +8,7 @@
 
     <template #body>
 
-      <BtnElt v-if="!checkSession('user')"
+      <BtnElt v-if="!checkRole('user')"
         id="likes"
         href="/login"
         class="btn-blue"
@@ -81,7 +81,7 @@
         :users="users"/>
     </template>
 
-    <template #aside  v-if="checkSession('user')">
+    <template #aside  v-if="checkRole('user')">
       <CreateComment />
     </template>
   </CardElt>
@@ -115,10 +115,11 @@ export default {
 
   computed: {
     ...mapState([
+      "user",
       "article", 
       "comments", 
       "users"
-    ]),
+    ])
   },
 
   methods: {
@@ -133,8 +134,8 @@ export default {
      * @param {string} role
      * @returns
      */
-    checkSession(role) {
-      return this.$serve.checkSession(this.users, role);
+    checkRole(role) {
+      return this.$serve.checkRole(this.user.role, role);
     },
 
     /**
