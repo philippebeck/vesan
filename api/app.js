@@ -4,7 +4,6 @@ const express   = require("express");
 const mongoose  = require("mongoose");
 const helmet    = require("helmet");
 const sanitize  = require("express-mongo-sanitize");
-const rateLimit = require("express-rate-limit");
 const cors      = require("cors");
 
 const productRoute  = require("./route/ProductRoute");
@@ -34,16 +33,6 @@ app.use(express.json());
 app.use(cors());
 app.use(helmet());
 app.use(sanitize());
-
-/**
- * RATE LIMIT
- */
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 5,
-  standardHeaders: true,
-  legacyHeaders: false
-});
 
 /**
  * ROUTES
