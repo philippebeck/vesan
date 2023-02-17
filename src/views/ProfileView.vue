@@ -1,8 +1,11 @@
 <template>
   <CardElt>
     <template #header>
-      <i class="blue anima-slideT fa-solid fa-user-gear fa-2x"></i>
-      <h1 class="sky anima-slideB">Profile</h1>
+      <h1 class="sky anima-slideB">
+        <i class="fa-solid fa-user-gear fa-lg"
+          aria-hidden="true"></i>
+        Profile
+      </h1>
     </template>
 
     <template #body>
