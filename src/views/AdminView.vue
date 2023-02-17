@@ -133,8 +133,8 @@ export default {
 
   data() {
     return {
-      user: {},
-      constants: {}
+      constants: {},
+      user: {}
     }
   },
 
@@ -176,7 +176,7 @@ export default {
       "products", 
       "reviews", 
       "users"
-    ]),
+    ])
   },
 
   methods: {
@@ -186,7 +186,7 @@ export default {
       "listLinks", 
       "listOrders", 
       "listProducts", 
-      "listReviews", 
+      "listReviews",
       "listUsers"
     ]),
 
