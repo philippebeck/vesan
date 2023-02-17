@@ -1,8 +1,12 @@
 <template>
   <CardElt>
     <template #header>
-      <i class="fa-regular fa-comment fa-2x"></i>
-      <h3>{{ constants.CREATE_COMMENT }}</h3>
+      <h3>
+        <i class="fa-regular fa-comment fa-lg"
+          aria-hidden="true">
+        </i>
+        {{ constants.CREATE_COMMENT }}
+      </h3>
     </template>
 
     <template #body>
