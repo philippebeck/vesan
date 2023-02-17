@@ -22,7 +22,7 @@
         </template>
       </BtnElt>
 
-      <BtnElt v-else-if="checkSession('user')" 
+      <BtnElt v-else-if="checkRole('user')" 
         href="#review"
         class="btn-violet"
         content="Need a Review !"
@@ -113,7 +113,7 @@
         :users="users"/>
     </template>
 
-    <template #aside  v-if="checkSession('user')">
+    <template #aside  v-if="checkRole('user')">
       <CreateReview id="review"/>
     </template>
   </CardElt>
@@ -155,6 +155,7 @@ export default {
 
   computed: {
     ...mapState([
+      "user",
       "product", 
       "reviews", 
       "users"
@@ -169,12 +170,12 @@ export default {
     ]),
 
     /**
-     * CHECK SESSION
+     * CHECK ROLE
      * @param {string} role
      * @returns
      */
-    checkSession(role) {
-      return this.$serve.checkSession(this.users, role);
+    checkRole(role) {
+      return this.$serve.checkRole(this.user.role, role);
     },
 
     /** 

@@ -95,7 +95,7 @@
           </BtnElt>
 
           <!-- Order Products -->
-          <BtnElt v-if="checkSession('user')"
+          <BtnElt v-if="checkRole('user')"
             type="button"
             @click="orderProducts()"
             class="btn-green"
@@ -154,19 +154,22 @@ export default {
   },
 
   computed: {
-    ...mapState(["users"]),
+    ...mapState([
+      "user",
+      "users"
+    ]),
   },
 
   methods: {
     ...mapActions(["checkUsers"]),
 
     /**
-     * CHECK SESSION
+     * CHECK ROLE
      * @param {string} role
      * @returns
      */
-    checkSession(role) {
-      return this.$serve.checkSession(this.users, role);
+    checkRole(role) {
+      return this.$serve.checkRole(this.user.role, role);
     },
 
     /**
