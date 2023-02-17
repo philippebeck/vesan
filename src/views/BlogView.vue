@@ -2,7 +2,7 @@
   <NavElt :items="setCats"
     class="sidebar">
 
-    <template #last  v-if="checkSession('editor')">
+    <template #last  v-if="checkRole('editor')">
       <a href="#create-article"
         title="Create a article">
         <i class="fa-regular fa-envelope fa-fw"></i>
@@ -45,7 +45,7 @@
             </template>
 
             <template #body>
-              <BtnElt v-if="!checkSession('user')"
+              <BtnElt v-if="!checkRole('user')"
                 :id="`like-${slotProps.value._id}`"
                 href="/login"
                 class="btn-blue"
@@ -107,7 +107,7 @@
       </ListElt>
     </template>
 
-    <template #aside v-if="checkSession('editor')">
+    <template #aside v-if="checkRole('editor')">
       <CreateArticle />
     </template>
   </CardElt>
@@ -137,6 +137,7 @@ export default {
 
   computed: {
     ...mapState([
+      "user",
       "articles", 
       "users"
     ]),
@@ -157,12 +158,12 @@ export default {
     ]),
 
     /**
-     * CHECK SESSION
+     * CHECK ROLE
      * @param {string} role
      * @returns
      */
-    checkSession(role) {
-      return this.$serve.checkSession(this.users, role);
+    checkRole(role) {
+      return this.$serve.checkRole(this.user.role, role);
     },
 
     /**

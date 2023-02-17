@@ -190,8 +190,7 @@ export default {
     ...mapState([
       "user", 
       "orders"
-    ]),
-
+    ])
   },
 
   methods: {

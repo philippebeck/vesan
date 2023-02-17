@@ -2,7 +2,7 @@
   <NavElt :items="setCats"
     class="sidebar">
 
-    <template #last v-if="checkSession('editor')">
+    <template #last v-if="checkRole('editor')">
       <a href="#create-product"
         title="Create an product">
         <i class="fa-solid fa-basket-shopping fa-fw"></i>
@@ -57,7 +57,7 @@
                 </template>
               </BtnElt>
 
-              <BtnElt v-else-if="checkSession('user')" 
+              <BtnElt v-else-if="checkRole('user')" 
                 :href="`product/${slotProps.value._id}#review`"
                 class="btn-violet"
                 content="Write a Review"
@@ -101,7 +101,7 @@
       </ListElt>
     </template>
 
-    <template #aside v-if="checkSession('editor')">
+    <template #aside v-if="checkRole('editor')">
       <CreateProduct />
     </template>
   </CardElt>
@@ -136,6 +136,7 @@ export default {
 
   computed: {
     ...mapState([
+      "user",
       "products", 
       "reviews", 
       "users"
@@ -158,12 +159,12 @@ export default {
     ]),
 
     /**
-     * CHECK SESSION
+     * CHECK ROLE
      * @param {string} role
      * @returns
      */
-    checkSession(role) {
-      return this.$serve.checkSession(this.users, role);
+    checkRole(role) {
+      return this.$serve.checkRole(this.user.role, role);
     },
 
     /**

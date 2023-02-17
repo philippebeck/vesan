@@ -79,36 +79,39 @@ export default createStore({
   },
 
   actions: {
-    async checkUsers(context) {
-      app.config.globalProperties.$serve.getData("/api/users/check")
-        .then(res => { context.commit("SET_USERS", res) })
-        .catch(err => { console.log(err) });
-    },
-    async getAvatar(context, id) {
-      app.config.globalProperties.$serve.getData("/api/users/avatar/" + id)
-        .then(res => { context.commit("SET_USER", res) })
-        .catch(err => { console.log(err) });
-    },
-
+    /* BLOG */
     async readArticle(context, id) {
       app.config.globalProperties.$serve.getData("/api/articles/" + id)
         .then(res => { context.commit("SET_ARTICLE", res) })
         .catch(err => { console.log(err) });
     },
-    async readProduct(context, id) {
-      app.config.globalProperties.$serve.getData("/api/products/" + id)
-        .then(res => { context.commit("SET_PRODUCT", res) })
-        .catch(err => { console.log(err) });
-    },
-    async readUser(context, id) {
-      app.config.globalProperties.$serve.getData("/api/users/" + id)
-        .then(res => { context.commit("SET_USER", res) })
-        .catch(err => { console.log(err) });
-    },
-
     async listArticleComments(context, id) {
       app.config.globalProperties.$serve.getData("/api/comments/" + id)
         .then(res => { context.commit("SET_COMMENTS", res) })
+        .catch(err => { console.log(err) });
+    },
+    async listArticles(context) {
+      app.config.globalProperties.$serve.getData("/api/articles")
+        .then(res => { context.commit("SET_ARTICLES", res) })
+        .catch(err => { console.log(err) });
+    },
+    async listComments(context) {
+      app.config.globalProperties.$serve.getData("/api/comments")
+        .then(res => { context.commit("SET_COMMENTS", res) })
+        .catch(err => { console.log(err) });
+    },
+
+    /* LINKS */
+    async listLinks(context) {
+      app.config.globalProperties.$serve.getData("/api/links")
+        .then(res => { context.commit("SET_LINKS", res) })
+        .catch(err => { console.log(err) });
+    },
+
+    /* SHOP */
+    async readProduct(context, id) {
+      app.config.globalProperties.$serve.getData("/api/products/" + id)
+        .then(res => { context.commit("SET_PRODUCT", res) })
         .catch(err => { console.log(err) });
     },
     async listProductReviews(context, id) {
@@ -121,27 +124,6 @@ export default createStore({
         .then(res => { context.commit("SET_USER_ORDERS", res) })
         .catch(err => { console.log(err) });
     },
-
-    async listArticles(context) {
-      app.config.globalProperties.$serve.getData("/api/articles")
-        .then(res => { context.commit("SET_ARTICLES", res) })
-        .catch(err => { console.log(err) });
-    },
-    async listComments(context) {
-      app.config.globalProperties.$serve.getData("/api/comments")
-        .then(res => { context.commit("SET_COMMENTS", res) })
-        .catch(err => { console.log(err) });
-    },
-    async listLinks(context) {
-      app.config.globalProperties.$serve.getData("/api/links")
-        .then(res => { context.commit("SET_LINKS", res) })
-        .catch(err => { console.log(err) });
-    },
-    async listOrders(context) {
-      app.config.globalProperties.$serve.getData("/api/orders")
-        .then(res => { context.commit("SET_ORDERS", res) })
-        .catch(err => { console.log(err) });
-    },
     async listProducts(context) {
       app.config.globalProperties.$serve.getData("/api/products")
         .then(res => { context.commit("SET_PRODUCTS", res) })
@@ -150,6 +132,28 @@ export default createStore({
     async listReviews(context) {
       app.config.globalProperties.$serve.getData("/api/reviews")
         .then(res => { context.commit("SET_REVIEWS", res) })
+        .catch(err => { console.log(err) });
+    },
+    async listOrders(context) {
+      app.config.globalProperties.$serve.getData("/api/orders")
+        .then(res => { context.commit("SET_ORDERS", res) })
+        .catch(err => { console.log(err) });
+    },
+
+    /* USERS */
+    async getAvatar(context, id) {
+      app.config.globalProperties.$serve.getData("/api/users/avatar/" + id)
+        .then(res => { context.commit("SET_USER", res) })
+        .catch(err => { console.log(err) });
+    },
+    async readUser(context, id) {
+      app.config.globalProperties.$serve.getData("/api/users/" + id)
+        .then(res => { context.commit("SET_USER", res) })
+        .catch(err => { console.log(err) });
+    },
+    async checkUsers(context) {
+      app.config.globalProperties.$serve.getData("/api/users/check")
+        .then(res => { context.commit("SET_USERS", res) })
         .catch(err => { console.log(err) });
     },
     async listUsers(context) {
