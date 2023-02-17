@@ -1,8 +1,12 @@
 <template>
   <CardElt id="create-product">
     <template #header>
-      <i class="fa-solid fa-basket-shopping fa-2x"></i>
-      <h3>{{ constants.CREATE_PRODUCT }}</h3>
+      <h3>
+        <i class="fa-solid fa-basket-shopping fa-lg"
+          aria-hidden="true">
+        </i>
+        {{ constants.CREATE_PRODUCT }}
+      </h3>
     </template>
 
     <template #body>

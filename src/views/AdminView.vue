@@ -1,8 +1,10 @@
 <template>
   <CardElt id="top">
     <template #header>
-      <i class="blue anima-bounce fa-solid fa-cogs fa-4x"></i>
       <h1 class="sky anima-turn3D">
+        <i class="fa-solid fa-cogs fa-2x"
+          aria-hidden="true">
+        </i>
         Admin
       </h1>
 
@@ -40,8 +42,14 @@
       <!-- Shop Part -->
       <CardElt>
         <template #header>
-          <i class="fa-solid fa-shop fa-3x"></i>
-          <h2 id="shop">Shop</h2>
+          
+          <h2 id="shop"
+            class="blue anima-bounce">
+            <i class="fa-solid fa-shop fa-lg"
+              aria-hidden="true">
+            </i>
+            Shop
+          </h2>
         </template>
 
         <template #body>
@@ -62,8 +70,13 @@
       <!-- Blog Part -->
       <CardElt>
         <template #header>
-          <i class="fa-solid fa-blog fa-3x"></i>
-          <h2 id="blog">Blog</h2>
+          <h2 id="blog"
+            class="blue anima-bounce">
+            <i class="fa-solid fa-blog fa-lg"
+              aria-hidden="true">
+            </i>
+            Blog
+          </h2>
         </template>
 
         <template #body>
@@ -81,8 +94,13 @@
       <!-- Users Part -->
       <CardElt v-if="checkRole('admin')">
         <template #header>
-          <i class="fa-solid fa-user-astronaut fa-3x"></i>
-          <h2 id="users">Users</h2>
+          <h2 id="users"
+            class="blue anima-bounce">
+            <i class="fa-solid fa-user-astronaut fa-lg"
+              aria-hidden="true">
+            </i>
+            Users
+          </h2>
         </template>
 
         <template #body>
@@ -94,8 +112,13 @@
       <!-- Links Part -->
       <CardElt v-if="checkRole('admin')">
         <template #header>
-          <i class="fa-solid fa-link fa-3x"></i>
-          <h2 id="links">Links</h2>
+          <h2 id="links"
+            class="blue anima-bounce">
+            <i class="fa-solid fa-link fa-lg"
+              aria-hidden="true">
+            </i>
+            Links
+          </h2>
         </template>
 
         <template #body>

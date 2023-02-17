@@ -1,8 +1,12 @@
 <template>
   <CardElt id="create-article">
     <template #header>
-      <i class="fa-regular fa-envelope fa-2x"></i>
-      <h3>{{ constants.CREATE_ARTICLE }}</h3>
+      <h3>
+        <i class="fa-regular fa-envelope fa-lg"
+          aria-hidden="true">
+        </i>
+        {{ constants.CREATE_ARTICLE }}
+      </h3>
     </template>
 
     <template #body>

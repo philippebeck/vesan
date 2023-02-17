@@ -1,8 +1,12 @@
 <template>
   <CardElt>
     <template #header>
-      <i class="fa-solid fa-envelopes-bulk fa-2x"></i>
-      <h3>List Articles</h3>
+      <h3>
+        <i class="fa-solid fa-envelopes-bulk fa-lg"
+          aria-hidden="true">
+        </i>
+        List Articles
+      </h3>
     </template>
 
     <template #body>

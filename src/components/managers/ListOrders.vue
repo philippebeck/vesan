@@ -1,8 +1,12 @@
 <template>
   <CardElt>
     <template #header>
-      <i class="fa-regular fa-rectangle-list fa-2x"></i>
-      <h3>List Orders</h3>
+      <h3>
+        <i class="fa-regular fa-rectangle-list fa-lg"
+          aria-hidden="true">
+        </i>
+        List Orders
+      </h3>
     </template>
 
     <template #body>

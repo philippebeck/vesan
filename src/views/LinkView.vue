@@ -6,7 +6,7 @@
       <i :class="`fa-brands fa-${slotProps.item.toLowerCase()} fa-fw`"></i>
     </template>
 
-    <template #last v-if="checkSession('admin')">
+    <template #last v-if="checkRole('admin')">
       <a href="#create-link"
         :title="constants.SIDEBAR_LINK">
         <i class="fa-solid fa-link fa-fw"></i>
@@ -20,8 +20,10 @@
 
   <CardElt id="top">
     <template #header>
-      <i class="blue anima-slideL fa-solid fa-link fa-3x"></i>
       <h1 class="sky anima-slideR">
+        <i class="fa-solid fa-link fa-lg"
+          aria-hidden="true">
+        </i>
         {{ constants.TITLE_LINK }}
       </h1>
     </template>
@@ -44,7 +46,7 @@
       </ListElt>
     </template>
 
-    <template #aside v-if="checkSession('admin')">
+    <template #aside v-if="checkRole('admin')">
       <CreateLink />
     </template>
 
@@ -57,7 +59,7 @@ import constants from "/constants"
 import CreateLink from "@/components/creators/CreateLink"
 
 export default {
-  name: "HomeView",
+  name: "LinkView",
   components: {
     CreateLink
   },
@@ -72,13 +74,12 @@ export default {
   mounted () {
     this.constants = constants;
     this.$store.dispatch("listLinks");
-    this.$store.dispatch("checkUsers");
   },
 
   computed: {
     ...mapState([
-      "links", 
-      "users"
+      "user",
+      "links"
     ]),
 
     /**
@@ -91,18 +92,15 @@ export default {
   },
 
   methods: {
-    ...mapActions([
-      "checkUsers", 
-      "listLinks"
-    ]),
+    ...mapActions(["listLinks"]),
 
     /**
-     * CHECK SESSION
+     * CHECK ROLE
      * @param {string} role
      * @returns
      */
-    checkSession(role) {
-      return this.$serve.checkSession(this.users, role);
+    checkRole(role) {
+      return this.$serve.checkRole(this.user.role, role);
     },
 
     /**

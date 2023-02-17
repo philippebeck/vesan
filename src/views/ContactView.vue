@@ -3,8 +3,10 @@
   <!-- CONTACT PAGE -->
   <CardElt>
     <template #header>
-      <i class="blue anima-slideR fa-solid fa-at fa-4x"></i>
       <h1 class="sky anima-slideL">
+        <i class="fa-solid fa-at fa-lg"
+          aria-hidden="true">
+        </i>
         Contact
       </h1>
     </template>

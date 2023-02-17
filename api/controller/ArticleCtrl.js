@@ -3,9 +3,8 @@
 const formidable  = require("formidable");
 const fs          = require("fs");
 const nem         = require("nemjs");
-const accents     = require("remove-accents");
 
-const ArticleModel     = require("../model/ArticleModel");
+const ArticleModel  = require("../model/ArticleModel");
 const CommentModel  = require("../model/CommentModel");
 
 require("dotenv").config();

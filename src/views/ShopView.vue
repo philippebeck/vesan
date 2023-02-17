@@ -16,8 +16,12 @@
 
   <CardElt id="top">
     <template #header>
-      <i class="blue anima-openX fa-solid fa-shop fa-4x"></i>
-      <h1 class="sky anima-openY">Shop</h1>
+      <h1 class="sky anima-openY">
+        <i class="fa-solid fa-shop fa-lg"
+          aria-hidden="true">
+        </i>
+        Shop
+      </h1>
       <b>Products to buy !</b>
     </template>
 
@@ -27,7 +31,7 @@
 
         <template #items="slotProps">
           <h2 :id="slotProps.item[0].cat"
-            class="anima-openX">
+            class="blue anima-openX">
             {{ slotProps.item[0].cat }}
           </h2>
         </template>
@@ -37,7 +41,8 @@
           <CardElt itemscope
             itemtype="https://schema.org/Product">
             <template #header>
-                <h3 itemprop="name">
+                <h3 itemprop="name"
+                  class="sky">
                   {{ slotProps.value.name }}
                 </h3>
             </template>

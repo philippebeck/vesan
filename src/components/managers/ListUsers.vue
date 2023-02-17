@@ -1,8 +1,12 @@
 <template>
   <CardElt>
     <template #header>
-      <i class="fa-solid fa-users-gear fa-2x"></i>
-      <h3>List Users</h3>
+      <h3>
+        <i class="fa-solid fa-users-gear fa-lg"
+          aria-hidden="true">
+        </i>
+        List Users
+      </h3>
     </template>
 
     <template #body>

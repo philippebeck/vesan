@@ -1,8 +1,12 @@
 <template>
   <CardElt>
     <template #header>
-      <i class="blue anima-flipperX fa-solid fa-basket-shopping fa-2x"></i>
-      <h1 class="sky anima-flipperY">Basket</h1>
+      <h1 class="sky anima-flipperY">
+        <i class="fa-solid fa-basket-shopping fa-lg"
+          aria-hidden="true">
+        </i>
+        Basket
+      </h1>
     </template>
 
     <template #body>

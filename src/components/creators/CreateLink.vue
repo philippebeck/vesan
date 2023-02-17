@@ -1,8 +1,12 @@
 <template>
     <CardElt id="create-link">
     <template #header>
-      <i class="fa-solid fa-link fa-2x"></i>
-      <h3>{{ constants.CREATE_LINK }}</h3>
+      <h3>
+        <i class="fa-solid fa-link fa-lg"
+          aria-hidden="true">
+        </i>
+        {{ constants.CREATE_LINK }}
+      </h3>
     </template>
 
     <template #body>
