@@ -237,7 +237,7 @@ export default {
 
   mounted() {
     if (constants.USER_ID) {
-      this.$store.dispatch("getAvatar", constants.USER_ID);
+      this.$store.dispatch("readAvatar", constants.USER_ID);
     }
   },
 
@@ -246,7 +246,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["getAvatar"]),
+    ...mapActions(["readAvatar"]),
 
     /**
      * CHECK ROLE
