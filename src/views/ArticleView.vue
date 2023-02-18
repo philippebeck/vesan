@@ -110,24 +110,15 @@ export default {
   mounted () {
     this.$store.dispatch("readArticle", this.$route.params.id);
     this.$store.dispatch("listArticleComments", this.$route.params.id);
-    this.$store.dispatch("checkUsers");
+    this.$store.dispatch("listUsersName");
 },
 
   computed: {
-    ...mapState([
-      "user",
-      "article", 
-      "comments", 
-      "users"
-    ])
+    ...mapState(["article", "comments", "user", "users"])
   },
 
   methods: {
-    ...mapActions([
-      "checkUsers", 
-      "readArticle", 
-      "listArticleComments"
-    ]),
+    ...mapActions(["readArticle", "listArticleComments", "listUsersName"]),
 
     /**
      * CHECK SESSION

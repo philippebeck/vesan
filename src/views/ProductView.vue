@@ -150,24 +150,15 @@ export default {
 
     this.$store.dispatch("readProduct", this.$route.params.id);
     this.$store.dispatch("listProductReviews", this.$route.params.id);
-    this.$store.dispatch("checkUsers");
+    this.$store.dispatch("listUsersName");
   },
 
   computed: {
-    ...mapState([
-      "user",
-      "product", 
-      "reviews", 
-      "users"
-    ]),
+    ...mapState(["product", "reviews", "user", "users"]),
   },
 
   methods: {
-    ...mapActions([
-      "checkUsers", 
-      "readProduct", 
-      "listProductReviews"
-    ]),
+    ...mapActions(["readProduct", "listProductReviews", "listUsersName"]),
 
     /**
      * CHECK ROLE
