@@ -2,11 +2,9 @@
 
 const formidable  = require("formidable");
 const nem         = require("nemjs");
-
-const LinkModel = require("../model/LinkModel");
+const LinkModel   = require("../model/LinkModel");
 
 require("dotenv").config();
-
 const form = formidable();
 
 //! ****************************** PUBLIC ******************************

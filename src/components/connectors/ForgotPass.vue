@@ -80,7 +80,7 @@ export default {
       message.append("subject", constants.FORGOT_SUBJECT);
       message.append("text", constants.FORGOT_TEXT);
 
-      this.$serve.postData("/api/users/forgot", message)
+      this.$serve.postData("/api/users/password", message)
         .then(() => {
           alert(message.get("subject") + " sended !");
           this.$router.push("/login");

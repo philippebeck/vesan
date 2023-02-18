@@ -136,16 +136,11 @@ export default {
 
     this.$store.dispatch("listProducts");
     this.$store.dispatch("listReviews");
-    this.$store.dispatch("checkUsers");
+    this.$store.dispatch("listUsersName");
   },
 
   computed: {
-    ...mapState([
-      "user",
-      "products", 
-      "reviews", 
-      "users"
-    ]),
+    ...mapState(["products", "reviews", "user", "users"]),
 
     /**
      * SET CATEGORIES
@@ -157,11 +152,7 @@ export default {
   },
 
   methods: {
-    ...mapActions([
-      "checkUsers", 
-      "listProducts", 
-      "listReviews"
-    ]),
+    ...mapActions(["listProducts", "listReviews", "listUsersName"]),
 
     /**
      * CHECK ROLE

@@ -38,40 +38,45 @@ export default createStore({
   },
 
   mutations: {
+    /* BLOG */
     SET_ARTICLE(state, article) {
       state.article = article
     },
+    SET_COMMENTS(state, comments) {
+      state.comments = comments
+    },
+    SET_ARTICLES(state, articles) {
+      state.articles = articles
+    },
+
+    /* LINKS */
+    SET_LINKS(state, links) {
+      state.links = links
+    },
+
+    /* SHOP */
     SET_PRODUCT(state, product) {
       state.product = product
     },
-    SET_USER(state, user) {
-      state.user = user
+    SET_REVIEWS(state, reviews) {
+      state.reviews = reviews
     },
-
     SET_USER_ORDERS(state, orders) {
       for (let order of orders) {
         delete order.user;
       }
       state.orders = orders
     },
-
-    SET_ARTICLES(state, articles) {
-      state.articles = articles
-    },
-    SET_COMMENTS(state, comments) {
-      state.comments = comments
-    },
-    SET_LINKS(state, links) {
-      state.links = links
+    SET_PRODUCTS(state, products) {
+      state.products = products
     },
     SET_ORDERS(state, orders) {
       state.orders = orders
     },
-    SET_PRODUCTS(state, products) {
-      state.products = products
-    },
-    SET_REVIEWS(state, reviews) {
-      state.reviews = reviews
+
+    /* USERS */
+    SET_USER(state, user) {
+      state.user = user
     },
     SET_USERS(state, users) {
       state.users = users
@@ -141,7 +146,7 @@ export default createStore({
     },
 
     /* USERS */
-    async getAvatar(context, id) {
+    async readAvatar(context, id) {
       app.config.globalProperties.$serve.getData("/api/users/avatar/" + id)
         .then(res => { context.commit("SET_USER", res) })
         .catch(err => { console.log(err) });
@@ -151,8 +156,8 @@ export default createStore({
         .then(res => { context.commit("SET_USER", res) })
         .catch(err => { console.log(err) });
     },
-    async checkUsers(context) {
-      app.config.globalProperties.$serve.getData("/api/users/check")
+    async listUsersName(context) {
+      app.config.globalProperties.$serve.getData("/api/users/names")
         .then(res => { context.commit("SET_USERS", res) })
         .catch(err => { console.log(err) });
     },

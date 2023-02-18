@@ -11,13 +11,9 @@ const ReviewModel   = require("../model/ReviewModel");
 
 require("dotenv").config();
 
-const USERS_IMG   = process.env.IMG_URL + "users/";
+const USERS_IMG = process.env.IMG_URL + "users/";
 const USERS_THUMB = process.env.THUMB_URL + "users/";
-
-const form = formidable({ 
-  uploadDir: USERS_IMG, 
-  keepExtensions: true 
-});
+const form = formidable({ uploadDir: USERS_IMG, keepExtensions: true });
 
 /**
  * CHECK USER CREDENTIALS
@@ -83,21 +79,18 @@ exports.setMessage = (fields, res) => {
 //! ****************************** PUBLIC ******************************
 
 /**
- * CHECK USERS
+ * LIST USERS NAME
  * @param {object} req 
  * @param {object} res 
  */
-exports.checkUsers = (req, res) => {
+exports.listUsersName = (req, res) => {
   UserModel
     .find()
     .then((users) => {
         let usersChecked = [];
 
         for (let i = 0; i < users.length; i++) {
-          usersChecked.push({
-            _id: users[i]._id,
-            name: users[i].name
-          });
+          usersChecked.push({ _id: users[i]._id, name: users[i].name });
         }
         res.status(200).json(usersChecked);
       }
@@ -106,11 +99,11 @@ exports.checkUsers = (req, res) => {
 }
 
 /**
- * GET AVATAR
+ * READ AVATAR
  * @param {object} req 
  * @param {object} res 
  */
-exports.getAvatar = (req, res) => {
+exports.readAvatar = (req, res) => {
   UserModel
     .findById(req.params.id)
     .then((user) => { 
@@ -142,26 +135,14 @@ exports.createUser = (req, res, next) => {
 
     this.checkCredentials(fields.email, fields.pass, res);
     let image = nem.getImgName(fields.name);
-
-    nem.createThumbnail(
-      "users/" + files.image.newFilename, 
-      "users/" + image
-    );
+    nem.createThumbnail("users/" + files.image.newFilename, "users/" + image);
 
     bcrypt
       .hash(fields.pass, 10)
       .then((hash) => {
-        let user = new UserModel(
-          this.getUser(
-            fields.name, 
-            fields.email, 
-            image, 
-            fields.alt, 
-            hash,
-            fields.role, 
-            fields.created, 
-            fields.updated
-          ));
+        let user = new UserModel(this.getUser(
+          fields.name, fields.email, image, fields.alt, hash, fields.role, fields.created, fields.updated
+        ));
 
         fs.unlink(USERS_IMG + files.image.newFilename, () => {
           user
@@ -259,14 +240,7 @@ exports.forgotPass = (req, res, next) => {
           .hash(pass, 10)
           .then((hash) => {
             let newUser = this.getUser(
-              user.name, 
-              user.email, 
-              user.image, 
-              user.alt, 
-              hash,
-              user.role,
-              user.created,
-              user.updated
+              user.name, user.email, user.image, user.alt, hash, user.role, user.created, user.updated
             );
 
             UserModel
@@ -364,11 +338,7 @@ exports.updateUser = (req, res, next) => {
 
     if (Object.keys(files).length !== 0) {
       image = nem.getImgName(fields.name);
-
-      nem.createThumbnail(
-        "users/" + files.image.newFilename, 
-        "users/" + image
-      );
+      nem.createThumbnail("users/" + files.image.newFilename, "users/" + image);
   
       UserModel
         .findById(req.params.id)
@@ -385,14 +355,7 @@ exports.updateUser = (req, res, next) => {
       .hash(fields.pass, 10)
       .then((hash) => {
         let user = this.getUser(
-          fields.name, 
-          fields.email, 
-          image, 
-          fields.alt, 
-          hash,
-          fields.role, 
-          fields.created, 
-          fields.updated
+          fields.name, fields.email, image, fields.alt, hash, fields.role, fields.created, fields.updated
         );
 
         UserModel

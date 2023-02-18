@@ -9,13 +9,9 @@ const ReviewModel   = require("../model/ReviewModel");
 
 require("dotenv").config();
 
-const PRODUCTS_IMG    = process.env.IMG_URL + "products/";
-const PRODUCTS_THUMB  = process.env.THUMB_URL + "products/";
-
-const form = formidable({ 
-  uploadDir: PRODUCTS_IMG, 
-  keepExtensions: true 
-});
+const PRODUCTS_IMG = process.env.IMG_URL + "products/";
+const PRODUCTS_THUMB = process.env.THUMB_URL + "products/";
+const form = formidable({ uploadDir: PRODUCTS_IMG, keepExtensions: true });
 
 /**
  * GET PRODUCT
@@ -88,41 +84,19 @@ exports.createProduct = (req, res, next) => {
     }
 
     let image = nem.getImgName(fields.name);
-
-    nem.createImage(
-      "products/" + files.image.newFilename, 
-      "products/" + image
-    );
-
-    nem.createThumbnail(
-      "products/" + files.image.newFilename, 
-      "products/" + image
-    );
+    nem.createImage("products/" + files.image.newFilename, "products/" + image);
+    nem.createThumbnail("products/" + files.image.newFilename, "products/" + image);
 
     let options = fields.options.split(",");
+    if (options[0] === "") { options.shift() }
 
-    if (options[0] === "") {
-      options.shift();
-    }
-
-    let product = new ProductModel(
-      this.getProduct(
-        fields.name, 
-        fields.description, 
-        image, 
-        fields.alt,
-        fields.price,
-        options,
-        fields.cat, 
-        fields.created,
-        fields.updated
-      ));
+    let product = new ProductModel(this.getProduct(
+      fields.name, fields.description, image, fields.alt, fields.price, options, fields.cat, fields.created, fields.updated
+    ));
 
     product
       .save()
-      .then(() => fs.unlink(PRODUCTS_IMG + files.image.newFilename, () => {
-        console.log("image ok !") 
-      }))
+      .then(() => fs.unlink(PRODUCTS_IMG + files.image.newFilename, () => { console.log("image ok !") }))
       .then(() => res.status(201).json({ message: process.env.PRODUCT_CREATED }))
       .catch((error) => res.status(400).json({ error }));
   })
@@ -146,16 +120,8 @@ exports.updateProduct = (req, res, next) => {
 
     if (Object.keys(files).length !== 0) {
       image = nem.getImgName(fields.name);
-  
-      nem.createImage(
-        "products/" + files.image.newFilename, 
-        "products/" + image
-      );
-
-      nem.createThumbnail(
-        "products/" + files.image.newFilename, 
-        "products/" + image
-      );
+      nem.createImage("products/" + files.image.newFilename, "products/" + image);
+      nem.createThumbnail("products/" + files.image.newFilename, "products/" + image);
       
       ProductModel
         .findById(req.params.id)
@@ -171,21 +137,10 @@ exports.updateProduct = (req, res, next) => {
     }
 
     let options = fields.options.split(",");
-
-    if (options[0] === "") {
-      options.shift();
-    }
+    if (options[0] === "") { options.shift() }
 
     let product = this.getProduct(
-      fields.name, 
-      fields.description, 
-      image, 
-      fields.alt,
-      fields.price,
-      options,
-      fields.cat, 
-      fields.created,
-      fields.updated
+      fields.name, fields.description, image, fields.alt, fields.price, options, fields.cat, fields.created, fields.updated
     );
 
     ProductModel

@@ -145,7 +145,7 @@ export default {
 
   mounted() {
     this.constants = constants;
-    this.$store.dispatch("checkUsers");
+    this.$store.dispatch("listUsersName");
 
     this.$serve.getData("/api/products")
       .then(res => { 
@@ -158,14 +158,11 @@ export default {
   },
 
   computed: {
-    ...mapState([
-      "user",
-      "users"
-    ]),
+    ...mapState(["user", "users"]),
   },
 
   methods: {
-    ...mapActions(["checkUsers"]),
+    ...mapActions(["listUsersName"]),
 
     /**
      * CHECK ROLE
