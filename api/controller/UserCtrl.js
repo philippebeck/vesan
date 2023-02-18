@@ -79,11 +79,11 @@ exports.setMessage = (fields, res) => {
 //! ****************************** PUBLIC ******************************
 
 /**
- * CHECK USERS
+ * LIST USERS NAME
  * @param {object} req 
  * @param {object} res 
  */
-exports.checkUsers = (req, res) => {
+exports.listUsersName = (req, res) => {
   UserModel
     .find()
     .then((users) => {
@@ -99,11 +99,11 @@ exports.checkUsers = (req, res) => {
 }
 
 /**
- * GET AVATAR
+ * READ AVATAR
  * @param {object} req 
  * @param {object} res 
  */
-exports.getAvatar = (req, res) => {
+exports.readAvatar = (req, res) => {
   UserModel
     .findById(req.params.id)
     .then((user) => { 
