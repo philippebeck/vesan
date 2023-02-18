@@ -76,6 +76,29 @@ exports.setMessage = (fields, res) => {
   })();
 }
 
+/**
+ * UPDATE IMAGE
+ * @param {string} id 
+ * @param {string} name 
+ * @param {string} newFilename 
+ * @returns 
+ */
+exports.updateImage = (id, name, newFilename) => {
+  let image = nem.getImgName(name);
+  nem.createThumbnail("users/" + newFilename, "users/" + image);
+
+  UserModel
+    .findById(id)
+    .then((user) => 
+      fs.unlink(USERS_THUMB + user.image, () => {
+        fs.unlink(USERS_IMG + newFilename, () => {
+          console.log("Images ok !");
+        })
+      })
+    )
+  return image;
+}
+
 //! ****************************** PUBLIC ******************************
 
 /**
