@@ -103,11 +103,12 @@ export default {
 
   data() {
     return {
-      userId: null
+      constants: {}
     }
   },
 
   mounted () {
+    this.constants = constants;
     this.$store.dispatch("readArticle", this.$route.params.id);
     this.$store.dispatch("listArticleComments", this.$route.params.id);
     this.$store.dispatch("listUsersName");

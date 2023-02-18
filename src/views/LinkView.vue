@@ -66,8 +66,7 @@ export default {
 
   data() {
     return {
-      constants: {},
-      userId: null
+      constants: {}
     }
   },
 

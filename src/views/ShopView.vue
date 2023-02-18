@@ -126,12 +126,13 @@ export default {
   data() {
     return {
       scores: [],
-      priceCurrency: "",
-      userId: null
+      constants: {},
+      priceCurrency: ""
     }
   },
 
   mounted () {
+    this.constants = constants;
     this.priceCurrency = constants.CURRENCY_ISO;
 
     this.$store.dispatch("listProducts");

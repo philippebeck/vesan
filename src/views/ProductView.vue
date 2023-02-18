@@ -136,16 +136,17 @@ export default {
   data() {
     return {
       basket: [],
+      constants: {},
       order: {},
       option: "",
       priceCurrency: "",
       quantity: 1,
-      isInBasket: false,
-      userId: null
+      isInBasket: false
     }
   },
 
   mounted () {
+    this.constants = constants;
     this.priceCurrency = constants.CURRENCY_ISO;
 
     this.$store.dispatch("readProduct", this.$route.params.id);
