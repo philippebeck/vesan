@@ -145,21 +145,7 @@ exports.updateProduct = (req, res, next) => {
     let image = fields.image;
 
     if (Object.keys(files).length !== 0) {
-      image = nem.getImgName(fields.name);
-      nem.createImage("products/" + files.image.newFilename, "products/" + image);
-      nem.createThumbnail("products/" + files.image.newFilename, "products/" + image);
-      
-      ProductModel
-        .findById(req.params.id)
-        .then((product) => 
-          fs.unlink(PRODUCTS_THUMB + product.image, () => {
-            fs.unlink(PRODUCTS_IMG + product.image, () => {
-              fs.unlink(PRODUCTS_IMG + files.image.newFilename, () => {
-                console.log("Image ok !");
-              })
-            })
-          })
-        )
+      image = this.updateImage(req.params.id, fields.name, files.image.newFilename);
     }
 
     let options = fields.options.split(",");
