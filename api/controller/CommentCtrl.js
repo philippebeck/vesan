@@ -1,11 +1,9 @@
 "use strict";
 
-const formidable = require("formidable");
-
-const CommentModel = require("../model/CommentModel");
+const formidable    = require("formidable");
+const CommentModel  = require("../model/CommentModel");
 
 require("dotenv").config();
-
 const form = formidable();
 
 //! ****************************** PUBLIC ******************************

@@ -3,11 +3,10 @@
 const formidable  = require("formidable");
 const nem         = require("nemjs");
 
-const OrderModel = require("../model/OrderModel");
-const UserModel = require("../model/UserModel");
+const OrderModel  = require("../model/OrderModel");
+const UserModel   = require("../model/UserModel");
 
 require("dotenv").config();
-
 const form = formidable();
 
 /**
