@@ -9,13 +9,9 @@ const CommentModel  = require("../model/CommentModel");
 
 require("dotenv").config();
 
-const ARTICLES_IMG    = process.env.IMG_URL + "articles/";
-const ARTICLES_THUMB  = process.env.THUMB_URL + "articles/";
-
-const form = formidable({ 
-  uploadDir: ARTICLES_IMG, 
-  keepExtensions: true 
-});
+const ARTICLES_IMG = process.env.IMG_URL + "articles/";
+const ARTICLES_THUMB = process.env.THUMB_URL + "articles/";
+const form = formidable({ uploadDir: ARTICLES_IMG, keepExtensions: true });
 
 /**
  * GET ARTICLE
@@ -90,35 +86,16 @@ exports.createArticle = (req, res, next) => {
     }
 
     let image = nem.getImgName(fields.name);
-
-    nem.createImage(
-      "articles/" + files.image.newFilename, 
-      "articles/" + image
-    );
-
-    nem.createThumbnail(
-      "articles/" + files.image.newFilename, 
-      "articles/" + image
-    );
+    nem.createImage("articles/" + files.image.newFilename, "articles/" + image);
+    nem.createThumbnail("articles/" + files.image.newFilename, "articles/" + image);
 
     let article  = new ArticleModel(this.getArticle(
-      fields.name, 
-      fields.text, 
-      image, 
-      fields.alt, 
-      fields.user,
-      fields.likes,
-      fields.usersLiked,
-      fields.cat, 
-      fields.created,
-      fields.updated
+      fields.name, fields.text, image, fields.alt, fields.user, fields.likes, fields.usersLiked, fields.cat, fields.created, fields.updated
     ));
 
     article
       .save()
-      .then(() => fs.unlink(ARTICLES_IMG + files.image.newFilename, () => {
-        console.log("image ok !");
-      }))
+      .then(() => fs.unlink(ARTICLES_IMG + files.image.newFilename, () => { console.log("image ok !") }))
       .then(() => res.status(201).json({ message: process.env.ARTICLE_CREATED }))
       .catch((error) => res.status(400).json({ error }));
   })
@@ -142,16 +119,8 @@ exports.updateArticle = (req, res, next) => {
 
     if (Object.keys(files).length !== 0) {
       image = nem.getImgName(fields.name);
-
-      nem.createImage(
-        "articles/" + files.image.newFilename, 
-        "articles/" + image
-      );
-
-    nem.createThumbnail(
-      "articles/" + files.image.newFilename, 
-      "articles/" + image
-    );
+      nem.createImage( "articles/" + files.image.newFilename, "articles/" + image);
+      nem.createThumbnail("articles/" + files.image.newFilename, "articles/" + image);
 
       ArticleModel
         .findById(req.params.id)
@@ -167,22 +136,10 @@ exports.updateArticle = (req, res, next) => {
     }
 
     let usersLiked = fields.usersLiked.split(",");
-
-    if (usersLiked[0] === "") {
-      usersLiked.shift();
-    }
+    if (usersLiked[0] === "") { usersLiked.shift() }
 
     let article = this.getArticle(
-      fields.name, 
-      fields.text, 
-      image, 
-      fields.alt, 
-      fields.user,
-      fields.likes,
-      usersLiked,
-      fields.cat, 
-      fields.created,
-      fields.updated
+      fields.name, fields.text, image, fields.alt, fields.user, fields.likes, usersLiked, fields.cat, fields.created, fields.updated
     );
 
     ArticleModel
