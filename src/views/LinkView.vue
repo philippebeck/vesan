@@ -76,10 +76,7 @@ export default {
   },
 
   computed: {
-    ...mapState([
-      "user",
-      "links"
-    ]),
+    ...mapState(["links", "user"]),
 
     /**
      * SET CATEGORIES
