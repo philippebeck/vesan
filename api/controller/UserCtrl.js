@@ -360,18 +360,7 @@ exports.updateUser = (req, res, next) => {
     let image = fields.image;
 
     if (Object.keys(files).length !== 0) {
-      image = nem.getImgName(fields.name);
-      nem.createThumbnail("users/" + files.image.newFilename, "users/" + image);
-  
-      UserModel
-        .findById(req.params.id)
-        .then((user) => 
-          fs.unlink(USERS_THUMB + user.image, () => {
-            fs.unlink(USERS_IMG + files.image.newFilename, () => {
-              console.log("Image ok !");
-            })
-          })
-        )
+      image = this.updateImage(req.params.id, fields.name, files.image.newFilename);
     }
 
     bcrypt
