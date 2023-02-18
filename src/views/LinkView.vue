@@ -66,8 +66,7 @@ export default {
 
   data() {
     return {
-      constants: {},
-      userId: null
+      constants: {}
     }
   },
 
@@ -77,10 +76,7 @@ export default {
   },
 
   computed: {
-    ...mapState([
-      "user",
-      "links"
-    ]),
+    ...mapState(["links", "user"]),
 
     /**
      * SET CATEGORIES

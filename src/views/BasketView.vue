@@ -138,8 +138,7 @@ export default {
       order: [],
       sale: [],
       constants: {},
-      total: 0,
-      userId: null
+      total: 0
     }
   },
 

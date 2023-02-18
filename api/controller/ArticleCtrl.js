@@ -43,6 +43,32 @@ exports.getArticle = (name, text, image, alt, user, likes, usersLiked, cat, crea
   }
 }
 
+/**
+ * UPDATE IMAGE
+ * @param {string} id 
+ * @param {string} name 
+ * @param {string} newFilename 
+ * @returns 
+ */
+exports.updateImage = (id, name, newFilename) => {
+  let image = nem.getImgName(name);
+  nem.createImage( "articles/" + newFilename, "articles/" + image);
+  nem.createThumbnail("articles/" + newFilename, "articles/" + image);
+
+  ArticleModel
+    .findById(id)
+    .then((article) => 
+      fs.unlink(ARTICLES_THUMB + article.image, () => {
+        fs.unlink(ARTICLES_IMG + article.image, () => {
+          fs.unlink(ARTICLES_IMG + newFilename, () => {
+            console.log("Image ok !");
+          })
+        })
+      })
+    )
+  return image;
+}
+
 //! ****************************** PUBLIC ******************************
 
 /**
@@ -118,21 +144,7 @@ exports.updateArticle = (req, res, next) => {
     let image = fields.image;
 
     if (Object.keys(files).length !== 0) {
-      image = nem.getImgName(fields.name);
-      nem.createImage( "articles/" + files.image.newFilename, "articles/" + image);
-      nem.createThumbnail("articles/" + files.image.newFilename, "articles/" + image);
-
-      ArticleModel
-        .findById(req.params.id)
-        .then((article) => 
-          fs.unlink(ARTICLES_THUMB + article.image, () => {
-            fs.unlink(ARTICLES_IMG + article.image, () => {
-              fs.unlink(ARTICLES_IMG + files.image.newFilename, () => {
-                console.log("Image ok !");
-              })
-            })
-          })
-        )
+      image = this.updateImage(req.params.id, fields.name, files.image.newFilename);
     }
 
     let usersLiked = fields.usersLiked.split(",");

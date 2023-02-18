@@ -131,12 +131,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-ul {
-  padding: 0;
-}
-li {
-  list-style: none;
-}
-</style>

@@ -95,7 +95,9 @@
   </NavElt>
 
   <!-- VIEWS -->
-  <router-view/>
+  <main>
+    <router-view/>
+  </main>
 
   <!-- FOOTER -->
   <FootElt>

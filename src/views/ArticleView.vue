@@ -90,7 +90,6 @@
 <script>
 import { mapState, mapActions } from "vuex"
 import constants from "/constants"
-
 import CreateComment from "@/components/creators/CreateComment"
 import ListComments from "@/components/managers/ListComments"
 
@@ -103,11 +102,12 @@ export default {
 
   data() {
     return {
-      userId: null
+      constants: {}
     }
   },
 
   mounted () {
+    this.constants = constants;
     this.$store.dispatch("readArticle", this.$route.params.id);
     this.$store.dispatch("listArticleComments", this.$route.params.id);
     this.$store.dispatch("listUsersName");

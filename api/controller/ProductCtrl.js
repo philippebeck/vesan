@@ -41,6 +41,32 @@ exports.getProduct = (name, description, image, alt, price, options, cat, create
   }
 }
 
+/**
+ * UPDATE IMAGE
+ * @param {string} id 
+ * @param {string} name 
+ * @param {string} newFilename 
+ * @returns 
+ */
+exports.updateImage = (id, name, newFilename) => {
+  let image = nem.getImgName(name);
+  nem.createImage("products/" + newFilename, "products/" + image);
+  nem.createThumbnail("products/" + newFilename, "products/" + image);
+  
+  ProductModel
+    .findById(id)
+    .then((product) => 
+      fs.unlink(PRODUCTS_THUMB + product.image, () => {
+        fs.unlink(PRODUCTS_IMG + product.image, () => {
+          fs.unlink(PRODUCTS_IMG + newFilename, () => {
+            console.log("Image ok !");
+          })
+        })
+      })
+    )
+  return image;
+}
+
 //! ****************************** PUBLIC ******************************
 
 /**
@@ -119,21 +145,7 @@ exports.updateProduct = (req, res, next) => {
     let image = fields.image;
 
     if (Object.keys(files).length !== 0) {
-      image = nem.getImgName(fields.name);
-      nem.createImage("products/" + files.image.newFilename, "products/" + image);
-      nem.createThumbnail("products/" + files.image.newFilename, "products/" + image);
-      
-      ProductModel
-        .findById(req.params.id)
-        .then((product) => 
-          fs.unlink(PRODUCTS_THUMB + product.image, () => {
-            fs.unlink(PRODUCTS_IMG + product.image, () => {
-              fs.unlink(PRODUCTS_IMG + files.image.newFilename, () => {
-                console.log("Image ok !");
-              })
-            })
-          })
-        )
+      image = this.updateImage(req.params.id, fields.name, files.image.newFilename);
     }
 
     let options = fields.options.split(",");

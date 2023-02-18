@@ -130,11 +130,12 @@ export default {
 
   data() {
     return {
-      userId: null
+      constants: {}
     }
   },
 
   mounted () {
+    this.constants = constants;
     this.$store.dispatch("listArticles");
     this.$store.dispatch("listUsersName");
   },
