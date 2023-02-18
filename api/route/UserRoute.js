@@ -7,14 +7,14 @@ const nem     = require("nemjs");
 const UserCtrl = require("../controller/UserCtrl");
 
 /* Public */
-router.get("/check", UserCtrl.checkUsers);
-router.get("/avatar/:id", UserCtrl.getAvatar);
+router.get("/names", UserCtrl.listUsersName);
+router.get("/avatar/:id", UserCtrl.readAvatar);
 router.post("/", UserCtrl.createUser);
 router.post("/check", UserCtrl.checkUser);
 router.post("/email", UserCtrl.checkEmail);
-router.post("/forgot", UserCtrl.forgotPass);
 router.post("/login", UserCtrl.loginUser);
-router.post("/send", UserCtrl.sendMessage);
+router.post("/message", UserCtrl.sendMessage);
+router.post("/password", UserCtrl.forgotPass);
 
 /* Private */
 router.get("/", nem.checkAuth, UserCtrl.listUsers);
