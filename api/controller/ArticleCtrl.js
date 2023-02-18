@@ -43,6 +43,32 @@ exports.getArticle = (name, text, image, alt, user, likes, usersLiked, cat, crea
   }
 }
 
+/**
+ * UPDATE IMAGE
+ * @param {string} id 
+ * @param {string} name 
+ * @param {string} newFilename 
+ * @returns 
+ */
+exports.updateImage = (id, name, newFilename) => {
+  let image = nem.getImgName(name);
+  nem.createImage( "articles/" + newFilename, "articles/" + image);
+  nem.createThumbnail("articles/" + newFilename, "articles/" + image);
+
+  ArticleModel
+    .findById(id)
+    .then((article) => 
+      fs.unlink(ARTICLES_THUMB + article.image, () => {
+        fs.unlink(ARTICLES_IMG + article.image, () => {
+          fs.unlink(ARTICLES_IMG + newFilename, () => {
+            console.log("Image ok !");
+          })
+        })
+      })
+    )
+  return image;
+}
+
 //! ****************************** PUBLIC ******************************
 
 /**
