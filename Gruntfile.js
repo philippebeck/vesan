@@ -1,0 +1,22 @@
+module.exports = function(grunt) {
+  grunt.initConfig({
+    pkg: grunt.file.readJSON("package.json"),
+    concat: {
+      options: {
+        banner: "/*! <%= pkg.name %> v<%= pkg.version %> | <%= pkg.homepage %> | <%= pkg.license %> */\n\n", 
+        footer: "\n/* Author: <%= pkg.author.name %> <<%= pkg.author.email %>>\n Updated: <%= grunt.template.today('dS mmm yyyy @ h:MM:ss TT') %> */"
+      },
+      css: {
+        src: [
+          "src/style/init.css",
+          "node_modules/animadio/dist/style.css",
+          "node_modules/vue-elt/dist/style.css"
+        ], 
+        dest: "src/style/style.css"
+      }
+    }
+  });
+
+  grunt.loadNpmTasks("grunt-contrib-concat");
+  grunt.registerTask("default", ["concat"]);
+};
