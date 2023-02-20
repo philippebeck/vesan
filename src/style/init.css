@@ -1,9 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Geo&family=Rozha+One&family=Syne+Mono&display=swap');
 @import url("../../node_modules/@fortawesome/fontawesome-free/css/all.min.css");
-@import url("../../node_modules/animadio/dist/animadio.min.css");
 
 :root {
-  --sans-serif: 'Geo', sans-serif;
-  --serif: 'Rozha One', serif;
-  --monospace: 'Syne Mono', monospace;
+  --ani-sans-serif: 'Geo', sans-serif;
+  --ani-serif: 'Rozha One', serif;
+  --ani-monospace: 'Syne Mono', monospace;
 }

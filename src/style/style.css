@@ -2,15 +2,12 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Geo&family=Rozha+One&family=Syne+Mono&display=swap');
 @import url("../../node_modules/@fortawesome/fontawesome-free/css/all.min.css");
-@import url("../../node_modules/animadio/dist/animadio.min.css");
 
 :root {
-  --sans-serif: 'Geo', sans-serif;
-  --serif: 'Rozha One', serif;
-  --monospace: 'Syne Mono', monospace;
+  --ani-sans-serif: 'Geo', sans-serif;
+  --ani-serif: 'Rozha One', serif;
+  --ani-monospace: 'Syne Mono', monospace;
 }
-
-/*! animadio v5.7.0 | https://github.com/philippebeck/animadio | MIT License */
 
 /********** VARS **********/
 :root {
@@ -286,10 +283,7 @@ button,
   --ani-animation-delay-min: 500ms;
   --ani-animation-delay-max: 1s; }
 
-/*! vue-elt v0.6.7 | https://github.com/philippebeck/vue-elt | Apache-2.0 License */
-
-/********************  BTN ELT ********************/
-
+/********** BTN ELT **********/
 a,
 button {
   --ve-btn-display: inline-block;
@@ -315,8 +309,7 @@ button {
   --ve-btn-child-margin: auto;
 }
 
-/********************  FIELD ELT ********************/
-
+/********** FIELD ELT **********/
 fieldset {
   --ve-fieldset-display: flex;
   --ve-fieldset-flex-flow: row wrap;
@@ -365,8 +358,7 @@ textarea {
   --ve-hover-input-transition: all 500ms;
 }
 
-/********************  MEDIA ELT ********************/
-
+/********** MEDIA ELT **********/
 figure {
   --ve-figure-border: 1px solid transparent;
   --ve-figure-border-radius: 20px;
@@ -401,8 +393,7 @@ figcaption {
   --ve-figcaption-color: var(--blue);
 }
 
-/********************  LIST ELT ********************/
-
+/********** LIST ELT **********/
 ul {
   --ve-ul-margin: 20px 0;
   --ve-ul-padding: 0;
@@ -413,8 +404,7 @@ ul {
   --ve-li-ul-place-content: center;
 }
 
-/********************  SLIDER ELT ********************/
-
+/********** SLIDER ELT **********/
 .slider {
   --ve-slider-margin: var(--slider-figcaption-height) auto -20px;
   --ve-slider-border: none;
@@ -475,8 +465,7 @@ button {
   }
 }
 
-/********************  TABLE ELT ********************/
-
+/********** TABLE ELT **********/
 table {
   --ve-table-display: table;
   --ve-table-overflow: hidden;
@@ -574,8 +563,7 @@ td {
   }
 }
 
-/********************  CARD ELT ********************/
-
+/********** CARD ELT **********/
 article,
 section {
   --ve-card-box-sizing: border-box;
@@ -588,8 +576,7 @@ section {
   --ve-card-color: var(--ani-gray);
 }
 
-/********************  FOOT ELT ********************/
-
+/********** FOOT ELT **********/
 footer {
   --ve-footer-text-align: center;
   --ve-footer-child-margin: 0;
@@ -642,8 +629,7 @@ aside {
   }
 }
 
-/********************  NAV ELT ********************/
-
+/********** NAV ELT **********/
 :root {
   --ve-navbar-height: 50px;
 }
@@ -735,4 +721,4 @@ aside {
 }
 
 /* Author: Philippe Beck <philippe@philippebeck.net>
- Updated: 19th Feb 2023 @ 11:54:04 AM */
+ Updated: 20th Feb 2023 @ 12:24:37 PM */
