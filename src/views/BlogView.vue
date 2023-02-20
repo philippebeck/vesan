@@ -100,7 +100,7 @@
 
                   <template #figcaption>
                     <blockquote itemprop="text">
-                      {{ slotProps.value.text }}
+                      {{ slotProps.value.text.slice(0, 50) }}...
                     </blockquote>
                   </template>
                 </MediaElt>
