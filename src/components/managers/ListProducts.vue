@@ -35,7 +35,8 @@
               type="textarea"
               v-model:value="getProducts()[slotProps.index].description"
               @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
-              :info="constants.UPDATE_DESCRIPTION"/>
+              :info="constants.UPDATE_DESCRIPTION"
+              :max="5000"/>
           </template>
 
           <!-- Image -->

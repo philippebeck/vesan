@@ -147,7 +147,9 @@ export default {
      * @returns
      */
     checkLikes() {
-      return this.$serve.checkLikes(this.article.usersLiked);
+      if (this.article.usersLiked) {
+        return this.$serve.checkLikes(this.article.usersLiked);
+      }
     },
 
     /**

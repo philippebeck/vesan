@@ -85,7 +85,7 @@
 
                   <template #figcaption>
                     <p itemprop="description">
-                      {{ slotProps.value.description }}
+                      {{ slotProps.value.description.slice(0, 50) }}...
                     </p>
                     <p itemprop="offers"
                       itemscope

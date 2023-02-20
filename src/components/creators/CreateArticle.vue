@@ -36,7 +36,8 @@
               type="textarea"
               v-model:value="text"
               @keyup.enter="validateNewArticle()"
-              :info="constants.CREATE_TEXT">
+              :info="constants.CREATE_TEXT"
+              :max="5000">
               <template #legend>
                 Text
               </template>

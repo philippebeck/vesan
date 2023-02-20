@@ -36,7 +36,8 @@
               type="textarea"
               v-model:value="description"
               @keyup.enter="validateNewProduct()"
-              :info="constants.CREATE_DESCRIPTION">
+              :info="constants.CREATE_DESCRIPTION"
+              :max="5000">
               <template #legend>
                 Description
               </template>

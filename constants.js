@@ -22,8 +22,8 @@ export default {
   PASS_MAX : 50,
   PASS_MIN : 8,
 
-  TEXT_MIN : 3,
-  TEXT_MAX : 500,
+  TEXT_MIN : 8,
+  TEXT_MAX : 5000,
 
   TOKEN : JSON.parse(localStorage.getItem("userToken")),
   USER_ID : JSON.parse(localStorage.getItem("userId")),
@@ -96,7 +96,7 @@ CATS_ARTICLE : [
   ALERT_ORDER : "Order created !",
   ALERT_PASS : "Your Password must have 8 to 50 characters, with uppercase, lowercase, 1 number minimum & no space.",
   ALERT_URL : "This URL is not a valid path.",
-  ALERT_TEXT : "The text must have between 3 & 500 characters.",
+  ALERT_TEXT : "The text must have between 8 & 5000 characters.",
 
   BASKET_CLEAR : "Clear the basket",
   BASKET_LOGIN : "Login to order those Products",

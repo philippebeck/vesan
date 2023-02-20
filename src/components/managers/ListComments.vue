@@ -24,7 +24,8 @@
               @change="setModerate(slotProps.item._id)"
               @keyup.enter="updateComment(slotProps.item._id)"
               itemprop="text"
-              :info="constants.UPDATE_TEXT"/>
+              :info="constants.UPDATE_TEXT"
+              :max="5000"/>
 
             <BtnElt type="button"
               @click="updateComment(slotProps.item._id)" 
