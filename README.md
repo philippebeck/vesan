@@ -80,7 +80,7 @@ From the root of your App with Vesan :
 1. To configure the frontend, replace values :  
 `constants.js`
 
-1. To configure the design, replaces values & add `!important` for each overload :  
+1. To configure the design, replaces values :  
 `src/style/style.css`
 
 ---
