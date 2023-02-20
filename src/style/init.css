@@ -2,7 +2,7 @@
 @import url("../../node_modules/@fortawesome/fontawesome-free/css/all.min.css");
 
 :root {
-  --sans-serif: 'Geo', sans-serif;
-  --serif: 'Rozha One', serif;
-  --monospace: 'Syne Mono', monospace;
+  --ani-sans-serif: 'Geo', sans-serif;
+  --ani-serif: 'Rozha One', serif;
+  --ani-monospace: 'Syne Mono', monospace;
 }
