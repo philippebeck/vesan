@@ -35,7 +35,8 @@
               type="textarea"
               v-model:value="getArticles()[slotProps.index].text"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              :info="constants.UPDATE_TEXT"/>
+              :info="constants.UPDATE_TEXT"
+              :max="5000"/>
           </template>
 
           <!-- Image -->
