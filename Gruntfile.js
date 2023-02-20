@@ -8,9 +8,10 @@ module.exports = function(grunt) {
       },
       css: {
         src: [
-          "src/style/init.css",
+          "src/style/import.css",
           "node_modules/animadio/dist/style.css",
-          "node_modules/vue-elt/dist/style.css"
+          "node_modules/vue-elt/dist/style.css",
+          "src/style/overload.css"
         ], 
         dest: "src/style/style.css"
       }
