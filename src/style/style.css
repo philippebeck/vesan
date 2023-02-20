@@ -1,13 +1,7 @@
-/*! vesan v0.32.0 | https://github.com/philippebeck/vesan | Apache-2.0 License */
+/*! vesan v0.32.1 | https://github.com/philippebeck/vesan | Apache-2.0 License */
 
 @import url('https://fonts.googleapis.com/css2?family=Geo&family=Rozha+One&family=Syne+Mono&display=swap');
 @import url("../../node_modules/@fortawesome/fontawesome-free/css/all.min.css");
-
-:root {
-  --ani-sans-serif: 'Geo', sans-serif;
-  --ani-serif: 'Rozha One', serif;
-  --ani-monospace: 'Syne Mono', monospace;
-}
 
 /********** VARS **********/
 :root {
@@ -367,7 +361,7 @@ figure {
 }
 
 img {
-  --ve-img-border: 1px solid var(--blue);
+  --ve-img-border: 1px solid var(--ani-blue);
   --ve-img-border-radius: 20px;
   --ve-img-padding: 1px;
   --ve-img-max-width: 100%;
@@ -377,12 +371,12 @@ img {
 }
 
 audio {
-  --ve-audio-border: 2px solid var(--gray);
+  --ve-audio-border: 2px solid var(--ani-gray);
   --ve-audio-border-radius: 10px;
 }
 
 video {
-  --ve-video-border: 2px solid var(--black);
+  --ve-video-border: 2px solid var(--ani-black);
   --ve-video-border-radius: 20px;
 }
 
@@ -390,7 +384,7 @@ figcaption {
   --ve-figcaption-display: flex;
   --ve-figcaption-flex-flow: column nowrap;
   --ve-figcaption-place-content: center center;
-  --ve-figcaption-color: var(--blue);
+  --ve-figcaption-color: var(--ani-blue);
 }
 
 /********** LIST ELT **********/
@@ -406,7 +400,7 @@ ul {
 
 /********** SLIDER ELT **********/
 .slider {
-  --ve-slider-margin: var(--slider-figcaption-height) auto -20px;
+  --ve-slider-margin: var(--ve-slider-figcaption-height) auto -20px;
   --ve-slider-border: none;
   --ve-slider-padding: 0;
   --ve-slider-width: 100%;
@@ -591,7 +585,7 @@ footer {
   --ve-footer-ul-background-color: var(--ani-sky);
   --ve-footer-h3-margin-bottom: 5px;
   --ve-footer-h3-font-size: 2rem;
-  --ve-footer-h3-font-family: monospace;
+  --ve-footer-h3-font-family: var(--ani-monospace);
   --ve-footer-h3-color: var(--ani-yellow);
   --ve-footer-section-a-color: var(--ani-white);
   --ve-footer-section-a-hover-color: var(--ani-gray);
@@ -638,7 +632,7 @@ aside {
   --ve-sidebar-display: flex;
   --ve-sidebar-flex-flow: column;
   --ve-sidebar-position: fixed;
-  --ve-sidebar-top: calc(var(--navbar-height) + 10px);
+  --ve-sidebar-top: calc(var(--ve-navbar-height) + 10px);
   --ve-sidebar-left: 2px;
   --ve-sidebar-z-index: 10;
   --ve-sidebar-width: auto;
@@ -720,5 +714,11 @@ aside {
   }
 }
 
+:root {
+  --ani-sans-serif: Geo, sans-serif;
+  --ani-serif: "Rozha One", serif;
+  --ani-monospace: "Syne Mono", monospace;
+}
+
 /* Author: Philippe Beck <philippe@philippebeck.net>
- Updated: 20th Feb 2023 @ 12:24:37 PM */
+ Updated: 20th Feb 2023 @ 8:06:35 PM */
