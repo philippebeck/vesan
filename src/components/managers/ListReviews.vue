@@ -24,7 +24,8 @@
               @change="setModerate(slotProps.item._id)"
               @keyup.enter="updateReview(slotProps.item._id)"
               itemprop="text"
-              :info="constants.UPDATE_TEXT"/>
+              :info="constants.UPDATE_TEXT"
+              :max="5000"/>
 
             <FieldElt :id="'score-' + slotProps.item._id"
               type="number"
