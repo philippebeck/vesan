@@ -2,6 +2,7 @@
 
 const formidable  = require("formidable");
 const ReviewModel = require("../model/ReviewModel");
+const UserModel = require("../model/UserModel");
 
 require("dotenv").config();
 const form = formidable();
@@ -16,7 +17,22 @@ const form = formidable();
 exports.listProductReviews = (req, res) => {
   ReviewModel
     .find({ product: req.params.id })
-    .then((reviews) => res.status(200).json(reviews))
+    .then((reviews) => {
+      UserModel
+        .find()
+        .then((users) => {
+
+          for (let review of reviews) {
+            for (let user of users) {
+              if (review.user === user._id.toString()) {
+                review.user = user.name;
+              }
+            }
+          }
+          res.status(200).json(reviews);
+        })
+        .catch((error) => res.status(400).json({ error }));
+    })
     .catch((error) => res.status(400).json({ error }));
 };
 
