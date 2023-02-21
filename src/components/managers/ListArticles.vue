@@ -73,7 +73,13 @@
           <!-- User -->
           <template #cell-user="slotProps">
             <b>{{ getUserName(articles[slotProps.index].user) }}</b>
-            ({{ getArticles()[slotProps.index].user }})
+            ({{ articles[slotProps.index].user }})
+          </template>
+
+          <!-- UsersLiked -->
+          <template #cell-usersLiked="slotProps">
+            <ListElt :dynamic="true"
+              :items="articles[slotProps.index].usersLiked"/>
           </template>
 
           <!-- Created -->
