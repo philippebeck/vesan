@@ -133,13 +133,15 @@ Available Components *(UNDER CONSTRUCTION)* :
 -   **CreateArticle** *(Creator)*  
 -   **CreateComment** *(Creator)*  
 -   **CreateLink** *(Creator)*  
--   **ListProducts** *(Manager)*  
--   **ListReviews** *(Manager)*  
--   **ListOrders** *(Manager)*  
--   **ListArticles** *(Manager)*  
--   **ListComments** *(Manager)*  
--   **ListUsers** *(Manager)*  
--   **ListLinks** *(Manager)*  
+-   **CommentList** *(List)*  
+-   **ReviewList** *(List)*  
+-   **ProductManager** *(Manager)*  
+-   **ReviewManager** *(Manager)*  
+-   **OrderManager** *(Manager)*  
+-   **ArticleManager** *(Manager)*  
+-   **CommentManager** *(Manager)*  
+-   **UserManager** *(Manager)*  
+-   **LinkManager** *(Manager)*  
 
 ---
 
