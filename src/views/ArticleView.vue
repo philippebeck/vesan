@@ -66,7 +66,7 @@
           <p class="silver">
             Created by 
             <b itemprop="author">
-              {{ getArticleUser() }}
+              {{ article.user }}
             </b>
             on 
             <i itemprop="dateCreated">
@@ -81,8 +81,7 @@
       </MediaElt>
 
       <ListComments v-if="comments.length > 0"
-        :comments="comments"
-        :users="users"/>
+        :comments="comments"/>
     </template>
 
     <template #aside  v-if="checkRole('user')">
@@ -114,15 +113,14 @@ export default {
     this.constants = constants;
     this.$store.dispatch("readArticle", this.$route.params.id);
     this.$store.dispatch("listArticleComments", this.$route.params.id);
-    this.$store.dispatch("listUsersName");
 },
 
   computed: {
-    ...mapState(["article", "comments", "user", "users"])
+    ...mapState(["article", "comments", "user"])
   },
 
   methods: {
-    ...mapActions(["readArticle", "listArticleComments", "listUsersName"]),
+    ...mapActions(["readArticle", "listArticleComments"]),
 
     /**
      * CHECK SESSION
@@ -131,19 +129,6 @@ export default {
      */
     checkRole(role) {
       return this.$serve.checkRole(this.user.role, role);
-    },
-
-    /**
-     * GET ARTICLE USER
-     * @param {}  
-     */
-    getArticleUser() {
-      for (let i = 0; i < this.users.length; i++ ) {
-        if (this.article.user === this.users[i]._id) {
-
-          return this.users[i].name;
-        }
-      }
     },
 
     /**
