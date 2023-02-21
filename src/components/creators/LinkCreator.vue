@@ -76,7 +76,7 @@
 import constants from "/constants"
 
 export default {
-  name: "CreateLink",
+  name: "LinkCreator",
 
   data() {
     return {

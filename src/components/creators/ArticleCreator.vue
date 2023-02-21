@@ -115,7 +115,7 @@
 import constants from "/constants"
 
 export default {
-  name: "CreateArticle",
+  name: "ArticleCreator",
 
   data() {
     return {
