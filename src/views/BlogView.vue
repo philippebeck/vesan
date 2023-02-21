@@ -112,20 +112,20 @@
     </template>
 
     <template #aside v-if="checkRole('editor')">
-      <CreateArticle />
+      <ArticleCreator />
     </template>
   </CardElt>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex"
-import CreateArticle from "@/components/creators/CreateArticle"
+import ArticleCreator from "@/components/creators/ArticleCreator"
 import constants from "/constants"
 
 export default {
   name: "BlogView",
   components: {
-    CreateArticle
+    ArticleCreator
   },
 
   data() {

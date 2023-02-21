@@ -5,7 +5,7 @@
         <i class="fa-solid fa-users-gear fa-lg"
           aria-hidden="true">
         </i>
-        List Users
+        User Manager
       </h3>
     </template>
 
@@ -118,7 +118,7 @@
 import constants from "/constants";
 
 export default {
-  name: "ListUsers",
+  name: "UserManager",
   props: ["users"],
 
   data() {

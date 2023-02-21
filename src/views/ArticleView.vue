@@ -80,12 +80,12 @@
         </template>
       </MediaElt>
 
-      <ListComments v-if="comments.length > 0"
+      <CommentList v-if="comments.length > 0"
         :comments="comments"/>
     </template>
 
     <template #aside  v-if="checkRole('user')">
-      <CreateComment />
+      <CommentCreator />
     </template>
   </CardElt>
 </template>
@@ -93,14 +93,14 @@
 <script>
 import { mapState, mapActions } from "vuex"
 import constants from "/constants"
-import CreateComment from "@/components/creators/CreateComment"
-import ListComments from "@/components/managers/ListComments"
+import CommentCreator from "@/components/creators/CommentCreator"
+import CommentList from "@/components/lists/CommentList"
 
 export default {
   name: "ArticleView",
   components: {
-    CreateComment,
-    ListComments
+    CommentCreator,
+    CommentList
   },
 
   data() {

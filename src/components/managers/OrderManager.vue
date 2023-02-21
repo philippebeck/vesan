@@ -5,7 +5,7 @@
         <i class="fa-regular fa-rectangle-list fa-lg"
           aria-hidden="true">
         </i>
-        List Orders
+        Order Manager
       </h3>
     </template>
 
@@ -106,7 +106,7 @@
 import constants from "/constants"
 
 export default {
-  name: "ListOrders",
+  name: "OrderManager",
   props: ["orders", "users"],
 
   data() {

@@ -46,7 +46,7 @@
 import constants from "/constants";
 
 export default {
-  name: "CreateComment",
+  name: "CommentCreator",
 
   data() {
     return {

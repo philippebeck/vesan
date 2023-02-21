@@ -62,7 +62,7 @@
 import constants from "/constants";
 
 export default {
-  name: "CreateReview",
+  name: "ReviewCreator",
 
   data() {
     return {

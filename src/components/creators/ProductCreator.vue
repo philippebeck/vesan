@@ -149,7 +149,7 @@
 import constants from "/constants"
 
 export default {
-  name: "CreateProduct",
+  name: "ProductCreator",
 
   data() {
     return {

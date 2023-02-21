@@ -14,7 +14,7 @@
 
       <!-- Id -->
       <template #cell-_id="slotProps">
-        {{ slotProps.index + 1 }}
+        #{{ slotProps.index + 1 }}
         ({{ slotProps.item._id }})
       </template>
 
@@ -75,7 +75,7 @@
 import constants from "/constants"
 
 export default {
-  name: "ListLinks",
+  name: "LinkManager",
   props: ["links"],
 
   data() {
