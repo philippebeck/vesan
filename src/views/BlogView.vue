@@ -57,7 +57,7 @@
                 <template #btn>
                   <i class="fa-regular fa-thumbs-up fa-lg">
                   </i> <b itemprop="contentRating">
-                    {{ slotProps.value.likes }}
+                    {{ slotProps.value.usersLiked.length }}
                   </b>
                 </template>
               </BtnElt>
@@ -71,7 +71,7 @@
                 <template #btn>
                   <i class="fa-regular fa-thumbs-up fa-lg">
                   </i> <b itemprop="contentRating">
-                    {{ slotProps.value.likes }}
+                    {{ slotProps.value.usersLiked.length }}
                   </b>
                 </template>
               </BtnElt>
@@ -85,7 +85,7 @@
                 <template #btn>
                   <i class="fa-regular fa-thumbs-up fa-lg">
                   </i> <b itemprop="contentRating">
-                    {{ slotProps.value.likes }}
+                    {{ slotProps.value.usersLiked.length }}
                   </b>
                 </template>
               </BtnElt>
@@ -198,22 +198,18 @@ export default {
 
           for (let j = 0; j < usersLiked.length; j++) {
             if (constants.USER_ID === usersLiked[j]) {
-
               hasLiked = true;
-              this.articles[i].likes -= 1;
               usersLiked.splice(j, 1);
             }
           }
 
           if (hasLiked === false) {
-            this.articles[i].likes += 1;
             usersLiked.push(constants.USER_ID);
           }
 
           let article = new FormData();
           article.append("id", this.articles[i]._id);
           article.append("name", this.articles[i].name);
-          article.append("likes", this.articles[i].likes);
           article.append("usersLiked", usersLiked);
 
           this.$serve.putData(`/api/articles/${article.get("id")}`, article)
