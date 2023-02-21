@@ -80,7 +80,7 @@
         </template>
       </MediaElt>
 
-      <ListComments v-if="comments.length > 0"
+      <CommentList v-if="comments.length > 0"
         :comments="comments"/>
     </template>
 
@@ -94,13 +94,13 @@
 import { mapState, mapActions } from "vuex"
 import constants from "/constants"
 import CreateComment from "@/components/creators/CreateComment"
-import ListComments from "@/components/managers/ListComments"
+import CommentList from "@/components/lists/CommentList"
 
 export default {
   name: "ArticleView",
   components: {
     CreateComment,
-    ListComments
+    CommentList
   },
 
   data() {

@@ -107,7 +107,7 @@
         </BtnElt>
       </form>
 
-      <ListReviews v-if="reviews.length > 0"
+      <ReviewList v-if="reviews.length > 0"
         id="reviews"
         :reviews="reviews"/>
     </template>
@@ -121,7 +121,7 @@
 <script>
 import { mapState, mapActions } from "vuex"
 import CreateReview from "@/components/creators/CreateReview"
-import ListReviews from "@/components/managers/ListReviews"
+import ReviewList from "@/components/lists/ReviewList"
 import constants from "/constants"
 
 export default {
@@ -129,7 +129,7 @@ export default {
 
   components: {
     CreateReview,
-    ListReviews
+    ReviewList
   },
 
   data() {
