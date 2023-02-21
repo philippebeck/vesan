@@ -156,11 +156,6 @@ export default createStore({
         .then(res => { context.commit("SET_USER", res) })
         .catch(err => { console.log(err) });
     },
-    async listUsersName(context) {
-      app.config.globalProperties.$serve.getData("/api/users/names")
-        .then(res => { context.commit("SET_USERS", res) })
-        .catch(err => { console.log(err) });
-    },
     async listUsers(context) {
       app.config.globalProperties.$serve.getData("/api/users")
         .then(res => { context.commit("SET_USERS", res) })

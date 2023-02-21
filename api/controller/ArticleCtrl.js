@@ -6,6 +6,7 @@ const nem         = require("nemjs");
 
 const ArticleModel  = require("../model/ArticleModel");
 const CommentModel  = require("../model/CommentModel");
+const UserModel     = require("../model/UserModel");
 
 require("dotenv").config();
 
@@ -89,7 +90,16 @@ exports.listArticles = (req, res) => {
 exports.readArticle = (req, res) => {
   ArticleModel
   .findById(req.params.id)
-  .then((article) => res.status(200).json(article))
+  .then((article) => {
+
+    UserModel
+      .findById(article.user)
+      .then((user) => {
+        article.user = user.name;
+        res.status(200).json(article);
+      })
+      .catch((error) => res.status(400).json({ error }));
+  })
   .catch((error) => res.status(400).json({ error }));
 }
 

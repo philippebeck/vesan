@@ -137,11 +137,10 @@ export default {
   mounted () {
     this.constants = constants;
     this.$store.dispatch("listArticles");
-    this.$store.dispatch("listUsersName");
   },
 
   computed: {
-    ...mapState(["articles", "user", "users"]),
+    ...mapState(["articles", "user"]),
 
     /**
      * SET CATEGORIES
@@ -153,7 +152,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["listArticles", "listUsersName"]),
+    ...mapActions(["listArticles"]),
 
     /**
      * CHECK ROLE

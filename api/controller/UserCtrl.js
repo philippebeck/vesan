@@ -102,26 +102,6 @@ exports.updateImage = (id, name, newFilename) => {
 //! ****************************** PUBLIC ******************************
 
 /**
- * LIST USERS NAME
- * @param {object} req 
- * @param {object} res 
- */
-exports.listUsersName = (req, res) => {
-  UserModel
-    .find()
-    .then((users) => {
-        let usersChecked = [];
-
-        for (let i = 0; i < users.length; i++) {
-          usersChecked.push({ _id: users[i]._id, name: users[i].name });
-        }
-        res.status(200).json(usersChecked);
-      }
-    )
-    .catch((error) => res.status(400).json({ error }));
-}
-
-/**
  * READ AVATAR
  * @param {object} req 
  * @param {object} res 

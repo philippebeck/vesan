@@ -110,8 +110,7 @@
 
       <ListReviews v-if="reviews.length > 0"
         id="reviews"
-        :reviews="reviews"
-        :users="users"/>
+        :reviews="reviews"/>
     </template>
 
     <template #aside  v-if="checkRole('user')">
@@ -152,15 +151,14 @@ export default {
 
     this.$store.dispatch("readProduct", this.$route.params.id);
     this.$store.dispatch("listProductReviews", this.$route.params.id);
-    this.$store.dispatch("listUsersName");
   },
 
   computed: {
-    ...mapState(["product", "reviews", "user", "users"]),
+    ...mapState(["product", "reviews", "user"]),
   },
 
   methods: {
-    ...mapActions(["readProduct", "listProductReviews", "listUsersName"]),
+    ...mapActions(["readProduct", "listProductReviews"]),
 
     /**
      * CHECK ROLE

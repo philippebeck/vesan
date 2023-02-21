@@ -2,6 +2,7 @@
 
 const formidable    = require("formidable");
 const CommentModel  = require("../model/CommentModel");
+const UserModel     = require("../model/UserModel");
 
 require("dotenv").config();
 const form = formidable();
@@ -16,7 +17,23 @@ const form = formidable();
 exports.listArticleComments = (req, res) => {
   CommentModel
     .find({ article: req.params.id })
-    .then((comments) => res.status(200).json(comments))
+    .then((comments) => {
+
+      UserModel
+        .find()
+        .then((users) => {
+
+          for (let comment of comments) {
+            for (let user of users) {
+              if (comment.user === user._id.toString()) {
+                comment.user = user.name + "-" + comment.user;
+              }
+            }
+          }
+          res.status(200).json(comments);
+        })
+      .catch((error) => res.status(400).json({ error }));
+    })
     .catch((error) => res.status(400).json({ error }));
 };
 
