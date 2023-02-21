@@ -73,8 +73,7 @@
           :list="product.options"
           v-model:value="option"
           @keyup.enter="addToBasket()"
-          info="Select an option"
-          :min="2">
+          info="Select an option">
           <template #legend>
             Option
           </template>
@@ -210,10 +209,16 @@ export default {
      * ADD TO BASKET
      */
     addToBasket() {
-      this.createOrder();
-      this.getBasket();
-      this.checkBasket();
-      this.setBasket();
+      if (this.option !== "") {
+
+        this.createOrder();
+        this.getBasket();
+        this.checkBasket();
+        this.setBasket();
+
+      } else {
+        alert("You need to choose an option !");
+      }
     },
 
     /**
