@@ -17,8 +17,10 @@
 
           <!-- Id -->
           <template #cell-_id="slotProps">
-            <b>#{{ slotProps.index + 1 }}</b>
-            ({{ articles[slotProps.index]._id }})
+            <a :href="`/article/${articles[slotProps.index]._id}`">
+              <b>#{{ slotProps.index + 1 }}</b>
+              ({{ articles[slotProps.index]._id }})
+            </a>
           </template>
 
           <!-- Name -->
@@ -71,7 +73,13 @@
           <!-- User -->
           <template #cell-user="slotProps">
             <b>{{ getUserName(articles[slotProps.index].user) }}</b>
-            ({{ getArticles()[slotProps.index].user }})
+            ({{ articles[slotProps.index].user }})
+          </template>
+
+          <!-- UsersLiked -->
+          <template #cell-usersLiked="slotProps">
+            <ListElt :dynamic="true"
+              :items="articles[slotProps.index].usersLiked"/>
           </template>
 
           <!-- Created -->

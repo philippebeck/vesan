@@ -107,8 +107,10 @@
 
           <!-- Id -->
           <template #cell-_id="slotProps">
-            <b>#{{ slotProps.index + 1 }}</b>
-            ({{ comments[slotProps.index]._id }})
+            <a :href="`/article/${comments[slotProps.index].article}`">
+              <b>#{{ slotProps.index + 1 }}</b>
+              ({{ comments[slotProps.index]._id }})
+            </a>
           </template>
 
           <!-- Text -->
@@ -118,9 +120,11 @@
 
           <!-- Article -->
           <template #cell-article="slotProps">
-            <b>{{ getArticleName(comments[slotProps.index].article) }}</b>
-            ({{ comments[slotProps.index].article }})
-          </template>
+            <a :href="`/article/${comments[slotProps.index].article}`">
+              <b>{{ getArticleName(comments[slotProps.index].article) }}</b>
+              ({{ comments[slotProps.index].article }})
+            </a>
+            </template>
 
           <!-- User -->
           <template #cell-user="slotProps">

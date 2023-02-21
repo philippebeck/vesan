@@ -127,8 +127,10 @@
 
           <!-- Id -->
           <template #cell-_id="slotProps">
-            <b>#{{ slotProps.index + 1 }}</b>
-            ({{ reviews[slotProps.index]._id }})
+            <a :href="`/product/${reviews[slotProps.index].product}`">
+              <b>#{{ slotProps.index + 1 }}</b>
+              ({{ reviews[slotProps.index]._id }})
+            </a>
           </template>
 
           <!-- Text -->
@@ -144,8 +146,10 @@
 
           <!-- Product -->
           <template #cell-product="slotProps">
-            <b>{{ getProductName(reviews[slotProps.index].product) }}</b>
-            ({{ reviews[slotProps.index].product }})
+            <a :href="`/product/${reviews[slotProps.index].product}`">
+              <b>{{ getProductName(reviews[slotProps.index].product) }}</b>
+              ({{ reviews[slotProps.index].product }})
+            </a>
           </template>
 
           <!-- User -->

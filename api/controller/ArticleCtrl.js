@@ -20,14 +20,13 @@ const form = formidable({ uploadDir: ARTICLES_IMG, keepExtensions: true });
  * @param {string} image 
  * @param {string} alt 
  * @param {string} user 
- * @param {number} likes 
  * @param {array} usersLiked 
  * @param {string} cat 
  * @param {string} created 
  * @param {string} updated 
  * @returns 
  */
-exports.getArticle = (name, text, image, alt, user, likes, usersLiked, cat, created, updated) => {
+exports.getArticle = (name, text, image, alt, user, usersLiked, cat, created, updated) => {
 
   return {
     name: name,
@@ -35,7 +34,6 @@ exports.getArticle = (name, text, image, alt, user, likes, usersLiked, cat, crea
     image: image,
     alt: alt,
     user: user,
-    likes: likes,
     usersLiked: usersLiked,
     cat: cat,
     created: created,
@@ -116,7 +114,7 @@ exports.createArticle = (req, res, next) => {
     nem.createThumbnail("articles/" + files.image.newFilename, "articles/" + image);
 
     let article  = new ArticleModel(this.getArticle(
-      fields.name, fields.text, image, fields.alt, fields.user, fields.likes, fields.usersLiked, fields.cat, fields.created, fields.updated
+      fields.name, fields.text, image, fields.alt, fields.user, fields.usersLiked, fields.cat, fields.created, fields.updated
     ));
 
     article
@@ -151,7 +149,7 @@ exports.updateArticle = (req, res, next) => {
     if (usersLiked[0] === "") { usersLiked.shift() }
 
     let article = this.getArticle(
-      fields.name, fields.text, image, fields.alt, fields.user, fields.likes, usersLiked, fields.cat, fields.created, fields.updated
+      fields.name, fields.text, image, fields.alt, fields.user, usersLiked, fields.cat, fields.created, fields.updated
     );
 
     ArticleModel
