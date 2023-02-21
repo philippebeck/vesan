@@ -57,7 +57,7 @@
             <p class="silver">
               Created by
               <b itemprop="author">
-                {{ getUserName(slotProps.item.user) }}
+                {{ slotProps.item.user }}
               </b>
               on
               <i itemprop="dateCreated">
@@ -91,7 +91,7 @@
               <p class="silver">
                 Created by
                 <b itemprop="author">
-                  {{ getUserName(slotProps.item.user) }}
+                  {{ slotProps.item.user }}
                 </b>
                 on
                 <i itemprop="dateCreated">
