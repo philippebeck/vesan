@@ -53,15 +53,15 @@
         </template>
 
         <template #body>
-          <ListProducts v-if="products.length > 0"
+          <ProductManager v-if="products.length > 0"
             :products="products"/>
 
-          <ListReviews v-if="reviews.length > 0"
+          <ReviewManager v-if="reviews.length > 0"
             :reviews="reviews"
             :products="products"
             :users="users"/>
 
-          <ListOrders v-if="orders.length > 0"
+          <OrderManager v-if="orders.length > 0"
             :orders="orders"
             :users="users"/>
         </template>
@@ -80,11 +80,11 @@
         </template>
 
         <template #body>
-          <ListArticles v-if="articles.length > 0"
+          <ArticleManager v-if="articles.length > 0"
             :articles="articles"
             :users="users"/>
 
-          <ListComments v-if="comments.length > 0"
+          <CommentManager v-if="comments.length > 0"
             :comments="comments"
             :articles="articles"
             :users="users"/>
@@ -104,7 +104,7 @@
         </template>
 
         <template #body>
-          <ListUsers v-if="users.length > 0"
+          <UserManager v-if="users.length > 0"
             :users="users"/>
         </template>
       </CardElt>
@@ -122,7 +122,7 @@
         </template>
 
         <template #body>
-          <ListLinks v-if="links.length > 0"
+          <LinkManager v-if="links.length > 0"
             :links="links"/>
         </template>
       </CardElt>
@@ -134,24 +134,24 @@
 import { mapState, mapActions } from "vuex"
 import constants from "/constants"
 
-import ListProducts from "@/components/managers/ListProducts"
-import ListReviews from "@/components/managers/ListReviews"
-import ListOrders from "@/components/managers/ListOrders"
-import ListArticles from "@/components/managers/ListArticles"
-import ListComments from "@/components/managers/ListComments"
-import ListUsers from "@/components/managers/ListUsers"
-import ListLinks from "@/components/managers/ListLinks"
+import ProductManager from "@/components/managers/ProductManager"
+import ReviewManager from "@/components/managers/ReviewManager"
+import OrderManager from "@/components/managers/OrderManager"
+import ArticleManager from "@/components/managers/ArticleManager"
+import CommentManager from "@/components/managers/CommentManager"
+import UserManager from "@/components/managers/UserManager"
+import LinkManager from "@/components/managers/LinkManager"
 
 export default {
   name: "AdminView",
   components: {
-    ListProducts,
-    ListReviews,
-    ListOrders,
-    ListArticles,
-    ListComments,
-    ListUsers,
-    ListLinks
+    ProductManager,
+    ReviewManager,
+    OrderManager,
+    ArticleManager,
+    CommentManager,
+    UserManager,
+    LinkManager
   },
 
   data() {
