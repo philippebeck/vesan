@@ -125,7 +125,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex"
+import { mapState } from "vuex"
 import constants from "/constants"
 
 export default {
@@ -144,7 +144,6 @@ export default {
 
   mounted() {
     this.constants = constants;
-    this.$store.dispatch("listUsersName");
 
     this.$serve.getData("/api/products")
       .then(res => { 
@@ -157,12 +156,10 @@ export default {
   },
 
   computed: {
-    ...mapState(["user", "users"]),
+    ...mapState(["user"]),
   },
 
   methods: {
-    ...mapActions(["listUsersName"]),
-
     /**
      * CHECK ROLE
      * @param {string} role
