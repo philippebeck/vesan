@@ -107,20 +107,20 @@
     </template>
 
     <template #aside v-if="checkRole('editor')">
-      <CreateProduct />
+      <ProductCreator />
     </template>
   </CardElt>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex"
-import CreateProduct from "@/components/creators/CreateProduct"
+import ProductCreator from "@/components/creators/ProductCreator"
 import constants from "/constants"
 
 export default {
   name: "ShopView",
   components: {
-    CreateProduct
+    ProductCreator
   },
 
   data() {

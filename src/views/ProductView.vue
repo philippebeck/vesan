@@ -113,14 +113,14 @@
     </template>
 
     <template #aside  v-if="checkRole('user')">
-      <CreateReview id="review"/>
+      <ReviewCreator id="review"/>
     </template>
   </CardElt>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex"
-import CreateReview from "@/components/creators/CreateReview"
+import ReviewCreator from "@/components/creators/ReviewCreator"
 import ReviewList from "@/components/lists/ReviewList"
 import constants from "/constants"
 
@@ -128,7 +128,7 @@ export default {
   name: "ProductView",
 
   components: {
-    CreateReview,
+    ReviewCreator,
     ReviewList
   },
 

@@ -85,7 +85,7 @@
     </template>
 
     <template #aside  v-if="checkRole('user')">
-      <CreateComment />
+      <CommentCreator />
     </template>
   </CardElt>
 </template>
@@ -93,13 +93,13 @@
 <script>
 import { mapState, mapActions } from "vuex"
 import constants from "/constants"
-import CreateComment from "@/components/creators/CreateComment"
+import CommentCreator from "@/components/creators/CommentCreator"
 import CommentList from "@/components/lists/CommentList"
 
 export default {
   name: "ArticleView",
   components: {
-    CreateComment,
+    CommentCreator,
     CommentList
   },
 

@@ -47,7 +47,7 @@
     </template>
 
     <template #aside v-if="checkRole('admin')">
-      <CreateLink />
+      <LinkCreator />
     </template>
 
   </CardElt>
@@ -56,12 +56,12 @@
 <script>
 import { mapState, mapActions } from "vuex"
 import constants from "/constants"
-import CreateLink from "@/components/creators/CreateLink"
+import LinkCreator from "@/components/creators/LinkCreator"
 
 export default {
   name: "LinkView",
   components: {
-    CreateLink
+    LinkCreator
   },
 
   data() {
