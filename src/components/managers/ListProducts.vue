@@ -17,8 +17,10 @@
 
           <!-- Id -->
           <template #cell-_id="slotProps">
-            <b>#{{ slotProps.index + 1 }}</b>
-            ({{ products[slotProps.index]._id }})
+            <a :href="`/product/${products[slotProps.index]._id}`">
+              <b>#{{ slotProps.index + 1 }}</b>
+              ({{ products[slotProps.index]._id }})
+            </a>
           </template>
 
           <!-- Name -->
