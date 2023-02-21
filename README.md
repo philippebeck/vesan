@@ -128,11 +128,11 @@ Available Components *(UNDER CONSTRUCTION)* :
 -   **ForgotPass** *(Connector)*  
 -   **SignIn** *(Connector*  
 -   **SignUp** *(Connector)*  
--   **CreateProduct** *(Creator)*  
--   **CreateReview** *(Creator)*  
--   **CreateArticle** *(Creator)*  
--   **CreateComment** *(Creator)*  
--   **CreateLink** *(Creator)*  
+-   **ProductCreator** *(Creator)*  
+-   **ReviewCreator** *(Creator)*  
+-   **ArticleCreator** *(Creator)*  
+-   **CommentCreator** *(Creator)*  
+-   **LinkCreator** *(Creator)*  
 -   **CommentList** *(List)*  
 -   **ReviewList** *(List)*  
 -   **ProductManager** *(Manager)*  
