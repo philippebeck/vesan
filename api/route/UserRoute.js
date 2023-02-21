@@ -7,7 +7,6 @@ const nem     = require("nemjs");
 const UserCtrl = require("../controller/UserCtrl");
 
 /* Public */
-router.get("/names", UserCtrl.listUsersName);
 router.get("/avatar/:id", UserCtrl.readAvatar);
 router.post("/", UserCtrl.createUser);
 router.post("/check", UserCtrl.checkUser);
