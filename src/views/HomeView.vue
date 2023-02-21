@@ -6,6 +6,7 @@
 
       <!-- Slider -->
       <SliderElt :slides="['vuejs', 'sass', 'node-js', 'html5', 'js', 'css3']"
+        :delay="5000"
         class="anima-grow">
         <template #slide="slotProps">
           <i :class="`fa-brands fa-${slotProps.slide.toLowerCase()} fa-10x blue`"></i>
