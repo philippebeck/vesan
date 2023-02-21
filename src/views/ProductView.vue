@@ -34,7 +34,8 @@
           content="Login to write a review"
           :title="`Be the first to write a Review about ${product.name}`" />
 
-      <MediaElt :src="`/img/products/${product.image}`"
+      <MediaElt v-if="product.image"
+        :src="`/img/products/${product.image}`"
         :alt="product.alt"
         itemprop="image">
 
