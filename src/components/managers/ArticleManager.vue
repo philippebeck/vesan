@@ -5,7 +5,7 @@
         <i class="fa-solid fa-envelopes-bulk fa-lg"
           aria-hidden="true">
         </i>
-        List Articles
+        Article Manager
       </h3>
     </template>
 
@@ -124,7 +124,7 @@
 import constants from "/constants";
 
 export default {
-  name: "ListArticles",
+  name: "ArticleManager",
   props: ["articles", "users"],
 
   data() {

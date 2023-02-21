@@ -5,7 +5,7 @@
         <i class="fa-solid fa-shopping-cart fa-lg"
           aria-hidden="true">
         </i>
-        List Products
+        Product Manager
       </h3>
     </template>
 
@@ -134,7 +134,7 @@
 import constants from "/constants"
 
 export default {
-  name: "ListProducts",
+  name: "ProductManager",
   props: ["products"],
 
   data() {
