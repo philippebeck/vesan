@@ -14,7 +14,7 @@
         :dynamic="true">
         <template #items="slotProps">
 
-          <form v-if="slotProps.item.user === constants.USER_ID"
+          <form v-if="slotProps.item.user.split('-')[1] === constants.USER_ID"
             itemscope
             itemtype="https://schema.org/Comment">
 
@@ -48,7 +48,7 @@
             <p class="silver">
               Created by
               <b itemprop="author">
-                {{ getUserName(slotProps.item.user) }}
+                {{ slotProps.item.user.split("-")[0] }}
               </b>
               on 
               <i itemprop="dateCreated">
@@ -72,7 +72,7 @@
             <figcaption class="silver">
               Created by
               <b itemprop="author">
-                {{ getUserName(slotProps.item.user) }}
+                {{ slotProps.item.user.split("-")[0] }}
               </b>
               on 
               <i itemprop="dateCreated">
