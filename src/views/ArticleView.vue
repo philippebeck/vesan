@@ -15,8 +15,9 @@
         :title="`Login to like ${article.name}`">
         <template #btn>
           <i class="fa-regular fa-thumbs-up fa-lg">
-          </i> <b itemprop="contentRating">
-            {{ article.likes }}
+          </i> <b v-if="article.usersLiked"
+            itemprop="contentRating">
+            {{ article.usersLiked.length }}
           </b>
         </template>
       </BtnElt>
@@ -29,8 +30,9 @@
         :title="`Like ${article.name} ?`">
         <template #btn>
           <i class="fa-regular fa-thumbs-up fa-lg">
-          </i> <b itemprop="contentRating">
-            {{ article.likes }}
+          </i> <b v-if="article.usersLiked"
+            itemprop="contentRating">
+            {{ article.usersLiked.length }}
           </b>
         </template>
       </BtnElt>
@@ -43,13 +45,15 @@
         :title="`Dislike ${article.name} ?`">
         <template #btn>
           <i class="fa-regular fa-thumbs-up fa-lg">
-          </i> <b itemprop="contentRating">
-            {{ article.likes }}
+          </i> <b v-if="article.usersLiked"
+            itemprop="contentRating">
+            {{ article.usersLiked.length }}
           </b>
         </template>
       </BtnElt>
 
-      <MediaElt :src="`/img/articles/${article.image}`"
+      <MediaElt v-if="article.image"
+        :src="`/img/articles/${article.image}`"
         :alt="article.alt"
         itemprop="image">
 
@@ -162,20 +166,17 @@ export default {
       for (let i = 0; i < usersLiked.length; i++) {
         if (constants.USER_ID === usersLiked[i]) {
           hasLiked = true;
-          this.article.likes -= 1;
           usersLiked.splice(i, 1);
         }
       }
 
       if (hasLiked === false) {
-        this.article.likes += 1;
         usersLiked.push(constants.USER_ID);
       }
 
       let article = new FormData();
       article.append("id", this.article._id);
       article.append("name", this.article.name);
-      article.append("likes", this.article.likes);
       article.append("usersLiked", usersLiked);
 
       this.$serve.putData(`/api/articles/${article.get("id")}`, article)
