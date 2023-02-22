@@ -125,7 +125,9 @@
                   <li>
                     <i>({{ item.option }})</i>
                   </li>
-                  <li class="black">{{ item.quantity }}x {{ item.price }}€</li>
+                  <li class="black">
+                    {{ item.quantity }}x {{ item.price }}€
+                  </li>
                 </ul>
               </a>
             </li>
