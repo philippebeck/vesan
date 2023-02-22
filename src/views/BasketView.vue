@@ -98,8 +98,7 @@
           <!-- Order Products -->
           <div v-if="checkRole('user')"
             id="paypal"
-            class="mar-lg"
-            @click="orderProducts()">
+            class="mar-lg">
           </div>
 
           <BtnElt v-else
@@ -287,15 +286,58 @@ export default {
         currency: constants.CURRENCY_ISO 
       })
         .then((paypal) => {
-            paypal
-                .Buttons()
-                .render("#paypal")
-                .catch((error) => {
-                    console.error("failed to render the PayPal Buttons", error);
+          paypal
+            .Buttons({
+              style: {
+                color:  "blue",
+                shape:  "pill",
+                label:  "pay"
+              },
+
+              createOrder : function (actions) {
+                return actions.order.create({
+
+                  purchase_units : [{
+                    amount : {
+                      value : this.total,
+                      currency_code : constants.CURRENCY_ISO
+                    }
+                  }]
                 });
+              },
+
+              onApprove : function (actions) {
+                return actions.order.capture().then(
+            
+                  function(details) {
+                    alert("Transaction validated by " + 
+                      details.payer.name.given_name + 
+                      " " + 
+                      details.payer.name.surname
+                    );
+
+                    this.orderProducts();
+                  }
+                );
+              },
+
+              onCancel : function () {
+                alert("Canceled transaction !");
+              },
+
+              onError: function(err) {
+                alert("Invalid transaction !");
+                throw new Error(err);
+              }
+            })
+            .render("#paypal")
+
+            .catch((error) => {
+              console.error("Failed to render the PayPal Buttons", error);
+            });
         })
         .catch((error) => {
-            console.error("failed to load the PayPal JS SDK script", error);
+          console.error("Failed to load the PayPal JS SDK script", error);
         });
     },
 
