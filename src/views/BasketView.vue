@@ -95,28 +95,12 @@
             </b>
           </p>
 
-          <!-- Clear Basket -->
-          <BtnElt type="button"
-            @click="clearBasket()"
-            class="btn-red"
-            content="Clear"
-            :title="constants.BASKET_CLEAR">
-            <template #btn>
-              <i class="fa-solid fa-trash-can fa-lg"></i>
-            </template>
-          </BtnElt>
-
           <!-- Order Products -->
-          <BtnElt v-if="checkRole('user')"
-            type="button"
-            @click="orderProducts()"
-            class="btn-green"
-            content="Order"
-            :title="constants.BASKET_ORDER">
-            <template #btn>
-              <i class="fa-solid fa-cash-register fa-lg"></i>
-            </template>
-          </BtnElt>
+          <div v-if="checkRole('user')"
+            id="paypal"
+            class="mar-lg"
+            @click="orderProducts()">
+          </div>
 
           <BtnElt v-else
             href="/login"
@@ -127,6 +111,17 @@
               <i class="fa-solid fa-cash-register fa-lg"></i>
             </template>
           </BtnElt>
+
+          <!-- Clear Basket -->
+          <BtnElt type="button"
+            @click="clearBasket()"
+            class="btn-red"
+            content="Clear"
+            :title="constants.BASKET_CLEAR">
+            <template #btn>
+              <i class="fa-solid fa-trash-can fa-lg"></i>
+            </template>
+          </BtnElt>
       </form>
     </template>
   </CardElt>
@@ -135,6 +130,7 @@
 <script>
 import { mapState } from "vuex"
 import constants from "/constants"
+import { loadScript } from "@paypal/paypal-js";
 
 export default {
   name: "BasketView",
@@ -159,6 +155,7 @@ export default {
         this.getBasket();
         this.setOrder();
         this.calculateTotal();
+        this.setPaypal();
       })
       .catch(err => { console.log(err) });
   },
@@ -281,13 +278,25 @@ export default {
     },
 
     /**
-     * CLEAR BASKET
+     * SET PAYPAL
      */
-    clearBasket() {
-      if (confirm(constants.CONFIRM_BASKET) === true) {
-        localStorage.removeItem("basket");
-        this.$router.go();
-      }
+    setPaypal() {
+      loadScript({ 
+        "client-id": constants.PAYPAL_ID, 
+        "data-namespace": "paypal_sdk",
+        currency: constants.CURRENCY_ISO 
+      })
+        .then((paypal) => {
+            paypal
+                .Buttons()
+                .render("#paypal")
+                .catch((error) => {
+                    console.error("failed to render the PayPal Buttons", error);
+                });
+        })
+        .catch((error) => {
+            console.error("failed to load the PayPal JS SDK script", error);
+        });
     },
 
     /**
@@ -310,6 +319,16 @@ export default {
           this.$router.go();
         })
         .catch(err => { console.log(err) });
+    },
+
+    /**
+     * CLEAR BASKET
+     */
+    clearBasket() {
+      if (confirm(constants.CONFIRM_BASKET) === true) {
+        localStorage.removeItem("basket");
+        this.$router.go();
+      }
     }
   }
 }
