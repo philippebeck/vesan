@@ -21,7 +21,6 @@
             <FieldElt :id="'text-' + slotProps.item._id"
               type="textarea"
               v-model:value="slotProps.item.text"
-              @change="setModerate(slotProps.item._id)"
               @keyup.enter="updateComment(slotProps.item._id)"
               itemprop="text"
               :info="constants.UPDATE_TEXT"
@@ -110,18 +109,6 @@ export default {
 
   methods: {
     /**
-     * SET MODERATE
-     * @param {string} id 
-     */
-    setModerate(id) {
-      for (let comment of this.comments) {
-        if (comment._id === id) {
-          comment.moderate = "false";
-        }
-      }
-    },
-
-    /**
      * UPDATE COMMENT
      * @param {string} id 
      */
@@ -134,7 +121,7 @@ export default {
 
             commentData.append("id", id);
             commentData.append("text", comment.text);
-            commentData.append("moderate", comment.moderate);
+            commentData.append("moderate", "false");
             commentData.append("updated", Date.now());
 
             this.$serve.putData(`/api/comments/${id}`, commentData)

@@ -21,7 +21,6 @@
             <FieldElt :id="'text-' + slotProps.item._id"
               type="textarea"
               v-model:value="slotProps.item.text"
-              @change="setModerate(slotProps.item._id)"
               @keyup.enter="updateReview(slotProps.item._id)"
               itemprop="text"
               :info="constants.UPDATE_TEXT"
@@ -30,7 +29,6 @@
             <FieldElt :id="'score-' + slotProps.item._id"
               type="number"
               v-model:value="slotProps.item.score"
-              @change="setModerate(slotProps.item._id)"
               @keyup.enter="updateReview(slotProps.item._id)"
               :info="constants.UPDATE_SCORE"
               :min="0"
@@ -130,18 +128,6 @@ export default {
 
   methods: {
     /**
-     * SET MODERATE
-     * @param {string} id 
-     */
-    setModerate(id) {
-      for (let review of this.reviews) {
-        if (review._id === id) {
-          review.moderate = "false";
-        }
-      }
-    },
-
-    /**
      * UPDATE REVIEW
      * @param {string} id 
      */
@@ -156,7 +142,7 @@ export default {
             reviewData.append("id", id);
             reviewData.append("text", review.text);
             reviewData.append("score", review.score);
-            reviewData.append("moderate", review.moderate);
+            reviewData.append("moderate", "false");
             reviewData.append("updated", Date.now());
 
             this.$serve.putData(`/api/reviews/${id}`, reviewData)
