@@ -12,7 +12,7 @@
     <template #body>
       <form method="post">
         <TableElt :items="reviews">
-          <template #head>up/del</template>
+          <template #head>mod/del</template>
 
           <!-- Id -->
           <template #cell-_id="slotProps">
@@ -67,10 +67,10 @@
             <!-- Moderate -->
             <BtnElt type="button"
               @click="moderateReview(reviews[slotProps.index]._id)" 
-              class="btn-sky"
+              class="btn-green"
               :title="'Moderate review #' + reviews[slotProps.index]._id">
               <template #btn>
-                <i class="fa-solid fa-edit"></i>
+                <i class="fa-solid fa-spell-check"></i>
               </template>
             </BtnElt>
 
