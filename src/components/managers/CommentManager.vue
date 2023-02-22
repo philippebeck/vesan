@@ -22,11 +22,6 @@
             </a>
           </template>
 
-          <!-- Text -->
-          <template #cell-text="slotProps">
-            {{ comments[slotProps.index].text }}
-          </template>
-
           <!-- Article -->
           <template #cell-article="slotProps">
             <a :href="`/article/${comments[slotProps.index].article}`">
@@ -47,7 +42,7 @@
               type="select"
               :list="constants.IS_MODERATE"
               v-model:value="getComments()[slotProps.index].moderate"
-              @keyup.enter="updateComment(comments[slotProps.index]._id)"
+              @keyup.enter="moderateComment(comments[slotProps.index]._id)"
               :info="constants.UPDATE_MODERATE"/>
           </template>
 
@@ -63,11 +58,11 @@
 
           <template #body="slotProps">
 
-            <!-- Update -->
+            <!-- Moderate -->
             <BtnElt type="button"
-              @click="updateComment(comments[slotProps.index]._id)" 
+              @click="moderateComment(comments[slotProps.index]._id)" 
               class="btn-sky"
-              :title="'Update comment #' + comments[slotProps.index]._id">
+              :title="'Moderate comment #' + comments[slotProps.index]._id">
               <template #btn>
                 <i class="fa-solid fa-edit"></i>
               </template>
@@ -114,18 +109,6 @@ export default {
     getComments() {
       return this.comments;
     },
-
-    /**
-     * SET MODERATE
-     * @param {string} id 
-     */
-    setModerate(id) {
-      for (let comment of this.comments) {
-        if (comment._id === id) {
-          comment.moderate = "false";
-        }
-      }
-    },
     
     /**
      * GET ARTICLE NAME
@@ -146,28 +129,23 @@ export default {
     },
 
     /**
-     * UPDATE COMMENT
+     * MODERATE COMMENT
      * @param {string} id 
      */
-    updateComment(id) {
+    moderateComment(id) {
       for (let comment of this.comments) {
         if (comment._id === id) {
 
-          if (this.$serve.checkText(comment.text)) {
-            let commentData = new FormData();
+          let commentData = new FormData();
+          commentData.append("id", id);
+          commentData.append("moderate", comment.moderate);
 
-            commentData.append("id", id);
-            commentData.append("text", comment.text);
-            commentData.append("moderate", comment.moderate);
-            commentData.append("updated", Date.now());
-
-            this.$serve.putData(`/api/comments/${id}`, commentData)
-              .then(() => {
-                alert(`Comment #${id} updated !`);
-                this.$router.go();
-              })
-              .catch(err => { console.log(err) });
-          }
+          this.$serve.putData(`/api/comments/${id}`, commentData)
+            .then(() => {
+              alert(`Comment #${id} moderated !`);
+              this.$router.go();
+            })
+            .catch(err => { console.log(err) });
         }
       }
     },
