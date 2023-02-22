@@ -116,9 +116,9 @@ Available Views *(UNDER CONSTRUCTION)* :
 -   **BlogView** *(Blog with articles list)*  
 -   **ArticleView** *(Article of the blog)*  
 -   **ContactView** *(Contact)*  
--   **BasketView** *(Basket & orders)*  
+-   **BasketView** *(Basket & order process)*  
 -   **LoginView** *(Login with connectors)*  
--   **ProfileView** *(User profile)*  
+-   **ProfileView** *(User profile & user orders)*  
 -   **AdminView** *(Admin with managers)*  
 -   **LinkView** *(Links list)*  
 -   **LegalView** *(Legal notice)*  
