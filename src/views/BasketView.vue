@@ -16,6 +16,14 @@
             Total
           </template>
 
+          <!-- Product Id -->
+          <template #cell-id="slotProps">
+            <a :href="`/product/${sale[slotProps.index].id}`">
+              #{{ slotProps.index + 1 }}
+              ({{ slotProps.item.id }})
+            </a>
+          </template>
+
           <!-- Product Name -->
           <template #cell-name="slotProps">
             <a :href="`/product/${sale[slotProps.index].id}`">
@@ -67,7 +75,7 @@
 
             <!-- Delete Item -->
             <BtnElt type="button"
-              @click="deleteItem(`${slotProps.item.name}`, `${slotProps.item.option}`)"
+              @click="deleteItem(`${slotProps.item.id}`, `${slotProps.item.option}`)"
               class="btn-orange"
               content="Remove"
               :title="`Remove ${slotProps.item.name}`">
@@ -189,14 +197,15 @@ export default {
           let item = this.basket[j];
 
           if (product._id === item.id) {
-            let thing = {};
+            let order = {};
             let sale  = {};
 
-            thing.name      = product.name;
-            thing.image     = product.image;
-            thing.option    = item.option;
-            thing.quantity  = Number(item.quantity);
-            thing.price     = Number(product.price);
+            order.id        = item.id;
+            order.name      = product.name;
+            order.image     = product.image;
+            order.option    = item.option;
+            order.quantity  = Number(item.quantity);
+            order.price     = Number(product.price);
 
             sale.id       = item.id;
             sale.name     = product.name;
@@ -204,7 +213,7 @@ export default {
             sale.quantity = Number(item.quantity);
             sale.price    = Number(product.price);
 
-            this.order.push(thing);
+            this.order.push(order);
             this.sale.push(sale);
           }
         }
@@ -236,20 +245,20 @@ export default {
 
     /**
      * DELETE ITEM
-     * @param {string} name 
+     * @param {string} id 
      * @param {string} option 
      */
-    deleteItem(name, option) {
+    deleteItem(id, option) {
       for (let i = 0; i < this.order.length; i++) {
         let element = this.order[i];
 
-        if (element.name === name && element.option === option) {
+        if (element.id === id && element.option === option) {
           this.order.splice(i, 1);
 
           for (let j = 0; j < this.basket.length; j++) {
             let item = this.basket[j];
 
-            if (item.name === element.name && item.option === element.option) {
+            if (item.id === id && item.option === option) {
               this.basket.splice(j, 1);
             }
           }
@@ -285,7 +294,7 @@ export default {
      * ORDER PRODUCTS
      */
     orderProducts() {
-      let order     = new FormData();
+      let order = new FormData();
 
       order.append("products", JSON.stringify(this.sale));
       order.append("total", this.total);

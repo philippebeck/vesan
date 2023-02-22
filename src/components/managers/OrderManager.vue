@@ -25,15 +25,19 @@
             <ul>
               <li v-for="(item, index) in orders[slotProps.index].products"
                 :key="index">
-                <ul :title="item.id">
-                  <li>
-                    <b>{{ item.name }}</b>
-                  </li>
-                  <li>
-                    <i>({{ item.option }})</i>
-                  </li>
-                  <li class="black">{{ item.quantity }}x {{ item.price }}€</li>
-                </ul>
+                <a :href="`/product/${item.id}`">
+                  <ul :title="`Go to ${item.name} page`">
+                    <li>
+                      <b>{{ item.name }}</b>
+                    </li>
+                    <li>
+                      <i>({{ item.option }})</i>
+                    </li>
+                    <li class="black">
+                      {{ item.quantity }}x {{ item.price }}€
+                    </li>
+                  </ul>
+                </a>
               </li>
             </ul>
           </template>
@@ -54,7 +58,7 @@
               type="select"
               :list="constants.CATS_ORDER"
               v-model:value="getOrders()[slotProps.index].status"
-              @keyup.enter="updateOrder(orders[slotProps.index]._id)"
+              @keyup.enter="updateStatus(orders[slotProps.index]._id)"
               :info="constants.UPDATE_STATUS"/>
           </template>
 
@@ -78,11 +82,11 @@
 
           <!-- Update -->
           <BtnElt type="button"
-              @click="updateOrder(orders[slotProps.index]._id)" 
-              class="btn-sky"
-              :title="'Update order #' + orders[slotProps.index]._id">
+              @click="updateStatus(orders[slotProps.index]._id)" 
+              class="btn-green"
+              :title="'Update status of order #' + orders[slotProps.index]._id">
               <template #btn>
-                <i class="fa-solid fa-edit"></i>
+                <i class="fa-regular fa-calendar-check"></i>
               </template>
             </BtnElt>
 
@@ -137,10 +141,10 @@ export default {
     },
 
     /**
-     * UPDATE ORDER
+     * UPDATE ORDER STATUS
      * @param {string} id 
      */
-    updateOrder(id) {
+    updateStatus(id) {
       for (let order of this.orders) {
         if (order._id === id) {
           let orderData = new FormData();
@@ -152,7 +156,7 @@ export default {
 
           this.$serve.putData(`/api/orders/${id}`, orderData)
             .then(() => {
-              alert(`Order #${id} updated !`);
+              alert(`Status of order #${id} updated !`);
               this.$router.go();
             })
             .catch(err => { console.log(err) });

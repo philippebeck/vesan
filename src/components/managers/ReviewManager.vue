@@ -12,7 +12,7 @@
     <template #body>
       <form method="post">
         <TableElt :items="reviews">
-          <template #head>up/del</template>
+          <template #head>mod/del</template>
 
           <!-- Id -->
           <template #cell-_id="slotProps">
@@ -20,11 +20,6 @@
               <b>#{{ slotProps.index + 1 }}</b>
               ({{ reviews[slotProps.index]._id }})
             </a>
-          </template>
-
-          <!-- Text -->
-          <template #cell-text="slotProps">
-            {{ reviews[slotProps.index].text }}
           </template>
 
           <!-- Score -->
@@ -53,7 +48,7 @@
               type="select"
               :list="constants.IS_MODERATE"
               v-model:value="getReviews()[slotProps.index].moderate"
-              @keyup.enter="updateReview(reviews[slotProps.index]._id)"
+              @keyup.enter="moderateReview(reviews[slotProps.index]._id)"
               :info="constants.UPDATE_MODERATE"/>
           </template>
 
@@ -69,13 +64,13 @@
 
           <template #body="slotProps">
 
-            <!-- Update -->
+            <!-- Moderate -->
             <BtnElt type="button"
-              @click="updateReview(reviews[slotProps.index]._id)" 
-              class="btn-sky"
-              :title="'Update review #' + reviews[slotProps.index]._id">
+              @click="moderateReview(reviews[slotProps.index]._id)" 
+              class="btn-green"
+              :title="'Moderate review #' + reviews[slotProps.index]._id">
               <template #btn>
-                <i class="fa-solid fa-edit"></i>
+                <i class="fa-solid fa-spell-check"></i>
               </template>
             </BtnElt>
 
@@ -122,18 +117,6 @@ export default {
     },
 
     /**
-     * SET MODERATE
-     * @param {string} id 
-     */
-    setModerate(id) {
-      for (let review of this.reviews) {
-        if (review._id === id) {
-          review.moderate = "false";
-        }
-      }
-    },
-
-    /**
      * GET PRODUCT NAME
      * @param {string} id 
      * @returns
@@ -152,30 +135,23 @@ export default {
     },
 
     /**
-     * UPDATE REVIEW
+     * MODERATE REVIEW
      * @param {string} id 
      */
-    updateReview(id) {
+    moderateReview(id) {
       for (let review of this.reviews) {
         if (review._id === id) {
 
-          if (this.$serve.checkText(review.text) &&
-            review.score !== null) {
-            let reviewData = new FormData();
+          let reviewData = new FormData();
+          reviewData.append("id", id);
+          reviewData.append("moderate", review.moderate);
 
-            reviewData.append("id", id);
-            reviewData.append("text", review.text);
-            reviewData.append("score", review.score);
-            reviewData.append("moderate", review.moderate);
-            reviewData.append("updated", Date.now());
-
-            this.$serve.putData(`/api/reviews/${id}`, reviewData)
-              .then(() => {
-                alert(`Review #${id} updated !`);
-                this.$router.go();
-              })
-              .catch(err => { console.log(err) });
-          }
+          this.$serve.putData(`/api/reviews/${id}`, reviewData)
+            .then(() => {
+              alert(`Review #${id} moderated !`);
+              this.$router.go();
+            })
+            .catch(err => { console.log(err) });
         }
       }
     },

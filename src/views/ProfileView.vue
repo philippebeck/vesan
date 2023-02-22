@@ -125,7 +125,9 @@
                   <li>
                     <i>({{ item.option }})</i>
                   </li>
-                  <li class="black">{{ item.quantity }}x {{ item.price }}€</li>
+                  <li class="black">
+                    {{ item.quantity }}x {{ item.price }}€
+                  </li>
                 </ul>
               </a>
             </li>
@@ -135,16 +137,6 @@
         <!-- Total -->
         <template #cell-total="slotProps">
           <b>{{ orders[slotProps.index].total }} €</b>
-        </template>
-
-        <!-- Payment -->
-        <template #cell-payment="slotProps">
-          <b>{{ orders[slotProps.index].payment }}</b>
-        </template>
-
-        <!-- Status -->
-        <template #cell-status="slotProps">
-          <b>{{ orders[slotProps.index].status }}</b>
         </template>
 
         <!-- Created -->
