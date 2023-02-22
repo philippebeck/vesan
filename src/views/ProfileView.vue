@@ -137,16 +137,6 @@
           <b>{{ orders[slotProps.index].total }} €</b>
         </template>
 
-        <!-- Payment -->
-        <template #cell-payment="slotProps">
-          <b>{{ orders[slotProps.index].payment }}</b>
-        </template>
-
-        <!-- Status -->
-        <template #cell-status="slotProps">
-          <b>{{ orders[slotProps.index].status }}</b>
-        </template>
-
         <!-- Created -->
         <template #cell-created="slotProps">
           {{ new Date(orders[slotProps.index].created).toLocaleString() }}
