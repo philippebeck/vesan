@@ -92,7 +92,6 @@ export default {
       name: "",
       email: "",
       image:"",
-      alt:"",
       pass: ""
     }
   },
@@ -148,7 +147,6 @@ export default {
       user.append("name", this.name);
       user.append("email", this.email);
       user.append("image", image);
-      user.append("alt", this.name);
       user.append("pass", this.pass);
       user.append("role", "user");
       user.append("created", Date.now());
