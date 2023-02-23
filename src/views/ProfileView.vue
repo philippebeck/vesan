@@ -268,6 +268,9 @@ export default {
       if (confirm(`Delete ${userName} ?`) === true) {
         this.$serve.deleteData(`/api/users/${this.user._id}`)
           .then(() => {
+            localStorage.removeItem("userId");
+            localStorage.removeItem("userToken");
+
             alert(userName + " deleted !");
             this.$router.go();
           })
