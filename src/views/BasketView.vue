@@ -364,6 +364,7 @@ export default {
       this.$serve.postData("/api/orders", order)
         .then(() => {
           alert(constants.ALERT_ORDER);
+          localStorage.removeItem("basket");
           this.$router.go();
         })
         .catch(err => { console.log(err) });
