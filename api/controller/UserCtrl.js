@@ -36,20 +36,18 @@ exports.checkCredentials = (email, pass, res) => {
  * @param {string} name 
  * @param {string} email 
  * @param {string} image 
- * @param {string} alt 
  * @param {string} pass 
  * @param {string} role 
  * @param {string} created 
  * @param {string} updated 
  * @returns 
  */
-exports.getUser = (name, email, image, alt, pass, role, created, updated) => {
+exports.getUser = (name, email, image, pass, role, created, updated) => {
 
   return {
     name: name,
     email: email,
     image: image,
-    alt: alt,
     pass: pass,
     role: role,
     created: created,
@@ -114,7 +112,6 @@ exports.readAvatar = (req, res) => {
 
       avatar.name   = user.name;
       avatar.image  = user.image;
-      avatar.alt    = user.alt;
       avatar.role   = user.role;
 
       res.status(200).json(avatar) 
@@ -144,7 +141,7 @@ exports.createUser = (req, res, next) => {
       .hash(fields.pass, 10)
       .then((hash) => {
         let user = new UserModel(this.getUser(
-          fields.name, fields.email, image, fields.alt, hash, fields.role, fields.created, fields.updated
+          fields.name, fields.email, image, hash, fields.role, fields.created, fields.updated
         ));
 
         fs.unlink(USERS_IMG + files.image.newFilename, () => {
@@ -243,7 +240,7 @@ exports.forgotPass = (req, res, next) => {
           .hash(pass, 10)
           .then((hash) => {
             let newUser = this.getUser(
-              user.name, user.email, user.image, user.alt, hash, user.role, user.created, user.updated
+              user.name, user.email, user.image, hash, user.role, user.created, user.updated
             );
 
             UserModel
@@ -347,7 +344,7 @@ exports.updateUser = (req, res, next) => {
       .hash(fields.pass, 10)
       .then((hash) => {
         let user = this.getUser(
-          fields.name, fields.email, image, fields.alt, hash, fields.role, fields.created, fields.updated
+          fields.name, fields.email, image, hash, fields.role, fields.created, fields.updated
         );
 
         UserModel
