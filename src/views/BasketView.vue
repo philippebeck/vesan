@@ -67,11 +67,10 @@
 
           <!-- Product Total -->
           <template #body="slotProps">
-            <p>
-              <b>
-                {{ slotProps.item.price * slotProps.item.quantity }} €
-              </b>
-            </p>
+            <b>
+              {{ slotProps.item.price * slotProps.item.quantity }} €
+            </b>
+            <br>
 
             <!-- Delete Item -->
             <BtnElt type="button"
@@ -87,9 +86,9 @@
           </TableElt>
 
           <!-- Basket Total -->
-          <p class="bord bord-violet black container-60sm-50md">
+          <p class="bord bord-violet container-60sm-50md">
             {{ constants.BASKET_TOTAL }}
-            <b>
+            <b class="black">
               {{ total }}
               {{ constants.CURRENCY_SYMBOL }}
             </b>
@@ -103,7 +102,7 @@
 
           <BtnElt v-else
             href="/login"
-            class="btn-green"
+            class="btn-green width-sm"
             content="Order"
             :title="constants.BASKET_LOGIN">
             <template #btn>
@@ -114,7 +113,7 @@
           <!-- Clear Basket -->
           <BtnElt type="button"
             @click="clearBasket()"
-            class="btn-red"
+            class="btn-red width-sm"
             content="Clear"
             :title="constants.BASKET_CLEAR">
             <template #btn>
@@ -154,7 +153,7 @@ export default {
         this.getBasket();
         this.setOrder();
         this.calculateTotal();
-        this.setPaypal();
+        this.setPaypal(this.total, this.orderProducts);
       })
       .catch(err => { console.log(err) });
   },
@@ -278,47 +277,43 @@ export default {
 
     /**
      * SET PAYPAL
+     * @param {number} total
+     * @param {function} orderProducts
      */
-    setPaypal() {
+    setPaypal(total, orderProducts) {
       loadScript({ 
         "client-id": constants.PAYPAL_ID, 
         "data-namespace": "paypal_sdk",
         currency: constants.CURRENCY_ISO 
       })
+
         .then((paypal) => {
           paypal
             .Buttons({
               style: {
-                color:  "blue",
-                shape:  "pill",
-                label:  "pay"
+                color: "blue",
+                shape: "pill",
+                label: "paypal"
               },
 
-              createOrder : function (actions) {
+              createOrder: function(data, actions) {
                 return actions.order.create({
-
-                  purchase_units : [{
-                    amount : {
-                      value : this.total,
-                      currency_code : constants.CURRENCY_ISO
+                  purchase_units: [{ 
+                    "amount": {
+                      "currency_code": constants.CURRENCY_ISO,
+                      "value": total
                     }
                   }]
                 });
               },
 
-              onApprove : function (actions) {
-                return actions.order.capture().then(
-            
-                  function(details) {
-                    alert("Transaction validated by " + 
-                      details.payer.name.given_name + 
-                      " " + 
-                      details.payer.name.surname
-                    );
-
-                    this.orderProducts();
-                  }
-                );
+              onApprove: function(data, actions) {
+                return actions.order.capture()
+                  .then((orderData) => {
+                      alert("Status of transaction #" + orderData.id + " : " + orderData.status);
+                      orderProducts(orderData.id);
+                    }
+                  );
               },
 
               onCancel : function () {
@@ -330,12 +325,14 @@ export default {
                 throw new Error(err);
               }
             })
+
             .render("#paypal")
 
             .catch((error) => {
               console.error("Failed to render the PayPal Buttons", error);
             });
         })
+
         .catch((error) => {
           console.error("Failed to load the PayPal JS SDK script", error);
         });
@@ -343,13 +340,14 @@ export default {
 
     /**
      * ORDER PRODUCTS
+     * @param {string} orderId
      */
-    orderProducts() {
+    orderProducts(orderId) {
       let order = new FormData();
 
       order.append("products", JSON.stringify(this.sale));
       order.append("total", this.total);
-      order.append("payment", "cb");
+      order.append("payment", orderId);
       order.append("status", "Pending");
       order.append("user", constants.USER_ID);
       order.append("created", Date.now());
