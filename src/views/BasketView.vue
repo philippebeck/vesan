@@ -10,7 +10,7 @@
     </template>
 
     <template #body>
-      <form>
+      <form v-if="basket[0] !== undefined">
         <TableElt :items="order">
           <template #head>
             Total
@@ -121,6 +121,8 @@
             </template>
           </BtnElt>
       </form>
+
+      <b v-else>Your basket is empty !</b>
     </template>
   </CardElt>
 </template>
@@ -151,9 +153,12 @@ export default {
       .then(res => { 
         this.products = res;
         this.getBasket();
-        this.setOrder();
-        this.calculateTotal();
-        this.setPaypal(this.getTotal, this.orderProducts);
+
+        if (this.basket[0] !== undefined) {
+          this.setOrder();
+          this.calculateTotal();
+          this.setPaypal(this.getTotal, this.orderProducts);
+        }
       })
       .catch(err => { console.log(err) });
   },
