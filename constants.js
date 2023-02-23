@@ -22,6 +22,8 @@ export default {
   PASS_MAX : 50,
   PASS_MIN : 8,
 
+  PAYPAL_ID : "your-client-id",
+
   TEXT_MIN : 8,
   TEXT_MAX : 5000,
 

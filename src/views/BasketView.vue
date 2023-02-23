@@ -67,11 +67,10 @@
 
           <!-- Product Total -->
           <template #body="slotProps">
-            <p>
-              <b>
-                {{ slotProps.item.price * slotProps.item.quantity }} €
-              </b>
-            </p>
+            <b>
+              {{ slotProps.item.price * slotProps.item.quantity }} €
+            </b>
+            <br>
 
             <!-- Delete Item -->
             <BtnElt type="button"
@@ -87,44 +86,38 @@
           </TableElt>
 
           <!-- Basket Total -->
-          <p class="bord bord-violet black container-60sm-50md">
+          <p class="bord bord-violet container-60sm-50md">
             {{ constants.BASKET_TOTAL }}
-            <b>
+            <b class="black">
               {{ total }}
               {{ constants.CURRENCY_SYMBOL }}
             </b>
           </p>
 
-          <!-- Clear Basket -->
-          <BtnElt type="button"
-            @click="clearBasket()"
-            class="btn-red"
-            content="Clear"
-            :title="constants.BASKET_CLEAR">
-            <template #btn>
-              <i class="fa-solid fa-trash-can fa-lg"></i>
-            </template>
-          </BtnElt>
-
           <!-- Order Products -->
-          <BtnElt v-if="checkRole('user')"
-            type="button"
-            @click="orderProducts()"
-            class="btn-green"
-            content="Order"
-            :title="constants.BASKET_ORDER">
-            <template #btn>
-              <i class="fa-solid fa-cash-register fa-lg"></i>
-            </template>
-          </BtnElt>
+          <div v-if="checkRole('user')"
+            id="paypal"
+            class="mar-lg">
+          </div>
 
           <BtnElt v-else
             href="/login"
-            class="btn-green"
+            class="btn-green width-sm"
             content="Order"
             :title="constants.BASKET_LOGIN">
             <template #btn>
               <i class="fa-solid fa-cash-register fa-lg"></i>
+            </template>
+          </BtnElt>
+
+          <!-- Clear Basket -->
+          <BtnElt type="button"
+            @click="clearBasket()"
+            class="btn-red width-sm"
+            content="Clear"
+            :title="constants.BASKET_CLEAR">
+            <template #btn>
+              <i class="fa-solid fa-trash-can fa-lg"></i>
             </template>
           </BtnElt>
       </form>
@@ -135,6 +128,7 @@
 <script>
 import { mapState } from "vuex"
 import constants from "/constants"
+import { loadScript } from "@paypal/paypal-js";
 
 export default {
   name: "BasketView",
@@ -159,6 +153,7 @@ export default {
         this.getBasket();
         this.setOrder();
         this.calculateTotal();
+        this.setPaypal(this.total, this.orderProducts);
       })
       .catch(err => { console.log(err) });
   },
@@ -281,24 +276,78 @@ export default {
     },
 
     /**
-     * CLEAR BASKET
+     * SET PAYPAL
+     * @param {number} total
+     * @param {function} orderProducts
      */
-    clearBasket() {
-      if (confirm(constants.CONFIRM_BASKET) === true) {
-        localStorage.removeItem("basket");
-        this.$router.go();
-      }
+    setPaypal(total, orderProducts) {
+      loadScript({ 
+        "client-id": constants.PAYPAL_ID, 
+        "data-namespace": "paypal_sdk",
+        currency: constants.CURRENCY_ISO 
+      })
+
+        .then((paypal) => {
+          paypal
+            .Buttons({
+              style: {
+                color: "blue",
+                shape: "pill",
+                label: "paypal"
+              },
+
+              createOrder: function(data, actions) {
+                return actions.order.create({
+                  purchase_units: [{ 
+                    "amount": {
+                      "currency_code": constants.CURRENCY_ISO,
+                      "value": total
+                    }
+                  }]
+                });
+              },
+
+              onApprove: function(data, actions) {
+                return actions.order.capture()
+                  .then((orderData) => {
+                      alert("Status of transaction #" + orderData.id + " : " + orderData.status);
+                      orderProducts(orderData.id);
+                    }
+                  );
+              },
+
+              onCancel : function () {
+                alert("Canceled transaction !");
+              },
+
+              onError: function(err) {
+                alert("Invalid transaction !");
+                throw new Error(err);
+              }
+            })
+
+            .render("#paypal")
+
+            .catch((error) => {
+              console.error("Failed to render the PayPal Buttons", error);
+            });
+        })
+
+        .catch((error) => {
+          console.error("Failed to load the PayPal JS SDK script", error);
+        });
     },
 
     /**
      * ORDER PRODUCTS
+     * @param {string} orderId
      */
-    orderProducts() {
+    orderProducts(orderId) {
       let order = new FormData();
 
       order.append("products", JSON.stringify(this.sale));
       order.append("total", this.total);
-      order.append("payment", "cb");
+      order.append("payment", orderId);
       order.append("status", "Pending");
       order.append("user", constants.USER_ID);
       order.append("created", Date.now());
@@ -310,6 +359,16 @@ export default {
           this.$router.go();
         })
         .catch(err => { console.log(err) });
+    },
+
+    /**
+     * CLEAR BASKET
+     */
+    clearBasket() {
+      if (confirm(constants.CONFIRM_BASKET) === true) {
+        localStorage.removeItem("basket");
+        this.$router.go();
+      }
     }
   }
 }
