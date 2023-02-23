@@ -48,7 +48,7 @@
           <!-- User Image -->
           <template #item-3>
             <MediaElt :src="'/img/thumbnails/users/' + user.image"
-              :alt="user.alt" />
+              :alt="user.name" />
             <FieldElt id="user-image"
               v-model:value="image"
               :info="constants.CREATE_IMAGE"
@@ -268,6 +268,9 @@ export default {
       if (confirm(`Delete ${userName} ?`) === true) {
         this.$serve.deleteData(`/api/users/${this.user._id}`)
           .then(() => {
+            localStorage.removeItem("userId");
+            localStorage.removeItem("userToken");
+
             alert(userName + " deleted !");
             this.$router.go();
           })

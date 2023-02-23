@@ -48,15 +48,6 @@
               :info="constants.UPDATE_IMAGE"/>
           </template>
 
-          <!-- Alt -->
-          <template #cell-alt="slotProps">
-            <FieldElt :id="'alt-' + users[slotProps.index]._id"
-              type="textarea"
-              v-model:value="getUsers()[slotProps.index].alt"
-              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"
-              :info="constants.UPDATE_ALT"/>
-          </template>
-
           <!-- Pass -->
           <template #cell-pass="slotProps">
             <FieldElt :id="'pass-' + users[slotProps.index]._id"
@@ -206,7 +197,6 @@ export default {
         user.append("id", this.users[i]._id);
         user.append("name", this.users[i].name);
         user.append("email", this.users[i].email);
-        user.append("alt", this.users[i].alt);
         user.append("role", this.users[i].role);
         user.append("pass", this.pass);
         user.append("updated", Date.now());

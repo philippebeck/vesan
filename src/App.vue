@@ -45,7 +45,7 @@
           <a href="/profile"
             :title="`${user.name} Profile`">
             <img :src="`/img/thumbnails/users/${user.image}`"
-              :alt="user.alt"
+              :alt="user.name"
               :height="40"
               :width="40"
               class="bord bord-circle">
@@ -69,7 +69,7 @@
           <a href="/profile"
             :title="`${user.name} Profile`">
             <img :src="`/img/thumbnails/users/${user.image}`"
-              :alt="user.alt"
+              :alt="user.name"
               :height="40"
               :width="40"
               class="bord bord-circle">

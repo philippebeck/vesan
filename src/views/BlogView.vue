@@ -95,7 +95,7 @@
 
                 <MediaElt :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
                   :src="`img/thumbnails/articles/${slotProps.value.image}`" 
-                  :alt="`${slotProps.value.name}`" 
+                  :alt="`${slotProps.value.alt}`" 
                   itemprop="image">
 
                   <template #figcaption>

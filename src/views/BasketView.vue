@@ -10,7 +10,7 @@
     </template>
 
     <template #body>
-      <form>
+      <form v-if="basket[0] !== undefined">
         <TableElt :items="order">
           <template #head>
             Total
@@ -53,7 +53,7 @@
             <FieldElt :id="`quantity-${slotProps.index}`"
               type="number"
               v-model:value="slotProps.item.quantity"
-              @change="updateQuantity(`${slotProps.item.name}`, `${slotProps.item.option}`)"
+              @change="updateQuantity(`${slotProps.item.id}`, `${slotProps.item.option}`)"
               :info="constants.UPDATE_QUANTITY"
               :min="1"
               :max="100">
@@ -121,6 +121,8 @@
             </template>
           </BtnElt>
       </form>
+
+      <b v-else>Your basket is empty !</b>
     </template>
   </CardElt>
 </template>
@@ -151,9 +153,12 @@ export default {
       .then(res => { 
         this.products = res;
         this.getBasket();
-        this.setOrder();
-        this.calculateTotal();
-        this.setPaypal(this.total, this.orderProducts);
+
+        if (this.basket[0] !== undefined) {
+          this.setOrder();
+          this.calculateTotal();
+          this.setPaypal(this.getTotal, this.orderProducts);
+        }
       })
       .catch(err => { console.log(err) });
   },
@@ -217,18 +222,18 @@ export default {
 
     /**
      * UPDATE QUANTITY
-     * @param {string} name 
+     * @param {string} id 
      * @param {string} option 
      */
-    updateQuantity(name, option) {
+    updateQuantity(id, option) {
       for (let i = 0; i < this.order.length; i++) {
         let element = this.order[i];
 
-        if (element.name === name && element.option === option) {
+        if (element.id === id && element.option === option) {
           for (let j = 0; j < this.basket.length; j++) {
             let item = this.basket[j];
 
-            if (item.name === element.name && item.option === element.option) {
+            if (item.id === element.id && item.option === element.option) {
               this.basket[j].quantity = Number(element.quantity);
             }
           }
@@ -276,11 +281,19 @@ export default {
     },
 
     /**
+     * GET TOTAL
+     * @returns
+     */
+    getTotal() {
+      return this.total;
+    },
+
+    /**
      * SET PAYPAL
-     * @param {number} total
+     * @param {function} getTotal
      * @param {function} orderProducts
      */
-    setPaypal(total, orderProducts) {
+    setPaypal(getTotal, orderProducts) {
       loadScript({ 
         "client-id": constants.PAYPAL_ID, 
         "data-namespace": "paypal_sdk",
@@ -301,7 +314,7 @@ export default {
                   purchase_units: [{ 
                     "amount": {
                       "currency_code": constants.CURRENCY_ISO,
-                      "value": total
+                      "value": getTotal()
                     }
                   }]
                 });
@@ -356,6 +369,7 @@ export default {
       this.$serve.postData("/api/orders", order)
         .then(() => {
           alert(constants.ALERT_ORDER);
+          localStorage.removeItem("basket");
           this.$router.go();
         })
         .catch(err => { console.log(err) });

@@ -20,10 +20,6 @@ const UserModel = mongoose.Schema(
       required: true,
       unique: true
     },
-    alt: { 
-      type: String, 
-      required: true 
-    },
     pass: { 
       type: String, 
       required: true 
