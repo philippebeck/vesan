@@ -71,7 +71,7 @@
               <BtnElt v-else 
                 href="/login"
                 class="btn-violet"
-                content="Login to write a review"
+                content="Login to review"
                 :title="`Be the first to write a Review about ${slotProps.value.name}`" />
 
               <a :href="`product/${slotProps.value._id}`"
