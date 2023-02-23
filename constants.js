@@ -30,7 +30,7 @@ export default {
   TOKEN : JSON.parse(localStorage.getItem("userToken")),
   USER_ID : JSON.parse(localStorage.getItem("userId")),
 
-  /* LISTES */
+  /* LISTS */
 
 CATS_ARTICLE : [
     "Transportation",
