@@ -32,21 +32,12 @@
 
           <!-- Text -->
           <template #item-2>
-            <FieldElt id="article-text"
-              type="textarea"
-              v-model:value="text"
-              @keyup.enter="validateNewArticle()"
-              :info="constants.CREATE_TEXT"
-              :max="5000">
-              <template #legend>
-                Text
-              </template>
-              <template #label>
-                {{ constants.LABEL_TEXT }}
-              </template>
-            </FieldElt>
+            <Editor id="article-text"
+              api-key="your-tinymce-key"
+              v-model="text"
+              @keyup.enter="validateNewArticle()"/>
           </template>
-          
+
           <!-- Image -->
           <template #item-3>
             <FieldElt id="article-image"
@@ -95,6 +86,7 @@
             </FieldElt>
           </template>
         </ListElt>
+        <br>
 
         <!-- Create Button -->
         <BtnElt type="button"
@@ -112,10 +104,14 @@
 </template>
 
 <script>
+import Editor from "@tinymce/tinymce-vue"
 import constants from "/constants"
 
 export default {
   name: "ArticleCreator",
+  components: {
+    Editor
+  },
 
   data() {
     return {
