@@ -58,9 +58,9 @@
         itemprop="image">
 
         <template #figcaption>
-          <blockquote itemprop="text"
+          <blockquote v-html="article.text"
+            itemprop="text"
             class="container width-sm bord bord-sky blue">
-            {{ article.text }}
           </blockquote>
           
           <p class="silver">
