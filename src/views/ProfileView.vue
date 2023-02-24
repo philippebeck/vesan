@@ -47,7 +47,8 @@
           
           <!-- User Image -->
           <template #item-3>
-            <MediaElt :src="'/img/thumbnails/users/' + user.image"
+            <MediaElt v-if="user.image"
+              :src="'/img/thumbnails/users/' + user.image"
               :alt="user.name" />
             <FieldElt id="user-image"
               v-model:value="image"
@@ -163,7 +164,6 @@ export default {
   data() {
     return {
       constants: {},
-      image: "",
       pass: ""
     }
   },
@@ -208,10 +208,15 @@ export default {
      */
     validateUpdatedUser() {
       if (this.$serve.checkName(this.user.name) && 
-        this.$serve.checkEmail(this.user.email) && 
-        this.$serve.checkPass(this.pass)) {
+        this.$serve.checkEmail(this.user.email)) {
 
-        this.checkUpdatedUser();
+        if (this.pass) {
+          if (this.$serve.checkPass(this.pass)) {
+            this.checkUpdatedUser();
+          }
+        } else {
+          this.checkUpdatedUser();
+        }
       }
     },
 
@@ -244,16 +249,18 @@ export default {
         image = this.user.image;
       }
 
-      user.append("id", this.user._id);
+      if (this.pass !== "") {
+        user.append("pass", this.pass);
+      }
+
       user.append("name", this.user.name);
       user.append("email", this.user.email);
       user.append("image", image);
-      user.append("pass", this.pass);
       user.append("updated", Date.now());
 
-      this.$serve.putData(`/api/users/${user.get("id")}`, user)
+      this.$serve.putData(`/api/users/${this.user._id}`, user)
         .then(() => {
-          alert(user.get("name") + " updated !");
+          alert(this.user.name + " updated !");
           this.$router.go();
         })
         .catch(err => { console.log(err) });

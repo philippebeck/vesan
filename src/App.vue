@@ -164,7 +164,7 @@
 
     <!-- Links -->
     <template #foot3>
-      <ListElt :items="['Links', 'Legal Notice']">
+      <ListElt :items="['Links', 'Legal Notice', 'Donation', 'Sponsor']">
         <template #item-1>
           <a href="/link"
             title="Find links for coding">
@@ -177,12 +177,24 @@
             Legal Notice
           </a>
         </template>
+        <template #item-3>
+          <a href="https://paypal.me/philippebeck"
+            title="Donation @Philippe Beck">
+            Donation
+          </a>
+        </template>
+        <template #item-4>
+          <a href="https://github.com/sponsors/philippebeck"
+            title="Sponsor @Philippe Beck">
+            Sponsor
+          </a>
+        </template>
       </ListElt>
     </template>
 
     <!-- Social Networks & Contributions -->
     <template #foot>
-      <ListElt :items="['GitHub', 'LinkedIn', 'Sponsor', 'Twitter', 'Medium', 'Donation', 'CodePen']">
+      <ListElt :items="['GitHub', 'LinkedIn', 'Medium', 'NPM', 'Twitter', 'CodePen']">
         <template #item-1>
           <a href="https://github.com/philippebeck"
             title="Philippe Beck @GitHub">
@@ -196,30 +208,24 @@
           </a>
         </template>
         <template #item-3>
-          <a href="https://github.com/sponsors/philippebeck"
-            title="Sponsor @Philippe Beck">
-            <i class="fa-regular fa-heart fa-lg fa-fw pink"></i>
-          </a>
-        </template>
-        <template #item-4>
-          <a href="https://twitter.com/ph_beck"
-            title="Philippe Beck @Twitter">
-            <i class="fa-brands fa-twitter fa-lg fa-fw sky"></i>
-          </a>
-        </template>
-        <template #item-5>
           <a href="https://medium.com/@philippebeck"
             title="Philippe Beck @Medium">
             <i class="fa-brands fa-medium fa-lg fa-fw green"></i>
           </a>
         </template>
-        <template #item-6>
-          <a href="https://paypal.me/philippebeck"
-            title="Donation @Philippe Beck">
-            <i class="fa-brands fa-paypal fa-lg fa-fw blue"></i>
+        <template #item-4>
+          <a href="https://www.npmjs.com/~philippebeck"
+            title="Philippe Beck @NPM">
+            <i class="fa-brands fa-npm fa-lg fa-fw red"></i>
           </a>
         </template>
-        <template #item-7>
+        <template #item-5>
+          <a href="https://twitter.com/ph_beck"
+            title="Philippe Beck @Twitter">
+            <i class="fa-brands fa-twitter fa-lg fa-fw sky"></i>
+          </a>
+        </template>
+        <template #item-6>
           <a href="https://codepen.io/philippebeck"
             title="Philippe Beck @CodePen">
             <i class="fa-brands fa-codepen fa-lg fa-fw black"></i>

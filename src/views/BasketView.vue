@@ -18,7 +18,7 @@
 
           <!-- Product Id -->
           <template #cell-id="slotProps">
-            <a :href="`/product/${sale[slotProps.index].id}`">
+            <a :href="`/product/${order[slotProps.index].id}`">
               #{{ slotProps.index + 1 }}
               ({{ slotProps.item.id }})
             </a>
@@ -26,14 +26,14 @@
 
           <!-- Product Name -->
           <template #cell-name="slotProps">
-            <a :href="`/product/${sale[slotProps.index].id}`">
+            <a :href="`/product/${order[slotProps.index].id}`">
               <strong>{{ slotProps.item.name }}</strong>
             </a>
           </template>
 
           <!-- Product Image -->
           <template #cell-image="slotProps">
-            <a :href="`/product/${sale[slotProps.index].id}`">
+            <a :href="`/product/${order[slotProps.index].id}`">
               <MediaElt :src="'img/thumbnails/products/' + slotProps.item.image"
                 :alt="slotProps.item.name"
                 :title="slotProps.item.name">
@@ -43,7 +43,7 @@
 
           <!-- Product Option -->
           <template #cell-option="slotProps">
-            <a :href="`/product/${sale[slotProps.index].id}`">
+            <a :href="`/product/${order[slotProps.index].id}`">
               <b>{{ slotProps.item.option }}</b>
             </a>
           </template>
@@ -140,7 +140,6 @@ export default {
       products: [],
       basket: [],
       order: [],
-      sale: [],
       constants: {},
       total: 0
     }
@@ -198,7 +197,6 @@ export default {
 
           if (product._id === item.id) {
             let order = {};
-            let sale  = {};
 
             order.id        = item.id;
             order.name      = product.name;
@@ -207,14 +205,7 @@ export default {
             order.quantity  = Number(item.quantity);
             order.price     = Number(product.price);
 
-            sale.id       = item.id;
-            sale.name     = product.name;
-            sale.option   = item.option;
-            sale.quantity = Number(item.quantity);
-            sale.price    = Number(product.price);
-
             this.order.push(order);
-            this.sale.push(sale);
           }
         }
       }
@@ -254,16 +245,17 @@ export default {
 
         if (element.id === id && element.option === option) {
           this.order.splice(i, 1);
-
-          for (let j = 0; j < this.basket.length; j++) {
-            let item = this.basket[j];
-
-            if (item.id === id && item.option === option) {
-              this.basket.splice(j, 1);
-            }
-          }
         }
       }
+
+      for (let i = 0; i < this.basket.length; i++) {
+        let item = this.basket[i];
+
+        if (item.id === id && item.option === option) {
+          this.basket.splice(i, 1);
+        }
+      }
+
       this.calculateTotal();
       localStorage.setItem("basket", JSON.stringify(this.basket));
     },
@@ -356,9 +348,15 @@ export default {
      * @param {string} orderId
      */
     orderProducts(orderId) {
-      let order = new FormData();
+      let order     = new FormData();
+      let products  = [];
 
-      order.append("products", JSON.stringify(this.sale));
+      for (let product of this.order) {
+        delete product.image;
+        products.push(product);
+      }
+
+      order.append("products", JSON.stringify(products));
       order.append("total", this.total);
       order.append("payment", orderId);
       order.append("status", "Pending");
@@ -370,7 +368,7 @@ export default {
         .then(() => {
           alert(constants.ALERT_ORDER);
           localStorage.removeItem("basket");
-          this.$router.go();
+          this.$router.push("/profile");
         })
         .catch(err => { console.log(err) });
     },
