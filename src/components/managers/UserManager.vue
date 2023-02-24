@@ -48,15 +48,6 @@
               :info="constants.UPDATE_IMAGE"/>
           </template>
 
-          <!-- Pass -->
-          <template #cell-pass="slotProps">
-            <FieldElt :id="'pass-' + users[slotProps.index]._id"
-              type="password"
-              v-model:value="pass"
-              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"
-              :info="constants.UPDATE_PASSWORD"/>
-          </template>
-
           <!-- Role -->
           <template #cell-role="slotProps">
             <FieldElt :id="'role-' + users[slotProps.index]._id"
@@ -114,7 +105,6 @@ export default {
 
   data() {
     return {
-      pass: "",
       constants: {}
     }
   },
@@ -141,8 +131,7 @@ export default {
         if (this.users[i]._id === id) {
 
           if (this.$serve.checkName(this.users[i].name) && 
-            this.$serve.checkEmail(this.users[i].email) && 
-            this.$serve.checkPass(this.pass)) {
+            this.$serve.checkEmail(this.users[i].email)) {
 
             this.checkUpdatedUser(i);
           }
@@ -188,22 +177,21 @@ export default {
       if (!isReferenced) {
 
         let user  = new FormData();
-        let image = document.getElementById('image-' + this.users[i]._id).files[0];
+        let image = document.getElementById(`image-${this.users[i]._id}`).files[0];
 
-        if (image !== undefined) {
-          user.append("image", image);
+        if (typeof image === "undefined") {
+          image = this.users[i].image;
         }
 
-        user.append("id", this.users[i]._id);
         user.append("name", this.users[i].name);
         user.append("email", this.users[i].email);
+        user.append("image", image);
         user.append("role", this.users[i].role);
-        user.append("pass", this.pass);
         user.append("updated", Date.now());
 
-        this.$serve.putData(`/api/users/${user.get("id")}`, user)
+        this.$serve.putData(`/api/users/${this.users[i]._id}`, user)
           .then(() => {
-            alert(user.get("name") + " updated !");
+            alert(this.users[i].name + " updated !");
             this.$router.go();
           })
           .catch(err => { console.log(err) });
