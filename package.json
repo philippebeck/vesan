@@ -14,7 +14,11 @@
     "scss",
     "node",
     "express",
-    "mongo"
+    "mongo",
+    "blog",
+    "tinymce",
+    "shop",
+    "paypal"
   ],
   "scripts": {
     "serve": "vue-cli-service serve",
