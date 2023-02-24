@@ -303,7 +303,24 @@ exports.sendMessage = (req, res, next) => {
 exports.listUsers = (req, res) => {
   UserModel
     .find()
-    .then((users) => res.status(200).json(users))
+    .then((users) => {
+      let usersList = [];
+
+      for (let user of users) {
+        let userSafe = {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          image: user.image,
+          role: user.role,
+          created: user.created,
+          updated: user.updated,
+        };
+
+        usersList.push(userSafe);
+      }
+      res.status(200).json(usersList);
+    })
     .catch((error) => res.status(400).json({ error }));
 }
 
@@ -333,25 +350,53 @@ exports.updateUser = (req, res, next) => {
       return;
     }
 
-    this.checkCredentials(fields.email, fields.pass, res);
     let image = fields.image;
 
     if (Object.keys(files).length !== 0) {
       image = this.updateImage(req.params.id, fields.name, files.image.newFilename);
     }
 
-    bcrypt
+    if (fields.pass) {
+      this.checkCredentials(fields.email, fields.pass, res);
+
+      bcrypt
       .hash(fields.pass, 10)
       .then((hash) => {
-        let user = this.getUser(
-          fields.name, fields.email, image, hash, fields.role, fields.created, fields.updated
-        );
+
+        let user = {
+          name: fields.name,
+          email: fields.email,
+          image: image,
+          pass: hash,
+          updated: fields.updated
+        }
 
         UserModel
           .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
           .then(() => res.status(200).json({ message: process.env.USER_UPDATED }))
+          .catch((error) => res.status(400).json({ error }));
       })
       .catch((error) => res.status(400).json({ error }));
+
+    } else {
+
+      if (!nem.checkEmail(fields.email)) {
+        return res.status(401).json({ message: process.env.USER_EMAIL });
+      }
+
+      let user = {
+        name: fields.name,
+        email: fields.email,
+        image: image,
+        role: fields.role,
+        updated: fields.updated
+      }
+
+      UserModel
+        .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
+        .then(() => res.status(200).json({ message: process.env.USER_UPDATED }))
+        .catch((error) => res.status(400).json({ error }));
+    }
   });
 }
 
