@@ -4,3 +4,17 @@
   --ani-serif: "Rozha One", serif;
   --ani-monospace: "Syne Mono", monospace;
 }
+
+[id="article-text"] ~ *,
+[id="product-description"] ~ * {
+  margin: auto;
+  max-width: 500px;
+  height: 500px;
+}
+
+[id*="products-"] *,
+[id*="usersLiked"] {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
