@@ -156,7 +156,10 @@ export default {
         if (this.basket[0] !== undefined) {
           this.setOrder();
           this.calculateTotal();
-          this.setPaypal(this.getTotal, this.orderProducts);
+
+          if (constants.USER_ID) {
+            this.setPaypal(this.getTotal, this.orderProducts);
+          }
         }
       })
       .catch(err => { console.log(err) });
