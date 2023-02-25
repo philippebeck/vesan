@@ -234,13 +234,18 @@ exports.forgotPass = (req, res, next) => {
       .findOne({ email: fields.email })
       .then((user) => { 
         let pass    = nem.generatePass();
-        fields.text = fields.text + pass;
+
+        fields.html = `
+          <p>${fields.text}</p>
+          <b>${pass}</b>
+        `;
 
         bcrypt
           .hash(pass, 10)
           .then((hash) => {
             let newUser = this.getUser(
-              user.name, user.email, user.image, hash, user.role, user.created, user.updated
+              user.name, user.email, user.image, hash, 
+              user.role, user.created, user.updated
             );
 
             UserModel
