@@ -40,8 +40,8 @@
         itemprop="image">
 
         <template #figcaption>
-          <p itemprop="description">
-            {{ product.description }}
+          <p v-html="product.description"
+            itemprop="description">
           </p>
           <p itemprop="offers"
             itemscope

@@ -84,8 +84,8 @@
                   itemprop="image">
 
                   <template #figcaption>
-                    <p itemprop="description">
-                      {{ slotProps.value.description.slice(0, 50) }}...
+                    <p v-html="slotProps.value.description.slice(0, 50)"
+                      itemprop="description">
                     </p>
                     <p itemprop="offers"
                       itemscope

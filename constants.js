@@ -145,8 +145,8 @@ CATS_ARTICLE : [
   FORGOT_CONFIRM : `, do you confirm sending a new password ?`,
   FORGOT_CREDENTIALS : "Wrong email or password !",
   FORGOT_EMAIL : "This email is not referenced",
-  FORGOT_SUBJECT : "New Password",
-  FORGOT_TEXT : "This is your new Password, keep it safe : ",
+  FORGOT_SUBJECT : "New password",
+  FORGOT_TEXT : "This is your new password, keep it safe : ",
 
   IMG_ARTICLE : "An image of the article must be uploaded !",
   IMG_PRODUCT : "An image of the product must be uploaded !",
