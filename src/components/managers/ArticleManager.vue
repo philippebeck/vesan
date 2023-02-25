@@ -78,7 +78,8 @@
 
           <!-- UsersLiked -->
           <template #cell-usersLiked="slotProps">
-            <ListElt :dynamic="true"
+            <ListElt :id="'usersLiked-' + articles[slotProps.index]._id"
+              :dynamic="true"
               :items="articles[slotProps.index].usersLiked"/>
           </template>
 
