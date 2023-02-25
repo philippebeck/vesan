@@ -118,7 +118,7 @@ export default {
 
         message.append("email", this.email);
         message.append("subject", this.subject);
-        message.append("text", this.text);
+        message.append("html", this.text);
 
         this.$serve.postData("/api/users/message", message)
           .then(() => {

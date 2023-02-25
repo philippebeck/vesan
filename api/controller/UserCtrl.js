@@ -233,10 +233,10 @@ exports.forgotPass = (req, res, next) => {
     UserModel
       .findOne({ email: fields.email })
       .then((user) => { 
-        let pass    = nem.generatePass();
+        let pass = nem.generatePass();
 
         fields.html = `
-          <p>${fields.text}</p>
+          <p>${fields.html}</p>
           <b>${pass}</b>
         `;
 
@@ -293,6 +293,8 @@ exports.sendMessage = (req, res, next) => {
       next(err);
       return;
     }
+
+    fields.html = `<p>${fields.html}</p>`;
 
     this.setMessage(fields, res);
   })

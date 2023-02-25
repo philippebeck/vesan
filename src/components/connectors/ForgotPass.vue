@@ -78,7 +78,7 @@ export default {
 
       message.append("email", this.email);
       message.append("subject", constants.FORGOT_SUBJECT);
-      message.append("text", constants.FORGOT_TEXT);
+      message.append("html", constants.FORGOT_TEXT);
 
       this.$serve.postData("/api/users/password", message)
         .then(() => {
