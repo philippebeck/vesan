@@ -32,10 +32,18 @@
 
           <!-- Text -->
           <template #item-2>
+            <label for="article-text">
+              Text
+            </label>
             <Editor id="article-text"
               api-key="your-tinymce-key"
               v-model="text"
-              @keyup.enter="validateNewArticle()"/>
+              @keyup.enter="validateNewArticle()"
+              :init="{
+                toolbar:
+                  'undo redo outdent indent align | \
+                  bold italic underline strikethrough backcolor'
+              }"/>
           </template>
 
           <!-- Image -->

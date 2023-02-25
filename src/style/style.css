@@ -1,4 +1,4 @@
-/*! vesan v0.39.0 | https://github.com/philippebeck/vesan | Apache-2.0 License */
+/*! vesan v0.40.0 | https://github.com/philippebeck/vesan | Apache-2.0 License */
 
 @import url('https://fonts.googleapis.com/css2?family=Geo&family=Rozha+One&family=Syne+Mono&display=swap');
 @import url("../../node_modules/@fortawesome/fontawesome-free/css/all.min.css");
@@ -721,5 +721,19 @@ aside {
   --ani-monospace: "Syne Mono", monospace;
 }
 
+[id="article-text"] ~ *,
+[id="product-description"] ~ * {
+  margin: auto;
+  max-width: 500px;
+  height: 500px;
+}
+
+[id*="products-"] *,
+[id*="usersLiked"] {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 /* Author: Philippe Beck <philippe@philippebeck.net>
- Updated: 24th Feb 2023 @ 11:27:19 PM */
+ Updated: 25th Feb 2023 @ 3:20:23 PM */

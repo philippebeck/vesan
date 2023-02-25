@@ -32,21 +32,20 @@
 
           <!-- Product Description -->
           <template #item-2>
-            <FieldElt id="product-description"
-              type="textarea"
-              v-model:value="description"
+            <label for="product-description">
+              Description
+            </label>
+            <Editor id="product-description"
+              api-key="your-tinymce-key"
+              v-model="description"
               @keyup.enter="validateNewProduct()"
-              :info="constants.CREATE_DESCRIPTION"
-              :max="5000">
-              <template #legend>
-                Description
-              </template>
-              <template #label>
-                {{ constants.LABEL_DESCRIPTION }}
-              </template>
-            </FieldElt>
+              :init="{
+                toolbar:
+                  'undo redo outdent indent align | \
+                  bold italic underline strikethrough backcolor'
+              }"/>
           </template>
-          
+
           <!-- Product Image -->
           <template #item-3>
             <FieldElt id="product-image"
@@ -61,7 +60,7 @@
               </template>
             </FieldElt>
           </template>
-          
+
           <!-- Product Alt -->
           <template #item-4>
             <FieldElt id="product-alt"
@@ -146,10 +145,14 @@
 </template>
 
 <script>
+import Editor from "@tinymce/tinymce-vue"
 import constants from "/constants"
 
 export default {
   name: "ProductCreator",
+  components: {
+    Editor
+  },
 
   data() {
     return {

@@ -1,6 +1,6 @@
 {
   "name": "vesan",
-  "version": "0.39.0",
+  "version": "0.40.0",
   "description": "CMS with Vue-Elt, Servidio, Animadio & NemJS",
   "keywords": [
     "cms",
@@ -14,7 +14,11 @@
     "scss",
     "node",
     "express",
-    "mongo"
+    "mongo",
+    "blog",
+    "tinymce",
+    "shop",
+    "paypal"
   ],
   "scripts": {
     "serve": "vue-cli-service serve",

@@ -22,7 +22,7 @@
 
           <!-- Products -->
           <template #cell-products="slotProps">
-            <ul>
+            <ul :id="'products-' + orders[slotProps.index]._id">
               <li v-for="(item, index) in orders[slotProps.index].products"
                 :key="index">
                 <a :href="`/product/${item.id}`">
