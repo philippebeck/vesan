@@ -5,28 +5,29 @@
         <i class="fa-solid fa-cogs fa-2x"
           aria-hidden="true">
         </i>
-        Admin
+        {{ constants.ADMIN_TITLE }}
       </h1>
+      <p>{{ constants.ADMIN_INTRO }}</p>
 
       <!-- Sidebar -->
       <NavElt class="sidebar">
         <template #first>
           <a href="#shop"
-            :title="constants.SIDEBAR_SHOP">
+            :title="constants.MANAGE_SHOP">
             <i class="fa-solid fa-shop fa-fw"></i>
           </a>
           <a href="#blog"
-            :title="constants.SIDEBAR_BLOG">
+            :title="constants.MANAGE_BLOG">
             <i class="fa-solid fa-blog fa-fw"></i>
           </a>
           <a v-if="checkRole('admin')"
             href="#users"
-            :title="constants.SIDEBAR_USERS">
+            :title="constants.MANAGE_USERS">
             <i class="fa-solid fa-user-astronaut fa-fw"></i>
           </a>
           <a v-if="checkRole('admin')"
             href="#links"
-            :title="constants.SIDEBAR_LINKS">
+            :title="constants.MANAGE_LINKS">
             <i class="fa-solid fa-link fa-fw"></i>
           </a>
         </template>
@@ -48,8 +49,9 @@
             <i class="fa-solid fa-shop fa-lg"
               aria-hidden="true">
             </i>
-            Shop
+            {{ constants.SHOP_TITLE }}
           </h2>
+          <p>{{ constants.MANAGE_SHOP }}</p>
         </template>
 
         <template #body>
@@ -75,8 +77,9 @@
             <i class="fa-solid fa-blog fa-lg"
               aria-hidden="true">
             </i>
-            Blog
+            {{ constants.BLOG_TITLE }}
           </h2>
+          <p>{{ constants.MANAGE_BLOG }}</p>
         </template>
 
         <template #body>
@@ -99,8 +102,9 @@
             <i class="fa-solid fa-user-astronaut fa-lg"
               aria-hidden="true">
             </i>
-            Users
+            {{ constants.USER_TITLE }}
           </h2>
+          <p>{{ constants.MANAGE_USERS }}</p>
         </template>
 
         <template #body>
@@ -117,8 +121,9 @@
             <i class="fa-solid fa-link fa-lg"
               aria-hidden="true">
             </i>
-            Links
+            {{ constants.LINK_TITLE }}
           </h2>
+          <p>{{ constants.MANAGE_LINKS }}</p>
         </template>
 
         <template #body>

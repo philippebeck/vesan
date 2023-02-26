@@ -5,8 +5,9 @@
         <i class="fa-solid fa-sign-in-alt fa-lg"
           aria-hidden="true">
         </i>
-        Sign Up
+        {{ constants.SIGNUP_TITLE }}
       </h1>
+      <p>{{ constants.SIGNUP_INTRO }}</p>
     </template>
 
     <template #body>
@@ -16,8 +17,9 @@
       <BtnElt type="button"
         @click="setType('SignIn')"
         class="btn-green"
-        content="SignIn"
-        title="Go to SignIn">
+        :content="constants.SIGNIN_TITLE"
+        :title="constants.GO_TO + constants.SIGNIN_TITLE">
+
         <template #btn>
           <i class="fa-solid fa-right-to-bracket fa-lg"></i>
         </template>
@@ -27,8 +29,9 @@
       <BtnElt type="button"
         @click="setType('ForgotPass')"
         class="btn-orange"
-        content="ForgotPass"
-        title="Go to ForgotPass">
+        :content="constants.FORGOT_TITLE"
+        :title="constants.GO_TO + constants.FORGOT_TITLE">
+
         <template #btn>
           <i class="fa-regular fa-paper-plane fa-lg"></i>
         </template>
@@ -42,8 +45,9 @@
         <i class="fa-solid fa-sign-in-alt fa-lg"
           aria-hidden="true">
         </i>
-        Sign In
+        {{ constants.SIGNIN_TITLE }}
       </h1>
+      <p>{{ constants.SIGNIN_INTRO }}</p>
     </template>
 
     <template #body>
@@ -53,8 +57,9 @@
       <BtnElt type="button"
         @click="setType('SignUp')"
         class="btn-blue"
-        content="SignUp"
-        title="Go to SignUp">
+        :content="constants.SIGNUP_TITLE"
+        :title="constants.GO_TO + constants.SIGNUP_TITLE">
+
         <template #btn>
           <i class="fa-solid fa-user-plus fa-lg"></i>
         </template>
@@ -64,8 +69,9 @@
       <BtnElt type="button"
         @click="setType('ForgotPass')"
         class="btn-orange"
-        content="ForgotPass"
-        title="Go to ForgotPass">
+        :content="constants.FORGOT_TITLE"
+        :title="constants.GO_TO + constants.FORGOT_TITLE">
+
         <template #btn>
           <i class="fa-regular fa-paper-plane fa-lg"></i>
         </template>
@@ -79,8 +85,9 @@
         <i class="fa-solid fa-key fa-lg"
           aria-hidden="true">
         </i>
-        Forgot Password
+        {{ constants.FORGOT_TITLE }}
       </h1>
+      <p>{{ constants.FORGOT_INTRO }}</p>
     </template>
 
     <template #body>
@@ -90,8 +97,9 @@
       <BtnElt type="button"
         @click="setType('SignUp')"
         class="btn-blue"
-        content="SignUp"
-        title="Go to SignUp">
+        :content="constants.SIGNUP_TITLE"
+        :title="constants.GO_TO + constants.SIGNUP_TITLE">
+
         <template #btn>
           <i class="fa-solid fa-user-plus fa-lg"></i>
         </template>
@@ -101,8 +109,9 @@
       <BtnElt type="button"
         @click="setType('SignIn')"
         class="btn-green"
-        content="SignIn"
-        title="Go to SignIn">
+        :content="constants.SIGNIN_TITLE"
+        :title="constants.GO_TO + constants.SIGNIN_TITLE">
+
         <template #btn>
           <i class="fa-solid fa-right-to-bracket fa-lg"></i>
         </template>
@@ -112,6 +121,7 @@
 </template>
 
 <script>
+import constants from "/constants"
 import SignUp from "@/components/connectors/SignUp"
 import SignIn from "@/components/connectors/SignIn"
 import ForgotPass from "@/components/connectors/ForgotPass"
@@ -126,11 +136,14 @@ export default {
 
   data() {
     return {
-      type: "SignIn"
+      type: "SignIn",
+      constants: {}
     }
   },
 
-    beforeMount() {
+  mounted() {
+    this.constants = constants;
+
     if (localStorage.userId) {
       this.$router.push("/");
     }
