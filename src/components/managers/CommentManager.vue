@@ -5,14 +5,17 @@
         <i class="fa-regular fa-comments fa-lg"
           aria-hidden="true">
         </i>
-        Comment Manager
+        {{ constants.MANAGER_COMMENT }}
       </h3>
     </template>
 
     <template #body>
       <form method="post">
         <TableElt :items="comments">
-          <template #head>mod/del</template>
+
+          <template #head>
+            {{ constants.HEAD_MOD }}
+          </template>
 
           <!-- Id -->
           <template #cell-_id="slotProps">
@@ -62,7 +65,8 @@
             <BtnElt type="button"
               @click="moderateComment(comments[slotProps.index]._id)" 
               class="btn-green"
-              :title="'Moderate comment #' + comments[slotProps.index]._id">
+              :title="constants.MODERATE_COMMENT + comments[slotProps.index]._id">
+
               <template #btn>
                 <i class="fa-solid fa-spell-check"></i>
               </template>
@@ -72,7 +76,8 @@
             <BtnElt type="button"
               @click="deleteComment(comments[slotProps.index]._id)" 
               class="btn-red"
-              :title="'Delete comment #' + comments[slotProps.index]._id">
+              :title="constants.DELETE_COMMENT + comments[slotProps.index]._id">
+
               <template #btn>
                 <i class="fa-solid fa-trash-alt"></i>
               </template>

@@ -5,7 +5,7 @@
         <i class="fa-solid fa-users-gear fa-lg"
           aria-hidden="true">
         </i>
-        User Manager
+        {{ constants.MANAGER_USER }}
       </h3>
     </template>
 
@@ -13,7 +13,10 @@
       <form method="post"
         enctype="multipart/form-data">
         <TableElt :items="users">
-          <template #head>up/del</template>
+
+          <template #head>
+            {{ constants.HEAD_UP }}
+          </template>
 
           <!-- Id -->
           <template #cell-_id="slotProps">
@@ -43,6 +46,7 @@
             <MediaElt :src="'/img/thumbnails/users/' + users[slotProps.index].image"
               :alt="users[slotProps.index].name"
               :title="users[slotProps.index].image"/>
+
             <FieldElt :id="'image-' + users[slotProps.index]._id"
               type="file"
               :info="constants.UPDATE_IMAGE"/>
@@ -74,7 +78,8 @@
             <BtnElt type="button"
               @click="validateUpdatedUser(users[slotProps.index]._id)" 
               class="btn-sky"
-              :title="'Update ' + users[slotProps.index].name">
+              :title="constants.UPDATE + users[slotProps.index].name">
+
               <template #btn>
                 <i class="fa-solid fa-edit"></i>
               </template>
@@ -84,7 +89,8 @@
             <BtnElt type="button"
               @click="deleteUser(users[slotProps.index]._id)" 
               class="btn-red"
-              :title="'Delete ' + users[slotProps.index].name">
+              :title="constants.DELETE + users[slotProps.index].name">
+
               <template #btn>
                 <i class="fa-solid fa-trash-alt"></i>
               </template>

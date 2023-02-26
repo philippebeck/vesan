@@ -5,14 +5,17 @@
         <i class="fa-solid fa-list-check fa-lg"
           aria-hidden="true">
         </i>
-        Review Manager
+        {{ constants.MANAGER_REVIEW }}
       </h2>
     </template>
 
     <template #body>
       <form method="post">
         <TableElt :items="reviews">
-          <template #head>mod/del</template>
+
+          <template #head>
+            {{ constants.HEAD_MOD }}
+          </template>
 
           <!-- Id -->
           <template #cell-_id="slotProps">
@@ -68,7 +71,8 @@
             <BtnElt type="button"
               @click="moderateReview(reviews[slotProps.index]._id)" 
               class="btn-green"
-              :title="'Moderate review #' + reviews[slotProps.index]._id">
+              :title="constants.MODERATE_REVIEW + reviews[slotProps.index]._id">
+
               <template #btn>
                 <i class="fa-solid fa-spell-check"></i>
               </template>
@@ -78,7 +82,8 @@
             <BtnElt type="button"
               @click="deleteReview(reviews[slotProps.index]._id)" 
               class="btn-red"
-              :title="'Delete review #' + reviews[slotProps.index]._id">
+              :title="constants.DELETE_REVIEW + reviews[slotProps.index]._id">
+
               <template #btn>
                 <i class="fa-solid fa-trash-alt"></i>
               </template>

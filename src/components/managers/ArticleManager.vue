@@ -5,7 +5,7 @@
         <i class="fa-solid fa-envelopes-bulk fa-lg"
           aria-hidden="true">
         </i>
-        Article Manager
+        {{ constants.MANAGER_ARTICLE }}
       </h3>
     </template>
 
@@ -13,7 +13,10 @@
       <form method="post"
         enctype="multipart/form-data">
         <TableElt :items="articles">
-          <template #head>up/del</template>
+
+          <template #head>
+            {{ constants.HEAD_UP }}
+          </template>
 
           <!-- Id -->
           <template #cell-_id="slotProps">
@@ -46,6 +49,7 @@
             <MediaElt :src="'/img/thumbnails/articles/' + articles[slotProps.index].image"
               :alt="articles[slotProps.index].alt"
               :title="articles[slotProps.index].name"/>
+
             <FieldElt :id="'image-' + articles[slotProps.index]._id"
               type="file"
               :info="constants.UPDATE_IMAGE"/>
@@ -99,7 +103,8 @@
           <BtnElt type="button"
               @click="validateUpdatedArticle(articles[slotProps.index]._id)" 
               class="btn-sky"
-              :title="'Update ' + articles[slotProps.index].name">
+              :title="constants.UPDATE + articles[slotProps.index].name">
+
               <template #btn>
                 <i class="fa-solid fa-edit"></i>
               </template>
@@ -109,7 +114,8 @@
             <BtnElt type="button"
               @click="deleteArticle(articles[slotProps.index]._id)" 
               class="btn-red"
-              :title="'Delete ' + articles[slotProps.index].name">
+              :title="constants.DELETE + articles[slotProps.index].name">
+
               <template #btn>
                 <i class="fa-solid fa-trash-alt"></i>
               </template>
