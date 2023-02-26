@@ -5,7 +5,7 @@
         <i class="fa-regular fa-comments fa-lg"
           aria-hidden="true">
         </i>
-        Comment List
+        {{ constants.LIST_COMMENTS }}
       </h2>
     </template>
 
@@ -29,7 +29,8 @@
             <BtnElt type="button"
               @click="updateComment(slotProps.item._id)" 
               class="btn-sky"
-              :title="'Update comment #' + slotProps.item._id">
+              :title="constants.UPDATE_COMMENT + slotProps.item._id">
+
               <template #btn>
                 <i class="fa-solid fa-edit"></i>
               </template>
@@ -38,22 +39,23 @@
             <BtnElt type="button"
               @click="deleteComment(slotProps.item._id)" 
               class="btn-red"
-              :title="'Delete comment #' + slotProps.item._id">
+              :title="constants.DELETE_COMMENT + slotProps.item._id">
+
               <template #btn>
                 <i class="fa-solid fa-trash-alt"></i>
               </template>
             </BtnElt>
 
             <p class="silver">
-              Created by
+              {{ constants.CREATE_BY }}
               <b itemprop="author">
                 {{ slotProps.item.user.split("-")[0] }}
               </b>
-              on 
+              {{ constants.ON }} 
               <i itemprop="dateCreated">
                 {{ new Date(slotProps.item.created).toLocaleDateString() }}
               </i>
-              / Updated on 
+              / {{ constants.UPDATE_ON }} 
               <i itemprop="dateModified">
                 {{ new Date(slotProps.item.updated).toLocaleDateString() }}
               </i>
@@ -68,16 +70,17 @@
               {{ slotProps.item.text }}
             </blockquote>
             <br>
+
             <figcaption class="silver">
-              Created by
+              {{ constants.CREATE_BY }}
               <b itemprop="author">
                 {{ slotProps.item.user.split("-")[0] }}
               </b>
-              on 
+              {{ constants.ON }} 
               <i itemprop="dateCreated">
                 {{ new Date(slotProps.item.created).toLocaleDateString() }}
               </i>
-              / Updated on 
+              / {{ constants.UPDATE_ON }} 
               <i itemprop="dateModified">
                 {{ new Date(slotProps.item.updated).toLocaleDateString() }}
               </i>
