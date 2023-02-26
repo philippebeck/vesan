@@ -99,8 +99,9 @@
                   itemprop="image">
 
                   <template #figcaption>
-                    <blockquote v-html="slotProps.value.text.slice(0, 50)" 
-                      itemprop="text">
+                    <blockquote v-html="slotProps.value.text.slice(0, 40)" 
+                      itemprop="text"
+                      class="monospace">
                     </blockquote>
                   </template>
                 </MediaElt>

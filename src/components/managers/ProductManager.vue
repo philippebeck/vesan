@@ -165,7 +165,7 @@ export default {
         if (this.products[i]._id === id) {
 
           if (this.$serve.checkName(this.products[i].name) &&
-            this.$serve.checkText(this.products[i].text)) {
+            this.$serve.checkText(this.products[i].description)) {
 
             this.checkUpdatedProduct(i);
           }
