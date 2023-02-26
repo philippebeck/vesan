@@ -4,8 +4,9 @@
       <h1 class="sky anima-slideB">
         <i class="fa-solid fa-user-gear fa-lg"
           aria-hidden="true"></i>
-        Profile
+        {{ constants.PROFILE_TITLE }}
       </h1>
+      <p>{{ constants.PROFILE_INTRO }}</p>
     </template>
 
     <template #body>
@@ -20,8 +21,9 @@
               @keyup.enter="validateUpdatedUser()"
               :info="constants.CREATE_NAME"
               :min="2">
+
               <template #legend>
-                Name
+                {{ constants.LEGEND_NAME }}
               </template>
               <template #label>
                 {{ constants.LABEL_NAME }}
@@ -36,8 +38,9 @@
               v-model:value="user.email"
               @keyup.enter="validateUpdatedUser()"
               :info="constants.CREATE_EMAIL">
+
               <template #legend>
-                Email
+                {{ constants.LEGEND_EMAIL }}
               </template>
               <template #label>
                 {{ constants.LABEL_EMAIL }}
@@ -50,12 +53,14 @@
             <MediaElt v-if="user.image"
               :src="'/img/thumbnails/users/' + user.image"
               :alt="user.name" />
+
             <FieldElt id="user-image"
               v-model:value="image"
               :info="constants.CREATE_IMAGE"
               type="file">
+
               <template #legend>
-                Image
+                {{ constants.LEGEND_IMAGE }}
               </template>
               <template #label>
                 {{ constants.LABEL_IMAGE }}
@@ -70,8 +75,9 @@
               v-model:value="pass"
               @keyup.enter="validateUpdatedUser()"
               :info="constants.CREATE_PASSWORD">
+
               <template #legend>
-                Password
+                {{ constants.LEGEND_PASSWORD }}
               </template>
               <template #label>
                 {{ constants.LABEL_PASSWORD }}
@@ -84,8 +90,9 @@
         <BtnElt type="button"
           @click="validateUpdatedUser()" 
           class="btn-blue"
-          content="Update"
+          :content="constants.UPDATE"
           :title="constants.UPDATE_PROFILE">
+
           <template #btn>
             <i class="fa-solid fa-user-pen fa-lg"></i>
           </template>
@@ -95,8 +102,9 @@
         <BtnElt type="button"
           @click="deleteUser()" 
           class="btn-red"
-          content="Delete"
+          :content="constants.DELETE"
           :title="constants.DELETE_ACCOUNT">
+
           <template #btn>
             <i class="fa-solid fa-user-slash fa-lg"></i>
           </template>
@@ -105,7 +113,9 @@
 
       <TableElt v-if="orders.length !== 0"
         :items="orders">
-        <template #title>Your Orders</template>
+        <template #title>
+          {{ constants.ORDER_TITLE }}
+        </template>
 
         <!-- Id -->
         <template #cell-_id="slotProps">
@@ -119,7 +129,8 @@
             <li v-for="(item, index) in orders[slotProps.index].products"
               :key="index">
               <a :href="`/product/${item.id}`">
-                <ul :title="`Go to ${item.name} page`">
+
+                <ul :title="constants.GO_TO + item.name">
                   <li>
                     <b>{{ item.name }}</b>
                   </li>

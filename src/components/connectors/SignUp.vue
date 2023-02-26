@@ -10,8 +10,9 @@
           @keyup.enter="validateNewUser()"
           :info="constants.CREATE_NAME"
           :min="2">
+
           <template #legend>
-            Name
+            {{ constants.LEGEND_NAME }}
           </template>
           <template #label>
             {{ constants.LABEL_NAME }}
@@ -26,8 +27,9 @@
           v-model:value="email"
           @keyup.enter="validateNewUser()"
           :info="constants.CREATE_EMAIL">
+
           <template #legend>
-            Email
+            {{ constants.LEGEND_EMAIL }}
           </template>
           <template #label>
             {{ constants.LABEL_EMAIL }}
@@ -41,8 +43,9 @@
           type="file"
           v-model:value="image"
           :info="constants.CREATE_IMAGE">
+
           <template #legend>
-            Image
+            {{ constants.LEGEND_IMAGE }}
           </template>
           <template #label>
             {{ constants.LABEL_IMAGE }}
@@ -57,8 +60,9 @@
           v-model:value="pass"
           @keyup.enter="validateNewUser()"
           :info="constants.CREATE_PASSWORD">
+
           <template #legend>
-            Password
+            {{ constants.LEGEND_PASSWORD }}
           </template>
           <template #label>
             {{ constants.LABEL_PASSWORD }}
@@ -71,8 +75,9 @@
     <BtnElt type="button"
       @click="validateNewUser()" 
       class="btn-blue"
-      content="Create"
+      :content="constants.CONTENT_CREATE"
       :title="constants.BUTTON_SIGNUP">
+
       <template #btn>
         <i class="fa-solid fa-user-plus fa-lg"></i>
       </template>

@@ -6,8 +6,9 @@
 
       <!-- Slider -->
       <SliderElt :slides="['vuejs', 'sass', 'node-js', 'html5', 'js', 'css3']"
-        :delay="5000"
+        :delay="constants.SLIDER_DELAY"
         class="anima-grow">
+
         <template #slide="slotProps">
           <i :class="`fa-brands fa-${slotProps.slide.toLowerCase()} fa-10x blue`"></i>
         </template>
@@ -18,21 +19,33 @@
 
       <!-- Main Title -->
       <h1 class="blue anima-shrink">
-        Vesan
+        {{ constants.HOME_TITLE }}
       </h1>
     </template>
 
     <!-- Main Content -->
     <template #body>
       <strong class="gray">
-        CMS with Vue-Elt, Servidio, Animadio & NemJS
+        {{ constants.HOME_INTRO }}
       </strong>
     </template>
   </CardElt>
 </template>
 
 <script>
+import constants from "/constants"
+
 export default {
-  name: "HomeView"
+  name: "HomeView",
+
+  data() {
+    return {
+      constants: {}
+    }
+  },
+
+  mounted() {
+    this.constants = constants;
+  }
 }
 </script>

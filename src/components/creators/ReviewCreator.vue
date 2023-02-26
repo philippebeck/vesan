@@ -19,8 +19,9 @@
           @keyup.enter="validateNewReview()"
           :info="constants.CREATE_TEXT"
           :max="5000">
+
           <template #legend>
-            Text
+            {{ constants.LEGEND_TEXT }}
           </template>
           <template #label>
             {{ constants.LABEL_TEXT }}
@@ -35,8 +36,9 @@
           :info="constants.CREATE_SCORE"
           :min="0"
           :max="5">
+
           <template #legend>
-            Score
+            {{ constants.LEGEND_SCORE }}
           </template>
           <template #label>
             {{ constants.LABEL_SCORE }}
@@ -47,8 +49,9 @@
         <BtnElt type="button"
           @click="validateNewReview()" 
           class="btn-green"
-          content="Create"
+          :content="constants.CONTENT_CREATE"
           :title="constants.CREATE_REVIEW">
+
           <template #btn>
             <i class="fa-solid fa-square-plus fa-lg"></i>
           </template>

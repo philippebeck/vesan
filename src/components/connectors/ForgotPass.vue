@@ -7,8 +7,9 @@
       @keyup.enter="checkEmail()"
       :info="constants.CREATE_EMAIL"
       required>
+
       <template #legend>
-        Email
+        {{ constants.LEGEND_EMAIL }}
       </template>
       <template #label>
         {{ constants.LABEL_EMAIL }}
@@ -25,8 +26,9 @@
     <BtnElt type="button"
       @click="checkEmail()"
       class="btn-orange"
-      content="Send"
+      :content="constants.CONTENT_SEND"
       :title="constants.BUTTON_FORGOT">
+
       <template #btn>
         <i class="fa-regular fa-paper-plane fa-lg"></i>
       </template>

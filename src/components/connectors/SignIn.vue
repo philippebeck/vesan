@@ -7,8 +7,9 @@
       v-model:value="email"
       @keyup.enter="login()"
       :info="constants.CREATE_EMAIL">
+
       <template #legend>
-        Email
+        {{ constants.LEGEND_EMAIL }}
       </template>
       <template #label>
         {{ constants.LABEL_EMAIL }}
@@ -21,8 +22,9 @@
       v-model:value="pass"
       @keyup.enter="login()"
       :info="constants.CREATE_PASSWORD">
+
       <template #legend>
-        Password
+        {{ constants.LEGEND_PASSWORD }}
       </template>
       <template #label>
         {{ constants.LABEL_PASSWORD }}
@@ -39,8 +41,9 @@
     <BtnElt type="button"
       @click="login()"
       class="btn-green"
-      content="Enter"
+      :content="constants.CONTENT_ENTER"
       :title="constants.BUTTON_SIGNIN">
+
       <template #btn>
         <i class="fa-solid fa-right-to-bracket fa-lg"></i>
       </template>

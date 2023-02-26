@@ -5,7 +5,7 @@
         <i class="fa-solid fa-list-check fa-lg"
           aria-hidden="true">
         </i>
-        Review List
+        {{ constants.LIST_REVIEWS }}
       </h2>
     </template>
 
@@ -37,7 +37,8 @@
             <BtnElt type="button"
               @click="updateReview(slotProps.item._id)" 
               class="btn-sky"
-              :title="'Update review #' + slotProps.item._id">
+              :title="constants.UPDATE_REVIEW + slotProps.item._id">
+
               <template #btn>
                 <i class="fa-solid fa-edit"></i>
               </template>
@@ -46,22 +47,23 @@
             <BtnElt type="button"
               @click="deleteReview(slotProps.item._id)" 
               class="btn-red"
-              :title="'Delete review #' + slotProps.item._id">
+              :title="constants.DELETE_REVIEW + slotProps.item._id">
+
               <template #btn>
                 <i class="fa-solid fa-trash-alt"></i>
               </template>
             </BtnElt>
 
             <p class="silver">
-              Created by
+              {{ constants.CREATE_BY }}
               <b itemprop="author">
                 {{ slotProps.item.user.split("-")[0] }}
               </b>
-              on
+              {{ constants.ON }}
               <i itemprop="dateCreated">
                 {{ new Date(slotProps.item.created).toLocaleDateString() }}
               </i>
-              / Updated on
+              / {{ constants.UPDATE_ON }}
               <i>
                 {{ new Date(slotProps.item.updated).toLocaleDateString() }}
               </i>
@@ -87,15 +89,15 @@
               </p>
 
               <p class="silver">
-                Created by
+                {{ constants.CREATE_BY }}
                 <b itemprop="author">
                   {{ slotProps.item.user.split("-")[0] }}
                 </b>
-                on
+                {{ constants.ON }}
                 <i itemprop="dateCreated">
                   {{ new Date(slotProps.item.created).toLocaleDateString() }}
                 </i>
-                / Updated on
+                / {{ constants.UPDATE_ON }}
                 <i>
                   {{ new Date(slotProps.item.updated).toLocaleDateString() }}
                 </i>

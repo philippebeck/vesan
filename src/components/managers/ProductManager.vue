@@ -5,7 +5,7 @@
         <i class="fa-solid fa-shopping-cart fa-lg"
           aria-hidden="true">
         </i>
-        Product Manager
+        {{ constants.MANAGER_PRODUCT }}
       </h3>
     </template>
 
@@ -13,7 +13,10 @@
       <form method="post"
         enctype="multipart/form-data">
         <TableElt :items="products">
-          <template #head>up/del</template>
+
+          <template #head>
+            {{ constants.HEAD_UP }}
+          </template>
 
           <!-- Id -->
           <template #cell-_id="slotProps">
@@ -47,6 +50,7 @@
               :alt="products[slotProps.index].alt"
               :title="products[slotProps.index].name">
             </MediaElt>
+
             <FieldElt :id="'image-' + products[slotProps.index]._id"
               type="file"
               :info="constants.UPDATE_IMAGE"/>
@@ -107,7 +111,8 @@
             <BtnElt type="button"
               @click="validateUpdatedProduct(products[slotProps.index]._id)" 
               class="btn-sky"
-              :title="'Update ' + products[slotProps.index].name">
+              :title="constants.UPDATE + products[slotProps.index].name">
+
               <template #btn>
                 <i class="fa-solid fa-edit"></i>
               </template>
@@ -117,7 +122,8 @@
             <BtnElt type="button"
               @click="deleteProduct(products[slotProps.index]._id)" 
               class="btn-red"
-              :title="'Delete ' + products[slotProps.index].name">
+              :title="constants.DELETE + products[slotProps.index].name">
+
               <template #btn>
                 <i class="fa-solid fa-trash-alt"></i>
               </template>

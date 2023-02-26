@@ -5,14 +5,17 @@
         <i class="fa-regular fa-rectangle-list fa-lg"
           aria-hidden="true">
         </i>
-        Order Manager
+        {{ constants.MANAGER_ORDER }}
       </h3>
     </template>
 
     <template #body>
       <form method="post">
         <TableElt :items="orders">
-          <template #head>up/del</template>
+
+          <template #head>
+            {{ constants.HEAD_UP }}
+          </template>
 
           <!-- Id -->
           <template #cell-_id="slotProps">
@@ -26,7 +29,7 @@
               <li v-for="(item, index) in orders[slotProps.index].products"
                 :key="index">
                 <a :href="`/product/${item.id}`">
-                  <ul :title="`Go to ${item.name} page`">
+                  <ul :title="constants.GO_TO + item.name">
                     <li>
                       <b>{{ item.name }}</b>
                     </li>
@@ -84,7 +87,7 @@
           <BtnElt type="button"
               @click="updateStatus(orders[slotProps.index]._id)" 
               class="btn-green"
-              :title="'Update status of order #' + orders[slotProps.index]._id">
+              :title="constants.UPDATE_ORDER + orders[slotProps.index]._id">
               <template #btn>
                 <i class="fa-regular fa-calendar-check"></i>
               </template>
@@ -94,7 +97,7 @@
             <BtnElt type="button"
               @click="deleteOrder(orders[slotProps.index]._id)" 
               class="btn-red"
-              :title="'Delete order #' + orders[slotProps.index]._id">
+              :title="constants.DELETE_ORDER + orders[slotProps.index]._id">
               <template #btn>
                 <i class="fa-solid fa-trash-alt"></i>
               </template>

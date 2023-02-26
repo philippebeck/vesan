@@ -8,7 +8,7 @@
 
     <template #last v-if="checkRole('admin')">
       <a href="#create-link"
-        :title="constants.SIDEBAR_LINK">
+        :title="constants.CREATE_LINK">
         <i class="fa-solid fa-link fa-fw"></i>
       </a>
     </template>
@@ -24,8 +24,9 @@
         <i class="fa-solid fa-link fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.TITLE_LINK }}
+        {{ constants.LINK_TITLE }}
       </h1>
+      <p>{{ constants.LINK_INTRO }}</p>
     </template>
 
     <template #body>

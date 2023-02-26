@@ -7,8 +7,9 @@
         <i class="fa-solid fa-at fa-lg"
           aria-hidden="true">
         </i>
-        Contact
+        {{ constants.CONTACT_TITLE }}
       </h1>
+      <p>{{ constants.CONTACT_INTRO }}</p>
     </template>
 
     <template #body>
@@ -23,8 +24,9 @@
               @keyup.enter="send()"
               class="anima-slideR"
               :info="constants.CREATE_EMAIL">
+
               <template #legend>
-                Email
+                {{ constants.LEGEND_EMAIL }}
               </template>
               <template #label>
                 {{ constants.LABEL_EMAIL }}
@@ -39,8 +41,9 @@
               @keyup.enter="send()"
               class="anima-slideL"
               :info="constants.CREATE_SUBJECT">
+
               <template #legend>
-                Subject
+                {{ constants.LEGEND_SUBJECT }}
               </template>
               <template #label>
                 {{ constants.LABEL_SUBJECT }}
@@ -57,8 +60,9 @@
               class="anima-slideR"
               :info="constants.CREATE_TEXT"
               :max="100">
+
               <template #legend>
-                Text
+                {{ constants.LEGEND_TEXT }}
               </template>
               <template #label>
                 {{ constants.LABEL_TEXT }}
@@ -77,8 +81,9 @@
         <BtnElt type="button"
           @click="send()" 
           class="btn-green anima-slideL"
-          content="Send"
+          :content="constants.CONTENT_SEND"
           :title="constants.BUTTON_MESSAGE">
+
           <template #btn>
             <i class="fa-regular fa-paper-plane fa-lg"></i>
           </template>

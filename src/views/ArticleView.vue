@@ -12,7 +12,8 @@
         id="likes"
         href="/login"
         class="btn-blue"
-        :title="`Login to like ${article.name}`">
+        :title="constants.LIKE_LOGIN + article.name">
+
         <template #btn>
           <i class="fa-regular fa-thumbs-up fa-lg">
           </i> <b v-if="article.usersLiked"
@@ -27,7 +28,8 @@
         type="button"
         @click="addLike()"
         class="btn-blue"
-        :title="`Like ${article.name} ?`">
+        :title="constants.LIKE + article.name">
+
         <template #btn>
           <i class="fa-regular fa-thumbs-up fa-lg">
           </i> <b v-if="article.usersLiked"
@@ -42,7 +44,8 @@
         type="button"
         @click="addLike()"
         class="btn-sky"
-        :title="`Dislike ${article.name} ?`">
+        :title="constants.DISLIKE + article.name">
+
         <template #btn>
           <i class="fa-regular fa-thumbs-up fa-lg">
           </i> <b v-if="article.usersLiked"
@@ -64,15 +67,15 @@
           </blockquote>
           
           <p class="silver">
-            Created by 
+            {{ constants.CREATE_BY }}
             <b itemprop="author">
               {{ article.user }}
             </b>
-            on 
+            {{ constants.ON }} 
             <i itemprop="dateCreated">
               {{ new Date(article.created).toLocaleDateString() }}
             </i>
-            / Updated on 
+            / {{ constants.UPDATE_ON }}
             <i itemprop="dateModified">
               {{ new Date(article.updated).toLocaleDateString() }}
             </i>
