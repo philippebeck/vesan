@@ -116,8 +116,13 @@ CATS_ARTICLE : [
 
   CONFIRM_BASKET : "Do you want to clear your basket ?",
 
+  CONTENT_CREATE : "Create",
+  CONTENT_ENTER : "Enter",
+  CONTENT_SEND : "Send",
+
   CREATE_ALT : "Alternative text",
   CREATE_ARTICLE : "Create article",
+  CREATE_BY : "Created by",
   CREATE_CATEGORY : "Choose a category",
   CREATE_COMMENT : "Create comment",
   CREATE_DESCRIPTION : "This is wonderful !",
@@ -136,7 +141,11 @@ CATS_ARTICLE : [
   CREATE_TITLE : "My new title",
   CREATE_URL : "https://",
 
+  DELETE : "Delete ",
   DELETE_ACCOUNT : "Delete your account",
+  DELETE_COMMENT : "Delete comment #",
+  DELETE_ORDER : "Delete order #",
+  DELETE_REVIEW : "Delete review #",
 
   ERROR_ALT : "404 Error",
   ERROR_TITLE : "Page not found !",
@@ -147,6 +156,11 @@ CATS_ARTICLE : [
   FORGOT_EMAIL : "This email is not referenced",
   FORGOT_SUBJECT : "New password",
   FORGOT_TEXT : "This is your new password, keep it safe : ",
+
+  GO_TO : "Go to",
+
+  HEAD_UP : "up/del",
+  HEAD_MOD : "mod/del",
 
   IMG_ARTICLE : "An image of the article must be uploaded !",
   IMG_PRODUCT : "An image of the product must be uploaded !",
@@ -165,6 +179,36 @@ CATS_ARTICLE : [
   LABEL_TEXT : "Write the text",
   LABEL_TITLE : "Write the title",
 
+  LEGEND_ALT : "Alt",
+  LEGEND_CATEGORY : "Category",
+  LEGEND_DESCRIPTION : "Description",
+  LEGEND_EMAIL : "Email",
+  LEGEND_IMAGE : "Image",
+  LEGEND_NAME : "Name",
+  LEGEND_OPTIONS : "Options",
+  LEGEND_PASSWORD : "Password",
+  LEGEND_PRICE : "Price",
+  LEGEND_SCORE : "Score",
+  LEGEND_TEXT : "Text",
+  LEGEND_TITLE : "Title",
+  LEGEND_URL : "Url",
+
+  LIST_COMMENTS : "Comment list",
+  LIST_REVIEWS : "Review list",
+
+  MANAGER_ARTICLE : "Article manager",
+  MANAGER_COMMENT : "Comment manager",
+  MANAGER_LINK : "Link manager",
+  MANAGER_ORDER : "Order manager",
+  MANAGER_PRODUCT : "Product manager",
+  MANAGER_REVIEW : "Review manager",
+  MANAGER_USER : "User manager",
+
+  MODERATE_COMMENT : "Moderate comment #",
+  MODERATE_REVIEW : "Moderate review #",
+
+  ON : "on",
+
   SIDEBAR_SHOP : "Manage products, reviews & orders",
   SIDEBAR_BLOG : "Manage articles & comments",
   SIDEBAR_USERS : "Manage users",
@@ -173,18 +217,23 @@ CATS_ARTICLE : [
 
   TITLE_LINK : "Links for dev !",
 
+  UPDATE : "Update ",
   UPDATE_ALT : "Update the alternative text",
   UPDATE_CATEGORY : "Update the category",
+  UPDATE_COMMENT : "Update comment #",
   UPDATE_DESCRIPTION : "Update the description",
   UPDATE_EMAIL : "Update the email",
   UPDATE_IMAGE : "Update the image",
   UPDATE_MODERATE : "Update moderation",
   UPDATE_NAME : "Update the name",
+  UPDATE_ON : "Updated on",
   UPDATE_OPTIONS : "Update the options",
   UPDATE_PASSWORD : "Update the password",
   UPDATE_PRICE : "Update the price",
   UPDATE_PROFILE : "Update your profile",
   UPDATE_QUANTITY : "Update the quantity",
+  UPDATE_ORDER : "Update status of order #",
+  UPDATE_REVIEW : "Update review #",
   UPDATE_ROLE : "Update the role",
   UPDATE_SCORE : "Update the score",
   UPDATE_STATUS : "Update the status",
