@@ -14,7 +14,8 @@
         itemscope
         itemtype="https://schema.org/AggregateRating" 
         class="btn-violet"
-        :title="`Read Reviews about ${product.name}`">
+        :title="constants.REVIEW_READ + product.name">
+
         <template #btn>
           <b itemprop="ratingValue">
             {{ calculateScoresAverage(product._id) }}
@@ -25,14 +26,14 @@
       <BtnElt v-else-if="checkRole('user')" 
         href="#review"
         class="btn-violet"
-        content="Need a Review !"
-        :title="`Be the first to write a Review about ${product.name}`" />
+        :content="constants.REVIEW_WRITE"
+        :title="constants.REVIEW_FIRST + product.name" />
 
       <BtnElt v-else 
           href="/login"
           class="btn-violet"
-          content="Login to write a review"
-          :title="`Be the first to write a Review about ${product.name}`" />
+          :content="constants.REVIEW_LOGIN"
+          :title="constants.REVIEW_FIRST + product.name" />
 
       <MediaElt v-if="product.image"
         :src="`/img/products/${product.image}`"
@@ -55,11 +56,11 @@
           
 
           <p class="silver">
-            Release on 
+            {{ constants.RELEASE_ON }}
             <i itemprop="releaseDate">
               {{ new Date(product.created).toLocaleDateString() }}
             </i>
-            / Updated on 
+            / {{ constants.UPDATE_ON }}
             <i>
               {{ new Date(product.updated).toLocaleDateString() }}
             </i>
@@ -73,12 +74,13 @@
           :list="product.options"
           v-model:value="option"
           @keyup.enter="addToBasket()"
-          info="Select an option">
+          :info="constants.CREATE_OPTION">
+
           <template #legend>
-            Option
+            {{ constants.LEGEND_OPTION }}
           </template>
           <template #label>
-            Indicate the product option
+            {{ constants.LABEL_OPTION }}
           </template>
         </FieldElt>
 
@@ -86,21 +88,23 @@
           type="number"
           v-model:value="quantity"
           @keyup.enter="addToBasket()"
-          info="Choose a quantity"
+          :info="constants.CREATE_QUANTITY"
           :min="1">
+
           <template #legend>
-            Quantity
+            {{ constants.LEGEND_QUANTITY }}
           </template>
           <template #label>
-            Indicate the product quantity
+            {{ constants.LABEL_QUANTITY }}
           </template>
         </FieldElt>
 
         <BtnElt type="button"
           @click="addToBasket()"
           class="btn-green width-sm"
-          content="Add to Basket"
-          :title="`Add ${product.name} to the basket`">
+          :content="constants.BASKET_ADD"
+          :title="constants.BASKET_ADD + product.name">
+
           <template #btn>
             <i class="fa-solid fa-basket-shopping fa-lg"></i>
           </template>

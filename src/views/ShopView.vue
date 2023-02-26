@@ -4,7 +4,7 @@
 
     <template #last v-if="checkRole('editor')">
       <a href="#create-product"
-        title="Create an product">
+        :title="constants.CREATE_PRODUCT">
         <i class="fa-solid fa-basket-shopping fa-fw"></i>
       </a>
     </template>
@@ -20,9 +20,9 @@
         <i class="fa-solid fa-shop fa-lg"
           aria-hidden="true">
         </i>
-        Shop
+        {{ constants.SHOP_TITLE }}
       </h1>
-      <b>Products to buy !</b>
+      <b>{{ constants.SHOP_INTRO }}</b>
     </template>
 
     <template #body>
@@ -54,7 +54,8 @@
                 itemscope
                 itemtype="https://schema.org/AggregateRating"
                 class="btn-violet"
-                :title="`Read reviews about ${slotProps.value.name}`">
+                :title="constants.REVIEW_READ + slotProps.value.name">
+
                 <template #btn>
                   <b itemprop="ratingValue">
                     {{ calculateScoresAverage(slotProps.value._id) }}
@@ -65,18 +66,18 @@
               <BtnElt v-else-if="checkRole('user')" 
                 :href="`product/${slotProps.value._id}#review`"
                 class="btn-violet"
-                content="Write a Review"
-                :title="`Be the first to write a review about ${slotProps.value.name}`" />
+                :content="constants.REVIEW_WRITE"
+                :title="constants.REVIEW_FIRST + slotProps.value.name" />
 
               <BtnElt v-else 
                 href="/login"
                 class="btn-violet"
-                content="Login to review"
-                :title="`Be the first to write a Review about ${slotProps.value.name}`" />
+                :content="constants.REVIEW_LOGIN"
+                :title="constants.REVIEW_FIRST + slotProps.value.name" />
 
               <a :href="`product/${slotProps.value._id}`"
                 itemprop="url"
-                :title="`Watch ${slotProps.value.name}`">
+                :title="constants.WATCH + slotProps.value.name">
 
                 <MediaElt :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
                   :src="`img/thumbnails/products/${slotProps.value.image}`" 
@@ -88,6 +89,7 @@
                       itemprop="description"
                       class="monospace">
                     </p>
+
                     <p itemprop="offers"
                       itemscope
                       itemtype="https://schema.org/Offer">

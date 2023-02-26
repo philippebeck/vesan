@@ -5,15 +5,16 @@
         <i class="fa-solid fa-basket-shopping fa-lg"
           aria-hidden="true">
         </i>
-        Basket
+        {{ constants.BASKET_TITLE }}
       </h1>
+      <p>{{ constants.BASKET_INTRO }}</p>
     </template>
 
     <template #body>
       <form v-if="basket[0] !== undefined">
         <TableElt :items="order">
           <template #head>
-            Total
+            {{ constants.TOTAL }}
           </template>
 
           <!-- Product Id -->
@@ -76,8 +77,9 @@
             <BtnElt type="button"
               @click="deleteItem(`${slotProps.item.id}`, `${slotProps.item.option}`)"
               class="btn-orange"
-              content="Remove"
-              :title="`Remove ${slotProps.item.name}`">
+              :content="constants.DELETE"
+              :title="constants.DELETE + slotProps.item.name">
+
               <template #btn>
                 <i class="fa-solid fa-trash fa-lg"></i>
               </template>
@@ -103,8 +105,9 @@
           <BtnElt v-else
             href="/login"
             class="btn-green width-sm"
-            content="Order"
+            :content="constants.CONTENT_ORDER"
             :title="constants.BASKET_LOGIN">
+
             <template #btn>
               <i class="fa-solid fa-cash-register fa-lg"></i>
             </template>
@@ -114,15 +117,16 @@
           <BtnElt type="button"
             @click="clearBasket()"
             class="btn-red width-sm"
-            content="Clear"
+            :content="constants.CONTENT_CLEAR"
             :title="constants.BASKET_CLEAR">
+
             <template #btn>
               <i class="fa-solid fa-trash-can fa-lg"></i>
             </template>
           </BtnElt>
       </form>
 
-      <b v-else>Your basket is empty !</b>
+      <b v-else>{{ constants.BASKET_EMPTY }}</b>
     </template>
   </CardElt>
 </template>
