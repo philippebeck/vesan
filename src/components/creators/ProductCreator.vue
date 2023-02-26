@@ -21,8 +21,9 @@
               @keyup.enter="validateNewProduct()"
               :info="constants.CREATE_NAME"
               :min="2">
+
               <template #legend>
-                Name
+                {{ constants.LEGEND_NAME }}
               </template>
               <template #label>
                 {{ constants.LABEL_NAME }}
@@ -33,8 +34,9 @@
           <!-- Product Description -->
           <template #item-2>
             <label for="product-description">
-              Description
+              {{ constants.LEGEND_DESCRIPTION }}
             </label>
+
             <Editor id="product-description"
               api-key="your-tinymce-key"
               v-model="description"
@@ -52,8 +54,9 @@
               type="file"
               v-model:value="image"
               :info="constants.CREATE_IMAGE">
+
               <template #legend>
-                Image
+                {{ constants.LEGEND_IMAGE }}
               </template>
               <template #label>
                 {{ constants.LABEL_IMAGE }}
@@ -67,8 +70,9 @@
               type="textarea"
               v-model:value="alt"
               :info="constants.CREATE_ALT">
+
               <template #legend>
-                Alt
+                {{ constants.LEGEND_ALT }}
               </template>
               <template #label>
                 {{ constants.LABEL_ALT }}
@@ -85,8 +89,9 @@
               :info="constants.CREATE_PRICE"
               :min="1"
               :max="1000">
+
               <template #legend>
-                Price
+                {{ constants.LEGEND_PRICE }}
               </template>
               <template #label>
                 {{ constants.LABEL_PRICE }}
@@ -102,8 +107,9 @@
               @keyup.enter="validateNewProduct()"
               :info="constants.CREATE_OPTIONS"
               :max="100">
+
               <template #legend>
-                Options
+                {{ constants.LEGEND_OPTIONS }}
               </template>
               <template #label>
                 {{ constants.LABEL_OPTIONS }}
@@ -119,8 +125,9 @@
               v-model:value="cat"
               @keyup.enter="validateNewProduct()"
               :info="constants.CREATE_CATEGORY">
+
               <template #legend>
-                Category
+                {{ constants.LEGEND_CATEGORY }}
               </template>
               <template #label>
                 {{ constants.LABEL_CATEGORY }}
@@ -133,8 +140,9 @@
         <BtnElt type="button"
           @click="validateNewProduct()" 
           class="btn-green"
-          content="Create"
+          :content="constants.CONTENT_CREATE"
           :title="constants.CREATE_PRODUCT">
+
           <template #btn>
             <i class="fa-solid fa-square-plus fa-lg"></i>
           </template>

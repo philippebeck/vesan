@@ -19,8 +19,9 @@
         @keyup.enter="createComment()"
         :info="constants.CREATE_TEXT"
         :max="5000">
+
         <template #legend>
-          Text
+          {{ constants.LEGEND_TEXT }}
         </template>
         <template #label>
           {{ constants.LABEL_TEXT }}
@@ -31,8 +32,9 @@
       <BtnElt type="button"
         @click="createComment()" 
         class="btn-green"
-        content="Create"
+        :content="constants.CONTENT_CREATE"
         :title="constants.CREATE_COMMENT">
+
         <template #btn>
           <i class="fa-solid fa-square-plus fa-lg"></i>
         </template>

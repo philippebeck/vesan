@@ -19,13 +19,14 @@
             <FieldElt id="article-name"
               v-model:value="name"
               @keyup.enter="validateNewArticle()"
-              :info="constants.CREATE_TITLE"
+              :info="constants.CREATE_NAME"
               :min="2">
+
               <template #legend>
-                Title
+                {{ constants.LEGEND_NAME }}
               </template>
               <template #label>
-                {{ constants.LABEL_TITLE }}
+                {{ constants.LABEL_NAME }}
               </template>
             </FieldElt>
           </template>
@@ -33,8 +34,9 @@
           <!-- Text -->
           <template #item-2>
             <label for="article-text">
-              Text
+              {{ constants.LEGEND_TEXT }}
             </label>
+
             <Editor id="article-text"
               api-key="your-tinymce-key"
               v-model="text"
@@ -52,8 +54,9 @@
               type="file"
               v-model:value="image"
               :info="constants.CREATE_IMAGE">
+
               <template #legend>
-                Image
+                {{ constants.LEGEND_IMAGE }}
               </template>
               <template #label>
                 {{ constants.LABEL_IMAGE }}
@@ -68,8 +71,9 @@
               v-model:value="alt"
               @keyup.enter="validateNewArticle()"
               :info="constants.CREATE_ALT">
+
               <template #legend>
-                Alt
+                {{ constants.LEGEND_ALT }}
               </template>
               <template #label>
                 {{ constants.LABEL_ALT }}
@@ -85,8 +89,9 @@
               v-model:value="cat"
               @keyup.enter="validateNewArticle()"
               :info="constants.CREATE_CATEGORY">
+
               <template #legend>
-                Category
+                {{ constants.LEGEND_CATEGORY }}
               </template>
               <template #label>
                 {{ constants.LABEL_CATEGORY }}
@@ -100,8 +105,9 @@
         <BtnElt type="button"
           @click="validateNewArticle()" 
           class="btn-green"
-          content="Create"
+          :content="constants.CONTENT_CREATE"
           :title="constants.CREATE_ARTICLE">
+
           <template #btn>
             <i class="fa-solid fa-square-plus fa-lg"></i>
           </template>

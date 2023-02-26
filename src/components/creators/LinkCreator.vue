@@ -19,8 +19,9 @@
               @keyup.enter="validateNewLink()"
               :info="constants.CREATE_NAME"
               :min="parseInt('2')">
+
               <template #legend>
-                Name
+                {{ constants.LEGEND_NAME }}
               </template>
               <template #label>
                 {{ constants.LABEL_NAME }}
@@ -36,8 +37,9 @@
               :info="constants.CREATE_URL"
               :min="parseInt('5')"
               :max="parseInt('100')">
+
               <template #legend>
-                URL
+                {{ constants.LEGEND_URL }}
               </template>
               <template #label>
                 {{ constants.LABEL_URL }}
@@ -52,8 +54,9 @@
               v-model:value="cat"
               @keyup.enter="validateNewLink()"
               :info="constants.CREATE_CATEGORY">
+
               <template #legend>
-                Category
+                {{ constants.LEGEND_CATEGORY }}
               </template>
               <template #label>
                 {{ constants.LABEL_CATEGORY }}
@@ -65,8 +68,13 @@
         <BtnElt type="button"
           @click="validateNewLink()" 
           class="btn-green"
-          content="Create"
-          :title="constants.CREATE_LINK"/>
+          :content="constants.CONTENT_CREATE"
+          :title="constants.CREATE_LINK">
+
+          <template #btn>
+            <i class="fa-solid fa-square-plus fa-lg"></i>
+          </template>
+        </BtnElt>
       </form>
     </template>
   </CardElt>
