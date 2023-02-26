@@ -4,7 +4,7 @@
 
     <template #last  v-if="checkRole('editor')">
       <a href="#create-article"
-        title="Create a article">
+        :title="constants.CREATE_ARTICLE">
         <i class="fa-regular fa-envelope fa-fw"></i>
       </a>
     </template>
@@ -21,9 +21,9 @@
         <i class="fa-solid fa-blog fa-lg"
           aria-hidden="true">
         </i>
-        Blog
+        {{ constants.BLOG_TITLE }}
       </h1>
-      <b>Articles to read !</b>
+      <p>{{ constants.BLOG_INTRO }}</p>
     </template>
 
     <template #body>
@@ -53,7 +53,8 @@
                 :id="`like-${slotProps.value._id}`"
                 href="/login"
                 class="btn-blue"
-                :title="`Login to like ${slotProps.value.name}`">
+                :title="constants.LIKE_LOGIN + slotProps.value.name">
+
                 <template #btn>
                   <i class="fa-regular fa-thumbs-up fa-lg">
                   </i> <b itemprop="contentRating">
@@ -67,7 +68,8 @@
                 type="button"
                 @click="addLike(slotProps.value._id)"
                 class="btn-blue"
-                :title="`Like ${slotProps.value.name} ?`">
+                :title="constants.LIKE + slotProps.value.name">
+
                 <template #btn>
                   <i class="fa-regular fa-thumbs-up fa-lg">
                   </i> <b itemprop="contentRating">
@@ -81,7 +83,8 @@
                 type="button"
                 @click="addLike(slotProps.value._id)"
                 class="btn-sky"
-                :title="`Dislike ${slotProps.value.name} ?`">
+                :title="constants.DISLIKE + slotProps.value.name">
+
                 <template #btn>
                   <i class="fa-regular fa-thumbs-up fa-lg">
                   </i> <b itemprop="contentRating">
@@ -91,7 +94,7 @@
               </BtnElt>
 
               <a :href="`article/${slotProps.value._id}`"
-                :title="`Read ${slotProps.value.name}`">
+                :title="constants.READ + slotProps.value.name">
 
                 <MediaElt :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
                   :src="`img/thumbnails/articles/${slotProps.value.image}`" 
@@ -106,6 +109,7 @@
                   </template>
                 </MediaElt>
               </a>
+
             </template>
           </CardElt>
         </template>
