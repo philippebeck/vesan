@@ -110,7 +110,7 @@
     </template>
 
     <template #aside v-if="checkRole('editor')">
-      <ProductCreator />
+      <ProductCreator :constants="constants"/>
     </template>
   </CardElt>
 </template>
