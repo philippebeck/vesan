@@ -159,7 +159,7 @@ export default {
           this.calculateTotal();
 
           if (this.constants.USER_ID) {
-            this.setPaypal(this.getTotal, this.orderProducts);
+            this.setPaypal(this.constants, this.getTotal, this.orderProducts);
           }
         }
       })
@@ -286,30 +286,31 @@ export default {
 
     /**
      * SET PAYPAL
+     * @param {object} constants
      * @param {function} getTotal
      * @param {function} orderProducts
      */
-    setPaypal(getTotal, orderProducts) {
+    setPaypal(constants, getTotal, orderProducts) {
       loadScript({ 
-        "client-id": this.constants.PAYPAL_ID, 
-        "data-namespace": "paypal_sdk",
-        currency: this.constants.CURRENCY_ISO 
+        "client-id": constants.PAYPAL_ID, 
+        "data-namespace": constants.PAYPAL_NAMESPACE,
+        currency: constants.CURRENCY_ISO 
       })
 
         .then((paypal) => {
           paypal
             .Buttons({
               style: {
-                color: "blue",
-                shape: "pill",
-                label: "paypal"
+                color: constants.PAYPAL_COLOR,
+                shape: constants.PAYPAL_SHAPE,
+                label: constants.PAYPAL_LABEL
               },
 
               createOrder: function(data, actions) {
                 return actions.order.create({
                   purchase_units: [{ 
                     "amount": {
-                      "currency_code": this.constants.CURRENCY_ISO,
+                      "currency_code": constants.CURRENCY_ISO,
                       "value": getTotal()
                     }
                   }]
@@ -319,18 +320,18 @@ export default {
               onApprove: function(data, actions) {
                 return actions.order.capture()
                   .then((orderData) => {
-                      alert("Status of transaction #" + orderData.id + " : " + orderData.status);
+                      alert(constants.PAYPAL_STATUS + orderData.id + " : " + orderData.status);
                       orderProducts(orderData.id);
                     }
                   );
               },
 
               onCancel : function () {
-                alert("Canceled transaction !");
+                alert(constants.PAYPAL_CANCEL);
               },
 
               onError: function(err) {
-                alert("Invalid transaction !");
+                alert(constants.PAYPAL_ERROR);
                 throw new Error(err);
               }
             })
@@ -338,12 +339,12 @@ export default {
             .render("#paypal")
 
             .catch((error) => {
-              console.error("Failed to render the PayPal Buttons", error);
+              console.error(constants.PAYPAL_BTN, error);
             });
         })
 
         .catch((error) => {
-          console.error("Failed to load the PayPal JS SDK script", error);
+          console.error(constants.PAYPAL_SDK, error);
         });
     },
 
