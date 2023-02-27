@@ -14,7 +14,7 @@
 
     <template #body>
       <form>
-        <ListElt :items="['email', 'subject', 'text']">
+        <ListElt :items="constants.CONTACT_LIST">
 
           <!-- User Email -->
           <template #item-1>
@@ -38,7 +38,8 @@
             <FieldElt id="subject"
               v-model:value="subject"
               class="anima-slideL"
-              :info="constants.CREATE_SUBJECT">
+              :info="constants.CREATE_SUBJECT"
+              :min="2">
 
               <template #legend>
                 {{ constants.LEGEND_SUBJECT }}
@@ -108,7 +109,9 @@ export default {
      */
     send() {
       if (this.$serve.checkEmail(this.email) && 
-      this.$serve.checkName(this.subject)) {
+        this.$serve.checkName(this.subject) && 
+        this.$serve.checkText(this.text)) {
+
         let message = new FormData();
 
         message.append("email", this.email);
