@@ -94,22 +94,16 @@
 </template>
 
 <script>
-import constants from "/constants"
-
 export default {
   name: "ContactView",
+  props: ["constants"],
 
   data() {
     return {
-      constants: {},
       email: "",
       subject: "",
       text: ""
     }
-  },
-
-  mounted() {
-    this.constants = constants;
   },
 
   methods: {

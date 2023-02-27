@@ -11,7 +11,7 @@
     </template>
 
     <template #body>
-      <SignUp />
+      <SignUp :constants="constants"/>
 
       <!-- Toggle Button to SignIn Component -->
       <BtnElt type="button"
@@ -51,7 +51,7 @@
     </template>
 
     <template #body>
-      <SignIn />
+      <SignIn :constants="constants"/>
 
       <!-- Toggle Button to SignUp Component -->
       <BtnElt type="button"
@@ -91,7 +91,7 @@
     </template>
 
     <template #body>
-      <ForgotPass />
+      <ForgotPass :constants="constants"/>
 
       <!-- Toggle Button to SignUp Component -->
       <BtnElt type="button"
@@ -121,7 +121,6 @@
 </template>
 
 <script>
-import constants from "/constants"
 import SignUp from "@/components/connectors/SignUp"
 import SignIn from "@/components/connectors/SignIn"
 import ForgotPass from "@/components/connectors/ForgotPass"
@@ -134,16 +133,14 @@ export default {
     ForgotPass
   },
 
+  props: ["constants"],
   data() {
     return {
-      type: "SignIn",
-      constants: {}
+      type: "SignIn"
     }
   },
 
   mounted() {
-    this.constants = constants;
-
     if (localStorage.userId) {
       this.$router.push("/");
     }
