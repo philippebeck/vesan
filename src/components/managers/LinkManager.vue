@@ -158,7 +158,7 @@ export default {
 
         this.$serve.putData(`/api/links/${link.get("id")}`, link)
           .then(() => {
-            alert(link.get("name") + " updated !");
+            alert(link.get("name") + this.constants.UPDATED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });
@@ -178,10 +178,10 @@ export default {
         }
       }
 
-      if (confirm(`Delete ${linkName} ?`) === true) {
+      if (confirm(`${this.constants.DELETE} ${linkName} ?`) === true) {
         this.$serve.deleteData(`/api/links/${id}`)
           .then(() => {
-            alert(linkName + " deleted !");
+            alert(linkName + this.constants.DELETED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

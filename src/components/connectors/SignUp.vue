@@ -7,7 +7,7 @@
       <template #item-1>
         <FieldElt id="user-name"
           v-model:value="name"
-          :info="constants.CREATE_NAME"
+          :info="constants.INFO_NAME"
           :min="2">
 
           <template #legend>
@@ -24,7 +24,7 @@
         <FieldElt id="user-email"
           type="email"
           v-model:value="email"
-          :info="constants.CREATE_EMAIL">
+          :info="constants.INFO_EMAIL">
 
           <template #legend>
             {{ constants.LEGEND_EMAIL }}
@@ -40,7 +40,7 @@
         <FieldElt id="user-image"
           type="file"
           v-model:value="image"
-          :info="constants.CREATE_IMAGE">
+          :info="constants.INFO_IMAGE">
 
           <template #legend>
             {{ constants.LEGEND_IMAGE }}
@@ -56,7 +56,7 @@
         <FieldElt id="user-pass"
           type="password"
           v-model:value="pass"
-          :info="constants.CREATE_PASSWORD">
+          :info="constants.INFO_PASSWORD">
 
           <template #legend>
             {{ constants.LEGEND_PASSWORD }}
@@ -73,7 +73,7 @@
       <BtnElt type="button"
         class="btn-blue"
         :content="constants.CONTENT_CREATE"
-        :title="constants.BUTTON_SIGNUP">
+        :title="constants.TITLE_SIGNUP">
 
         <template #btn>
           <i class="fa-solid fa-user-plus fa-lg"></i>
@@ -113,7 +113,7 @@ export default {
           this.checkNewUser();
 
         } else {
-          alert("A photo of the user must be uploaded !");
+          alert(this.constants.IMG_USER);
         }
       }
     },
@@ -154,7 +154,7 @@ export default {
 
       this.$serve.postData("/api/users", user)
         .then(() => {
-          alert(user.get("name") + " created !");
+          alert(this.name + this.constants.CREATED);
           this.$router.go();
         })
         .catch(err => { console.log(err) });

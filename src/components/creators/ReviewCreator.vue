@@ -5,7 +5,7 @@
         <i class="fa-solid fa-check fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.CREATE_REVIEW }}
+        {{ constants.REVIEW_CREATOR }}
       </h3>
     </template>
 
@@ -17,7 +17,7 @@
           type="textarea"
           v-model:value="text"
           @keyup.enter="validateNewReview()"
-          :info="constants.CREATE_TEXT"
+          :info="constants.INFO_TEXT"
           :max="5000">
 
           <template #legend>
@@ -33,7 +33,7 @@
           type="number"
           v-model:value="score"
           @keyup.enter="validateNewReview()"
-          :info="constants.CREATE_SCORE"
+          :info="constants.INFO_SCORE"
           :min="0"
           :max="5">
 
@@ -50,7 +50,7 @@
           @click="validateNewReview()" 
           class="btn-green"
           :content="constants.CONTENT_CREATE"
-          :title="constants.CREATE_REVIEW">
+          :title="constants.REVIEW_CREATOR">
 
           <template #btn>
             <i class="fa-solid fa-square-plus fa-lg"></i>
@@ -123,7 +123,7 @@ export default {
 
         this.$serve.postData("/api/reviews", review)
           .then(() => {
-            alert("New review created !");
+            alert(this.constants.CREATED_REVIEW);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

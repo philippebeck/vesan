@@ -5,9 +5,9 @@
         <i class="fa-solid fa-cogs fa-2x"
           aria-hidden="true">
         </i>
-        {{ constants.ADMIN_TITLE }}
+        {{ constants.ADMIN_VIEW }}
       </h1>
-      <p>{{ constants.ADMIN_INTRO }}</p>
+      <p>{{ constants.INTRO_ADMIN }}</p>
 
       <!-- Sidebar -->
       <NavElt class="sidebar">
@@ -49,7 +49,7 @@
             <i class="fa-solid fa-shop fa-lg"
               aria-hidden="true">
             </i>
-            {{ constants.SHOP_TITLE }}
+            {{ constants.SHOP_VIEW }}
           </h2>
           <p>{{ constants.MANAGE_SHOP }}</p>
         </template>
@@ -80,7 +80,7 @@
             <i class="fa-solid fa-blog fa-lg"
               aria-hidden="true">
             </i>
-            {{ constants.BLOG_TITLE }}
+            {{ constants.BLOG_VIEW }}
           </h2>
           <p>{{ constants.MANAGE_BLOG }}</p>
         </template>
@@ -107,7 +107,7 @@
             <i class="fa-solid fa-user-astronaut fa-lg"
               aria-hidden="true">
             </i>
-            {{ constants.USER_TITLE }}
+            {{ constants.TITLE_USER }}
           </h2>
           <p>{{ constants.MANAGE_USERS }}</p>
         </template>
@@ -127,7 +127,7 @@
             <i class="fa-solid fa-link fa-lg"
               aria-hidden="true">
             </i>
-            {{ constants.LINK_TITLE }}
+            {{ constants.LINK_VIEW }}
           </h2>
           <p>{{ constants.MANAGE_LINKS }}</p>
         </template>
@@ -191,7 +191,7 @@ export default {
         .catch(err => { console.log(err) });
 
     } else {
-      alert(this.constants.HOME_GO);
+      alert(this.constants.GO_HOME);
       this.$router.push("/");
     }
   },

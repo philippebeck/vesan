@@ -74,7 +74,7 @@
           :list="product.options"
           v-model:value="option"
           @keyup.enter="addToBasket()"
-          :info="constants.CREATE_OPTION">
+          :info="constants.INFO_OPTION">
 
           <template #legend>
             {{ constants.LEGEND_OPTION }}
@@ -88,7 +88,7 @@
           type="number"
           v-model:value="quantity"
           @keyup.enter="addToBasket()"
-          :info="constants.CREATE_QUANTITY"
+          :info="constants.INFO_QUANTITY"
           :min="1">
 
           <template #legend>
@@ -102,8 +102,8 @@
         <BtnElt type="button"
           @click="addToBasket()"
           class="btn-green width-sm"
-          :content="constants.BASKET_ADD"
-          :title="constants.BASKET_ADD + product.name">
+          :content="constants.CONTENT_ADD"
+          :title="constants.CONTENT_ADD + product.name">
 
           <template #btn>
             <i class="fa-solid fa-basket-shopping fa-lg"></i>
@@ -220,7 +220,7 @@ export default {
         this.setBasket();
 
       } else {
-        alert("You need to choose an option !");
+        alert(this.constants.ALERT_OPTION);
       }
     },
 
@@ -277,7 +277,7 @@ export default {
       }
 
       localStorage.setItem("basket", JSON.stringify(this.basket));
-      alert(`${this.order.quantity} "${this.product.name}" (${this.order.option}) has been added to the Basket !`);
+      alert(`${this.order.quantity} "${this.product.name}" (${this.order.option}) ${this.constants.BASKET_ADDED}`);
 
       this.$router.push("/shop");
     }

@@ -5,7 +5,7 @@
     <FieldElt id="email"
       type="email"
       v-model:value="email"
-      :info="constants.CREATE_EMAIL">
+      :info="constants.INFO_EMAIL">
 
       <template #legend>
         {{ constants.LEGEND_EMAIL }}
@@ -19,7 +19,7 @@
     <FieldElt id="pass"
       type="password"
       v-model:value="pass"
-      :info="constants.CREATE_PASSWORD">
+      :info="constants.INFO_PASSWORD">
 
       <template #legend>
         {{ constants.LEGEND_PASSWORD }}
@@ -35,7 +35,7 @@
         @click="login()"
         class="btn-green"
         :content="constants.CONTENT_ENTER"
-        :title="constants.BUTTON_SIGNIN">
+        :title="constants.TITLE_SIGNIN">
 
         <template #btn>
           <i class="fa-solid fa-right-to-bracket fa-lg"></i>

@@ -5,7 +5,7 @@
         <i class="fa-solid fa-shopping-cart fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.MANAGER_PRODUCT }}
+        {{ constants.PRODUCT_MANAGER }}
       </h3>
     </template>
 
@@ -222,7 +222,7 @@ export default {
 
         this.$serve.putData(`/api/products/${product.get("id")}`, product)
           .then(() => {
-            alert(product.get("name") + " updated !");
+            alert(product.get("name") + this.constants.UPDATED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });
@@ -242,10 +242,10 @@ export default {
         }
       }
       
-      if (confirm(`Delete ${productName} ?`) === true) {
+      if (confirm(`${this.constants.DELETE} ${productName} ?`) === true) {
         this.$serve.deleteData(`/api/products/${id}`)
           .then(() => {
-            alert(productName + " deleted !");
+            alert(productName + this.constants.DELETED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

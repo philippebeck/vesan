@@ -5,7 +5,7 @@
         <i class="fa-regular fa-comments fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.LIST_COMMENTS }}
+        {{ constants.COMMENT_LIST }}
       </h2>
     </template>
 
@@ -117,7 +117,7 @@ export default {
 
             this.$serve.putData(`/api/comments/${id}`, commentData)
               .then(() => {
-                alert(`Comment #${id} updated !`);
+                alert(this.constants.COMMENT + id + this.constants.UPDATED);
                 this.$router.go();
               })
               .catch(err => { console.log(err) });
@@ -131,11 +131,11 @@ export default {
      * @param {string} id 
      */
     deleteComment(id) {
-      if (confirm(`Delete comment #${id} ?`) === true) {
+      if (confirm(`${this.constants.DELETE_COMMENT}${id} ?`) === true) {
 
         this.$serve.deleteData(`/api/comments/${id}`)
           .then(() => {
-            alert(`Comment #${id} deleted !`);
+            alert(this.constants.COMMENT + id + this.constants.DELETED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

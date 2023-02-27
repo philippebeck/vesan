@@ -4,7 +4,7 @@
 
     <template #last v-if="checkRole('editor')">
       <a href="#create-product"
-        :title="constants.CREATE_PRODUCT">
+        :title="constants.PRODUCT_CREATOR">
         <i class="fa-solid fa-basket-shopping fa-fw"></i>
       </a>
     </template>
@@ -20,9 +20,9 @@
         <i class="fa-solid fa-shop fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.SHOP_TITLE }}
+        {{ constants.SHOP_VIEW }}
       </h1>
-      <b>{{ constants.SHOP_INTRO }}</b>
+      <b>{{ constants.INTRO_SHOP }}</b>
     </template>
 
     <template #body>

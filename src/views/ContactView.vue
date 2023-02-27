@@ -7,9 +7,9 @@
         <i class="fa-solid fa-at fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.CONTACT_TITLE }}
+        {{ constants.CONTACT_VIEW }}
       </h1>
-      <p>{{ constants.CONTACT_INTRO }}</p>
+      <p>{{ constants.INTRO_CONTACT }}</p>
     </template>
 
     <template #body>
@@ -22,7 +22,7 @@
               type="email"
               v-model:value="email"
               class="anima-slideR"
-              :info="constants.CREATE_EMAIL">
+              :info="constants.INFO_EMAIL">
 
               <template #legend>
                 {{ constants.LEGEND_EMAIL }}
@@ -38,7 +38,7 @@
             <FieldElt id="subject"
               v-model:value="subject"
               class="anima-slideL"
-              :info="constants.CREATE_SUBJECT"
+              :info="constants.INFO_SUBJECT"
               :min="2">
 
               <template #legend>
@@ -56,7 +56,7 @@
               type="textarea"
               v-model:value="text"
               class="anima-slideR"
-              :info="constants.CREATE_TEXT"
+              :info="constants.INFO_TEXT"
               :max="100">
 
               <template #legend>
@@ -75,7 +75,7 @@
             @click="send()" 
             class="btn-green anima-slideL"
             :content="constants.CONTENT_SEND"
-            :title="constants.BUTTON_MESSAGE">
+            :title="constants.TITLE_MESSAGE">
 
             <template #btn>
               <i class="fa-regular fa-paper-plane fa-lg"></i>
@@ -120,7 +120,7 @@ export default {
 
         this.$serve.postData("/api/users/message", message)
           .then(() => {
-            alert(message.get("subject") + " sended !");
+            alert(this.subject + this.constants.SENDED);
             this.$router.push("/");
           })
           .catch(err => { console.log(err) });

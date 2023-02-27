@@ -5,9 +5,9 @@
         <i class="fa-solid fa-basket-shopping fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.BASKET_TITLE }}
+        {{ constants.BASKET_VIEW }}
       </h1>
-      <p>{{ constants.BASKET_INTRO }}</p>
+      <p>{{ constants.INTRO_BASKET }}</p>
     </template>
 
     <template #body>
@@ -17,7 +17,7 @@
             {{ constants.TOTAL }}
           </template>
 
-          <!-- Product Id -->
+          <!-- Id -->
           <template #cell-id="slotProps">
             <a :href="`/product/${order[slotProps.index].id}`">
               #{{ slotProps.index + 1 }}
@@ -25,14 +25,14 @@
             </a>
           </template>
 
-          <!-- Product Name -->
+          <!-- Name -->
           <template #cell-name="slotProps">
             <a :href="`/product/${order[slotProps.index].id}`">
               <strong>{{ slotProps.item.name }}</strong>
             </a>
           </template>
 
-          <!-- Product Image -->
+          <!-- Image -->
           <template #cell-image="slotProps">
             <a :href="`/product/${order[slotProps.index].id}`">
               <MediaElt :src="'img/thumbnails/products/' + slotProps.item.image"
@@ -42,14 +42,14 @@
             </a>
           </template>
 
-          <!-- Product Option -->
+          <!-- Option -->
           <template #cell-option="slotProps">
             <a :href="`/product/${order[slotProps.index].id}`">
               <b>{{ slotProps.item.option }}</b>
             </a>
           </template>
 
-          <!-- Product Quantity -->
+          <!-- Quantity -->
           <template #cell-quantity="slotProps">
             <FieldElt :id="`quantity-${slotProps.index}`"
               type="number"
@@ -61,19 +61,19 @@
             </FieldElt>
           </template>
 
-          <!-- Product Price -->
+          <!-- Price -->
           <template #cell-price="slotProps">
             <b>{{ slotProps.item.price }} €</b>
           </template>
 
-          <!-- Product Total -->
+          <!-- Total -->
           <template #body="slotProps">
             <b>
               {{ slotProps.item.price * slotProps.item.quantity }} €
             </b>
             <br>
 
-            <!-- Delete Item -->
+            <!-- Delete -->
             <BtnElt type="button"
               @click="deleteItem(`${slotProps.item.id}`, `${slotProps.item.option}`)"
               class="btn-orange"
@@ -87,7 +87,7 @@
           </template>
           </TableElt>
 
-          <!-- Basket Total -->
+          <!-- Total -->
           <p class="bord bord-violet container-60sm-50md">
             {{ constants.BASKET_TOTAL }}
             <b class="black">
@@ -96,7 +96,7 @@
             </b>
           </p>
 
-          <!-- Order Products -->
+          <!-- Order -->
           <div v-if="checkRole('user')"
             id="paypal"
             class="mar-lg">
@@ -113,12 +113,12 @@
             </template>
           </BtnElt>
 
-          <!-- Clear Basket -->
+          <!-- Clear -->
           <BtnElt type="button"
             @click="clearBasket()"
             class="btn-red width-sm"
             :content="constants.CONTENT_CLEAR"
-            :title="constants.BASKET_CLEAR">
+            :title="constants.TITLE_CLEAR">
 
             <template #btn>
               <i class="fa-solid fa-trash-can fa-lg"></i>
@@ -382,7 +382,7 @@ export default {
      * CLEAR BASKET
      */
     clearBasket() {
-      if (confirm(this.constants.CONFIRM_BASKET) === true) {
+      if (confirm(this.constants.BASKET_CONFIRM) === true) {
         localStorage.removeItem("basket");
         this.$router.go();
       }

@@ -5,7 +5,7 @@
         <i class="fa-solid fa-basket-shopping fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.CREATE_PRODUCT }}
+        {{ constants.PRODUCT_CREATOR }}
       </h3>
     </template>
 
@@ -19,7 +19,7 @@
             <FieldElt id="product-name"
               v-model:value="name"
               @keyup.enter="validateNewProduct()"
-              :info="constants.CREATE_NAME"
+              :info="constants.INFO_NAME"
               :min="2">
 
               <template #legend>
@@ -53,7 +53,7 @@
             <FieldElt id="product-image"
               type="file"
               v-model:value="image"
-              :info="constants.CREATE_IMAGE">
+              :info="constants.INFO_IMAGE">
 
               <template #legend>
                 {{ constants.LEGEND_IMAGE }}
@@ -69,7 +69,7 @@
             <FieldElt id="product-alt"
               type="textarea"
               v-model:value="alt"
-              :info="constants.CREATE_ALT">
+              :info="constants.INFO_ALT">
 
               <template #legend>
                 {{ constants.LEGEND_ALT }}
@@ -86,7 +86,7 @@
               type="number"
               v-model:value="price"
               @keyup.enter="validateNewProduct()"
-              :info="constants.CREATE_PRICE"
+              :info="constants.INFO_PRICE"
               :min="1"
               :max="1000">
 
@@ -105,7 +105,7 @@
               type="textarea"
               v-model:value="options"
               @keyup.enter="validateNewProduct()"
-              :info="constants.CREATE_OPTIONS"
+              :info="constants.INFO_OPTIONS"
               :max="100">
 
               <template #legend>
@@ -124,7 +124,7 @@
               :list="constants.CATS_PRODUCT"
               v-model:value="cat"
               @keyup.enter="validateNewProduct()"
-              :info="constants.CREATE_CATEGORY">
+              :info="constants.INFO_CATEGORY">
 
               <template #legend>
                 {{ constants.LEGEND_CATEGORY }}
@@ -141,7 +141,7 @@
           @click="validateNewProduct()" 
           class="btn-green"
           :content="constants.CONTENT_CREATE"
-          :title="constants.CREATE_PRODUCT">
+          :title="constants.PRODUCT_CREATOR">
 
           <template #btn>
             <i class="fa-solid fa-square-plus fa-lg"></i>

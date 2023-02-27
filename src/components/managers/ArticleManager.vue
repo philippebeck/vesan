@@ -5,7 +5,7 @@
         <i class="fa-solid fa-envelopes-bulk fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.MANAGER_ARTICLE }}
+        {{ constants.ARTICLE_MANAGER }}
       </h3>
     </template>
 
@@ -31,7 +31,7 @@
             <FieldElt :id="'name-' + articles[slotProps.index]._id"
               v-model:value="getArticles()[slotProps.index].name"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              :info="constants.UPDATE_TITLE"/>
+              :info="constants.UPDATE_NAME"/>
           </template>
 
           <!-- Text -->
@@ -222,7 +222,7 @@ export default {
 
         this.$serve.putData(`/api/articles/${article.get("id")}`, article)
           .then(() => {
-            alert(article.get("name") + " updated !");
+            alert(article.get("name") + this.constants.UPDATED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });
@@ -242,10 +242,10 @@ export default {
         }
       }
 
-      if (confirm(`Delete ${articleTitle} ?`) === true) {
+      if (confirm(`${this.constants.DELETE} ${articleTitle} ?`) === true) {
         this.$serve.deleteData(`/api/articles/${id}`)
           .then(() => {
-            alert(articleTitle + " deleted !");
+            alert(articleTitle + this.constants.DELETED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

@@ -4,7 +4,7 @@
 
     <template #last  v-if="checkRole('editor')">
       <a href="#create-article"
-        :title="constants.CREATE_ARTICLE">
+        :title="constants.ARTICLE_CREATOR">
         <i class="fa-regular fa-envelope fa-fw"></i>
       </a>
     </template>
@@ -21,9 +21,9 @@
         <i class="fa-solid fa-blog fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.BLOG_TITLE }}
+        {{ constants.BLOG_VIEW }}
       </h1>
-      <p>{{ constants.BLOG_INTRO }}</p>
+      <p>{{ constants.INTRO_BLOG }}</p>
     </template>
 
     <template #body>
@@ -128,9 +128,7 @@ import ArticleCreator from "@/components/creators/ArticleCreator"
 
 export default {
   name: "BlogView",
-  components: {
-    ArticleCreator
-  },
+  components: { ArticleCreator },
   props: ["constants"],
 
   mounted () {
@@ -164,6 +162,7 @@ export default {
     /**
      * SORT ITEMS BY CATEGORY
      * @param {array} items 
+     * @returns
      */
     sortItemsByCat(items) {
       return this.$serve.sortItemsByCat(items);
@@ -171,6 +170,7 @@ export default {
 
     /**
      * CHECK LIKES
+     * @param {string} id
      * @returns
      */
     checkLikes(id) {
@@ -205,16 +205,18 @@ export default {
           }
 
           let article = new FormData();
+
           article.append("id", this.articles[i]._id);
           article.append("name", this.articles[i].name);
           article.append("usersLiked", usersLiked);
 
           this.$serve.putData(`/api/articles/${article.get("id")}`, article)
             .then(() => {
+
               if (hasLiked === true) {
-                console.log(article.get("name") + " disliked !");
+                alert(article.get("name") + this.constants.DISLIKED);
               } else {
-                console.log(article.get("name") + " liked !");
+                alert(article.get("name") + this.constants.LIKED);
               }
             })
             .catch(err => { console.log(err) });

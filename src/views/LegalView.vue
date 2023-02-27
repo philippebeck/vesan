@@ -1,8 +1,8 @@
 <template>
   <CardElt class="container-90sm-80md-70lg-60xl-50wd">
     <template #header>
-      <h1>Apache License</h1>
-      <p>Version 2.0, January 2004</p>
+      <h1>{{ constants.LEGAL_VIEW }}</h1>
+      <p>{{ constants.INTRO_LEGAL }}</p>
       <a href="http://www.apache.org/licenses">
         http://www.apache.org/licenses
       </a>
@@ -141,6 +141,7 @@
 
 <script>
 export default {
-  name: 'LegalView'
+  name: "LegalView",
+  props: ["constants"]
 }
 </script>
