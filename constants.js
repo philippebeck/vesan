@@ -299,12 +299,12 @@ export default {
 
   /******************** CONTENT ********************/
 
-  CONTENT_ADD : "Add",
-  CONTENT_CLEAR : "Clear",
-  CONTENT_CREATE : "Create",
-  CONTENT_ENTER : "Enter",
-  CONTENT_ORDER : "Order",
-  CONTENT_SEND : "Send",
+  CONTENT_ADD : "Add ",
+  CONTENT_CLEAR : "Clear ",
+  CONTENT_CREATE : "Create ",
+  CONTENT_ENTER : "Enter ",
+  CONTENT_ORDER : "Order ",
+  CONTENT_SEND : "Send ",
 
   /******************** TITLE ********************/
 
@@ -316,15 +316,23 @@ export default {
 
   /******************** WORD ********************/
 
+  COMMENT : "Comment #",
+  CREATED : " created !",
   DELETE : "Delete ",
   DELETED : " deleted !",
   DISLIKE : "Dislike ",
   DISLIKED : " disliked !",
   LIKE : "Like ",
   LIKED : " liked !",
+  MODERATED : " moderated !",
   ON : "on",
+  ORDER : "Order #",
   READ : "Read ",
+  REVIEW : "Review #",
+  SENDED : " sended !",
   TOTAL : "Total",
+  UPDATE : "Update ",
+  UPDATED : " updated !",
   WATCH : "Watch ",
 
   /******************** SERVIDIO CHECK ********************/
@@ -337,6 +345,7 @@ export default {
 
   /******************** BASKET ********************/
 
+  BASKET_ADDED : " has been added to the Basket !",
   BASKET_CONFIRM : "Do you want to clear your basket ?",
   BASKET_EMPTY : "Your basket is empty !",
   BASKET_LOGIN : "Login to order those Products",
@@ -375,6 +384,7 @@ export default {
 
   /******************** UNDER CONSTRUCTION ********************/
 
+  ALERT_OPTION : "You need to choose an option !",
   ALERT_ORDER : "Order created !",
 
   CHECK_AVAILABLE : " is not available !",
@@ -383,6 +393,8 @@ export default {
   CHECK_REVIEW : "You have already written a review for this product, you can edit your old review or delete it",
 
   CREATE_BY : "Created by",
+  CREATED_COMMENT : "New comment created !",
+  CREATED_REVIEW : "New review created !",
 
   ERROR_ALT : "404 Error",
   ERROR_LINK : "Go back home ?",
@@ -395,6 +407,7 @@ export default {
 
   IMG_ARTICLE : "An image of the article must be uploaded !",
   IMG_PRODUCT : "An image of the product must be uploaded !",
+  IMG_USER : "An image of the user must be uploaded !",
 
   LIKE_LOGIN : "Login to like ",
 
@@ -406,7 +419,5 @@ export default {
   TITLE_ORDER : "Your orders",
   TITLE_USER : "Users",
 
-  UPDATE : "Update ",
   UPDATE_ON : "Updated on",
-  UPDATED : " updated !",
 }
