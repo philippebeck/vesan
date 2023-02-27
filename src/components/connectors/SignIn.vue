@@ -5,7 +5,6 @@
     <FieldElt id="email"
       type="email"
       v-model:value="email"
-      @keyup.enter="login()"
       :info="constants.CREATE_EMAIL">
 
       <template #legend>
@@ -20,7 +19,6 @@
     <FieldElt id="pass"
       type="password"
       v-model:value="pass"
-      @keyup.enter="login()"
       :info="constants.CREATE_PASSWORD">
 
       <template #legend>
@@ -31,29 +29,28 @@
       </template>
     </FieldElt>
 
-    <!-- Security -->
-    <div id="recaptcha"
-      class="g-recaptcha"
-      data-sitekey="">
-    </div>
-
     <!-- Login Button -->
-    <BtnElt type="button"
-      @click="login()"
-      class="btn-green"
-      :content="constants.CONTENT_ENTER"
-      :title="constants.BUTTON_SIGNIN">
+    <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY">
+      <BtnElt type="button"
+        @click="login()"
+        class="btn-green"
+        :content="constants.CONTENT_ENTER"
+        :title="constants.BUTTON_SIGNIN">
 
-      <template #btn>
-        <i class="fa-solid fa-right-to-bracket fa-lg"></i>
-      </template>
-    </BtnElt>
+        <template #btn>
+          <i class="fa-solid fa-right-to-bracket fa-lg"></i>
+        </template>
+      </BtnElt>
+    </vue-recaptcha>
   </form>
 </template>
 
 <script>
+import { VueRecaptcha } from "vue-recaptcha";
+
 export default {
   name: "SignIn",
+  components: { VueRecaptcha },
   props: ["constants"],
 
   data() {

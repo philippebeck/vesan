@@ -3,11 +3,10 @@
     enctype="multipart/form-data">
     <ListElt :items="['name', 'email', 'image', 'pass']">
 
-      <!-- User Name -->
+      <!-- Name -->
       <template #item-1>
         <FieldElt id="user-name"
           v-model:value="name"
-          @keyup.enter="validateNewUser()"
           :info="constants.CREATE_NAME"
           :min="2">
 
@@ -20,12 +19,11 @@
         </FieldElt>
       </template>
 
-      <!-- User Email -->
+      <!-- Email -->
       <template #item-2>
         <FieldElt id="user-email"
           type="email"
           v-model:value="email"
-          @keyup.enter="validateNewUser()"
           :info="constants.CREATE_EMAIL">
 
           <template #legend>
@@ -37,7 +35,7 @@
         </FieldElt>
       </template>
       
-      <!-- User Image -->
+      <!-- Image -->
       <template #item-3>
         <FieldElt id="user-image"
           type="file"
@@ -53,12 +51,11 @@
         </FieldElt>
       </template>
 
-      <!-- User Pass -->
+      <!-- Pass -->
       <template #item-4>
         <FieldElt id="user-pass"
           type="password"
           v-model:value="pass"
-          @keyup.enter="validateNewUser()"
           :info="constants.CREATE_PASSWORD">
 
           <template #legend>
@@ -71,23 +68,27 @@
       </template>
     </ListElt>
 
-    <!-- Create Button -->
-    <BtnElt type="button"
-      @click="validateNewUser()" 
-      class="btn-blue"
-      :content="constants.CONTENT_CREATE"
-      :title="constants.BUTTON_SIGNUP">
+    <!-- Create -->
+    <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY">
+      <BtnElt type="button"
+        class="btn-blue"
+        :content="constants.CONTENT_CREATE"
+        :title="constants.BUTTON_SIGNUP">
 
-      <template #btn>
-        <i class="fa-solid fa-user-plus fa-lg"></i>
-      </template>
-    </BtnElt>
+        <template #btn>
+          <i class="fa-solid fa-user-plus fa-lg"></i>
+        </template>
+      </BtnElt>
+    </vue-recaptcha>
   </form>
 </template>
 
 <script>
+import { VueRecaptcha } from "vue-recaptcha";
+
 export default {
   name: "CreateUser",
+  components: { VueRecaptcha },
   props: ["constants"],
 
   data() {

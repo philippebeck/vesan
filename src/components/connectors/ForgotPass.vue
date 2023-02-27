@@ -4,7 +4,6 @@
     <FieldElt id="email"
       type="email"
       v-model:value="email"
-      @keyup.enter="checkEmail()"
       :info="constants.CREATE_EMAIL"
       required>
 
@@ -16,29 +15,28 @@
       </template>
     </FieldElt>
 
-    <!-- Security -->
-    <div id="recaptcha"
-      class="g-recaptcha"
-      data-sitekey="">
-    </div>
+    <!-- Send Password -->
+    <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY">
+      <BtnElt type="button"
+        @click="checkEmail()"
+        class="btn-orange"
+        :content="constants.CONTENT_SEND"
+        :title="constants.BUTTON_FORGOT">
 
-    <!-- Send Password Button -->
-    <BtnElt type="button"
-      @click="checkEmail()"
-      class="btn-orange"
-      :content="constants.CONTENT_SEND"
-      :title="constants.BUTTON_FORGOT">
-
-      <template #btn>
-        <i class="fa-regular fa-paper-plane fa-lg"></i>
-      </template>
-    </BtnElt>
+        <template #btn>
+          <i class="fa-regular fa-paper-plane fa-lg"></i>
+        </template>
+      </BtnElt>
+    </vue-recaptcha>
   </form>
 </template>
 
 <script>
+import { VueRecaptcha } from "vue-recaptcha";
+
 export default {
   name: "ForgotPass",
+  components: { VueRecaptcha },
   props: ["constants"],
 
   data() {
