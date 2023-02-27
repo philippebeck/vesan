@@ -5,7 +5,7 @@
         <i class="fa-regular fa-comments fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.LIST_COMMENTS }}
+        {{ constants.COMMENT_LIST }}
       </h2>
     </template>
 
