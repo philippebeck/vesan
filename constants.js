@@ -27,6 +27,8 @@ export default {
 
   PAYPAL_ID : "your-client-id",
 
+  RECAPTCHA_KEY : "your-recaptcha-key",
+
   SLIDER_DELAY : 5000,
 
   TEXT_MIN : 8,
