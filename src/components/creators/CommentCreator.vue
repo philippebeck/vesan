@@ -76,8 +76,6 @@ export default {
           })
           .catch(err => { console.log(err) });
 
-      } else {
-        alert(this.constants.ALERT_TEXT);
       }
     }
   }

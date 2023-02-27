@@ -50,7 +50,7 @@ export default {
      * CHECK EMAIL
      */
     checkEmail() {
-      if (this.email && this.$serve.checkEmail(this.email)) {
+      if (this.$serve.checkEmail(this.email)) {
         let email = new FormData();
         email.append("email", this.email);
 
@@ -61,9 +61,6 @@ export default {
             }
           })
           .catch(() => { alert(this.constants.FORGOT_EMAIL) });
-
-      } else {
-        alert("Fill a referenced email to receive a new password");
       }
     },
 
