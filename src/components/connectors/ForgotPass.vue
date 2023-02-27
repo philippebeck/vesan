@@ -37,20 +37,14 @@
 </template>
 
 <script>
-import constants from "/constants";
-
 export default {
   name: "ForgotPass",
+  props: ["constants"],
 
   data() {
     return {
-      constants: {},
       email: ""
     }
-  },
-
-  mounted() {
-    this.constants = constants;
   },
 
   methods: {
@@ -64,11 +58,11 @@ export default {
 
         this.$serve.postData("/api/users/email", email)
           .then((name) => {
-            if (confirm(name + constants.FORGOT_CONFIRM)) {
+            if (confirm(name + this.constants.FORGOT_CONFIRM)) {
               this.forgotPass();
             }
           })
-          .catch(() => { alert(constants.FORGOT_EMAIL) });
+          .catch(() => { alert(this.constants.FORGOT_EMAIL) });
       }
     },
 
@@ -79,8 +73,8 @@ export default {
       let message = new FormData();
 
       message.append("email", this.email);
-      message.append("subject", constants.FORGOT_SUBJECT);
-      message.append("html", constants.FORGOT_TEXT);
+      message.append("subject", this.constants.FORGOT_SUBJECT);
+      message.append("html", this.constants.FORGOT_TEXT);
 
       this.$serve.postData("/api/users/password", message)
         .then(() => {

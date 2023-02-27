@@ -52,21 +52,15 @@
 </template>
 
 <script>
-import constants from "/constants"
-
 export default {
   name: "SignIn",
+  props: ["constants"],
 
   data() {
     return {
-      constants: {},
       email: "",
       pass: ""
     }
-  },
-
-  mounted() {
-    this.constants = constants;
   },
 
   methods: {
@@ -92,7 +86,7 @@ export default {
 
             this.$router.go("/");
           })
-          .catch(() => { alert(constants.FORGOT_CREDENTIALS) });
+          .catch(() => { alert(this.constants.FORGOT_CREDENTIALS) });
       }
     }
   }

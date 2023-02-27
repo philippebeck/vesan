@@ -86,23 +86,17 @@
 </template>
 
 <script>
-import constants from "/constants";
-
 export default {
   name: "CreateUser",
+  props: ["constants"],
 
   data() {
     return {
-      constants: {},
       name: "",
       email: "",
       image:"",
       pass: ""
     }
-  },
-
-  mounted() {
-    this.constants = constants;
   },
 
   methods: {
