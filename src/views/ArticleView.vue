@@ -147,6 +147,7 @@ export default {
 
       for (let i = 0; i < usersLiked.length; i++) {
         if (this.constants.USER_ID === usersLiked[i]) {
+
           hasLiked = true;
           usersLiked.splice(i, 1);
         }
@@ -157,16 +158,18 @@ export default {
       }
 
       let article = new FormData();
+
       article.append("id", this.article._id);
       article.append("name", this.article.name);
       article.append("usersLiked", usersLiked);
 
       this.$serve.putData(`/api/articles/${article.get("id")}`, article)
         .then(() => {
+
           if (hasLiked === true) {
-            alert(article.get("name") + " disliked !");
+            alert(article.get("name") + this.constants.DISLIKED);
           } else {
-            alert(article.get("name") + " liked !");
+            alert(article.get("name") + this.constants.LIKED);
           }
         })
         .catch(err => { console.log(err) });

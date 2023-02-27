@@ -220,7 +220,7 @@ export default {
         this.setBasket();
 
       } else {
-        alert("You need to choose an option !");
+        alert(this.constants.ALERT_OPTION);
       }
     },
 
@@ -277,7 +277,7 @@ export default {
       }
 
       localStorage.setItem("basket", JSON.stringify(this.basket));
-      alert(`${this.order.quantity} "${this.product.name}" (${this.order.option}) has been added to the Basket !`);
+      alert(`${this.order.quantity} "${this.product.name}" (${this.order.option}) ${this.constants.BASKET_ADDED}`);
 
       this.$router.push("/shop");
     }

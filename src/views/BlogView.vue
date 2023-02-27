@@ -128,9 +128,7 @@ import ArticleCreator from "@/components/creators/ArticleCreator"
 
 export default {
   name: "BlogView",
-  components: {
-    ArticleCreator
-  },
+  components: { ArticleCreator },
   props: ["constants"],
 
   mounted () {
@@ -164,6 +162,7 @@ export default {
     /**
      * SORT ITEMS BY CATEGORY
      * @param {array} items 
+     * @returns
      */
     sortItemsByCat(items) {
       return this.$serve.sortItemsByCat(items);
@@ -171,6 +170,7 @@ export default {
 
     /**
      * CHECK LIKES
+     * @param {string} id
      * @returns
      */
     checkLikes(id) {
@@ -205,16 +205,18 @@ export default {
           }
 
           let article = new FormData();
+
           article.append("id", this.articles[i]._id);
           article.append("name", this.articles[i].name);
           article.append("usersLiked", usersLiked);
 
           this.$serve.putData(`/api/articles/${article.get("id")}`, article)
             .then(() => {
+
               if (hasLiked === true) {
-                console.log(article.get("name") + " disliked !");
+                alert(article.get("name") + this.constants.DISLIKED);
               } else {
-                console.log(article.get("name") + " liked !");
+                alert(article.get("name") + this.constants.LIKED);
               }
             })
             .catch(err => { console.log(err) });

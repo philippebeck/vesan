@@ -120,7 +120,7 @@ export default {
 
         this.$serve.postData("/api/users/message", message)
           .then(() => {
-            alert(message.get("subject") + " sended !");
+            alert(this.subject + this.constants.SENDED);
             this.$router.push("/");
           })
           .catch(err => { console.log(err) });
