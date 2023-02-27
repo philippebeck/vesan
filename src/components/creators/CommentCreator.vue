@@ -5,7 +5,7 @@
         <i class="fa-regular fa-comment fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.CREATE_COMMENT }}
+        {{ constants.COMMENT_CREATOR }}
       </h3>
     </template>
 
@@ -17,7 +17,7 @@
         type="textarea"
         v-model:value="text"
         @keyup.enter="createComment()"
-        :info="constants.CREATE_TEXT"
+        :info="constants.INFO_TEXT"
         :max="5000">
 
         <template #legend>
@@ -33,7 +33,7 @@
         @click="createComment()" 
         class="btn-green"
         :content="constants.CONTENT_CREATE"
-        :title="constants.CREATE_COMMENT">
+        :title="constants.COMMENT_CREATOR">
 
         <template #btn>
           <i class="fa-solid fa-square-plus fa-lg"></i>

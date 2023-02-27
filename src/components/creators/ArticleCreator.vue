@@ -5,7 +5,7 @@
         <i class="fa-regular fa-envelope fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.CREATE_ARTICLE }}
+        {{ constants.ARTICLE_CREATOR }}
       </h3>
     </template>
 
@@ -19,7 +19,7 @@
             <FieldElt id="article-name"
               v-model:value="name"
               @keyup.enter="validateNewArticle()"
-              :info="constants.CREATE_NAME"
+              :info="constants.INFO_NAME"
               :min="2">
 
               <template #legend>
@@ -53,7 +53,7 @@
             <FieldElt id="article-image"
               type="file"
               v-model:value="image"
-              :info="constants.CREATE_IMAGE">
+              :info="constants.INFO_IMAGE">
 
               <template #legend>
                 {{ constants.LEGEND_IMAGE }}
@@ -70,7 +70,7 @@
               type="textarea"
               v-model:value="alt"
               @keyup.enter="validateNewArticle()"
-              :info="constants.CREATE_ALT">
+              :info="constants.INFO_ALT">
 
               <template #legend>
                 {{ constants.LEGEND_ALT }}
@@ -88,7 +88,7 @@
               :list="constants.CATS_ARTICLE"
               v-model:value="cat"
               @keyup.enter="validateNewArticle()"
-              :info="constants.CREATE_CATEGORY">
+              :info="constants.INFO_CATEGORY">
 
               <template #legend>
                 {{ constants.LEGEND_CATEGORY }}
@@ -106,7 +106,7 @@
           @click="validateNewArticle()" 
           class="btn-green"
           :content="constants.CONTENT_CREATE"
-          :title="constants.CREATE_ARTICLE">
+          :title="constants.ARTICLE_CREATOR">
 
           <template #btn>
             <i class="fa-solid fa-square-plus fa-lg"></i>

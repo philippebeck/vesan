@@ -5,7 +5,7 @@
         <i class="fa-solid fa-link fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.CREATE_LINK }}
+        {{ constants.LINK_CREATOR }}
       </h3>
     </template>
 
@@ -17,7 +17,7 @@
             <FieldElt id="name"
               v-model:value="name"
               @keyup.enter="validateNewLink()"
-              :info="constants.CREATE_NAME"
+              :info="constants.INFO_NAME"
               :min="parseInt('2')">
 
               <template #legend>
@@ -34,7 +34,7 @@
               type="url"
               v-model:value="url"
               @keyup.enter="validateNewLink()"
-              :info="constants.CREATE_URL"
+              :info="constants.INFO_URL"
               :min="parseInt('5')"
               :max="parseInt('100')">
 
@@ -53,7 +53,7 @@
               :list="constants.CATS_LINK"
               v-model:value="cat"
               @keyup.enter="validateNewLink()"
-              :info="constants.CREATE_CATEGORY">
+              :info="constants.INFO_CATEGORY">
 
               <template #legend>
                 {{ constants.LEGEND_CATEGORY }}
@@ -69,7 +69,7 @@
           @click="validateNewLink()" 
           class="btn-green"
           :content="constants.CONTENT_CREATE"
-          :title="constants.CREATE_LINK">
+          :title="constants.LINK_CREATOR">
 
           <template #btn>
             <i class="fa-solid fa-square-plus fa-lg"></i>
