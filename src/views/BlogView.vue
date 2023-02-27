@@ -4,7 +4,7 @@
 
     <template #last  v-if="checkRole('editor')">
       <a href="#create-article"
-        :title="constants.CREATE_ARTICLE">
+        :title="constants.ARTICLE_CREATOR">
         <i class="fa-regular fa-envelope fa-fw"></i>
       </a>
     </template>
@@ -21,9 +21,9 @@
         <i class="fa-solid fa-blog fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.BLOG_TITLE }}
+        {{ constants.BLOG_VIEW }}
       </h1>
-      <p>{{ constants.BLOG_INTRO }}</p>
+      <p>{{ constants.INTRO_BLOG }}</p>
     </template>
 
     <template #body>

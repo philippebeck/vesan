@@ -4,9 +4,9 @@
       <h1 class="sky anima-slideB">
         <i class="fa-solid fa-user-gear fa-lg"
           aria-hidden="true"></i>
-        {{ constants.PROFILE_TITLE }}
+        {{ constants.PROFILE_VIEW }}
       </h1>
-      <p>{{ constants.PROFILE_INTRO }}</p>
+      <p>{{ constants.INTRO_PROFILE }}</p>
     </template>
 
     <template #body>
@@ -19,7 +19,7 @@
             <FieldElt id="user-name"
               v-model:value="user.name"
               @keyup.enter="validateUpdatedUser()"
-              :info="constants.CREATE_NAME"
+              :info="constants.INFO_NAME"
               :min="2">
 
               <template #legend>
@@ -37,7 +37,7 @@
               type="email"
               v-model:value="user.email"
               @keyup.enter="validateUpdatedUser()"
-              :info="constants.CREATE_EMAIL">
+              :info="constants.INFO_EMAIL">
 
               <template #legend>
                 {{ constants.LEGEND_EMAIL }}
@@ -56,7 +56,7 @@
 
             <FieldElt id="user-image"
               v-model:value="image"
-              :info="constants.CREATE_IMAGE"
+              :info="constants.INFO_IMAGE"
               type="file">
 
               <template #legend>
@@ -74,7 +74,7 @@
               type="password"
               v-model:value="pass"
               @keyup.enter="validateUpdatedUser()"
-              :info="constants.CREATE_PASSWORD">
+              :info="constants.INFO_PASSWORD">
 
               <template #legend>
                 {{ constants.LEGEND_PASSWORD }}
@@ -114,7 +114,7 @@
       <TableElt v-if="orders.length !== 0"
         :items="orders">
         <template #title>
-          {{ constants.ORDER_TITLE }}
+          {{ constants.TITLE_ORDER }}
         </template>
 
         <!-- Id -->
@@ -218,10 +218,9 @@ export default {
       if (this.$serve.checkName(this.user.name) && 
         this.$serve.checkEmail(this.user.email)) {
 
-        if (this.pass) {
-          if (this.$serve.checkPass(this.pass)) {
+        if (this.pass && this.$serve.checkPass(this.pass)) {
             this.checkUpdatedUser();
-          }
+          
         } else {
           this.checkUpdatedUser();
         }
@@ -268,7 +267,7 @@ export default {
 
       this.$serve.putData(`/api/users/${this.user._id}`, user)
         .then(() => {
-          alert(this.user.name + " updated !");
+          alert(this.user.name + this.constants.UPDATED);
           this.$router.go();
         })
         .catch(err => { console.log(err) });
@@ -280,13 +279,13 @@ export default {
     deleteUser() {
       let userName = this.user.name;
 
-      if (confirm(`Delete ${userName} ?`) === true) {
+      if (confirm(`${this.constants.DELETE} ${userName} ?`) === true) {
         this.$serve.deleteData(`/api/users/${this.user._id}`)
           .then(() => {
             localStorage.removeItem("userId");
             localStorage.removeItem("userToken");
 
-            alert(userName + " deleted !");
+            alert(userName + this.constants.DELETED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

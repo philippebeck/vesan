@@ -5,9 +5,9 @@
         <i class="fa-solid fa-basket-shopping fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.BASKET_TITLE }}
+        {{ constants.BASKET_VIEW }}
       </h1>
-      <p>{{ constants.BASKET_INTRO }}</p>
+      <p>{{ constants.INTRO_BASKET }}</p>
     </template>
 
     <template #body>
@@ -118,7 +118,7 @@
             @click="clearBasket()"
             class="btn-red width-sm"
             :content="constants.CONTENT_CLEAR"
-            :title="constants.BASKET_CLEAR">
+            :title="constants.TITLE_CLEAR">
 
             <template #btn>
               <i class="fa-solid fa-trash-can fa-lg"></i>
@@ -382,7 +382,7 @@ export default {
      * CLEAR BASKET
      */
     clearBasket() {
-      if (confirm(this.constants.CONFIRM_BASKET) === true) {
+      if (confirm(this.constants.BASKET_CONFIRM) === true) {
         localStorage.removeItem("basket");
         this.$router.go();
       }

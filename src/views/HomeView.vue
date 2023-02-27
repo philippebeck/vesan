@@ -19,14 +19,14 @@
 
       <!-- Main Title -->
       <h1 class="blue anima-shrink">
-        {{ constants.HOME_TITLE }}
+        {{ constants.HOME_VIEW }}
       </h1>
     </template>
 
     <!-- Main Content -->
     <template #body>
       <strong class="gray">
-        {{ constants.HOME_INTRO }}
+        {{ constants.INTRO_HOME }}
       </strong>
     </template>
   </CardElt>

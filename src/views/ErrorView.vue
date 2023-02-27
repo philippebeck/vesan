@@ -3,7 +3,8 @@
   <!-- ERROR PAGE -->
   <CardElt>
     <template #header>
-      <h1>{{ constants.ERROR_TITLE }}</h1>
+      <h1>{{ constants.ERROR_VIEW }}</h1>
+      <b>{{ constants.INTRO_ERROR }}</b>
     </template>
 
     <template #body>
