@@ -154,13 +154,13 @@
 
 <script>
 import Editor from "@tinymce/tinymce-vue"
-import constants from "/constants"
 
 export default {
   name: "ProductCreator",
   components: {
     Editor
   },
+  props: ["constants"],
 
   data() {
     return {
@@ -170,13 +170,8 @@ export default {
       alt: "",
       price: null,
       options: "",
-      cat: "",
-      constants: {}
+      cat: ""
     }
-  },
-
-  mounted() {
-    this.constants = constants;
   },
 
   methods: {
@@ -190,12 +185,12 @@ export default {
         if (document.getElementById('product-image').files[0] !== undefined) {
 
           if (this.cat === "") {
-            this.cat = constants.CAT_PRODUCT;
+            this.cat = this.constants.CAT_PRODUCT;
           }
           this.checkNewProduct();
 
         } else {
-          alert(constants.IMG_PRODUCT);
+          alert(this.constants.IMG_PRODUCT);
         }
       }
     },
@@ -211,12 +206,12 @@ export default {
           for (let product of products) {
 
             if (product.name === this.name) {
-              alert(this.name + constants.CHECK_AVAILABLE);
+              alert(this.name + this.constants.CHECK_AVAILABLE);
               isReferenced = true;
             }
 
             if (product.description === this.description) {
-              alert(this.description + constants.CHECK_REFERENCE);
+              alert(this.description + this.constants.CHECK_REFERENCE);
               isReferenced = true;
             }
           }

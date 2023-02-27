@@ -103,21 +103,9 @@
 </template>
 
 <script>
-import constants from "/constants";
-
 export default {
   name: "UserManager",
-  props: ["users"],
-
-  data() {
-    return {
-      constants: {}
-    }
-  },
-
-  mounted() {
-    this.constants = constants;
-  },
+  props: ["constants", "users"],
 
   methods: {
     /**
@@ -160,12 +148,12 @@ export default {
             }
 
             if (users[j] && users[j].name === this.users[i].name) {
-              alert(this.users[i].name + constants.CHECK_AVAILABLE);
+              alert(this.users[i].name + this.constants.CHECK_AVAILABLE);
               isReferenced = true;
             }
 
             if (users[j] && users[j].email === this.users[i].email) {
-              alert(this.users[i].email+ constants.CHECK_REFERENCE);
+              alert(this.users[i].email+ this.constants.CHECK_REFERENCE);
               isReferenced = true;
             }
           }

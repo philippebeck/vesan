@@ -167,24 +167,21 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
-import constants from "/constants";
 
 export default {
   name: "ProfileView",
+  props: ["constants"],
 
   data() {
     return {
-      constants: {},
       pass: ""
     }
   },
 
   mounted() {
-    this.constants = constants;
-
-    if (constants.USER_ID) {
-      this.$store.dispatch("readUser", constants.USER_ID);
-      this.$store.dispatch("listUserOrders", constants.USER_ID);
+    if (this.constants.USER_ID) {
+      this.$store.dispatch("readUser", this.constants.USER_ID);
+      this.$store.dispatch("listUserOrders", this.constants.USER_ID);
 
     } else {
       alert("Go back Home !");

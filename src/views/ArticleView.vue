@@ -84,18 +84,18 @@
       </MediaElt>
 
       <CommentList v-if="comments.length > 0"
-        :comments="comments"/>
+        :comments="comments"
+        :constants="constants"/>
     </template>
 
     <template #aside  v-if="checkRole('user')">
-      <CommentCreator />
+      <CommentCreator :constants="constants"/>
     </template>
   </CardElt>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex"
-import constants from "/constants"
 import CommentCreator from "@/components/creators/CommentCreator"
 import CommentList from "@/components/lists/CommentList"
 
@@ -105,15 +105,9 @@ export default {
     CommentCreator,
     CommentList
   },
-
-  data() {
-    return {
-      constants: {}
-    }
-  },
+  props: ["constants"],
 
   mounted () {
-    this.constants = constants;
     this.$store.dispatch("readArticle", this.$route.params.id);
     this.$store.dispatch("listArticleComments", this.$route.params.id);
 },
@@ -152,14 +146,14 @@ export default {
       let usersLiked = this.article.usersLiked;
 
       for (let i = 0; i < usersLiked.length; i++) {
-        if (constants.USER_ID === usersLiked[i]) {
+        if (this.constants.USER_ID === usersLiked[i]) {
           hasLiked = true;
           usersLiked.splice(i, 1);
         }
       }
 
       if (hasLiked === false) {
-        usersLiked.push(constants.USER_ID);
+        usersLiked.push(this.constants.USER_ID);
       }
 
       let article = new FormData();

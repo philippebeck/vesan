@@ -138,3 +138,9 @@
     </template>
   </CardElt>
 </template>
+
+<script>
+export default {
+  name: 'LegalView'
+}
+</script>

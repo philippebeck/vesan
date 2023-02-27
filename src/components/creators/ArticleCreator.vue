@@ -119,13 +119,13 @@
 
 <script>
 import Editor from "@tinymce/tinymce-vue"
-import constants from "/constants"
 
 export default {
   name: "ArticleCreator",
   components: {
     Editor
   },
+  props: ["constants"],
 
   data() {
     return {
@@ -133,13 +133,8 @@ export default {
       text:"",
       image: "",
       alt: "",
-      cat: "",
-      constants: {}
+      cat: ""
     }
-  },
-
-  mounted() {
-    this.constants = constants;
   },
 
   methods: {
@@ -153,12 +148,12 @@ export default {
         if (document.getElementById('article-image').files[0] !== undefined) {
 
           if (this.cat === "") {
-            this.cat = constants.CAT_ARTICLE;
+            this.cat = this.constants.CAT_ARTICLE;
           }
           this.checkNewArticle();
 
         } else {
-          alert(constants.IMG_ARTICLE);
+          alert(this.constants.IMG_ARTICLE);
         }
       }
     },
@@ -174,12 +169,12 @@ export default {
           for (let article of articles) {
             
             if (article.name === this.name) {
-              alert(this.name + constants.CHECK_AVAILABLE);
+              alert(this.name + this.constants.CHECK_AVAILABLE);
               isReferenced = true;
             }
 
             if (article.text === this.text) {
-              alert(this.text + constants.CHECK_REFERENCE);
+              alert(this.text + this.constants.CHECK_REFERENCE);
               isReferenced = true;
             }
           }
@@ -203,7 +198,7 @@ export default {
         article.append("image", image);
         article.append("alt", this.alt);
         article.append("cat", this.cat);
-        article.append("user", constants.USER_ID);
+        article.append("user", this.constants.USER_ID);
         article.append("created", Date.now());
         article.append("updated", Date.now());
         article.append("likes", 0);

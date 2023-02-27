@@ -21,7 +21,6 @@
             <FieldElt id="email"
               type="email"
               v-model:value="email"
-              @keyup.enter="send()"
               class="anima-slideR"
               :info="constants.CREATE_EMAIL">
 
@@ -38,7 +37,6 @@
           <template #item-2>
             <FieldElt id="subject"
               v-model:value="subject"
-              @keyup.enter="send()"
               class="anima-slideL"
               :info="constants.CREATE_SUBJECT">
 
@@ -56,7 +54,6 @@
             <FieldElt id="text"
               type="textarea"
               v-model:value="text"
-              @keyup.enter="send()"
               class="anima-slideR"
               :info="constants.CREATE_TEXT"
               :max="100">
@@ -71,45 +68,38 @@
           </template>
         </ListElt>
 
-        <!-- Security -->
-        <div id="recaptcha" 
-          class="g-recaptcha" 
-          data-sitekey="">
-        </div>
-
         <!-- Send Button -->
-        <BtnElt type="button"
-          @click="send()" 
-          class="btn-green anima-slideL"
-          :content="constants.CONTENT_SEND"
-          :title="constants.BUTTON_MESSAGE">
+        <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY">
+          <BtnElt type="button"
+            @click="send()" 
+            class="btn-green anima-slideL"
+            :content="constants.CONTENT_SEND"
+            :title="constants.BUTTON_MESSAGE">
 
-          <template #btn>
-            <i class="fa-regular fa-paper-plane fa-lg"></i>
-          </template>
-        </BtnElt>
+            <template #btn>
+              <i class="fa-regular fa-paper-plane fa-lg"></i>
+            </template>
+          </BtnElt>
+        </vue-recaptcha>
       </form>
     </template>
   </CardElt>
 </template>
 
 <script>
-import constants from "/constants"
+import { VueRecaptcha } from "vue-recaptcha";
 
 export default {
   name: "ContactView",
+  components: { VueRecaptcha },
+  props: ["constants"],
 
   data() {
     return {
-      constants: {},
       email: "",
       subject: "",
       text: ""
     }
-  },
-
-  mounted() {
-    this.constants = constants;
   },
 
   methods: {

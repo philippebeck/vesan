@@ -45,20 +45,14 @@
 </template>
 
 <script>
-import constants from "/constants";
-
 export default {
   name: "CommentCreator",
+  props: ["constants"],
 
   data() {
     return {
-      text: "",
-      constants: {}
+      text: ""
     }
-  },
-
-  mounted() {
-    this.constants = constants;
   },
 
   methods: {
@@ -71,7 +65,7 @@ export default {
 
         comment.append("text", this.text);
         comment.append("article", this.$route.params.id);
-        comment.append("user", constants.USER_ID);
+        comment.append("user", this.constants.USER_ID);
         comment.append("created", Date.now());
         comment.append("updated", Date.now());
 
@@ -83,7 +77,7 @@ export default {
           .catch(err => { console.log(err) });
 
       } else {
-        alert(constants.ALERT_TEXT);
+        alert(this.constants.ALERT_TEXT);
       }
     }
   }

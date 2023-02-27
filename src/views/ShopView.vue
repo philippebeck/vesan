@@ -110,7 +110,7 @@
     </template>
 
     <template #aside v-if="checkRole('editor')">
-      <ProductCreator />
+      <ProductCreator :constants="constants"/>
     </template>
   </CardElt>
 </template>
@@ -118,25 +118,23 @@
 <script>
 import { mapState, mapActions } from "vuex"
 import ProductCreator from "@/components/creators/ProductCreator"
-import constants from "/constants"
 
 export default {
   name: "ShopView",
   components: {
     ProductCreator
   },
+  props: ["constants"],
 
   data() {
     return {
       scores: [],
-      constants: {},
       priceCurrency: ""
     }
   },
 
   mounted () {
-    this.constants = constants;
-    this.priceCurrency = constants.CURRENCY_ISO;
+    this.priceCurrency = this.constants.CURRENCY_ISO;
 
     this.$store.dispatch("listProducts");
     this.$store.dispatch("listReviews");

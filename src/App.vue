@@ -1,13 +1,13 @@
 <template>
 
   <!-- NAVBAR -->
-  <NavElt :items="['home', 'shop', 'blog', 'contact', 'basket']">
+  <NavElt :items="constants.NAV_MAIN">
 
     <!-- Brand Logo -->
     <template #brand>
       <img class="anima-slideB"
-        src="/img/logo.svg"
-        alt="Logo Phi">
+        :src="constants.LOGO_SRC"
+        :alt="constants.LOGO_ALT">
     </template>
 
     <!-- Main Part -->
@@ -30,9 +30,9 @@
     <!-- Admin Part -->
     <template #admin>
 
-      <!-- Admin -->
+      <!-- Admin & Editor -->
       <ListElt v-if="checkRole('admin') || checkRole('editor')"
-        :items="['admin', 'profile', 'logout']">
+        :items="constants.NAV_ADMIN">
 
         <template #item-1>
           <a href="/admin"
@@ -43,7 +43,7 @@
 
         <template #item-2>
           <a href="/profile"
-            :title="`${user.name} Profile`">
+            :title="`Profile of ${user.name}`">
             <img :src="`/img/thumbnails/users/${user.image}`"
               :alt="user.name"
               :height="40"
@@ -61,13 +61,13 @@
         </template>
       </ListElt>
 
-      <!-- Author & User -->
+      <!-- User -->
       <ListElt v-else-if="checkRole('user')"
-        :items="['profile', 'logout']">
+        :items="constants.NAV_USER">
 
         <template #item-1>
           <a href="/profile"
-            :title="`${user.name} Profile`">
+            :title="`Profile of ${user.name}`">
             <img :src="`/img/thumbnails/users/${user.image}`"
               :alt="user.name"
               :height="40"
@@ -96,7 +96,7 @@
 
   <!-- VIEWS -->
   <main>
-    <router-view/>
+    <router-view :constants="constants"/>
   </main>
 
   <!-- FOOTER -->
@@ -104,7 +104,7 @@
 
     <!-- Websites -->
     <template #foot1>
-      <ListElt :items="['Asperger', 'Astronomy', 'Philippe Beck']">
+      <ListElt :items="constants.FOOT1">
         <template #item-1>
           <a href="https://asperger.philippebeck.net"
             title="Tests for Asperger's Syndrome">
@@ -128,7 +128,7 @@
 
     <!-- Tools -->
     <template #foot2>
-      <ListElt :items="['Vue-Elt', 'Servidio', 'Animadio', 'NemJS', 'Vesan']">
+      <ListElt :items="constants.FOOT2">
         <template #item-1>
           <a href="https://www.npmjs.com/package/vue-elt"
             title="Vuejs SFC Library">
@@ -164,7 +164,7 @@
 
     <!-- Links -->
     <template #foot3>
-      <ListElt :items="['Links', 'Legal Notice', 'Donation', 'Sponsor']">
+      <ListElt :items="constants.FOOT3">
         <template #item-1>
           <a href="/link"
             title="Find links for coding">
@@ -194,7 +194,7 @@
 
     <!-- Social Networks & Contributions -->
     <template #foot>
-      <ListElt :items="['GitHub', 'LinkedIn', 'Medium', 'NPM', 'Twitter', 'CodePen']">
+      <ListElt :items="constants.FOOT">
         <template #item-1>
           <a href="https://github.com/philippebeck"
             title="Philippe Beck @GitHub">
@@ -243,7 +243,15 @@ import constants from "/constants"
 export default {
   name: 'App',
 
+  data() {
+    return {
+      constants: {}
+    }
+  },
+
   mounted() {
+    this.constants = constants;
+
     if (constants.USER_ID) {
       this.$store.dispatch("readAvatar", constants.USER_ID);
     }

@@ -125,22 +125,15 @@
 <script>
 import { mapState, mapActions } from "vuex"
 import ArticleCreator from "@/components/creators/ArticleCreator"
-import constants from "/constants"
 
 export default {
   name: "BlogView",
   components: {
     ArticleCreator
   },
-
-  data() {
-    return {
-      constants: {}
-    }
-  },
+  props: ["constants"],
 
   mounted () {
-    this.constants = constants;
     this.$store.dispatch("listArticles");
   },
 
@@ -201,14 +194,14 @@ export default {
           let usersLiked = this.articles[i].usersLiked;
 
           for (let j = 0; j < usersLiked.length; j++) {
-            if (constants.USER_ID === usersLiked[j]) {
+            if (this.constants.USER_ID === usersLiked[j]) {
               hasLiked = true;
               usersLiked.splice(j, 1);
             }
           }
 
           if (hasLiked === false) {
-            usersLiked.push(constants.USER_ID);
+            usersLiked.push(this.constants.USER_ID);
           }
 
           let article = new FormData();

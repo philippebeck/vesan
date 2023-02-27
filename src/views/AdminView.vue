@@ -56,14 +56,17 @@
 
         <template #body>
           <ProductManager v-if="products.length > 0"
+            :constants="constants"
             :products="products"/>
 
           <ReviewManager v-if="reviews.length > 0"
-            :reviews="reviews"
+            :constants="constants"
             :products="products"
+            :reviews="reviews"
             :users="users"/>
 
           <OrderManager v-if="orders.length > 0"
+            :constants="constants"
             :orders="orders"
             :users="users"/>
         </template>
@@ -85,11 +88,13 @@
         <template #body>
           <ArticleManager v-if="articles.length > 0"
             :articles="articles"
+            :constants="constants"
             :users="users"/>
 
           <CommentManager v-if="comments.length > 0"
-            :comments="comments"
             :articles="articles"
+            :comments="comments"
+            :constants="constants"
             :users="users"/>
         </template>
       </CardElt>
@@ -109,6 +114,7 @@
 
         <template #body>
           <UserManager v-if="users.length > 0"
+            :constants="constants"
             :users="users"/>
         </template>
       </CardElt>
@@ -128,6 +134,7 @@
 
         <template #body>
           <LinkManager v-if="links.length > 0"
+            :constants="constants"
             :links="links"/>
         </template>
       </CardElt>
@@ -137,7 +144,6 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
-import constants from "/constants"
 
 import ProductManager from "@/components/managers/ProductManager"
 import ReviewManager from "@/components/managers/ReviewManager"
@@ -159,18 +165,16 @@ export default {
     LinkManager
   },
 
+  props: ["constants"],
   data() {
     return {
-      constants: {},
       user: {}
     }
   },
 
   mounted () {
-    this.constants = constants;
-
-    if (constants.USER_ID) {
-      this.$serve.getData("/api/users/avatar/" + constants.USER_ID)
+    if (this.constants.USER_ID) {
+      this.$serve.getData("/api/users/avatar/" + this.constants.USER_ID)
         .then((res) => { 
           this.user = res;
 
