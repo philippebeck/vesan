@@ -81,22 +81,16 @@
 </template>
 
 <script>
-import constants from "/constants"
-
 export default {
   name: "LinkCreator",
+  props: ["constants"],
 
   data() {
     return {
       name: "",
       url: "",
-      cat: "",
-      constants: {}
+      cat: ""
     }
-  },
-
-  mounted() {
-    this.constants = constants;
   },
 
   methods: {
@@ -111,7 +105,7 @@ export default {
       if (this.$serve.checkName(this.name) &&
         this.$serve.checkUrl(`https://${this.url}`)) {
         if (this.cat === "") {
-          this.cat = constants.CAT_LINK;
+          this.cat = this.constants.CAT_LINK;
         }
         this.checkNewLink();
       }
@@ -128,11 +122,11 @@ export default {
           for (let link of links) {
 
             if (link.name === this.name) {
-              alert(this.name + constants.CHECK_AVAILABLE);
+              alert(this.name + this.constants.CHECK_AVAILABLE);
               isReferenced = true;
             }
             if (link.url === this.url) {
-              alert(this.url + constants.CHECK_REFERENCE);
+              alert(this.url + this.constants.CHECK_REFERENCE);
               isReferenced = true;
             }
           }

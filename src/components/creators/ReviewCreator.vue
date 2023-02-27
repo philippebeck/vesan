@@ -62,21 +62,15 @@
 </template>
 
 <script>
-import constants from "/constants";
-
 export default {
   name: "ReviewCreator",
+  props: ["constants"],
 
   data() {
     return {
       text: "",
-      score: null,
-      constants: {}
+      score: null
     }
-  },
-
-  mounted() {
-    this.constants = constants;
   },
 
   methods: {
@@ -90,7 +84,7 @@ export default {
         this.checkNewReview();
 
       } else {
-        alert(constants.ALERT_FIELD);
+        alert(this.constants.ALERT_FIELD);
       }
     },
 
@@ -103,10 +97,10 @@ export default {
           let isReferenced = false;
 
           for (let review of reviews) {
-            if (review.user === constants.USER_ID && 
+            if (review.user === this.constants.USER_ID && 
               review.product === this.$route.params.id) {
 
-              alert(constants.CHECK_REVIEW);
+              alert(this.constants.CHECK_REVIEW);
               isReferenced = true;
             }
           }
@@ -126,7 +120,7 @@ export default {
         review.append("text", this.text);
         review.append("score", this.score);
         review.append("product", this.$route.params.id);
-        review.append("user", constants.USER_ID);
+        review.append("user", this.constants.USER_ID);
         review.append("created", Date.now());
         review.append("updated", Date.now());
 
