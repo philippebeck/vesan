@@ -160,13 +160,7 @@ CATS_ARTICLE : [
   ADMIN_INTRO : "Manage all data !",
   ADMIN_TITLE : "Admin",
 
-  ALERT_NAME : "The Name must have between 2 & 50 characters.",
-  ALERT_EMAIL : "Your Email is not a valid address.",
-  ALERT_FIELD : "Fields cannot be empty !",
   ALERT_ORDER : "Order created !",
-  ALERT_PASS : "Your Password must have 8 to 50 characters, with uppercase, lowercase, 1 number minimum & no space.",
-  ALERT_URL : "This URL is not a valid path.",
-  ALERT_TEXT : "The text must have between 8 & 5000 characters.",
 
   BASKET_ADD : "Add to Basket ",
   BASKET_CLEAR : "Clear the basket",
@@ -186,8 +180,13 @@ CATS_ARTICLE : [
   BUTTON_SIGNUP : "SignUp a new user",
 
   CHECK_AVAILABLE : " is not available !",
+  CHECK_NAME : "The Name must have between 2 & 50 characters.",
+  CHECK_EMAIL : "Your Email is not a valid address.",
+  CHECK_PASS : "Your Password must have 8 to 50 characters, with uppercase, lowercase, 1 number minimum & no space.",
   CHECK_REFERENCE : " is already referenced !",
   CHECK_REVIEW : "You have already written a review for this product, you can edit your old review or delete it",
+  CHECK_URL : "This URL is not a valid path.",
+  CHECK_TEXT : "The text must have between 8 & 5000 characters.",
 
   CONFIRM_BASKET : "Do you want to clear your basket ?",
 
