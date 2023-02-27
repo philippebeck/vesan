@@ -82,9 +82,6 @@ export default {
         this.score !== null) {
 
         this.checkNewReview();
-
-      } else {
-        alert(this.constants.ALERT_FIELD);
       }
     },
 

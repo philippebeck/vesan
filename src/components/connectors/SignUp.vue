@@ -105,8 +105,7 @@ export default {
      * VALIDATE NEW USER IF DATA ARE VALID
      */
     validateNewUser() {
-      if (this.name && this.email && this.pass &&
-        this.$serve.checkName(this.name) && 
+      if (this.$serve.checkName(this.name) && 
         this.$serve.checkEmail(this.email) && 
         this.$serve.checkPass(this.pass)) {
 
@@ -116,9 +115,6 @@ export default {
         } else {
           alert("A photo of the user must be uploaded !");
         }
-
-      } else {
-        alert("Fill all fields to signup !");
       }
     },
 

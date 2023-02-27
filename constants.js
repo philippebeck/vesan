@@ -25,7 +25,10 @@ export default {
   PASS_MAX : 50,
   PASS_MIN : 8,
 
-  PAYPAL_ID : "your-client-id",
+  PAYPAL_COLOR : "blue",
+  PAYPAL_LABEL : "paypal",
+  PAYPAL_NAMESPACE : "paypal_sdk",
+  PAYPAL_SHAPE : "pill",
 
   RECAPTCHA_KEY : "your-recaptcha-key",
 
@@ -84,6 +87,12 @@ CATS_ARTICLE : [
     "Media",
     "Pet",
     "Sports",
+  ],
+
+  CONTACT_LIST : [
+    "email",
+    "subject",
+    "text"
   ],
 
   FOOT : [
@@ -160,13 +169,7 @@ CATS_ARTICLE : [
   ADMIN_INTRO : "Manage all data !",
   ADMIN_TITLE : "Admin",
 
-  ALERT_NAME : "The Name must have between 2 & 50 characters.",
-  ALERT_EMAIL : "Your Email is not a valid address.",
-  ALERT_FIELD : "Fields cannot be empty !",
   ALERT_ORDER : "Order created !",
-  ALERT_PASS : "Your Password must have 8 to 50 characters, with uppercase, lowercase, 1 number minimum & no space.",
-  ALERT_URL : "This URL is not a valid path.",
-  ALERT_TEXT : "The text must have between 8 & 5000 characters.",
 
   BASKET_ADD : "Add to Basket ",
   BASKET_CLEAR : "Clear the basket",
@@ -186,8 +189,13 @@ CATS_ARTICLE : [
   BUTTON_SIGNUP : "SignUp a new user",
 
   CHECK_AVAILABLE : " is not available !",
+  CHECK_NAME : "The Name must have between 2 & 50 characters.",
+  CHECK_EMAIL : "Your Email is not a valid address.",
+  CHECK_PASS : "Your Password must have 8 to 50 characters, with uppercase, lowercase, 1 number minimum & no space.",
   CHECK_REFERENCE : " is already referenced !",
   CHECK_REVIEW : "You have already written a review for this product, you can edit your old review or delete it",
+  CHECK_URL : "This URL is not a valid path.",
+  CHECK_TEXT : "The text must have between 8 & 5000 characters.",
 
   CONFIRM_BASKET : "Do you want to clear your basket ?",
 
@@ -230,6 +238,7 @@ CATS_ARTICLE : [
   DELETE_REVIEW : "Delete review #",
 
   DISLIKE : "Dislike ",
+  DISLIKED : " disliked !",
 
   ERROR_ALT : "404 Error",
   ERROR_TITLE : "Page not found !",
@@ -250,6 +259,7 @@ CATS_ARTICLE : [
 
   HOME_INTRO : "CMS with Vue-Elt, Servidio, Animadio & NemJS",
   HOME_TITLE : "Vesan",
+  HOME_GO : "Go back Home !",
 
   IMG_ARTICLE : "An image of the article must be uploaded !",
   IMG_PRODUCT : "An image of the product must be uploaded !",
@@ -289,6 +299,7 @@ CATS_ARTICLE : [
 
   LIKE : "Like ",
   LIKE_LOGIN : "Login to like ",
+  LIKED : " liked !",
 
   LINK_INTRO : "Links for dev !",
   LINK_TITLE : "Links",
@@ -315,6 +326,12 @@ CATS_ARTICLE : [
   ON : "on",
 
   ORDER_TITLE : "Your orders",
+
+  PAYPAL_BTN : "Failed to render the PayPal Buttons",
+  PAYPAL_CANCEL : "Canceled transaction !",
+  PAYPAL_ERROR : "Invalid transaction !",
+  PAYPAL_SDK : "Failed to load the PayPal JS SDK script",
+  PAYPAL_STATUS : "Status of transaction #",
 
   PROFILE_INTRO : "Manage your profile & your orders",
   PROFILE_TITLE : "Profile",

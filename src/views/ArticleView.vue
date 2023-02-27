@@ -164,9 +164,9 @@ export default {
       this.$serve.putData(`/api/articles/${article.get("id")}`, article)
         .then(() => {
           if (hasLiked === true) {
-            console.log(article.get("name") + " disliked !");
+            alert(article.get("name") + " disliked !");
           } else {
-            console.log(article.get("name") + " liked !");
+            alert(article.get("name") + " liked !");
           }
         })
         .catch(err => { console.log(err) });

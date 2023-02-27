@@ -65,8 +65,7 @@ export default {
      * USER LOGIN
      */
     login() {
-      if (this.email && this.pass &&
-        this.$serve.checkEmail(this.email) && 
+      if (this.$serve.checkEmail(this.email) && 
         this.$serve.checkPass(this.pass)) {
 
         let auth = new FormData();
@@ -85,9 +84,6 @@ export default {
             this.$router.go("/");
           })
           .catch(() => { alert(this.constants.FORGOT_CREDENTIALS) });
-
-      } else {
-        alert("Fill a referenced email & his linked password to enter");
       }
     }
   }
