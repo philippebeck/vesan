@@ -94,21 +94,9 @@
 </template>
 
 <script>
-import constants from "/constants";
-
 export default {
   name: "CommentList",
-  props: ["comments"],
-
-  data() {
-    return {
-      constants: {}
-    }
-  },
-
-  mounted() {
-    this.constants = constants;
-  },
+  props: ["comments", "constants"],
 
   methods: {
     /**
