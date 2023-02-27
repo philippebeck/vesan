@@ -4,7 +4,7 @@
     <FieldElt id="email"
       type="email"
       v-model:value="email"
-      :info="constants.CREATE_EMAIL"
+      :info="constants.INFO_EMAIL"
       required>
 
       <template #legend>
@@ -21,7 +21,7 @@
         @click="checkEmail()"
         class="btn-orange"
         :content="constants.CONTENT_SEND"
-        :title="constants.BUTTON_FORGOT">
+        :title="constants.TITLE_FORGOT">
 
         <template #btn>
           <i class="fa-regular fa-paper-plane fa-lg"></i>
