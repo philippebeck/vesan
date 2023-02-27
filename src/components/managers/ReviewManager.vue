@@ -97,21 +97,9 @@
 </template>
 
 <script>
-import constants from "/constants";
-
 export default {
   name: "ReviewManager",
-  props: ["reviews", "products", "users"],
-
-  data() {
-    return {
-      constants: {}
-    }
-  },
-
-  mounted() {
-    this.constants = constants;
-  },
+  props: ["constants", "products", "reviews", "users"],
 
   methods: {
     /**

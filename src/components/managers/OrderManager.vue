@@ -110,22 +110,9 @@
 </template>
 
 <script>
-import constants from "/constants"
-
 export default {
   name: "OrderManager",
-  props: ["orders", "users"],
-
-  data() {
-    return {
-      constants: {}
-    }
-  },
-
-  mounted() {
-    this.constants = constants;
-  },
-
+  props: ["constants", "orders", "users"],
 
   methods: {
     /**

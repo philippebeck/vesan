@@ -72,21 +72,9 @@
 </template>
 
 <script>
-import constants from "/constants"
-
 export default {
   name: "LinkManager",
-  props: ["links"],
-
-  data() {
-    return {
-      constants: {}
-    }
-  },
-
-  mounted() {
-    this.constants = constants;
-  },
+  props: ["constants", "links"],
 
   methods: {
     /**
@@ -140,12 +128,12 @@ export default {
             }
 
             if (links[j] && links[j].name === this.links[i].name) {
-              alert(this.links[i].name + constants.CHECK_AVAILABLE);
+              alert(this.links[i].name + this.constants.CHECK_AVAILABLE);
               isReferenced = true;
             }
 
             if (links[j] && links[j].url === this.links[i].url) {
-              alert(this.links[i].url+ constants.CHECK_REFERENCE);
+              alert(this.links[i].url+ this.constants.CHECK_REFERENCE);
               isReferenced = true;
             }
           }

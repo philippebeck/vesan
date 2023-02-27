@@ -90,21 +90,9 @@
 </template>
 
 <script>
-import constants from "/constants";
-
 export default {
   name: "CommentManager",
-  props: ["comments", "articles", "users"],
-
-  data() {
-    return {
-      constants: {}
-    }
-  },
-
-  mounted() {
-    this.constants = constants;
-  },
+  props: ["articles", "comments", "constants", "users"],
 
   methods: {
     /**
