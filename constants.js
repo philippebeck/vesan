@@ -314,6 +314,19 @@ export default {
   TITLE_SIGNIN : "SignIn to your account",
   TITLE_SIGNUP : "SignUp a new user",
 
+  /******************** WORD ********************/
+
+  DELETE : "Delete ",
+  DELETED : " deleted !",
+  DISLIKE : "Dislike ",
+  DISLIKED : " disliked !",
+  LIKE : "Like ",
+  LIKED : " liked !",
+  ON : "on",
+  READ : "Read ",
+  TOTAL : "Total",
+  WATCH : "Watch ",
+
   /******************** SERVIDIO CHECK ********************/
 
   CHECK_NAME : "The Name must have between 2 & 50 characters.",
@@ -322,15 +335,47 @@ export default {
   CHECK_URL : "This URL is not a valid path.",
   CHECK_TEXT : "The text must have between 8 & 5000 characters.",
 
-  /******************** UNDER CONSTRUCTION ********************/
-
-  ALERT_ORDER : "Order created !",
+  /******************** BASKET ********************/
 
   BASKET_CONFIRM : "Do you want to clear your basket ?",
   BASKET_EMPTY : "Your basket is empty !",
   BASKET_LOGIN : "Login to order those Products",
   BASKET_ORDER : "Order those Products",
   BASKET_TOTAL : "The total of your basket is",
+
+  /******************** DELETE ********************/
+
+  DELETE_ACCOUNT : "Delete your account",
+  DELETE_COMMENT : "Delete comment #",
+  DELETE_ORDER : "Delete order #",
+  DELETE_REVIEW : "Delete review #",
+
+  /******************** FORGOT ********************/
+
+  FORGOT_CONFIRM : `, do you confirm sending a new password ?`,
+  FORGOT_CREDENTIALS : "Wrong email or password !",
+  FORGOT_EMAIL : "This email is not referenced",
+  FORGOT_SUBJECT : "New password",
+  FORGOT_TEXT : "This is your new password, keep it safe : ",
+
+  /******************** PAYPAL ********************/
+
+  PAYPAL_BTN : "Failed to render the PayPal Buttons",
+  PAYPAL_CANCEL : "Canceled transaction !",
+  PAYPAL_ERROR : "Invalid transaction !",
+  PAYPAL_SDK : "Failed to load the PayPal JS SDK script",
+  PAYPAL_STATUS : "Status of transaction #",
+
+  /******************** REVIEW ********************/
+
+  REVIEW_FIRST : "Be the first to write a review about ",
+  REVIEW_LOGIN : "Login to review",
+  REVIEW_READ : "Read reviews about ",
+  REVIEW_WRITE : "Write a review",
+
+  /******************** UNDER CONSTRUCTION ********************/
+
+  ALERT_ORDER : "Order created !",
 
   CHECK_AVAILABLE : " is not available !",
 
@@ -339,24 +384,8 @@ export default {
 
   CREATE_BY : "Created by",
 
-  DELETE : "Delete ",
-  DELETE_ACCOUNT : "Delete your account",
-  DELETE_COMMENT : "Delete comment #",
-  DELETE_ORDER : "Delete order #",
-  DELETE_REVIEW : "Delete review #",
-  DELETED : " deleted !",
-
-  DISLIKE : "Dislike ",
-  DISLIKED : " disliked !",
-
   ERROR_ALT : "404 Error",
   ERROR_LINK : "Go back home ?",
-
-  FORGOT_CONFIRM : `, do you confirm sending a new password ?`,
-  FORGOT_CREDENTIALS : "Wrong email or password !",
-  FORGOT_EMAIL : "This email is not referenced",
-  FORGOT_SUBJECT : "New password",
-  FORGOT_TEXT : "This is your new password, keep it safe : ",
 
   GO_HOME : "Go back Home !",
   GO_TO : "Go to ",
@@ -367,38 +396,17 @@ export default {
   IMG_ARTICLE : "An image of the article must be uploaded !",
   IMG_PRODUCT : "An image of the product must be uploaded !",
 
-  LIKE : "Like ",
   LIKE_LOGIN : "Login to like ",
-  LIKED : " liked !",
 
   MODERATE_COMMENT : "Moderate comment #",
   MODERATE_REVIEW : "Moderate review #",
 
-  ON : "on",
-
-  PAYPAL_BTN : "Failed to render the PayPal Buttons",
-  PAYPAL_CANCEL : "Canceled transaction !",
-  PAYPAL_ERROR : "Invalid transaction !",
-  PAYPAL_SDK : "Failed to load the PayPal JS SDK script",
-  PAYPAL_STATUS : "Status of transaction #",
-
-  READ : "Read ",
-
   RELEASE_ON : "Release on",
-
-  REVIEW_FIRST : "Be the first to write a review about ",
-  REVIEW_LOGIN : "Login to review",
-  REVIEW_READ : "Read reviews about ",
-  REVIEW_WRITE : "Write a review",
 
   TITLE_ORDER : "Your orders",
   TITLE_USER : "Users",
 
-  TOTAL : "Total",
-
   UPDATE : "Update ",
   UPDATE_ON : "Updated on",
   UPDATED : " updated !",
-
-  WATCH : "Watch ",
 }
