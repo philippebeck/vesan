@@ -113,11 +113,13 @@
 
       <ReviewList v-if="reviews.length > 0"
         id="reviews"
+        :constants="constants"
         :reviews="reviews"/>
     </template>
 
     <template #aside  v-if="checkRole('user')">
-      <ReviewCreator id="review"/>
+      <ReviewCreator id="review"
+        :constants="constants"/>
     </template>
   </CardElt>
 </template>
@@ -126,20 +128,18 @@
 import { mapState, mapActions } from "vuex"
 import ReviewCreator from "@/components/creators/ReviewCreator"
 import ReviewList from "@/components/lists/ReviewList"
-import constants from "/constants"
 
 export default {
   name: "ProductView",
-
   components: {
     ReviewCreator,
     ReviewList
   },
+  props: ["constants"],
 
   data() {
     return {
       basket: [],
-      constants: {},
       order: {},
       option: "",
       priceCurrency: "",
@@ -149,8 +149,7 @@ export default {
   },
 
   mounted () {
-    this.constants = constants;
-    this.priceCurrency = constants.CURRENCY_ISO;
+    this.priceCurrency = this.constants.CURRENCY_ISO;
 
     this.$store.dispatch("readProduct", this.$route.params.id);
     this.$store.dispatch("listProductReviews", this.$route.params.id);
@@ -278,7 +277,6 @@ export default {
       }
 
       localStorage.setItem("basket", JSON.stringify(this.basket));
-
       alert(`${this.order.quantity} "${this.product.name}" (${this.order.option}) has been added to the Basket !`);
 
       this.$router.push("/shop");

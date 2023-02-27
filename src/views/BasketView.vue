@@ -133,25 +133,22 @@
 
 <script>
 import { mapState } from "vuex"
-import constants from "/constants"
 import { loadScript } from "@paypal/paypal-js";
 
 export default {
   name: "BasketView",
+  props: ["constants"],
 
   data() {
     return {
       products: [],
       basket: [],
       order: [],
-      constants: {},
       total: 0
     }
   },
 
   mounted() {
-    this.constants = constants;
-
     this.$serve.getData("/api/products")
       .then(res => { 
         this.products = res;
@@ -161,7 +158,7 @@ export default {
           this.setOrder();
           this.calculateTotal();
 
-          if (constants.USER_ID) {
+          if (this.constants.USER_ID) {
             this.setPaypal(this.getTotal, this.orderProducts);
           }
         }
@@ -294,9 +291,9 @@ export default {
      */
     setPaypal(getTotal, orderProducts) {
       loadScript({ 
-        "client-id": constants.PAYPAL_ID, 
+        "client-id": this.constants.PAYPAL_ID, 
         "data-namespace": "paypal_sdk",
-        currency: constants.CURRENCY_ISO 
+        currency: this.constants.CURRENCY_ISO 
       })
 
         .then((paypal) => {
@@ -312,7 +309,7 @@ export default {
                 return actions.order.create({
                   purchase_units: [{ 
                     "amount": {
-                      "currency_code": constants.CURRENCY_ISO,
+                      "currency_code": this.constants.CURRENCY_ISO,
                       "value": getTotal()
                     }
                   }]
@@ -367,13 +364,13 @@ export default {
       order.append("total", this.total);
       order.append("payment", orderId);
       order.append("status", "Pending");
-      order.append("user", constants.USER_ID);
+      order.append("user", this.constants.USER_ID);
       order.append("created", Date.now());
       order.append("updated", Date.now());
 
       this.$serve.postData("/api/orders", order)
         .then(() => {
-          alert(constants.ALERT_ORDER);
+          alert(this.constants.ALERT_ORDER);
           localStorage.removeItem("basket");
           this.$router.push("/profile");
         })
@@ -384,7 +381,7 @@ export default {
      * CLEAR BASKET
      */
     clearBasket() {
-      if (confirm(constants.CONFIRM_BASKET) === true) {
+      if (confirm(this.constants.CONFIRM_BASKET) === true) {
         localStorage.removeItem("basket");
         this.$router.go();
       }
