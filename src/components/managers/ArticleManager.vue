@@ -222,7 +222,7 @@ export default {
 
         this.$serve.putData(`/api/articles/${article.get("id")}`, article)
           .then(() => {
-            alert(article.get("name") + " updated !");
+            alert(article.get("name") + this.constants.UPDATED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });
@@ -242,10 +242,10 @@ export default {
         }
       }
 
-      if (confirm(`Delete ${articleTitle} ?`) === true) {
+      if (confirm(`${this.constants.DELETE} ${articleTitle} ?`) === true) {
         this.$serve.deleteData(`/api/articles/${id}`)
           .then(() => {
-            alert(articleTitle + " deleted !");
+            alert(articleTitle + this.constants.DELETED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

@@ -146,7 +146,7 @@ export default {
 
           this.$serve.putData(`/api/orders/${id}`, orderData)
             .then(() => {
-              alert(`Status of order #${id} updated !`);
+              alert(this.constants.ORDER + id + this.constants.UPDATED);
               this.$router.go();
             })
             .catch(err => { console.log(err) });
@@ -159,11 +159,11 @@ export default {
      * @param {string} id 
      */
     deleteOrder(id) {
-      if (confirm(`Delete order #${id} ?`) === true) {
+      if (confirm(`${this.constants.DELETE_ORDER}${id} ?`) === true) {
 
         this.$serve.deleteData(`/api/orders/${id}`)
           .then(() => {
-            alert(`Order #${id} deleted !`);
+            alert(this.constants.ORDER + id + this.constants.DELETED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

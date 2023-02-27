@@ -185,7 +185,7 @@ export default {
 
         this.$serve.putData(`/api/users/${this.users[i]._id}`, user)
           .then(() => {
-            alert(this.users[i].name + " updated !");
+            alert(this.users[i].name + this.constants.UPDATED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });
@@ -205,10 +205,10 @@ export default {
         }
       }
 
-      if (confirm(`Delete ${userName} ?`) === true) {
+      if (confirm(`${this.constants.DELETE} ${userName} ?`) === true) {
         this.$serve.deleteData(`/api/users/${id}`)
           .then(() => {
-            alert(userName + " deleted !");
+            alert(userName + this.constants.DELETED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });
