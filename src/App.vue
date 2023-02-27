@@ -96,7 +96,7 @@
 
   <!-- VIEWS -->
   <main>
-    <router-view/>
+    <router-view :constants="constants" />
   </main>
 
   <!-- FOOTER -->
@@ -243,7 +243,15 @@ import constants from "/constants"
 export default {
   name: 'App',
 
+  data() {
+    return {
+      constants: {}
+    }
+  },
+
   mounted() {
+    this.constants = constants;
+
     if (constants.USER_ID) {
       this.$store.dispatch("readAvatar", constants.USER_ID);
     }
