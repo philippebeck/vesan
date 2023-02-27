@@ -149,7 +149,7 @@ export default {
 
         this.$serve.postData("/api/links", link)
           .then(() => {
-            alert(link.get("name") + " created !");
+            alert(this.name + this.constants.CREATED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

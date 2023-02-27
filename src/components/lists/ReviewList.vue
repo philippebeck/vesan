@@ -137,7 +137,7 @@ export default {
 
             this.$serve.putData(`/api/reviews/${id}`, reviewData)
               .then(() => {
-                alert(`Review #${id} updated !`);
+                alert(this.constants.REVIEW + id + this.constants.UPDATED);
                 this.$router.go();
               })
               .catch(err => { console.log(err) });
@@ -151,11 +151,11 @@ export default {
      * @param {string} id 
      */
     deleteReview(id) {
-      if (confirm(`Delete review #${id} ?`) === true) {
+      if (confirm(`${this.constants.DELETE_REVIEW}${id} ?`) === true) {
 
         this.$serve.deleteData(`/api/reviews/${id}`)
           .then(() => {
-            alert(`Review #${id} deleted !`);
+            alert(this.constants.REVIEW + id + this.constants.DELETED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

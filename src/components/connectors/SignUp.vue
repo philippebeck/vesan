@@ -113,7 +113,7 @@ export default {
           this.checkNewUser();
 
         } else {
-          alert("A photo of the user must be uploaded !");
+          alert(this.constants.IMG_USER);
         }
       }
     },
@@ -154,7 +154,7 @@ export default {
 
       this.$serve.postData("/api/users", user)
         .then(() => {
-          alert(user.get("name") + " created !");
+          alert(this.name + this.constants.CREATED);
           this.$router.go();
         })
         .catch(err => { console.log(err) });
