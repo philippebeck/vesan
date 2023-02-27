@@ -5,7 +5,7 @@
         <i class="fa-solid fa-envelopes-bulk fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.MANAGER_ARTICLE }}
+        {{ constants.ARTICLE_MANAGER }}
       </h3>
     </template>
 
@@ -31,7 +31,7 @@
             <FieldElt :id="'name-' + articles[slotProps.index]._id"
               v-model:value="getArticles()[slotProps.index].name"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              :info="constants.UPDATE_TITLE"/>
+              :info="constants.UPDATE_NAME"/>
           </template>
 
           <!-- Text -->

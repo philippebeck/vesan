@@ -5,7 +5,7 @@
         <i class="fa-solid fa-list-check fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.MANAGER_REVIEW }}
+        {{ constants.REVIEW_MANAGER }}
       </h2>
     </template>
 

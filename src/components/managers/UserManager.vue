@@ -5,7 +5,7 @@
         <i class="fa-solid fa-users-gear fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.MANAGER_USER }}
+        {{ constants.USER_MANAGER }}
       </h3>
     </template>
 

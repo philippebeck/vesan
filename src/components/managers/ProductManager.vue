@@ -5,7 +5,7 @@
         <i class="fa-solid fa-shopping-cart fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.MANAGER_PRODUCT }}
+        {{ constants.PRODUCT_MANAGER }}
       </h3>
     </template>
 

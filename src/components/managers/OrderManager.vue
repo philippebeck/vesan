@@ -5,7 +5,7 @@
         <i class="fa-regular fa-rectangle-list fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.MANAGER_ORDER }}
+        {{ constants.ORDER_MANAGER }}
       </h3>
     </template>
 
