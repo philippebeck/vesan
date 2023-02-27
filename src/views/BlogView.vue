@@ -117,7 +117,7 @@
     </template>
 
     <template #aside v-if="checkRole('editor')">
-      <ArticleCreator />
+      <ArticleCreator :constants="constants"/>
     </template>
   </CardElt>
 </template>

@@ -48,7 +48,7 @@
     </template>
 
     <template #aside v-if="checkRole('admin')">
-      <LinkCreator />
+      <LinkCreator :constants="constants"/>
     </template>
 
   </CardElt>
