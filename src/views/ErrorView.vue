@@ -26,19 +26,8 @@
 </template>
 
 <script>
-import constants from "/constants"
-
 export default {
   name: 'ErrorView',
-
-  data() {
-    return {
-      constants: {}
-    }
-  },
-
-  mounted() {
-    this.constants = constants;
-  }
+  props: ["constants"]
 }
 </script>

@@ -56,7 +56,6 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
-import constants from "/constants"
 import LinkCreator from "@/components/creators/LinkCreator"
 
 export default {
@@ -64,15 +63,9 @@ export default {
   components: {
     LinkCreator
   },
-
-  data() {
-    return {
-      constants: {}
-    }
-  },
+  props: ["constants"],
 
   mounted () {
-    this.constants = constants;
     this.$store.dispatch("listLinks");
   },
 
