@@ -15,6 +15,9 @@ export default {
   CURRENCY_ISO : "EUR",
   CURRENCY_SYMBOL : "€",
 
+  LOGO_ALT : "Logo Phi",
+  LOGO_SRC : "/img/logo.svg",
+
   NAME_MIN : 2,
   NAME_MAX : 50,
 
@@ -81,9 +84,58 @@ CATS_ARTICLE : [
     "Sports",
   ],
 
+  FOOT : [
+    "GitHub", 
+    "LinkedIn", 
+    "Medium", 
+    "NPM", 
+    "Twitter", 
+    "CodePen"
+  ],
+
+  FOOT1 : [
+    "Asperger", 
+    "Astronomy", 
+    "Philippe Beck"
+  ],
+
+  FOOT2 : [
+    "Vue-Elt", 
+    "Servidio", 
+    "Animadio", 
+    "NemJS", 
+    "Vesan"
+  ],
+
+  FOOT3 : [
+    "Links", 
+    "Legal Notice", 
+    "Donation", 
+    "Sponsor"
+  ],
+
   IS_MODERATE : [
     "true",
     "false"
+  ],
+
+  NAV_ADMIN : [
+    "admin", 
+    "profile", 
+    "logout"
+  ],
+
+  NAV_MAIN : [
+    "home", 
+    "shop", 
+    "blog", 
+    "contact", 
+    "basket"
+  ],
+
+  NAV_USER : [
+    "profile", 
+    "logout"
   ],
 
   ROLES_USER : [
