@@ -11,7 +11,7 @@
 
     <template #body>
       <form>
-        <ListElt :items="['name', 'url', 'cat']">
+        <ListElt :items="constants.LINK_FORM">
 
           <template #item-1>
             <FieldElt id="name"
@@ -122,11 +122,11 @@ export default {
           for (let link of links) {
 
             if (link.name === this.name) {
-              alert(this.name + this.constants.CHECK_AVAILABLE);
+              alert(this.name + this.constants.ALERT_AVAILABLE);
               isReferenced = true;
             }
             if (link.url === this.url) {
-              alert(this.url + this.constants.CHECK_REFERENCE);
+              alert(this.url + this.constants.ALERT_REFERENCED);
               isReferenced = true;
             }
           }
@@ -149,7 +149,7 @@ export default {
 
         this.$serve.postData("/api/links", link)
           .then(() => {
-            alert(this.name + this.constants.CREATED);
+            alert(this.name + this.constants.ALERT_CREATED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

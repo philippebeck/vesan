@@ -56,11 +56,11 @@ export default {
 
         this.$serve.postData("/api/users/email", email)
           .then((name) => {
-            if (confirm(name + this.constants.FORGOT_CONFIRM)) {
+            if (confirm(name + this.constants.CONFIRM_FORGOT)) {
               this.forgotPass();
             }
           })
-          .catch(() => { alert(this.constants.FORGOT_EMAIL) });
+          .catch(() => { alert(this.constants.ALERT_FORGOT_EMAIL) });
       }
     },
 
@@ -76,7 +76,7 @@ export default {
 
       this.$serve.postData("/api/users/password", message)
         .then(() => {
-          alert(message.get("subject") + this.constants.SENDED);
+          alert(message.get("subject") + this.constants.ALERT_SENDED);
           this.$router.push("/login");
         })
         .catch(err => { console.log(err) });

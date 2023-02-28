@@ -23,7 +23,7 @@
         <FieldElt :id="'name-' + table[slotProps.index]._id"
           v-model:value="table[slotProps.index].name"
           @keyup.enter="validateUpdatedLink(table[slotProps.index]._id)"
-          :info="constants.UPDATE_NAME"/>
+          :info="constants.INFO_UP_NAME"/>
       </template>
 
       <!-- URL -->
@@ -32,7 +32,7 @@
           type="url"
           v-model:value="table[slotProps.index].url"
           @keyup.enter="validateUpdatedLink(table[slotProps.index]._id)"
-          :info="constants.UPDATE_URL"
+          :info="constants.INFO_UP_URL"
           :max="parseInt('100')"/>
       </template>
 
@@ -43,7 +43,7 @@
           :list="constants.CATS_LINK"
           v-model:value="table[slotProps.index].cat"
           @keyup.enter="validateUpdatedLink(table[slotProps.index]._id)"
-          :info="constants.UPDATE_CATEGORY"/>
+          :info="constants.INFO_UP_CATEGORY"/>
       </template>
 
       <!-- Update -->
@@ -128,12 +128,12 @@ export default {
             }
 
             if (links[j] && links[j].name === this.links[i].name) {
-              alert(this.links[i].name + this.constants.CHECK_AVAILABLE);
+              alert(this.links[i].name + this.constants.ALERT_AVAILABLE);
               isReferenced = true;
             }
 
             if (links[j] && links[j].url === this.links[i].url) {
-              alert(this.links[i].url+ this.constants.CHECK_REFERENCE);
+              alert(this.links[i].url+ this.constants.ALERT_REFERENCED);
               isReferenced = true;
             }
           }
@@ -158,7 +158,7 @@ export default {
 
         this.$serve.putData(`/api/links/${link.get("id")}`, link)
           .then(() => {
-            alert(link.get("name") + this.constants.UPDATED);
+            alert(link.get("name") + this.constants.ALERT_UPDATED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });
@@ -178,10 +178,10 @@ export default {
         }
       }
 
-      if (confirm(`${this.constants.DELETE} ${linkName} ?`) === true) {
+      if (confirm(`${this.constants.TITLE_DELETE} ${linkName} ?`) === true) {
         this.$serve.deleteData(`/api/links/${id}`)
           .then(() => {
-            alert(linkName + this.constants.DELETED);
+            alert(linkName + this.constants.ALERT_DELETED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

@@ -13,21 +13,21 @@
       <NavElt class="sidebar">
         <template #first>
           <a href="#shop"
-            :title="constants.MANAGE_SHOP">
+            :title="constants.INTRO_SHOP">
             <i class="fa-solid fa-shop fa-fw"></i>
           </a>
           <a href="#blog"
-            :title="constants.MANAGE_BLOG">
+            :title="constants.INTRO_BLOG">
             <i class="fa-solid fa-blog fa-fw"></i>
           </a>
           <a v-if="checkRole('admin')"
             href="#users"
-            :title="constants.MANAGE_USERS">
+            :title="constants.INTRO_USERS">
             <i class="fa-solid fa-user-astronaut fa-fw"></i>
           </a>
           <a v-if="checkRole('admin')"
             href="#links"
-            :title="constants.MANAGE_LINKS">
+            :title="constants.INTRO_LINKS">
             <i class="fa-solid fa-link fa-fw"></i>
           </a>
         </template>
@@ -51,7 +51,7 @@
             </i>
             {{ constants.SHOP_VIEW }}
           </h2>
-          <p>{{ constants.MANAGE_SHOP }}</p>
+          <p>{{ constants.INTRO_SHOP }}</p>
         </template>
 
         <template #body>
@@ -82,7 +82,7 @@
             </i>
             {{ constants.BLOG_VIEW }}
           </h2>
-          <p>{{ constants.MANAGE_BLOG }}</p>
+          <p>{{ constants.INTRO_BLOG }}</p>
         </template>
 
         <template #body>
@@ -107,9 +107,9 @@
             <i class="fa-solid fa-user-astronaut fa-lg"
               aria-hidden="true">
             </i>
-            {{ constants.TITLE_USER }}
+            {{ constants.ADMIN_USERS }}
           </h2>
-          <p>{{ constants.MANAGE_USERS }}</p>
+          <p>{{ constants.INTRO_USERS }}</p>
         </template>
 
         <template #body>
@@ -129,7 +129,7 @@
             </i>
             {{ constants.LINK_VIEW }}
           </h2>
-          <p>{{ constants.MANAGE_LINKS }}</p>
+          <p>{{ constants.INTRO_LINKS }}</p>
         </template>
 
         <template #body>
@@ -191,7 +191,7 @@ export default {
         .catch(err => { console.log(err) });
 
     } else {
-      alert(this.constants.GO_HOME);
+      alert(this.constants.ALERT_HOME);
       this.$router.push("/");
     }
   },

@@ -12,7 +12,7 @@
         id="likes"
         href="/login"
         class="btn-blue"
-        :title="constants.LIKE_LOGIN + article.name">
+        :title="constants.TITLE_LIKE_LOGIN + article.name">
 
         <template #btn>
           <i class="fa-regular fa-thumbs-up fa-lg">
@@ -28,7 +28,7 @@
         type="button"
         @click="addLike()"
         class="btn-blue"
-        :title="constants.LIKE + article.name">
+        :title="constants.TITLE_LIKE + article.name">
 
         <template #btn>
           <i class="fa-regular fa-thumbs-up fa-lg">
@@ -44,7 +44,7 @@
         type="button"
         @click="addLike()"
         class="btn-sky"
-        :title="constants.DISLIKE + article.name">
+        :title="constants.TITLE_DISLIKE + article.name">
 
         <template #btn>
           <i class="fa-regular fa-thumbs-up fa-lg">
@@ -167,9 +167,9 @@ export default {
         .then(() => {
 
           if (hasLiked === true) {
-            alert(article.get("name") + this.constants.DISLIKED);
+            alert(article.get("name") + this.constants.ALERT_DISLIKED);
           } else {
-            alert(article.get("name") + this.constants.LIKED);
+            alert(article.get("name") + this.constants.ALERT_LIKED);
           }
         })
         .catch(err => { console.log(err) });

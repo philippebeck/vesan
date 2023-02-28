@@ -29,7 +29,7 @@
             <FieldElt :id="'name-' + users[slotProps.index]._id"
               v-model:value="getUsers()[slotProps.index].name"
               @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"
-              :info="constants.UPDATE_NAME"/>
+              :info="constants.INFO_UP_NAME"/>
           </template>
 
           <!-- Email -->
@@ -38,7 +38,7 @@
               type="email"
               v-model:value="getUsers()[slotProps.index].email"
               @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"
-              :info="constants.UPDATE_EMAIL"/>
+              :info="constants.INFO_UP_EMAIL"/>
           </template>
 
           <!-- Image -->
@@ -49,7 +49,7 @@
 
             <FieldElt :id="'image-' + users[slotProps.index]._id"
               type="file"
-              :info="constants.UPDATE_IMAGE"/>
+              :info="constants.INFO_UP_IMAGE"/>
           </template>
 
           <!-- Role -->
@@ -59,7 +59,7 @@
               :list="constants.ROLES_USER"
               v-model:value="getUsers()[slotProps.index].role"
               @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"
-              :info="constants.UPDATE_ROLE"/>
+              :info="constants.INFO_UP_ROLE"/>
           </template>
 
           <!-- Created -->
@@ -78,7 +78,7 @@
             <BtnElt type="button"
               @click="validateUpdatedUser(users[slotProps.index]._id)" 
               class="btn-sky"
-              :title="constants.UPDATE + users[slotProps.index].name">
+              :title="constants.TITLE_UPDATE + users[slotProps.index].name">
 
               <template #btn>
                 <i class="fa-solid fa-edit"></i>
@@ -89,7 +89,7 @@
             <BtnElt type="button"
               @click="deleteUser(users[slotProps.index]._id)" 
               class="btn-red"
-              :title="constants.DELETE + users[slotProps.index].name">
+              :title="constants.TITLE_DELETE + users[slotProps.index].name">
 
               <template #btn>
                 <i class="fa-solid fa-trash-alt"></i>
@@ -148,12 +148,12 @@ export default {
             }
 
             if (users[j] && users[j].name === this.users[i].name) {
-              alert(this.users[i].name + this.constants.CHECK_AVAILABLE);
+              alert(this.users[i].name + this.constants.ALERT_AVAILABLE);
               isReferenced = true;
             }
 
             if (users[j] && users[j].email === this.users[i].email) {
-              alert(this.users[i].email+ this.constants.CHECK_REFERENCE);
+              alert(this.users[i].email+ this.constants.ALERT_REFERENCED);
               isReferenced = true;
             }
           }
@@ -185,7 +185,7 @@ export default {
 
         this.$serve.putData(`/api/users/${this.users[i]._id}`, user)
           .then(() => {
-            alert(this.users[i].name + this.constants.UPDATED);
+            alert(this.users[i].name + this.constants.ALERT_UPDATED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });
@@ -205,10 +205,10 @@ export default {
         }
       }
 
-      if (confirm(`${this.constants.DELETE} ${userName} ?`) === true) {
+      if (confirm(`${this.constants.TITLE_DELETE} ${userName} ?`) === true) {
         this.$serve.deleteData(`/api/users/${id}`)
           .then(() => {
-            alert(userName + this.constants.DELETED);
+            alert(userName + this.constants.ALERT_DELETED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

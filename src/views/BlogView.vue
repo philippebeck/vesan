@@ -23,7 +23,7 @@
         </i>
         {{ constants.BLOG_VIEW }}
       </h1>
-      <p>{{ constants.INTRO_BLOG }}</p>
+      <p>{{ constants.INTRO_ARTICLES }}</p>
     </template>
 
     <template #body>
@@ -53,7 +53,7 @@
                 :id="`like-${slotProps.value._id}`"
                 href="/login"
                 class="btn-blue"
-                :title="constants.LIKE_LOGIN + slotProps.value.name">
+                :title="constants.TITLE_LIKE_LOGIN + slotProps.value.name">
 
                 <template #btn>
                   <i class="fa-regular fa-thumbs-up fa-lg">
@@ -68,7 +68,7 @@
                 type="button"
                 @click="addLike(slotProps.value._id)"
                 class="btn-blue"
-                :title="constants.LIKE + slotProps.value.name">
+                :title="constants.TITLE_LIKE + slotProps.value.name">
 
                 <template #btn>
                   <i class="fa-regular fa-thumbs-up fa-lg">
@@ -83,7 +83,7 @@
                 type="button"
                 @click="addLike(slotProps.value._id)"
                 class="btn-sky"
-                :title="constants.DISLIKE + slotProps.value.name">
+                :title="constants.TITLE_DISLIKE + slotProps.value.name">
 
                 <template #btn>
                   <i class="fa-regular fa-thumbs-up fa-lg">
@@ -94,7 +94,7 @@
               </BtnElt>
 
               <a :href="`article/${slotProps.value._id}`"
-                :title="constants.READ + slotProps.value.name">
+                :title="constants.TITLE_READ + slotProps.value.name">
 
                 <MediaElt :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
                   :src="`img/thumbnails/articles/${slotProps.value.image}`" 
@@ -214,9 +214,9 @@ export default {
             .then(() => {
 
               if (hasLiked === true) {
-                alert(article.get("name") + this.constants.DISLIKED);
+                alert(article.get("name") + this.constants.ALERT_DISLIKED);
               } else {
-                alert(article.get("name") + this.constants.LIKED);
+                alert(article.get("name") + this.constants.ALERT_LIKED);
               }
             })
             .catch(err => { console.log(err) });

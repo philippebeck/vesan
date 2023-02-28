@@ -12,7 +12,7 @@
     <template #body>
       <form method="post"
         enctype="multipart/form-data">
-        <ListElt :items="['name', 'email', 'image', 'pass']">
+        <ListElt :items="constants.USER_FORM">
 
           <!-- User Name -->
           <template #item-1>
@@ -90,8 +90,8 @@
         <BtnElt type="button"
           @click="validateUpdatedUser()" 
           class="btn-blue"
-          :content="constants.UPDATE"
-          :title="constants.UPDATE_PROFILE">
+          :content="constants.TITLE_UPDATE"
+          :title="constants.INFO_UP_PROFILE">
 
           <template #btn>
             <i class="fa-solid fa-user-pen fa-lg"></i>
@@ -102,8 +102,8 @@
         <BtnElt type="button"
           @click="deleteUser()" 
           class="btn-red"
-          :content="constants.DELETE"
-          :title="constants.DELETE_ACCOUNT">
+          :content="constants.TITLE_DELETE"
+          :title="constants.TITLE_DELETE_ACCOUNT">
 
           <template #btn>
             <i class="fa-solid fa-user-slash fa-lg"></i>
@@ -114,7 +114,7 @@
       <TableElt v-if="orders.length !== 0"
         :items="orders">
         <template #title>
-          {{ constants.TITLE_ORDER }}
+          {{ constants.PROFILE_ORDERS }}
         </template>
 
         <!-- Id -->
@@ -130,7 +130,7 @@
               :key="index">
               <a :href="`/product/${item.id}`">
 
-                <ul :title="constants.GO_TO + item.name">
+                <ul :title="constants.TITLE_GO + item.name">
                   <li>
                     <b>{{ item.name }}</b>
                   </li>
@@ -267,7 +267,7 @@ export default {
 
       this.$serve.putData(`/api/users/${this.user._id}`, user)
         .then(() => {
-          alert(this.user.name + this.constants.UPDATED);
+          alert(this.user.name + this.constants.ALERT_UPDATED);
           this.$router.go();
         })
         .catch(err => { console.log(err) });
@@ -279,13 +279,13 @@ export default {
     deleteUser() {
       let userName = this.user.name;
 
-      if (confirm(`${this.constants.DELETE} ${userName} ?`) === true) {
+      if (confirm(`${this.constants.TITLE_DELETE} ${userName} ?`) === true) {
         this.$serve.deleteData(`/api/users/${this.user._id}`)
           .then(() => {
             localStorage.removeItem("userId");
             localStorage.removeItem("userToken");
 
-            alert(userName + this.constants.DELETED);
+            alert(userName + this.constants.ALERT_DELETED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

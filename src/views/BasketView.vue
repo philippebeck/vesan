@@ -55,7 +55,7 @@
               type="number"
               v-model:value="slotProps.item.quantity"
               @change="updateQuantity(`${slotProps.item.id}`, `${slotProps.item.option}`)"
-              :info="constants.UPDATE_QUANTITY"
+              :info="constants.INFO_UP_QUANTITY"
               :min="1"
               :max="100">
             </FieldElt>
@@ -77,8 +77,8 @@
             <BtnElt type="button"
               @click="deleteItem(`${slotProps.item.id}`, `${slotProps.item.option}`)"
               class="btn-orange"
-              :content="constants.DELETE"
-              :title="constants.DELETE + slotProps.item.name">
+              :content="constants.TITLE_DELETE"
+              :title="constants.TITLE_DELETE + slotProps.item.name">
 
               <template #btn>
                 <i class="fa-solid fa-trash fa-lg"></i>
@@ -106,7 +106,7 @@
             href="/login"
             class="btn-green width-sm"
             :content="constants.CONTENT_ORDER"
-            :title="constants.BASKET_LOGIN">
+            :title="constants.TITLE_BASKET">
 
             <template #btn>
               <i class="fa-solid fa-cash-register fa-lg"></i>
@@ -371,7 +371,7 @@ export default {
 
       this.$serve.postData("/api/orders", order)
         .then(() => {
-          alert(this.constants.ALERT_ORDER);
+          alert(this.constants.ALERT_ORDER_CREATED);
           localStorage.removeItem("basket");
           this.$router.push("/profile");
         })
@@ -382,7 +382,7 @@ export default {
      * CLEAR BASKET
      */
     clearBasket() {
-      if (confirm(this.constants.BASKET_CONFIRM) === true) {
+      if (confirm(this.constants.CONFIRM_BASKET) === true) {
         localStorage.removeItem("basket");
         this.$router.go();
       }

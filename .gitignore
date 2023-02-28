@@ -1,6 +1,7 @@
 .env
 api/.env
 api/node_modules/
+constants.js
 dist/
 node_modules/
 public/img/

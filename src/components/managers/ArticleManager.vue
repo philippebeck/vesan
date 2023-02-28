@@ -31,7 +31,7 @@
             <FieldElt :id="'name-' + articles[slotProps.index]._id"
               v-model:value="getArticles()[slotProps.index].name"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              :info="constants.UPDATE_NAME"/>
+              :info="constants.INFO_UP_NAME"/>
           </template>
 
           <!-- Text -->
@@ -40,7 +40,7 @@
               type="textarea"
               v-model:value="getArticles()[slotProps.index].text"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              :info="constants.UPDATE_TEXT"
+              :info="constants.INFO_UP_TEXT"
               :max="5000"/>
           </template>
 
@@ -52,7 +52,7 @@
 
             <FieldElt :id="'image-' + articles[slotProps.index]._id"
               type="file"
-              :info="constants.UPDATE_IMAGE"/>
+              :info="constants.INFO_UP_IMAGE"/>
           </template>
 
           <!-- Alt -->
@@ -61,7 +61,7 @@
               type="textarea"
               v-model:value="getArticles()[slotProps.index].alt"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              :info="constants.UPDATE_ALT"/>
+              :info="constants.INFO_UP_ALT"/>
           </template>
 
           <!-- Category -->
@@ -71,7 +71,7 @@
               :list="constants.CATS_ARTICLE"
               v-model:value="getArticles()[slotProps.index].cat"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              :info="constants.UPDATE_CATEGORY"/>
+              :info="constants.INFO_UP_CATEGORY"/>
           </template>
 
           <!-- User -->
@@ -103,7 +103,7 @@
           <BtnElt type="button"
               @click="validateUpdatedArticle(articles[slotProps.index]._id)" 
               class="btn-sky"
-              :title="constants.UPDATE + articles[slotProps.index].name">
+              :title="constants.TITLE_UPDATE + articles[slotProps.index].name">
 
               <template #btn>
                 <i class="fa-solid fa-edit"></i>
@@ -114,7 +114,7 @@
             <BtnElt type="button"
               @click="deleteArticle(articles[slotProps.index]._id)" 
               class="btn-red"
-              :title="constants.DELETE + articles[slotProps.index].name">
+              :title="constants.TITLE_DELETE + articles[slotProps.index].name">
 
               <template #btn>
                 <i class="fa-solid fa-trash-alt"></i>
@@ -182,12 +182,12 @@ export default {
             }
 
             if (articles[j] && articles[j].name === this.articles[i].name) {
-              alert(this.articles[i].name + this.constants.CHECK_AVAILABLE);
+              alert(this.articles[i].name + this.constants.ALERT_AVAILABLE);
               isReferenced = true;
             }
 
             if (articles[j] && articles[j].text === this.articles[i].text) {
-              alert(this.articles[i].text+ this.constants.CHECK_REFERENCE);
+              alert(this.articles[i].text+ this.constants.ALERT_REFERENCED);
               isReferenced = true;
             }
           }
@@ -222,7 +222,7 @@ export default {
 
         this.$serve.putData(`/api/articles/${article.get("id")}`, article)
           .then(() => {
-            alert(article.get("name") + this.constants.UPDATED);
+            alert(article.get("name") + this.constants.ALERT_UPDATED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });
@@ -242,10 +242,10 @@ export default {
         }
       }
 
-      if (confirm(`${this.constants.DELETE} ${articleTitle} ?`) === true) {
+      if (confirm(`${this.constants.TITLE_DELETE} ${articleTitle} ?`) === true) {
         this.$serve.deleteData(`/api/articles/${id}`)
           .then(() => {
-            alert(articleTitle + this.constants.DELETED);
+            alert(articleTitle + this.constants.ALERT_DELETED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

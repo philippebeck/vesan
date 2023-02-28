@@ -29,7 +29,7 @@
               <li v-for="(item, index) in orders[slotProps.index].products"
                 :key="index">
                 <a :href="`/product/${item.id}`">
-                  <ul :title="constants.GO_TO + item.name">
+                  <ul :title="constants.TITLE_GO + item.name">
                     <li>
                       <b>{{ item.name }}</b>
                     </li>
@@ -62,7 +62,7 @@
               :list="constants.CATS_ORDER"
               v-model:value="getOrders()[slotProps.index].status"
               @keyup.enter="updateStatus(orders[slotProps.index]._id)"
-              :info="constants.UPDATE_STATUS"/>
+              :info="constants.INFO_UP_STATUS"/>
           </template>
 
           <!-- User -->
@@ -87,7 +87,7 @@
           <BtnElt type="button"
               @click="updateStatus(orders[slotProps.index]._id)" 
               class="btn-green"
-              :title="constants.UPDATE_ORDER + orders[slotProps.index]._id">
+              :title="constants.INFO_UP_ORDER + orders[slotProps.index]._id">
               <template #btn>
                 <i class="fa-regular fa-calendar-check"></i>
               </template>
@@ -97,7 +97,7 @@
             <BtnElt type="button"
               @click="deleteOrder(orders[slotProps.index]._id)" 
               class="btn-red"
-              :title="constants.DELETE_ORDER + orders[slotProps.index]._id">
+              :title="constants.TITLE_DELETE_ORDER + orders[slotProps.index]._id">
               <template #btn>
                 <i class="fa-solid fa-trash-alt"></i>
               </template>
@@ -146,7 +146,7 @@ export default {
 
           this.$serve.putData(`/api/orders/${id}`, orderData)
             .then(() => {
-              alert(this.constants.ORDER + id + this.constants.UPDATED);
+              alert(this.constants.ALERT_ORDER + id + this.constants.ALERT_UPDATED);
               this.$router.go();
             })
             .catch(err => { console.log(err) });
@@ -159,11 +159,11 @@ export default {
      * @param {string} id 
      */
     deleteOrder(id) {
-      if (confirm(`${this.constants.DELETE_ORDER}${id} ?`) === true) {
+      if (confirm(`${this.constants.TITLE_DELETE_ORDER}${id} ?`) === true) {
 
         this.$serve.deleteData(`/api/orders/${id}`)
           .then(() => {
-            alert(this.constants.ORDER + id + this.constants.DELETED);
+            alert(this.constants.ALERT_ORDER + id + this.constants.ALERT_DELETED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

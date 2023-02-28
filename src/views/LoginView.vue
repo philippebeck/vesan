@@ -18,7 +18,7 @@
         @click="setType('SignIn')"
         class="btn-green"
         :content="constants.SIGN_IN"
-        :title="constants.GO_TO + constants.SIGN_IN">
+        :title="constants.TITLE_GO + constants.SIGN_IN">
 
         <template #btn>
           <i class="fa-solid fa-right-to-bracket fa-lg"></i>
@@ -30,7 +30,7 @@
         @click="setType('ForgotPass')"
         class="btn-orange"
         :content="constants.FORGOT_PASS"
-        :title="constants.GO_TO + constants.FORGOT_PASS">
+        :title="constants.TITLE_GO + constants.FORGOT_PASS">
 
         <template #btn>
           <i class="fa-regular fa-paper-plane fa-lg"></i>
@@ -58,7 +58,7 @@
         @click="setType('SignUp')"
         class="btn-blue"
         :content="constants.SIGN_UP"
-        :title="constants.GO_TO + constants.SIGN_UP">
+        :title="constants.TITLE_GO + constants.SIGN_UP">
 
         <template #btn>
           <i class="fa-solid fa-user-plus fa-lg"></i>
@@ -70,7 +70,7 @@
         @click="setType('ForgotPass')"
         class="btn-orange"
         :content="constants.FORGOT_PASS"
-        :title="constants.GO_TO + constants.FORGOT_PASS">
+        :title="constants.TITLE_GO + constants.FORGOT_PASS">
 
         <template #btn>
           <i class="fa-regular fa-paper-plane fa-lg"></i>
@@ -98,7 +98,7 @@
         @click="setType('SignUp')"
         class="btn-blue"
         :content="constants.SIGN_UP"
-        :title="constants.GO_TO + constants.SIGN_UP">
+        :title="constants.TITLE_GO + constants.SIGN_UP">
 
         <template #btn>
           <i class="fa-solid fa-user-plus fa-lg"></i>
@@ -110,7 +110,7 @@
         @click="setType('SignIn')"
         class="btn-green"
         :content="constants.SIGN_IN"
-        :title="constants.GO_TO + constants.SIGN_IN">
+        :title="constants.TITLE_GO + constants.SIGN_IN">
 
         <template #btn>
           <i class="fa-solid fa-right-to-bracket fa-lg"></i>
