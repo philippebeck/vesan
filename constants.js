@@ -26,6 +26,7 @@ export default {
   PASS_MIN : 8,
 
   PAYPAL_COLOR : "blue",
+  PAYPAL_ID : "your-paypal-id",
   PAYPAL_LABEL : "paypal",
   PAYPAL_NAMESPACE : "paypal_sdk",
   PAYPAL_SHAPE : "pill",
@@ -33,6 +34,7 @@ export default {
   RECAPTCHA_KEY : "your-recaptcha-key",
 
   SLIDER_DELAY : 5000,
+  SLIDER_FA : "brands",
 
   TEXT_MIN : 8,
   TEXT_MAX : 5000,
@@ -245,28 +247,25 @@ export default {
   INFO_SUBJECT : "The subject of your message ?",
   INFO_TEXT : "Once upon a time...",
   INFO_URL : "https://",
-
-  /******************** UPDATE ********************/
-
-  UPDATE_ALT : "Update the alternative text",
-  UPDATE_CATEGORY : "Update the category",
-  UPDATE_COMMENT : "Update comment #",
-  UPDATE_DESCRIPTION : "Update the description",
-  UPDATE_EMAIL : "Update the email",
-  UPDATE_IMAGE : "Update the image",
-  UPDATE_MODERATE : "Update moderation",
-  UPDATE_NAME : "Update the name",
-  UPDATE_OPTIONS : "Update the options",
-  UPDATE_PRICE : "Update the price",
-  UPDATE_PROFILE : "Update your profile",
-  UPDATE_QUANTITY : "Update the quantity",
-  UPDATE_ORDER : "Update status of order #",
-  UPDATE_REVIEW : "Update review #",
-  UPDATE_ROLE : "Update the role",
-  UPDATE_SCORE : "Update the score",
-  UPDATE_STATUS : "Update the status",
-  UPDATE_TEXT : "Update the text",
-  UPDATE_URL : "Update the URL",
+  INFO_UP_ALT : "Update the alternative text",
+  INFO_UP_CATEGORY : "Update the category",
+  INFO_UP_COMMENT : "Update comment #",
+  INFO_UP_DESCRIPTION : "Update the description",
+  INFO_UP_EMAIL : "Update the email",
+  INFO_UP_IMAGE : "Update the image",
+  INFO_UP_MODERATE : "Update moderation",
+  INFO_UP_NAME : "Update the name",
+  INFO_UP_OPTIONS : "Update the options",
+  INFO_UP_PRICE : "Update the price",
+  INFO_UP_PROFILE : "Update your profile",
+  INFO_UP_QUANTITY : "Update the quantity",
+  INFO_UP_ORDER : "Update status of order #",
+  INFO_UP_REVIEW : "Update review #",
+  INFO_UP_ROLE : "Update the role",
+  INFO_UP_SCORE : "Update the score",
+  INFO_UP_STATUS : "Update the status",
+  INFO_UP_TEXT : "Update the text",
+  INFO_UP_URL : "Update the URL",
 
   /******************** LEGEND ********************/
 
@@ -313,31 +312,47 @@ export default {
   CONTENT_CREATE : "Create ",
   CONTENT_ENTER : "Enter ",
   CONTENT_ORDER : "Order ",
+  CONTENT_REVIEW_LOGIN : "Login to review",
+  CONTENT_REVIEW_WRITE : "Write a review",
   CONTENT_SEND : "Send ",
 
   /******************** TITLE ********************/
 
   TITLE_CLEAR : "Clear the basket",
-  TITLE_COMMENT : "Moderate comment #",
+  TITLE_COMMENT_MODERATE : "Moderate comment #",
   TITLE_FORGOT : "Send a new password",
   TITLE_GO : "Go to ",
   TITLE_LIKE : "Login to like ",
   TITLE_MESSAGE : "Send a message",
-  TITLE_REVIEW : "Moderate review #",
+  TITLE_READ : "Read ",
+  TITLE_REVIEW_FIRST : "Be the first to write a review about ",
+  TITLE_REVIEW_MODERATE : "Moderate review #",
+  TITLE_REVIEW_READ : "Read reviews about ",
   TITLE_SIGNIN : "SignIn to your account",
   TITLE_SIGNUP : "SignUp a new user",
+  TITLE_WATCH : "Watch ",
+
+  /******************** CONFIRM ********************/
+
+  CONFIRM_BASKET : "Do you want to clear your basket ?",
+  CONFIRM_FORGOT : `, do you confirm sending a new password ?`,
 
   /******************** ALERT ********************/
 
   ALERT_AVAILABLE : " is not available !",
-  ALERT_COMMENT : "New comment created !",
+  ALERT_BASKET_ADDED : " has been added to the Basket !",
+  ALERT_COMMENT : "Comment #",
+  ALERT_FORGOT_CREDENTIALS : "Wrong email or password !",
+  ALERT_FORGOT_EMAIL : "This email is not referenced",
   ALERT_HOME : "Go back Home !",
   ALERT_IMG : "An image must be uploaded !",
+  ALERT_NEW_COMMENT : "New comment created !",
+  ALERT_NEW_REVIEW : "New review created !",
   ALERT_OPTION : "You need to choose an option !",
   ALERT_ORDER : "Order created !",
   ALERT_PRODUCT : "You have already written a review for this product, you can edit your old review or delete it",
   ALERT_REFERENCE : " is already referenced !",
-  ALERT_REVIEW : "New review created !",
+  ALERT_REVIEW : "Review #",
 
   /******************** SERVIDIO CHECK ********************/
 
@@ -356,8 +371,6 @@ export default {
 
   /******************** BASKET ********************/
 
-  BASKET_ADDED : " has been added to the Basket !",
-  BASKET_CONFIRM : "Do you want to clear your basket ?",
   BASKET_EMPTY : "Your basket is empty !",
   BASKET_LOGIN : "Login to order those Products",
   BASKET_ORDER : "Order those Products",
@@ -370,22 +383,11 @@ export default {
 
   /******************** FORGOT ********************/
 
-  FORGOT_CONFIRM : `, do you confirm sending a new password ?`,
-  FORGOT_CREDENTIALS : "Wrong email or password !",
-  FORGOT_EMAIL : "This email is not referenced",
   FORGOT_SUBJECT : "New password",
   FORGOT_TEXT : "This is your new password, keep it safe : ",
 
-  /******************** REVIEW ********************/
-
-  REVIEW_FIRST : "Be the first to write a review about ",
-  REVIEW_LOGIN : "Login to review",
-  REVIEW_READ : "Read reviews about ",
-  REVIEW_WRITE : "Write review",
-
   /******************** WORD ********************/
 
-  COMMENT : "Comment #",
   CREATED : " created !",
   DELETE : "Delete ",
   DELETED : " deleted !",
@@ -396,13 +398,10 @@ export default {
   MODERATED : " moderated !",
   ON : "on",
   ORDER : "Order #",
-  READ : "Read ",
-  REVIEW : "Review #",
   SENDED : " sended !",
   TOTAL : "Total",
   UPDATE : "Update ",
   UPDATED : " updated !",
-  WATCH : "Watch ",
 
   /******************** INTERPOLATION ********************/
 
@@ -413,7 +412,7 @@ export default {
   RELEASE_ON : "Release on",
   UPDATE_ON : "Updated on",
 
-  /******************** ALT ********************/
+  /******************** OTHERS ********************/
 
-  ERROR_ALT : "404 Error"
+  ERROR_ALT : "404 Error",
 }
