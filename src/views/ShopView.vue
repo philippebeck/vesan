@@ -54,7 +54,7 @@
                 itemscope
                 itemtype="https://schema.org/AggregateRating"
                 class="btn-violet"
-                :title="constants.REVIEW_READ + slotProps.value.name">
+                :title="constants.TITLE_REVIEW_READ + slotProps.value.name">
 
                 <template #btn>
                   <b itemprop="ratingValue">
@@ -66,18 +66,18 @@
               <BtnElt v-else-if="checkRole('user')" 
                 :href="`product/${slotProps.value._id}#review`"
                 class="btn-violet"
-                :content="constants.REVIEW_WRITE"
-                :title="constants.REVIEW_FIRST + slotProps.value.name" />
+                :content="constants.CONTENT_REVIEW_WRITE"
+                :title="constants.TITLE_REVIEW_FIRST + slotProps.value.name" />
 
               <BtnElt v-else 
                 href="/login"
                 class="btn-violet"
-                :content="constants.REVIEW_LOGIN"
-                :title="constants.REVIEW_FIRST + slotProps.value.name" />
+                :content="constants.CONTENT_REVIEW_LOGIN"
+                :title="constants.TITLE_REVIEW_FIRST + slotProps.value.name" />
 
               <a :href="`product/${slotProps.value._id}`"
                 itemprop="url"
-                :title="constants.WATCH + slotProps.value.name">
+                :title="constants.TITLE_WATCH + slotProps.value.name">
 
                 <MediaElt :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
                   :src="`img/thumbnails/products/${slotProps.value.image}`" 

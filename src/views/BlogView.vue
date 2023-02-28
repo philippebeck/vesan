@@ -94,7 +94,7 @@
               </BtnElt>
 
               <a :href="`article/${slotProps.value._id}`"
-                :title="constants.READ + slotProps.value.name">
+                :title="constants.TITLE_READ + slotProps.value.name">
 
                 <MediaElt :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
                   :src="`img/thumbnails/articles/${slotProps.value.image}`" 

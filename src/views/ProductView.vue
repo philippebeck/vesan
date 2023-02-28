@@ -14,7 +14,7 @@
         itemscope
         itemtype="https://schema.org/AggregateRating" 
         class="btn-violet"
-        :title="constants.REVIEW_READ + product.name">
+        :title="constants.TITLE_REVIEW_READ + product.name">
 
         <template #btn>
           <b itemprop="ratingValue">
@@ -26,14 +26,14 @@
       <BtnElt v-else-if="checkRole('user')" 
         href="#review"
         class="btn-violet"
-        :content="constants.REVIEW_WRITE"
-        :title="constants.REVIEW_FIRST + product.name" />
+        :content="constants.CONTENT_REVIEW_WRITE"
+        :title="constants.TITLE_REVIEW_FIRST + product.name" />
 
       <BtnElt v-else 
           href="/login"
           class="btn-violet"
-          :content="constants.REVIEW_LOGIN"
-          :title="constants.REVIEW_FIRST + product.name" />
+          :content="constants.CONTENT_REVIEW_LOGIN"
+          :title="constants.TITLE_REVIEW_FIRST + product.name" />
 
       <MediaElt v-if="product.image"
         :src="`/img/products/${product.image}`"
@@ -277,7 +277,7 @@ export default {
       }
 
       localStorage.setItem("basket", JSON.stringify(this.basket));
-      alert(`${this.order.quantity} "${this.product.name}" (${this.order.option}) ${this.constants.BASKET_ADDED}`);
+      alert(`${this.order.quantity} "${this.product.name}" (${this.order.option}) ${this.constants.ALERT_BASKET_ADDED}`);
 
       this.$router.push("/shop");
     }

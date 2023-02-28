@@ -55,7 +55,7 @@
               type="number"
               v-model:value="slotProps.item.quantity"
               @change="updateQuantity(`${slotProps.item.id}`, `${slotProps.item.option}`)"
-              :info="constants.UPDATE_QUANTITY"
+              :info="constants.INFO_UP_QUANTITY"
               :min="1"
               :max="100">
             </FieldElt>
@@ -382,7 +382,7 @@ export default {
      * CLEAR BASKET
      */
     clearBasket() {
-      if (confirm(this.constants.BASKET_CONFIRM) === true) {
+      if (confirm(this.constants.CONFIRM_BASKET) === true) {
         localStorage.removeItem("basket");
         this.$router.go();
       }

@@ -91,7 +91,7 @@
           @click="validateUpdatedUser()" 
           class="btn-blue"
           :content="constants.UPDATE"
-          :title="constants.UPDATE_PROFILE">
+          :title="constants.INFO_UP_PROFILE">
 
           <template #btn>
             <i class="fa-solid fa-user-pen fa-lg"></i>

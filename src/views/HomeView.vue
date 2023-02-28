@@ -5,15 +5,15 @@
     <template #header>
 
       <!-- Slider -->
-      <SliderElt :slides="['vuejs', 'sass', 'node-js', 'html5', 'js', 'css3']"
+      <SliderElt :slides="constants.SLIDES"
         :delay="constants.SLIDER_DELAY"
         class="anima-grow">
 
         <template #slide="slotProps">
-          <i :class="`fa-brands fa-${slotProps.slide.toLowerCase()} fa-10x blue`"></i>
+          <i :class="`fa-${constants.SLIDER_FA} fa-${slotProps.slide.toLowerCase()} fa-10x blue`"></i>
         </template>
         <template #gallery="slotProps">
-          <i :class="`fa-brands fa-${slotProps.slide.toLowerCase()}`"></i>
+          <i :class="`fa-${constants.SLIDER_FA} fa-${slotProps.slide.toLowerCase()}`"></i>
         </template>
       </SliderElt>
 
