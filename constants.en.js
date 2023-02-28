@@ -252,7 +252,7 @@ export default {
 
   INTRO_ADMIN : "Manage all data !",
   INTRO_ARTICLES : "Articles to read !",
-  INTRO_BASKET : "Use the Paypal button below to order",
+  INTRO_BASKET : "Use the Paypal button to order",
   INTRO_BLOG : "Manage articles & comments",
   INTRO_CONTACT : "Contact me if you have any question",
   INTRO_ERROR : "Page not found !",
@@ -275,7 +275,7 @@ export default {
   INFO_EMAIL : "john@doe.com",
   INFO_IMAGE : "Image file only",
   INFO_NAME : "My new name",
-  INFO_OPTION : "Select an option",
+  INFO_OPTION : "Choose an option",
   INFO_OPTIONS : "option-1,option-2,option-3,etc",
   INFO_PASSWORD : "********",
   INFO_PRICE : "100 €",
@@ -381,14 +381,13 @@ export default {
   /******************** ALERT ********************/
 
   ALERT_AVAILABLE : " is not available !",
-  ALERT_BASKET_ADDED : " has been added to the Basket !",
+  ALERT_BASKET_ADDED : " has been added to the basket !",
   ALERT_COMMENT : "Comment #",
   ALERT_CREATED : " created !",
   ALERT_DELETED : " deleted !",
   ALERT_DISLIKED : " disliked !",
-  ALERT_FORGOT_CREDENTIALS : "Wrong email or password !",
   ALERT_FORGOT_EMAIL : "This email is not referenced",
-  ALERT_HOME : "Go back Home !",
+  ALERT_HOME : "Return Home !",
   ALERT_IMG : "An image must be uploaded !",
   ALERT_LIKED : " liked !",
   ALERT_MODERATED : " moderated !",
@@ -425,15 +424,15 @@ export default {
   /******************** INTERPOLATION ********************/
 
   BASKET_EMPTY : "Your basket is empty !",
-  BASKET_TOTAL : "The total of your basket is",
-  CREATE_BY : "Created by",
+  BASKET_TOTAL : "The total of your basket is ",
+  CREATE_BY : "Created by ",
   ERROR_LINK : "Go back home ?",
   HEAD_MOD : "mod/del",
   HEAD_UP : "up/del",
-  ON : "on",
-  RELEASE_ON : "Release on",
+  ON : " on ",
+  RELEASE_ON : "Release on ",
   TOTAL : "Total",
-  UPDATE_ON : "Updated on",
+  UPDATE_ON : "Updated on ",
 
   /******************** OTHER ********************/
 
