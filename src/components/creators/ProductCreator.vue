@@ -190,7 +190,7 @@ export default {
           this.checkNewProduct();
 
         } else {
-          alert(this.constants.IMG_PRODUCT);
+          alert(this.constants.ALERT_IMG);
         }
       }
     },
@@ -206,12 +206,12 @@ export default {
           for (let product of products) {
 
             if (product.name === this.name) {
-              alert(this.name + this.constants.CHECK_AVAILABLE);
+              alert(this.name + this.constants.ALERT_AVAILABLE);
               isReferenced = true;
             }
 
             if (product.description === this.description) {
-              alert(this.description + this.constants.CHECK_REFERENCE);
+              alert(this.description + this.constants.ALERT_REFERENCE);
               isReferenced = true;
             }
           }
@@ -242,7 +242,7 @@ export default {
 
         this.$serve.postData("/api/products", product)
           .then(() => {
-            alert(product.get("name") + " created !");
+            alert(this.name + this.constants.CREATED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

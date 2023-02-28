@@ -122,11 +122,11 @@ export default {
           for (let link of links) {
 
             if (link.name === this.name) {
-              alert(this.name + this.constants.CHECK_AVAILABLE);
+              alert(this.name + this.constants.ALERT_AVAILABLE);
               isReferenced = true;
             }
             if (link.url === this.url) {
-              alert(this.url + this.constants.CHECK_REFERENCE);
+              alert(this.url + this.constants.ALERT_REFERENCE);
               isReferenced = true;
             }
           }

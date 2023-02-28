@@ -97,7 +97,7 @@ export default {
             if (review.user === this.constants.USER_ID && 
               review.product === this.$route.params.id) {
 
-              alert(this.constants.CHECK_REVIEW);
+              alert(this.constants.ALERT_PRODUCT);
               isReferenced = true;
             }
           }
@@ -123,7 +123,7 @@ export default {
 
         this.$serve.postData("/api/reviews", review)
           .then(() => {
-            alert(this.constants.CREATED_REVIEW);
+            alert(this.constants.ALERT_REVIEW);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

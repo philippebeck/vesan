@@ -71,7 +71,7 @@ export default {
 
         this.$serve.postData("/api/comments", comment)
           .then(() => {
-            alert(this.constants.CREATED_COMMENT);
+            alert(this.constants.ALERT_COMMENT);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

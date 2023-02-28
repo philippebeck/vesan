@@ -153,7 +153,7 @@ export default {
           this.checkNewArticle();
 
         } else {
-          alert(this.constants.IMG_ARTICLE);
+          alert(this.constants.ALERT_IMG);
         }
       }
     },
@@ -169,12 +169,12 @@ export default {
           for (let article of articles) {
             
             if (article.name === this.name) {
-              alert(this.name + this.constants.CHECK_AVAILABLE);
+              alert(this.name + this.constants.ALERT_AVAILABLE);
               isReferenced = true;
             }
 
             if (article.text === this.text) {
-              alert(this.text + this.constants.CHECK_REFERENCE);
+              alert(this.text + this.constants.ALERT_REFERENCE);
               isReferenced = true;
             }
           }
@@ -206,7 +206,7 @@ export default {
 
         this.$serve.postData("/api/articles", article)
           .then(() => {
-            alert(article.get("name") + " created !");
+            alert(this.name + this.constants.CREATED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });
