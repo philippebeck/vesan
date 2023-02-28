@@ -128,12 +128,12 @@ export default {
             }
 
             if (links[j] && links[j].name === this.links[i].name) {
-              alert(this.links[i].name + this.constants.CHECK_AVAILABLE);
+              alert(this.links[i].name + this.constants.ALERT_AVAILABLE);
               isReferenced = true;
             }
 
             if (links[j] && links[j].url === this.links[i].url) {
-              alert(this.links[i].url+ this.constants.CHECK_REFERENCE);
+              alert(this.links[i].url+ this.constants.ALERT_REFERENCE);
               isReferenced = true;
             }
           }

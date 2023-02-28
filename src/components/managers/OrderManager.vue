@@ -29,7 +29,7 @@
               <li v-for="(item, index) in orders[slotProps.index].products"
                 :key="index">
                 <a :href="`/product/${item.id}`">
-                  <ul :title="constants.GO_TO + item.name">
+                  <ul :title="constants.TITLE_GO + item.name">
                     <li>
                       <b>{{ item.name }}</b>
                     </li>

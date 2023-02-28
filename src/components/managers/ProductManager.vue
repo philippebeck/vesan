@@ -182,12 +182,12 @@ export default {
             }
 
             if (products[j] && products[j].name === this.products[i].name) {
-              alert(this.products[i].name + this.constants.CHECK_AVAILABLE);
+              alert(this.products[i].name + this.constants.ALERT_AVAILABLE);
               isReferenced = true;
             }
 
             if (products[j] && products[j].description === this.products[i].description) {
-              alert(this.products[i].description+ this.constants.CHECK_REFERENCE);
+              alert(this.products[i].description+ this.constants.ALERT_REFERENCE);
               isReferenced = true;
             }
           }

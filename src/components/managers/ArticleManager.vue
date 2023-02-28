@@ -182,12 +182,12 @@ export default {
             }
 
             if (articles[j] && articles[j].name === this.articles[i].name) {
-              alert(this.articles[i].name + this.constants.CHECK_AVAILABLE);
+              alert(this.articles[i].name + this.constants.ALERT_AVAILABLE);
               isReferenced = true;
             }
 
             if (articles[j] && articles[j].text === this.articles[i].text) {
-              alert(this.articles[i].text+ this.constants.CHECK_REFERENCE);
+              alert(this.articles[i].text+ this.constants.ALERT_REFERENCE);
               isReferenced = true;
             }
           }

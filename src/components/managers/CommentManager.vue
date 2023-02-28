@@ -65,7 +65,7 @@
             <BtnElt type="button"
               @click="moderateComment(comments[slotProps.index]._id)" 
               class="btn-green"
-              :title="constants.MODERATE_COMMENT + comments[slotProps.index]._id">
+              :title="constants.TITLE_COMMENT + comments[slotProps.index]._id">
 
               <template #btn>
                 <i class="fa-solid fa-spell-check"></i>
