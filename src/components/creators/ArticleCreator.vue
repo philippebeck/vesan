@@ -12,7 +12,7 @@
     <template #body>
       <form method="post"
         enctype="multipart/form-data">
-        <ListElt :items="['name', 'text', 'image', 'alt', 'cat']">
+        <ListElt :items="constants.ARTICLE_FORM">
 
           <!-- Name -->
           <template #item-1>
@@ -174,7 +174,7 @@ export default {
             }
 
             if (article.text === this.text) {
-              alert(this.text + this.constants.ALERT_REFERENCE);
+              alert(this.text + this.constants.ALERT_REFERENCED);
               isReferenced = true;
             }
           }
@@ -206,7 +206,7 @@ export default {
 
         this.$serve.postData("/api/articles", article)
           .then(() => {
-            alert(this.name + this.constants.CREATED);
+            alert(this.name + this.constants.ALERT_CREATED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

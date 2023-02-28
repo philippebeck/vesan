@@ -47,7 +47,7 @@
             <BtnElt type="button"
               @click="deleteReview(slotProps.item._id)" 
               class="btn-red"
-              :title="constants.DELETE_REVIEW + slotProps.item._id">
+              :title="constants.TITLE_DELETE_REVIEW + slotProps.item._id">
 
               <template #btn>
                 <i class="fa-solid fa-trash-alt"></i>
@@ -137,7 +137,7 @@ export default {
 
             this.$serve.putData(`/api/reviews/${id}`, reviewData)
               .then(() => {
-                alert(this.constants.ALERT_REVIEW + id + this.constants.UPDATED);
+                alert(this.constants.ALERT_REVIEW + id + this.constants.ALERT_UPDATED);
                 this.$router.go();
               })
               .catch(err => { console.log(err) });
@@ -151,11 +151,11 @@ export default {
      * @param {string} id 
      */
     deleteReview(id) {
-      if (confirm(`${this.constants.DELETE_REVIEW}${id} ?`) === true) {
+      if (confirm(`${this.constants.TITLE_DELETE_REVIEW}${id} ?`) === true) {
 
         this.$serve.deleteData(`/api/reviews/${id}`)
           .then(() => {
-            alert(this.constants.ALERT_REVIEW + id + this.constants.DELETED);
+            alert(this.constants.ALERT_REVIEW + id + this.constants.ALERT_DELETED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

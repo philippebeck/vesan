@@ -76,7 +76,7 @@ export default {
 
       this.$serve.postData("/api/users/password", message)
         .then(() => {
-          alert(message.get("subject") + this.constants.SENDED);
+          alert(message.get("subject") + this.constants.ALERT_SENDED);
           this.$router.push("/login");
         })
         .catch(err => { console.log(err) });

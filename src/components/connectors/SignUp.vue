@@ -1,7 +1,7 @@
 <template>
   <form method="post"
     enctype="multipart/form-data">
-    <ListElt :items="['name', 'email', 'image', 'pass']">
+    <ListElt :items="constants.USER_FORM">
 
       <!-- Name -->
       <template #item-1>
@@ -154,7 +154,7 @@ export default {
 
       this.$serve.postData("/api/users", user)
         .then(() => {
-          alert(this.name + this.constants.CREATED);
+          alert(this.name + this.constants.ALERT_CREATED);
           this.$router.go();
         })
         .catch(err => { console.log(err) });
