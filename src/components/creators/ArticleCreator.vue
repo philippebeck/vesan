@@ -38,7 +38,7 @@
             </label>
 
             <Editor id="article-text"
-              api-key="your-tinymce-key"
+              :api-key="constants.TINY_KEY"
               v-model="text"
               @keyup.enter="validateNewArticle()"
               :init="{

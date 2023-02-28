@@ -38,7 +38,7 @@
             </label>
 
             <Editor id="product-description"
-              api-key="your-tinymce-key"
+              :api-key="constants.TINY_KEY"
               v-model="description"
               @keyup.enter="validateNewProduct()"
               :init="{
