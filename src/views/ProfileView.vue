@@ -114,7 +114,7 @@
       <TableElt v-if="orders.length !== 0"
         :items="orders">
         <template #title>
-          {{ constants.TITLE_ORDER }}
+          {{ constants.PROFILE_ORDERS }}
         </template>
 
         <!-- Id -->

@@ -23,7 +23,7 @@
         </i>
         {{ constants.BLOG_VIEW }}
       </h1>
-      <p>{{ constants.INTRO_BLOG }}</p>
+      <p>{{ constants.INTRO_ARTICLES }}</p>
     </template>
 
     <template #body>

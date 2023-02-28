@@ -113,7 +113,7 @@ export default {
           this.checkNewUser();
 
         } else {
-          alert(this.constants.IMG_USER);
+          alert(this.constants.ALERT_IMG);
         }
       }
     },

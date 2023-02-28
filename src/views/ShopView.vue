@@ -22,7 +22,7 @@
         </i>
         {{ constants.SHOP_VIEW }}
       </h1>
-      <b>{{ constants.INTRO_SHOP }}</b>
+      <b>{{ constants.INTRO_PRODUCTS }}</b>
     </template>
 
     <template #body>
