@@ -95,7 +95,7 @@ export default {
     "Sponsor"
   ],
 
-  /******************** CATS ********************/
+  /******************** CATEGORIES ********************/
 
   CATS_ARTICLE : [
     "Transportation",
@@ -144,17 +144,50 @@ export default {
     "Sports",
   ],
 
-  /******************** UNDER CONSTRUCTION ********************/
+  /******************** FORMS ********************/
+
+  ARTICLE_FORM : [
+    "name", 
+    "text", 
+    "image", 
+    "alt", 
+    "cat"
+  ],
+
+  CONTACT_FORM : [
+    "email",
+    "subject",
+    "text"
+  ],
+
+  LINK_FORM : [
+    "name", 
+    "url", 
+    "cat"
+  ],
+
+  PRODUCT_FORM : [
+    "name", 
+    "description", 
+    "image", 
+    "alt", 
+    "price", 
+    "options", 
+    "cat"
+  ],
+
+  USER_FORM : [
+    "name", 
+    "email",
+    "image", 
+    "pass"
+  ],
+
+  /******************** LIST ********************/
 
   IS_MODERATE : [
     "true",
     "false"
-  ],
-
-  CONTACT_LIST : [
-    "email",
-    "subject",
-    "text"
   ],
 
   ROLES_USER : [
@@ -318,11 +351,19 @@ export default {
 
   /******************** TITLE ********************/
 
+  TITLE_BASKET : "Login to order those Products",
   TITLE_CLEAR : "Clear the basket",
   TITLE_COMMENT_MODERATE : "Moderate comment #",
+  TITLE_DELETE : "Delete ",
+  TITLE_DELETE_ACCOUNT : "Delete your account",
+  TITLE_DELETE_COMMENT : "Delete comment #",
+  TITLE_DELETE_ORDER : "Delete order #",
+  TITLE_DELETE_REVIEW : "Delete review #",
+  TITLE_DISLIKE : "Dislike ",
   TITLE_FORGOT : "Send a new password",
   TITLE_GO : "Go to ",
-  TITLE_LIKE : "Login to like ",
+  TITLE_LIKE : "Like ",
+  TITLE_LIKE_LOGIN : "Login to like ",
   TITLE_MESSAGE : "Send a message",
   TITLE_READ : "Read ",
   TITLE_REVIEW_FIRST : "Be the first to write a review about ",
@@ -330,89 +371,69 @@ export default {
   TITLE_REVIEW_READ : "Read reviews about ",
   TITLE_SIGNIN : "SignIn to your account",
   TITLE_SIGNUP : "SignUp a new user",
+  TITLE_UPDATE : "Update ",
   TITLE_WATCH : "Watch ",
-
-  /******************** CONFIRM ********************/
-
-  CONFIRM_BASKET : "Do you want to clear your basket ?",
-  CONFIRM_FORGOT : `, do you confirm sending a new password ?`,
 
   /******************** ALERT ********************/
 
   ALERT_AVAILABLE : " is not available !",
   ALERT_BASKET_ADDED : " has been added to the Basket !",
   ALERT_COMMENT : "Comment #",
+  ALERT_CREATED : " created !",
+  ALERT_DELETED : " deleted !",
+  ALERT_DISLIKED : " disliked !",
   ALERT_FORGOT_CREDENTIALS : "Wrong email or password !",
   ALERT_FORGOT_EMAIL : "This email is not referenced",
   ALERT_HOME : "Go back Home !",
   ALERT_IMG : "An image must be uploaded !",
+  ALERT_LIKED : " liked !",
+  ALERT_MODERATED : " moderated !",
   ALERT_NEW_COMMENT : "New comment created !",
   ALERT_NEW_REVIEW : "New review created !",
   ALERT_OPTION : "You need to choose an option !",
-  ALERT_ORDER : "Order created !",
+  ALERT_ORDER : "Order #",
+  ALERT_ORDER_CREATED : "Order created !",
   ALERT_PRODUCT : "You have already written a review for this product, you can edit your old review or delete it",
-  ALERT_REFERENCE : " is already referenced !",
+  ALERT_REFERENCED : " is already referenced !",
   ALERT_REVIEW : "Review #",
-
-  /******************** SERVIDIO CHECK ********************/
-
+  ALERT_SENDED : " sended !",
+  ALERT_UPDATED : " updated !",
+  // SERVIDIO
   CHECK_NAME : "The Name must have between 2 & 50 characters.",
   CHECK_EMAIL : "Your Email is not a valid address.",
   CHECK_PASS : "Your Password must have 8 to 50 characters, with uppercase, lowercase, 1 number minimum & no space.",
   CHECK_URL : "This URL is not a valid path.",
   CHECK_TEXT : "The text must have between 8 & 5000 characters.",
 
-  /******************** DELETE ********************/
+  /******************** CONFIRM ********************/
 
-  DELETE_ACCOUNT : "Delete your account",
-  DELETE_COMMENT : "Delete comment #",
-  DELETE_ORDER : "Delete order #",
-  DELETE_REVIEW : "Delete review #",
+  CONFIRM_BASKET : "Do you want to clear your basket ?",
+  CONFIRM_FORGOT : `, do you confirm sending a new password ?`,
 
-  /******************** BASKET ********************/
+  /******************** PAYPAL ********************/
 
-  BASKET_EMPTY : "Your basket is empty !",
-  BASKET_LOGIN : "Login to order those Products",
-  BASKET_ORDER : "Order those Products",
-  BASKET_TOTAL : "The total of your basket is",
   PAYPAL_BTN : "Failed to render the PayPal Buttons",
   PAYPAL_CANCEL : "Canceled transaction !",
   PAYPAL_ERROR : "Invalid transaction !",
   PAYPAL_SDK : "Failed to load the PayPal JS SDK script",
   PAYPAL_STATUS : "Status of transaction #",
 
-  /******************** FORGOT ********************/
-
-  FORGOT_SUBJECT : "New password",
-  FORGOT_TEXT : "This is your new password, keep it safe : ",
-
-  /******************** WORD ********************/
-
-  CREATED : " created !",
-  DELETE : "Delete ",
-  DELETED : " deleted !",
-  DISLIKE : "Dislike ",
-  DISLIKED : " disliked !",
-  LIKE : "Like ",
-  LIKED : " liked !",
-  MODERATED : " moderated !",
-  ON : "on",
-  ORDER : "Order #",
-  SENDED : " sended !",
-  TOTAL : "Total",
-  UPDATE : "Update ",
-  UPDATED : " updated !",
-
   /******************** INTERPOLATION ********************/
 
+  BASKET_EMPTY : "Your basket is empty !",
+  BASKET_TOTAL : "The total of your basket is",
   CREATE_BY : "Created by",
   ERROR_LINK : "Go back home ?",
   HEAD_MOD : "mod/del",
   HEAD_UP : "up/del",
+  ON : "on",
   RELEASE_ON : "Release on",
+  TOTAL : "Total",
   UPDATE_ON : "Updated on",
 
-  /******************** OTHERS ********************/
+  /******************** OTHER ********************/
 
   ERROR_ALT : "404 Error",
+  FORGOT_SUBJECT : "New password",
+  FORGOT_TEXT : "This is your new password, keep it safe : ",
 }
