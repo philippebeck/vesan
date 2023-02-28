@@ -209,6 +209,13 @@ export default {
     "css3"
   ],
 
+  HOME_CONTENT : [
+    "Vue-Elt for Components",
+    "Servidio for Frontend Services",
+    "Animadio for Design",
+    "NemJS for Backend Middlewares"
+  ],
+
   /******************** TITLES ********************/
 
   // PRIVATE VIEWS

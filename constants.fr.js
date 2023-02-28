@@ -209,6 +209,13 @@ export default {
     "css3"
   ],
 
+  HOME_CONTENT : [
+    "Vue-Elt pour les Composants",
+    "Servidio pour les Services Frontend",
+    "Animadio pour le Design",
+    "NemJS pour les Middlewares Backend"
+  ],
+
   /******************** TITLES ********************/
 
   // PRIVATE VIEWS
@@ -363,7 +370,7 @@ export default {
   TITLE_DELETE_COMMENT : "Supprimer le commentaire #",
   TITLE_DELETE_ORDER : "Supprimer la commande #",
   TITLE_DELETE_REVIEW : "Supprimer l'avis #",
-  TITLE_DISLIKE : "Je n'aime pas ",
+  TITLE_DISLIKE : "Je n'aime plus ",
   TITLE_FORGOT : "Envoyer un nouveau mot de passe",
   TITLE_GO : "Aller à ",
   TITLE_LIKE : "J'aime ",
