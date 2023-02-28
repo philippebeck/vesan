@@ -12,7 +12,7 @@
 
     <!-- Main Part -->
     <template #home>
-      <i class="fa-solid fa-home fa-fw"></i>
+      <i class="fa-solid fa-laptop-house fa-fw"></i>
     </template>
     <template #shop>
       <i class="fa-solid fa-shop fa-fw"></i>

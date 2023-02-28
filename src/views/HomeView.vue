@@ -25,9 +25,9 @@
 
     <!-- Main Content -->
     <template #body>
-      <strong class="gray">
-        {{ constants.INTRO_HOME }}
-      </strong>
+      <strong>{{ constants.INTRO_HOME }}</strong>
+      <ListElt :dynamic="true"
+        :items="constants.HOME_CONTENT"/>
     </template>
   </CardElt>
 </template>
