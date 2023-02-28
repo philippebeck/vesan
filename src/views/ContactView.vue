@@ -14,7 +14,7 @@
 
     <template #body>
       <form>
-        <ListElt :items="constants.CONTACT_LIST">
+        <ListElt :items="constants.CONTACT_FORM">
 
           <!-- User Email -->
           <template #item-1>
@@ -120,7 +120,7 @@ export default {
 
         this.$serve.postData("/api/users/message", message)
           .then(() => {
-            alert(this.subject + this.constants.SENDED);
+            alert(this.subject + this.constants.ALERT_SENDED);
             this.$router.push("/");
           })
           .catch(err => { console.log(err) });
