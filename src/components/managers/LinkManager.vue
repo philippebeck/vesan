@@ -133,7 +133,7 @@ export default {
             }
 
             if (links[j] && links[j].url === this.links[i].url) {
-              alert(this.links[i].url+ this.constants.ALERT_REFERENCE);
+              alert(this.links[i].url+ this.constants.ALERT_REFERENCED);
               isReferenced = true;
             }
           }
@@ -158,7 +158,7 @@ export default {
 
         this.$serve.putData(`/api/links/${link.get("id")}`, link)
           .then(() => {
-            alert(link.get("name") + this.constants.UPDATED);
+            alert(link.get("name") + this.constants.ALERT_UPDATED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });
@@ -178,10 +178,10 @@ export default {
         }
       }
 
-      if (confirm(`${this.constants.DELETE} ${linkName} ?`) === true) {
+      if (confirm(`${this.constants.TITLE_DELETE} ${linkName} ?`) === true) {
         this.$serve.deleteData(`/api/links/${id}`)
           .then(() => {
-            alert(linkName + this.constants.DELETED);
+            alert(linkName + this.constants.ALERT_DELETED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

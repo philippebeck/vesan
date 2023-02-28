@@ -111,7 +111,7 @@
             <BtnElt type="button"
               @click="validateUpdatedProduct(products[slotProps.index]._id)" 
               class="btn-sky"
-              :title="constants.UPDATE + products[slotProps.index].name">
+              :title="constants.TITLE_UPDATE + products[slotProps.index].name">
 
               <template #btn>
                 <i class="fa-solid fa-edit"></i>
@@ -122,7 +122,7 @@
             <BtnElt type="button"
               @click="deleteProduct(products[slotProps.index]._id)" 
               class="btn-red"
-              :title="constants.DELETE + products[slotProps.index].name">
+              :title="constants.TITLE_DELETE + products[slotProps.index].name">
 
               <template #btn>
                 <i class="fa-solid fa-trash-alt"></i>
@@ -187,7 +187,7 @@ export default {
             }
 
             if (products[j] && products[j].description === this.products[i].description) {
-              alert(this.products[i].description+ this.constants.ALERT_REFERENCE);
+              alert(this.products[i].description+ this.constants.ALERT_REFERENCED);
               isReferenced = true;
             }
           }
@@ -222,7 +222,7 @@ export default {
 
         this.$serve.putData(`/api/products/${product.get("id")}`, product)
           .then(() => {
-            alert(product.get("name") + this.constants.UPDATED);
+            alert(product.get("name") + this.constants.ALERT_UPDATED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });
@@ -242,10 +242,10 @@ export default {
         }
       }
       
-      if (confirm(`${this.constants.DELETE} ${productName} ?`) === true) {
+      if (confirm(`${this.constants.TITLE_DELETE} ${productName} ?`) === true) {
         this.$serve.deleteData(`/api/products/${id}`)
           .then(() => {
-            alert(productName + this.constants.DELETED);
+            alert(productName + this.constants.ALERT_DELETED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

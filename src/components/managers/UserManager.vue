@@ -78,7 +78,7 @@
             <BtnElt type="button"
               @click="validateUpdatedUser(users[slotProps.index]._id)" 
               class="btn-sky"
-              :title="constants.UPDATE + users[slotProps.index].name">
+              :title="constants.TITLE_UPDATE + users[slotProps.index].name">
 
               <template #btn>
                 <i class="fa-solid fa-edit"></i>
@@ -89,7 +89,7 @@
             <BtnElt type="button"
               @click="deleteUser(users[slotProps.index]._id)" 
               class="btn-red"
-              :title="constants.DELETE + users[slotProps.index].name">
+              :title="constants.TITLE_DELETE + users[slotProps.index].name">
 
               <template #btn>
                 <i class="fa-solid fa-trash-alt"></i>
@@ -153,7 +153,7 @@ export default {
             }
 
             if (users[j] && users[j].email === this.users[i].email) {
-              alert(this.users[i].email+ this.constants.ALERT_REFERENCE);
+              alert(this.users[i].email+ this.constants.ALERT_REFERENCED);
               isReferenced = true;
             }
           }
@@ -185,7 +185,7 @@ export default {
 
         this.$serve.putData(`/api/users/${this.users[i]._id}`, user)
           .then(() => {
-            alert(this.users[i].name + this.constants.UPDATED);
+            alert(this.users[i].name + this.constants.ALERT_UPDATED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });
@@ -205,10 +205,10 @@ export default {
         }
       }
 
-      if (confirm(`${this.constants.DELETE} ${userName} ?`) === true) {
+      if (confirm(`${this.constants.TITLE_DELETE} ${userName} ?`) === true) {
         this.$serve.deleteData(`/api/users/${id}`)
           .then(() => {
-            alert(userName + this.constants.DELETED);
+            alert(userName + this.constants.ALERT_DELETED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });
