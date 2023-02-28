@@ -23,13 +23,13 @@
               v-model:value="slotProps.item.text"
               @keyup.enter="updateComment(slotProps.item._id)"
               itemprop="text"
-              :info="constants.UPDATE_TEXT"
+              :info="constants.INFO_UP_TEXT"
               :max="5000"/>
 
             <BtnElt type="button"
               @click="updateComment(slotProps.item._id)" 
               class="btn-sky"
-              :title="constants.UPDATE_COMMENT + slotProps.item._id">
+              :title="constants.INFO_UP_COMMENT + slotProps.item._id">
 
               <template #btn>
                 <i class="fa-solid fa-edit"></i>
@@ -117,7 +117,7 @@ export default {
 
             this.$serve.putData(`/api/comments/${id}`, commentData)
               .then(() => {
-                alert(this.constants.COMMENT + id + this.constants.UPDATED);
+                alert(this.constants.ALERT_COMMENT + id + this.constants.UPDATED);
                 this.$router.go();
               })
               .catch(err => { console.log(err) });
@@ -135,7 +135,7 @@ export default {
 
         this.$serve.deleteData(`/api/comments/${id}`)
           .then(() => {
-            alert(this.constants.COMMENT + id + this.constants.DELETED);
+            alert(this.constants.ALERT_COMMENT + id + this.constants.DELETED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

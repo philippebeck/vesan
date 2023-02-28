@@ -31,7 +31,7 @@
             <FieldElt :id="'name-' + products[slotProps.index]._id"
               v-model:value="getProducts()[slotProps.index].name"
               @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
-              :info="constants.UPDATE_NAME"/>
+              :info="constants.INFO_UP_NAME"/>
           </template>
 
           <!-- Description -->
@@ -40,7 +40,7 @@
               type="textarea"
               v-model:value="getProducts()[slotProps.index].description"
               @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
-              :info="constants.UPDATE_DESCRIPTION"
+              :info="constants.INFO_UP_DESCRIPTION"
               :max="5000"/>
           </template>
 
@@ -53,7 +53,7 @@
 
             <FieldElt :id="'image-' + products[slotProps.index]._id"
               type="file"
-              :info="constants.UPDATE_IMAGE"/>
+              :info="constants.INFO_UP_IMAGE"/>
           </template>
 
           <!-- Alt -->
@@ -62,7 +62,7 @@
               type="textarea"
               v-model:value="getProducts()[slotProps.index].alt"
               @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
-              :info="constants.UPDATE_ALT"/>
+              :info="constants.INFO_UP_ALT"/>
           </template>
 
           <!-- Price -->
@@ -71,7 +71,7 @@
               type="number"
               v-model:value="getProducts()[slotProps.index].price"
               @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
-              :info="constants.UPDATE_PRICE"
+              :info="constants.INFO_UP_PRICE"
               :min="1"
               :max="1000"/>
           </template>
@@ -82,7 +82,7 @@
               type="textarea"
               v-model:value="getProducts()[slotProps.index].options"
               @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
-              :info="constants.UPDATE_OPTIONS"/>
+              :info="constants.INFO_UP_OPTIONS"/>
           </template>
 
           <!-- Category -->
@@ -92,7 +92,7 @@
               :list="constants.CATS_PRODUCT"
               v-model:value="getProducts()[slotProps.index].cat"
               @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
-              :info="constants.UPDATE_CATEGORY"/>
+              :info="constants.INFO_UP_CATEGORY"/>
           </template>
 
           <!-- Created -->

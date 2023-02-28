@@ -46,7 +46,7 @@
               :list="constants.IS_MODERATE"
               v-model:value="getComments()[slotProps.index].moderate"
               @keyup.enter="moderateComment(comments[slotProps.index]._id)"
-              :info="constants.UPDATE_MODERATE"/>
+              :info="constants.INFO_UP_MODERATE"/>
           </template>
 
           <!-- Created -->
@@ -65,7 +65,7 @@
             <BtnElt type="button"
               @click="moderateComment(comments[slotProps.index]._id)" 
               class="btn-green"
-              :title="constants.TITLE_COMMENT + comments[slotProps.index]._id">
+              :title="constants.TITLE_COMMENT_MODERATE + comments[slotProps.index]._id">
 
               <template #btn>
                 <i class="fa-solid fa-spell-check"></i>
@@ -135,7 +135,7 @@ export default {
 
           this.$serve.putData(`/api/comments/${id}`, commentData)
             .then(() => {
-              alert(this.constants.COMMENT + id + this.constants.MODERATED);
+              alert(this.constants.ALERT_COMMENT + id + this.constants.MODERATED);
               this.$router.go();
             })
             .catch(err => { console.log(err) });
@@ -152,7 +152,7 @@ export default {
 
         this.$serve.deleteData(`/api/comments/${id}`)
           .then(() => {
-            alert(this.constants.COMMENT + id + this.constants.DELETED);
+            alert(this.constants.ALERT_COMMENT + id + this.constants.DELETED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

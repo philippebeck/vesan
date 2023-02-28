@@ -31,7 +31,7 @@
             <FieldElt :id="'name-' + articles[slotProps.index]._id"
               v-model:value="getArticles()[slotProps.index].name"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              :info="constants.UPDATE_NAME"/>
+              :info="constants.INFO_UP_NAME"/>
           </template>
 
           <!-- Text -->
@@ -40,7 +40,7 @@
               type="textarea"
               v-model:value="getArticles()[slotProps.index].text"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              :info="constants.UPDATE_TEXT"
+              :info="constants.INFO_UP_TEXT"
               :max="5000"/>
           </template>
 
@@ -52,7 +52,7 @@
 
             <FieldElt :id="'image-' + articles[slotProps.index]._id"
               type="file"
-              :info="constants.UPDATE_IMAGE"/>
+              :info="constants.INFO_UP_IMAGE"/>
           </template>
 
           <!-- Alt -->
@@ -61,7 +61,7 @@
               type="textarea"
               v-model:value="getArticles()[slotProps.index].alt"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              :info="constants.UPDATE_ALT"/>
+              :info="constants.INFO_UP_ALT"/>
           </template>
 
           <!-- Category -->
@@ -71,7 +71,7 @@
               :list="constants.CATS_ARTICLE"
               v-model:value="getArticles()[slotProps.index].cat"
               @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
-              :info="constants.UPDATE_CATEGORY"/>
+              :info="constants.INFO_UP_CATEGORY"/>
           </template>
 
           <!-- User -->

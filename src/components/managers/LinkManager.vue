@@ -23,7 +23,7 @@
         <FieldElt :id="'name-' + table[slotProps.index]._id"
           v-model:value="table[slotProps.index].name"
           @keyup.enter="validateUpdatedLink(table[slotProps.index]._id)"
-          :info="constants.UPDATE_NAME"/>
+          :info="constants.INFO_UP_NAME"/>
       </template>
 
       <!-- URL -->
@@ -32,7 +32,7 @@
           type="url"
           v-model:value="table[slotProps.index].url"
           @keyup.enter="validateUpdatedLink(table[slotProps.index]._id)"
-          :info="constants.UPDATE_URL"
+          :info="constants.INFO_UP_URL"
           :max="parseInt('100')"/>
       </template>
 
@@ -43,7 +43,7 @@
           :list="constants.CATS_LINK"
           v-model:value="table[slotProps.index].cat"
           @keyup.enter="validateUpdatedLink(table[slotProps.index]._id)"
-          :info="constants.UPDATE_CATEGORY"/>
+          :info="constants.INFO_UP_CATEGORY"/>
       </template>
 
       <!-- Update -->

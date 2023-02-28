@@ -123,7 +123,7 @@ export default {
 
         this.$serve.postData("/api/reviews", review)
           .then(() => {
-            alert(this.constants.ALERT_REVIEW);
+            alert(this.constants.ALERT_NEW_REVIEW);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

@@ -29,7 +29,7 @@
             <FieldElt :id="'name-' + users[slotProps.index]._id"
               v-model:value="getUsers()[slotProps.index].name"
               @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"
-              :info="constants.UPDATE_NAME"/>
+              :info="constants.INFO_UP_NAME"/>
           </template>
 
           <!-- Email -->
@@ -38,7 +38,7 @@
               type="email"
               v-model:value="getUsers()[slotProps.index].email"
               @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"
-              :info="constants.UPDATE_EMAIL"/>
+              :info="constants.INFO_UP_EMAIL"/>
           </template>
 
           <!-- Image -->
@@ -49,7 +49,7 @@
 
             <FieldElt :id="'image-' + users[slotProps.index]._id"
               type="file"
-              :info="constants.UPDATE_IMAGE"/>
+              :info="constants.INFO_UP_IMAGE"/>
           </template>
 
           <!-- Role -->
@@ -59,7 +59,7 @@
               :list="constants.ROLES_USER"
               v-model:value="getUsers()[slotProps.index].role"
               @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"
-              :info="constants.UPDATE_ROLE"/>
+              :info="constants.INFO_UP_ROLE"/>
           </template>
 
           <!-- Created -->

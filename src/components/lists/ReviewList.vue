@@ -23,21 +23,21 @@
               v-model:value="slotProps.item.text"
               @keyup.enter="updateReview(slotProps.item._id)"
               itemprop="text"
-              :info="constants.UPDATE_TEXT"
+              :info="constants.INFO_UP_TEXT"
               :max="5000"/>
 
             <FieldElt :id="'score-' + slotProps.item._id"
               type="number"
               v-model:value="slotProps.item.score"
               @keyup.enter="updateReview(slotProps.item._id)"
-              :info="constants.UPDATE_SCORE"
+              :info="constants.INFO_UP_SCORE"
               :min="0"
               :max="5"/>
 
             <BtnElt type="button"
               @click="updateReview(slotProps.item._id)" 
               class="btn-sky"
-              :title="constants.UPDATE_REVIEW + slotProps.item._id">
+              :title="constants.INFO_UP_REVIEW + slotProps.item._id">
 
               <template #btn>
                 <i class="fa-solid fa-edit"></i>
@@ -137,7 +137,7 @@ export default {
 
             this.$serve.putData(`/api/reviews/${id}`, reviewData)
               .then(() => {
-                alert(this.constants.REVIEW + id + this.constants.UPDATED);
+                alert(this.constants.ALERT_REVIEW + id + this.constants.UPDATED);
                 this.$router.go();
               })
               .catch(err => { console.log(err) });
@@ -155,7 +155,7 @@ export default {
 
         this.$serve.deleteData(`/api/reviews/${id}`)
           .then(() => {
-            alert(this.constants.REVIEW + id + this.constants.DELETED);
+            alert(this.constants.ALERT_REVIEW + id + this.constants.DELETED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });

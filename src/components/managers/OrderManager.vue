@@ -62,7 +62,7 @@
               :list="constants.CATS_ORDER"
               v-model:value="getOrders()[slotProps.index].status"
               @keyup.enter="updateStatus(orders[slotProps.index]._id)"
-              :info="constants.UPDATE_STATUS"/>
+              :info="constants.INFO_UP_STATUS"/>
           </template>
 
           <!-- User -->
@@ -87,7 +87,7 @@
           <BtnElt type="button"
               @click="updateStatus(orders[slotProps.index]._id)" 
               class="btn-green"
-              :title="constants.UPDATE_ORDER + orders[slotProps.index]._id">
+              :title="constants.INFO_UP_ORDER + orders[slotProps.index]._id">
               <template #btn>
                 <i class="fa-regular fa-calendar-check"></i>
               </template>
