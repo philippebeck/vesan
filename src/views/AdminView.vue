@@ -191,7 +191,7 @@ export default {
         .catch(err => { console.log(err) });
 
     } else {
-      alert(this.constants.GO_HOME);
+      alert(this.constants.ALERT_HOME);
       this.$router.push("/");
     }
   },

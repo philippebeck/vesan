@@ -12,7 +12,7 @@
         id="likes"
         href="/login"
         class="btn-blue"
-        :title="constants.LIKE_LOGIN + article.name">
+        :title="constants.TITLE_LIKE + article.name">
 
         <template #btn>
           <i class="fa-regular fa-thumbs-up fa-lg">

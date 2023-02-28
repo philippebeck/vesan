@@ -53,7 +53,7 @@
                 :id="`like-${slotProps.value._id}`"
                 href="/login"
                 class="btn-blue"
-                :title="constants.LIKE_LOGIN + slotProps.value.name">
+                :title="constants.TITLE_LIKE + slotProps.value.name">
 
                 <template #btn>
                   <i class="fa-regular fa-thumbs-up fa-lg">
