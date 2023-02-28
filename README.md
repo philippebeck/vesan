@@ -75,13 +75,13 @@ From the root of your App with Vesan :
 From the root of your App with Vesan :  
 
 1. To configure the backend, replace values :  
-`api/.env.example` *(then rename it .env)*
+`api/.env.en  || api/.env.fr` *(then rename it .env)*  
 
 1. To configure the frontend, replace values :  
-`constants.js`
+`constants.en.js || constants.fr.js` *(then rename it constants.js)*  
 
 1. To configure the design, replaces values :  
-`src/style/style.css`
+`src/style/style.ui.css` *(then rename it style.css)*  
 
 ---
 

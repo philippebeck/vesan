@@ -83,7 +83,7 @@ export default {
 
             this.$router.go("/");
           })
-          .catch(() => { alert(this.constants.ALERT_FORGOT_CREDENTIALS) });
+          .catch(err => { console.log(err) });
       }
     }
   }
