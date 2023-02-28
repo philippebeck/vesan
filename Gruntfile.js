@@ -13,7 +13,7 @@ module.exports = function(grunt) {
           "node_modules/vue-elt/dist/style.css",
           "src/style/overload.css"
         ], 
-        dest: "src/style/style.css"
+        dest: "src/style/style.ui.css"
       }
     }
   });
