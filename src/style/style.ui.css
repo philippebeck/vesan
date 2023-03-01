@@ -744,5 +744,9 @@ aside {
   text-overflow: ellipsis;
 }
 
+.fa-brands {
+  cursor: pointer;
+}
+
 /* Author: Philippe Beck <philippe@philippebeck.net>
- Updated: 1st Mar 2023 @ 12:56:38 PM */
+ Updated: 1st Mar 2023 @ 6:22:06 PM */
