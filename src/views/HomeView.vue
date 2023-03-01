@@ -10,7 +10,7 @@
         class="anima-grow">
 
         <template #slide="slotProps">
-          <i :class="`fa-${constants.SLIDER_FA} fa-${slotProps.slide.toLowerCase()} fa-10x blue`"></i>
+          <i :class="`fa-${constants.SLIDER_FA} fa-${slotProps.slide.toLowerCase()} fa-9x blue`"></i>
         </template>
         <template #gallery="slotProps">
           <i :class="`fa-${constants.SLIDER_FA} fa-${slotProps.slide.toLowerCase()}`"></i>
