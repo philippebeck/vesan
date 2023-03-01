@@ -19,7 +19,7 @@
 
         <template #item-1>
           <a href="/admin"
-            title="Admin">
+            :title="constants.TITLE_ADMIN">
             <i class="fa-solid fa-user-gear fa-fw"></i>
           </a>
         </template>
@@ -38,7 +38,7 @@
         <template #item-3>
           <button type="button"
             @click="logout()"
-            title="Logout">
+            :title="constants.TITLE_LOGOUT">
             <i class="fa-solid fa-sign-out-alt fa-fw"></i>
           </button>
         </template>
@@ -62,7 +62,7 @@
         <template #item-2>
           <button type="button"
             @click="logout()"
-            title="Logout">
+            :title="constants.TITLE_LOGOUT">
             <i class="fa-solid fa-sign-out-alt fa-fw"></i>
           </button>
         </template>
@@ -71,7 +71,7 @@
       <!-- Visitor -->
       <a v-else
         href="/login"
-        title="Login">
+        :title="constants.TITLE_LOGIN">
         <i class="fa-solid fa-sign-in-alt fa-fw"></i>
       </a>
     </template>
