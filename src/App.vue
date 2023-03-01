@@ -37,7 +37,7 @@
         <template #item-1>
           <a href="/admin"
             title="Admin">
-            <i class="fa-solid fa-user-ninja fa-fw"></i>
+            <i class="fa-solid fa-user-gear fa-fw"></i>
           </a>
         </template>
 
