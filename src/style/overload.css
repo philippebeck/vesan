@@ -18,3 +18,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+.fa-brands {
+  cursor: pointer;
+}

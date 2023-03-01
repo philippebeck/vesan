@@ -79,7 +79,7 @@ exports.listArticles = (req, res) => {
   ArticleModel
     .find()
     .then((articles) => res.status(200).json(articles))
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) => res.status(404).json({ error }));
 };
 
 /**
@@ -98,9 +98,9 @@ exports.readArticle = (req, res) => {
         article.user = user.name;
         res.status(200).json(article);
       })
-      .catch((error) => res.status(400).json({ error }));
+      .catch((error) => res.status(404).json({ error }));
   })
-  .catch((error) => res.status(400).json({ error }));
+  .catch((error) => res.status(404).json({ error }));
 }
 
 //! ****************************** PRIVATE ******************************
@@ -186,12 +186,12 @@ exports.deleteArticle = (req, res) => {
             .then(() => 
               ArticleModel
                 .findByIdAndDelete(req.params.id)
-                .then(() => res.status(200).json({ message: process.env.ARTICLE_DELETED }))
+                .then(() => res.status(204).json({ message: process.env.ARTICLE_DELETED }))
                 .catch((error) => res.status(400).json({ error }))
             )
-            .catch(error => res.status(500).json({ error }));
+            .catch(error => res.status(400).json({ error }));
         });
       })
     })
-    .catch(error => res.status(500).json({ error }));
+    .catch(error => res.status(404).json({ error }));
 };

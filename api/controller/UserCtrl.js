@@ -23,11 +23,11 @@ const form = formidable({ uploadDir: USERS_IMG, keepExtensions: true });
  */
 exports.checkCredentials = (email, pass, res) => {
   if (!nem.checkEmail(email)) {
-    return res.status(401).json({ message: process.env.USER_EMAIL });
+    return res.status(400).json({ message: process.env.USER_EMAIL });
   }
 
   if (!nem.checkPass(pass)) {
-    return res.status(401).json({ message: process.env.USER_PASS });
+    return res.status(400).json({ message: process.env.USER_PASS });
   }
 }
 
@@ -68,7 +68,7 @@ exports.setMessage = (fields, res) => {
       let mail = nem.createMessage(fields);
 
       await mailer.sendMail(mail, function() {
-        res.status(200).json({ message: process.env.USER_MESSAGE });
+        res.status(202).json({ message: process.env.USER_MESSAGE });
       });
     } catch(e){ console.error(e); }
   })();
@@ -116,7 +116,7 @@ exports.readAvatar = (req, res) => {
 
       res.status(200).json(avatar) 
     })
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) => res.status(404).json({ error }));
 }
 
 /**
@@ -151,7 +151,7 @@ exports.createUser = (req, res, next) => {
             .catch((error) => res.status(400).json({ error }));
         });
       })
-      .catch((error) => res.status(500).json({ error }));
+      .catch((error) => res.status(400).json({ error }));
   });
 }
 
@@ -251,11 +251,11 @@ exports.forgotPass = (req, res, next) => {
             UserModel
               .findByIdAndUpdate(user._id, { ...newUser, _id: user._id })
               .then(() => { this.setMessage(fields, res) })
-              .catch((error) => res.status(500).json({ error }));
+              .catch((error) => res.status(400).json({ error }));
           })
           .catch((error) => res.status(400).json({ error }));
       })
-      .catch((error) => res.status(500).json({ error }));
+      .catch((error) => res.status(404).json({ error }));
   })
 }
 
@@ -328,7 +328,7 @@ exports.listUsers = (req, res) => {
       }
       res.status(200).json(usersList);
     })
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) => res.status(404).json({ error }));
 }
 
 /**
@@ -340,7 +340,7 @@ exports.readUser = (req, res) => {
   UserModel
   .findById(req.params.id)
   .then((user) => res.status(200).json(user))
-  .catch((error) => res.status(400).json({ error }));
+  .catch((error) => res.status(404).json({ error }));
 }
 
 /**
@@ -388,7 +388,7 @@ exports.updateUser = (req, res, next) => {
     } else {
 
       if (!nem.checkEmail(fields.email)) {
-        return res.status(401).json({ message: process.env.USER_EMAIL });
+        return res.status(400).json({ message: process.env.USER_EMAIL });
       }
 
       let user = {
@@ -427,7 +427,7 @@ exports.deleteUser = (req, res) => {
 
                 UserModel
                   .findByIdAndDelete(req.params.id)
-                  .then(() => res.status(200).json({ message: process.env.USER_DELETED }))
+                  .then(() => res.status(204).json({ message: process.env.USER_DELETED }))
                   .catch((error) => res.status(400).json({ error }))
               )
               .catch((error) => res.status(400).json({ error }))
@@ -435,5 +435,5 @@ exports.deleteUser = (req, res) => {
           .catch((error) => res.status(400).json({ error }))
       })
     })
-    .catch(error => res.status(500).json({ error }));
+    .catch(error => res.status(404).json({ error }));
 }

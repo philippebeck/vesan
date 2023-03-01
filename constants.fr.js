@@ -59,7 +59,7 @@ export default {
       "href": "/shop",
       "name": "Boutique",
       "type": "solid",
-      "icon": "shop"
+      "icon": "store"
     },
     {
       "href": "/blog",
@@ -296,6 +296,13 @@ export default {
 
   /******************** LIST ********************/
 
+  HOME_CONTENT : [
+    "Vue-Elt pour les Composants",
+    "Servidio pour les Services Frontend",
+    "Animadio pour le Design",
+    "NemJS pour les Middlewares Backend"
+  ],
+
   IS_MODERATE : [
     "true",
     "false"
@@ -314,13 +321,6 @@ export default {
     "html5", 
     "js", 
     "css3"
-  ],
-
-  HOME_CONTENT : [
-    "Vue-Elt pour les Composants",
-    "Servidio pour les Services Frontend",
-    "Animadio pour le Design",
-    "NemJS pour les Middlewares Backend"
   ],
 
   /******************** TITLES ********************/

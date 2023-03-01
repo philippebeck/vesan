@@ -1,4 +1,4 @@
-/*! vesan v0.49.0 | https://github.com/philippebeck/vesan | Apache-2.0 License */
+/*! vesan v0.50.0 | https://github.com/philippebeck/vesan | Apache-2.0 License */
 
 @import url('https://fonts.googleapis.com/css2?family=Geo&family=Rozha+One&family=Syne+Mono&display=swap');
 @import url("../../node_modules/@fortawesome/fontawesome-free/css/all.min.css");
@@ -744,5 +744,9 @@ aside {
   text-overflow: ellipsis;
 }
 
+.fa-brands {
+  cursor: pointer;
+}
+
 /* Author: Philippe Beck <philippe@philippebeck.net>
- Updated: 1st Mar 2023 @ 12:56:38 PM */
+ Updated: 1st Mar 2023 @ 9:05:01 PM */
