@@ -465,6 +465,7 @@ export default {
 
   /******************** TITLE ********************/
 
+  TITLE_ADMIN : "Admin",
   TITLE_BASKET : "Login to order those Products",
   TITLE_CLEAR : "Clear the basket",
   TITLE_COMMENT_MODERATE : "Moderate comment #",
@@ -478,6 +479,8 @@ export default {
   TITLE_GO : "Go to ",
   TITLE_LIKE : "Like ",
   TITLE_LIKE_LOGIN : "Login to like ",
+  TITLE_LOGIN : "Login",
+  TITLE_LOGOUT : "Logout",
   TITLE_MESSAGE : "Send a message",
   TITLE_READ : "Read ",
   TITLE_REVIEW_FIRST : "Be the first to write a review about ",
