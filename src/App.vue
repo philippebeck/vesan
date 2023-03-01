@@ -43,7 +43,7 @@
 
         <template #item-2>
           <a href="/profile"
-            :title="`Profile of ${user.name}`">
+            :title="constants.PROFILE_OF + user.name">
             <img :src="`/img/thumbnails/users/${user.image}`"
               :alt="user.name"
               :height="40"
@@ -67,7 +67,7 @@
 
         <template #item-1>
           <a href="/profile"
-            :title="`Profile of ${user.name}`">
+            :title="constants.PROFILE_OF + user.name">
             <img :src="`/img/thumbnails/users/${user.image}`"
               :alt="user.name"
               :height="40"

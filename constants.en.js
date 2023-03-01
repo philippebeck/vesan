@@ -515,6 +515,7 @@ export default {
   HEAD_MOD : "mod/del",
   HEAD_UP : "up/del",
   ON : " on ",
+  PROFILE_OF : "Profile of ",
   RELEASE_ON : "Release on ",
   TOTAL : "Total",
   UPDATE_ON : "Updated on ",
