@@ -78,7 +78,7 @@ exports.listProducts = (req, res) => {
   ProductModel
     .find()
     .then((products) => res.status(200).json(products))
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) => res.status(404).json({ error }));
 };
 
 /**
@@ -90,7 +90,7 @@ exports.readProduct = (req, res) => {
   ProductModel
   .findById(req.params.id)
   .then((product) => res.status(200).json(product))
-  .catch((error) => res.status(400).json({ error }));
+  .catch((error) => res.status(404).json({ error }));
 }
 
 //! ****************************** PRIVATE ******************************
@@ -179,12 +179,12 @@ exports.deleteProduct = (req, res) => {
             .then(() => 
               ProductModel
                 .findByIdAndDelete(req.params.id)
-                .then(() => res.status(200).json({ message: process.env.PRODUCT_DELETED }))
+                .then(() => res.status(204).json({ message: process.env.PRODUCT_DELETED }))
                 .catch((error) => res.status(400).json({ error }))
             )
             .catch((error) => res.status(400).json({ error }))
         })
       })
     })
-    .catch(error => res.status(500).json({ error }));
+    .catch(error => res.status(404).json({ error }));
 }

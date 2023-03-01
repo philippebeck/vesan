@@ -22,7 +22,7 @@ exports.setMessage = (fields, res) => {
       let mail = nem.createMessage(fields);
 
       await mailer.sendMail(mail, function() {
-        res.status(200).json({ message: process.env.USER_MESSAGE });
+        res.status(202).json({ message: process.env.USER_MESSAGE });
       });
     } catch(e){ console.error(e); }
   })();
@@ -39,7 +39,7 @@ exports.listOrders = (req, res) => {
   OrderModel
     .find()
     .then((orders) => res.status(200).json(orders))
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) => res.status(404).json({ error }));
 };
 
 /**
@@ -51,7 +51,7 @@ exports.listUserOrders = (req, res) => {
   OrderModel
     .find({ user: req.params.id })
     .then((orders) => res.status(200).json(orders))
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) => res.status(404).json({ error }));
 };
 
 /**
@@ -147,6 +147,6 @@ exports.updateOrder = (req, res, next) => {
 exports.deleteOrder = (req, res) => {
   OrderModel
     .findByIdAndDelete(req.params.id)
-    .then(() => res.status(200).json({ message: process.env.ORDER_DELETED }))
+    .then(() => res.status(204).json({ message: process.env.ORDER_DELETED }))
     .catch((error) => res.status(400).json({ error }))
 };

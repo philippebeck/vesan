@@ -32,9 +32,9 @@ exports.listArticleComments = (req, res) => {
           }
           res.status(200).json(comments);
         })
-      .catch((error) => res.status(400).json({ error }));
+      .catch((error) => res.status(404).json({ error }));
     })
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) => res.status(404).json({ error }));
 };
 
 //! ****************************** PRIVATE ******************************
@@ -48,7 +48,7 @@ exports.listComments = (req, res) => {
   CommentModel
     .find()
     .then((comments) => res.status(200).json(comments))
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) => res.status(404).json({ error }));
 };
 
 /**
@@ -103,6 +103,6 @@ exports.updateComment = (req, res, next) => {
 exports.deleteComment = (req, res) => {
   CommentModel
     .findByIdAndDelete(req.params.id)
-    .then(() => res.status(200).json({ message: process.env.COMMENT_DELETED }))
+    .then(() => res.status(204).json({ message: process.env.COMMENT_DELETED }))
     .catch((error) => res.status(400).json({ error }))
 };

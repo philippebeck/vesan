@@ -32,9 +32,9 @@ exports.listProductReviews = (req, res) => {
           }
           res.status(200).json(reviews);
         })
-        .catch((error) => res.status(400).json({ error }));
+        .catch((error) => res.status(404).json({ error }));
     })
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) => res.status(404).json({ error }));
 };
 
 //! ****************************** PRIVATE ******************************
@@ -48,7 +48,7 @@ exports.listReviews = (req, res) => {
   ReviewModel
     .find()
     .then((reviews) => res.status(200).json(reviews))
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) => res.status(404).json({ error }));
 };
 
 /**
@@ -103,6 +103,6 @@ exports.updateReview = (req, res, next) => {
 exports.deleteReview = (req, res) => {
   ReviewModel
     .findByIdAndDelete(req.params.id)
-    .then(() => res.status(200).json({ message: process.env.REVIEW_DELETED }))
+    .then(() => res.status(204).json({ message: process.env.REVIEW_DELETED }))
     .catch((error) => res.status(400).json({ error }))
 };

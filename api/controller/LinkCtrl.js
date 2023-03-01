@@ -18,7 +18,7 @@ exports.listLinks = (req, res) => {
   LinkModel
     .find()
     .then((links) => res.status(200).json(links))
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) => res.status(404).json({ error }));
 };
 
 //! ****************************** PRIVATE ******************************
@@ -38,7 +38,7 @@ exports.createLink = (req, res, next) => {
     }
 
     if (!nem.checkUrl("https://" + fields.url)) {
-      return res.status(401).json({ message: process.env.LINK_URL });
+      return res.status(400).json({ message: process.env.LINK_URL });
     }
 
     let link = new LinkModel(fields);
@@ -65,7 +65,7 @@ exports.updateLink = (req, res, next) => {
     }
 
     if (!nem.checkUrl("https://" + fields.url)) {
-      return res.status(401).json({ message: process.env.LINK_URL });
+      return res.status(400).json({ message: process.env.LINK_URL });
     }
 
     LinkModel
@@ -83,6 +83,6 @@ exports.updateLink = (req, res, next) => {
 exports.deleteLink = (req, res) => {
   LinkModel
     .findByIdAndDelete(req.params.id)
-    .then(() => res.status(200).json({ message: process.env.LINK_DELETED }))
+    .then(() => res.status(204).json({ message: process.env.LINK_DELETED }))
     .catch((error) => res.status(400).json({ error }))
 };
