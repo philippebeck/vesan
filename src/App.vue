@@ -10,23 +10,6 @@
         :alt="constants.LOGO_ALT">
     </template>
 
-    <!-- Main Part -->
-    <template #home>
-      <i class="fa-solid fa-laptop-house fa-fw"></i>
-    </template>
-    <template #shop>
-      <i class="fa-solid fa-shop fa-fw"></i>
-    </template>
-    <template #blog>
-      <i class="fa-solid fa-blog fa-fw"></i>
-    </template>
-    <template #contact>
-      <i class="fa-brands fa-at fa-fw"></i>
-    </template>
-    <template #basket>
-      <i class="fa-solid fa-basket-shopping fa-fw"></i>
-    </template>
-
     <!-- Admin Part -->
     <template #admin>
 
@@ -36,7 +19,7 @@
 
         <template #item-1>
           <a href="/admin"
-            title="Admin">
+            :title="constants.TITLE_ADMIN">
             <i class="fa-solid fa-user-gear fa-fw"></i>
           </a>
         </template>
@@ -55,7 +38,7 @@
         <template #item-3>
           <button type="button"
             @click="logout()"
-            title="Logout">
+            :title="constants.TITLE_LOGOUT">
             <i class="fa-solid fa-sign-out-alt fa-fw"></i>
           </button>
         </template>
@@ -79,7 +62,7 @@
         <template #item-2>
           <button type="button"
             @click="logout()"
-            title="Logout">
+            :title="constants.TITLE_LOGOUT">
             <i class="fa-solid fa-sign-out-alt fa-fw"></i>
           </button>
         </template>
@@ -88,7 +71,7 @@
       <!-- Visitor -->
       <a v-else
         href="/login"
-        title="Login">
+        :title="constants.TITLE_LOGIN">
         <i class="fa-solid fa-sign-in-alt fa-fw"></i>
       </a>
     </template>

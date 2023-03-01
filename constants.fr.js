@@ -48,18 +48,43 @@ export default {
 
   /******************** NAV ********************/
 
+  NAV_MAIN : [
+    {
+      "href": "/home",
+      "name": "Accueil",
+      "type": "solid",
+      "icon": "laptop-house"
+    },
+    {
+      "href": "/shop",
+      "name": "Boutique",
+      "type": "solid",
+      "icon": "shop"
+    },
+    {
+      "href": "/blog",
+      "name": "Blog",
+      "type": "solid",
+      "icon": "blog"
+    },
+    {
+      "href": "/contact",
+      "name": "Contact",
+      "type": "brands",
+      "icon": "at"
+    },
+    {
+      "href": "/basket",
+      "name": "Panier",
+      "type": "solid",
+      "icon": "basket-shopping"
+    }
+  ],
+
   NAV_ADMIN : [
     "admin", 
     "profile", 
     "logout"
-  ],
-
-  NAV_MAIN : [
-    "home", 
-    "shop", 
-    "blog", 
-    "contact", 
-    "basket"
   ],
 
   NAV_USER : [
@@ -444,6 +469,7 @@ export default {
 
   /******************** TITLE ********************/
 
+  TITLE_ADMIN : "Admin",
   TITLE_BASKET : "Connectez-vous pour commander ces produits",
   TITLE_CLEAR : "Vider le panier",
   TITLE_COMMENT_MODERATE : "Modérer le commentaire #",
@@ -457,6 +483,8 @@ export default {
   TITLE_GO : "Aller à ",
   TITLE_LIKE : "J'aime ",
   TITLE_LIKE_LOGIN : "Connectez-vous pour liker ",
+  TITLE_LOGIN : "Connexion",
+  TITLE_LOGOUT : "Déconnexion",
   TITLE_MESSAGE : "Envoyer un message",
   TITLE_READ : "Lire ",
   TITLE_REVIEW_FIRST : "Soyez le premier à rédiger un avis sur ",
