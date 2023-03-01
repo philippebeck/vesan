@@ -100,7 +100,10 @@
   </main>
 
   <!-- FOOTER -->
-  <FootElt>
+  <FootElt
+    :title1="constants.FOOT_TITLE1"
+    :title2="constants.FOOT_TITLE2"
+    :title3="constants.FOOT_TITLE3">
 
     <!-- Websites -->
     <template #foot1>
