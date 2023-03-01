@@ -12,7 +12,7 @@
 
     <!-- Main Part -->
     <template #home>
-      <i class="fa-solid fa-home fa-fw"></i>
+      <i class="fa-solid fa-laptop-house fa-fw"></i>
     </template>
     <template #shop>
       <i class="fa-solid fa-shop fa-fw"></i>
@@ -37,13 +37,13 @@
         <template #item-1>
           <a href="/admin"
             title="Admin">
-            <i class="fa-solid fa-user-ninja fa-fw"></i>
+            <i class="fa-solid fa-user-gear fa-fw"></i>
           </a>
         </template>
 
         <template #item-2>
           <a href="/profile"
-            :title="`Profile of ${user.name}`">
+            :title="constants.PROFILE_OF + user.name">
             <img :src="`/img/thumbnails/users/${user.image}`"
               :alt="user.name"
               :height="40"
@@ -67,7 +67,7 @@
 
         <template #item-1>
           <a href="/profile"
-            :title="`Profile of ${user.name}`">
+            :title="constants.PROFILE_OF + user.name">
             <img :src="`/img/thumbnails/users/${user.image}`"
               :alt="user.name"
               :height="40"
@@ -104,23 +104,12 @@
 
     <!-- Websites -->
     <template #foot1>
-      <ListElt :items="constants.FOOT1">
-        <template #item-1>
-          <a href="https://asperger.philippebeck.net"
-            title="Tests for Asperger's Syndrome">
-            Asperger
-          </a>
-        </template>
-        <template #item-2>
-          <a href="https://astronomy.philippebeck.net"
-            title="NASA & CDS APIs">
-            Astronomy
-          </a>
-        </template>
-        <template #item-3>
-          <a href="https://philippebeck.net"
-            title="Portal">
-            Philippe Beck
+      <ListElt :dynamic="true"
+        :items="constants.FOOT1">
+        <template #items="slotProps">
+          <a :href="slotProps.item.href"
+            :title="slotProps.item.title">
+            {{ slotProps.item.content }}
           </a>
         </template>
       </ListElt>
@@ -128,35 +117,12 @@
 
     <!-- Tools -->
     <template #foot2>
-      <ListElt :items="constants.FOOT2">
-        <template #item-1>
-          <a href="https://www.npmjs.com/package/vue-elt"
-            title="Vuejs SFC Library">
-            Vue-Elt
-          </a>
-        </template>
-        <template #item-2>
-          <a href="https://www.npmjs.com/package/servidio"
-            title="JavaScript Frontend Services">
-            Servidio
-          </a>
-        </template>
-        <template #item-3>
-          <a href="https://www.npmjs.com/package/animadio"
-            title="Animadio CSS Library">
-            Animadio
-          </a>
-        </template>
-        <template #item-4>
-          <a href="https://www.npmjs.com/package/nemjs"
-            title="JavaScript Backend Services">
-            Nemjs
-          </a>
-        </template>
-        <template #item-5>
-          <a href="https://www.npmjs.com/package/vesan"
-            title="CMS with Vue-Elt, Servidio, Animadio & NemJS">
-            Vesan
+      <ListElt :dynamic="true"
+        :items="constants.FOOT2">
+        <template #items="slotProps">
+          <a :href="slotProps.item.href"
+            :title="slotProps.item.title">
+            {{ slotProps.item.content }}
           </a>
         </template>
       </ListElt>
@@ -164,71 +130,25 @@
 
     <!-- Links -->
     <template #foot3>
-      <ListElt :items="constants.FOOT3">
-        <template #item-1>
-          <a href="/link"
-            title="Find links for coding">
-            Links for Dev
-          </a>
-        </template>
-        <template #item-2>
-          <a href="/legal"
-            title="Read the legal notice">
-            Legal Notice
-          </a>
-        </template>
-        <template #item-3>
-          <a href="https://paypal.me/philippebeck"
-            title="Donation @Philippe Beck">
-            Donation
-          </a>
-        </template>
-        <template #item-4>
-          <a href="https://github.com/sponsors/philippebeck"
-            title="Sponsor @Philippe Beck">
-            Sponsor
+      <ListElt :dynamic="true"
+        :items="constants.FOOT3">
+        <template #items="slotProps">
+          <a :href="slotProps.item.href"
+            :title="slotProps.item.title">
+            {{ slotProps.item.content }}
           </a>
         </template>
       </ListElt>
     </template>
 
-    <!-- Social Networks & Contributions -->
+    <!-- Social Networks -->
     <template #foot>
-      <ListElt :items="constants.FOOT">
-        <template #item-1>
-          <a href="https://github.com/philippebeck"
-            title="Philippe Beck @GitHub">
-            <i class="fa-brands fa-github fa-lg fa-fw black"></i>
-          </a>
-        </template>
-        <template #item-2>
-          <a href="https://www.linkedin.com/in/philippebeck"
-            title="Philippe Beck @LinkedIn">
-            <i class="fa-brands fa-linkedin-in fa-lg fa-fw blue"></i>
-          </a>
-        </template>
-        <template #item-3>
-          <a href="https://medium.com/@philippebeck"
-            title="Philippe Beck @Medium">
-            <i class="fa-brands fa-medium fa-lg fa-fw green"></i>
-          </a>
-        </template>
-        <template #item-4>
-          <a href="https://www.npmjs.com/~philippebeck"
-            title="Philippe Beck @NPM">
-            <i class="fa-brands fa-npm fa-lg fa-fw red"></i>
-          </a>
-        </template>
-        <template #item-5>
-          <a href="https://twitter.com/ph_beck"
-            title="Philippe Beck @Twitter">
-            <i class="fa-brands fa-twitter fa-lg fa-fw sky"></i>
-          </a>
-        </template>
-        <template #item-6>
-          <a href="https://codepen.io/philippebeck"
-            title="Philippe Beck @CodePen">
-            <i class="fa-brands fa-codepen fa-lg fa-fw black"></i>
+      <ListElt :dynamic="true"
+        :items="constants.FOOT">
+        <template #items="slotProps">
+          <a :href="slotProps.href"
+            :title="slotProps.item.title">
+            <i :class="`fa-brands fa-${slotProps.item.fa} fa-lg fa-fw ${slotProps.item.color}`"></i>
           </a>
         </template>
       </ListElt>

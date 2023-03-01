@@ -70,33 +70,111 @@ export default {
   /******************** FOOT ********************/
 
   FOOT : [
-    "GitHub", 
-    "LinkedIn", 
-    "Medium", 
-    "NPM", 
-    "Twitter", 
-    "CodePen"
+    {
+      "href": "https://github.com/philippebeck",
+      "title": "Philippe Beck @GitHub",
+      "fa": "github",
+      "color": "black"
+    }, 
+    {
+      "href": "https://www.linkedin.com/in/philippebeck",
+      "title": "Philippe Beck @LinkedIn",
+      "fa": "linkedin-in",
+      "color": "blue"
+    }, 
+    {
+      "href": "https://medium.com/@philippebeck",
+      "title": "Philippe Beck @Medium",
+      "fa": "medium",
+      "color": "green"
+    }, 
+    {
+      "href": "https://www.npmjs.com/~philippebeck",
+      "title": "Philippe Beck @NPM",
+      "fa": "npm",
+      "color": "red"
+    }, 
+    {
+      "href": "https://twitter.com/ph_beck",
+      "title": "Philippe Beck @Twitter",
+      "fa": "twitter",
+      "color": "sky"
+    }, 
+    {
+      "href": "https://codepen.io/philippebeck",
+      "title": "Philippe Beck @CodePen",
+      "fa": "codepen",
+      "color": "black"
+    }
   ],
 
   FOOT1 : [
-    "Asperger", 
-    "Astronomy", 
-    "Philippe Beck"
+    {
+      "href": "https://asperger.philippebeck.net",
+      "title": "Tests for Asperger's Syndrome",
+      "content": "Asperger"
+    }, 
+    {
+      "href": "https://astronomy.philippebeck.net",
+      "title": "NASA & CDS APIs",
+      "content": "AStronomy"
+    }, 
+    {
+      "href": "https://philippebeck.net",
+      "title": "Portal",
+      "content": "Philippe Beck"
+    }
   ],
 
   FOOT2 : [
-    "Vue-Elt", 
-    "Servidio", 
-    "Animadio", 
-    "NemJS", 
-    "Vesan"
+    {
+      "href": "https://www.npmjs.com/package/vue-elt",
+      "title": "Vuejs SFC Library",
+      "content": "Vue-Elt"
+    }, 
+    {
+      "href": "https://www.npmjs.com/package/servidio",
+      "title": "JavaScript Frontend Services",
+      "content": "Servidio"
+    }, 
+    {
+      "href": "https://www.npmjs.com/package/animadio",
+      "title": "Animadio CSS Library",
+      "content": "Animadio"
+    }, 
+    {
+      "href": "https://www.npmjs.com/package/nemjs",
+      "title": "JavaScript Backend Services",
+      "content": "Nemjs"
+    }, 
+    {
+      "href": "https://www.npmjs.com/package/vesan",
+      "title": "CMS with Vue-Elt, Servidio, Animadio & NemJS",
+      "content": "Vesan"
+    }
   ],
 
   FOOT3 : [
-    "Links", 
-    "Legal Notice", 
-    "Donation", 
-    "Sponsor"
+    {
+      "href": "/link",
+      "title": "Find links for coding",
+      "content": "Links for Dev"
+    }, 
+    {
+      "href": "/legal",
+      "title": "Read the legal notice",
+      "content": "Legal Notice"
+    }, 
+    {
+      "href": "https://paypal.me/philippebeck",
+      "title": "Donation @Philippe Beck",
+      "content": "Donation"
+    }, 
+    {
+      "href": "https://github.com/sponsors/philippebeck",
+      "title": "Sponsor @Philippe Beck",
+      "content": "Sponsor"
+    }
   ],
 
   /******************** CATEGORIES ********************/
@@ -207,6 +285,13 @@ export default {
     "html5", 
     "js", 
     "css3"
+  ],
+
+  HOME_CONTENT : [
+    "Vue-Elt for Components",
+    "Servidio for Frontend Services",
+    "Animadio for Design",
+    "NemJS for Backend Middlewares"
   ],
 
   /******************** TITLES ********************/
@@ -430,6 +515,7 @@ export default {
   HEAD_MOD : "mod/del",
   HEAD_UP : "up/del",
   ON : " on ",
+  PROFILE_OF : "Profile of ",
   RELEASE_ON : "Release on ",
   TOTAL : "Total",
   UPDATE_ON : "Updated on ",
