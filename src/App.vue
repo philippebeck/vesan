@@ -10,23 +10,6 @@
         :alt="constants.LOGO_ALT">
     </template>
 
-    <!-- Main Part -->
-    <template #home>
-      <i class="fa-solid fa-laptop-house fa-fw"></i>
-    </template>
-    <template #shop>
-      <i class="fa-solid fa-shop fa-fw"></i>
-    </template>
-    <template #blog>
-      <i class="fa-solid fa-blog fa-fw"></i>
-    </template>
-    <template #contact>
-      <i class="fa-brands fa-at fa-fw"></i>
-    </template>
-    <template #basket>
-      <i class="fa-solid fa-basket-shopping fa-fw"></i>
-    </template>
-
     <!-- Admin Part -->
     <template #admin>
 
