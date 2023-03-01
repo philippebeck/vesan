@@ -48,18 +48,43 @@ export default {
 
   /******************** NAV ********************/
 
+  NAV_MAIN : [
+    {
+      "href": "/home",
+      "name": "Accueil",
+      "type": "solid",
+      "icon": "laptop-house"
+    },
+    {
+      "href": "/shop",
+      "name": "Boutique",
+      "type": "solid",
+      "icon": "shop"
+    },
+    {
+      "href": "/blog",
+      "name": "Blog",
+      "type": "solid",
+      "icon": "blog"
+    },
+    {
+      "href": "/contact",
+      "name": "Contact",
+      "type": "brands",
+      "icon": "at"
+    },
+    {
+      "href": "/basket",
+      "name": "Panier",
+      "type": "solid",
+      "icon": "basket-shopping"
+    }
+  ],
+
   NAV_ADMIN : [
     "admin", 
     "profile", 
     "logout"
-  ],
-
-  NAV_MAIN : [
-    "home", 
-    "shop", 
-    "blog", 
-    "contact", 
-    "basket"
   ],
 
   NAV_USER : [
