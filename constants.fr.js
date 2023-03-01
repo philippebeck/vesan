@@ -108,6 +108,10 @@ export default {
     }
   ],
 
+  FOOT_TITLE1 : "Sites",
+  FOOT_TITLE2 : "Outils",
+  FOOT_TITLE3 : "Liens",
+
   FOOT1 : [
     {
       "href": "https://asperger.philippebeck.net",
