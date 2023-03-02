@@ -151,12 +151,11 @@ export default {
       if (!isReferenced) {
         let link = new FormData();
 
-        link.append("id", this.links[i]._id);
         link.append("name", this.links[i].name);
         link.append("url", this.links[i].url);
         link.append("cat", this.links[i].cat);
 
-        this.$serve.putData(`/api/links/${link.get("id")}`, link)
+        this.$serve.putData(`/api/links/${this.links[i]._id}`, link)
           .then(() => {
             alert(link.get("name") + this.constants.ALERT_UPDATED);
             this.$router.go();

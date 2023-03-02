@@ -208,14 +208,15 @@ export default {
         let image = document.getElementById('image-' + this.articles[i]._id).files[0];
 
         if (image !== undefined) {
-          article.append("image", image);
+          image = this.articles[i].image;
         }
 
         article.append("name", this.articles[i].name);
         article.append("text", this.articles[i].text);
+        article.append("image", image);
         article.append("alt", this.articles[i].alt);
-        article.append("cat", this.articles[i].cat);
         article.append("usersLiked", this.articles[i].usersLiked);
+        article.append("cat", this.articles[i].cat);
         article.append("updated", Date.now());
 
         this.$serve.putData(`/api/articles/${this.articles[i]._id}`, article)
