@@ -364,7 +364,7 @@ export default {
       order.append("products", JSON.stringify(products));
       order.append("total", this.total);
       order.append("payment", orderId);
-      order.append("status", "Pending");
+      order.append("status", this.constants.ORDER_STATUS);
       order.append("user", this.constants.USER_ID);
       order.append("created", Date.now());
       order.append("updated", Date.now());
