@@ -139,7 +139,6 @@ export default {
         if (order._id === id) {
           let orderData = new FormData();
 
-          orderData.append("id", id);
           orderData.append("products", JSON.stringify(order.products));
           orderData.append("status", order.status);
           orderData.append("updated", Date.now());
