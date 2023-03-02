@@ -14,6 +14,37 @@ const PRODUCTS_THUMB = process.env.THUMB_URL + "products/";
 const form = formidable({ uploadDir: PRODUCTS_IMG, keepExtensions: true });
 
 /**
+ * CHECK PRODUCT DATA
+ * @param {string} name 
+ * @param {string} description 
+ * @param {string} alt 
+ * @param {number} price 
+ * @param {string} cat 
+ * @param {object} res 
+ */
+exports.checkProductData = (name, description, alt, price, cat, res) => {
+  if (!nem.checkName(name)) {
+    return res.status(400).json({ message: process.env.CHECK_NAME });
+  }
+
+  if (!nem.checkText(description)) {
+    return res.status(400).json({ message: process.env.CHECK_TEXT });
+  }
+
+  if (!nem.checkText(alt)) {
+    return res.status(400).json({ message: process.env.CHECK_TEXT });
+  }
+
+  if (price < 1) {
+    return res.status(400).json({ message: process.env.CHECK_PRICE });
+  }
+
+  if (cat === "") {
+    return res.status(400).json({ message: process.env.CHECK_CAT });
+  }
+}
+
+/**
  * GET PRODUCT
  * @param {string} name 
  * @param {string} description 
@@ -109,12 +140,14 @@ exports.createProduct = (req, res, next) => {
       return;
     }
 
-    let image = nem.getImgName(fields.name);
+    this.checkProductData(fields.name, fields.description, fields.alt, fields.price, fields.cat, res);
+
+    let options = nem.stringToArray(fields.options);
+    let image   = nem.getImgName(fields.name);
 
     nem.createImage("products/" + files.image.newFilename, "products/" + image);
     nem.createThumbnail("products/" + files.image.newFilename, "products/" + image);
 
-    let options = nem.stringToArray(fields.options);
     let product = new ProductModel(this.getProduct(
       fields.name, fields.description, image, fields.alt, fields.price, options, fields.cat, fields.created, fields.updated
     ));
@@ -141,13 +174,15 @@ exports.updateProduct = (req, res, next) => {
       return;
     }
 
-    let image = fields.image;
+    this.checkProductData(fields.name, fields.description, fields.alt, fields.price, fields.cat, res);
+
+    let options = nem.stringToArray(fields.options);
+    let image   = fields.image;
 
     if (Object.keys(files).length !== 0) {
       image = this.updateImage(req.params.id, fields.name, files.image.newFilename);
     }
 
-    let options = nem.stringToArray(fields.options);
     let product = this.getProduct(
       fields.name, fields.description, image, fields.alt, fields.price, options, fields.cat, fields.created, fields.updated
     );
