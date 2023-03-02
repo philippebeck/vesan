@@ -1,6 +1,8 @@
 "use strict";
 
-const formidable    = require("formidable");
+const formidable  = require("formidable");
+const nem         = require("nemjs");
+
 const CommentModel  = require("../model/CommentModel");
 const UserModel     = require("../model/UserModel");
 
