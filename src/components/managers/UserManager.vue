@@ -173,7 +173,7 @@ export default {
         let user  = new FormData();
         let image = document.getElementById(`image-${this.users[i]._id}`).files[0];
 
-        if (typeof image === "undefined") {
+        if (image === undefined) {
           image = this.users[i].image;
         }
 

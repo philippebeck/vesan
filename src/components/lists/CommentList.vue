@@ -110,7 +110,6 @@ export default {
           if (this.$serve.checkText(comment.text)) {
             let commentData = new FormData();
 
-            commentData.append("id", id);
             commentData.append("text", comment.text);
             commentData.append("moderate", "false");
             commentData.append("updated", Date.now());

@@ -1,11 +1,29 @@
 "use strict";
 
 const formidable  = require("formidable");
+const nem         = require("nemjs");
+
 const ReviewModel = require("../model/ReviewModel");
 const UserModel   = require("../model/UserModel");
 
 require("dotenv").config();
 const form = formidable();
+
+/**
+ * CHECK REVIEW DATA
+ * @param {string} text 
+ * @param {string} score 
+ * @param {object} res 
+ */
+exports.checkReviewData = (text, score, res) => {
+  if (!nem.checkText(text)) {
+    return res.status(400).json({ message: process.env.CHECK_TEXT });
+  }
+
+  if (score < 0 || score > 5) {
+    return res.status(400).json({ message: process.env.CHECK_SCORE });
+  }
+}
 
 //! ****************************** PUBLIC ******************************
 
@@ -65,6 +83,7 @@ exports.createReview = (req, res, next) => {
       return;
     }
 
+    this.checkReviewData(fields.text, fields.score, res);
     let review = new ReviewModel(fields);
 
     review
@@ -87,6 +106,8 @@ exports.updateReview = (req, res, next) => {
       next(err);
       return;
     }
+
+    this.checkReviewData(fields.text, fields.score, res);
 
     ReviewModel
       .findByIdAndUpdate(req.params.id, { ...fields, _id: req.params.id })

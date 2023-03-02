@@ -15,6 +15,32 @@ const ARTICLES_THUMB = process.env.THUMB_URL + "articles/";
 const form = formidable({ uploadDir: ARTICLES_IMG, keepExtensions: true });
 
 /**
+ * CHECK ARTICLE DATA
+ * @param {string} name 
+ * @param {string} text 
+ * @param {string} alt 
+ * @param {string} cat 
+ * @param {object} res 
+ */
+exports.checkArticleData = (name, text, alt, cat, res) => {
+  if (!nem.checkName(name)) {
+    return res.status(400).json({ message: process.env.CHECK_NAME });
+  }
+
+  if (!nem.checkText(text)) {
+    return res.status(400).json({ message: process.env.CHECK_TEXT });
+  }
+
+  if (!nem.checkText(alt)) {
+    return res.status(400).json({ message: process.env.CHECK_TEXT });
+  }
+
+  if (cat === "") {
+    return res.status(400).json({ message: process.env.CHECK_CAT });
+  }
+}
+
+/**
  * GET ARTICLE
  * @param {string} name 
  * @param {string} text 
@@ -119,7 +145,10 @@ exports.createArticle = (req, res, next) => {
       return;
     }
 
+    this.checkArticleData(fields.name, fields.text, fields.alt, fields.cat, res);
+
     let image = nem.getImgName(fields.name);
+
     nem.createImage("articles/" + files.image.newFilename, "articles/" + image);
     nem.createThumbnail("articles/" + files.image.newFilename, "articles/" + image);
 
@@ -149,14 +178,14 @@ exports.updateArticle = (req, res, next) => {
       return;
     }
 
-    let image = fields.image;
+    this.checkArticleData(fields.name, fields.text, fields.alt, fields.cat, res);
+
+    let usersLiked  = nem.stringToArray(fields.usersLiked);
+    let image       = fields.image;
 
     if (Object.keys(files).length !== 0) {
       image = this.updateImage(req.params.id, fields.name, files.image.newFilename);
     }
-
-    let usersLiked = fields.usersLiked.split(",");
-    if (usersLiked[0] === "") { usersLiked.shift() }
 
     let article = this.getArticle(
       fields.name, fields.text, image, fields.alt, fields.user, usersLiked, fields.cat, fields.created, fields.updated

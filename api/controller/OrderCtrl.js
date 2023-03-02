@@ -10,6 +10,46 @@ require("dotenv").config();
 const form = formidable();
 
 /**
+ * CREATE MESSAGE
+ * @param {number} total 
+ * @param {string} payment 
+ * @param {array} products 
+ * @returns 
+ */
+exports.createMessage = (total, payment, products) => {
+  let message     = {};
+  message.subject = process.env.ORDER_SUBJECT;
+
+  message.text = `
+    <h1>Thanks for your order !</h1>
+    <p>
+      Your order, for a total of 
+      <b>${total} ${process.env.CURRENCY_SYMBOL}</b>,
+      has been accepted with payment 
+      <b>#${payment}</b> !
+    </p>
+    <p>This is the product list of your order :</p>
+  `;
+
+  for (let product of products) {
+    message.products += `
+      <ul>
+        <li><i>id</i> : ${product.id}</li>
+        <li><i>name</i> : <b>${product.name}</b></li>
+        <li><i>option</i> : <b>${product.option}</b></li>
+        <li><i>quantity</i> : ${product.quantity}</li>
+        <li><i>price</i> : ${product.price} ${process.env.CURRENCY_SYMBOL}</li>
+      </ul>
+    `;
+  }
+
+  message.products  = message.products.split('undefined')[1];
+  message.html      = message.text + message.products;
+
+  return message;
+}
+
+/**
  * SET MESSAGE
  * @param {string} fields 
  * @param {object} res 
@@ -69,36 +109,8 @@ exports.createOrder = (req, res, next) => {
     }
 
     fields.products = JSON.parse(fields.products);
-
-    let message     = {};
-    message.subject = process.env.ORDER_SUBJECT;
-
-    message.text = `
-      <h1>Thanks for your order !</h1>
-      <p>
-        Your order, for a total of 
-        <b>${fields.total} ${process.env.CURRENCY_SYMBOL}</b>,
-        has been accepted with payment 
-        <b>#${fields.payment}</b> !
-      </p>
-      <p>This is the product list of your order :</p>
-    `;
-
-    for (let product of fields.products) {
-      message.products += `
-        <ul>
-          <li><i>id</i> : ${product.id}</li>
-          <li><i>name</i> : <b>${product.name}</b></li>
-          <li><i>option</i> : <b>${product.option}</b></li>
-          <li><i>quantity</i> : ${product.quantity}</li>
-          <li><i>price</i> : ${product.price} ${process.env.CURRENCY_SYMBOL}</li>
-        </ul>
-      `;
-    }
-
-    message.products  = message.products.split('undefined')[1];
-    message.html      = message.text + message.products;
-    let order         = new OrderModel(fields);
+    let message     = this.createMessage(fields.total, fields.payment, fields.products);
+    let order       = new OrderModel(fields);
 
     order
       .save()

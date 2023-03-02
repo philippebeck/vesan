@@ -16,18 +16,28 @@ const USERS_THUMB = process.env.THUMB_URL + "users/";
 const form = formidable({ uploadDir: USERS_IMG, keepExtensions: true });
 
 /**
- * CHECK USER CREDENTIALS
+ * CHECK USER DATA
+ * @param {string} name 
  * @param {string} email 
  * @param {string} pass 
+ * @param {string} role 
  * @param {object} res 
  */
-exports.checkCredentials = (email, pass, res) => {
+exports.checkUserData = (name, email, pass, role, res) => {
+  if (!nem.checkName(name)) {
+    return res.status(400).json({ message: process.env.CHECK_NAME });
+  }
+
   if (!nem.checkEmail(email)) {
     return res.status(400).json({ message: process.env.USER_EMAIL });
   }
 
   if (!nem.checkPass(pass)) {
     return res.status(400).json({ message: process.env.USER_PASS });
+  }
+
+  if (role === "") {
+    return res.status(400).json({ message: process.env.CHECK_ROLE });
   }
 }
 
@@ -133,7 +143,8 @@ exports.createUser = (req, res, next) => {
       return;
     }
 
-    this.checkCredentials(fields.email, fields.pass, res);
+    this.checkUserData(fields.name, fields.email, fields.pass, fields.role, res);
+
     let image = nem.getImgName(fields.name);
     nem.createThumbnail("users/" + files.image.newFilename, "users/" + image);
 
@@ -303,7 +314,7 @@ exports.sendMessage = (req, res, next) => {
 //! ****************************** PRIVATE ******************************
 
 /**
- * LIST ALL USERS
+ * LIST ALL USERS WITHOUT PASSWORD
  * @param {object} req 
  * @param {object} res 
  */
@@ -364,19 +375,15 @@ exports.updateUser = (req, res, next) => {
     }
 
     if (fields.pass) {
-      this.checkCredentials(fields.email, fields.pass, res);
+      this.checkUserData(fields.name, fields.email, fields.pass, fields.role, res);
 
       bcrypt
       .hash(fields.pass, 10)
       .then((hash) => {
 
-        let user = {
-          name: fields.name,
-          email: fields.email,
-          image: image,
-          pass: hash,
-          updated: fields.updated
-        }
+        let user = this.getUser(
+          fields.name, fields.email, image, hash, fields.role, fields.created, fields.updated
+        )
 
         UserModel
           .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
@@ -387,8 +394,16 @@ exports.updateUser = (req, res, next) => {
 
     } else {
 
+      if (!nem.checkName(fields.name)) {
+        return res.status(400).json({ message: process.env.CHECK_NAME });
+      }
+    
       if (!nem.checkEmail(fields.email)) {
         return res.status(400).json({ message: process.env.USER_EMAIL });
+      }
+    
+      if (fields.role === "") {
+        return res.status(400).json({ message: process.env.CHECK_ROLE });
       }
 
       let user = {
@@ -396,7 +411,8 @@ exports.updateUser = (req, res, next) => {
         email: fields.email,
         image: image,
         role: fields.role,
-        updated: fields.updated
+        created: fields.created,
+        updated: fields.updated,
       }
 
       UserModel

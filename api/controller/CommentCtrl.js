@@ -1,6 +1,8 @@
 "use strict";
 
-const formidable    = require("formidable");
+const formidable  = require("formidable");
+const nem         = require("nemjs");
+
 const CommentModel  = require("../model/CommentModel");
 const UserModel     = require("../model/UserModel");
 
@@ -56,6 +58,7 @@ exports.listComments = (req, res) => {
  * @param {object} req 
  * @param {object} res 
  * @param {function} next 
+ * @returns
  */
 exports.createComment = (req, res, next) => {
   form.parse(req, (err, fields) => {
@@ -63,6 +66,10 @@ exports.createComment = (req, res, next) => {
     if (err) {
       next(err);
       return;
+    }
+
+    if (!nem.checkText(fields.text)) {
+      return res.status(400).json({ message: process.env.CHECK_TEXT });
     }
 
     let comment = new CommentModel(fields);
@@ -86,6 +93,10 @@ exports.updateComment = (req, res, next) => {
     if (err) {
       next(err);
       return;
+    }
+
+    if (!nem.checkText(fields.text)) {
+      return res.status(400).json({ message: process.env.CHECK_TEXT });
     }
 
     CommentModel

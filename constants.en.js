@@ -23,6 +23,8 @@ export default {
   NAME_MIN : 2,
   NAME_MAX : 50,
 
+  ORDER_STATUS : "Pending",
+
   PASS_INT : 1,
   PASS_MAX : 50,
   PASS_MIN : 8,
