@@ -130,7 +130,8 @@ export default {
         if (comment._id === id) {
 
           let commentData = new FormData();
-          commentData.append("id", id);
+
+          commentData.append("text", comment.text);
           commentData.append("moderate", comment.moderate);
 
           this.$serve.putData(`/api/comments/${id}`, commentData)
