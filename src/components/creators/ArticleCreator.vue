@@ -197,12 +197,11 @@ export default {
         article.append("text", this.text);
         article.append("image", image);
         article.append("alt", this.alt);
-        article.append("cat", this.cat);
         article.append("user", this.constants.USER_ID);
+        article.append("usersLiked", []);
+        article.append("cat", this.cat);
         article.append("created", Date.now());
         article.append("updated", Date.now());
-        article.append("likes", 0);
-        article.append("usersLiked", []);
 
         this.$serve.postData("/api/articles", article)
           .then(() => {
