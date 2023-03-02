@@ -155,10 +155,8 @@ exports.updateArticle = (req, res, next) => {
       image = this.updateImage(req.params.id, fields.name, files.image.newFilename);
     }
 
-    let usersLiked = fields.usersLiked.split(",");
-    if (usersLiked[0] === "") { usersLiked.shift() }
-
-    let article = this.getArticle(
+    let usersLiked  = nem.stringToArray(fields.usersLiked);
+    let article     = this.getArticle(
       fields.name, fields.text, image, fields.alt, fields.user, usersLiked, fields.cat, fields.created, fields.updated
     );
 

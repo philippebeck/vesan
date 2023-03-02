@@ -110,12 +110,11 @@ exports.createProduct = (req, res, next) => {
     }
 
     let image = nem.getImgName(fields.name);
+
     nem.createImage("products/" + files.image.newFilename, "products/" + image);
     nem.createThumbnail("products/" + files.image.newFilename, "products/" + image);
 
-    let options = fields.options.split(",");
-    if (options[0] === "") { options.shift() }
-
+    let options = nem.stringToArray(fields.options);
     let product = new ProductModel(this.getProduct(
       fields.name, fields.description, image, fields.alt, fields.price, options, fields.cat, fields.created, fields.updated
     ));
@@ -148,9 +147,7 @@ exports.updateProduct = (req, res, next) => {
       image = this.updateImage(req.params.id, fields.name, files.image.newFilename);
     }
 
-    let options = fields.options.split(",");
-    if (options[0] === "") { options.shift() }
-
+    let options = nem.stringToArray(fields.options);
     let product = this.getProduct(
       fields.name, fields.description, image, fields.alt, fields.price, options, fields.cat, fields.created, fields.updated
     );
