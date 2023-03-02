@@ -136,7 +136,9 @@ export default {
         if (review._id === id) {
 
           let reviewData = new FormData();
-          reviewData.append("id", id);
+
+          reviewData.append("text", review.text);
+          reviewData.append("score", review.score);
           reviewData.append("moderate", review.moderate);
 
           this.$serve.putData(`/api/reviews/${id}`, reviewData)
