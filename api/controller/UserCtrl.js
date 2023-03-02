@@ -16,18 +16,27 @@ const USERS_THUMB = process.env.THUMB_URL + "users/";
 const form = formidable({ uploadDir: USERS_IMG, keepExtensions: true });
 
 /**
- * CHECK USER CREDENTIALS
+ * CHECK USER DATA
+ * @param {string} name 
  * @param {string} email 
  * @param {string} pass 
  * @param {object} res 
  */
-exports.checkCredentials = (email, pass, res) => {
+exports.checkUserData = (name, email, pass, res) => {
+  if (!nem.checkName(name)) {
+    return res.status(400).json({ message: process.env.CHECK_NAME });
+  }
+
   if (!nem.checkEmail(email)) {
     return res.status(400).json({ message: process.env.USER_EMAIL });
   }
 
   if (!nem.checkPass(pass)) {
     return res.status(400).json({ message: process.env.USER_PASS });
+  }
+
+  if (role === "") {
+    return res.status(400).json({ message: process.env.CHECK_ROLE });
   }
 }
 
@@ -133,7 +142,7 @@ exports.createUser = (req, res, next) => {
       return;
     }
 
-    this.checkCredentials(fields.email, fields.pass, res);
+    this.checkUserData(fields.email, fields.pass, res);
     let image = nem.getImgName(fields.name);
     nem.createThumbnail("users/" + files.image.newFilename, "users/" + image);
 
@@ -364,7 +373,7 @@ exports.updateUser = (req, res, next) => {
     }
 
     if (fields.pass) {
-      this.checkCredentials(fields.email, fields.pass, res);
+      this.checkUserData(fields.email, fields.pass, res);
 
       bcrypt
       .hash(fields.pass, 10)
