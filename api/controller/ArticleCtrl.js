@@ -66,6 +66,36 @@ exports.checkNewArticle = (name, text, res) => {
 }
 
 /**
+ * CHECK UPDATED ARTICLE
+ * @param {string} id 
+ * @param {string} name 
+ * @param {string} text 
+ * @param {object} res 
+ * @returns
+ */
+exports.checkUpdatedArticle = (id, name, text, res) => {
+  ArticleModel
+    .find()
+    .then((articles) => {
+      for (let i = 0; i < articles.length; i++) {
+
+        if (articles[i]._id === id) {
+          articles.splice(i, 1);
+        }
+
+        if (articles[i].name === name) {
+          return res.status(400).json({ message: process.env.DISPO_NAME });
+        }
+
+        if (articles[i].text === text) {
+          return res.status(400).json({ message: process.env.DISPO_TEXT });
+        }
+      }
+    })
+    .catch((error) => res.status(404).json({ error }));
+}
+
+/**
  * GET ARTICLE
  * @param {string} name 
  * @param {string} text 
