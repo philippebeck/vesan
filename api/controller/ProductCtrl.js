@@ -160,21 +160,30 @@ exports.createProduct = (req, res, next) => {
 
     this.checkProductData(fields.name, fields.description, fields.alt, fields.price, fields.cat, res);
 
-    let options = nem.stringToArray(fields.options);
-    let image   = nem.getImgName(fields.name);
+    ProductModel
+      .find()
+      .then((products) => {
+        for (let product of products) {
+          this.checkProductUnique(fields.name, fields.description, product, res);
+        }
 
-    nem.createImage("products/" + files.image.newFilename, "products/" + image);
-    nem.createThumbnail("products/" + files.image.newFilename, "products/" + image);
+        let options = nem.stringToArray(fields.options);
+        let image   = nem.getImgName(fields.name);
 
-    let product = new ProductModel(this.getProduct(
-      fields.name, fields.description, image, fields.alt, fields.price, options, fields.cat, fields.created, fields.updated
-    ));
+        nem.createImage("products/" + files.image.newFilename, "products/" + image);
+        nem.createThumbnail("products/" + files.image.newFilename, "products/" + image);
 
-    product
-      .save()
-      .then(() => fs.unlink(PRODUCTS_IMG + files.image.newFilename, () => { console.log("image ok !") }))
-      .then(() => res.status(201).json({ message: process.env.PRODUCT_CREATED }))
-      .catch((error) => res.status(400).json({ error }));
+        let product = new ProductModel(this.getProduct(
+          fields.name, fields.description, image, fields.alt, fields.price, options, fields.cat, fields.created, fields.updated
+        ));
+
+        product
+          .save()
+          .then(() => fs.unlink(PRODUCTS_IMG + files.image.newFilename, () => { console.log("image ok !") }))
+          .then(() => res.status(201).json({ message: process.env.PRODUCT_CREATED }))
+          .catch((error) => res.status(400).json({ error }));
+      })
+      .catch((error) => res.status(404).json({ error }));
   })
 };
 
@@ -194,21 +203,36 @@ exports.updateProduct = (req, res, next) => {
 
     this.checkProductData(fields.name, fields.description, fields.alt, fields.price, fields.cat, res);
 
-    let options = nem.stringToArray(fields.options);
-    let image   = fields.image;
-
-    if (Object.keys(files).length !== 0) {
-      image = this.updateImage(req.params.id, fields.name, files.image.newFilename);
-    }
-
-    let product = this.getProduct(
-      fields.name, fields.description, image, fields.alt, fields.price, options, fields.cat, fields.created, fields.updated
-    );
-
     ProductModel
-      .findByIdAndUpdate(req.params.id, { ...product, _id: req.params.id })
-      .then(() => res.status(200).json({ message: process.env.PRODUCT_UPDATED }))
-      .catch((error) => res.status(400).json({ error }));
+      .find()
+      .then((products) => {
+        for (let i = 0; i < products.length; i++) {
+
+          if (products[i]._id.equals(req.params.id)) {
+            products.splice(i, 1);
+
+          } else {
+            this.checkProductUnique(fields.name, fields.description, products[i], res);
+          }
+        }
+
+        let options = nem.stringToArray(fields.options);
+        let image   = fields.image;
+    
+        if (Object.keys(files).length !== 0) {
+          image = this.updateImage(req.params.id, fields.name, files.image.newFilename);
+        }
+    
+        let product = this.getProduct(
+          fields.name, fields.description, image, fields.alt, fields.price, options, fields.cat, fields.created, fields.updated
+        );
+    
+        ProductModel
+          .findByIdAndUpdate(req.params.id, { ...product, _id: req.params.id })
+          .then(() => res.status(200).json({ message: process.env.PRODUCT_UPDATED }))
+          .catch((error) => res.status(400).json({ error }));
+      })
+      .catch((error) => res.status(404).json({ error }));
   })
 };
 
