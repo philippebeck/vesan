@@ -30,7 +30,7 @@
           <template #cell-name="slotProps">
             <FieldElt :id="'name-' + articles[slotProps.index]._id"
               v-model:value="getArticles()[slotProps.index].name"
-              @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
+              @keyup.enter="updateArticle(articles[slotProps.index]._id)"
               :info="constants.INFO_UP_NAME"/>
           </template>
 
@@ -39,7 +39,7 @@
             <FieldElt :id="'text-' + articles[slotProps.index]._id"
               type="textarea"
               v-model:value="getArticles()[slotProps.index].text"
-              @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
+              @keyup.enter="updateArticle(articles[slotProps.index]._id)"
               :info="constants.INFO_UP_TEXT"
               :max="5000"/>
           </template>
@@ -60,7 +60,7 @@
             <FieldElt :id="'alt-' + articles[slotProps.index]._id"
               type="textarea"
               v-model:value="getArticles()[slotProps.index].alt"
-              @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
+              @keyup.enter="updateArticle(articles[slotProps.index]._id)"
               :info="constants.INFO_UP_ALT"/>
           </template>
 
@@ -70,7 +70,7 @@
               type="select"
               :list="constants.CATS_ARTICLE"
               v-model:value="getArticles()[slotProps.index].cat"
-              @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
+              @keyup.enter="updateArticle(articles[slotProps.index]._id)"
               :info="constants.INFO_UP_CATEGORY"/>
           </template>
 
@@ -81,10 +81,10 @@
           </template>
 
           <!-- UsersLiked -->
-          <template #cell-usersLiked="slotProps">
-            <ListElt :id="'usersLiked-' + articles[slotProps.index]._id"
+          <template #cell-likes="slotProps">
+            <ListElt :id="'likes-' + articles[slotProps.index]._id"
               :dynamic="true"
-              :items="articles[slotProps.index].usersLiked"/>
+              :items="articles[slotProps.index].likes"/>
           </template>
 
           <!-- Created -->
@@ -101,7 +101,7 @@
 
           <!-- Update -->
           <BtnElt type="button"
-              @click="validateUpdatedArticle(articles[slotProps.index]._id)" 
+              @click="updateArticle(articles[slotProps.index]._id)" 
               class="btn-sky"
               :title="constants.TITLE_UPDATE + articles[slotProps.index].name">
 
@@ -151,80 +151,38 @@ export default {
     },
 
     /**
-     * VALIDATE UPDATED ARTICLE
+     * UPDATE ARTICLE
      * @param {string} id 
      */
-    validateUpdatedArticle(id) {
+    updateArticle(id) {
       for (let i = 0; i < this.articles.length; i++ ) {
         if (this.articles[i]._id === id) {
 
-          if (this.$serve.checkName(this.articles[i].name) &&
-            this.$serve.checkText(this.articles[i].text)) {
+          if (this.$serve.checkName(this.articles[i].name) && this.$serve.checkText(this.articles[i].text)) {
 
-            this.checkUpdatedArticle(i);
+            let article = new FormData();
+            let image   = document.getElementById('image-' + this.articles[i]._id).files[0];
+
+            if (image !== undefined) { image = this.articles[i].image }
+
+            article.append("name", this.articles[i].name);
+            article.append("text", this.articles[i].text);
+            article.append("image", image);
+            article.append("alt", this.articles[i].alt);
+            article.append("user", this.articles[i].user);
+            article.append("likes", this.articles[i].likes);
+            article.append("cat", this.articles[i].cat);
+            article.append("created", this.articles[i].created);
+            article.append("updated", Date.now());
+
+            this.$serve.putData(`/api/articles/${this.articles[i]._id}`, article)
+              .then(() => {
+                alert(article.get("name") + this.constants.ALERT_UPDATED);
+                this.$router.go();
+              })
+              .catch(err => { console.log(err) });
           }
         }
-      }
-    },
-
-    /**
-     * CHECK UPDATED ARTICLE IF NAME | EMAIL ARE REFERENCED
-     * @param {number} i 
-     */
-    checkUpdatedArticle(i) {
-      this.$serve.getData("/api/articles")
-        .then((articles) => {
-          let isReferenced = false;
-
-          for (let j = 0; j < articles.length; j++) {
-            if (articles[j]._id === this.articles[i]._id) {
-              articles.splice(j, 1);
-            }
-
-            if (articles[j] && articles[j].name === this.articles[i].name) {
-              alert(this.articles[i].name + this.constants.ALERT_AVAILABLE);
-              isReferenced = true;
-            }
-
-            if (articles[j] && articles[j].text === this.articles[i].text) {
-              alert(this.articles[i].text+ this.constants.ALERT_REFERENCED);
-              isReferenced = true;
-            }
-          }
-          this.updateArticle(isReferenced, i);
-        })
-        .catch(err => { console.log(err) });
-    },
-
-    /**
-     * UPDATE ARTICLE IF NO INFO IS REFERENCED
-     * @param {boolean} isReferenced 
-     * @param {number} i 
-     */
-    updateArticle(isReferenced, i) {
-      if (!isReferenced) {
-
-        let article  = new FormData();
-        let image = document.getElementById('image-' + this.articles[i]._id).files[0];
-
-        if (image !== undefined) {
-          image = this.articles[i].image;
-        }
-
-        article.append("name", this.articles[i].name);
-        article.append("text", this.articles[i].text);
-        article.append("image", image);
-        article.append("alt", this.articles[i].alt);
-        article.append("usersLiked", this.articles[i].usersLiked);
-        article.append("cat", this.articles[i].cat);
-        article.append("updated", Date.now());
-
-        this.$serve.putData(`/api/articles/${this.articles[i]._id}`, article)
-          .then(() => {
-            alert(article.get("name") + this.constants.ALERT_UPDATED);
-            this.$router.go();
-          })
-          .catch(err => { console.log(err) });
       }
     },
 
