@@ -41,58 +41,21 @@ exports.checkArticleData = (name, text, alt, cat, res) => {
 }
 
 /**
- * CHECK NEW ARTICLE
+ * CHECK ARTICLE UNIQUE
  * @param {string} name 
  * @param {string} text 
+ * @param {object} article 
  * @param {object} res 
  * @returns
  */
-exports.checkNewArticle = (name, text, res) => {
-  ArticleModel
-  .find()
-  .then((articles) => {
-    for (let article of articles) {
+exports.checkArticleUnique = (name, text, article, res) => {
+  if (article.name === name) {
+    return res.status(400).json({ message: process.env.DISPO_NAME });
+  }
 
-      if (article.name === name) {
-        return res.status(400).json({ message: process.env.DISPO_NAME });
-      }
-
-      if (article.text === text) {
-        return res.status(400).json({ message: process.env.DISPO_TEXT });
-      }
-    }
-  })
-  .catch((error) => res.status(404).json({ error }));
-}
-
-/**
- * CHECK UPDATED ARTICLE
- * @param {string} id 
- * @param {string} name 
- * @param {string} text 
- * @param {object} res 
- * @returns
- */
-exports.checkUpdatedArticle = (id, name, text, res) => {
-  ArticleModel
-    .find()
-    .then((articles) => {
-      for (let i = 0; i < articles.length; i++) {
-
-        if (articles[i]._id === id) {
-          articles.splice(i, 1);
-        }
-
-        if (articles[i].name === name) {
-          return res.status(400).json({ message: process.env.DISPO_NAME });
-        }
-
-        if (articles[i].text === text) {
-          return res.status(400).json({ message: process.env.DISPO_TEXT });
-        }
-      }
-    })
-    .catch((error) => res.status(404).json({ error }));
+  if (article.text === text) {
+    return res.status(400).json({ message: process.env.DISPO_TEXT });
+  }
 }
 
 /**
@@ -201,22 +164,30 @@ exports.createArticle = (req, res, next) => {
     }
 
     this.checkArticleData(fields.name, fields.text, fields.alt, fields.cat, res);
-    this.checkNewArticle(fields.name, fields.text, res);
 
-    let image = nem.getImgName(fields.name);
+    ArticleModel
+      .find()
+      .then((articles) => {
+        for (let article of articles) {
+          this.checkArticleUnique(fields.name, fields.text, article, res);
+        }
 
-    nem.createImage("articles/" + files.image.newFilename, "articles/" + image);
-    nem.createThumbnail("articles/" + files.image.newFilename, "articles/" + image);
+        let image = nem.getImgName(fields.name);
 
-    let article  = new ArticleModel(this.getArticle(
-      fields.name, fields.text, image, fields.alt, fields.user, fields.likes, fields.cat, fields.created, fields.updated
-    ));
+        nem.createImage("articles/" + files.image.newFilename, "articles/" + image);
+        nem.createThumbnail("articles/" + files.image.newFilename, "articles/" + image);
 
-    article
-      .save()
-      .then(() => fs.unlink(ARTICLES_IMG + files.image.newFilename, () => { console.log("image ok !") }))
-      .then(() => res.status(201).json({ message: process.env.ARTICLE_CREATED }))
-      .catch((error) => res.status(400).json({ error }));
+        let article  = new ArticleModel(this.getArticle(
+          fields.name, fields.text, image, fields.alt, fields.user, fields.likes, fields.cat, fields.created, fields.updated
+        ));
+
+        article
+          .save()
+          .then(() => fs.unlink(ARTICLES_IMG + files.image.newFilename, () => { console.log("image ok !") }))
+          .then(() => res.status(201).json({ message: process.env.ARTICLE_CREATED }))
+          .catch((error) => res.status(400).json({ error }));
+      })
+      .catch((error) => res.status(404).json({ error }));
   })
 };
 
@@ -235,23 +206,37 @@ exports.updateArticle = (req, res, next) => {
     }
 
     this.checkArticleData(fields.name, fields.text, fields.alt, fields.cat, res);
-    this.checkUpdatedArticle(req.params.id, fields.name, fields.text, res);
-
-    let likes = nem.stringToArray(fields.likes);
-    let image = fields.image;
-
-    if (Object.keys(files).length !== 0) {
-      image = this.updateImage(req.params.id, fields.name, files.image.newFilename);
-    }
-
-    let article = this.getArticle(
-      fields.name, fields.text, image, fields.alt, fields.user, likes, fields.cat, fields.created, fields.updated
-    );
 
     ArticleModel
-      .findByIdAndUpdate(req.params.id, { ...article, _id: req.params.id })
-      .then(() => res.status(200).json({ message: process.env.ARTICLE_UPDATED }))
-      .catch((error) => res.status(400).json({ error }));
+      .find()
+      .then((articles) => {
+        for (let i = 0; i < articles.length; i++) {
+
+          if (articles[i]._id.equals(req.params.id)) {
+            articles.splice(i, 1);
+
+          } else {
+            this.checkArticleUnique(fields.name, fields.text, articles[i], res);
+          }
+        }
+
+        let likes = nem.stringToArray(fields.likes);
+        let image = fields.image;
+
+        if (Object.keys(files).length !== 0) {
+          image = this.updateImage(req.params.id, fields.name, files.image.newFilename);
+        }
+
+        let article = this.getArticle(
+          fields.name, fields.text, image, fields.alt, fields.user, likes, fields.cat, fields.created, fields.updated
+        );
+
+        ArticleModel
+          .findByIdAndUpdate(req.params.id, { ...article, _id: req.params.id })
+          .then(() => res.status(200).json({ message: process.env.ARTICLE_UPDATED }))
+          .catch((error) => res.status(400).json({ error }));
+      })
+      .catch((error) => res.status(404).json({ error }));
   })
 };
 
