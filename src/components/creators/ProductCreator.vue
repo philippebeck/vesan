@@ -171,76 +171,37 @@ export default {
 
   methods: {
     /**
-     * VALIDATE NEW PRODUCT IF DATA ARE VALID
+     * CREATE PRODUCT
      */
-    validateNewProduct() {
-      if (this.$serve.checkName(this.name) &&
-        this.$serve.checkText(this.description)) {
+    createProduct() {
+      if (this.$serve.checkName(this.name) && this.$serve.checkText(this.description) && this.$serve.checkText(this.alt)) {
 
-        if (document.getElementById('product-image').files[0] !== undefined) {
+        if (this.cat === "") { this.cat = this.constants.CAT_PRODUCT }
+        let image = document.getElementById('product-image').files[0];
 
-          if (this.cat === "") {
-            this.cat = this.constants.CAT_PRODUCT;
-          }
-          this.checkNewProduct();
+        if (image !== undefined) {
+          let product = new FormData();
+
+          product.append("name", this.name);
+          product.append("description", this.description);
+          product.append("image", image);
+          product.append("alt", this.alt);
+          product.append("price", this.price);
+          product.append("options", this.options);
+          product.append("cat", this.cat);
+          product.append("created", Date.now());
+          product.append("updated", Date.now());
+
+          this.$serve.postData("/api/products", product)
+            .then(() => {
+              alert(this.name + this.constants.ALERT_CREATED);
+              this.$router.go();
+            })
+            .catch(err => { console.log(err) });
 
         } else {
           alert(this.constants.ALERT_IMG);
         }
-      }
-    },
-
-    /**
-     * CHECK NEW PRODUCT IF NAME | DESCRIPTION ARE REFERENCED
-     */
-    checkNewProduct() {
-      this.$serve.getData("/api/products")
-        .then((products) => {
-          let isReferenced = false;
-
-          for (let product of products) {
-
-            if (product.name === this.name) {
-              alert(this.name + this.constants.ALERT_AVAILABLE);
-              isReferenced = true;
-            }
-
-            if (product.description === this.description) {
-              alert(this.description + this.constants.ALERT_REFERENCED);
-              isReferenced = true;
-            }
-          }
-
-          this.createProduct(isReferenced);
-        })
-        .catch(err => { console.log(err) });
-    },
-
-    /**
-     * CREATE PRODUCT IF NO INFO IS REFERENCED
-     * @param {boolean} isReferenced 
-     */
-    createProduct(isReferenced) {
-      if (!isReferenced) {
-        let product  = new FormData();
-        let image = document.getElementById('product-image').files[0];
-
-        product.append("name", this.name);
-        product.append("description", this.description);
-        product.append("image", image);
-        product.append("alt", this.alt);
-        product.append("price", this.price);
-        product.append("options", this.options);
-        product.append("cat", this.cat);
-        product.append("created", Date.now());
-        product.append("updated", Date.now());
-
-        this.$serve.postData("/api/products", product)
-          .then(() => {
-            alert(this.name + this.constants.ALERT_CREATED);
-            this.$router.go();
-          })
-          .catch(err => { console.log(err) });
       }
     }
   }
