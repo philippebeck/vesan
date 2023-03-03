@@ -76,7 +76,7 @@
             ({{ articles[slotProps.index].user }})
           </template>
 
-          <!-- UsersLiked -->
+          <!-- Likes -->
           <template #cell-likes="slotProps">
             <ListElt :id="'likes-' + articles[slotProps.index]._id"
               :dynamic="true"
