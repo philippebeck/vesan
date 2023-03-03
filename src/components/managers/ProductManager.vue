@@ -49,7 +49,7 @@
               :title="products[slotProps.index].name">
             </MediaElt>
 
-            <FieldElt :id="'image-' + products[slotProps.index]._id"
+            <FieldElt :id="products[slotProps.index]._id"
               type="file"
               :info="constants.INFO_UP_IMAGE"/>
           </template>

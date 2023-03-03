@@ -48,7 +48,7 @@
               :alt="articles[slotProps.index].alt"
               :title="articles[slotProps.index].name"/>
 
-            <FieldElt :id="'image-' + articles[slotProps.index]._id"
+            <FieldElt :id="articles[slotProps.index]._id"
               type="file"
               :info="constants.INFO_UP_IMAGE"/>
           </template>
