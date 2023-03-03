@@ -16,7 +16,7 @@
 
           <!-- Product Name -->
           <template #item-1>
-            <FieldElt id="product-name"
+            <FieldElt v-model:value="name"
               v-model:value="name"
               @keyup.enter="validateNewProduct()"
               :info="constants.INFO_NAME"
@@ -66,8 +66,7 @@
 
           <!-- Product Alt -->
           <template #item-4>
-            <FieldElt id="product-alt"
-              type="textarea"
+            <FieldElt type="textarea"
               v-model:value="alt"
               :info="constants.INFO_ALT">
 
@@ -82,8 +81,7 @@
 
           <!-- Product Price -->
           <template #item-5>
-            <FieldElt id="product-price"
-              type="number"
+            <FieldElt type="number"
               v-model:value="price"
               @keyup.enter="validateNewProduct()"
               :info="constants.INFO_PRICE"
@@ -101,8 +99,7 @@
 
           <!-- Product Options -->
           <template #item-6>
-            <FieldElt id="product-options"
-              type="textarea"
+            <FieldElt type="textarea"
               v-model:value="options"
               @keyup.enter="validateNewProduct()"
               :info="constants.INFO_OPTIONS"
@@ -119,8 +116,7 @@
 
           <!-- Product Category -->
           <template #item-7>
-            <FieldElt id="product-cat"
-              type="select"
+            <FieldElt type="select"
               :list="constants.CATS_PRODUCT"
               v-model:value="cat"
               @keyup.enter="validateNewProduct()"

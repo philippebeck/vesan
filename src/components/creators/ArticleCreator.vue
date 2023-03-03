@@ -16,8 +16,7 @@
 
           <!-- Name -->
           <template #item-1>
-            <FieldElt id="article-name"
-              v-model:value="name"
+            <FieldElt v-model:value="name"
               @keyup.enter="createArticle()"
               :info="constants.INFO_NAME"
               :min="2">
@@ -66,8 +65,7 @@
 
           <!-- Alternative Text -->
           <template #item-4>
-            <FieldElt id="article-alt"
-              type="textarea"
+            <FieldElt type="textarea"
               v-model:value="alt"
               @keyup.enter="createArticle()"
               :info="constants.INFO_ALT">
@@ -83,8 +81,7 @@
 
           <!-- Category -->
           <template #item-5>
-            <FieldElt id="article-cat"
-              type="select"
+            <FieldElt type="select"
               :list="constants.CATS_ARTICLE"
               v-model:value="cat"
               @keyup.enter="createArticle()"
