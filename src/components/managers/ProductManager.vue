@@ -28,18 +28,16 @@
 
           <!-- Name -->
           <template #cell-name="slotProps">
-            <FieldElt :id="'name-' + products[slotProps.index]._id"
-              v-model:value="getProducts()[slotProps.index].name"
-              @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
+            <FieldElt v-model:value="getProducts()[slotProps.index].name"
+              @keyup.enter="updateProduct(products[slotProps.index]._id)"
               :info="constants.INFO_UP_NAME"/>
           </template>
 
           <!-- Description -->
           <template #cell-description="slotProps">
-            <FieldElt :id="'description-' + products[slotProps.index]._id"
-              type="textarea"
+            <FieldElt type="textarea"
               v-model:value="getProducts()[slotProps.index].description"
-              @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
+              @keyup.enter="updateProduct(products[slotProps.index]._id)"
               :info="constants.INFO_UP_DESCRIPTION"
               :max="5000"/>
           </template>
@@ -51,26 +49,24 @@
               :title="products[slotProps.index].name">
             </MediaElt>
 
-            <FieldElt :id="'image-' + products[slotProps.index]._id"
+            <FieldElt :id="products[slotProps.index]._id"
               type="file"
               :info="constants.INFO_UP_IMAGE"/>
           </template>
 
           <!-- Alt -->
           <template #cell-alt="slotProps">
-            <FieldElt :id="'alt-' + products[slotProps.index]._id"
-              type="textarea"
+            <FieldElt type="textarea"
               v-model:value="getProducts()[slotProps.index].alt"
-              @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
+              @keyup.enter="updateProduct(products[slotProps.index]._id)"
               :info="constants.INFO_UP_ALT"/>
           </template>
 
           <!-- Price -->
           <template #cell-price="slotProps">
-            <FieldElt :id="'price-' + products[slotProps.index]._id"
-              type="number"
+            <FieldElt type="number"
               v-model:value="getProducts()[slotProps.index].price"
-              @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
+              @keyup.enter="updateProduct(products[slotProps.index]._id)"
               :info="constants.INFO_UP_PRICE"
               :min="1"
               :max="1000"/>
@@ -78,20 +74,18 @@
 
           <!-- Options -->
           <template #cell-options="slotProps">
-            <FieldElt :id="'options-' + products[slotProps.index]._id"
-              type="textarea"
+            <FieldElt type="textarea"
               v-model:value="getProducts()[slotProps.index].options"
-              @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
+              @keyup.enter="updateProduct(products[slotProps.index]._id)"
               :info="constants.INFO_UP_OPTIONS"/>
           </template>
 
           <!-- Category -->
           <template #cell-cat="slotProps">
-            <FieldElt :id="'cat-' + products[slotProps.index]._id"
-              type="select"
+            <FieldElt type="select"
               :list="constants.CATS_PRODUCT"
               v-model:value="getProducts()[slotProps.index].cat"
-              @keyup.enter="validateUpdatedProduct(products[slotProps.index]._id)"
+              @keyup.enter="updateProduct(products[slotProps.index]._id)"
               :info="constants.INFO_UP_CATEGORY"/>
           </template>
 
@@ -109,7 +103,7 @@
 
             <!-- Update -->
             <BtnElt type="button"
-              @click="validateUpdatedProduct(products[slotProps.index]._id)" 
+              @click="updateProduct(products[slotProps.index]._id)" 
               class="btn-sky"
               :title="constants.TITLE_UPDATE + products[slotProps.index].name">
 
@@ -151,81 +145,36 @@ export default {
     },
 
     /**
-     * VALIDATE UPDATED PRODUCT
+     * UPDATE PRODUCT
      * @param {string} id 
      */
-    validateUpdatedProduct(id) {
-      for (let i = 0; i < this.products.length; i++ ) {
-        if (this.products[i]._id === id) {
+    updateProduct(id) {
+      for (let product of this.products) {
+        if (product._id === id) {
 
-          if (this.$serve.checkName(this.products[i].name) &&
-            this.$serve.checkText(this.products[i].description)) {
+          if (this.$serve.checkName(product.name) && this.$serve.checkText(product.description) && this.$serve.checkText(product.alt)) {
 
-            this.checkUpdatedProduct(i);
+            let data  = new FormData();
+            let image = document.getElementById(id).files[0] ?? product.image;
+
+            data.append("name", product.name);
+            data.append("description", product.description);
+            data.append("image", image);
+            data.append("alt", product.alt);
+            data.append("price", product.price);
+            data.append("options", product.options);
+            data.append("cat", product.cat);
+            data.append("created", product.created);
+            data.append("updated", Date.now());
+
+            this.$serve.putData(`/api/products/${id}`, data)
+              .then(() => {
+                alert(product.name + this.constants.ALERT_UPDATED);
+                this.$router.go();
+              })
+              .catch(err => { console.log(err) });
           }
         }
-      }
-    },
-
-    /**
-     * CHECK UPDATED PRODUCT IF NAME | DESCRIPTION ARE REFERENCED
-     * @param {number} i 
-     */
-    checkUpdatedProduct(i) {
-      this.$serve.getData("/api/products")
-        .then((products) => {
-          let isReferenced = false;
-
-          for (let j = 0; j < products.length; j++) {
-            if (products[j]._id === this.products[i]._id) {
-              products.splice(j, 1);
-            }
-
-            if (products[j] && products[j].name === this.products[i].name) {
-              alert(this.products[i].name + this.constants.ALERT_AVAILABLE);
-              isReferenced = true;
-            }
-
-            if (products[j] && products[j].description === this.products[i].description) {
-              alert(this.products[i].description+ this.constants.ALERT_REFERENCED);
-              isReferenced = true;
-            }
-          }
-          this.updateProduct(isReferenced, i);
-        })
-        .catch(err => { console.log(err) });
-    },
-
-    /**
-     * UPDATE PRODUCT IF NO INFO IS REFERENCED
-     * @param {boolean} isReferenced 
-     * @param {number} i 
-     */
-    updateProduct(isReferenced, i) {
-      if (!isReferenced) {
-
-        let product  = new FormData();
-        let image = document.getElementById('image-' + this.products[i]._id).files[0];
-
-        if (image === undefined) {
-          image = this.products[i].image;
-        }
-
-        product.append("name", this.products[i].name);
-        product.append("description", this.products[i].description);
-        product.append("image", image);
-        product.append("alt", this.products[i].alt);
-        product.append("price", this.products[i].price);
-        product.append("options", this.products[i].options);
-        product.append("cat", this.products[i].cat);
-        product.append("updated", Date.now());
-
-        this.$serve.putData(`/api/products/${this.products[i]._id}`, product)
-          .then(() => {
-            alert(product.get("name") + this.constants.ALERT_UPDATED);
-            this.$router.go();
-          })
-          .catch(err => { console.log(err) });
       }
     },
 
@@ -236,9 +185,9 @@ export default {
     deleteProduct(id) {
       let productName = "";
 
-      for (let i = 0; i < this.products.length; i++ ) {
-        if (this.products[i]._id === id) {
-          productName = this.products[i].name;
+      for (let product of this.products) {
+        if (product._id === id) {
+          productName = product.name;
         }
       }
       

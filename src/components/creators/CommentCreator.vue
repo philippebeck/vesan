@@ -13,8 +13,7 @@
       <form method="post">
 
       <!-- Comment Text -->
-      <FieldElt id="comment-text"
-        type="textarea"
+      <FieldElt type="textarea"
         v-model:value="text"
         @keyup.enter="createComment()"
         :info="constants.INFO_TEXT"
@@ -61,11 +60,12 @@ export default {
      */
     createComment() {
       if (this.$serve.checkText(this.text)) {
-        let comment  = new FormData();
+        let comment = new FormData();
 
         comment.append("text", this.text);
         comment.append("article", this.$route.params.id);
         comment.append("user", this.constants.USER_ID);
+        comment.append("moderate", "false");
         comment.append("created", Date.now());
         comment.append("updated", Date.now());
 

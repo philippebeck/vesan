@@ -18,16 +18,14 @@
             itemscope
             itemtype="https://schema.org/Review">
 
-            <FieldElt :id="'text-' + slotProps.item._id"
-              type="textarea"
+            <FieldElt type="textarea"
               v-model:value="slotProps.item.text"
               @keyup.enter="updateReview(slotProps.item._id)"
               itemprop="text"
               :info="constants.INFO_UP_TEXT"
               :max="5000"/>
 
-            <FieldElt :id="'score-' + slotProps.item._id"
-              type="number"
+            <FieldElt type="number"
               v-model:value="slotProps.item.score"
               @keyup.enter="updateReview(slotProps.item._id)"
               :info="constants.INFO_UP_SCORE"

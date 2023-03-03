@@ -57,8 +57,7 @@
 
           <!-- Status -->
           <template #cell-status="slotProps">
-            <FieldElt :id="'status-' + orders[slotProps.index]._id"
-              type="select"
+            <FieldElt type="select"
               :list="constants.CATS_ORDER"
               v-model:value="getOrders()[slotProps.index].status"
               @keyup.enter="updateStatus(orders[slotProps.index]._id)"

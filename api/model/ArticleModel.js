@@ -28,7 +28,7 @@ const ArticleModel = mongoose.Schema(
       type: String, 
       required: true
     },
-    usersLiked: {
+    likes: {
       type: Array,
       default: []
     },

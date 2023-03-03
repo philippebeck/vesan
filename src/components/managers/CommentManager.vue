@@ -129,12 +129,16 @@ export default {
       for (let comment of this.comments) {
         if (comment._id === id) {
 
-          let commentData = new FormData();
+          let data = new FormData();
 
-          commentData.append("text", comment.text);
-          commentData.append("moderate", comment.moderate);
+          data.append("text", comment.text);
+          data.append("article", comment.article);
+          data.append("user", comment.user);
+          data.append("moderate", comment.moderate);
+          data.append("created", comment.created);
+          data.append("updated", comment.updated);
 
-          this.$serve.putData(`/api/comments/${id}`, commentData)
+          this.$serve.putData(`/api/comments/${id}`, data)
             .then(() => {
               alert(this.constants.ALERT_COMMENT + id + this.constants.ALERT_MODERATED);
               this.$router.go();

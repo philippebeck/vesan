@@ -28,18 +28,16 @@
 
           <!-- Name -->
           <template #cell-name="slotProps">
-            <FieldElt :id="'name-' + articles[slotProps.index]._id"
-              v-model:value="getArticles()[slotProps.index].name"
-              @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
+            <FieldElt v-model:value="getArticles()[slotProps.index].name"
+              @keyup.enter="updateArticle(articles[slotProps.index]._id)"
               :info="constants.INFO_UP_NAME"/>
           </template>
 
           <!-- Text -->
           <template #cell-text="slotProps">
-            <FieldElt :id="'text-' + articles[slotProps.index]._id"
-              type="textarea"
+            <FieldElt type="textarea"
               v-model:value="getArticles()[slotProps.index].text"
-              @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
+              @keyup.enter="updateArticle(articles[slotProps.index]._id)"
               :info="constants.INFO_UP_TEXT"
               :max="5000"/>
           </template>
@@ -50,27 +48,25 @@
               :alt="articles[slotProps.index].alt"
               :title="articles[slotProps.index].name"/>
 
-            <FieldElt :id="'image-' + articles[slotProps.index]._id"
+            <FieldElt :id="articles[slotProps.index]._id"
               type="file"
               :info="constants.INFO_UP_IMAGE"/>
           </template>
 
           <!-- Alt -->
           <template #cell-alt="slotProps">
-            <FieldElt :id="'alt-' + articles[slotProps.index]._id"
-              type="textarea"
+            <FieldElt type="textarea"
               v-model:value="getArticles()[slotProps.index].alt"
-              @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
+              @keyup.enter="updateArticle(articles[slotProps.index]._id)"
               :info="constants.INFO_UP_ALT"/>
           </template>
 
           <!-- Category -->
           <template #cell-cat="slotProps">
-            <FieldElt :id="'cat-' + articles[slotProps.index]._id"
-              type="select"
+            <FieldElt type="select"
               :list="constants.CATS_ARTICLE"
               v-model:value="getArticles()[slotProps.index].cat"
-              @keyup.enter="validateUpdatedArticle(articles[slotProps.index]._id)"
+              @keyup.enter="updateArticle(articles[slotProps.index]._id)"
               :info="constants.INFO_UP_CATEGORY"/>
           </template>
 
@@ -80,11 +76,11 @@
             ({{ articles[slotProps.index].user }})
           </template>
 
-          <!-- UsersLiked -->
-          <template #cell-usersLiked="slotProps">
-            <ListElt :id="'usersLiked-' + articles[slotProps.index]._id"
+          <!-- Likes -->
+          <template #cell-likes="slotProps">
+            <ListElt :id="'likes-' + articles[slotProps.index]._id"
               :dynamic="true"
-              :items="articles[slotProps.index].usersLiked"/>
+              :items="articles[slotProps.index].likes"/>
           </template>
 
           <!-- Created -->
@@ -101,7 +97,7 @@
 
           <!-- Update -->
           <BtnElt type="button"
-              @click="validateUpdatedArticle(articles[slotProps.index]._id)" 
+              @click="updateArticle(articles[slotProps.index]._id)" 
               class="btn-sky"
               :title="constants.TITLE_UPDATE + articles[slotProps.index].name">
 
@@ -151,80 +147,36 @@ export default {
     },
 
     /**
-     * VALIDATE UPDATED ARTICLE
+     * UPDATE ARTICLE
      * @param {string} id 
      */
-    validateUpdatedArticle(id) {
-      for (let i = 0; i < this.articles.length; i++ ) {
-        if (this.articles[i]._id === id) {
+    updateArticle(id) {
+      for (let article of this.articles) {
+        if (article._id === id) {
 
-          if (this.$serve.checkName(this.articles[i].name) &&
-            this.$serve.checkText(this.articles[i].text)) {
+          if (this.$serve.checkName(article.name) && this.$serve.checkText(article.text) && this.$serve.checkText(article.alt)) {
 
-            this.checkUpdatedArticle(i);
+            let data  = new FormData();
+            let image = document.getElementById(id).files[0] ?? article.image;
+
+            data.append("name", article.name);
+            data.append("text", article.text);
+            data.append("image", image);
+            data.append("alt", article.alt);
+            data.append("user", article.user);
+            data.append("likes", article.likes);
+            data.append("cat", article.cat);
+            data.append("created", article.created);
+            data.append("updated", Date.now());
+
+            this.$serve.putData(`/api/articles/${id}`, data)
+              .then(() => {
+                alert(article.name + this.constants.ALERT_UPDATED);
+                this.$router.go();
+              })
+              .catch(err => { console.log(err) });
           }
         }
-      }
-    },
-
-    /**
-     * CHECK UPDATED ARTICLE IF NAME | EMAIL ARE REFERENCED
-     * @param {number} i 
-     */
-    checkUpdatedArticle(i) {
-      this.$serve.getData("/api/articles")
-        .then((articles) => {
-          let isReferenced = false;
-
-          for (let j = 0; j < articles.length; j++) {
-            if (articles[j]._id === this.articles[i]._id) {
-              articles.splice(j, 1);
-            }
-
-            if (articles[j] && articles[j].name === this.articles[i].name) {
-              alert(this.articles[i].name + this.constants.ALERT_AVAILABLE);
-              isReferenced = true;
-            }
-
-            if (articles[j] && articles[j].text === this.articles[i].text) {
-              alert(this.articles[i].text+ this.constants.ALERT_REFERENCED);
-              isReferenced = true;
-            }
-          }
-          this.updateArticle(isReferenced, i);
-        })
-        .catch(err => { console.log(err) });
-    },
-
-    /**
-     * UPDATE ARTICLE IF NO INFO IS REFERENCED
-     * @param {boolean} isReferenced 
-     * @param {number} i 
-     */
-    updateArticle(isReferenced, i) {
-      if (!isReferenced) {
-
-        let article  = new FormData();
-        let image = document.getElementById('image-' + this.articles[i]._id).files[0];
-
-        if (image !== undefined) {
-          image = this.articles[i].image;
-        }
-
-        article.append("name", this.articles[i].name);
-        article.append("text", this.articles[i].text);
-        article.append("image", image);
-        article.append("alt", this.articles[i].alt);
-        article.append("usersLiked", this.articles[i].usersLiked);
-        article.append("cat", this.articles[i].cat);
-        article.append("updated", Date.now());
-
-        this.$serve.putData(`/api/articles/${this.articles[i]._id}`, article)
-          .then(() => {
-            alert(article.get("name") + this.constants.ALERT_UPDATED);
-            this.$router.go();
-          })
-          .catch(err => { console.log(err) });
       }
     },
 
@@ -233,18 +185,18 @@ export default {
      * @param {string} id 
      */
     deleteArticle(id) {
-      let articleTitle = "";
+      let articleName = "";
 
-      for (let i = 0; i < this.articles.length; i++ ) {
-        if (this.articles[i]._id === id) {
-          articleTitle = this.articles[i].name;
+      for (let article of this.articles) {
+        if (article._id === id) {
+          articleName = article.name;
         }
       }
 
-      if (confirm(`${this.constants.TITLE_DELETE} ${articleTitle} ?`) === true) {
+      if (confirm(`${this.constants.TITLE_DELETE} ${articleName} ?`) === true) {
         this.$serve.deleteData(`/api/articles/${id}`)
           .then(() => {
-            alert(articleTitle + this.constants.ALERT_DELETED);
+            alert(articleName + this.constants.ALERT_DELETED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });
