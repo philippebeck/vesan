@@ -41,6 +41,31 @@ exports.checkArticleData = (name, text, alt, cat, res) => {
 }
 
 /**
+ * CHECK NEW ARTICLE
+ * @param {string} name 
+ * @param {string} text 
+ * @param {object} res 
+ * @returns
+ */
+exports.checkNewArticle = (name, text, res) => {
+  ArticleModel
+  .find()
+  .then((articles) => {
+    for (let article of articles) {
+
+      if (article.name === name) {
+        return res.status(400).json({ message: process.env.DISPO_NAME });
+      }
+
+      if (article.text === text) {
+        return res.status(400).json({ message: process.env.DISPO_TEXT });
+      }
+    }
+  })
+  .catch((error) => res.status(404).json({ error }));
+}
+
+/**
  * GET ARTICLE
  * @param {string} name 
  * @param {string} text 
