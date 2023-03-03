@@ -151,29 +151,27 @@ export default {
      * @param {string} id 
      */
     updateArticle(id) {
-      for (let i = 0; i < this.articles.length; i++ ) {
-        if (this.articles[i]._id === id) {
+      for (let article of this.articles) {
+        if (article._id === id) {
 
-          if (this.$serve.checkName(this.articles[i].name) && this.$serve.checkText(this.articles[i].text)) {
+          if (this.$serve.checkName(article.name) && this.$serve.checkText(article.text) && this.$serve.checkText(article.alt)) {
 
-            let article = new FormData();
-            let image   = document.getElementById('image-' + this.articles[i]._id).files[0];
+            let data  = new FormData();
+            let image = document.getElementById(id).files[0] ?? article.image;
 
-            if (image !== undefined) { image = this.articles[i].image }
+            data.append("name", article.name);
+            data.append("text", article.text);
+            data.append("image", image);
+            data.append("alt", article.alt);
+            data.append("user", article.user);
+            data.append("likes", article.likes);
+            data.append("cat", article.cat);
+            data.append("created", article.created);
+            data.append("updated", Date.now());
 
-            article.append("name", this.articles[i].name);
-            article.append("text", this.articles[i].text);
-            article.append("image", image);
-            article.append("alt", this.articles[i].alt);
-            article.append("user", this.articles[i].user);
-            article.append("likes", this.articles[i].likes);
-            article.append("cat", this.articles[i].cat);
-            article.append("created", this.articles[i].created);
-            article.append("updated", Date.now());
-
-            this.$serve.putData(`/api/articles/${this.articles[i]._id}`, article)
+            this.$serve.putData(`/api/articles/${id}`, data)
               .then(() => {
-                alert(article.get("name") + this.constants.ALERT_UPDATED);
+                alert(article.name + this.constants.ALERT_UPDATED);
                 this.$router.go();
               })
               .catch(err => { console.log(err) });
@@ -187,18 +185,18 @@ export default {
      * @param {string} id 
      */
     deleteArticle(id) {
-      let articleTitle = "";
+      let articleName = "";
 
-      for (let i = 0; i < this.articles.length; i++ ) {
-        if (this.articles[i]._id === id) {
-          articleTitle = this.articles[i].name;
+      for (let article of this.articles) {
+        if (article._id === id) {
+          articleName = article.name;
         }
       }
 
-      if (confirm(`${this.constants.TITLE_DELETE} ${articleTitle} ?`) === true) {
+      if (confirm(`${this.constants.TITLE_DELETE} ${articleName} ?`) === true) {
         this.$serve.deleteData(`/api/articles/${id}`)
           .then(() => {
-            alert(articleTitle + this.constants.ALERT_DELETED);
+            alert(articleName + this.constants.ALERT_DELETED);
             this.$router.go();
           })
           .catch(err => { console.log(err) });
