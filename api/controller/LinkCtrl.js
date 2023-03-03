@@ -78,12 +78,22 @@ exports.createLink = (req, res, next) => {
     }
 
     this.checkLinkData(fields.name, fields.url, fields.cat, res);
-    let link = new LinkModel(fields);
 
-    link
-      .save()
-      .then(() => res.status(201).json({ message: process.env.LINK_CREATED }))
-      .catch((error) => res.status(400).json({ error }));
+    LinkModel
+      .find()
+      .then((links) => {
+        for (let link of links) {
+          this.checkLinkUnique(fields.name, fields.url, link, res);
+        }
+
+        let link = new LinkModel(fields);
+
+        link
+          .save()
+          .then(() => res.status(201).json({ message: process.env.LINK_CREATED }))
+          .catch((error) => res.status(400).json({ error }));
+      })
+      .catch((error) => res.status(404).json({ error }));
   })
 };
 
@@ -105,9 +115,21 @@ exports.updateLink = (req, res, next) => {
     this.checkLinkData(fields.name, fields.url, fields.cat, res);
 
     LinkModel
-      .findByIdAndUpdate(req.params.id, { ...fields, _id: req.params.id })
-      .then(() => res.status(200).json({ message: process.env.LINK_UPDATED }))
-      .catch((error) => res.status(400).json({ error }));
+      .find()
+      .then((links) => {
+        for (let link of links) {
+
+          if (!link._id.equals(req.params.id)) {
+            this.checkLinkUnique(fields.name, fields.url, link, res);
+          }
+        }
+
+        LinkModel
+          .findByIdAndUpdate(req.params.id, { ...fields, _id: req.params.id })
+          .then(() => res.status(200).json({ message: process.env.LINK_UPDATED }))
+          .catch((error) => res.status(400).json({ error }));
+      })
+      .catch((error) => res.status(404).json({ error }));
   })
 };
 
