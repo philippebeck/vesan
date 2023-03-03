@@ -45,6 +45,24 @@ exports.checkProductData = (name, description, alt, price, cat, res) => {
 }
 
 /**
+ * CHECK PRODUCT UNIQUE
+ * @param {string} name 
+ * @param {string} description 
+ * @param {object} product 
+ * @param {object} res 
+ * @returns
+ */
+exports.checkArticleUnique = (name, description, product, res) => {
+  if (product.name === name) {
+    return res.status(400).json({ message: process.env.DISPO_NAME });
+  }
+
+  if (product.description === description) {
+    return res.status(400).json({ message: process.env.DISPO_DESCRIPTION });
+  }
+}
+
+/**
  * GET PRODUCT
  * @param {string} name 
  * @param {string} description 
