@@ -206,13 +206,10 @@ exports.updateProduct = (req, res, next) => {
     ProductModel
       .find()
       .then((products) => {
-        for (let i = 0; i < products.length; i++) {
+        for (let product of products) {
 
-          if (products[i]._id.equals(req.params.id)) {
-            products.splice(i, 1);
-
-          } else {
-            this.checkProductUnique(fields.name, fields.description, products[i], res);
+          if (!product._id.equals(req.params.id)) {
+            this.checkProductUnique(fields.name, fields.description, product, res);
           }
         }
 

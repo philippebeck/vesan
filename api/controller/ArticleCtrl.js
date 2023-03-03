@@ -210,13 +210,10 @@ exports.updateArticle = (req, res, next) => {
     ArticleModel
       .find()
       .then((articles) => {
-        for (let i = 0; i < articles.length; i++) {
+        for (let article of articles) {
 
-          if (articles[i]._id.equals(req.params.id)) {
-            articles.splice(i, 1);
-
-          } else {
-            this.checkArticleUnique(fields.name, fields.text, articles[i], res);
+          if (!article._id.equals(req.params.id)) {
+            this.checkArticleUnique(fields.name, fields.text, article, res);
           }
         }
 
