@@ -14,9 +14,8 @@
         <ListElt :items="constants.LINK_FORM">
 
           <template #item-1>
-            <FieldElt id="name"
-              v-model:value="name"
-              @keyup.enter="validateNewLink()"
+            <FieldElt v-model:value="name"
+              @keyup.enter="createLink()"
               :info="constants.INFO_NAME"
               :min="parseInt('2')">
 
@@ -30,10 +29,9 @@
           </template>
 
           <template #item-2>
-            <FieldElt id="url"
-              type="url"
+            <FieldElt type="url"
               v-model:value="url"
-              @keyup.enter="validateNewLink()"
+              @keyup.enter="createLink()"
               :info="constants.INFO_URL"
               :min="parseInt('5')"
               :max="parseInt('100')">
@@ -48,11 +46,10 @@
           </template>
           
           <template #item-3>
-            <FieldElt id="cat"
-              type="select"
+            <FieldElt type="select"
               :list="constants.CATS_LINK"
               v-model:value="cat"
-              @keyup.enter="validateNewLink()"
+              @keyup.enter="createLink()"
               :info="constants.INFO_CATEGORY">
 
               <template #legend>
@@ -66,7 +63,7 @@
         </ListElt>
 
         <BtnElt type="button"
-          @click="validateNewLink()" 
+          @click="createLink()" 
           class="btn-green"
           :content="constants.CONTENT_CREATE"
           :title="constants.LINK_CREATOR">
@@ -95,52 +92,13 @@ export default {
 
   methods: {
     /**
-     * VALIDATE NEW LINK IF DATA ARE VALID
+     * CREATE LINK
      */
-    validateNewLink() {
-      if (this.url.startsWith("http")) {
-        this.url = this.url.split('//')[1];
-      }
+    createLink() {
+      if (this.url.startsWith("http")) { this.url = this.url.split('//')[1] }
+      if (this.cat === "") { this.cat = this.constants.CAT_LINK }
 
-      if (this.$serve.checkName(this.name) &&
-        this.$serve.checkUrl(`https://${this.url}`)) {
-        if (this.cat === "") {
-          this.cat = this.constants.CAT_LINK;
-        }
-        this.checkNewLink();
-      }
-    },
-
-    /**
-     * CHECK NEW LINK IF NAME | URL ARE REFERENCED
-     */
-    checkNewLink() {
-      this.$serve.getData("/api/links")
-        .then((links) => {
-          let isReferenced = false;
-
-          for (let link of links) {
-
-            if (link.name === this.name) {
-              alert(this.name + this.constants.ALERT_AVAILABLE);
-              isReferenced = true;
-            }
-            if (link.url === this.url) {
-              alert(this.url + this.constants.ALERT_REFERENCED);
-              isReferenced = true;
-            }
-          }
-          this.createLink(isReferenced);
-        })
-        .catch(err => { console.log(err) });
-    },
-
-    /**
-     * CREATE LINK IF NO INFO IS REFERENCED
-     * @param {boolean} isReferenced 
-     */
-    createLink(isReferenced) {
-      if (!isReferenced) {
+      if (this.$serve.checkName(this.name) && this.$serve.checkUrl(`https://${this.url}`)) {
         let link = new FormData();
 
         link.append("name", this.name);
