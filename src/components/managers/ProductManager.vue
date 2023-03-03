@@ -145,81 +145,36 @@ export default {
     },
 
     /**
-     * VALIDATE UPDATED PRODUCT
+     * UPDATE PRODUCT
      * @param {string} id 
      */
-    validateUpdatedProduct(id) {
-      for (let i = 0; i < this.products.length; i++ ) {
-        if (this.products[i]._id === id) {
+    updateProduct(id) {
+      for (let product of this.products) {
+        if (product._id === id) {
 
-          if (this.$serve.checkName(this.products[i].name) &&
-            this.$serve.checkText(this.products[i].description)) {
+          if (this.$serve.checkName(product.name) && this.$serve.checkText(product.description) && this.$serve.checkText(product.alt)) {
 
-            this.checkUpdatedProduct(i);
+            let data  = new FormData();
+            let image = document.getElementById(id).files[0] ?? product.image;
+
+            data.append("name", product.name);
+            data.append("description", product.description);
+            data.append("image", image);
+            data.append("alt", product.alt);
+            data.append("price", product.price);
+            data.append("options", product.options);
+            data.append("cat", product.cat);
+            data.append("created", product.created);
+            data.append("updated", Date.now());
+
+            this.$serve.putData(`/api/products/${id}`, data)
+              .then(() => {
+                alert(product.name + this.constants.ALERT_UPDATED);
+                this.$router.go();
+              })
+              .catch(err => { console.log(err) });
           }
         }
-      }
-    },
-
-    /**
-     * CHECK UPDATED PRODUCT IF NAME | DESCRIPTION ARE REFERENCED
-     * @param {number} i 
-     */
-    checkUpdatedProduct(i) {
-      this.$serve.getData("/api/products")
-        .then((products) => {
-          let isReferenced = false;
-
-          for (let j = 0; j < products.length; j++) {
-            if (products[j]._id === this.products[i]._id) {
-              products.splice(j, 1);
-            }
-
-            if (products[j] && products[j].name === this.products[i].name) {
-              alert(this.products[i].name + this.constants.ALERT_AVAILABLE);
-              isReferenced = true;
-            }
-
-            if (products[j] && products[j].description === this.products[i].description) {
-              alert(this.products[i].description+ this.constants.ALERT_REFERENCED);
-              isReferenced = true;
-            }
-          }
-          this.updateProduct(isReferenced, i);
-        })
-        .catch(err => { console.log(err) });
-    },
-
-    /**
-     * UPDATE PRODUCT IF NO INFO IS REFERENCED
-     * @param {boolean} isReferenced 
-     * @param {number} i 
-     */
-    updateProduct(isReferenced, i) {
-      if (!isReferenced) {
-
-        let product  = new FormData();
-        let image = document.getElementById('image-' + this.products[i]._id).files[0];
-
-        if (image === undefined) {
-          image = this.products[i].image;
-        }
-
-        product.append("name", this.products[i].name);
-        product.append("description", this.products[i].description);
-        product.append("image", image);
-        product.append("alt", this.products[i].alt);
-        product.append("price", this.products[i].price);
-        product.append("options", this.products[i].options);
-        product.append("cat", this.products[i].cat);
-        product.append("updated", Date.now());
-
-        this.$serve.putData(`/api/products/${this.products[i]._id}`, product)
-          .then(() => {
-            alert(product.get("name") + this.constants.ALERT_UPDATED);
-            this.$router.go();
-          })
-          .catch(err => { console.log(err) });
       }
     },
 
@@ -230,9 +185,9 @@ export default {
     deleteProduct(id) {
       let productName = "";
 
-      for (let i = 0; i < this.products.length; i++ ) {
-        if (this.products[i]._id === id) {
-          productName = this.products[i].name;
+      for (let product of this.products) {
+        if (product._id === id) {
+          productName = product.name;
         }
       }
       
