@@ -18,7 +18,7 @@
           <template #item-1>
             <FieldElt id="article-name"
               v-model:value="name"
-              @keyup.enter="validateNewArticle()"
+              @keyup.enter="createArticle()"
               :info="constants.INFO_NAME"
               :min="2">
 
@@ -40,7 +40,7 @@
             <Editor id="article-text"
               :api-key="constants.TINY_KEY"
               v-model="text"
-              @keyup.enter="validateNewArticle()"
+              @keyup.enter="createArticle()"
               :init="{
                 toolbar:
                   'undo redo outdent indent align | \
@@ -69,7 +69,7 @@
             <FieldElt id="article-alt"
               type="textarea"
               v-model:value="alt"
-              @keyup.enter="validateNewArticle()"
+              @keyup.enter="createArticle()"
               :info="constants.INFO_ALT">
 
               <template #legend>
@@ -87,7 +87,7 @@
               type="select"
               :list="constants.CATS_ARTICLE"
               v-model:value="cat"
-              @keyup.enter="validateNewArticle()"
+              @keyup.enter="createArticle()"
               :info="constants.INFO_CATEGORY">
 
               <template #legend>
@@ -103,7 +103,7 @@
 
         <!-- Create Button -->
         <BtnElt type="button"
-          @click="validateNewArticle()" 
+          @click="createArticle()" 
           class="btn-green"
           :content="constants.CONTENT_CREATE"
           :title="constants.ARTICLE_CREATOR">
@@ -139,76 +139,37 @@ export default {
 
   methods: {
     /**
-     * VALIDATE NEW ARTICLE IF DATA ARE VALID
+     * CREATE ARTICLE
      */
-    validateNewArticle() {
-      if (this.$serve.checkName(this.name) &&
-        this.$serve.checkText(this.text)) {
-
+    createArticle() {
+      if (this.$serve.checkName(this.name) && this.$serve.checkText(this.text)) {
         if (document.getElementById('article-image').files[0] !== undefined) {
 
-          if (this.cat === "") {
-            this.cat = this.constants.CAT_ARTICLE;
-          }
-          this.checkNewArticle();
+          if (this.cat === "") { this.cat = this.constants.CAT_ARTICLE }
+          
+          let article   = new FormData();
+          let image     = document.getElementById('article-image').files[0];
+
+          article.append("name", this.name);
+          article.append("text", this.text);
+          article.append("image", image);
+          article.append("alt", this.alt);
+          article.append("user", this.constants.USER_ID);
+          article.append("likes", []);
+          article.append("cat", this.cat);
+          article.append("created", Date.now());
+          article.append("updated", Date.now());
+
+          this.$serve.postData("/api/articles", article)
+            .then(() => {
+              alert(this.name + this.constants.ALERT_CREATED);
+              this.$router.go();
+            })
+            .catch(err => { console.log(err) });
 
         } else {
           alert(this.constants.ALERT_IMG);
         }
-      }
-    },
-
-    /**
-     * CHECK NEW ARTICLE IF TITLE | TEXT ARE REFERENCED
-     */
-    checkNewArticle() {
-      this.$serve.getData("/api/articles")
-        .then((articles) => {
-          let isReferenced = false;
-
-          for (let article of articles) {
-            
-            if (article.name === this.name) {
-              alert(this.name + this.constants.ALERT_AVAILABLE);
-              isReferenced = true;
-            }
-
-            if (article.text === this.text) {
-              alert(this.text + this.constants.ALERT_REFERENCED);
-              isReferenced = true;
-            }
-          }
-
-          this.createArticle(isReferenced);
-        })
-        .catch(err => { console.log(err) });
-    },
-
-    /**
-     * CREATE ARTICLE IF NO INFO IS REFERENCED
-     * @param {boolean} isReferenced 
-     */
-    createArticle(isReferenced) {
-      if (!isReferenced) {
-        let article  = new FormData();
-        let image = document.getElementById('article-image').files[0];
-
-        article.append("name", this.name);
-        article.append("text", this.text);
-        article.append("image", image);
-        article.append("alt", this.alt);
-        article.append("user", this.constants.USER_ID);
-        article.append("usersLiked", []);
-        article.append("cat", this.cat);
-        article.append("created", Date.now());
-        article.append("updated", Date.now());
-
-        this.$serve.postData("/api/articles", article)
-          .then(() => {
-            alert(this.name + this.constants.ALERT_CREATED);
-            this.$router.go();
-          })
-          .catch(err => { console.log(err) });
       }
     }
   }
