@@ -52,7 +52,7 @@ exports.checkProductData = (name, description, alt, price, cat, res) => {
  * @param {object} res 
  * @returns
  */
-exports.checkArticleUnique = (name, description, product, res) => {
+exports.checkProductUnique = (name, description, product, res) => {
   if (product.name === name) {
     return res.status(400).json({ message: process.env.DISPO_NAME });
   }
