@@ -17,8 +17,7 @@
           <!-- Product Name -->
           <template #item-1>
             <FieldElt v-model:value="name"
-              v-model:value="name"
-              @keyup.enter="validateNewProduct()"
+              @keyup.enter="createProduct()"
               :info="constants.INFO_NAME"
               :min="2">
 
@@ -40,7 +39,7 @@
             <Editor id="product-description"
               :api-key="constants.TINY_KEY"
               v-model="description"
-              @keyup.enter="validateNewProduct()"
+              @keyup.enter="createProduct()"
               :init="{
                 toolbar:
                   'undo redo outdent indent align | \
@@ -83,7 +82,7 @@
           <template #item-5>
             <FieldElt type="number"
               v-model:value="price"
-              @keyup.enter="validateNewProduct()"
+              @keyup.enter="createProduct()"
               :info="constants.INFO_PRICE"
               :min="1"
               :max="1000">
@@ -101,7 +100,7 @@
           <template #item-6>
             <FieldElt type="textarea"
               v-model:value="options"
-              @keyup.enter="validateNewProduct()"
+              @keyup.enter="createProduct()"
               :info="constants.INFO_OPTIONS"
               :max="100">
 
@@ -119,7 +118,7 @@
             <FieldElt type="select"
               :list="constants.CATS_PRODUCT"
               v-model:value="cat"
-              @keyup.enter="validateNewProduct()"
+              @keyup.enter="createProduct()"
               :info="constants.INFO_CATEGORY">
 
               <template #legend>
@@ -134,7 +133,7 @@
 
         <!-- Create Button -->
         <BtnElt type="button"
-          @click="validateNewProduct()" 
+          @click="createProduct()" 
           class="btn-green"
           :content="constants.CONTENT_CREATE"
           :title="constants.PRODUCT_CREATOR">
