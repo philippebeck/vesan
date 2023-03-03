@@ -13,8 +13,7 @@
       <form method="post">
 
         <!-- Review Text -->
-        <FieldElt id="review-text"
-          type="textarea"
+        <FieldElt type="textarea"
           v-model:value="text"
           @keyup.enter="validateNewReview()"
           :info="constants.INFO_TEXT"
@@ -29,8 +28,7 @@
         </FieldElt>
 
         <!-- Review Score -->
-        <FieldElt id="review-score"
-          type="number"
+        <FieldElt type="number"
           v-model:value="score"
           @keyup.enter="validateNewReview()"
           :info="constants.INFO_SCORE"

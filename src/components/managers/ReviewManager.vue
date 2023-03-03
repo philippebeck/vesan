@@ -47,8 +47,7 @@
 
           <!-- Moderate -->
           <template #cell-moderate="slotProps">
-            <FieldElt :id="'text-' + reviews[slotProps.index]._id"
-              type="select"
+            <FieldElt type="select"
               :list="constants.IS_MODERATE"
               v-model:value="getReviews()[slotProps.index].moderate"
               @keyup.enter="moderateReview(reviews[slotProps.index]._id)"
