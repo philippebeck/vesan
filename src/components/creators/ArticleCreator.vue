@@ -139,13 +139,13 @@ export default {
      * CREATE ARTICLE
      */
     createArticle() {
-      if (this.$serve.checkName(this.name) && this.$serve.checkText(this.text)) {
-        if (document.getElementById('article-image').files[0] !== undefined) {
+      if (this.$serve.checkName(this.name) && this.$serve.checkText(this.text) && this.$serve.checkText(this.alt)) {
 
-          if (this.cat === "") { this.cat = this.constants.CAT_ARTICLE }
-          
-          let article   = new FormData();
-          let image     = document.getElementById('article-image').files[0];
+        if (this.cat === "") { this.cat = this.constants.CAT_ARTICLE }
+        let image = document.getElementById('article-image').files[0];
+
+        if (image !== undefined) {
+          let article = new FormData();
 
           article.append("name", this.name);
           article.append("text", this.text);
