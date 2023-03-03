@@ -28,6 +28,24 @@ exports.checkLinkData = (name, url, cat, res) => {
   }
 }
 
+/**
+ * CHECK LINK UNIQUE
+ * @param {string} name 
+ * @param {string} url 
+ * @param {object} link 
+ * @param {object} res 
+ * @returns
+ */
+exports.checkLinkUnique = (name, url, link, res) => {
+  if (link.name === name) {
+    return res.status(400).json({ message: process.env.DISPO_NAME });
+  }
+
+  if (link.url === url) {
+    return res.status(400).json({ message: process.env.DISPO_URL });
+  }
+}
+
 //! ****************************** PUBLIC ******************************
 
 /**
