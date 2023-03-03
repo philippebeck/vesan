@@ -28,16 +28,14 @@
 
           <!-- Name -->
           <template #cell-name="slotProps">
-            <FieldElt :id="'name-' + articles[slotProps.index]._id"
-              v-model:value="getArticles()[slotProps.index].name"
+            <FieldElt v-model:value="getArticles()[slotProps.index].name"
               @keyup.enter="updateArticle(articles[slotProps.index]._id)"
               :info="constants.INFO_UP_NAME"/>
           </template>
 
           <!-- Text -->
           <template #cell-text="slotProps">
-            <FieldElt :id="'text-' + articles[slotProps.index]._id"
-              type="textarea"
+            <FieldElt type="textarea"
               v-model:value="getArticles()[slotProps.index].text"
               @keyup.enter="updateArticle(articles[slotProps.index]._id)"
               :info="constants.INFO_UP_TEXT"
@@ -57,8 +55,7 @@
 
           <!-- Alt -->
           <template #cell-alt="slotProps">
-            <FieldElt :id="'alt-' + articles[slotProps.index]._id"
-              type="textarea"
+            <FieldElt type="textarea"
               v-model:value="getArticles()[slotProps.index].alt"
               @keyup.enter="updateArticle(articles[slotProps.index]._id)"
               :info="constants.INFO_UP_ALT"/>
@@ -66,8 +63,7 @@
 
           <!-- Category -->
           <template #cell-cat="slotProps">
-            <FieldElt :id="'cat-' + articles[slotProps.index]._id"
-              type="select"
+            <FieldElt type="select"
               :list="constants.CATS_ARTICLE"
               v-model:value="getArticles()[slotProps.index].cat"
               @keyup.enter="updateArticle(articles[slotProps.index]._id)"
