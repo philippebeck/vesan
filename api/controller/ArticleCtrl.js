@@ -102,13 +102,13 @@ exports.checkUpdatedArticle = (id, name, text, res) => {
  * @param {string} image 
  * @param {string} alt 
  * @param {string} user 
- * @param {array} usersLiked 
+ * @param {array} likes 
  * @param {string} cat 
  * @param {string} created 
  * @param {string} updated 
  * @returns 
  */
-exports.getArticle = (name, text, image, alt, user, usersLiked, cat, created, updated) => {
+exports.getArticle = (name, text, image, alt, user, likes, cat, created, updated) => {
 
   return {
     name: name,
@@ -116,7 +116,7 @@ exports.getArticle = (name, text, image, alt, user, usersLiked, cat, created, up
     image: image,
     alt: alt,
     user: user,
-    usersLiked: usersLiked,
+    likes: likes,
     cat: cat,
     created: created,
     updated: updated
@@ -201,6 +201,7 @@ exports.createArticle = (req, res, next) => {
     }
 
     this.checkArticleData(fields.name, fields.text, fields.alt, fields.cat, res);
+    this.checkNewArticle(fields.name, fields.text, res);
 
     let image = nem.getImgName(fields.name);
 
@@ -208,7 +209,7 @@ exports.createArticle = (req, res, next) => {
     nem.createThumbnail("articles/" + files.image.newFilename, "articles/" + image);
 
     let article  = new ArticleModel(this.getArticle(
-      fields.name, fields.text, image, fields.alt, fields.user, fields.usersLiked, fields.cat, fields.created, fields.updated
+      fields.name, fields.text, image, fields.alt, fields.user, fields.likes, fields.cat, fields.created, fields.updated
     ));
 
     article
@@ -234,16 +235,17 @@ exports.updateArticle = (req, res, next) => {
     }
 
     this.checkArticleData(fields.name, fields.text, fields.alt, fields.cat, res);
+    this.checkUpdatedArticle(req.params.id, fields.name, fields.text, res);
 
-    let usersLiked  = nem.stringToArray(fields.usersLiked);
-    let image       = fields.image;
+    let likes = nem.stringToArray(fields.likes);
+    let image = fields.image;
 
     if (Object.keys(files).length !== 0) {
       image = this.updateImage(req.params.id, fields.name, files.image.newFilename);
     }
 
     let article = this.getArticle(
-      fields.name, fields.text, image, fields.alt, fields.user, usersLiked, fields.cat, fields.created, fields.updated
+      fields.name, fields.text, image, fields.alt, fields.user, likes, fields.cat, fields.created, fields.updated
     );
 
     ArticleModel

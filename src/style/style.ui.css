@@ -738,7 +738,7 @@ aside {
 }
 
 [id*="products-"] *,
-[id*="usersLiked"] {
+[id*="likes"] {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

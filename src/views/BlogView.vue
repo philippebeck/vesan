@@ -58,7 +58,7 @@
                 <template #btn>
                   <i class="fa-regular fa-thumbs-up fa-lg">
                   </i> <b itemprop="contentRating">
-                    {{ slotProps.value.usersLiked.length }}
+                    {{ slotProps.value.likes.length }}
                   </b>
                 </template>
               </BtnElt>
@@ -73,7 +73,7 @@
                 <template #btn>
                   <i class="fa-regular fa-thumbs-up fa-lg">
                   </i> <b itemprop="contentRating">
-                    {{ slotProps.value.usersLiked.length }}
+                    {{ slotProps.value.likes.length }}
                   </b>
                 </template>
               </BtnElt>
@@ -88,7 +88,7 @@
                 <template #btn>
                   <i class="fa-regular fa-thumbs-up fa-lg">
                   </i> <b itemprop="contentRating">
-                    {{ slotProps.value.usersLiked.length }}
+                    {{ slotProps.value.likes.length }}
                   </b>
                 </template>
               </BtnElt>
@@ -177,7 +177,7 @@ export default {
       for (let article of this.articles) {
         if (article._id === id) {
 
-          return this.$serve.checkLikes(article.usersLiked);
+          return this.$serve.checkLikes(article.likes);
         }
       }
     },
@@ -191,24 +191,24 @@ export default {
 
       for (let i = 0; i < this.articles.length; i++) {
         if (id === this.articles[i]._id) {
-          let usersLiked = this.articles[i].usersLiked;
+          let likes = this.articles[i].likes;
 
-          for (let j = 0; j < usersLiked.length; j++) {
-            if (this.constants.USER_ID === usersLiked[j]) {
+          for (let j = 0; j < likes.length; j++) {
+            if (this.constants.USER_ID === likes[j]) {
               hasLiked = true;
-              usersLiked.splice(j, 1);
+              likes.splice(j, 1);
             }
           }
 
           if (hasLiked === false) {
-            usersLiked.push(this.constants.USER_ID);
+            likes.push(this.constants.USER_ID);
           }
 
           let article = new FormData();
 
           article.append("id", this.articles[i]._id);
           article.append("name", this.articles[i].name);
-          article.append("usersLiked", usersLiked);
+          article.append("likes", likes);
 
           this.$serve.putData(`/api/articles/${article.get("id")}`, article)
             .then(() => {
