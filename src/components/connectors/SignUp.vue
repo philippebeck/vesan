@@ -5,8 +5,7 @@
 
       <!-- Name -->
       <template #item-1>
-        <FieldElt id="user-name"
-          v-model:value="name"
+        <FieldElt v-model:value="name"
           :info="constants.INFO_NAME"
           :min="2">
 
@@ -21,8 +20,7 @@
 
       <!-- Email -->
       <template #item-2>
-        <FieldElt id="user-email"
-          type="email"
+        <FieldElt type="email"
           v-model:value="email"
           :info="constants.INFO_EMAIL">
 
@@ -53,8 +51,7 @@
 
       <!-- Pass -->
       <template #item-4>
-        <FieldElt id="user-pass"
-          type="password"
+        <FieldElt type="password"
           v-model:value="pass"
           :info="constants.INFO_PASSWORD">
 
@@ -71,6 +68,7 @@
     <!-- Create -->
     <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY">
       <BtnElt type="button"
+        @click="createUser()" 
         class="btn-blue"
         :content="constants.CONTENT_CREATE"
         :title="constants.TITLE_SIGNUP">
@@ -102,62 +100,35 @@ export default {
 
   methods: {
     /**
-     * VALIDATE NEW USER IF DATA ARE VALID
+     * CREATE USER
      */
-    validateNewUser() {
-      if (this.$serve.checkName(this.name) && 
-        this.$serve.checkEmail(this.email) && 
-        this.$serve.checkPass(this.pass)) {
+    createUser() {
+      if (this.$serve.checkName(this.name) && this.$serve.checkEmail(this.email) && this.$serve.checkPass(this.pass)) {
 
-        if (document.getElementById('user-image').files[0] !== undefined) {
-          this.checkNewUser();
+        let image = document.getElementById('user-image').files[0];
+
+        if (image !== undefined) {
+          let user = new FormData();
+
+          user.append("name", this.name);
+          user.append("email", this.email);
+          user.append("image", image);
+          user.append("pass", this.pass);
+          user.append("role", "user");
+          user.append("created", Date.now());
+          user.append("updated", Date.now());
+
+          this.$serve.postData("/api/users", user)
+            .then(() => {
+              alert(this.name + this.constants.ALERT_CREATED);
+              this.$router.go();
+            })
+            .catch(err => { alert(err.response.data.message) });
 
         } else {
           alert(this.constants.ALERT_IMG);
         }
       }
-    },
-
-    /**
-     * CHECK NEW USER IF NAME | EMAIL ARE REFERENCED
-     */
-    checkNewUser() {
-      let checker = new FormData();
-      checker.append("name", this.name);
-      checker.append("email", this.email);
-
-      this.$serve.postData("/api/users/check", checker)
-        .then((userAvailable) => {
-
-          if (userAvailable === true) {
-            this.createUser();
-          }
-        })
-        .catch(err => { console.log(err) });
-    },
-
-    /**
-     * CREATE USER IF NO INFO IS REFERENCED
-     * @param {boolean} isReferenced 
-     */
-    createUser() {
-      let user  = new FormData();
-      let image = document.getElementById('user-image').files[0];
-
-      user.append("name", this.name);
-      user.append("email", this.email);
-      user.append("image", image);
-      user.append("pass", this.pass);
-      user.append("role", "user");
-      user.append("created", Date.now());
-      user.append("updated", Date.now());
-
-      this.$serve.postData("/api/users", user)
-        .then(() => {
-          alert(this.name + this.constants.ALERT_CREATED);
-          this.$router.go();
-        })
-            .catch(err => { alert(err.response.data.message) });
     }
   }
 }
