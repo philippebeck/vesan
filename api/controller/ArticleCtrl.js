@@ -124,7 +124,7 @@ exports.listArticles = (req, res) => {
     .find()
     .then((articles) => res.status(200).json(articles))
     .catch((error) => res.status(404).json({ error }));
-};
+}
 
 /**
  * READ A ARTICLE
@@ -189,7 +189,7 @@ exports.createArticle = (req, res, next) => {
       })
       .catch((error) => res.status(404).json({ error }));
   })
-};
+}
 
 /**
  * UPDATE ARTICLE
@@ -211,7 +211,6 @@ exports.updateArticle = (req, res, next) => {
       .find()
       .then((articles) => {
         for (let article of articles) {
-
           if (!article._id.equals(req.params.id)) {
             this.checkArticleUnique(fields.name, fields.text, article, res);
           }
@@ -235,7 +234,7 @@ exports.updateArticle = (req, res, next) => {
       })
       .catch((error) => res.status(404).json({ error }));
   })
-};
+}
 
 /**
  * DELETE ARTICLE
@@ -262,4 +261,4 @@ exports.deleteArticle = (req, res) => {
       })
     })
     .catch(error => res.status(404).json({ error }));
-};
+}
