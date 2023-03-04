@@ -206,51 +206,41 @@ exports.forgotPass = (req, res, next) => {
       return;
     }
 
-    UserModel
-      .findOne({ email: fields.email })
-      .then((user) => { res.status(200).json(user.name) })
-      .catch((error) => res.status(404).json({ error }));
-  })
-}
-
-/**
- * FORGOT PASSWORD
- * @param {object} req 
- * @param {object} res 
- * @param {function} next 
- */
-exports.forgotPass = (req, res, next) => {
-  form.parse(req, (err, fields) => {
-
-    if (err) {
-      next(err);
-      return;
+    if (!nem.checkEmail(fields.email)) {
+      return res.status(403).json({ message: process.env.CHECK_EMAIL });
     }
 
     UserModel
       .findOne({ email: fields.email })
-      .then((user) => { 
-        let pass = nem.generatePass();
+      .then((user) => {
+        if (user !== null) {
+          let pass = nem.generatePass();
 
-        fields.html = `
-          <p>${fields.html}</p>
-          <b>${pass}</b>
-        `;
+          fields.html = `
+            <p>${fields.html}</p>
+            <b>${pass}</b>
+          `;
 
-        bcrypt
-          .hash(pass, 10)
-          .then((hash) => {
-            let newUser = this.getUser(
-              user.name, user.email, user.image, hash, 
-              user.role, user.created, user.updated
-            );
+          console.log(user);
 
-            UserModel
-              .findByIdAndUpdate(user._id, { ...newUser, _id: user._id })
-              .then(() => { this.setMessage(fields, res) })
-              .catch((error) => res.status(400).json({ error }));
-          })
-          .catch((error) => res.status(400).json({ error }));
+          bcrypt
+            .hash(pass, 10)
+            .then((hash) => {
+              let newUser = this.getUser(
+                user.name, user.email, user.image, hash, 
+                user.role, user.created, user.updated
+              );
+
+              UserModel
+                .findByIdAndUpdate(user._id, { ...newUser, _id: user._id })
+                .then(() => { this.setMessage(fields, res) })
+                .catch((error) => res.status(400).json({ error }));
+            })
+            .catch((error) => res.status(400).json({ error }));
+
+        } else {
+          return res.status(403).json({ message: process.env.DISPO_EMAIL_REF });
+        }
       })
       .catch((error) => res.status(404).json({ error }));
   })
