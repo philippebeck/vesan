@@ -9,6 +9,8 @@ const UserModel   = require("../model/UserModel");
 require("dotenv").config();
 const form = formidable();
 
+//! ****************************** CREATOR ******************************
+
 /**
  * CREATE MESSAGE
  * @param {number} total 
@@ -49,6 +51,8 @@ exports.createMessage = (total, payment, products) => {
   return message;
 }
 
+//! ****************************** SETTER ******************************
+
 /**
  * SET MESSAGE
  * @param {string} fields 
@@ -62,7 +66,7 @@ exports.setMessage = (fields, res) => {
       let mail = nem.createMessage(fields);
 
       await mailer.sendMail(mail, function() {
-        res.status(202).json({ message: process.env.USER_MESSAGE });
+        res.status(202).json({ message: process.env.ORDER_MESSAGE });
       });
     } catch(e){ console.error(e); }
   })();
@@ -79,7 +83,7 @@ exports.listOrders = (req, res) => {
   OrderModel
     .find()
     .then((orders) => res.status(200).json(orders))
-    .catch((error) => res.status(404).json({ error }));
+    .catch(() => res.status(404).json({ message: process.env.ORDERS_NOT_FOUND }));
 };
 
 /**
@@ -91,7 +95,7 @@ exports.listUserOrders = (req, res) => {
   OrderModel
     .find({ user: req.params.id })
     .then((orders) => res.status(200).json(orders))
-    .catch((error) => res.status(404).json({ error }));
+    .catch(() => res.status(404).json({ message: process.env.ORDERS_NOT_FOUND }));
 };
 
 /**
@@ -121,10 +125,10 @@ exports.createOrder = (req, res, next) => {
             message.email = user.email;
             this.setMessage(message, res);
           })
-          .catch(err => { console.log(err) });
+          .catch(() => res.status(404).json({ message: process.env.USER_NOT_FOUND }));
       })
       .then(() => res.status(201).json({ message: process.env.ORDER_CREATED }))
-      .catch((error) => res.status(400).json({ error }));
+      .catch(() => res.status(400).json({ message: process.env.ORDER_NOT_CREATED }));
   })
 };
 
@@ -147,7 +151,7 @@ exports.updateOrder = (req, res, next) => {
     OrderModel
       .findByIdAndUpdate(req.params.id, { ...fields, _id: req.params.id })
       .then(() => res.status(200).json({ message: process.env.ORDER_UPDATED }))
-      .catch((error) => res.status(400).json({ error }));
+      .catch(() => res.status(400).json({ message: process.env.ORDER_NOT_UPDATED }));
   })
 };
 
@@ -160,5 +164,5 @@ exports.deleteOrder = (req, res) => {
   OrderModel
     .findByIdAndDelete(req.params.id)
     .then(() => res.status(204).json({ message: process.env.ORDER_DELETED }))
-    .catch((error) => res.status(400).json({ error }))
+    .catch(() => res.status(400).json({ message: process.env.ORDER_NOT_DELETED }))
 };
