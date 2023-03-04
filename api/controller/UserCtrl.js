@@ -19,21 +19,16 @@ const form = formidable({ uploadDir: USERS_IMG, keepExtensions: true });
  * CHECK USER DATA
  * @param {string} name 
  * @param {string} email 
- * @param {string} pass 
  * @param {string} role 
  * @param {object} res 
  */
-exports.checkUserData = (name, email, pass, role, res) => {
+exports.checkUserData = (name, email, role, res) => {
   if (!nem.checkName(name)) {
     return res.status(403).json({ message: process.env.CHECK_NAME });
   }
 
   if (!nem.checkEmail(email)) {
-    return res.status(403).json({ message: process.env.USER_EMAIL });
-  }
-
-  if (!nem.checkPass(pass)) {
-    return res.status(403).json({ message: process.env.USER_PASS });
+    return res.status(403).json({ message: process.env.CHECK_EMAIL });
   }
 
   if (role === "") {
