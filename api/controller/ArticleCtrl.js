@@ -172,13 +172,14 @@ exports.createArticle = (req, res, next) => {
           this.checkArticleUnique(fields.name, fields.text, article, res);
         }
 
+        let likes = nem.stringToArray(fields.likes);
         let image = nem.getImgName(fields.name);
 
         nem.createImage("articles/" + files.image.newFilename, "articles/" + image);
         nem.createThumbnail("articles/" + files.image.newFilename, "articles/" + image);
 
         let article  = new ArticleModel(this.getArticle(
-          fields.name, fields.text, image, fields.alt, fields.user, fields.likes, fields.cat, fields.created, fields.updated
+          fields.name, fields.text, image, fields.alt, fields.user, likes, fields.cat, fields.created, fields.updated
         ));
 
         article
@@ -223,9 +224,15 @@ exports.updateArticle = (req, res, next) => {
           image = this.updateImage(req.params.id, fields.name, files.image.newFilename);
         }
 
-        let article = this.getArticle(
-          fields.name, fields.text, image, fields.alt, fields.user, likes, fields.cat, fields.created, fields.updated
-        );
+        let article = {
+          name: fields.name,
+          text: fields.text,
+          image: image,
+          alt: fields.alt,
+          likes: likes,
+          cat: fields.cat,
+          updated: fields.updated
+        }
 
         ArticleModel
           .findByIdAndUpdate(req.params.id, { ...article, _id: req.params.id })
