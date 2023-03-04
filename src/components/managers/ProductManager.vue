@@ -2,7 +2,7 @@
   <CardElt>
     <template #header>
       <h3>
-        <i class="fa-solid fa-shopping-cart fa-lg"
+        <i class="fa-regular fa-rectangle-list fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.PRODUCT_MANAGER }}
@@ -197,7 +197,7 @@ export default {
             alert(productName + this.constants.ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => { console.log(err) });
+          .catch(err => { alert(err.response.data.message) });
       }
     }
   }

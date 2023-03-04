@@ -2,7 +2,7 @@
   <CardElt>
     <template #header>
       <h2>
-        <i class="fa-solid fa-list-check fa-lg"
+        <i class="fa-solid fa-ranking-star fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.REVIEW_MANAGER }}
@@ -166,7 +166,7 @@ export default {
             alert(this.constants.ALERT_REVIEW + id + this.constants.ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => { console.log(err) });
+          .catch(err => { alert(err.response.data.message) });
       }
     }
   }

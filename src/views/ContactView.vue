@@ -4,7 +4,7 @@
   <CardElt>
     <template #header>
       <h1 class="sky anima-slideL">
-        <i class="fa-solid fa-at fa-lg"
+        <i class="fa-solid fa-envelope-open-text fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.CONTACT_VIEW }}

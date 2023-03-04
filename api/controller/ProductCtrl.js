@@ -13,6 +13,8 @@ const PRODUCTS_IMG = process.env.IMG_URL + "products/";
 const PRODUCTS_THUMB = process.env.THUMB_URL + "products/";
 const form = formidable({ uploadDir: PRODUCTS_IMG, keepExtensions: true });
 
+//! ****************************** CHECKERS ******************************
+
 /**
  * CHECK PRODUCT DATA
  * @param {string} name 
@@ -62,6 +64,8 @@ exports.checkProductUnique = (name, description, product, res) => {
   }
 }
 
+//! ****************************** GETTERS ******************************
+
 /**
  * GET PRODUCT
  * @param {string} name 
@@ -91,13 +95,14 @@ exports.getProduct = (name, description, image, alt, price, options, cat, create
 }
 
 /**
- * UPDATE IMAGE
+ * GET IMAGE UPDATED
  * @param {string} id 
  * @param {string} name 
  * @param {string} newFilename 
+ * @param {object} res 
  * @returns 
  */
-exports.updateImage = (id, name, newFilename) => {
+exports.getImageUpdated = (id, name, newFilename) => {
   let image = nem.getImgName(name);
   nem.createImage("products/" + newFilename, "products/" + image);
   nem.createThumbnail("products/" + newFilename, "products/" + image);
@@ -107,12 +112,12 @@ exports.updateImage = (id, name, newFilename) => {
     .then((product) => 
       fs.unlink(PRODUCTS_THUMB + product.image, () => {
         fs.unlink(PRODUCTS_IMG + product.image, () => {
-          fs.unlink(PRODUCTS_IMG + newFilename, () => {
-            console.log("Image ok !");
-          })
+          fs.unlink(PRODUCTS_IMG + newFilename, () => {})
         })
       })
     )
+    .catch(() => res.status(404).json({ message: process.env.PRODUCT_NOT_FOUND }));
+
   return image;
 }
 
@@ -127,7 +132,7 @@ exports.listProducts = (req, res) => {
   ProductModel
     .find()
     .then((products) => res.status(200).json(products))
-    .catch((error) => res.status(404).json({ error }));
+    .catch(() => res.status(404).json({ message: process.env.PRODUCTS_NOT_FOUND }));
 };
 
 /**
@@ -139,7 +144,7 @@ exports.readProduct = (req, res) => {
   ProductModel
   .findById(req.params.id)
   .then((product) => res.status(200).json(product))
-  .catch((error) => res.status(404).json({ error }));
+  .catch(() => res.status(404).json({ message: process.env.PRODUCT_NOT_FOUND }));
 }
 
 //! ****************************** PRIVATE ******************************
@@ -181,9 +186,9 @@ exports.createProduct = (req, res, next) => {
           .save()
           .then(() => fs.unlink(PRODUCTS_IMG + files.image.newFilename, () => { console.log("image ok !") }))
           .then(() => res.status(201).json({ message: process.env.PRODUCT_CREATED }))
-          .catch((error) => res.status(400).json({ error }));
+          .catch(() => res.status(400).json({ message: process.env.PRODUCT_NOT_CREATED }));
       })
-      .catch((error) => res.status(404).json({ error }));
+      .catch(() => res.status(404).json({ message: process.env.PRODUCTS_NOT_FOUND }));
   })
 };
 
@@ -217,7 +222,7 @@ exports.updateProduct = (req, res, next) => {
         let image   = fields.image;
     
         if (Object.keys(files).length !== 0) {
-          image = this.updateImage(req.params.id, fields.name, files.image.newFilename);
+          image = this.getImageUpdated(req.params.id, fields.name, files.image.newFilename);
         }
     
         let product = this.getProduct(
@@ -227,9 +232,9 @@ exports.updateProduct = (req, res, next) => {
         ProductModel
           .findByIdAndUpdate(req.params.id, { ...product, _id: req.params.id })
           .then(() => res.status(200).json({ message: process.env.PRODUCT_UPDATED }))
-          .catch((error) => res.status(400).json({ error }));
+          .catch(() => res.status(400).json({ message: process.env.PRODUCT_NOT_UPDATED }));
       })
-      .catch((error) => res.status(404).json({ error }));
+      .catch(() => res.status(404).json({ message: process.env.PRODUCTS_NOT_FOUND }));
   })
 };
 
@@ -251,11 +256,11 @@ exports.deleteProduct = (req, res) => {
               ProductModel
                 .findByIdAndDelete(req.params.id)
                 .then(() => res.status(204).json({ message: process.env.PRODUCT_DELETED }))
-                .catch((error) => res.status(400).json({ error }))
+                .catch(() => res.status(400).json({ message: process.env.PRODUCT_NOT_DELETED }))
             )
-            .catch((error) => res.status(400).json({ error }))
+            .catch(() => res.status(400).json({ message: process.env.REVIEWS_NOT_DELETED }))
         })
       })
     })
-    .catch(error => res.status(404).json({ error }));
+    .catch(() => res.status(404).json({ message: process.env.PRODUCT_NOT_FOUND }));
 }

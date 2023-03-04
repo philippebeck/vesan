@@ -5,8 +5,8 @@
   --ani-monospace: "Syne Mono", monospace;
 }
 
-[id="article-text"] ~ *,
-[id="product-description"] ~ * {
+[id="text"] ~ *,
+[id="description"] ~ * {
   margin: auto;
   max-width: 500px;
   height: 500px;

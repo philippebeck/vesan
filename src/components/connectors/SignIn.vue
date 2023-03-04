@@ -82,7 +82,7 @@ export default {
 
             this.$router.go("/");
           })
-          .catch(err => { console.log(err) });
+          .catch(err => { alert(err.response.data.message) });
       }
     }
   }

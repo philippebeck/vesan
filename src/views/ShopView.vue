@@ -5,7 +5,7 @@
     <template #last v-if="checkRole('editor')">
       <a href="#create-product"
         :title="constants.PRODUCT_CREATOR">
-        <i class="fa-solid fa-basket-shopping fa-fw"></i>
+        <i class="fa-regular fa-lightbulb fa-fw"></i>
       </a>
     </template>
 
@@ -17,7 +17,7 @@
   <CardElt id="top">
     <template #header>
       <h1 class="sky anima-openY">
-        <i class="fa-solid fa-shop fa-lg"
+        <i class="fa-solid fa-store fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.SHOP_VIEW }}

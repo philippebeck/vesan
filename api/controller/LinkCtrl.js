@@ -7,6 +7,8 @@ const LinkModel   = require("../model/LinkModel");
 require("dotenv").config();
 const form = formidable();
 
+//! ****************************** CHECKERS ******************************
+
 /**
  * CHECK LINK DATA
  * @param {string} name 
@@ -57,7 +59,7 @@ exports.listLinks = (req, res) => {
   LinkModel
     .find()
     .then((links) => res.status(200).json(links))
-    .catch((error) => res.status(404).json({ error }));
+    .catch(() => res.status(404).json({ message: process.env.LINKS_NOT_FOUND }));
 };
 
 //! ****************************** PRIVATE ******************************
@@ -91,9 +93,9 @@ exports.createLink = (req, res, next) => {
         link
           .save()
           .then(() => res.status(201).json({ message: process.env.LINK_CREATED }))
-          .catch((error) => res.status(400).json({ error }));
+          .catch(() => res.status(400).json({ message: process.env.LINK_NOT_CREATED }));
       })
-      .catch((error) => res.status(404).json({ error }));
+      .catch(() => res.status(404).json({ message: process.env.LINKS_NOT_FOUND }));
   })
 };
 
@@ -127,9 +129,9 @@ exports.updateLink = (req, res, next) => {
         LinkModel
           .findByIdAndUpdate(req.params.id, { ...fields, _id: req.params.id })
           .then(() => res.status(200).json({ message: process.env.LINK_UPDATED }))
-          .catch((error) => res.status(400).json({ error }));
+          .catch(() => res.status(400).json({ message: process.env.LINK_NOT_UPDATED }));
       })
-      .catch((error) => res.status(404).json({ error }));
+      .catch(() => res.status(404).json({ message: process.env.LINKS_NOT_FOUND }));
   })
 };
 
@@ -142,5 +144,5 @@ exports.deleteLink = (req, res) => {
   LinkModel
     .findByIdAndDelete(req.params.id)
     .then(() => res.status(204).json({ message: process.env.LINK_DELETED }))
-    .catch((error) => res.status(400).json({ error }))
+    .catch(() => res.status(400).json({ message: process.env.LINK_NOT_DELETED }))
 };

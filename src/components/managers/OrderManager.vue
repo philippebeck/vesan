@@ -2,7 +2,7 @@
   <CardElt>
     <template #header>
       <h3>
-        <i class="fa-regular fa-rectangle-list fa-lg"
+        <i class="fa-solid fa-gifts fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.ORDER_MANAGER }}
@@ -168,7 +168,7 @@ export default {
             alert(this.constants.ALERT_ORDER + id + this.constants.ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => { console.log(err) });
+          .catch(err => { alert(err.response.data.message) });
       }
     }
   }

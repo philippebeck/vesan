@@ -2,7 +2,7 @@
   <CardElt id="top">
     <template #header>
       <h1 class="sky anima-turn3D">
-        <i class="fa-solid fa-cogs fa-2x"
+        <i class="fa-solid fa-gears fa-2x"
           aria-hidden="true">
         </i>
         {{ constants.ADMIN_VIEW }}
@@ -14,7 +14,7 @@
         <template #first>
           <a href="#shop"
             :title="constants.INTRO_SHOP">
-            <i class="fa-solid fa-shop fa-fw"></i>
+            <i class="fa-solid fa-store fa-fw"></i>
           </a>
           <a href="#blog"
             :title="constants.INTRO_BLOG">
@@ -23,7 +23,7 @@
           <a v-if="checkRole('admin')"
             href="#users"
             :title="constants.INTRO_USERS">
-            <i class="fa-solid fa-user-astronaut fa-fw"></i>
+            <i class="fa-solid fa-users fa-fw"></i>
           </a>
           <a v-if="checkRole('admin')"
             href="#links"
@@ -46,7 +46,7 @@
           
           <h2 id="shop"
             class="blue anima-bounce">
-            <i class="fa-solid fa-shop fa-lg"
+            <i class="fa-solid fa-store fa-lg"
               aria-hidden="true">
             </i>
             {{ constants.SHOP_VIEW }}
@@ -104,7 +104,7 @@
         <template #header>
           <h2 id="users"
             class="blue anima-bounce">
-            <i class="fa-solid fa-user-astronaut fa-lg"
+            <i class="fa-solid fa-users fa-lg"
               aria-hidden="true">
             </i>
             {{ constants.ADMIN_USERS }}
@@ -188,7 +188,7 @@ export default {
             this.$store.dispatch("listUsers");
           }
         })
-        .catch(err => { console.log(err) });
+        .catch(err => { alert(err.response.data.message) });
 
     } else {
       alert(this.constants.ALERT_HOME);

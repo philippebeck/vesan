@@ -2,7 +2,7 @@
   <CardElt id="create-product">
     <template #header>
       <h3>
-        <i class="fa-solid fa-basket-shopping fa-lg"
+        <i class="fa-regular fa-lightbulb fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.PRODUCT_CREATOR }}
@@ -32,11 +32,11 @@
 
           <!-- Product Description -->
           <template #item-2>
-            <label for="product-description">
+            <label for="description">
               {{ constants.LEGEND_DESCRIPTION }}
             </label>
 
-            <Editor id="product-description"
+            <Editor id="description"
               :api-key="constants.TINY_KEY"
               v-model="description"
               @keyup.enter="createProduct()"
@@ -49,7 +49,7 @@
 
           <!-- Product Image -->
           <template #item-3>
-            <FieldElt id="product-image"
+            <FieldElt id="image"
               type="file"
               v-model:value="image"
               :info="constants.INFO_IMAGE">
@@ -177,7 +177,7 @@ export default {
       if (this.$serve.checkName(this.name) && this.$serve.checkText(this.description) && this.$serve.checkText(this.alt)) {
 
         if (this.cat === "") { this.cat = this.constants.CAT_PRODUCT }
-        let image = document.getElementById('product-image').files[0];
+        let image = document.getElementById('image').files[0];
 
         if (image !== undefined) {
           let product = new FormData();
