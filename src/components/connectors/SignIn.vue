@@ -32,7 +32,7 @@
     <!-- Login Button -->
     <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY">
       <BtnElt type="button"
-        @click="login()"
+        @click="signIn()"
         class="btn-green"
         :content="constants.CONTENT_ENTER"
         :title="constants.TITLE_SIGNIN">
@@ -62,13 +62,12 @@ export default {
 
   methods: {
     /**
-     * USER LOGIN
+     * USER SIGN IN
      */
-    login() {
-      if (this.$serve.checkEmail(this.email) && 
-        this.$serve.checkPass(this.pass)) {
-
+    signIn() {
+      if (this.$serve.checkEmail(this.email) && this.$serve.checkPass(this.pass)) {
         let auth = new FormData();
+
         auth.append("email", this.email);
         auth.append("pass", this.pass);
 
@@ -83,7 +82,7 @@ export default {
 
             this.$router.go("/");
           })
-          .catch(err => { alert(err.response.data.message) });
+          .catch(err => { console.log(err) });
       }
     }
   }
