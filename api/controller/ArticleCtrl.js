@@ -59,7 +59,7 @@ exports.checkArticleUnique = (name, text, article, res) => {
 }
 
 /**
- * GET ARTICLE
+ * SET ARTICLE CREATED
  * @param {string} name 
  * @param {string} text 
  * @param {string} image 
@@ -71,7 +71,7 @@ exports.checkArticleUnique = (name, text, article, res) => {
  * @param {string} updated 
  * @returns 
  */
-exports.getArticle = (name, text, image, alt, user, likes, cat, created, updated) => {
+exports.setArticleCreated = (name, text, image, alt, user, likes, cat, created, updated) => {
 
   return {
     name: name,
@@ -128,12 +128,12 @@ exports.updateImage = (id, name, newFilename, res) => {
     .then((article) => 
       fs.unlink(ARTICLES_THUMB + article.image, () => {
         fs.unlink(ARTICLES_IMG + article.image, () => {
-          fs.unlink(ARTICLES_IMG + newFilename, () => {
-            console.log("Image ok !");
-          })
+          fs.unlink(ARTICLES_IMG + newFilename, () => {})
         })
       })
     )
+    .catch(() => res.status(404).json({ message: process.env.ARTICLE_NOT_FOUND }));
+
   return image;
 }
 
@@ -148,7 +148,7 @@ exports.listArticles = (req, res) => {
   ArticleModel
     .find()
     .then((articles) => res.status(200).json(articles))
-    .catch((error) => res.status(404).json({ error }));
+    .catch(() => res.status(404).json({ message: process.env.ARTICLES_NOT_FOUND }));
 }
 
 /**
@@ -167,9 +167,9 @@ exports.readArticle = (req, res) => {
         article.user = user.name;
         res.status(200).json(article);
       })
-      .catch((error) => res.status(404).json({ error }));
+      .catch(() => res.status(404).json({ message: process.env.USER_NOT_FOUND }));
   })
-  .catch((error) => res.status(404).json({ error }));
+  .catch(() => res.status(404).json({ message: process.env.ARTICLE_NOT_FOUND }));
 }
 
 //! ****************************** PRIVATE ******************************
@@ -203,17 +203,17 @@ exports.createArticle = (req, res, next) => {
         nem.createImage("articles/" + files.image.newFilename, "articles/" + image);
         nem.createThumbnail("articles/" + files.image.newFilename, "articles/" + image);
 
-        let article  = new ArticleModel(this.getArticle(
+        let article = new ArticleModel(this.setArticleCreated(
           fields.name, fields.text, image, fields.alt, fields.user, likes, fields.cat, fields.created, fields.updated
         ));
 
         article
           .save()
-          .then(() => fs.unlink(ARTICLES_IMG + files.image.newFilename, () => { console.log("image ok !") }))
+          .then(() => fs.unlink(ARTICLES_IMG + files.image.newFilename, () => {}))
           .then(() => res.status(201).json({ message: process.env.ARTICLE_CREATED }))
-          .catch((error) => res.status(400).json({ error }));
+          .catch(() => res.status(400).json({ message: process.env.ARTICLE_NOT_CREATED }));
       })
-      .catch((error) => res.status(404).json({ error }));
+      .catch(() => res.status(404).json({ message: process.env.ARTICLES_NOT_FOUND }));
   })
 }
 
@@ -246,25 +246,19 @@ exports.updateArticle = (req, res, next) => {
         let image = fields.image;
 
         if (Object.keys(files).length !== 0) {
-          image = this.updateImage(req.params.id, fields.name, files.image.newFilename);
+          image = this.updateImage(req.params.id, fields.name, files.image.newFilename, res);
         }
 
-        let article = {
-          name: fields.name,
-          text: fields.text,
-          image: image,
-          alt: fields.alt,
-          likes: likes,
-          cat: fields.cat,
-          updated: fields.updated
-        }
+        let article = this.setArticleUpdated(
+          fields.name, fields.text, image, fields.alt, likes, fields.cat, fields.updated
+        );
 
         ArticleModel
           .findByIdAndUpdate(req.params.id, { ...article, _id: req.params.id })
           .then(() => res.status(200).json({ message: process.env.ARTICLE_UPDATED }))
-          .catch((error) => res.status(400).json({ error }));
+          .catch(() => res.status(400).json({ message: process.env.ARTICLE_NOT_UPDATED }));
       })
-      .catch((error) => res.status(404).json({ error }));
+      .catch(() => res.status(404).json({ message: process.env.ARTICLES_NOT_FOUND }));
   })
 }
 
@@ -286,11 +280,11 @@ exports.deleteArticle = (req, res) => {
               ArticleModel
                 .findByIdAndDelete(req.params.id)
                 .then(() => res.status(204).json({ message: process.env.ARTICLE_DELETED }))
-                .catch((error) => res.status(400).json({ error }))
+                .catch(() => res.status(400).json({ message: process.env.ARTICLE_NOT_DELETED }))
             )
-            .catch(error => res.status(400).json({ error }));
+            .catch(() => res.status(400).json({ message: process.env.COMMENT_DELETE_MANY }));
         });
       })
     })
-    .catch(error => res.status(404).json({ error }));
+    .catch(() => res.status(404).json({ message: process.env.ARTICLE_NOT_FOUND }));
 }
