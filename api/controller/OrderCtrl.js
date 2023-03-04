@@ -21,24 +21,24 @@ exports.createMessage = (total, payment, products) => {
   message.subject = process.env.ORDER_SUBJECT;
 
   message.text = `
-    <h1>Thanks for your order !</h1>
+    <h1>${process.env.ORDER_TITLE}</h1>
     <p>
-      Your order, for a total of 
+      ${process.env.ORDER_TOTAL} 
       <b>${total} ${process.env.CURRENCY_SYMBOL}</b>,
-      has been accepted with payment 
+      ${process.env.ORDER_PAYMENT} 
       <b>#${payment}</b> !
     </p>
-    <p>This is the product list of your order :</p>
+    <p>${process.env.ORDER_LIST}</p>
   `;
 
   for (let product of products) {
     message.products += `
       <ul>
         <li><i>id</i> : ${product.id}</li>
-        <li><i>name</i> : <b>${product.name}</b></li>
+        <li><i>${process.env.ORDER_NAME}</i> : <b>${product.name}</b></li>
         <li><i>option</i> : <b>${product.option}</b></li>
-        <li><i>quantity</i> : ${product.quantity}</li>
-        <li><i>price</i> : ${product.price} ${process.env.CURRENCY_SYMBOL}</li>
+        <li><i>${process.env.ORDER_QUANTITY}</i> : ${product.quantity}</li>
+        <li><i>${process.env.ORDER_PRICE}</i> : ${product.price} ${process.env.CURRENCY_SYMBOL}</li>
       </ul>
     `;
   }
