@@ -9,6 +9,8 @@ const UserModel = require("../model/UserModel");
 require("dotenv").config();
 const form = formidable();
 
+//! ****************************** GETTER ******************************
+
 /**
  * GET USER
  * @param {string} name 
@@ -32,6 +34,8 @@ exports.getUser = (name, email, image, pass, role, created, updated) => {
     updated: updated
   }
 }
+
+//! ****************************** SETTER ******************************
 
 /**
  * SET MESSAGE
