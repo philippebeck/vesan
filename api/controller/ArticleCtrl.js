@@ -87,13 +87,38 @@ exports.getArticle = (name, text, image, alt, user, likes, cat, created, updated
 }
 
 /**
+ * SET ARTICLE UPDATED
+ * @param {string} name 
+ * @param {string} text 
+ * @param {string} image 
+ * @param {string} alt 
+ * @param {array} likes 
+ * @param {string} cat 
+ * @param {string} updated 
+ * @returns 
+ */
+exports.setArticleUpdated = (name, text, image, alt, likes, cat, updated) => {
+
+  return {
+    name: name,
+    text: text,
+    image: image,
+    alt: alt,
+    likes: likes,
+    cat: cat,
+    updated: updated
+  }
+}
+
+/**
  * UPDATE IMAGE
  * @param {string} id 
  * @param {string} name 
  * @param {string} newFilename 
+ * @param {object} res 
  * @returns 
  */
-exports.updateImage = (id, name, newFilename) => {
+exports.updateImage = (id, name, newFilename, res) => {
   let image = nem.getImgName(name);
   nem.createImage( "articles/" + newFilename, "articles/" + image);
   nem.createThumbnail("articles/" + newFilename, "articles/" + image);
