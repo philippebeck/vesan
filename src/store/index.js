@@ -25,56 +25,67 @@ export default createStore({
 
   getters: {
     getArticle: state => state.article,
-    getProduct: state => state.product,
-    getUser: state => state.user,
-
     getArticles: state => state.articles,
+
     getComments: state => state.comments,
+
     getLinks: state => state.links,
+
     getOrders: state => state.orders,
+
+    getProduct: state => state.product,
     getProducts: state => state.products,
+
     getReviews: state => state.reviews,
+
+    getUser: state => state.user,
     getUsers: state => state.users,
   },
 
   mutations: {
-    /* BLOG */
+    /* ARTICLE */
     SET_ARTICLE(state, article) {
       state.article = article
-    },
-    SET_COMMENTS(state, comments) {
-      state.comments = comments
     },
     SET_ARTICLES(state, articles) {
       state.articles = articles
     },
 
-    /* LINKS */
+    /* COMMENT */
+    SET_COMMENTS(state, comments) {
+      state.comments = comments
+    },
+
+    /* LINK */
     SET_LINKS(state, links) {
       state.links = links
     },
 
-    /* SHOP */
-    SET_PRODUCT(state, product) {
-      state.product = product
-    },
-    SET_REVIEWS(state, reviews) {
-      state.reviews = reviews
-    },
+    /* ORDER */
     SET_USER_ORDERS(state, orders) {
       for (let order of orders) {
         delete order.user;
       }
       state.orders = orders
     },
-    SET_PRODUCTS(state, products) {
-      state.products = products
-    },
     SET_ORDERS(state, orders) {
       state.orders = orders
     },
 
-    /* USERS */
+    /* PRODUCT */
+    SET_PRODUCT(state, product) {
+      state.product = product
+    },
+    SET_PRODUCTS(state, products) {
+      state.products = products
+    },
+
+    /* REVIEW */
+    SET_REVIEWS(state, reviews) {
+      state.reviews = reviews
+    },
+
+    /* USER */
     SET_USER(state, user) {
       state.user = user
     },
@@ -84,20 +95,29 @@ export default createStore({
   },
 
   actions: {
-    /* BLOG */
+    /* ARTICLE */
     async readArticle(context, id) {
       app.config.globalProperties.$serve.getData("/api/articles/" + id)
         .then(res => { context.commit("SET_ARTICLE", res) })
         .catch(err => { console.log(err) });
     },
-    async listArticleComments(context, id) {
-      app.config.globalProperties.$serve.getData("/api/comments/" + id)
-        .then(res => { context.commit("SET_COMMENTS", res) })
-        .catch(err => { console.log(err) });
-    },
     async listArticles(context) {
       app.config.globalProperties.$serve.getData("/api/articles")
         .then(res => { context.commit("SET_ARTICLES", res) })
+        .catch(err => { console.log(err) });
+    },
+
+    /* AUTH */
+    async readAvatar(context, id) {
+      app.config.globalProperties.$serve.getData("/api/auth/" + id)
+        .then(res => { context.commit("SET_USER", res) })
+        .catch(err => { console.log(err) });
+    },
+
+    /* COMMENT */
+    async listArticleComments(context, id) {
+      app.config.globalProperties.$serve.getData("/api/comments/" + id)
+        .then(res => { context.commit("SET_COMMENTS", res) })
         .catch(err => { console.log(err) });
     },
     async listComments(context) {
@@ -106,37 +126,17 @@ export default createStore({
         .catch(err => { console.log(err) });
     },
 
-    /* LINKS */
+    /* LINK */
     async listLinks(context) {
       app.config.globalProperties.$serve.getData("/api/links")
         .then(res => { context.commit("SET_LINKS", res) })
         .catch(err => { console.log(err) });
     },
 
-    /* SHOP */
-    async readProduct(context, id) {
-      app.config.globalProperties.$serve.getData("/api/products/" + id)
-        .then(res => { context.commit("SET_PRODUCT", res) })
-        .catch(err => { console.log(err) });
-    },
-    async listProductReviews(context, id) {
-      app.config.globalProperties.$serve.getData("/api/reviews/" + id)
-        .then(res => { context.commit("SET_REVIEWS", res) })
-        .catch(err => { console.log(err) });
-    },
+    /* ORDER */
     async listUserOrders(context, id) {
       app.config.globalProperties.$serve.getData("/api/orders/" + id)
         .then(res => { context.commit("SET_USER_ORDERS", res) })
-        .catch(err => { console.log(err) });
-    },
-    async listProducts(context) {
-      app.config.globalProperties.$serve.getData("/api/products")
-        .then(res => { context.commit("SET_PRODUCTS", res) })
-        .catch(err => { console.log(err) });
-    },
-    async listReviews(context) {
-      app.config.globalProperties.$serve.getData("/api/reviews")
-        .then(res => { context.commit("SET_REVIEWS", res) })
         .catch(err => { console.log(err) });
     },
     async listOrders(context) {
@@ -145,12 +145,31 @@ export default createStore({
         .catch(err => { console.log(err) });
     },
 
-    /* USERS */
-    async readAvatar(context, id) {
-      app.config.globalProperties.$serve.getData("/api/users/avatar/" + id)
-        .then(res => { context.commit("SET_USER", res) })
+    /* PRODUCT */
+    async readProduct(context, id) {
+      app.config.globalProperties.$serve.getData("/api/products/" + id)
+        .then(res => { context.commit("SET_PRODUCT", res) })
         .catch(err => { console.log(err) });
     },
+    async listProducts(context) {
+      app.config.globalProperties.$serve.getData("/api/products")
+        .then(res => { context.commit("SET_PRODUCTS", res) })
+        .catch(err => { console.log(err) });
+    },
+
+    /* REVIEW */
+    async listProductReviews(context, id) {
+      app.config.globalProperties.$serve.getData("/api/reviews/" + id)
+        .then(res => { context.commit("SET_REVIEWS", res) })
+        .catch(err => { console.log(err) });
+    },
+    async listReviews(context) {
+      app.config.globalProperties.$serve.getData("/api/reviews")
+        .then(res => { context.commit("SET_REVIEWS", res) })
+        .catch(err => { console.log(err) });
+    },
+
+    /* USER */
     async readUser(context, id) {
       app.config.globalProperties.$serve.getData("/api/users/" + id)
         .then(res => { context.commit("SET_USER", res) })
