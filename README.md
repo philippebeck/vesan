@@ -106,6 +106,7 @@ Available API Files *(UNDER CONSTRUCTION)* :
 -   **OrderModel, OrderCtrl, OrderRoute** *(Product Orders)*  
 -   **ArticleModel, ArticleCtrl, ArticleRoute** *(Articles)*  
 -   **CommentModel, CommentCtrl, CommentRoute** *(Article Comments)*  
+-   **AuthCtrl, AuthRoute** *(Auth)*  
 -   **UserModel, UserCtrl, UserRoute** *(Users)*  
 -   **LinkModel, LinkCtrl, LinkRoute** *(Links)*  
 
