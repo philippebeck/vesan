@@ -344,59 +344,61 @@ exports.updateUser = (req, res, next) => {
       return;
     }
 
-    let image = fields.image;
+    this.checkUserData(fields.name, fields.email, fields.role, res);
 
-    if (Object.keys(files).length !== 0) {
-      image = this.updateImage(req.params.id, fields.name, files.image.newFilename);
-    }
+    UserModel
+      .find()
+      .then((users) => {
+        for (let user of users) {
+          if (!user._id.equals(req.params.id)) {
+            this.checkUserUnique(fields.name, fields.email, user, res);
+          }
+        }
 
-    if (fields.pass) {
-      this.checkUserData(fields.name, fields.email, fields.pass, fields.role, res);
+        let image = fields.image;
 
-      bcrypt
-      .hash(fields.pass, 10)
-      .then((hash) => {
+        if (Object.keys(files).length !== 0) {
+          image = this.updateImage(req.params.id, fields.name, files.image.newFilename);
+        }
 
-        let user = this.getUser(
-          fields.name, fields.email, image, hash, fields.role, fields.created, fields.updated
-        )
+        if (fields.pass) {
+          if (!nem.checkPass(pass)) {
+            return res.status(403).json({ message: process.env.CHECK_PASS });
+          }
 
-        UserModel
-          .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
-          .then(() => res.status(200).json({ message: process.env.USER_UPDATED }))
+          bcrypt
+          .hash(fields.pass, 10)
+          .then((hash) => {
+
+            let user = this.getUser(
+              fields.name, fields.email, image, hash, fields.role, fields.created, fields.updated
+            )
+
+            UserModel
+              .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
+              .then(() => res.status(200).json({ message: process.env.USER_UPDATED }))
+              .catch((error) => res.status(400).json({ error }));
+          })
           .catch((error) => res.status(400).json({ error }));
+
+        } else {
+          let user = {
+            name: fields.name,
+            email: fields.email,
+            image: image,
+            role: fields.role,
+            created: fields.created,
+            updated: fields.updated,
+          }
+
+          UserModel
+            .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
+            .then(() => res.status(200).json({ message: process.env.USER_UPDATED }))
+            .catch((error) => res.status(400).json({ error }));
+        }
       })
-      .catch((error) => res.status(400).json({ error }));
-
-    } else {
-
-      if (!nem.checkName(fields.name)) {
-        return res.status(400).json({ message: process.env.CHECK_NAME });
-      }
-    
-      if (!nem.checkEmail(fields.email)) {
-        return res.status(400).json({ message: process.env.USER_EMAIL });
-      }
-    
-      if (fields.role === "") {
-        return res.status(400).json({ message: process.env.CHECK_ROLE });
-      }
-
-      let user = {
-        name: fields.name,
-        email: fields.email,
-        image: image,
-        role: fields.role,
-        created: fields.created,
-        updated: fields.updated,
-      }
-
-      UserModel
-        .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
-        .then(() => res.status(200).json({ message: process.env.USER_UPDATED }))
-        .catch((error) => res.status(400).json({ error }));
-    }
-  });
+      .catch((error) => res.status(404).json({ error }));
+  })
 }
 
 /**
