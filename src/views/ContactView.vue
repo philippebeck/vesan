@@ -16,7 +16,7 @@
       <form>
         <ListElt :items="constants.CONTACT_FORM">
 
-          <!-- User Email -->
+          <!-- Email -->
           <template #item-1>
             <FieldElt id="email"
               type="email"
@@ -33,7 +33,7 @@
             </FieldElt>
           </template>
 
-          <!-- Message Subject -->
+          <!-- Subject -->
           <template #item-2>
             <FieldElt id="subject"
               v-model:value="subject"
@@ -50,7 +50,7 @@
             </FieldElt>
           </template>
 
-          <!-- Message Content -->
+          <!-- Text -->
           <template #item-3>
             <FieldElt id="text"
               type="textarea"
@@ -69,7 +69,7 @@
           </template>
         </ListElt>
 
-        <!-- Send Button -->
+        <!-- Send -->
         <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY">
           <BtnElt type="button"
             @click="send()" 
