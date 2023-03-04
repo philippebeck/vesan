@@ -174,7 +174,7 @@ export default {
 
   mounted () {
     if (this.constants.USER_ID) {
-      this.$serve.getData("/api/users/avatar/" + this.constants.USER_ID)
+      this.$serve.getData("/api/auth/" + this.constants.USER_ID)
         .then((res) => { 
           this.user = res;
 

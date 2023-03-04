@@ -56,7 +56,7 @@ export default {
         message.append("subject", this.constants.FORGOT_SUBJECT);
         message.append("html", this.constants.FORGOT_TEXT);
 
-        this.$serve.postData("/api/users/password", message)
+        this.$serve.postData("/api/auth/pass", message)
           .then(() => {
             alert(message.get("subject") + this.constants.ALERT_SENDED);
             this.$router.push("/login");
