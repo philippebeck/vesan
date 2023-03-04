@@ -15,7 +15,7 @@
         <!-- Review Text -->
         <FieldElt type="textarea"
           v-model:value="text"
-          @keyup.enter="validateNewReview()"
+          @keyup.enter="createReview()"
           :info="constants.INFO_TEXT"
           :max="5000">
 
@@ -30,7 +30,7 @@
         <!-- Review Score -->
         <FieldElt type="number"
           v-model:value="score"
-          @keyup.enter="validateNewReview()"
+          @keyup.enter="createReview()"
           :info="constants.INFO_SCORE"
           :min="0"
           :max="5">
@@ -45,7 +45,7 @@
 
         <!-- Create Button -->
         <BtnElt type="button"
-          @click="validateNewReview()" 
+          @click="createReview()" 
           class="btn-green"
           :content="constants.CONTENT_CREATE"
           :title="constants.REVIEW_CREATOR">
@@ -73,49 +73,17 @@ export default {
 
   methods: {
     /**
-     * VALIDATE NEW REVIEW
-     */
-    validateNewReview() {
-      if (this.$serve.checkText(this.text) &&
-        this.score !== null) {
-
-        this.checkNewReview();
-      }
-    },
-
-    /**
-     * CHECK IF USER HAS MADE A REVIEW FOR THIS PRODUCT
-     */
-    checkNewReview() {
-      this.$serve.getData("/api/reviews")
-        .then((reviews) => {
-          let isReferenced = false;
-
-          for (let review of reviews) {
-            if (review.user === this.constants.USER_ID && 
-              review.product === this.$route.params.id) {
-
-              alert(this.constants.ALERT_PRODUCT);
-              isReferenced = true;
-            }
-          }
-          this.createReview(isReferenced);
-        })
-        .catch(err => { console.log(err) });
-    },
-
-    /**
      * CREATE REVIEW
-     * @param {boolean} isReferenced 
      */
-    createReview(isReferenced) {
-      if (!isReferenced) {
+    createReview() {
+      if (this.$serve.checkText(this.text) && this.score !== null) {
         let review  = new FormData();
 
         review.append("text", this.text);
         review.append("score", this.score);
         review.append("product", this.$route.params.id);
         review.append("user", this.constants.USER_ID);
+        review.append("moderate", "false");
         review.append("created", Date.now());
         review.append("updated", Date.now());
 

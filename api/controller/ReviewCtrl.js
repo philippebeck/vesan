@@ -84,12 +84,25 @@ exports.createReview = (req, res, next) => {
     }
 
     this.checkReviewData(fields.text, fields.score, res);
-    let review = new ReviewModel(fields);
 
-    review
-      .save()
-      .then(() => res.status(201).json({ message: process.env.REVIEW_CREATED }))
-      .catch((error) => res.status(400).json({ error }));
+    ReviewModel
+      .find()
+      .then((reviews) => {
+        for (let review of reviews) {
+
+          if (review.product === fields.product && review.user === fields.user) {
+            return res.status(403).json({ message: process.env.DISPO_REVIEW });
+          }
+        }
+
+        let review = new ReviewModel(fields);
+
+        review
+          .save()
+          .then(() => res.status(201).json({ message: process.env.REVIEW_CREATED }))
+          .catch((error) => res.status(400).json({ error }));
+      })
+      .catch((error) => res.status(404).json({ error }));
   })
 };
 
