@@ -1,8 +1,7 @@
 <template>
   <form>
-    <!-- User Email -->
-    <FieldElt id="email"
-      type="email"
+    <!-- Email -->
+    <FieldElt type="email"
       v-model:value="email"
       :info="constants.INFO_EMAIL"
       required>
@@ -15,10 +14,10 @@
       </template>
     </FieldElt>
 
-    <!-- Send Password -->
+    <!-- Send -->
     <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY">
       <BtnElt type="button"
-        @click="checkEmail()"
+        @click="forgotPass()"
         class="btn-orange"
         :content="constants.CONTENT_SEND"
         :title="constants.TITLE_FORGOT">
@@ -47,39 +46,23 @@ export default {
 
   methods: {
     /**
-     * CHECK EMAIL
-     */
-    checkEmail() {
-      if (this.$serve.checkEmail(this.email)) {
-        let email = new FormData();
-        email.append("email", this.email);
-
-        this.$serve.postData("/api/users/email", email)
-          .then((name) => {
-            if (confirm(name + this.constants.CONFIRM_FORGOT)) {
-              this.forgotPass();
-            }
-          })
-          .catch(() => { alert(this.constants.ALERT_FORGOT_EMAIL) });
-      }
-    },
-
-    /**
      * FORGOT PASSWORD
      */
     forgotPass() {
-      let message = new FormData();
+      if (this.$serve.checkEmail(this.email)) {
+        let message = new FormData();
 
-      message.append("email", this.email);
-      message.append("subject", this.constants.FORGOT_SUBJECT);
-      message.append("html", this.constants.FORGOT_TEXT);
+        message.append("email", this.email);
+        message.append("subject", this.constants.FORGOT_SUBJECT);
+        message.append("html", this.constants.FORGOT_TEXT);
 
-      this.$serve.postData("/api/users/password", message)
-        .then(() => {
-          alert(message.get("subject") + this.constants.ALERT_SENDED);
-          this.$router.push("/login");
-        })
+        this.$serve.postData("/api/users/password", message)
+          .then(() => {
+            alert(message.get("subject") + this.constants.ALERT_SENDED);
+            this.$router.push("/login");
+          })
           .catch(err => { alert(err.response.data.message) });
+      }
     }
   }
 }
