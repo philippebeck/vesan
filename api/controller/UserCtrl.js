@@ -42,6 +42,24 @@ exports.checkUserData = (name, email, pass, role, res) => {
 }
 
 /**
+ * CHECK USER UNIQUE
+ * @param {string} name 
+ * @param {string} email 
+ * @param {object} user 
+ * @param {object} res 
+ * @returns 
+ */
+exports.checkUserUnique = (name, email, user, res) => {
+  if (user.name === name) {
+    return res.status(403).json({ message: process.env.DISPO_NAME });
+  }
+
+  if (user.email === email) {
+    return res.status(403).json({ message: process.env.DISPO_EMAIL });
+  }
+}
+
+/**
  * GET USER
  * @param {string} name 
  * @param {string} email 
