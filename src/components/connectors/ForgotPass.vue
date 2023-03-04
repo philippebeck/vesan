@@ -79,7 +79,7 @@ export default {
           alert(message.get("subject") + this.constants.ALERT_SENDED);
           this.$router.push("/login");
         })
-        .catch(err => { console.log(err) });
+          .catch(err => { alert(err.response.data.message) });
     }
   }
 }

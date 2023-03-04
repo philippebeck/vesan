@@ -188,7 +188,7 @@ export default {
             alert(this.users[i].name + this.constants.ALERT_UPDATED);
             this.$router.go();
           })
-          .catch(err => { console.log(err) });
+          .catch(err => { alert(err.response.data.message) });
       }
     },
 

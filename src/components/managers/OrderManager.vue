@@ -151,7 +151,7 @@ export default {
               alert(this.constants.ALERT_ORDER + id + this.constants.ALERT_UPDATED);
               this.$router.go();
             })
-            .catch(err => { console.log(err) });
+            .catch(err => { alert(err.response.data.message) });
         }
       }
     },

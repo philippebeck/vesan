@@ -92,7 +92,7 @@ export default {
             alert(this.constants.ALERT_NEW_REVIEW);
             this.$router.go();
           })
-          .catch(err => { console.log(err) });
+          .catch(err => { alert(err.response.data.message) });
       }
     }
   }

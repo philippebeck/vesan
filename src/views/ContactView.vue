@@ -123,7 +123,7 @@ export default {
             alert(this.subject + this.constants.ALERT_SENDED);
             this.$router.push("/");
           })
-          .catch(err => { console.log(err) });
+          .catch(err => { alert(err.response.data.message) });
       }
     }
   }

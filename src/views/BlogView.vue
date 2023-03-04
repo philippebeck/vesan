@@ -219,7 +219,7 @@ export default {
                 alert(article.get("name") + this.constants.ALERT_LIKED);
               }
             })
-            .catch(err => { console.log(err) });
+            .catch(err => { alert(err.response.data.message) });
         }
       }
     }
