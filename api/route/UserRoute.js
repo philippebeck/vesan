@@ -9,7 +9,6 @@ const UserCtrl = require("../controller/UserCtrl");
 /* Public */
 router.get("/avatar/:id", UserCtrl.readAvatar);
 router.post("/", UserCtrl.createUser);
-router.post("/check", UserCtrl.checkUser);
 router.post("/login", UserCtrl.loginUser);
 router.post("/message", UserCtrl.sendMessage);
 router.post("/password", UserCtrl.forgotPass);
