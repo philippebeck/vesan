@@ -163,10 +163,8 @@ export default {
             data.append("text", article.text);
             data.append("image", image);
             data.append("alt", article.alt);
-            data.append("user", article.user);
             data.append("likes", article.likes);
             data.append("cat", article.cat);
-            data.append("created", article.created);
             data.append("updated", Date.now());
 
             this.$serve.putData(`/api/articles/${id}`, data)
@@ -174,7 +172,7 @@ export default {
                 alert(article.name + this.constants.ALERT_UPDATED);
                 this.$router.go();
               })
-              .catch(err => { console.log(err) });
+              .catch(err => { alert(err.response.data.message) });
           }
         }
       }

@@ -69,7 +69,7 @@ exports.createComment = (req, res, next) => {
     }
 
     if (!nem.checkText(fields.text)) {
-      return res.status(400).json({ message: process.env.CHECK_TEXT });
+      return res.status(403).json({ message: process.env.CHECK_TEXT });
     }
 
     let comment = new CommentModel(fields);
@@ -96,7 +96,7 @@ exports.updateComment = (req, res, next) => {
     }
 
     if (!nem.checkText(fields.text)) {
-      return res.status(400).json({ message: process.env.CHECK_TEXT });
+      return res.status(403).json({ message: process.env.CHECK_TEXT });
     }
 
     CommentModel

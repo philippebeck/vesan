@@ -142,8 +142,8 @@ export default {
      * ADD LIKE
      */
     addLike() {
-      let hasLiked = false;
-      let likes = this.article.likes;
+      let hasLiked  = false;
+      let likes     = this.article.likes;
 
       for (let i = 0; i < likes.length; i++) {
         if (this.constants.USER_ID === likes[i]) {
@@ -153,17 +153,19 @@ export default {
         }
       }
 
-      if (hasLiked === false) {
-        likes.push(this.constants.USER_ID);
-      }
+      if (hasLiked === false) { likes.push(this.constants.USER_ID) }
 
       let article = new FormData();
 
-      article.append("id", this.article._id);
       article.append("name", this.article.name);
+      article.append("text", this.article.text);
+      article.append("image", this.article.image);
+      article.append("alt", this.article.alt);
       article.append("likes", likes);
+      article.append("cat", this.article.cat);
+      article.append("updated", this.article.updated);
 
-      this.$serve.putData(`/api/articles/${article.get("id")}`, article)
+      this.$serve.putData(`/api/articles/${this.article._id}`, article)
         .then(() => {
 
           if (hasLiked === true) {
@@ -172,7 +174,7 @@ export default {
             alert(article.get("name") + this.constants.ALERT_LIKED);
           }
         })
-        .catch(err => { console.log(err) });
+        .catch(err => { alert(err.response.data.message) });
     }
   }
 }

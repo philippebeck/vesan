@@ -24,23 +24,23 @@ const form = formidable({ uploadDir: PRODUCTS_IMG, keepExtensions: true });
  */
 exports.checkProductData = (name, description, alt, price, cat, res) => {
   if (!nem.checkName(name)) {
-    return res.status(400).json({ message: process.env.CHECK_NAME });
+    return res.status(403).json({ message: process.env.CHECK_NAME });
   }
 
   if (!nem.checkText(description)) {
-    return res.status(400).json({ message: process.env.CHECK_TEXT });
+    return res.status(403).json({ message: process.env.CHECK_TEXT });
   }
 
   if (!nem.checkText(alt)) {
-    return res.status(400).json({ message: process.env.CHECK_TEXT });
+    return res.status(403).json({ message: process.env.CHECK_TEXT });
   }
 
   if (price < 1) {
-    return res.status(400).json({ message: process.env.CHECK_PRICE });
+    return res.status(403).json({ message: process.env.CHECK_PRICE });
   }
 
   if (cat === "") {
-    return res.status(400).json({ message: process.env.CHECK_CAT });
+    return res.status(403).json({ message: process.env.CHECK_CAT });
   }
 }
 
@@ -54,11 +54,11 @@ exports.checkProductData = (name, description, alt, price, cat, res) => {
  */
 exports.checkProductUnique = (name, description, product, res) => {
   if (product.name === name) {
-    return res.status(400).json({ message: process.env.DISPO_NAME });
+    return res.status(403).json({ message: process.env.DISPO_NAME });
   }
 
   if (product.description === description) {
-    return res.status(400).json({ message: process.env.DISPO_DESCRIPTION });
+    return res.status(403).json({ message: process.env.DISPO_DESCRIPTION });
   }
 }
 

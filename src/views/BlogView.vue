@@ -200,17 +200,19 @@ export default {
             }
           }
 
-          if (hasLiked === false) {
-            likes.push(this.constants.USER_ID);
-          }
+          if (hasLiked === false) { likes.push(this.constants.USER_ID) }
 
           let article = new FormData();
 
-          article.append("id", this.articles[i]._id);
           article.append("name", this.articles[i].name);
+          article.append("text", this.articles[i].text);
+          article.append("image", this.articles[i].image);
+          article.append("alt", this.articles[i].alt);
           article.append("likes", likes);
+          article.append("cat", this.articles[i].cat);
+          article.append("updated", this.articles[i].updated);
 
-          this.$serve.putData(`/api/articles/${article.get("id")}`, article)
+          this.$serve.putData(`/api/articles/${id}`, article)
             .then(() => {
 
               if (hasLiked === true) {
@@ -219,7 +221,7 @@ export default {
                 alert(article.get("name") + this.constants.ALERT_LIKED);
               }
             })
-            .catch(err => { console.log(err) });
+            .catch(err => { alert(err.response.data.message) });
         }
       }
     }

@@ -26,18 +26,16 @@
 
           <!-- Name -->
           <template #cell-name="slotProps">
-            <FieldElt :id="'name-' + users[slotProps.index]._id"
-              v-model:value="getUsers()[slotProps.index].name"
-              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"
+            <FieldElt v-model:value="getUsers()[slotProps.index].name"
+              @keyup.enter="updateUser(users[slotProps.index]._id)"
               :info="constants.INFO_UP_NAME"/>
           </template>
 
           <!-- Email -->
           <template #cell-email="slotProps">
-            <FieldElt :id="'email-' + users[slotProps.index]._id"
-              type="email"
+            <FieldElt type="email"
               v-model:value="getUsers()[slotProps.index].email"
-              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"
+              @keyup.enter="updateUser(users[slotProps.index]._id)"
               :info="constants.INFO_UP_EMAIL"/>
           </template>
 
@@ -47,18 +45,17 @@
               :alt="users[slotProps.index].name"
               :title="users[slotProps.index].image"/>
 
-            <FieldElt :id="'image-' + users[slotProps.index]._id"
+            <FieldElt :id="users[slotProps.index]._id"
               type="file"
               :info="constants.INFO_UP_IMAGE"/>
           </template>
 
           <!-- Role -->
           <template #cell-role="slotProps">
-            <FieldElt :id="'role-' + users[slotProps.index]._id"
-              type="select"
+            <FieldElt type="select"
               :list="constants.ROLES_USER"
               v-model:value="getUsers()[slotProps.index].role"
-              @keyup.enter="validateUpdatedUser(users[slotProps.index]._id)"
+              @keyup.enter="updateUser(users[slotProps.index]._id)"
               :info="constants.INFO_UP_ROLE"/>
           </template>
 
@@ -76,7 +73,7 @@
 
             <!-- Update -->
             <BtnElt type="button"
-              @click="validateUpdatedUser(users[slotProps.index]._id)" 
+              @click="updateUser(users[slotProps.index]._id)" 
               class="btn-sky"
               :title="constants.TITLE_UPDATE + users[slotProps.index].name">
 
@@ -117,78 +114,33 @@ export default {
     },
 
     /**
-     * VALIDATE UPDATED USER
+     * UPDATE USER
      * @param {string} id 
      */
-    validateUpdatedUser(id) {
-      for (let i = 0; i < this.users.length; i++ ) {
-        if (this.users[i]._id === id) {
+    updateUser(id) {
+      for (let user of this.users) {
+        if (user._id === id) {
 
-          if (this.$serve.checkName(this.users[i].name) && 
-            this.$serve.checkEmail(this.users[i].email)) {
+          if (this.$serve.checkName(user.name) && this.$serve.checkEmail(user.email)) {
 
-            this.checkUpdatedUser(i);
+            let data  = new FormData();
+            let image = document.getElementById(id).files[0] ?? user.image;
+
+            data.append("name", user.name);
+            data.append("email", user.email);
+            data.append("image", image);
+            data.append("role", user.role);
+            data.append("created", user.created);
+            data.append("updated", Date.now());
+
+            this.$serve.putData(`/api/users/${id}`, data)
+              .then(() => {
+                alert(user.name + this.constants.ALERT_UPDATED);
+                this.$router.go();
+              })
+              .catch(err => { alert(err.response.data.message) });
           }
         }
-      }
-    },
-
-    /**
-     * CHECK UPDATED USER IF NAME | EMAIL ARE REFERENCED
-     * @param {number} i 
-     */
-    checkUpdatedUser(i) {
-      this.$serve.getData("/api/users")
-        .then((users) => {
-          let isReferenced = false;
-
-          for (let j = 0; j < users.length; j++) {
-            if (users[j]._id === this.users[i]._id) {
-              users.splice(j, 1);
-            }
-
-            if (users[j] && users[j].name === this.users[i].name) {
-              alert(this.users[i].name + this.constants.ALERT_AVAILABLE);
-              isReferenced = true;
-            }
-
-            if (users[j] && users[j].email === this.users[i].email) {
-              alert(this.users[i].email+ this.constants.ALERT_REFERENCED);
-              isReferenced = true;
-            }
-          }
-          this.updateUser(isReferenced, i);
-        })
-        .catch(err => { console.log(err) });
-    },
-
-    /**
-     * UPDATE USER IF NO INFO IS REFERENCED
-     * @param {boolean} isReferenced 
-     * @param {number} i 
-     */
-    updateUser(isReferenced, i) {
-      if (!isReferenced) {
-
-        let user  = new FormData();
-        let image = document.getElementById(`image-${this.users[i]._id}`).files[0];
-
-        if (image === undefined) {
-          image = this.users[i].image;
-        }
-
-        user.append("name", this.users[i].name);
-        user.append("email", this.users[i].email);
-        user.append("image", image);
-        user.append("role", this.users[i].role);
-        user.append("updated", Date.now());
-
-        this.$serve.putData(`/api/users/${this.users[i]._id}`, user)
-          .then(() => {
-            alert(this.users[i].name + this.constants.ALERT_UPDATED);
-            this.$router.go();
-          })
-          .catch(err => { console.log(err) });
       }
     },
 

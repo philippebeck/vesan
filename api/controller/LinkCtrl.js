@@ -16,15 +16,15 @@ const form = formidable();
  */
 exports.checkLinkData = (name, url, cat, res) => {
   if (!nem.checkName(name)) {
-    return res.status(400).json({ message: process.env.CHECK_NAME });
+    return res.status(403).json({ message: process.env.CHECK_NAME });
   }
 
   if (!nem.checkUrl("https://" + url)) {
-    return res.status(400).json({ message: process.env.CHECK_URL });
+    return res.status(403).json({ message: process.env.CHECK_URL });
   }
 
   if (cat === "") {
-    return res.status(400).json({ message: process.env.CHECK_CAT });
+    return res.status(403).json({ message: process.env.CHECK_CAT });
   }
 }
 
@@ -38,11 +38,11 @@ exports.checkLinkData = (name, url, cat, res) => {
  */
 exports.checkLinkUnique = (name, url, link, res) => {
   if (link.name === name) {
-    return res.status(400).json({ message: process.env.DISPO_NAME });
+    return res.status(403).json({ message: process.env.DISPO_NAME });
   }
 
   if (link.url === url) {
-    return res.status(400).json({ message: process.env.DISPO_URL });
+    return res.status(403).json({ message: process.env.DISPO_URL });
   }
 }
 

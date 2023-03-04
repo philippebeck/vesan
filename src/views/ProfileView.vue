@@ -16,9 +16,8 @@
 
           <!-- User Name -->
           <template #item-1>
-            <FieldElt id="user-name"
-              v-model:value="user.name"
-              @keyup.enter="validateUpdatedUser()"
+            <FieldElt v-model:value="user.name"
+              @keyup.enter="updateUser()"
               :info="constants.INFO_NAME"
               :min="2">
 
@@ -33,10 +32,9 @@
 
           <!-- User Email -->
           <template #item-2>
-            <FieldElt id="user-email"
-              type="email"
+            <FieldElt type="email"
               v-model:value="user.email"
-              @keyup.enter="validateUpdatedUser()"
+              @keyup.enter="updateUser()"
               :info="constants.INFO_EMAIL">
 
               <template #legend>
@@ -70,10 +68,9 @@
 
           <!-- User Pass -->
           <template #item-4>
-            <FieldElt id="user-pass"
-              type="password"
+            <FieldElt type="password"
               v-model:value="pass"
-              @keyup.enter="validateUpdatedUser()"
+              @keyup.enter="updateUser()"
               :info="constants.INFO_PASSWORD">
 
               <template #legend>
@@ -88,7 +85,7 @@
 
         <!-- Update Button -->
         <BtnElt type="button"
-          @click="validateUpdatedUser()" 
+          @click="updateUser()" 
           class="btn-blue"
           :content="constants.TITLE_UPDATE"
           :title="constants.INFO_UP_PROFILE">
@@ -212,65 +209,34 @@ export default {
     },
 
     /**
-     * VALIDATE UPDATED USER
-     */
-    validateUpdatedUser() {
-      if (this.$serve.checkName(this.user.name) && 
-        this.$serve.checkEmail(this.user.email)) {
-
-        if (this.pass && this.$serve.checkPass(this.pass)) {
-            this.checkUpdatedUser();
-          
-        } else {
-          this.checkUpdatedUser();
-        }
-      }
-    },
-
-    /**
-     * CHECK UPDATED USER IF NAME | EMAIL ARE REFERENCED
-     */
-    checkUpdatedUser() {
-      let checker = new FormData();
-      checker.append("name", this.name);
-      checker.append("email", this.email);
-
-      this.$serve.postData("/api/users/check", checker)
-        .then((userAvailable) => {
-
-          if (userAvailable === true) {
-            this.updateUser();
-          }
-        })
-        .catch(err => { console.log(err) });
-    },
-
-    /**
-     * UPDATE USER IF NO INFO IS REFERENCED
+     * UPDATE USER
      */
     updateUser() {
-      let user  = new FormData();
-      let image = document.getElementById("user-image").files[0];
+      if (this.$serve.checkName(this.user.name) && this.$serve.checkEmail(this.user.email)) {
 
-      if (typeof image === "undefined") {
-        image = this.user.image;
+        let user  = new FormData();
+        let image = document.getElementById("user-image").files[0] ?? this.user.image;
+
+        user.append("name", this.user.name);
+        user.append("email", this.user.email);
+        user.append("image", image);
+        user.append("role", this.user.role);
+        user.append("created", this.user.created);
+        user.append("updated", Date.now());
+
+        if (this.pass !== "") {
+          if (this.$serve.checkPass(this.pass)) {
+            user.append("pass", this.pass)
+          }
+        }
+
+        this.$serve.putData(`/api/users/${this.user._id}`, user)
+          .then(() => {
+            alert(this.user.name + this.constants.ALERT_UPDATED);
+            this.$router.go();
+          })
+          .catch(err => { alert(err.response.data.message) });
       }
-
-      if (this.pass !== "") {
-        user.append("pass", this.pass);
-      }
-
-      user.append("name", this.user.name);
-      user.append("email", this.user.email);
-      user.append("image", image);
-      user.append("updated", Date.now());
-
-      this.$serve.putData(`/api/users/${this.user._id}`, user)
-        .then(() => {
-          alert(this.user.name + this.constants.ALERT_UPDATED);
-          this.$router.go();
-        })
-        .catch(err => { console.log(err) });
     },
 
     /**

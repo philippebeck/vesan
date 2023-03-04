@@ -6,13 +6,14 @@ const helmet    = require("helmet");
 const sanitize  = require("express-mongo-sanitize");
 const cors      = require("cors");
 
+const articleRoute  = require("./route/ArticleRoute");
+const authRoute     = require("./route/AuthRoute");
+const commentRoute  = require("./route/CommentRoute");
+const linkRoute     = require("./route/LinkRoute");
+const orderRoute    = require("./route/OrderRoute");
 const productRoute  = require("./route/ProductRoute");
 const reviewRoute   = require("./route/ReviewRoute");
-const orderRoute    = require("./route/OrderRoute");
-const articleRoute  = require("./route/ArticleRoute");
-const commentRoute  = require("./route/CommentRoute");
 const userRoute     = require("./route/UserRoute");
-const linkRoute     = require("./route/LinkRoute");
 
 require("dotenv").config();
 
@@ -37,12 +38,13 @@ app.use(sanitize());
 /**
  * ROUTES
  */
+app.use(process.env.ROUTE_ARTICLE, articleRoute);
+app.use(process.env.ROUTE_AUTH, authRoute);
+app.use(process.env.ROUTE_COMMENT, commentRoute);
+app.use(process.env.ROUTE_LINK, linkRoute);
+app.use(process.env.ROUTE_ORDER, orderRoute);
 app.use(process.env.ROUTE_PRODUCT, productRoute);
 app.use(process.env.ROUTE_REVIEW, reviewRoute);
-app.use(process.env.ROUTE_ORDER, orderRoute);
-app.use(process.env.ROUTE_ARTICLE, articleRoute);
-app.use(process.env.ROUTE_COMMENT, commentRoute);
 app.use(process.env.ROUTE_USER, userRoute);
-app.use(process.env.ROUTE_LINK, linkRoute);
 
 module.exports = app;

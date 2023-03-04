@@ -24,19 +24,19 @@ const form = formidable({ uploadDir: ARTICLES_IMG, keepExtensions: true });
  */
 exports.checkArticleData = (name, text, alt, cat, res) => {
   if (!nem.checkName(name)) {
-    return res.status(400).json({ message: process.env.CHECK_NAME });
+    return res.status(403).json({ message: process.env.CHECK_NAME });
   }
 
   if (!nem.checkText(text)) {
-    return res.status(400).json({ message: process.env.CHECK_TEXT });
+    return res.status(403).json({ message: process.env.CHECK_TEXT });
   }
 
   if (!nem.checkText(alt)) {
-    return res.status(400).json({ message: process.env.CHECK_TEXT });
+    return res.status(403).json({ message: process.env.CHECK_TEXT });
   }
 
   if (cat === "") {
-    return res.status(400).json({ message: process.env.CHECK_CAT });
+    return res.status(403).json({ message: process.env.CHECK_CAT });
   }
 }
 
@@ -50,11 +50,11 @@ exports.checkArticleData = (name, text, alt, cat, res) => {
  */
 exports.checkArticleUnique = (name, text, article, res) => {
   if (article.name === name) {
-    return res.status(400).json({ message: process.env.DISPO_NAME });
+    return res.status(403).json({ message: process.env.DISPO_NAME });
   }
 
   if (article.text === text) {
-    return res.status(400).json({ message: process.env.DISPO_TEXT });
+    return res.status(403).json({ message: process.env.DISPO_TEXT });
   }
 }
 
@@ -124,7 +124,7 @@ exports.listArticles = (req, res) => {
     .find()
     .then((articles) => res.status(200).json(articles))
     .catch((error) => res.status(404).json({ error }));
-};
+}
 
 /**
  * READ A ARTICLE
@@ -172,13 +172,14 @@ exports.createArticle = (req, res, next) => {
           this.checkArticleUnique(fields.name, fields.text, article, res);
         }
 
+        let likes = nem.stringToArray(fields.likes);
         let image = nem.getImgName(fields.name);
 
         nem.createImage("articles/" + files.image.newFilename, "articles/" + image);
         nem.createThumbnail("articles/" + files.image.newFilename, "articles/" + image);
 
         let article  = new ArticleModel(this.getArticle(
-          fields.name, fields.text, image, fields.alt, fields.user, fields.likes, fields.cat, fields.created, fields.updated
+          fields.name, fields.text, image, fields.alt, fields.user, likes, fields.cat, fields.created, fields.updated
         ));
 
         article
@@ -189,7 +190,7 @@ exports.createArticle = (req, res, next) => {
       })
       .catch((error) => res.status(404).json({ error }));
   })
-};
+}
 
 /**
  * UPDATE ARTICLE
@@ -211,7 +212,6 @@ exports.updateArticle = (req, res, next) => {
       .find()
       .then((articles) => {
         for (let article of articles) {
-
           if (!article._id.equals(req.params.id)) {
             this.checkArticleUnique(fields.name, fields.text, article, res);
           }
@@ -224,9 +224,15 @@ exports.updateArticle = (req, res, next) => {
           image = this.updateImage(req.params.id, fields.name, files.image.newFilename);
         }
 
-        let article = this.getArticle(
-          fields.name, fields.text, image, fields.alt, fields.user, likes, fields.cat, fields.created, fields.updated
-        );
+        let article = {
+          name: fields.name,
+          text: fields.text,
+          image: image,
+          alt: fields.alt,
+          likes: likes,
+          cat: fields.cat,
+          updated: fields.updated
+        }
 
         ArticleModel
           .findByIdAndUpdate(req.params.id, { ...article, _id: req.params.id })
@@ -235,7 +241,7 @@ exports.updateArticle = (req, res, next) => {
       })
       .catch((error) => res.status(404).json({ error }));
   })
-};
+}
 
 /**
  * DELETE ARTICLE
@@ -262,4 +268,4 @@ exports.deleteArticle = (req, res) => {
       })
     })
     .catch(error => res.status(404).json({ error }));
-};
+}

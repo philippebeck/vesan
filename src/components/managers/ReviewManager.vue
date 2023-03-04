@@ -134,18 +134,22 @@ export default {
       for (let review of this.reviews) {
         if (review._id === id) {
 
-          let reviewData = new FormData();
+          let data = new FormData();
 
-          reviewData.append("text", review.text);
-          reviewData.append("score", review.score);
-          reviewData.append("moderate", review.moderate);
+          data.append("text", review.text);
+          data.append("score", review.score);
+          data.append("product", review.product);
+          data.append("user", review.user);
+          data.append("moderate", review.moderate);
+          data.append("created", review.created);
+          data.append("updated", review.updated);
 
-          this.$serve.putData(`/api/reviews/${id}`, reviewData)
+          this.$serve.putData(`/api/reviews/${id}`, data)
             .then(() => {
               alert(this.constants.ALERT_REVIEW + id + this.constants.ALERT_MODERATED);
               this.$router.go();
             })
-            .catch(err => { console.log(err) });
+            .catch(err => { alert(err.response.data.message) });
         }
       }
     },

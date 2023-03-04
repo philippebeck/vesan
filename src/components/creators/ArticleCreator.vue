@@ -162,7 +162,7 @@ export default {
               alert(this.name + this.constants.ALERT_CREATED);
               this.$router.go();
             })
-            .catch(err => { console.log(err) });
+            .catch(err => { alert(err.response.data.message) });
 
         } else {
           alert(this.constants.ALERT_IMG);
