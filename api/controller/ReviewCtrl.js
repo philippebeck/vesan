@@ -50,9 +50,9 @@ exports.listProductReviews = (req, res) => {
           }
           res.status(200).json(reviews);
         })
-        .catch((error) => res.status(404).json({ error }));
+        .catch(() => res.status(404).json({ message: process.env.USERS_NOT_FOUND }));
     })
-    .catch((error) => res.status(404).json({ error }));
+    .catch(() => res.status(404).json({ message: process.env.REVIEWS_NOT_FOUND }));
 };
 
 //! ****************************** PRIVATE ******************************
@@ -66,7 +66,7 @@ exports.listReviews = (req, res) => {
   ReviewModel
     .find()
     .then((reviews) => res.status(200).json(reviews))
-    .catch((error) => res.status(404).json({ error }));
+    .catch(() => res.status(404).json({ message: process.env.REVIEWS_NOT_FOUND }));
 };
 
 /**
@@ -100,9 +100,9 @@ exports.createReview = (req, res, next) => {
         review
           .save()
           .then(() => res.status(201).json({ message: process.env.REVIEW_CREATED }))
-          .catch((error) => res.status(400).json({ error }));
+          .catch(() => res.status(400).json({ message: process.env.REVIEW_NOT_CREATED }));
       })
-      .catch((error) => res.status(404).json({ error }));
+      .catch(() => res.status(404).json({ message: process.env.REVIEWS_NOT_FOUND }));
   })
 };
 
@@ -125,7 +125,7 @@ exports.updateReview = (req, res, next) => {
     ReviewModel
       .findByIdAndUpdate(req.params.id, { ...fields, _id: req.params.id })
       .then(() => res.status(200).json({ message: process.env.REVIEW_UPDATED }))
-      .catch((error) => res.status(400).json({ error }));
+      .catch(() => res.status(400).json({ message: process.env.REVIEW_NOT_UPDATED }));
   })
 };
 
@@ -138,5 +138,5 @@ exports.deleteReview = (req, res) => {
   ReviewModel
     .findByIdAndDelete(req.params.id)
     .then(() => res.status(204).json({ message: process.env.REVIEW_DELETED }))
-    .catch((error) => res.status(400).json({ error }))
+    .catch(() => res.status(400).json({ message: process.env.REVIEW_NOT_DELETED }))
 };
