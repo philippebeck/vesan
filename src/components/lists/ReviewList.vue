@@ -123,16 +123,18 @@ export default {
       for (let review of this.reviews) {
         if (review._id === id) {
 
-          if (this.$serve.checkText(review.text) &&
-            review.score !== null) {
-            let reviewData = new FormData();
+          if (this.$serve.checkText(review.text) && review.score !== null) {
+            let data = new FormData();
 
-            reviewData.append("text", review.text);
-            reviewData.append("score", review.score);
-            reviewData.append("moderate", "false");
-            reviewData.append("updated", Date.now());
+            data.append("text", review.text);
+            data.append("score", review.score);
+            data.append("product", review.product);
+            data.append("user", review.user);
+            data.append("moderate", "false");
+            data.append("created", review.created);
+            data.append("updated", Date.now());
 
-            this.$serve.putData(`/api/reviews/${id}`, reviewData)
+            this.$serve.putData(`/api/reviews/${id}`, data)
               .then(() => {
                 alert(this.constants.ALERT_REVIEW + id + this.constants.ALERT_UPDATED);
                 this.$router.go();
