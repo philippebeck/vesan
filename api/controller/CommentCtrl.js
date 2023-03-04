@@ -34,9 +34,9 @@ exports.listArticleComments = (req, res) => {
           }
           res.status(200).json(comments);
         })
-      .catch((error) => res.status(404).json({ error }));
+      .catch(() => res.status(404).json({ message: process.env.USERS_NOT_FOUND }));
     })
-    .catch((error) => res.status(404).json({ error }));
+    .catch(() => res.status(404).json({ message: process.env.COMMENTS_NOT_FOUND }));
 };
 
 //! ****************************** PRIVATE ******************************
@@ -50,7 +50,7 @@ exports.listComments = (req, res) => {
   CommentModel
     .find()
     .then((comments) => res.status(200).json(comments))
-    .catch((error) => res.status(404).json({ error }));
+    .catch(() => res.status(404).json({ message: process.env.COMMENTS_NOT_FOUND }));
 };
 
 /**
@@ -77,7 +77,7 @@ exports.createComment = (req, res, next) => {
     comment
       .save()
       .then(() => res.status(201).json({ message: process.env.COMMENT_CREATED }))
-      .catch((error) => res.status(400).json({ error }));
+      .catch(() => res.status(400).json({ message: process.env.COMMENT_NOT_CREATED }));
   })
 };
 
@@ -102,7 +102,7 @@ exports.updateComment = (req, res, next) => {
     CommentModel
       .findByIdAndUpdate(req.params.id, { ...fields, _id: req.params.id })
       .then(() => res.status(200).json({ message: process.env.COMMENT_UPDATED }))
-      .catch((error) => res.status(400).json({ error }));
+      .catch(() => res.status(400).json({ message: process.env.COMMENT_NOT_UPDATED }));
   })
 };
 
@@ -115,5 +115,5 @@ exports.deleteComment = (req, res) => {
   CommentModel
     .findByIdAndDelete(req.params.id)
     .then(() => res.status(204).json({ message: process.env.COMMENT_DELETED }))
-    .catch((error) => res.status(400).json({ error }))
+    .catch(() => res.status(400).json({ message: process.env.COMMENT_NOT_DELETED }))
 };
