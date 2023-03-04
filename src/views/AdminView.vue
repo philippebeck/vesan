@@ -188,7 +188,7 @@ export default {
             this.$store.dispatch("listUsers");
           }
         })
-        .catch(err => { console.log(err) });
+        .catch(err => { alert(err.response.data.message) });
 
     } else {
       alert(this.constants.ALERT_HOME);
