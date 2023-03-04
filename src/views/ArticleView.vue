@@ -161,10 +161,8 @@ export default {
       article.append("text", this.article.text);
       article.append("image", this.article.image);
       article.append("alt", this.article.alt);
-      article.append("user", this.article.user);
       article.append("likes", likes);
       article.append("cat", this.article.cat);
-      article.append("created", this.article.created);
       article.append("updated", this.article.updated);
 
       this.$serve.putData(`/api/articles/${this.article._id}`, article)
