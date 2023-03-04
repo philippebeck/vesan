@@ -2,7 +2,7 @@
   <CardElt id="create-product">
     <template #header>
       <h3>
-        <i class="fa-solid fa-basket-shopping fa-lg"
+        <i class="fa-regular fa-lightbulb fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.PRODUCT_CREATOR }}

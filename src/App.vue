@@ -20,7 +20,7 @@
         <template #item-1>
           <a href="/admin"
             :title="constants.TITLE_ADMIN">
-            <i class="fa-solid fa-user-gear fa-fw"></i>
+            <i class="fa-solid fa-gears fa-fw"></i>
           </a>
         </template>
 

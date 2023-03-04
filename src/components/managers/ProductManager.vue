@@ -2,7 +2,7 @@
   <CardElt>
     <template #header>
       <h3>
-        <i class="fa-solid fa-shopping-cart fa-lg"
+        <i class="fa-regular fa-rectangle-list fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.PRODUCT_MANAGER }}

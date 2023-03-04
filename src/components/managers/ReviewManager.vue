@@ -2,7 +2,7 @@
   <CardElt>
     <template #header>
       <h2>
-        <i class="fa-solid fa-list-check fa-lg"
+        <i class="fa-solid fa-ranking-star fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.REVIEW_MANAGER }}

@@ -2,7 +2,7 @@
   <CardElt>
     <template #header>
       <h3>
-        <i class="fa-regular fa-rectangle-list fa-lg"
+        <i class="fa-solid fa-gifts fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.ORDER_MANAGER }}

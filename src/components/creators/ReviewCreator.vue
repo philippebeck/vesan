@@ -2,7 +2,7 @@
   <CardElt>
     <template #header>
       <h3>
-        <i class="fa-solid fa-check fa-lg"
+        <i class="fa-solid fa-star-half-stroke fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.REVIEW_CREATOR }}

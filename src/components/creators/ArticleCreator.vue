@@ -2,7 +2,7 @@
   <CardElt id="create-article">
     <template #header>
       <h3>
-        <i class="fa-regular fa-envelope fa-lg"
+        <i class="fa-regular fa-pen-to-square fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.ARTICLE_CREATOR }}

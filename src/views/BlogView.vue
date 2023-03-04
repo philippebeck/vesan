@@ -5,7 +5,7 @@
     <template #last  v-if="checkRole('editor')">
       <a href="#create-article"
         :title="constants.ARTICLE_CREATOR">
-        <i class="fa-regular fa-envelope fa-fw"></i>
+        <i class="fa-regular fa-pen-to-square fa-fw"></i>
       </a>
     </template>
 
