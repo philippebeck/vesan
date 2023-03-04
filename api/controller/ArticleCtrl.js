@@ -24,19 +24,19 @@ const form = formidable({ uploadDir: ARTICLES_IMG, keepExtensions: true });
  */
 exports.checkArticleData = (name, text, alt, cat, res) => {
   if (!nem.checkName(name)) {
-    return res.status(400).json({ message: process.env.CHECK_NAME });
+    return res.status(403).json({ message: process.env.CHECK_NAME });
   }
 
   if (!nem.checkText(text)) {
-    return res.status(400).json({ message: process.env.CHECK_TEXT });
+    return res.status(403).json({ message: process.env.CHECK_TEXT });
   }
 
   if (!nem.checkText(alt)) {
-    return res.status(400).json({ message: process.env.CHECK_TEXT });
+    return res.status(403).json({ message: process.env.CHECK_TEXT });
   }
 
   if (cat === "") {
-    return res.status(400).json({ message: process.env.CHECK_CAT });
+    return res.status(403).json({ message: process.env.CHECK_CAT });
   }
 }
 
@@ -50,11 +50,11 @@ exports.checkArticleData = (name, text, alt, cat, res) => {
  */
 exports.checkArticleUnique = (name, text, article, res) => {
   if (article.name === name) {
-    return res.status(400).json({ message: process.env.DISPO_NAME });
+    return res.status(403).json({ message: process.env.DISPO_NAME });
   }
 
   if (article.text === text) {
-    return res.status(400).json({ message: process.env.DISPO_TEXT });
+    return res.status(403).json({ message: process.env.DISPO_TEXT });
   }
 }
 

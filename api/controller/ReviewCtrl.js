@@ -17,11 +17,11 @@ const form = formidable();
  */
 exports.checkReviewData = (text, score, res) => {
   if (!nem.checkText(text)) {
-    return res.status(400).json({ message: process.env.CHECK_TEXT });
+    return res.status(403).json({ message: process.env.CHECK_TEXT });
   }
 
   if (score < 0 || score > 5) {
-    return res.status(400).json({ message: process.env.CHECK_SCORE });
+    return res.status(403).json({ message: process.env.CHECK_SCORE });
   }
 }
 
