@@ -35,7 +35,7 @@
       
       <!-- Image -->
       <template #item-3>
-        <FieldElt id="user-image"
+        <FieldElt id="image"
           type="file"
           v-model:value="image"
           :info="constants.INFO_IMAGE">
@@ -105,7 +105,7 @@ export default {
     createUser() {
       if (this.$serve.checkName(this.name) && this.$serve.checkEmail(this.email) && this.$serve.checkPass(this.pass)) {
 
-        let image = document.getElementById('user-image').files[0];
+        let image = document.getElementById('image').files[0];
 
         if (image !== undefined) {
           let user = new FormData();

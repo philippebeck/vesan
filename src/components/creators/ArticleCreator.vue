@@ -32,11 +32,11 @@
 
           <!-- Text -->
           <template #item-2>
-            <label for="article-text">
+            <label for="text">
               {{ constants.LEGEND_TEXT }}
             </label>
 
-            <Editor id="article-text"
+            <Editor id="text"
               :api-key="constants.TINY_KEY"
               v-model="text"
               @keyup.enter="createArticle()"
@@ -49,7 +49,7 @@
 
           <!-- Image -->
           <template #item-3>
-            <FieldElt id="article-image"
+            <FieldElt id="image"
               type="file"
               v-model:value="image"
               :info="constants.INFO_IMAGE">
@@ -142,7 +142,7 @@ export default {
       if (this.$serve.checkName(this.name) && this.$serve.checkText(this.text) && this.$serve.checkText(this.alt)) {
 
         if (this.cat === "") { this.cat = this.constants.CAT_ARTICLE }
-        let image = document.getElementById('article-image').files[0];
+        let image = document.getElementById('image').files[0];
 
         if (image !== undefined) {
           let article = new FormData();
