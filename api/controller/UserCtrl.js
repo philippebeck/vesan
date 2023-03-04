@@ -15,6 +15,8 @@ const USERS_IMG = process.env.IMG_URL + "users/";
 const USERS_THUMB = process.env.THUMB_URL + "users/";
 const form = formidable({ uploadDir: USERS_IMG, keepExtensions: true });
 
+//! ****************************** CHECKERS ******************************
+
 /**
  * CHECK USER DATA
  * @param {string} name 
@@ -54,6 +56,8 @@ exports.checkUserUnique = (name, email, user, res) => {
   }
 }
 
+//! ****************************** GETTERS ******************************
+
 /**
  * GET USER
  * @param {string} name 
@@ -79,6 +83,31 @@ exports.getUser = (name, email, image, pass, role, created, updated) => {
 }
 
 /**
+ * GET IMAGE UPDATED
+ * @param {string} id 
+ * @param {string} name 
+ * @param {string} newFilename 
+ * @returns 
+ */
+exports.getImageUpdated = (id, name, newFilename) => {
+  let image = nem.getImgName(name);
+  nem.createThumbnail("users/" + newFilename, "users/" + image);
+
+  UserModel
+    .findById(id)
+    .then((user) => 
+      fs.unlink(USERS_THUMB + user.image, () => {
+        fs.unlink(USERS_IMG + newFilename, () => {
+          console.log("Images ok !");
+        })
+      })
+    )
+  return image;
+}
+
+//! ****************************** SETTER ******************************
+
+/**
  * SET MESSAGE
  * @param {string} fields 
  * @param {object} res 
@@ -95,29 +124,6 @@ exports.setMessage = (fields, res) => {
       });
     } catch(e){ console.error(e); }
   })();
-}
-
-/**
- * UPDATE IMAGE
- * @param {string} id 
- * @param {string} name 
- * @param {string} newFilename 
- * @returns 
- */
-exports.updateImage = (id, name, newFilename) => {
-  let image = nem.getImgName(name);
-  nem.createThumbnail("users/" + newFilename, "users/" + image);
-
-  UserModel
-    .findById(id)
-    .then((user) => 
-      fs.unlink(USERS_THUMB + user.image, () => {
-        fs.unlink(USERS_IMG + newFilename, () => {
-          console.log("Images ok !");
-        })
-      })
-    )
-  return image;
 }
 
 //! ****************************** PUBLIC ******************************
@@ -163,12 +169,12 @@ exports.createUser = (req, res, next) => {
               user
                 .save()
                 .then(() => res.status(201).json({ message: process.env.USER_CREATED }))
-                .catch((error) => res.status(400).json({ error }));
+                .catch(() => res.status(400).json({ message: process.env.USER_NOT_CREATED }));
             });
           })
-          .catch((error) => res.status(400).json({ error }));
+          .catch(() => res.status(400).json({ message: process.env.USER_NOT_PASS }));
       })
-      .catch((error) => { res.status(404).json({ error }) });
+      .catch(() => { res.status(404).json({ message: process.env.USERS_NOT_FOUND }) });
   });
 }
 
@@ -220,7 +226,7 @@ exports.listUsers = (req, res) => {
       }
       res.status(200).json(usersList);
     })
-    .catch((error) => res.status(404).json({ error }));
+    .catch(() => res.status(404).json({ message: process.env.USERS_NOT_FOUND }));
 }
 
 /**
@@ -232,7 +238,7 @@ exports.readUser = (req, res) => {
   UserModel
   .findById(req.params.id)
   .then((user) => res.status(200).json(user))
-  .catch((error) => res.status(404).json({ error }));
+  .catch(() => res.status(404).json({ message: process.env.USER_NOT_FOUND }));
 }
 
 /**
@@ -263,7 +269,7 @@ exports.updateUser = (req, res, next) => {
         let image = fields.image;
 
         if (Object.keys(files).length !== 0) {
-          image = this.updateImage(req.params.id, fields.name, files.image.newFilename);
+          image = this.getImageUpdated(req.params.id, fields.name, files.image.newFilename);
         }
 
         if (fields.pass) {
@@ -282,9 +288,9 @@ exports.updateUser = (req, res, next) => {
             UserModel
               .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
               .then(() => res.status(200).json({ message: process.env.USER_UPDATED }))
-              .catch((error) => res.status(400).json({ error }));
+              .catch(() => res.status(400).json({ message: process.env.USER_NOT_UPDATED }));
           })
-          .catch((error) => res.status(400).json({ error }));
+          .catch(() => res.status(400).json({ message: process.env.USER_NOT_PASS }));
 
         } else {
           let user = {
@@ -299,10 +305,10 @@ exports.updateUser = (req, res, next) => {
           UserModel
             .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
             .then(() => res.status(200).json({ message: process.env.USER_UPDATED }))
-            .catch((error) => res.status(400).json({ error }));
+            .catch(() => res.status(400).json({ message: process.env.USER_NOT_UPDATED }));
         }
       })
-      .catch((error) => res.status(404).json({ error }));
+      .catch(() => res.status(404).json({ message: process.env.USERS_NOT_FOUND }));
   })
 }
 
@@ -327,12 +333,12 @@ exports.deleteUser = (req, res) => {
                 UserModel
                   .findByIdAndDelete(req.params.id)
                   .then(() => res.status(204).json({ message: process.env.USER_DELETED }))
-                  .catch((error) => res.status(400).json({ error }))
+                  .catch(() => res.status(400).json({ message: process.env.USER_NOT_DELETED }))
               )
-              .catch((error) => res.status(400).json({ error }))
+              .catch(() => res.status(400).json({ message: process.env.REVIEWS_NOT_DELETED }))
           )
-          .catch((error) => res.status(400).json({ error }))
+          .catch(() => res.status(400).json({ message: process.env.COMMENTS_NOT_DELETED }))
       })
     })
-    .catch(error => res.status(404).json({ error }));
+    .catch(() => res.status(404).json({ message: process.env.USER_NOT_FOUND }));
 }
