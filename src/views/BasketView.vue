@@ -195,7 +195,7 @@ export default {
     setOrder() {
       for (let i = 0; i < this.products.length; i++) {
         let product = this.products[i];
-        
+
         for (let j = 0; j < this.basket.length; j++) {
           let item = this.basket[j];
 
