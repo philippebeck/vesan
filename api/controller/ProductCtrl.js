@@ -13,6 +13,8 @@ const PRODUCTS_IMG = process.env.IMG_URL + "products/";
 const PRODUCTS_THUMB = process.env.THUMB_URL + "products/";
 const form = formidable({ uploadDir: PRODUCTS_IMG, keepExtensions: true });
 
+//! ****************************** CHECKERS ******************************
+
 /**
  * CHECK PRODUCT DATA
  * @param {string} name 
@@ -62,8 +64,10 @@ exports.checkProductUnique = (name, description, product, res) => {
   }
 }
 
+//! ****************************** GETTERS ******************************
+
 /**
- * SET PRODUCT
+ * GET PRODUCT
  * @param {string} name 
  * @param {string} description 
  * @param {string} image 
@@ -75,7 +79,7 @@ exports.checkProductUnique = (name, description, product, res) => {
  * @param {string} updated 
  * @returns 
  */
-exports.setProduct = (name, description, image, alt, price, options, cat, created, updated) => {
+exports.getProduct = (name, description, image, alt, price, options, cat, created, updated) => {
 
   return {
     name: name,
@@ -91,14 +95,14 @@ exports.setProduct = (name, description, image, alt, price, options, cat, create
 }
 
 /**
- * UPDATE IMAGE
+ * GET IMAGE UPDATED
  * @param {string} id 
  * @param {string} name 
  * @param {string} newFilename 
  * @param {object} res 
  * @returns 
  */
-exports.updateImage = (id, name, newFilename) => {
+exports.getImageUpdated = (id, name, newFilename) => {
   let image = nem.getImgName(name);
   nem.createImage("products/" + newFilename, "products/" + image);
   nem.createThumbnail("products/" + newFilename, "products/" + image);
@@ -174,7 +178,7 @@ exports.createProduct = (req, res, next) => {
         nem.createImage("products/" + files.image.newFilename, "products/" + image);
         nem.createThumbnail("products/" + files.image.newFilename, "products/" + image);
 
-        let product = new ProductModel(this.setProduct(
+        let product = new ProductModel(this.getProduct(
           fields.name, fields.description, image, fields.alt, fields.price, options, fields.cat, fields.created, fields.updated
         ));
 
@@ -218,10 +222,10 @@ exports.updateProduct = (req, res, next) => {
         let image   = fields.image;
     
         if (Object.keys(files).length !== 0) {
-          image = this.updateImage(req.params.id, fields.name, files.image.newFilename);
+          image = this.getImageUpdated(req.params.id, fields.name, files.image.newFilename);
         }
     
-        let product = this.setProduct(
+        let product = this.getProduct(
           fields.name, fields.description, image, fields.alt, fields.price, options, fields.cat, fields.created, fields.updated
         );
     

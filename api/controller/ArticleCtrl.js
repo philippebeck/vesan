@@ -14,6 +14,8 @@ const ARTICLES_IMG = process.env.IMG_URL + "articles/";
 const ARTICLES_THUMB = process.env.THUMB_URL + "articles/";
 const form = formidable({ uploadDir: ARTICLES_IMG, keepExtensions: true });
 
+//! ****************************** CHECKERS ******************************
+
 /**
  * CHECK ARTICLE DATA
  * @param {string} name 
@@ -58,8 +60,10 @@ exports.checkArticleUnique = (name, text, article, res) => {
   }
 }
 
+//! ****************************** GETTERS ******************************
+
 /**
- * SET ARTICLE CREATED
+ * GET ARTICLE CREATED
  * @param {string} name 
  * @param {string} text 
  * @param {string} image 
@@ -71,7 +75,7 @@ exports.checkArticleUnique = (name, text, article, res) => {
  * @param {string} updated 
  * @returns 
  */
-exports.setArticleCreated = (name, text, image, alt, user, likes, cat, created, updated) => {
+exports.getArticleCreated = (name, text, image, alt, user, likes, cat, created, updated) => {
 
   return {
     name: name,
@@ -87,7 +91,7 @@ exports.setArticleCreated = (name, text, image, alt, user, likes, cat, created, 
 }
 
 /**
- * SET ARTICLE UPDATED
+ * GET ARTICLE UPDATED
  * @param {string} name 
  * @param {string} text 
  * @param {string} image 
@@ -97,7 +101,7 @@ exports.setArticleCreated = (name, text, image, alt, user, likes, cat, created, 
  * @param {string} updated 
  * @returns 
  */
-exports.setArticleUpdated = (name, text, image, alt, likes, cat, updated) => {
+exports.getArticleUpdated = (name, text, image, alt, likes, cat, updated) => {
 
   return {
     name: name,
@@ -111,14 +115,14 @@ exports.setArticleUpdated = (name, text, image, alt, likes, cat, updated) => {
 }
 
 /**
- * UPDATE IMAGE
+ * GET IMAGE UPDATED
  * @param {string} id 
  * @param {string} name 
  * @param {string} newFilename 
  * @param {object} res 
  * @returns 
  */
-exports.updateImage = (id, name, newFilename, res) => {
+exports.getImageUpdated = (id, name, newFilename, res) => {
   let image = nem.getImgName(name);
   nem.createImage( "articles/" + newFilename, "articles/" + image);
   nem.createThumbnail("articles/" + newFilename, "articles/" + image);
@@ -203,7 +207,7 @@ exports.createArticle = (req, res, next) => {
         nem.createImage("articles/" + files.image.newFilename, "articles/" + image);
         nem.createThumbnail("articles/" + files.image.newFilename, "articles/" + image);
 
-        let article = new ArticleModel(this.setArticleCreated(
+        let article = new ArticleModel(this.getArticleCreated(
           fields.name, fields.text, image, fields.alt, fields.user, likes, fields.cat, fields.created, fields.updated
         ));
 
@@ -246,10 +250,10 @@ exports.updateArticle = (req, res, next) => {
         let image = fields.image;
 
         if (Object.keys(files).length !== 0) {
-          image = this.updateImage(req.params.id, fields.name, files.image.newFilename, res);
+          image = this.getImageUpdated(req.params.id, fields.name, files.image.newFilename, res);
         }
 
-        let article = this.setArticleUpdated(
+        let article = this.getArticleUpdated(
           fields.name, fields.text, image, fields.alt, likes, fields.cat, fields.updated
         );
 
