@@ -161,76 +161,49 @@ exports.createUser = (req, res, next) => {
       return;
     }
 
-    this.checkUserData(fields.name, fields.email, fields.pass, fields.role, res);
+    this.checkUserData(fields.name, fields.email, fields.role, res);
 
-    let image = nem.getImgName(fields.name);
-    nem.createThumbnail("users/" + files.image.newFilename, "users/" + image);
+    if (!nem.checkPass(fields.pass)) {
+      return res.status(403).json({ message: process.env.CHECK_PASS });
+    }
 
-    bcrypt
-      .hash(fields.pass, 10)
-      .then((hash) => {
-        let user = new UserModel(this.getUser(
-          fields.name, fields.email, image, hash, fields.role, fields.created, fields.updated
-        ));
+    UserModel
+      .find()
+      .then((users) => {
+        for (let user of users) {
+          this.checkUserUnique(fields.name, fields.email, user, res);
+        }
 
-        fs.unlink(USERS_IMG + files.image.newFilename, () => {
-          user
-            .save()
-            .then(() => res.status(201).json({ message: process.env.USER_CREATED }))
-            .catch((error) => res.status(400).json({ error }));
-        });
+        let image = nem.getImgName(fields.name);
+        nem.createThumbnail("users/" + files.image.newFilename, "users/" + image);
+
+        bcrypt
+          .hash(fields.pass, 10)
+          .then((hash) => {
+            let user = new UserModel(this.getUser(
+              fields.name, fields.email, image, hash, fields.role, fields.created, fields.updated
+            ));
+
+            fs.unlink(USERS_IMG + files.image.newFilename, () => {
+              user
+                .save()
+                .then(() => res.status(201).json({ message: process.env.USER_CREATED }))
+                .catch((error) => res.status(400).json({ error }));
+            });
+          })
+          .catch((error) => res.status(400).json({ error }));
       })
-      .catch((error) => res.status(400).json({ error }));
+      .catch((error) => { res.status(404).json({ error }) });
   });
 }
 
 /**
- * CHECK USER
- * @param {object} req
- * @param {object} res
- * @param {function} next
+ * FORGOT PASSWORD
+ * @param {object} req 
+ * @param {object} res 
+ * @param {function} next 
  */
-exports.checkUser = (req, res, next) => {
-  form.parse(req, (err, fields) => {
-
-    if (err) {
-      next(err);
-      return;
-    }
-
-    UserModel
-      .findOne({ name: fields.name })
-      .then((userByName) => {
-
-        if (userByName === null) {
-          UserModel
-            .findOne({ email: fields.email })
-            .then((userByEmail) => {
-
-              if (userByEmail === null) {
-                res.status(200).json(true);
-
-              } else {
-                res.status(400).json({ message: process.env.EXISTING_EMAIL });
-              }
-            })
-            .catch((error) => res.status(404).json({ error }));
-
-        } else {
-          res.status(400).json({ message: process.env.EXISTING_NAME });
-        }
-      })
-      .catch((error) => { res.status(404).json({ error }) });
-  })
-}
-
-/**
- * CHECK EMAIL
- * @param {object} req
- * @param {object} res
- * @param {function} next
- */
-exports.checkEmail = (req, res, next) => {
+exports.forgotPass = (req, res, next) => {
   form.parse(req, (err, fields) => {
 
     if (err) {
