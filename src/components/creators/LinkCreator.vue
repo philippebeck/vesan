@@ -98,7 +98,7 @@ export default {
       if (this.url.startsWith("http")) { this.url = this.url.split('//')[1] }
       if (this.cat === "") { this.cat = this.constants.CAT_LINK }
 
-      if (this.$serve.checkName(this.name) && this.$serve.checkUrl(`https://${this.url}`)) {
+      if (this.$serve.checkString(this.name) && this.$serve.checkUrl(`https://${this.url}`)) {
         let link = new FormData();
 
         link.append("name", this.name);

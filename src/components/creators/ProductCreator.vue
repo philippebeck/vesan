@@ -175,7 +175,9 @@ export default {
      * CREATE PRODUCT
      */
     createProduct() {
-      if (this.$serve.checkName(this.name) && this.$serve.checkText(this.description) && this.$serve.checkText(this.alt)) {
+      if (this.$serve.checkString(this.name) && 
+        this.$serve.checkString(this.description, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
+        this.$serve.checkString(this.alt, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
 
         if (this.cat === "") { this.cat = this.constants.CAT_PRODUCT }
         let image = document.getElementById('image').files[0];

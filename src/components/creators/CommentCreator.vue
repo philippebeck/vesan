@@ -59,7 +59,7 @@ export default {
      * CREATE COMMENT
      */
     createComment() {
-      if (this.$serve.checkText(this.text)) {
+      if (this.$serve.checkString(this.text, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
         let comment = new FormData();
 
         comment.append("text", this.text);
