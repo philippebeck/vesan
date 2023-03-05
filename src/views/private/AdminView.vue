@@ -12,21 +12,33 @@
       <!-- Sidebar -->
       <NavElt class="sidebar">
         <template #first>
-          <a href="#shop"
-            :title="constants.INTRO_SHOP">
-            <i class="fa-solid fa-store fa-fw"></i>
+          <a href="#product"
+            :title="constants.INTRO_PRODUCTS">
+            <i class="fa-regular fa-rectangle-list fa-fw"></i>
           </a>
-          <a href="#blog"
-            :title="constants.INTRO_BLOG">
-            <i class="fa-solid fa-blog fa-fw"></i>
+          <a href="#review"
+            :title="constants.INTRO_REVIEWS">
+            <i class="fa-solid fa-ranking-star fa-fw"></i>
+          </a>
+          <a href="#order"
+            :title="constants.INTRO_ORDERS">
+            <i class="fa-solid fa-gifts fa-fw"></i>
+          </a>
+          <a href="#article"
+            :title="constants.INTRO_ARTICLES">
+            <i class="fa-regular fa-newspaper fa-fw"></i>
+          </a>
+          <a href="#comment"
+            :title="constants.INTRO_COMMENTS">
+            <i class="fa-regular fa-comments fa-fw"></i>
           </a>
           <a v-if="checkRole('admin')"
-            href="#users"
+            href="#user"
             :title="constants.INTRO_USERS">
-            <i class="fa-solid fa-users fa-fw"></i>
+            <i class="fa-solid fa-users-gear fa-fw"></i>
           </a>
           <a v-if="checkRole('admin')"
-            href="#links"
+            href="#link"
             :title="constants.INTRO_LINKS">
             <i class="fa-solid fa-link fa-fw"></i>
           </a>
@@ -41,103 +53,49 @@
     <template #body>
 
       <!-- Shop Part -->
-      <CardElt>
-        <template #header>
-          
-          <h2 id="shop"
-            class="blue anima-bounce">
-            <i class="fa-solid fa-store fa-lg"
-              aria-hidden="true">
-            </i>
-            {{ constants.SHOP_VIEW }}
-          </h2>
-          <p>{{ constants.INTRO_SHOP }}</p>
-        </template>
+      <ProductManager v-if="products.length > 0"
+        id="product"
+        :constants="constants"
+        :products="products"/>
 
-        <template #body>
-          <ProductManager v-if="products.length > 0"
-            :constants="constants"
-            :products="products"/>
+      <ReviewManager v-if="reviews.length > 0"
+        id="review"
+        :constants="constants"
+        :products="products"
+        :reviews="reviews"
+        :users="users"/>
 
-          <ReviewManager v-if="reviews.length > 0"
-            :constants="constants"
-            :products="products"
-            :reviews="reviews"
-            :users="users"/>
-
-          <OrderManager v-if="orders.length > 0"
-            :constants="constants"
-            :orders="orders"
-            :users="users"/>
-        </template>
-      </CardElt>
+      <OrderManager v-if="orders.length > 0"
+        id="order"
+        :constants="constants"
+        :orders="orders"
+        :users="users"/>
 
       <!-- Blog Part -->
-      <CardElt>
-        <template #header>
-          <h2 id="blog"
-            class="blue anima-bounce">
-            <i class="fa-solid fa-blog fa-lg"
-              aria-hidden="true">
-            </i>
-            {{ constants.BLOG_VIEW }}
-          </h2>
-          <p>{{ constants.INTRO_BLOG }}</p>
-        </template>
+      <ArticleManager v-if="articles.length > 0"
+        id="article"
+        :articles="articles"
+        :constants="constants"
+        :users="users"/>
 
-        <template #body>
-          <ArticleManager v-if="articles.length > 0"
-            :articles="articles"
-            :constants="constants"
-            :users="users"/>
-
-          <CommentManager v-if="comments.length > 0"
-            :articles="articles"
-            :comments="comments"
-            :constants="constants"
-            :users="users"/>
-        </template>
-      </CardElt>
+      <CommentManager v-if="comments.length > 0"
+        id="comment"
+        :articles="articles"
+        :comments="comments"
+        :constants="constants"
+        :users="users"/>
 
       <!-- Users Part -->
-      <CardElt v-if="checkRole('admin')">
-        <template #header>
-          <h2 id="users"
-            class="blue anima-bounce">
-            <i class="fa-solid fa-users fa-lg"
-              aria-hidden="true">
-            </i>
-            {{ constants.ADMIN_USERS }}
-          </h2>
-          <p>{{ constants.INTRO_USERS }}</p>
-        </template>
-
-        <template #body>
-          <UserManager v-if="users.length > 0"
-            :constants="constants"
-            :users="users"/>
-        </template>
-      </CardElt>
+      <UserManager v-if="users.length > 0"
+        id="user"
+        :constants="constants"
+        :users="users"/>
 
       <!-- Links Part -->
-      <CardElt v-if="checkRole('admin')">
-        <template #header>
-          <h2 id="links"
-            class="blue anima-bounce">
-            <i class="fa-solid fa-link fa-lg"
-              aria-hidden="true">
-            </i>
-            {{ constants.LINK_VIEW }}
-          </h2>
-          <p>{{ constants.INTRO_LINKS }}</p>
-        </template>
-
-        <template #body>
-          <LinkManager v-if="links.length > 0"
-            :constants="constants"
-            :links="links"/>
-        </template>
-      </CardElt>
+      <LinkManager v-if="links.length > 0"
+        id="link"
+        :constants="constants"
+        :links="links"/>
     </template>
   </CardElt>
 </template>
