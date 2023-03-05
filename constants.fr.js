@@ -471,6 +471,7 @@ export default {
   CONTENT_REVIEW_LOGIN : "Connectez-vous pour évaluer",
   CONTENT_REVIEW_WRITE : "Ecrivez un avis",
   CONTENT_SEND : "Envoyer ",
+  CONTENT_UPDATE : "Mettre à jour ",
 
   /******************** TITLE ********************/
 
