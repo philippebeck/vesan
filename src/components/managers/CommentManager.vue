@@ -68,7 +68,7 @@
               :title="constants.TITLE_COMMENT_MODERATE + comments[slotProps.index]._id">
 
               <template #btn>
-                <i class="fa-solid fa-spell-check"></i>
+                <i class="fa-solid fa-spell-check fa-lg fa-fw"></i>
               </template>
             </BtnElt>
 
@@ -79,7 +79,7 @@
               :title="constants.TITLE_DELETE_COMMENT + comments[slotProps.index]._id">
 
               <template #btn>
-                <i class="fa-solid fa-trash-alt"></i>
+                <i class="fa-solid fa-trash-arrow-up fa-lg fa-fw"></i>
               </template>
             </BtnElt>
           </template>

@@ -95,14 +95,14 @@
 
           <template #body="slotProps">
 
-          <!-- Update -->
-          <BtnElt type="button"
+            <!-- Update -->
+            <BtnElt type="button"
               @click="updateArticle(articles[slotProps.index]._id)" 
               class="btn-sky"
               :title="constants.TITLE_UPDATE + articles[slotProps.index].name">
 
               <template #btn>
-                <i class="fa-solid fa-edit"></i>
+                <i class="fa-solid fa-cloud-arrow-up fa-lg fa-fw"></i>
               </template>
             </BtnElt>
 
@@ -113,7 +113,7 @@
               :title="constants.TITLE_DELETE + articles[slotProps.index].name">
 
               <template #btn>
-                <i class="fa-solid fa-trash-alt"></i>
+                <i class="fa-solid fa-trash-arrow-up fa-lg fa-fw"></i>
               </template>
             </BtnElt>
           </template>
