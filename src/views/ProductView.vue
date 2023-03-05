@@ -175,37 +175,8 @@ export default {
      * CALCULATE SCORES AVERAGE
      * @returns
      */
-    calculateScoresAverage(productId) {
-      let sumData     = {};
-      let averageData = [];
-
-      for (let review of this.reviews) {
-
-        if (sumData[review.product]) {
-          sumData[review.product].sum += review.score;
-          sumData[review.product].n++;
-
-        } else {
-          sumData[review.product] = {
-            sum: review.score,
-            n: 1
-          };
-        }
-      }
-
-      for (let element of Object.keys(sumData)) {
-          averageData.push({
-            product: element,
-              score: sumData[element].sum / sumData[element].n
-          });
-      }
-
-      for (let data of averageData) {
-        if (productId === data.product) {
-
-          return data.score;
-        }
-      }
+    getScoreAverage(productId) {
+      return this.$serve.getScoreAverage(productId, this.reviews);
     },
 
     /**
@@ -268,13 +239,8 @@ export default {
      * SET BASKET
      */
     setBasket() {
-      if (!this.isInBasket) {
-          this.basket.push(this.order);
-      }
-
-      if (this.basket[0] === "") {
-        this.basket.shift();
-      }
+      if (!this.isInBasket) { this.basket.push(this.order) }
+      if (this.basket[0] === "") { this.basket.shift() }
 
       localStorage.setItem("basket", JSON.stringify(this.basket));
       alert(`${this.order.quantity} "${this.product.name}" (${this.order.option}) ${this.constants.ALERT_BASKET_ADDED}`);
