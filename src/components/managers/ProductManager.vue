@@ -155,7 +155,9 @@ export default {
       for (let product of this.products) {
         if (product._id === id) {
 
-          if (this.$serve.checkName(product.name) && this.$serve.checkText(product.description) && this.$serve.checkText(product.alt)) {
+          if (this.$serve.checkString(product.name) && 
+            this.$serve.checkString(product.description, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
+            this.$serve.checkString(product.alt, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
 
             let data  = new FormData();
             let image = document.getElementById(id).files[0] ?? product.image;
