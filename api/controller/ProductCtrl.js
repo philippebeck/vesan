@@ -25,23 +25,23 @@ const form = formidable({ uploadDir: PRODUCTS_IMG, keepExtensions: true });
  * @param {object} res 
  */
 exports.checkProductData = (name, description, alt, price, cat, res) => {
-  if (!nem.checkName(name)) {
+  if (!nem.checkString(name)) {
     return res.status(403).json({ message: process.env.CHECK_NAME });
   }
 
-  if (!nem.checkText(description)) {
+  if (!nem.checkString(description, process.env.TEXT_MIN, process.env.TEXT_MAX)) {
     return res.status(403).json({ message: process.env.CHECK_TEXT });
   }
 
-  if (!nem.checkText(alt)) {
+  if (!nem.checkString(alt, process.env.TEXT_MIN, process.env.TEXT_MAX)) {
     return res.status(403).json({ message: process.env.CHECK_TEXT });
   }
 
-  if (price < 1) {
+  if (!nem.checkNumber(price, process.env.PRICE_MIN, process.env.PRICE_MAX)) {
     return res.status(403).json({ message: process.env.CHECK_PRICE });
   }
 
-  if (cat === "") {
+  if (!nem.checkString(cat)) {
     return res.status(403).json({ message: process.env.CHECK_CAT });
   }
 }

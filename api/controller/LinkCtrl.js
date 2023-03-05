@@ -17,7 +17,7 @@ const form = formidable();
  * @param {object} res 
  */
 exports.checkLinkData = (name, url, cat, res) => {
-  if (!nem.checkName(name)) {
+  if (!nem.checkString(name)) {
     return res.status(403).json({ message: process.env.CHECK_NAME });
   }
 
@@ -25,7 +25,7 @@ exports.checkLinkData = (name, url, cat, res) => {
     return res.status(403).json({ message: process.env.CHECK_URL });
   }
 
-  if (cat === "") {
+  if (!nem.checkString(cat)) {
     return res.status(403).json({ message: process.env.CHECK_CAT });
   }
 }

@@ -25,7 +25,7 @@ const form = formidable({ uploadDir: USERS_IMG, keepExtensions: true });
  * @param {object} res 
  */
 exports.checkUserData = (name, email, role, res) => {
-  if (!nem.checkName(name)) {
+  if (!nem.checkString(name)) {
     return res.status(403).json({ message: process.env.CHECK_NAME });
   }
 
@@ -33,7 +33,7 @@ exports.checkUserData = (name, email, role, res) => {
     return res.status(403).json({ message: process.env.CHECK_EMAIL });
   }
 
-  if (role === "") {
+  if (!nem.checkString(role)) {
     return res.status(403).json({ message: process.env.CHECK_ROLE });
   }
 }
@@ -59,7 +59,7 @@ exports.checkUserUnique = (name, email, user, res) => {
 //! ****************************** GETTERS ******************************
 
 /**
- * GET USER
+ * GET USER CREATED
  * @param {string} name 
  * @param {string} email 
  * @param {string} image 
@@ -69,7 +69,7 @@ exports.checkUserUnique = (name, email, user, res) => {
  * @param {string} updated 
  * @returns 
  */
-exports.getUser = (name, email, image, pass, role, created, updated) => {
+exports.getUserCreated = (name, email, image, pass, role, created, updated) => {
 
   return {
     name: name,
@@ -78,6 +78,48 @@ exports.getUser = (name, email, image, pass, role, created, updated) => {
     pass: pass,
     role: role,
     created: created,
+    updated: updated
+  }
+}
+
+/**
+ * GET USER WITH PASSWORD
+ * @param {string} name 
+ * @param {string} email 
+ * @param {string} image 
+ * @param {string} pass 
+ * @param {string} role 
+ * @param {string} updated 
+ * @returns 
+ */
+exports.getUserWithPass = (name, email, image, pass, role, updated) => {
+
+  return {
+    name: name,
+    email: email,
+    image: image,
+    pass: pass,
+    role: role,
+    updated: updated
+  }
+}
+
+/**
+ * GET USER NO PASSWORD
+ * @param {string} name 
+ * @param {string} email 
+ * @param {string} image 
+ * @param {string} role 
+ * @param {string} updated 
+ * @returns 
+ */
+exports.getUserNoPass = (name, email, image, role, updated) => {
+
+  return {
+    name: name,
+    email: email,
+    image: image,
+    role: role,
     updated: updated
   }
 }
@@ -102,6 +144,8 @@ exports.getImageUpdated = (id, name, newFilename) => {
         })
       })
     )
+    .catch(() => res.status(404).json({ message: process.env.USER_NOT_FOUND }));
+
   return image;
 }
 
@@ -161,7 +205,7 @@ exports.createUser = (req, res, next) => {
         bcrypt
           .hash(fields.pass, 10)
           .then((hash) => {
-            let user = new UserModel(this.getUser(
+            let user = new UserModel(this.getUserCreated(
               fields.name, fields.email, image, hash, fields.role, fields.created, fields.updated
             ));
 
@@ -281,9 +325,9 @@ exports.updateUser = (req, res, next) => {
           .hash(fields.pass, 10)
           .then((hash) => {
 
-            let user = this.getUser(
-              fields.name, fields.email, image, hash, fields.role, fields.created, fields.updated
-            )
+            let user = this.getUserWithPass(
+              fields.name, fields.email, image, hash, fields.role, fields.updated
+            ); 
 
             UserModel
               .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
@@ -293,14 +337,9 @@ exports.updateUser = (req, res, next) => {
           .catch(() => res.status(400).json({ message: process.env.USER_NOT_PASS }));
 
         } else {
-          let user = {
-            name: fields.name,
-            email: fields.email,
-            image: image,
-            role: fields.role,
-            created: fields.created,
-            updated: fields.updated,
-          }
+          let user = this.getUserNoPass(
+            fields.name, fields.email, image, fields.role, fields.updated
+          );
 
           UserModel
             .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })

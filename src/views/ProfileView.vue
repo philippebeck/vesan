@@ -221,7 +221,6 @@ export default {
         user.append("email", this.user.email);
         user.append("image", image);
         user.append("role", this.user.role);
-        user.append("created", this.user.created);
         user.append("updated", Date.now());
 
         if (this.pass !== "") {

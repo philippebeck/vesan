@@ -136,14 +136,9 @@ export default {
     updateStatus(id) {
       for (let order of this.orders) {
         if (order._id === id) {
-          let data = new FormData();
 
-          data.append("products", JSON.stringify(order.products));
-          data.append("total", order.total);
-          data.append("payment", order.payment);
+          let data = new FormData();
           data.append("status", order.status);
-          data.append("user", order.user);
-          data.append("created", order.created);
           data.append("updated", Date.now());
 
           this.$serve.putData(`/api/orders/${id}`, data)

@@ -9,7 +9,28 @@ const UserModel   = require("../model/UserModel");
 require("dotenv").config();
 const form = formidable();
 
-//! ****************************** CREATOR ******************************
+//! ****************************** SETTER ******************************
+
+/**
+ * SET MESSAGE
+ * @param {string} fields 
+ * @param {object} res 
+ */
+exports.setMessage = (fields, res) => {
+  const mailer = nem.getMailer();
+
+  (async function(){
+    try {
+      let mail = nem.getMessage(fields);
+
+      await mailer.sendMail(mail, function() {
+        res.status(202).json({ message: process.env.ORDER_MESSAGE });
+      });
+    } catch(e){ console.error(e); }
+  })();
+}
+
+//! ****************************** CRUD ******************************
 
 /**
  * CREATE MESSAGE
@@ -49,27 +70,6 @@ exports.createMessage = (total, payment, products) => {
   message.html      = message.text + message.products;
 
   return message;
-}
-
-//! ****************************** SETTER ******************************
-
-/**
- * SET MESSAGE
- * @param {string} fields 
- * @param {object} res 
- */
-exports.setMessage = (fields, res) => {
-  const mailer = nem.getMailer();
-
-  (async function(){
-    try {
-      let mail = nem.getMessage(fields);
-
-      await mailer.sendMail(mail, function() {
-        res.status(202).json({ message: process.env.ORDER_MESSAGE });
-      });
-    } catch(e){ console.error(e); }
-  })();
 }
 
 //! ****************************** PRIVATE ******************************
@@ -146,7 +146,9 @@ exports.updateOrder = (req, res, next) => {
       return;
     }
 
-    fields.products = JSON.parse(fields.products);
+    if (fields.products) {
+      fields.products = JSON.parse(fields.products);
+    }
 
     OrderModel
       .findByIdAndUpdate(req.params.id, { ...fields, _id: req.params.id })

@@ -104,7 +104,6 @@ export default {
           if (this.$serve.checkName(this.links[i].name) && this.$serve.checkUrl(`https://${this.links[i].url}`)) {
 
               let link = new FormData();
-
               link.append("name", this.links[i].name);
               link.append("url", this.links[i].url);
               link.append("cat", this.links[i].cat);

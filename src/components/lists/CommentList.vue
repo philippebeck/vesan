@@ -110,10 +110,7 @@ export default {
             let data = new FormData();
 
             data.append("text", comment.text);
-            data.append("article", comment.article);
-            data.append("user", comment.user);
             data.append("moderate", "false");
-            data.append("created", comment.created);
             data.append("updated", Date.now());
 
             this.$serve.putData(`/api/comments/${id}`, data)
