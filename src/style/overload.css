@@ -5,20 +5,9 @@
   --ani-monospace: "Syne Mono", monospace;
 }
 
-[id="text"] ~ *,
-[id="description"] ~ * {
-  margin: auto;
-  max-width: 500px;
-  height: 500px;
-}
-
-[id*="products-"] *,
+[id*="products-"] > *,
 [id*="likes-"] {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-
-.fa-brands {
-  cursor: pointer;
 }
