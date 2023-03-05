@@ -1,20 +1,23 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router"
 
-import AdminView from "../views/AdminView";
-import ProfileView from "../views/ProfileView";
-import ArticleView from "../views/ArticleView";
-import BasketView from "../views/BasketView";
-import BlogView from "../views/BlogView";
-import ContactView from "../views/ContactView";
-import ErrorView from "../views/ErrorView";
-import HomeView from "../views/HomeView";
-import LegalView from "../views/LegalView";
-import LinkView from "../views/LinkView";
-import LoginView from "../views/LoginView";
-import ProductView from "../views/ProductView";
-import ShopView from "../views/ShopView";
+import AdminView from "../views/private/AdminView"
+import ArticleEditor from "../views/private/ArticleEditor"
+import ArticleView from "../views/public/ArticleView"
+import BasketView from "../views/public/BasketView"
+import BlogView from "../views/public/BlogView"
+import ContactView from "../views/public/ContactView"
+import ErrorView from "../views/public/ErrorView"
+import HomeView from "../views/public/HomeView"
+import LegalView from "../views/public/LegalView"
+import LinkView from "../views/public/LinkView"
+import LoginView from "../views/public/LoginView"
+import ProductEditor from "../views/private/ProductEditor"
+import ProductView from "../views/public/ProductView"
+import ProfileView from "../views/private/ProfileView"
+import ShopView from "../views/public/ShopView"
 
 const routes = [
+  // Public
   {
     path: "/",
     name: "home",
@@ -58,12 +61,6 @@ const routes = [
     alias: ["/cart"]
   },
   {
-    path: "/profile",
-    name: "profile",
-    component: ProfileView,
-    alias: ["/account"]
-  },
-  {
     path: "/link",
     name: "link",
     component: LinkView,
@@ -81,12 +78,32 @@ const routes = [
     component: LoginView,
     alias: ["/connection"]
   },
+  // Private
+  {
+    path: "/profile",
+    name: "profile",
+    component: ProfileView,
+    meta: { requiresAuth: true }
+  },
   {
     path: "/admin",
     name: "admin",
     component: AdminView,
     meta: { requiresAuth: true }
   },
+  {
+    path: "/article/edit/:id",
+    name: "articleEditor",
+    component: ArticleEditor,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/product/edit/:id",
+    name: "productEditor",
+    component: ProductEditor,
+    meta: { requiresAuth: true }
+  },
+  // Error
   {
     path: "/:pathMatch(.*)*",
     name: "error",
