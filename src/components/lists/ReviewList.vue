@@ -123,7 +123,8 @@ export default {
       for (let review of this.reviews) {
         if (review._id === id) {
 
-          if (this.$serve.checkText(review.text) && review.score !== null) {
+          if (this.$serve.checkString(review.text, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
+            this.$serve.checkNumber(this.score)) {
             let data = new FormData();
 
             data.append("text", review.text);

@@ -103,7 +103,9 @@ export default {
      * CREATE USER
      */
     createUser() {
-      if (this.$serve.checkName(this.name) && this.$serve.checkEmail(this.email) && this.$serve.checkPass(this.pass)) {
+      if (this.$serve.checkString(this.name) && 
+        this.$serve.checkEmail(this.email) && 
+        this.$serve.checkPass(this.pass)) {
 
         let image = document.getElementById('image').files[0];
 
