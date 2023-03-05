@@ -35,11 +35,14 @@
 
           <!-- Text -->
           <template #cell-text="slotProps">
-            <FieldElt type="textarea"
-              v-model:value="getArticles()[slotProps.index].text"
-              @keyup.enter="updateArticle(articles[slotProps.index]._id)"
-              :info="constants.INFO_UP_TEXT"
-              :max="5000"/>
+            <BtnElt :href="`/article/edit/${articles[slotProps.index]._id}`"
+              class="btn-blue"
+              :title="constants.TITLE_UPDATE + articles[slotProps.index].name">
+
+              <template #btn>
+                <i class="fa-regular fa-edit fa-lg"></i>
+              </template>
+            </BtnElt>
           </template>
 
           <!-- Image -->
