@@ -2,7 +2,7 @@
   <form>
     <TableElt :title="table[0].cat"
       :items="table"
-      v-for="table in sortItemsByCat(links)"
+      v-for="table in getItemsByCat(links)"
       :key="table"
       :id="table[0].cat">
 
@@ -85,8 +85,8 @@ export default {
      * SORT ITEMS BY CATEGORY
      * @param {array} items 
      */
-    sortItemsByCat(items) {
-      return this.$serve.sortItemsByCat(items);
+    getItemsByCat(items) {
+      return this.$serve.getItemsByCat(items);
     },
 
     /**

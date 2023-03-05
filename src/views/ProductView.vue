@@ -8,7 +8,7 @@
 
     <template #body>
 
-      <BtnElt v-if="calculateScoresAverage(product._id) !== undefined"
+      <BtnElt v-if="getScoreAverage(product._id) !== undefined"
         href="#reviews"
         itemprop="aggregateRating"
         itemscope
@@ -18,7 +18,7 @@
 
         <template #btn>
           <b itemprop="ratingValue">
-            {{ calculateScoresAverage(product._id) }}
+            {{ getScoreAverage(product._id) }}
           </b> <i class="fa-solid fa-star fa-lg"></i>
         </template>
       </BtnElt>
