@@ -1,5 +1,5 @@
 <template>
-  <NavElt :items="setCats"
+  <NavElt :items="getCats"
     class="sidebar">
 
     <template #items="slotProps">
@@ -30,7 +30,7 @@
     </template>
 
     <template #body>
-      <ListElt :items="sortItemsByCat(links)"
+      <ListElt :items="getItemsByCat(links)"
         :dynamic="true">
         <template #items="slotProps">
           <i :id="slotProps.index"
@@ -76,8 +76,8 @@ export default {
      * SET CATEGORIES
      * @returns
      */
-    setCats() {
-      return this.$serve.setCats(this.links);
+    getCats() {
+      return this.$serve.getCats(this.links);
     }
   },
 
@@ -97,8 +97,8 @@ export default {
      * SORT ITEMS BY CATEGORY
      * @param {array} items 
      */
-    sortItemsByCat(items) {
-      return this.$serve.sortItemsByCat(items);
+    getItemsByCat(items) {
+      return this.$serve.getItemsByCat(items);
     }
   }
 }

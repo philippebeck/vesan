@@ -124,8 +124,8 @@ exports.getArticleUpdated = (name, text, image, alt, likes, cat, updated) => {
  */
 exports.getImageUpdated = (id, name, newFilename, res) => {
   let image = nem.getImgName(name);
-  nem.createImage( "articles/" + newFilename, "articles/" + image);
-  nem.createThumbnail("articles/" + newFilename, "articles/" + image);
+  nem.setImage( "articles/" + newFilename, "articles/" + image);
+  nem.setThumbnail("articles/" + newFilename, "articles/" + image);
 
   ArticleModel
     .findById(id)
@@ -201,11 +201,11 @@ exports.createArticle = (req, res, next) => {
           this.checkArticleUnique(fields.name, fields.text, article, res);
         }
 
-        let likes = nem.stringToArray(fields.likes);
+        let likes = nem.getArrayFromString(fields.likes);
         let image = nem.getImgName(fields.name);
 
-        nem.createImage("articles/" + files.image.newFilename, "articles/" + image);
-        nem.createThumbnail("articles/" + files.image.newFilename, "articles/" + image);
+        nem.setImage("articles/" + files.image.newFilename, "articles/" + image);
+        nem.setThumbnail("articles/" + files.image.newFilename, "articles/" + image);
 
         let article = new ArticleModel(this.getArticleCreated(
           fields.name, fields.text, image, fields.alt, fields.user, likes, fields.cat, fields.created, fields.updated
@@ -246,7 +246,7 @@ exports.updateArticle = (req, res, next) => {
           }
         }
 
-        let likes = nem.stringToArray(fields.likes);
+        let likes = nem.getArrayFromString(fields.likes);
         let image = fields.image;
 
         if (Object.keys(files).length !== 0) {

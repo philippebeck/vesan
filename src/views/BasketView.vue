@@ -54,7 +54,7 @@
             <FieldElt :id="`quantity-${slotProps.index}`"
               type="number"
               v-model:value="slotProps.item.quantity"
-              @change="updateQuantity(`${slotProps.item.id}`, `${slotProps.item.option}`)"
+              @change="updateProductQuantity(`${slotProps.item.id}`, `${slotProps.item.option}`)"
               :info="constants.INFO_UP_QUANTITY"
               :min="1"
               :max="100">
@@ -75,7 +75,7 @@
 
             <!-- Delete -->
             <BtnElt type="button"
-              @click="deleteItem(`${slotProps.item.id}`, `${slotProps.item.option}`)"
+              @click="deleteProduct(`${slotProps.item.id}`, `${slotProps.item.option}`)"
               class="btn-orange"
               :content="constants.TITLE_DELETE"
               :title="constants.TITLE_DELETE + slotProps.item.name">
@@ -115,7 +115,7 @@
 
           <!-- Clear -->
           <BtnElt type="button"
-            @click="clearBasket()"
+            @click="deleteBasket()"
             class="btn-red width-sm"
             :content="constants.CONTENT_CLEAR"
             :title="constants.TITLE_CLEAR">
@@ -152,14 +152,14 @@ export default {
     this.$serve.getData("/api/products")
       .then(res => { 
         this.products = res;
-        this.getBasket();
+        this.setBasket();
 
         if (this.basket[0] !== undefined) {
           this.setOrder();
-          this.calculateTotal();
+          this.setTotal();
 
           if (this.constants.USER_ID) {
-            this.setPaypal(this.constants, this.getTotal, this.orderProducts);
+            this.setPaypal(this.constants, this.getTotal, this.createOrder);
           }
         }
       })
@@ -171,6 +171,7 @@ export default {
   },
 
   methods: {
+    //! ****************************** CHECKER ******************************
     /**
      * CHECK ROLE
      * @param {string} role
@@ -180,10 +181,22 @@ export default {
       return this.$serve.checkRole(this.user.role, role);
     },
 
+    //! ****************************** GETTER ******************************
+
     /**
-     * GET BASKET
+     * GET TOTAL
+     * @returns
      */
-    getBasket() {
+    getTotal() {
+      return this.total;
+    },
+
+    //! ****************************** SETTERS ******************************
+
+    /**
+     * SET BASKET
+     */
+    setBasket() {
       if (localStorage.getItem("basket") !== null) {
         this.basket = JSON.parse(localStorage.getItem("basket"));
       }
@@ -216,81 +229,12 @@ export default {
     },
 
     /**
-     * UPDATE QUANTITY
-     * @param {string} id 
-     * @param {string} option 
-     */
-    updateQuantity(id, option) {
-      for (let i = 0; i < this.order.length; i++) {
-        let element = this.order[i];
-
-        if (element.id === id && element.option === option) {
-          for (let j = 0; j < this.basket.length; j++) {
-            let item = this.basket[j];
-
-            if (item.id === element.id && item.option === element.option) {
-              this.basket[j].quantity = Number(element.quantity);
-            }
-          }
-        }
-      }
-      this.calculateTotal();
-      localStorage.setItem("basket", JSON.stringify(this.basket));
-    },
-
-    /**
-     * DELETE ITEM
-     * @param {string} id 
-     * @param {string} option 
-     */
-    deleteItem(id, option) {
-      for (let i = 0; i < this.order.length; i++) {
-        let element = this.order[i];
-
-        if (element.id === id && element.option === option) {
-          this.order.splice(i, 1);
-        }
-      }
-
-      for (let i = 0; i < this.basket.length; i++) {
-        let item = this.basket[i];
-
-        if (item.id === id && item.option === option) {
-          this.basket.splice(i, 1);
-        }
-      }
-
-      this.calculateTotal();
-      localStorage.setItem("basket", JSON.stringify(this.basket));
-    },
-
-    /**
-     * CALCULATE TOTAL
-     */
-    calculateTotal() {
-      this.total = 0;
-
-      for (let i = 0; i < this.order.length; i++) {
-        let productTotal = this.order[i].price * this.order[i].quantity
-        this.total += Number(productTotal);
-      }
-    },
-
-    /**
-     * GET TOTAL
-     * @returns
-     */
-    getTotal() {
-      return this.total;
-    },
-
-    /**
      * SET PAYPAL
      * @param {object} constants
      * @param {function} getTotal
-     * @param {function} orderProducts
+     * @param {function} createOrder
      */
-    setPaypal(constants, getTotal, orderProducts) {
+    setPaypal(constants, getTotal, createOrder) {
       loadScript({ 
         "client-id": constants.PAYPAL_ID, 
         "data-namespace": constants.PAYPAL_NAMESPACE,
@@ -321,7 +265,7 @@ export default {
                 return actions.order.capture()
                   .then((orderData) => {
                       alert(constants.PAYPAL_STATUS + orderData.id + " : " + orderData.status);
-                      orderProducts(orderData.id);
+                      createOrder(orderData.id);
                     }
                   );
               },
@@ -349,10 +293,24 @@ export default {
     },
 
     /**
-     * ORDER PRODUCTS
+     * SET TOTAL
+     */
+    setTotal() {
+      this.total = 0;
+
+      for (let i = 0; i < this.order.length; i++) {
+        let productTotal = this.order[i].price * this.order[i].quantity
+        this.total += Number(productTotal);
+      }
+    },
+
+    //! ****************************** CRUD ******************************
+
+    /**
+     * CREATE ORDER
      * @param {string} orderId
      */
-    orderProducts(orderId) {
+    createOrder(orderId) {
       let order     = new FormData();
       let products  = [];
 
@@ -379,9 +337,58 @@ export default {
     },
 
     /**
-     * CLEAR BASKET
+     * UPDATE PRODUCT QUANTITY
+     * @param {string} id 
+     * @param {string} option 
      */
-    clearBasket() {
+    updateProductQuantity(id, option) {
+      for (let i = 0; i < this.order.length; i++) {
+        let element = this.order[i];
+
+        if (element.id === id && element.option === option) {
+          for (let j = 0; j < this.basket.length; j++) {
+            let item = this.basket[j];
+
+            if (item.id === element.id && item.option === element.option) {
+              this.basket[j].quantity = Number(element.quantity);
+            }
+          }
+        }
+      }
+      this.setTotal();
+      localStorage.setItem("basket", JSON.stringify(this.basket));
+    },
+
+    /**
+     * DELETE PRODUCT
+     * @param {string} id 
+     * @param {string} option 
+     */
+    deleteProduct(id, option) {
+      for (let i = 0; i < this.order.length; i++) {
+        let element = this.order[i];
+
+        if (element.id === id && element.option === option) {
+          this.order.splice(i, 1);
+        }
+      }
+
+      for (let i = 0; i < this.basket.length; i++) {
+        let item = this.basket[i];
+
+        if (item.id === id && item.option === option) {
+          this.basket.splice(i, 1);
+        }
+      }
+
+      this.setTotal();
+      localStorage.setItem("basket", JSON.stringify(this.basket));
+    },
+
+    /**
+     * DELETE BASKET
+     */
+    deleteBasket() {
       if (confirm(this.constants.CONFIRM_BASKET) === true) {
         localStorage.removeItem("basket");
         this.$router.go();

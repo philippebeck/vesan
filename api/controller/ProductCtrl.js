@@ -104,8 +104,8 @@ exports.getProduct = (name, description, image, alt, price, options, cat, create
  */
 exports.getImageUpdated = (id, name, newFilename) => {
   let image = nem.getImgName(name);
-  nem.createImage("products/" + newFilename, "products/" + image);
-  nem.createThumbnail("products/" + newFilename, "products/" + image);
+  nem.setImage("products/" + newFilename, "products/" + image);
+  nem.setThumbnail("products/" + newFilename, "products/" + image);
   
   ProductModel
     .findById(id)
@@ -172,11 +172,11 @@ exports.createProduct = (req, res, next) => {
           this.checkProductUnique(fields.name, fields.description, product, res);
         }
 
-        let options = nem.stringToArray(fields.options);
+        let options = nem.getArrayFromString(fields.options);
         let image   = nem.getImgName(fields.name);
 
-        nem.createImage("products/" + files.image.newFilename, "products/" + image);
-        nem.createThumbnail("products/" + files.image.newFilename, "products/" + image);
+        nem.setImage("products/" + files.image.newFilename, "products/" + image);
+        nem.setThumbnail("products/" + files.image.newFilename, "products/" + image);
 
         let product = new ProductModel(this.getProduct(
           fields.name, fields.description, image, fields.alt, fields.price, options, fields.cat, fields.created, fields.updated
@@ -218,7 +218,7 @@ exports.updateProduct = (req, res, next) => {
           }
         }
 
-        let options = nem.stringToArray(fields.options);
+        let options = nem.getArrayFromString(fields.options);
         let image   = fields.image;
     
         if (Object.keys(files).length !== 0) {

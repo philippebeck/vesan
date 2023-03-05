@@ -1,5 +1,5 @@
 <template>
-  <NavElt :items="setCats"
+  <NavElt :items="getCats"
     class="sidebar">
 
     <template #last v-if="checkRole('editor')">
@@ -26,7 +26,7 @@
     </template>
 
     <template #body>
-      <ListElt :items="sortItemsByCat(products)"
+      <ListElt :items="getItemsByCat(products)"
         :dynamic="true">
 
         <template #items="slotProps">
@@ -48,7 +48,7 @@
             </template>
 
             <template #body>
-              <BtnElt v-if="calculateScoresAverage(slotProps.value._id) !== undefined"
+              <BtnElt v-if="getScoreAverage(slotProps.value._id) !== undefined"
                 :href="`product/${slotProps.value._id}#reviews`"
                 itemprop="aggregateRating"
                 itemscope
@@ -58,7 +58,7 @@
 
                 <template #btn>
                   <b itemprop="ratingValue">
-                    {{ calculateScoresAverage(slotProps.value._id) }}
+                    {{ getScoreAverage(slotProps.value._id) }}
                   </b> <i class="fa-solid fa-star"></i>
                 </template>
               </BtnElt>
@@ -147,8 +147,8 @@ export default {
      * SET CATEGORIES
      * @returns
      */
-    setCats() {
-      return this.$serve.setCats(this.products);
+    getCats() {
+      return this.$serve.getCats(this.products);
     }
   },
 
@@ -168,45 +168,16 @@ export default {
      * SORT ITEMS BY CATEGORY
      * @param {array} items 
      */
-    sortItemsByCat(items) {
-      return this.$serve.sortItemsByCat(items);
+    getItemsByCat(items) {
+      return this.$serve.getItemsByCat(items);
     },
 
     /** 
-     * CALCULATE SCORES AVERAGE
+     * GET SCORES AVERAGE
      * @returns
      */
-    calculateScoresAverage(productId) {
-      let sumData     = {};
-      let averageData = [];
-
-      for (let review of this.reviews) {
-
-        if (sumData[review.product]) {
-          sumData[review.product].sum += review.score;
-          sumData[review.product].n++;
-
-        } else {
-          sumData[review.product] = {
-            sum: review.score,
-            n: 1
-          };
-        }
-      }
-
-      for (let element of Object.keys(sumData)) {
-          averageData.push({
-            product: element,
-              score: sumData[element].sum / sumData[element].n
-          });
-      }
-
-      for (let data of averageData) {
-        if (productId === data.product) {
-
-          return data.score;
-        }
-      }
+    getScoreAverage(productId) {
+      return this.$serve.getScoreAverage(productId, this.reviews);
     }
   }
 }

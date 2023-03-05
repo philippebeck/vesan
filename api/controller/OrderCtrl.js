@@ -59,11 +59,11 @@ exports.createMessage = (total, payment, products) => {
  * @param {object} res 
  */
 exports.setMessage = (fields, res) => {
-  const mailer = nem.createMailer();
+  const mailer = nem.getMailer();
 
   (async function(){
     try {
-      let mail = nem.createMessage(fields);
+      let mail = nem.getMessage(fields);
 
       await mailer.sendMail(mail, function() {
         res.status(202).json({ message: process.env.ORDER_MESSAGE });

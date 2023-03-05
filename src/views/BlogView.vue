@@ -1,5 +1,5 @@
 <template>
-  <NavElt :items="setCats"
+  <NavElt :items="getCats"
     class="sidebar">
 
     <template #last  v-if="checkRole('editor')">
@@ -27,7 +27,7 @@
     </template>
 
     <template #body>
-      <ListElt :items="sortItemsByCat(articles)"
+      <ListElt :items="getItemsByCat(articles)"
         :dynamic="true">
 
         <template #items="slotProps">
@@ -142,8 +142,8 @@ export default {
      * SET CATEGORIES
      * @returns
      */
-    setCats() {
-      return this.$serve.setCats(this.articles);
+    getCats() {
+      return this.$serve.getCats(this.articles);
     }
   },
 
@@ -164,8 +164,8 @@ export default {
      * @param {array} items 
      * @returns
      */
-    sortItemsByCat(items) {
-      return this.$serve.sortItemsByCat(items);
+    getItemsByCat(items) {
+      return this.$serve.getItemsByCat(items);
     },
 
     /**

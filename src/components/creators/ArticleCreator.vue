@@ -42,8 +42,9 @@
               @keyup.enter="createArticle()"
               :init="{
                 toolbar:
-                  'undo redo outdent indent align | \
-                  bold italic underline strikethrough backcolor'
+                  'undo redo outdent indent align lineheight | \
+                  bold italic underline strikethrough backcolor | \
+                  blocks fontfamily fontsize'
               }"/>
           </template>
 

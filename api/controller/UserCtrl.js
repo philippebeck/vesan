@@ -91,7 +91,7 @@ exports.getUser = (name, email, image, pass, role, created, updated) => {
  */
 exports.getImageUpdated = (id, name, newFilename) => {
   let image = nem.getImgName(name);
-  nem.createThumbnail("users/" + newFilename, "users/" + image);
+  nem.setThumbnail("users/" + newFilename, "users/" + image);
 
   UserModel
     .findById(id)
@@ -113,11 +113,11 @@ exports.getImageUpdated = (id, name, newFilename) => {
  * @param {object} res 
  */
 exports.setMessage = (fields, res) => {
-  const mailer = nem.createMailer();
+  const mailer = nem.getMailer();
 
   (async function(){
     try {
-      let mail = nem.createMessage(fields);
+      let mail = nem.getMessage(fields);
 
       await mailer.sendMail(mail, function() {
         res.status(202).json({ message: process.env.USER_MESSAGE });
@@ -156,7 +156,7 @@ exports.createUser = (req, res, next) => {
         }
 
         let image = nem.getImgName(fields.name);
-        nem.createThumbnail("users/" + files.image.newFilename, "users/" + image);
+        nem.setThumbnail("users/" + files.image.newFilename, "users/" + image);
 
         bcrypt
           .hash(fields.pass, 10)
