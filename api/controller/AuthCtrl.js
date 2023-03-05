@@ -9,6 +9,19 @@ const UserModel = require("../model/UserModel");
 require("dotenv").config();
 const form = formidable();
 
+//! ****************************** CHECKER ******************************
+
+/**
+ * CHECK AUTH DATA
+ * @param {string} email 
+ * @param {object} res 
+ */
+exports.checkAuthData = (email, res) => {
+  if (!nem.checkEmail(email)) {
+    return res.status(403).json({ message: process.env.CHECK_EMAIL });
+  }
+}
+
 //! ****************************** GETTER ******************************
 
 /**
@@ -113,9 +126,7 @@ exports.forgotPass = (req, res, next) => {
       return;
     }
 
-    if (!nem.checkEmail(fields.email)) {
-      return res.status(403).json({ message: process.env.CHECK_EMAIL });
-    }
+    this.checkAuthData(fields.email, res);
 
     UserModel
       .findOne({ email: fields.email })
