@@ -1,12 +1,12 @@
 <template>
   <CardElt>
     <template #header>
-      <h3>
+      <h2>
         <i class="fa-regular fa-newspaper fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.ARTICLE_MANAGER }}
-      </h3>
+      </h2>
     </template>
 
     <template #body>
@@ -35,11 +35,14 @@
 
           <!-- Text -->
           <template #cell-text="slotProps">
-            <FieldElt type="textarea"
-              v-model:value="getArticles()[slotProps.index].text"
-              @keyup.enter="updateArticle(articles[slotProps.index]._id)"
-              :info="constants.INFO_UP_TEXT"
-              :max="5000"/>
+            <BtnElt :href="`/article/edit/${articles[slotProps.index]._id}`"
+              class="btn-blue"
+              :title="constants.TITLE_UPDATE + articles[slotProps.index].name">
+
+              <template #btn>
+                <i class="fa-regular fa-edit fa-lg"></i>
+              </template>
+            </BtnElt>
           </template>
 
           <!-- Image -->
@@ -95,14 +98,14 @@
 
           <template #body="slotProps">
 
-          <!-- Update -->
-          <BtnElt type="button"
+            <!-- Update -->
+            <BtnElt type="button"
               @click="updateArticle(articles[slotProps.index]._id)" 
               class="btn-sky"
               :title="constants.TITLE_UPDATE + articles[slotProps.index].name">
 
               <template #btn>
-                <i class="fa-solid fa-edit"></i>
+                <i class="fa-solid fa-cloud-arrow-up fa-lg fa-fw"></i>
               </template>
             </BtnElt>
 
@@ -113,7 +116,7 @@
               :title="constants.TITLE_DELETE + articles[slotProps.index].name">
 
               <template #btn>
-                <i class="fa-solid fa-trash-alt"></i>
+                <i class="fa-solid fa-trash-arrow-up fa-lg fa-fw"></i>
               </template>
             </BtnElt>
           </template>

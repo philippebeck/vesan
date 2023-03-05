@@ -1,71 +1,84 @@
 <template>
-  <form>
-    <TableElt :title="table[0].cat"
-      :items="table"
-      v-for="table in getItemsByCat(links)"
-      :key="table"
-      :id="table[0].cat">
+    <CardElt>
+    <template #header>
+      <h2>
+        <i class="fa-solid fa-link fa-lg"
+          aria-hidden="true">
+        </i>
+        {{ constants.LINK_MANAGER }}
+      </h2>
+    </template>
 
-      <template #title>
-        <i :class="`fa-brands fa-${table[0].cat.toLowerCase()} fa-5x sky anima-grow`"></i>
-      </template>
+    <template #body>
+      <form>
+        <TableElt :title="table[0].cat"
+          :items="table"
+          v-for="table in getItemsByCat(links)"
+          :key="table"
+          :id="table[0].cat">
 
-      <template #head>up/del</template>
-
-      <!-- Id -->
-      <template #cell-_id="slotProps">
-        #{{ slotProps.index + 1 }}
-        ({{ slotProps.item._id }})
-      </template>
-
-      <!-- Name -->
-      <template #cell-name="slotProps">
-        <FieldElt v-model:value="table[slotProps.index].name"
-          @keyup.enter="updateLink(table[slotProps.index]._id)"
-          :info="constants.INFO_UP_NAME"/>
-      </template>
-
-      <!-- URL -->
-      <template #cell-url="slotProps">
-        <FieldElt type="url"
-          v-model:value="table[slotProps.index].url"
-          @keyup.enter="updateLink(table[slotProps.index]._id)"
-          :info="constants.INFO_UP_URL"
-          :max="parseInt('100')"/>
-      </template>
-
-      <!-- Category -->
-      <template #cell-cat="slotProps">
-        <FieldElt type="select"
-          :list="constants.CATS_LINK"
-          v-model:value="table[slotProps.index].cat"
-          @keyup.enter="updateLink(table[slotProps.index]._id)"
-          :info="constants.INFO_UP_CATEGORY"/>
-      </template>
-
-      <!-- Update -->
-      <template #body="slotProps">
-        <BtnElt type="button"
-          @click="updateLink(table[slotProps.index]._id)" 
-          class="btn-sky"
-          :title="'Update ' + table[slotProps.index].name">
-          <template #btn>
-            <i class="fa-solid fa-edit"></i>
+          <template #title>
+            <i :class="`fa-brands fa-${table[0].cat.toLowerCase()} fa-5x sky anima-grow`"></i>
           </template>
-        </BtnElt>
 
-      <!-- Delete -->
-        <BtnElt type="button"
-          @click="deleteLink(table[slotProps.index]._id)" 
-          class="btn-red"
-          :title="'Delete ' + table[slotProps.index].name">
-          <template #btn>
-            <i class="fa-solid fa-trash-alt"></i>
+          <template #head>up/del</template>
+
+          <!-- Id -->
+          <template #cell-_id="slotProps">
+            #{{ slotProps.index + 1 }}
+            ({{ slotProps.item._id }})
           </template>
-        </BtnElt>
-      </template>
-    </TableElt>
-  </form>
+
+          <!-- Name -->
+          <template #cell-name="slotProps">
+            <FieldElt v-model:value="table[slotProps.index].name"
+              @keyup.enter="updateLink(table[slotProps.index]._id)"
+              :info="constants.INFO_UP_NAME"/>
+          </template>
+
+          <!-- URL -->
+          <template #cell-url="slotProps">
+            <FieldElt type="url"
+              v-model:value="table[slotProps.index].url"
+              @keyup.enter="updateLink(table[slotProps.index]._id)"
+              :info="constants.INFO_UP_URL"
+              :max="parseInt('100')"/>
+          </template>
+
+          <!-- Category -->
+          <template #cell-cat="slotProps">
+            <FieldElt type="select"
+              :list="constants.CATS_LINK"
+              v-model:value="table[slotProps.index].cat"
+              @keyup.enter="updateLink(table[slotProps.index]._id)"
+              :info="constants.INFO_UP_CATEGORY"/>
+          </template>
+
+          <!-- Update -->
+          <template #body="slotProps">
+            <BtnElt type="button"
+              @click="updateLink(table[slotProps.index]._id)" 
+              class="btn-sky"
+              :title="'Update ' + table[slotProps.index].name">
+              <template #btn>
+                <i class="fa-solid fa-cloud-arrow-up fa-lg fa-fw"></i>
+              </template>
+            </BtnElt>
+
+          <!-- Delete -->
+            <BtnElt type="button"
+              @click="deleteLink(table[slotProps.index]._id)" 
+              class="btn-red"
+              :title="'Delete ' + table[slotProps.index].name">
+              <template #btn>
+                <i class="fa-solid fa-trash-arrow-up fa-lg fa-fw"></i>
+              </template>
+            </BtnElt>
+          </template>
+        </TableElt>
+      </form>
+    </template>
+  </CardElt>
 </template>
 
 <script>

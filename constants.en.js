@@ -20,9 +20,6 @@ export default {
   LOGO_ALT : "Logo",
   LOGO_SRC : "/img/logo.svg",
 
-  NAME_MIN : 2,
-  NAME_MAX : 50,
-
   ORDER_STATUS : "Pending",
 
   PASS_INT : 1,
@@ -329,7 +326,9 @@ export default {
 
   // PRIVATE VIEWS
   ADMIN_VIEW : "Admin",
+  ARTICLE_EDITOR : "Edit an article",
   PROFILE_VIEW : "Profile",
+  PRODUCT_EDITOR : "Edit a product",
   // PUBLIC VIEWS
   BASKET_VIEW : "Basket",
   BLOG_VIEW : "Blog",
@@ -367,9 +366,11 @@ export default {
   /******************** INTRO ********************/
 
   INTRO_ADMIN : "Manage all data !",
-  INTRO_ARTICLES : "Articles to read !",
+  INTRO_ARTICLE : "Articles to read !",
+  INTRO_ARTICLES : "Manage articles",
   INTRO_BASKET : "Use the Paypal button to order",
   INTRO_BLOG : "Manage articles & comments",
+  INTRO_COMMENTS : "Manage comments",
   INTRO_CONTACT : "Contact me if you have any question",
   INTRO_ERROR : "Page not found !",
   INTRO_FORGOT : "Need a new password ?",
@@ -377,8 +378,11 @@ export default {
   INTRO_LEGAL : "Version 2.0, January 2004",
   INTRO_LINK : "Links for dev !",
   INTRO_LINKS : "Manage links",
-  INTRO_PRODUCTS : "Products to buy !",
+  INTRO_ORDERS : "Manage orders",
+  INTRO_PRODUCT : "Products to buy !",
+  INTRO_PRODUCTS : "Manage products",
   INTRO_PROFILE : "Manage your profile & your orders",
+  INTRO_REVIEWS : "Manage reviews",
   INTRO_SHOP : "Manage products, reviews & orders",
   INTRO_SIGNIN : "Sign in to your account !",
   INTRO_SIGNUP : "Sign up to comment & review !",
@@ -468,6 +472,7 @@ export default {
   CONTENT_REVIEW_LOGIN : "Login to review",
   CONTENT_REVIEW_WRITE : "Write a review",
   CONTENT_SEND : "Send ",
+  CONTENT_UPDATE : "Update ",
 
   /******************** TITLE ********************/
 

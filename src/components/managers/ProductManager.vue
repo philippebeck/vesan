@@ -1,12 +1,12 @@
 <template>
   <CardElt>
     <template #header>
-      <h3>
+      <h2>
         <i class="fa-regular fa-rectangle-list fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.PRODUCT_MANAGER }}
-      </h3>
+      </h2>
     </template>
 
     <template #body>
@@ -35,11 +35,14 @@
 
           <!-- Description -->
           <template #cell-description="slotProps">
-            <FieldElt type="textarea"
-              v-model:value="getProducts()[slotProps.index].description"
-              @keyup.enter="updateProduct(products[slotProps.index]._id)"
-              :info="constants.INFO_UP_DESCRIPTION"
-              :max="5000"/>
+            <BtnElt :href="`/product/edit/${products[slotProps.index]._id}`"
+              class="btn-blue"
+              :title="constants.TITLE_UPDATE + products[slotProps.index].name">
+
+              <template #btn>
+                <i class="fa-regular fa-edit fa-lg"></i>
+              </template>
+            </BtnElt>
           </template>
 
           <!-- Image -->
@@ -108,7 +111,7 @@
               :title="constants.TITLE_UPDATE + products[slotProps.index].name">
 
               <template #btn>
-                <i class="fa-solid fa-edit"></i>
+                <i class="fa-solid fa-cloud-arrow-up fa-lg fa-fw"></i>
               </template>
             </BtnElt>
 
@@ -119,7 +122,7 @@
               :title="constants.TITLE_DELETE + products[slotProps.index].name">
 
               <template #btn>
-                <i class="fa-solid fa-trash-alt"></i>
+                <i class="fa-solid fa-trash-arrow-up fa-lg fa-fw"></i>
               </template>
             </BtnElt>
 

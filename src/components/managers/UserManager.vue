@@ -1,12 +1,12 @@
 <template>
   <CardElt>
     <template #header>
-      <h3>
+      <h2>
         <i class="fa-solid fa-users-gear fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.USER_MANAGER }}
-      </h3>
+      </h2>
     </template>
 
     <template #body>
@@ -78,7 +78,7 @@
               :title="constants.TITLE_UPDATE + users[slotProps.index].name">
 
               <template #btn>
-                <i class="fa-solid fa-edit"></i>
+                <i class="fa-solid fa-cloud-arrow-up fa-lg fa-fw"></i>
               </template>
             </BtnElt>
 
@@ -89,7 +89,7 @@
               :title="constants.TITLE_DELETE + users[slotProps.index].name">
 
               <template #btn>
-                <i class="fa-solid fa-trash-alt"></i>
+                <i class="fa-solid fa-trash-arrow-up fa-lg fa-fw"></i>
               </template>
             </BtnElt>
           </template>

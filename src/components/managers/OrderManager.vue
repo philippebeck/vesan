@@ -1,12 +1,12 @@
 <template>
   <CardElt>
     <template #header>
-      <h3>
+      <h2>
         <i class="fa-solid fa-gifts fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.ORDER_MANAGER }}
-      </h3>
+      </h2>
     </template>
 
     <template #body>
@@ -88,7 +88,7 @@
               class="btn-green"
               :title="constants.INFO_UP_ORDER + orders[slotProps.index]._id">
               <template #btn>
-                <i class="fa-regular fa-calendar-check"></i>
+                <i class="fa-regular fa-calendar-check fa-lg fa-fw"></i>
               </template>
             </BtnElt>
 
@@ -98,7 +98,7 @@
               class="btn-red"
               :title="constants.TITLE_DELETE_ORDER + orders[slotProps.index]._id">
               <template #btn>
-                <i class="fa-solid fa-trash-alt"></i>
+                <i class="fa-solid fa-trash-arrow-up fa-lg fa-fw"></i>
               </template>
             </BtnElt>
           </template>
