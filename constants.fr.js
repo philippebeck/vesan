@@ -20,9 +20,6 @@ export default {
   LOGO_ALT : "Logo",
   LOGO_SRC : "/img/logo.svg",
 
-  NAME_MIN : 2,
-  NAME_MAX : 50,
-
   ORDER_STATUS : "En attente",
 
   PASS_INT : 1,
@@ -329,7 +326,9 @@ export default {
 
   // PRIVATE VIEWS
   ADMIN_VIEW : "Admin",
+  ARTICLE_EDITOR : "Éditer un article",
   PROFILE_VIEW : "Profil",
+  PRODUCT_EDITOR : "Éditer un produit",
   // PUBLIC VIEWS
   BASKET_VIEW : "Panier",
   BLOG_VIEW : "Blog",
@@ -367,18 +366,22 @@ export default {
   /******************** INTRO ********************/
 
   INTRO_ADMIN : "Gérez toutes les données !",
-  INTRO_ARTICLES : "Articles à lire !",
+  INTRO_ARTICLE : "Articles à lire !",
+  INTRO_ARTICLES : "Gérer les articles",
   INTRO_BASKET : "Utilisez le bouton Paypal pour commander",
-  INTRO_BLOG : "Gérer les articles et les commentaires",
+  INTRO_COMMENTS : "Gérer les commentaires",
   INTRO_CONTACT : "Contactez-moi si vous avez des questions",
   INTRO_ERROR : "Page non trouvée !",
   INTRO_FORGOT : "Besoin d'un nouveau mot de passe ?",
-  INTRO_HOME : "CMS avec Vue-Elt, Servidio, Animadio & NemJS",
+  INTRO_HOME : "Développeur fullstack, formateur aux métiers du Web & consultant digital",
   INTRO_LEGAL : "Version 2.0, Janvier 2004",
   INTRO_LINK : "Liens pour dev !",
   INTRO_LINKS : "Gérer les liens",
-  INTRO_PRODUCTS : "Produits à acheter !",
+  INTRO_ORDERS : "Gérer les commandes",
+  INTRO_PRODUCT : "Services garantis !",
+  INTRO_PRODUCTS : "Gérer les produits",
   INTRO_PROFILE : "Gérez votre profil & vos commandes",
+  INTRO_REVIEWS : "Gérer les avis",
   INTRO_SHOP : "Gérer les produits, les avis et les commandes",
   INTRO_SIGNIN : "Connectez-vous à votre compte !",
   INTRO_SIGNUP : "Inscrivez-vous pour commenter et écrire vos avis !",
