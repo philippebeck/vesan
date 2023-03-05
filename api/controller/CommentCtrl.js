@@ -9,6 +9,17 @@ const UserModel     = require("../model/UserModel");
 require("dotenv").config();
 const form = formidable();
 
+/**
+ * CHECK COMMENT DATA
+ * @param {string} text 
+ * @param {object} res 
+ */
+exports.checkCommentData = (text, res) => {
+  if (!nem.checkString(text, process.env.TEXT_MIN, process.env.TEXT_MAX)) {
+    return res.status(403).json({ message: process.env.CHECK_TEXT });
+  }
+}
+
 //! ****************************** PUBLIC ******************************
 
 /**
@@ -68,10 +79,7 @@ exports.createComment = (req, res, next) => {
       return;
     }
 
-    if (!nem.checkText(fields.text)) {
-      return res.status(403).json({ message: process.env.CHECK_TEXT });
-    }
-
+    this.checkCommentData(fields.text, res);
     let comment = new CommentModel(fields);
 
     comment
@@ -95,9 +103,7 @@ exports.updateComment = (req, res, next) => {
       return;
     }
 
-    if (!nem.checkText(fields.text)) {
-      return res.status(403).json({ message: process.env.CHECK_TEXT });
-    }
+    this.checkCommentData(fields.text, res);
 
     CommentModel
       .findByIdAndUpdate(req.params.id, { ...fields, _id: req.params.id })
