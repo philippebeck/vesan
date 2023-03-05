@@ -128,10 +128,7 @@ export default {
 
             data.append("text", review.text);
             data.append("score", review.score);
-            data.append("product", review.product);
-            data.append("user", review.user);
             data.append("moderate", "false");
-            data.append("created", review.created);
             data.append("updated", Date.now());
 
             this.$serve.putData(`/api/reviews/${id}`, data)

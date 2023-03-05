@@ -130,7 +130,6 @@ export default {
             data.append("email", user.email);
             data.append("image", image);
             data.append("role", user.role);
-            data.append("created", user.created);
             data.append("updated", Date.now());
 
             this.$serve.putData(`/api/users/${id}`, data)
