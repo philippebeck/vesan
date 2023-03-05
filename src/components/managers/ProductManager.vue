@@ -108,7 +108,7 @@
               :title="constants.TITLE_UPDATE + products[slotProps.index].name">
 
               <template #btn>
-                <i class="fa-solid fa-edit"></i>
+                <i class="fa-solid fa-cloud-arrow-up fa-lg fa-fw"></i>
               </template>
             </BtnElt>
 
@@ -119,7 +119,7 @@
               :title="constants.TITLE_DELETE + products[slotProps.index].name">
 
               <template #btn>
-                <i class="fa-solid fa-trash-alt"></i>
+                <i class="fa-solid fa-trash-arrow-up fa-lg fa-fw"></i>
               </template>
             </BtnElt>
 
