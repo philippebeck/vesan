@@ -14,7 +14,7 @@
         enctype="multipart/form-data">
         <ListElt :items="constants.USER_FORM">
 
-          <!-- User Name -->
+          <!-- Name -->
           <template #item-1>
             <FieldElt v-model:value="user.name"
               @keyup.enter="updateUser()"
@@ -30,7 +30,7 @@
             </FieldElt>
           </template>
 
-          <!-- User Email -->
+          <!-- Email -->
           <template #item-2>
             <FieldElt type="email"
               v-model:value="user.email"
@@ -46,16 +46,16 @@
             </FieldElt>
           </template>
           
-          <!-- User Image -->
+          <!-- Image -->
           <template #item-3>
             <MediaElt v-if="user.image"
               :src="'/img/thumbnails/users/' + user.image"
               :alt="user.name" />
 
-            <FieldElt id="user-image"
+            <FieldElt id="image"
+              type="file"
               v-model:value="image"
-              :info="constants.INFO_IMAGE"
-              type="file">
+              :info="constants.INFO_IMAGE">
 
               <template #legend>
                 {{ constants.LEGEND_IMAGE }}
@@ -66,7 +66,7 @@
             </FieldElt>
           </template>
 
-          <!-- User Pass -->
+          <!-- Pass -->
           <template #item-4>
             <FieldElt type="password"
               v-model:value="pass"
@@ -83,7 +83,7 @@
           </template>
         </ListElt>
 
-        <!-- Update Button -->
+        <!-- Update -->
         <BtnElt type="button"
           @click="updateUser()" 
           class="btn-blue"
@@ -95,7 +95,7 @@
           </template>
         </BtnElt>
 
-        <!-- Delete Button -->
+        <!-- Delete -->
         <BtnElt type="button"
           @click="deleteUser()" 
           class="btn-red"
@@ -215,7 +215,7 @@ export default {
       if (this.$serve.checkName(this.user.name) && this.$serve.checkEmail(this.user.email)) {
 
         let user  = new FormData();
-        let image = document.getElementById("user-image").files[0] ?? this.user.image;
+        let image = document.getElementById("image").files[0] ?? this.user.image;
 
         user.append("name", this.user.name);
         user.append("email", this.user.email);
