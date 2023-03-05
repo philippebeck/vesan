@@ -43,11 +43,11 @@ exports.getUser = (name, email, image, pass, role, created, updated) => {
  * @param {object} res 
  */
 exports.setMessage = (fields, res) => {
-  const mailer = nem.createMailer();
+  const mailer = nem.getMailer();
 
   (async function(){
     try {
-      let mail = nem.createMessage(fields);
+      let mail = nem.getMessage(fields);
 
       await mailer.sendMail(mail, function() {
         res.status(202).json({ message: process.env.AUTH_MESSAGE });
@@ -94,7 +94,7 @@ exports.loginUser = (req, res, next) => {
 
     UserModel
       .findOne({ email: fields.email })
-      .then((user) => { nem.checkLogin(fields.pass, user, res) })
+      .then((user) => { nem.setAuth(fields.pass, user, res) })
       .catch(() => res.status(401).json({ message: process.env.AUTH_LOGIN }));
   })
 }
@@ -121,7 +121,7 @@ exports.forgotPass = (req, res, next) => {
       .findOne({ email: fields.email })
       .then((user) => {
         if (user !== null) {
-          let pass = nem.generatePass();
+          let pass = nem.getGeneratePass();
 
           fields.html = `
             <p>${fields.html}</p>
