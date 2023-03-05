@@ -20,6 +20,9 @@ export default {
   LOGO_ALT : "Logo",
   LOGO_SRC : "/img/logo.svg",
 
+  NUM_MAX : 5,
+  NUM_MIN : 0,
+
   ORDER_STATUS : "Pending",
 
   PASS_INT : 1,
@@ -526,11 +529,11 @@ export default {
   ALERT_SENDED : " sended !",
   ALERT_UPDATED : " updated !",
   // SERVIDIO
-  CHECK_NAME : "The Name must have between 2 & 50 characters.",
   CHECK_EMAIL : "Your Email is not a valid address.",
+  CHECK_NUMBER : "The number must be between ",
   CHECK_PASS : "Your Password must have 8 to 50 characters, with uppercase, lowercase, 1 number minimum & no space.",
+  CHECK_STRING : "The number of characters must be between ",
   CHECK_URL : "This URL is not a valid path.",
-  CHECK_TEXT : "The text must have between 8 & 5000 characters.",
 
   /******************** CONFIRM ********************/
 

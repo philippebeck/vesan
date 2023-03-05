@@ -157,7 +157,9 @@ export default {
       for (let article of this.articles) {
         if (article._id === id) {
 
-          if (this.$serve.checkName(article.name) && this.$serve.checkText(article.text) && this.$serve.checkText(article.alt)) {
+          if (this.$serve.checkString(article.name) && 
+            this.$serve.checkString(article.text, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
+            this.$serve.checkString(article.alt, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
 
             let data  = new FormData();
             let image = document.getElementById(id).files[0] ?? article.image;

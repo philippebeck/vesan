@@ -106,7 +106,7 @@ export default {
       for (let comment of this.comments) {
         if (comment._id === id) {
 
-          if (this.$serve.checkText(comment.text)) {
+          if (this.$serve.checkString(comment.text, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
             let data = new FormData();
 
             data.append("text", comment.text);

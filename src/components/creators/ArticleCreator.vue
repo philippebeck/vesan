@@ -140,7 +140,9 @@ export default {
      * CREATE ARTICLE
      */
     createArticle() {
-      if (this.$serve.checkName(this.name) && this.$serve.checkText(this.text) && this.$serve.checkText(this.alt)) {
+      if (this.$serve.checkString(this.name) && 
+        this.$serve.checkString(this.text, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
+        this.$serve.checkString(this.alt, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
 
         if (this.cat === "") { this.cat = this.constants.CAT_ARTICLE }
         let image = document.getElementById('image').files[0];

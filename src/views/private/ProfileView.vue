@@ -212,7 +212,7 @@ export default {
      * UPDATE USER
      */
     updateUser() {
-      if (this.$serve.checkName(this.user.name) && this.$serve.checkEmail(this.user.email)) {
+      if (this.$serve.checkString(this.user.name) && this.$serve.checkEmail(this.user.email)) {
 
         let user  = new FormData();
         let image = document.getElementById("image").files[0] ?? this.user.image;

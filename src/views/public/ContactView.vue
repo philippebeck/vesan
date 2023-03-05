@@ -109,8 +109,8 @@ export default {
      */
     send() {
       if (this.$serve.checkEmail(this.email) && 
-        this.$serve.checkName(this.subject) && 
-        this.$serve.checkText(this.text)) {
+        this.$serve.checkString(this.subject) && 
+        this.$serve.checkString(this.text, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
 
         let message = new FormData();
 

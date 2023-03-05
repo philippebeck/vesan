@@ -114,7 +114,7 @@ export default {
             this.getLinks()[i].url = this.links[i].url.split('//')[1];
           }
 
-          if (this.$serve.checkName(this.links[i].name) && this.$serve.checkUrl(`https://${this.links[i].url}`)) {
+          if (this.$serve.checkString(this.links[i].name) && this.$serve.checkUrl(`https://${this.links[i].url}`)) {
 
               let link = new FormData();
               link.append("name", this.links[i].name);

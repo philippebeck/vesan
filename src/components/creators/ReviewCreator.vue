@@ -76,7 +76,8 @@ export default {
      * CREATE REVIEW
      */
     createReview() {
-      if (this.$serve.checkText(this.text) && this.score !== null) {
+      if (this.$serve.checkString(this.text, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
+        this.$serve.checkNumber(this.score)) {
         let review  = new FormData();
 
         review.append("text", this.text);

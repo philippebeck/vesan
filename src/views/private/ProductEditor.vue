@@ -207,7 +207,9 @@ export default {
      * UPDATE PRODUCT
      */
     updateProduct() {
-      if (this.$serve.checkName(this.product.name) && this.$serve.checkText(this.product.description) && this.$serve.checkText(this.product.alt)) {
+      if (this.$serve.checkString(this.product.name) && 
+        this.$serve.checkString(this.product.description, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
+        this.$serve.checkString(this.product.alt, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
 
         let data  = new FormData();
         let image = document.getElementById("image").files[0] ?? this.product.image;

@@ -121,7 +121,7 @@ export default {
       for (let user of this.users) {
         if (user._id === id) {
 
-          if (this.$serve.checkName(user.name) && this.$serve.checkEmail(user.email)) {
+          if (this.$serve.checkString(user.name) && this.$serve.checkEmail(user.email)) {
 
             let data  = new FormData();
             let image = document.getElementById(id).files[0] ?? user.image;
