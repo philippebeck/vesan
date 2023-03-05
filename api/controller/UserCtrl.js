@@ -144,6 +144,8 @@ exports.getImageUpdated = (id, name, newFilename) => {
         })
       })
     )
+    .catch(() => res.status(404).json({ message: process.env.USER_NOT_FOUND }));
+
   return image;
 }
 
