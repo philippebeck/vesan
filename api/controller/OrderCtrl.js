@@ -146,7 +146,9 @@ exports.updateOrder = (req, res, next) => {
       return;
     }
 
-    fields.products = JSON.parse(fields.products);
+    if (fields.products) {
+      fields.products = JSON.parse(fields.products);
+    }
 
     OrderModel
       .findByIdAndUpdate(req.params.id, { ...fields, _id: req.params.id })
