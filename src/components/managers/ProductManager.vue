@@ -62,7 +62,9 @@
             <FieldElt type="textarea"
               v-model:value="getProducts()[slotProps.index].alt"
               @keyup.enter="updateProduct(products[slotProps.index]._id)"
-              :info="constants.INFO_UP_ALT"/>
+              :info="constants.INFO_UP_ALT"
+              :min="constants.TEXT_MIN"
+              :max="constants.TEXT_MAX"/>
           </template>
 
           <!-- Price -->
@@ -71,8 +73,8 @@
               v-model:value="getProducts()[slotProps.index].price"
               @keyup.enter="updateProduct(products[slotProps.index]._id)"
               :info="constants.INFO_UP_PRICE"
-              :min="1"
-              :max="1000"/>
+              :min="constants.PRICE_MIN"
+              :max="constants.PRICE_MAX"/>
           </template>
 
           <!-- Options -->
@@ -80,7 +82,9 @@
             <FieldElt type="textarea"
               v-model:value="getProducts()[slotProps.index].options"
               @keyup.enter="updateProduct(products[slotProps.index]._id)"
-              :info="constants.INFO_UP_OPTIONS"/>
+              :info="constants.INFO_UP_OPTIONS"
+              :min="constants.TEXT_MIN"
+              :max="constants.TEXT_MAX"/>
           </template>
 
           <!-- Category -->
@@ -157,7 +161,9 @@ export default {
 
           if (this.$serve.checkString(product.name) && 
             this.$serve.checkString(product.description, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
-            this.$serve.checkString(product.alt, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
+            this.$serve.checkString(product.alt, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
+            this.$serve.checkNumber(product.price, this.constants.PRICE_MIN, this.constants.PRICE_MAX) && 
+            this.$serve.checkString(product.options, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
 
             let data  = new FormData();
             let image = document.getElementById(id).files[0] ?? product.image;
