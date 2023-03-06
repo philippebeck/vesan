@@ -13,10 +13,6 @@
       <form method="post">
         <TableElt :items="reviews">
 
-          <template #head>
-            {{ constants.HEAD_MOD }}
-          </template>
-
           <!-- Id -->
           <template #cell-_id="slotProps">
             <a :href="`/product/${reviews[slotProps.index].product}`">
@@ -56,28 +52,10 @@
 
           <!-- Created -->
           <template #cell-created="slotProps">
-            {{ new Date(reviews[slotProps.index].created).toLocaleString() }}
-          </template>
+            <p>
+              {{ new Date(reviews[slotProps.index].created).toLocaleString() }}
+            </p>
 
-          <!-- Updated -->
-          <template #cell-updated="slotProps">
-            {{ new Date(reviews[slotProps.index].updated).toLocaleString() }}
-          </template>
-
-          <template #body="slotProps">
-
-            <!-- Moderate -->
-            <BtnElt type="button"
-              @click="moderateReview(reviews[slotProps.index]._id)" 
-              class="btn-green"
-              :title="constants.TITLE_REVIEW_MODERATE + reviews[slotProps.index]._id">
-
-              <template #btn>
-                <i class="fa-solid fa-spell-check fa-lg fa-fw"></i>
-              </template>
-            </BtnElt>
-
-            <!-- Delete -->
             <BtnElt type="button"
               @click="deleteReview(reviews[slotProps.index]._id)" 
               class="btn-red"
@@ -89,6 +67,22 @@
             </BtnElt>
           </template>
 
+          <!-- Updated -->
+          <template #cell-updated="slotProps">
+            <p>
+              {{ new Date(reviews[slotProps.index].updated).toLocaleString() }}
+            </p>
+
+            <BtnElt type="button"
+              @click="moderateReview(reviews[slotProps.index]._id)" 
+              class="btn-green"
+              :title="constants.TITLE_REVIEW_MODERATE + reviews[slotProps.index]._id">
+
+              <template #btn>
+                <i class="fa-solid fa-spell-check fa-lg fa-fw"></i>
+              </template>
+            </BtnElt>
+          </template>
         </TableElt>
       </form>
     </template>

@@ -13,10 +13,6 @@
       <form method="post">
         <TableElt :items="orders">
 
-          <template #head>
-            {{ constants.HEAD_UP }}
-          </template>
-
           <!-- Id -->
           <template #cell-_id="slotProps">
             <b>#{{ slotProps.index + 1 }}</b>
@@ -72,33 +68,32 @@
 
           <!-- Created -->
           <template #cell-created="slotProps">
-            {{ new Date(orders[slotProps.index].created).toLocaleString() }}
-          </template>
+            <p>
+              {{ new Date(orders[slotProps.index].created).toLocaleString() }}
+            </p>
 
-          <!-- Updated -->
-          <template #cell-updated="slotProps">
-            {{ new Date(orders[slotProps.index].updated).toLocaleString() }}
-          </template>
-
-          <template #body="slotProps">
-
-          <!-- Update -->
-          <BtnElt type="button"
-              @click="updateStatus(orders[slotProps.index]._id)" 
-              class="btn-green"
-              :title="constants.INFO_UP_ORDER + orders[slotProps.index]._id">
-              <template #btn>
-                <i class="fa-regular fa-calendar-check fa-lg fa-fw"></i>
-              </template>
-            </BtnElt>
-
-            <!-- Delete -->
             <BtnElt type="button"
               @click="deleteOrder(orders[slotProps.index]._id)" 
               class="btn-red"
               :title="constants.TITLE_DELETE_ORDER + orders[slotProps.index]._id">
               <template #btn>
                 <i class="fa-solid fa-trash-arrow-up fa-lg fa-fw"></i>
+              </template>
+            </BtnElt>
+          </template>
+
+          <!-- Updated -->
+          <template #cell-updated="slotProps">
+            <p>
+              {{ new Date(orders[slotProps.index].updated).toLocaleString() }}
+            </p>
+
+            <BtnElt type="button"
+              @click="updateStatus(orders[slotProps.index]._id)" 
+              class="btn-green"
+              :title="constants.INFO_UP_ORDER + orders[slotProps.index]._id">
+              <template #btn>
+                <i class="fa-regular fa-calendar-check fa-lg fa-fw"></i>
               </template>
             </BtnElt>
           </template>
