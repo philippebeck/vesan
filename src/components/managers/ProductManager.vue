@@ -14,10 +14,6 @@
         enctype="multipart/form-data">
         <TableElt :items="products">
 
-          <template #head>
-            {{ constants.HEAD_UP }}
-          </template>
-
           <!-- Id -->
           <template #cell-_id="slotProps">
             <a :href="`/product/${products[slotProps.index]._id}`">
@@ -98,28 +94,10 @@
 
           <!-- Created -->
           <template #cell-created="slotProps">
-            {{ new Date(products[slotProps.index].created).toLocaleString() }}
-          </template>
+            <p>
+              {{ new Date(products[slotProps.index].created).toLocaleString() }}
+            </p>
 
-          <!-- Updated -->
-          <template #cell-updated="slotProps">
-            {{ new Date(products[slotProps.index].updated).toLocaleString() }}
-          </template>
-
-          <template #body="slotProps">
-
-            <!-- Update -->
-            <BtnElt type="button"
-              @click="updateProduct(products[slotProps.index]._id)" 
-              class="btn-sky"
-              :title="constants.TITLE_UPDATE + products[slotProps.index].name">
-
-              <template #btn>
-                <i class="fa-solid fa-cloud-arrow-up fa-lg fa-fw"></i>
-              </template>
-            </BtnElt>
-
-            <!-- Delete -->
             <BtnElt type="button"
               @click="deleteProduct(products[slotProps.index]._id)" 
               class="btn-red"
@@ -129,7 +107,23 @@
                 <i class="fa-solid fa-trash-arrow-up fa-lg fa-fw"></i>
               </template>
             </BtnElt>
+          </template>
 
+          <!-- Updated -->
+          <template #cell-updated="slotProps">
+            <p>
+              {{ new Date(products[slotProps.index].updated).toLocaleString() }}
+            </p>
+
+            <BtnElt type="button"
+              @click="updateProduct(products[slotProps.index]._id)" 
+              class="btn-sky"
+              :title="constants.TITLE_UPDATE + products[slotProps.index].name">
+
+              <template #btn>
+                <i class="fa-solid fa-cloud-arrow-up fa-lg fa-fw"></i>
+              </template>
+            </BtnElt>
           </template>
         </TableElt>
       </form>
@@ -166,7 +160,7 @@ export default {
             this.$serve.checkString(product.options, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
 
             let data  = new FormData();
-            let image = document.getElementById(id).files[0] ?? product.image;
+            let image = document.getElementById(id).querySelector("[type='file']").files[0] ?? product.image;
 
             data.append("name", product.name);
             data.append("description", product.description);

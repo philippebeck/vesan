@@ -14,10 +14,6 @@
         enctype="multipart/form-data">
         <TableElt :items="users">
 
-          <template #head>
-            {{ constants.HEAD_UP }}
-          </template>
-
           <!-- Id -->
           <template #cell-_id="slotProps">
             <b>#{{ slotProps.index + 1 }}</b>
@@ -61,28 +57,10 @@
 
           <!-- Created -->
           <template #cell-created="slotProps">
-            {{ new Date(getUsers()[slotProps.index].created).toLocaleString() }}
-          </template>
+            <p>
+              {{ new Date(getUsers()[slotProps.index].created).toLocaleString() }}
+            </p>
 
-          <!-- Updated -->
-          <template #cell-updated="slotProps">
-            {{ new Date(getUsers()[slotProps.index].updated).toLocaleString() }}
-          </template>
-
-          <template #body="slotProps">
-
-            <!-- Update -->
-            <BtnElt type="button"
-              @click="updateUser(users[slotProps.index]._id)" 
-              class="btn-sky"
-              :title="constants.TITLE_UPDATE + users[slotProps.index].name">
-
-              <template #btn>
-                <i class="fa-solid fa-cloud-arrow-up fa-lg fa-fw"></i>
-              </template>
-            </BtnElt>
-
-            <!-- Delete -->
             <BtnElt type="button"
               @click="deleteUser(users[slotProps.index]._id)" 
               class="btn-red"
@@ -90,6 +68,23 @@
 
               <template #btn>
                 <i class="fa-solid fa-trash-arrow-up fa-lg fa-fw"></i>
+              </template>
+            </BtnElt>
+          </template>
+
+          <!-- Updated -->
+          <template #cell-updated="slotProps">
+            <p>
+              {{ new Date(getUsers()[slotProps.index].updated).toLocaleString() }}
+            </p>
+
+            <BtnElt type="button"
+              @click="updateUser(users[slotProps.index]._id)" 
+              class="btn-sky"
+              :title="constants.TITLE_UPDATE + users[slotProps.index].name">
+
+              <template #btn>
+                <i class="fa-solid fa-cloud-arrow-up fa-lg fa-fw"></i>
               </template>
             </BtnElt>
           </template>
@@ -124,7 +119,7 @@ export default {
           if (this.$serve.checkString(user.name) && this.$serve.checkEmail(user.email)) {
 
             let data  = new FormData();
-            let image = document.getElementById(id).files[0] ?? user.image;
+            let image = document.getElementById(id).querySelector("[type='file']").files[0] ?? user.image;
 
             data.append("name", user.name);
             data.append("email", user.email);

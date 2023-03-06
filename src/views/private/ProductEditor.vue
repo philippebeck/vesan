@@ -55,8 +55,7 @@
               :src="'/img/thumbnails/products/' + product.image"
               :alt="product.alt" />
 
-            <FieldElt id="image"
-              type="file"
+            <FieldElt type="file"
               v-model:value="image"
               :info="constants.INFO_IMAGE">
 
@@ -213,7 +212,7 @@ export default {
         this.$serve.checkString(this.product.alt, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
 
         let data  = new FormData();
-        let image = document.getElementById("image").files[0] ?? this.product.image;
+        let image = document.querySelector("[type='file']").files[0] ?? this.product.image;
 
         data.append("name", this.product.name);
         data.append("description", this.product.description);

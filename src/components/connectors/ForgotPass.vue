@@ -49,7 +49,7 @@ export default {
      * FORGOT PASSWORD
      */
     forgotPass() {
-      if (this.$serve.checkEmail(this.email)) {
+      if (this.$serve.checkEmail(this.email) && confirm(this.constants.CONFIRM_FORGOT) === true) {
         let message = new FormData();
 
         message.append("email", this.email);

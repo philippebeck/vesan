@@ -14,10 +14,6 @@
         enctype="multipart/form-data">
         <TableElt :items="articles">
 
-          <template #head>
-            {{ constants.HEAD_UP }}
-          </template>
-
           <!-- Id -->
           <template #cell-_id="slotProps">
             <a :href="`/article/${articles[slotProps.index]._id}`">
@@ -90,28 +86,10 @@
 
           <!-- Created -->
           <template #cell-created="slotProps">
-            {{ new Date(articles[slotProps.index].created).toLocaleString() }}
-          </template>
+            <p>
+              {{ new Date(articles[slotProps.index].created).toLocaleString() }}
+            </p>
 
-          <!-- Updated -->
-          <template #cell-updated="slotProps">
-            {{ new Date(articles[slotProps.index].updated).toLocaleString() }}
-          </template>
-
-          <template #body="slotProps">
-
-            <!-- Update -->
-            <BtnElt type="button"
-              @click="updateArticle(articles[slotProps.index]._id)" 
-              class="btn-sky"
-              :title="constants.TITLE_UPDATE + articles[slotProps.index].name">
-
-              <template #btn>
-                <i class="fa-solid fa-cloud-arrow-up fa-lg fa-fw"></i>
-              </template>
-            </BtnElt>
-
-            <!-- Delete -->
             <BtnElt type="button"
               @click="deleteArticle(articles[slotProps.index]._id)" 
               class="btn-red"
@@ -119,6 +97,23 @@
 
               <template #btn>
                 <i class="fa-solid fa-trash-arrow-up fa-lg fa-fw"></i>
+              </template>
+            </BtnElt>
+          </template>
+
+          <!-- Updated -->
+          <template #cell-updated="slotProps">
+            <p>
+              {{ new Date(articles[slotProps.index].updated).toLocaleString() }}
+            </p>
+
+            <BtnElt type="button"
+              @click="updateArticle(articles[slotProps.index]._id)" 
+              class="btn-sky"
+              :title="constants.TITLE_UPDATE + articles[slotProps.index].name">
+
+              <template #btn>
+                <i class="fa-solid fa-cloud-arrow-up fa-lg fa-fw"></i>
               </template>
             </BtnElt>
           </template>
@@ -164,7 +159,7 @@ export default {
             this.$serve.checkString(article.alt, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
 
             let data  = new FormData();
-            let image = document.getElementById(id).files[0] ?? article.image;
+            let image = document.getElementById(id).querySelector("[type='file']").files[0] ?? article.image;
 
             data.append("name", article.name);
             data.append("text", article.text);

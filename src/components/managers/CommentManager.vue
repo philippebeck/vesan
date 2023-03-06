@@ -13,10 +13,6 @@
       <form method="post">
         <TableElt :items="comments">
 
-          <template #head>
-            {{ constants.HEAD_MOD }}
-          </template>
-
           <!-- Id -->
           <template #cell-_id="slotProps">
             <a :href="`/article/${comments[slotProps.index].article}`">
@@ -51,28 +47,10 @@
 
           <!-- Created -->
           <template #cell-created="slotProps">
-            {{ new Date(comments[slotProps.index].created).toLocaleString() }}
-          </template>
+            <p>
+              {{ new Date(comments[slotProps.index].created).toLocaleString() }}
+            </p>
 
-          <!-- Updated -->
-          <template #cell-updated="slotProps">
-            {{ new Date(comments[slotProps.index].updated).toLocaleString() }}
-          </template>
-
-          <template #body="slotProps">
-
-            <!-- Moderate -->
-            <BtnElt type="button"
-              @click="moderateComment(comments[slotProps.index]._id)" 
-              class="btn-green"
-              :title="constants.TITLE_COMMENT_MODERATE + comments[slotProps.index]._id">
-
-              <template #btn>
-                <i class="fa-solid fa-spell-check fa-lg fa-fw"></i>
-              </template>
-            </BtnElt>
-
-            <!-- Delete -->
             <BtnElt type="button"
               @click="deleteComment(comments[slotProps.index]._id)" 
               class="btn-red"
@@ -80,6 +58,23 @@
 
               <template #btn>
                 <i class="fa-solid fa-trash-arrow-up fa-lg fa-fw"></i>
+              </template>
+            </BtnElt>
+          </template>
+
+          <!-- Updated -->
+          <template #cell-updated="slotProps">
+            <p>
+              {{ new Date(comments[slotProps.index].updated).toLocaleString() }}
+            </p>
+
+            <BtnElt type="button"
+              @click="moderateComment(comments[slotProps.index]._id)" 
+              class="btn-green"
+              :title="constants.TITLE_COMMENT_MODERATE + comments[slotProps.index]._id">
+
+              <template #btn>
+                <i class="fa-solid fa-spell-check fa-lg fa-fw"></i>
               </template>
             </BtnElt>
           </template>

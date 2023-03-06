@@ -317,7 +317,7 @@ exports.updateUser = (req, res, next) => {
         }
 
         if (fields.pass) {
-          if (!nem.checkPass(pass)) {
+          if (!nem.checkPass(fields.pass)) {
             return res.status(403).json({ message: process.env.CHECK_PASS });
           }
 
@@ -327,7 +327,7 @@ exports.updateUser = (req, res, next) => {
 
             let user = this.getUserWithPass(
               fields.name, fields.email, image, hash, fields.role, fields.updated
-            ); 
+            );
 
             UserModel
               .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
