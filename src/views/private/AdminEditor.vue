@@ -112,7 +112,7 @@ import UserManager from "@/components/managers/UserManager"
 import LinkManager from "@/components/managers/LinkManager"
 
 export default {
-  name: "AdminView",
+  name: "AdminEditor",
   components: {
     ProductManager,
     ReviewManager,

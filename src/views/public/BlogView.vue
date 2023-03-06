@@ -216,9 +216,9 @@ export default {
             .then(() => {
 
               if (hasLiked === true) {
-                alert(article.get("name") + this.constants.ALERT_DISLIKED);
+                console.log(this.article.name + this.constants.ALERT_DISLIKED);
               } else {
-                alert(article.get("name") + this.constants.ALERT_LIKED);
+                console.log(this.article.name + this.constants.ALERT_LIKED);
               }
             })
             .catch(err => { alert(err.response.data.message) });

@@ -35,17 +35,27 @@ export default {
   PAYPAL_NAMESPACE : "paypal_sdk",
   PAYPAL_SHAPE : "pill",
 
+  PRICE_MAX : 5000,
+  PRICE_MIN : 1,
+
   RECAPTCHA_KEY : "{votre-recaptcha-key}",
 
   SLIDER_DELAY : 5000,
   SLIDER_FA : "brands",
 
-  TEXT_MIN : 8,
+  STRING_MAX : 50,
+  STRING_MIN : 2,
+
   TEXT_MAX : 5000,
+  TEXT_MIN : 8,
 
   TINY_KEY : "{votre-tiny-key}",
 
   TOKEN : JSON.parse(localStorage.getItem("userToken")),
+
+  URL_MAX : 100,
+  URL_MIN : 5,
+
   USER_ID : JSON.parse(localStorage.getItem("userId")),
 
   /******************** NAV ********************/
@@ -452,7 +462,7 @@ export default {
   LABEL_DESCRIPTION : "Ecrivez la description",
   LABEL_EMAIL : "Ecrivez votre email",
   LABEL_IMAGE : "Fournissez une image",
-  LABEL_NAME : "Ecrivez un name",
+  LABEL_NAME : "Ecrivez un nom",
   LABEL_OPTION : "Indiquez l'option du produit",
   LABEL_OPTIONS : "Ecrivez les options",
   LABEL_PASSWORD : "8 à 50 caractères avec majuscule & minuscule, 1 nombre mini & pas d'espace",

@@ -17,7 +17,8 @@
           v-model:value="text"
           @keyup.enter="createReview()"
           :info="constants.INFO_TEXT"
-          :max="5000">
+          :min="constants.TEXT_MIN"
+          :max="constants.TEXT_MAX">
 
           <template #legend>
             {{ constants.LEGEND_TEXT }}
@@ -32,8 +33,8 @@
           v-model:value="score"
           @keyup.enter="createReview()"
           :info="constants.INFO_SCORE"
-          :min="0"
-          :max="5">
+          :min="constants.NUM_MIN"
+          :max="constants.NUM_MAX">
 
           <template #legend>
             {{ constants.LEGEND_SCORE }}

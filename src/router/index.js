@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router"
 
-import AdminView from "../views/private/AdminView"
+import AdminEditor from "../views/private/AdminEditor"
 import ArticleEditor from "../views/private/ArticleEditor"
 import ArticleView from "../views/public/ArticleView"
 import BasketView from "../views/public/BasketView"
@@ -13,7 +13,7 @@ import LinkView from "../views/public/LinkView"
 import LoginView from "../views/public/LoginView"
 import ProductEditor from "../views/private/ProductEditor"
 import ProductView from "../views/public/ProductView"
-import ProfileView from "../views/private/ProfileView"
+import ProfileEditor from "../views/private/ProfileEditor"
 import ShopView from "../views/public/ShopView"
 
 const routes = [
@@ -82,13 +82,13 @@ const routes = [
   {
     path: "/profile",
     name: "profile",
-    component: ProfileView,
+    component: ProfileEditor,
     meta: { requiresAuth: true }
   },
   {
     path: "/admin",
     name: "admin",
-    component: AdminView,
+    component: AdminEditor,
     meta: { requiresAuth: true }
   },
   {

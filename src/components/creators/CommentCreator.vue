@@ -17,7 +17,8 @@
         v-model:value="text"
         @keyup.enter="createComment()"
         :info="constants.INFO_TEXT"
-        :max="5000">
+        :min="constants.TEXT_MIN"
+        :max="constants.TEXT_MAX">
 
         <template #legend>
           {{ constants.LEGEND_TEXT }}

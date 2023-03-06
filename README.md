@@ -100,7 +100,7 @@ From the root of your App with Vesan :
 
 ## Content
 
-Available API Files *(UNDER CONSTRUCTION)* :
+Available API Files :
 -   **ProductModel, ProductCtrl, ProductRoute** *(Products)*  
 -   **ReviewModel, ReviewCtrl, ReviewRoute** *(Product Reviews)*  
 -   **OrderModel, OrderCtrl, OrderRoute** *(Product Orders)*  
@@ -110,7 +110,7 @@ Available API Files *(UNDER CONSTRUCTION)* :
 -   **UserModel, UserCtrl, UserRoute** *(Users)*  
 -   **LinkModel, LinkCtrl, LinkRoute** *(Links)*  
 
-Available Views *(UNDER CONSTRUCTION)* :  
+Public Views :  
 -   **HomeView** *(Home)*  
 -   **ShopView** *(Shop with products list)*  
 -   **ProductView** *(Product of the shop)*  
@@ -118,31 +118,41 @@ Available Views *(UNDER CONSTRUCTION)* :
 -   **ArticleView** *(Article of the blog)*  
 -   **ContactView** *(Contact)*  
 -   **BasketView** *(Basket & order process)*  
--   **LoginView** *(Login with connectors)*  
--   **ProfileView** *(User profile & user orders)*  
--   **AdminView** *(Admin with managers)*  
+-   **LoginView** *(Login with connector components)*  
 -   **LinkView** *(Links list)*  
 -   **LegalView** *(Legal notice)*  
 -   **ErrorView** *(Error)*  
 
-Available Components *(UNDER CONSTRUCTION)* :  
--   **ForgotPass** *(Connector)*  
--   **SignIn** *(Connector*  
--   **SignUp** *(Connector)*  
--   **ProductCreator** *(Creator)*  
--   **ReviewCreator** *(Creator)*  
--   **ArticleCreator** *(Creator)*  
--   **CommentCreator** *(Creator)*  
--   **LinkCreator** *(Creator)*  
--   **CommentList** *(List)*  
--   **ReviewList** *(List)*  
--   **ProductManager** *(Manager)*  
--   **ReviewManager** *(Manager)*  
--   **OrderManager** *(Manager)*  
--   **ArticleManager** *(Manager)*  
--   **CommentManager** *(Manager)*  
--   **UserManager** *(Manager)*  
--   **LinkManager** *(Manager)*  
+Connector Components *(public)* :  
+-   **ForgotPass** *(Forgot password)*  
+-   **SignIn** *(Connection)*  
+-   **SignUp** *(Create user)*  
+
+List Components *(public)* :  
+-   **CommentList** *(Comment list for article)*  
+-   **ReviewList** *(Review list for product)*  
+
+Private Views :  
+-   **ProfileEditor** *(User profile & user orders)*  
+-   **AdminEditor** *(Admin with manager components & editor views)*  
+-   **ArticleEditor** *(Editor for article)*  
+-   **ProductEditor** *(Editor for product)*  
+
+Creator Components *(private)* :  
+-   **ProductCreator** *(Create product)*  
+-   **ReviewCreator** *(Create review)*  
+-   **ArticleCreator** *(Create article)*  
+-   **CommentCreator** *(Create comment)*  
+-   **LinkCreator** *(Create link)*  
+
+Manager Components *(private)* :  
+-   **ProductManager** *(Manage products)*  
+-   **ReviewManager** *(Manage reviews)*  
+-   **OrderManager** *(Manage orders)*  
+-   **ArticleManager** *(Manage articles)*  
+-   **CommentManager** *(Manage comments)*  
+-   **UserManager** *(Manage users)*  
+-   **LinkManager** *(Manage links)*  
 
 ---
 

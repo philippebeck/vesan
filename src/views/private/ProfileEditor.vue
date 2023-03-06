@@ -166,7 +166,7 @@
 import { mapState, mapActions } from "vuex"
 
 export default {
-  name: "ProfileView",
+  name: "ProfileEditor",
   props: ["constants"],
 
   data() {
