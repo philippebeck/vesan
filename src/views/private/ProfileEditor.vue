@@ -4,7 +4,7 @@
       <h1 class="sky anima-slideB">
         <i class="fa-solid fa-user-gear fa-lg"
           aria-hidden="true"></i>
-        {{ constants.PROFILE_VIEW }}
+        {{ constants.PROFILE_EDITOR }}
       </h1>
       <p>{{ constants.INTRO_PROFILE }}</p>
     </template>
@@ -52,8 +52,7 @@
               :src="'/img/thumbnails/users/' + user.image"
               :alt="user.name" />
 
-            <FieldElt id="image"
-              type="file"
+            <FieldElt type="file"
               v-model:value="image"
               :info="constants.INFO_IMAGE">
 
@@ -215,7 +214,7 @@ export default {
       if (this.$serve.checkString(this.user.name) && this.$serve.checkEmail(this.user.email)) {
 
         let user  = new FormData();
-        let image = document.getElementById("image").files[0] ?? this.user.image;
+        let image = document.querySelector("[type='file']").files[0] ?? this.user.image;
 
         user.append("name", this.user.name);
         user.append("email", this.user.email);
