@@ -5,6 +5,15 @@
   --ani-monospace: "Syne Mono", monospace;
 }
 
+/* TINYMCE EDITOR */
+[id="text"] ~ *,
+[id="description"] ~ * {
+  margin: auto;
+  max-width: 1000px;
+  height: 500px;
+}
+
+/* ADMIN TABLES */
 [id*="products-"] > *,
 [id*="likes-"] {
   overflow: hidden;
