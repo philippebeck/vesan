@@ -18,8 +18,7 @@
           <template #item-1>
             <FieldElt v-model:value="name"
               @keyup.enter="createArticle()"
-              :info="constants.INFO_NAME"
-              :min="2">
+              :info="constants.INFO_NAME">
 
               <template #legend>
                 {{ constants.LEGEND_NAME }}
@@ -69,7 +68,9 @@
             <FieldElt type="textarea"
               v-model:value="alt"
               @keyup.enter="createArticle()"
-              :info="constants.INFO_ALT">
+              :info="constants.INFO_ALT"
+              :min="constants.TEXT_MIN"
+              :max="constants.TEXT_MAX">
 
               <template #legend>
                 {{ constants.LEGEND_ALT }}

@@ -16,8 +16,7 @@
           <template #item-1>
             <FieldElt v-model:value="name"
               @keyup.enter="createLink()"
-              :info="constants.INFO_NAME"
-              :min="parseInt('2')">
+              :info="constants.INFO_NAME">
 
               <template #legend>
                 {{ constants.LEGEND_NAME }}
@@ -33,8 +32,8 @@
               v-model:value="url"
               @keyup.enter="createLink()"
               :info="constants.INFO_URL"
-              :min="parseInt('5')"
-              :max="parseInt('100')">
+              :min="constants.URL_MIN"
+              :max="constants.URL_MAX">
 
               <template #legend>
                 {{ constants.LEGEND_URL }}
