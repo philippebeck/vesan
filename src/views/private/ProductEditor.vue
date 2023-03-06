@@ -5,7 +5,8 @@
         <i class="fa-regular fa-lightbulb fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.PRODUCT_EDITOR }}
+        {{ constants.EDIT }}
+        {{ product.name }}
       </h3>
     </template>
 

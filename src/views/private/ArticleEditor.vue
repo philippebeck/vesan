@@ -5,7 +5,8 @@
         <i class="fa-regular fa-pen-to-square fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.ARTICLE_EDITOR }}
+        {{ constants.EDIT }}
+        {{ article.name }}
       </h3>
     </template>
 

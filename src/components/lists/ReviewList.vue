@@ -23,14 +23,15 @@
               @keyup.enter="updateReview(slotProps.item._id)"
               itemprop="text"
               :info="constants.INFO_UP_TEXT"
-              :max="5000"/>
+              :min="constants.TEXT_MIN"
+              :max="constants.TEXT_MAX"/>
 
             <FieldElt type="number"
               v-model:value="slotProps.item.score"
               @keyup.enter="updateReview(slotProps.item._id)"
               :info="constants.INFO_UP_SCORE"
-              :min="0"
-              :max="5"/>
+              :min="constants.NUM_MIN"
+              :max="constants.NUM_MAX"/>
 
             <BtnElt type="button"
               @click="updateReview(slotProps.item._id)" 

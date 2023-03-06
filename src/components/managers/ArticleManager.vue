@@ -61,7 +61,9 @@
             <FieldElt type="textarea"
               v-model:value="getArticles()[slotProps.index].alt"
               @keyup.enter="updateArticle(articles[slotProps.index]._id)"
-              :info="constants.INFO_UP_ALT"/>
+              :info="constants.INFO_UP_ALT"
+              :min="constants.TEXT_MIN"
+              :max="constants.TEXT_MAX"/>
           </template>
 
           <!-- Category -->

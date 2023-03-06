@@ -23,7 +23,8 @@
               @keyup.enter="updateComment(slotProps.item._id)"
               itemprop="text"
               :info="constants.INFO_UP_TEXT"
-              :max="5000"/>
+              :min="constants.TEXT_MIN"
+              :max="constants.TEXT_MAX"/>
 
             <BtnElt type="button"
               @click="updateComment(slotProps.item._id)" 
