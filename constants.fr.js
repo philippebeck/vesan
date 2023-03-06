@@ -52,6 +52,10 @@ export default {
   TINY_KEY : "{votre-tiny-key}",
 
   TOKEN : JSON.parse(localStorage.getItem("userToken")),
+
+  URL_MAX : 100,
+  URL_MIN : 5,
+
   USER_ID : JSON.parse(localStorage.getItem("userId")),
 
   /******************** NAV ********************/
