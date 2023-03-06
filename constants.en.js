@@ -338,10 +338,8 @@ export default {
   /******************** TITLES ********************/
 
   // PRIVATE VIEWS
-  ADMIN_VIEW : "Admin",
-  ARTICLE_EDITOR : "Edit an article",
-  PROFILE_VIEW : "Profile",
-  PRODUCT_EDITOR : "Edit a product",
+  ADMIN_EDITOR : "Admin",
+  PROFILE_EDITOR : "Profile",
   // PUBLIC VIEWS
   BASKET_VIEW : "Basket",
   BLOG_VIEW : "Blog",
@@ -517,13 +515,11 @@ export default {
 
   /******************** ALERT ********************/
 
-  ALERT_AVAILABLE : " is not available !",
   ALERT_BASKET_ADDED : " has been added to the basket !",
   ALERT_COMMENT : "Comment #",
   ALERT_CREATED : " created !",
   ALERT_DELETED : " deleted !",
   ALERT_DISLIKED : " disliked !",
-  ALERT_FORGOT_EMAIL : "This email is not referenced",
   ALERT_HOME : "Return Home !",
   ALERT_IMG : "An image must be uploaded !",
   ALERT_LIKED : " liked !",
@@ -533,8 +529,6 @@ export default {
   ALERT_OPTION : "You need to choose an option !",
   ALERT_ORDER : "Order #",
   ALERT_ORDER_CREATED : "Order created !",
-  ALERT_PRODUCT : "You have already written a review for this product, you can edit your old review or delete it",
-  ALERT_REFERENCED : " is already referenced !",
   ALERT_REVIEW : "Review #",
   ALERT_SENDED : " sended !",
   ALERT_UPDATED : " updated !",

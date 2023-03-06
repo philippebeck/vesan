@@ -338,10 +338,8 @@ export default {
   /******************** TITLES ********************/
 
   // PRIVATE VIEWS
-  ADMIN_VIEW : "Admin",
-  ARTICLE_EDITOR : "Éditer un article",
-  PROFILE_VIEW : "Profil",
-  PRODUCT_EDITOR : "Éditer un produit",
+  ADMIN_EDITOR : "Admin",
+  PROFILE_EDITOR : "Profil",
   // PUBLIC VIEWS
   BASKET_VIEW : "Panier",
   BLOG_VIEW : "Blog",
@@ -516,13 +514,11 @@ export default {
 
   /******************** ALERT ********************/
 
-  ALERT_AVAILABLE : " n'est pas disponible !",
   ALERT_BASKET_ADDED : " a été ajouté au panier !",
   ALERT_COMMENT : "Commentaire #",
   ALERT_CREATED : " créé !",
   ALERT_DELETED : " supprimé !",
   ALERT_DISLIKED : " pas aimé !",
-  ALERT_FORGOT_EMAIL : "Cet email n'est pas référencé",
   ALERT_HOME : "Retournes à l'accueil !",
   ALERT_IMG : "Une image doit être téléchargée !",
   ALERT_LIKED : " aimé !",
@@ -532,8 +528,6 @@ export default {
   ALERT_OPTION : "Vous devez choisir une option !",
   ALERT_ORDER : "Commande #",
   ALERT_ORDER_CREATED : "Commande créée !",
-  ALERT_PRODUCT : "Vous avez déjà rédigé un avis sur ce produit, vous pouvez modifier votre ancien avis ou le supprimer",
-  ALERT_REFERENCED : " est déjà référencé !",
   ALERT_REVIEW : "Avis #",
   ALERT_SENDED : " envoyé !",
   ALERT_UPDATED : " mis à jour !",

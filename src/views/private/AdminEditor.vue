@@ -5,7 +5,7 @@
         <i class="fa-solid fa-gears fa-2x"
           aria-hidden="true">
         </i>
-        {{ constants.ADMIN_VIEW }}
+        {{ constants.ADMIN_EDITOR }}
       </h1>
       <p>{{ constants.INTRO_ADMIN }}</p>
 
