@@ -35,13 +35,19 @@ export default {
   PAYPAL_NAMESPACE : "paypal_sdk",
   PAYPAL_SHAPE : "pill",
 
+  PRICE_MAX : 5000,
+  PRICE_MIN : 1,
+
   RECAPTCHA_KEY : "{your-recaptcha-key}",
 
   SLIDER_DELAY : 5000,
   SLIDER_FA : "brands",
 
-  TEXT_MIN : 8,
+  STRING_MAX : 50,
+  STRING_MIN : 2,
+
   TEXT_MAX : 5000,
+  TEXT_MIN : 8,
 
   TINY_KEY : "{your-tiny-key}",
 
