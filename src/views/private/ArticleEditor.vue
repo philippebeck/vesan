@@ -193,7 +193,7 @@ export default {
         this.$serve.putData(`/api/articles/${this.article._id}`, data)
           .then(() => {
             alert(this.article.name + this.constants.ALERT_UPDATED);
-            this.$router.go();
+            this.$router.push("/admin");
           })
           .catch(err => {
             if (err.response) {

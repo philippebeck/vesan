@@ -230,7 +230,7 @@ export default {
         this.$serve.putData(`/api/products/${this.product._id}`, data)
           .then(() => {
             alert(this.product.name + this.constants.ALERT_UPDATED);
-            this.$router.go();
+            this.$router.push("/admin");
           })
           .catch(err => {
             if (err.response) {
