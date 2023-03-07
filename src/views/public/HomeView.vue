@@ -18,13 +18,14 @@
         </template>
       </SliderElt>
 
+      <!-- Video or Image -->
       <MediaElt v-else
         :type="constants.HOME_MEDIA"
         :src="constants.HOME_SRC"
         :width="constants.HOME_WIDTH"
         :loop="constants.HOME_LOOP"/>
 
-      <!-- Main Title -->
+      <!-- Title -->
       <h1 class="blue anima-shrink">
         {{ constants.HOME_VIEW }}
       </h1>
