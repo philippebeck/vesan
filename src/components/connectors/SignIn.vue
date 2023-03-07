@@ -82,7 +82,13 @@ export default {
 
             this.$router.go("/");
           })
-          .catch(err => { alert(err.response.data.message) });
+          .catch(err => {
+            if (err.response) {
+              alert(err.response.data.message) 
+            } else {
+              console.log(err);
+            }
+          });
       }
     }
   }

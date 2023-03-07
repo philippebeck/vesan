@@ -58,9 +58,7 @@
             <FieldElt type="textarea"
               v-model:value="getProducts()[slotProps.index].alt"
               @keyup.enter="updateProduct(products[slotProps.index]._id)"
-              :info="constants.INFO_UP_ALT"
-              :min="constants.TEXT_MIN"
-              :max="constants.TEXT_MAX"/>
+              :info="constants.INFO_UP_ALT"/>
           </template>
 
           <!-- Price -->
@@ -155,7 +153,7 @@ export default {
 
           if (this.$serve.checkString(product.name) && 
             this.$serve.checkString(product.description, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
-            this.$serve.checkString(product.alt, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
+            this.$serve.checkString(product.alt) && 
             this.$serve.checkNumber(product.price, this.constants.PRICE_MIN, this.constants.PRICE_MAX) && 
             this.$serve.checkString(product.options, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
 
@@ -175,9 +173,14 @@ export default {
             this.$serve.putData(`/api/products/${id}`, data)
               .then(() => {
                 alert(product.name + this.constants.ALERT_UPDATED);
-                this.$router.go();
               })
-              .catch(err => { alert(err.response.data.message) });
+              .catch(err => {
+                if (err.response) {
+                  alert(err.response.data.message) 
+                } else {
+                  console.log(err);
+                }
+              });
           }
         }
       }
@@ -202,7 +205,13 @@ export default {
             alert(productName + this.constants.ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => { alert(err.response.data.message) });
+          .catch(err => {
+            if (err.response) {
+              alert(err.response.data.message) 
+            } else {
+              console.log(err);
+            }
+          });
       }
     }
   }

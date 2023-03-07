@@ -210,7 +210,9 @@ export default {
     updateProduct() {
       if (this.$serve.checkString(this.product.name) && 
         this.$serve.checkString(this.product.description, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
-        this.$serve.checkString(this.product.alt, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
+        this.$serve.checkString(this.product.alt) && 
+        this.$serve.checkNumber(this.product.price, this.constants.PRICE_MIN, this.constants.PRICE_MAX) && 
+        this.$serve.checkString(this.product.options, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
 
         let data  = new FormData();
         let image = document.getElementById("image").files[0] ?? this.product.image;
@@ -228,9 +230,15 @@ export default {
         this.$serve.putData(`/api/products/${this.product._id}`, data)
           .then(() => {
             alert(this.product.name + this.constants.ALERT_UPDATED);
-            this.$router.go();
+            this.$router.push("/admin");
           })
-          .catch(err => { alert(err.response.data.message) });
+          .catch(err => {
+            if (err.response) {
+              alert(err.response.data.message) 
+            } else {
+              console.log(err);
+            }
+          });
       }
     }
   }

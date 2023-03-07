@@ -57,9 +57,7 @@
             <FieldElt type="textarea"
               v-model:value="getArticles()[slotProps.index].alt"
               @keyup.enter="updateArticle(articles[slotProps.index]._id)"
-              :info="constants.INFO_UP_ALT"
-              :min="constants.TEXT_MIN"
-              :max="constants.TEXT_MAX"/>
+              :info="constants.INFO_UP_ALT"/>
           </template>
 
           <!-- Category -->
@@ -156,7 +154,7 @@ export default {
 
           if (this.$serve.checkString(article.name) && 
             this.$serve.checkString(article.text, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
-            this.$serve.checkString(article.alt, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
+            this.$serve.checkString(article.alt)) {
 
             let data  = new FormData();
             let image = document.getElementById(id).files[0] ?? article.image;
@@ -172,9 +170,14 @@ export default {
             this.$serve.putData(`/api/articles/${id}`, data)
               .then(() => {
                 alert(article.name + this.constants.ALERT_UPDATED);
-                this.$router.go();
               })
-              .catch(err => { alert(err.response.data.message) });
+              .catch(err => {
+                if (err.response) {
+                  alert(err.response.data.message) 
+                } else {
+                  console.log(err);
+                }
+              });
           }
         }
       }
@@ -199,7 +202,13 @@ export default {
             alert(articleName + this.constants.ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => { alert(err.response.data.message) });
+          .catch(err => {
+            if (err.response) {
+              alert(err.response.data.message) 
+            } else {
+              console.log(err);
+            }
+          });
       }
     }
   }

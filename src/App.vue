@@ -132,7 +132,7 @@
       <ListElt :dynamic="true"
         :items="constants.FOOT">
         <template #items="slotProps">
-          <a :href="slotProps.href"
+          <a :href="slotProps.item.href"
             :title="slotProps.item.title">
             <i :class="`fa-brands fa-${slotProps.item.fa} fa-lg fa-fw ${slotProps.item.color}`"></i>
           </a>

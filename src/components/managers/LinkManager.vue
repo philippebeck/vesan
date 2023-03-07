@@ -116,17 +116,22 @@ export default {
 
           if (this.$serve.checkString(this.links[i].name) && this.$serve.checkUrl(`https://${this.links[i].url}`)) {
 
-              let link = new FormData();
-              link.append("name", this.links[i].name);
-              link.append("url", this.links[i].url);
-              link.append("cat", this.links[i].cat);
+            let link = new FormData();
+            link.append("name", this.links[i].name);
+            link.append("url", this.links[i].url);
+            link.append("cat", this.links[i].cat);
 
-              this.$serve.putData(`/api/links/${this.links[i]._id}`, link)
-                .then(() => {
-                  alert(link.get("name") + this.constants.ALERT_UPDATED);
-                  this.$router.go();
-                })
-                .catch(err => { alert(err.response.data.message) });
+            this.$serve.putData(`/api/links/${this.links[i]._id}`, link)
+              .then(() => {
+                alert(link.get("name") + this.constants.ALERT_UPDATED);
+              })
+              .catch(err => {
+                if (err.response) {
+                  alert(err.response.data.message) 
+                } else {
+                  console.log(err);
+                }
+              });
           }
         }
       }
@@ -151,7 +156,13 @@ export default {
             alert(linkName + this.constants.ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => { alert(err.response.data.message) });
+          .catch(err => {
+            if (err.response) {
+              alert(err.response.data.message) 
+            } else {
+              console.log(err);
+            }
+          });
       }
     }
   }

@@ -136,9 +136,14 @@ export default {
           this.$serve.putData(`/api/reviews/${id}`, data)
             .then(() => {
               alert(this.constants.ALERT_REVIEW + id + this.constants.ALERT_MODERATED);
-              this.$router.go();
             })
-            .catch(err => { alert(err.response.data.message) });
+            .catch(err => {
+              if (err.response) {
+                alert(err.response.data.message) 
+              } else {
+                console.log(err);
+              }
+            });
         }
       }
     },
@@ -155,7 +160,13 @@ export default {
             alert(this.constants.ALERT_REVIEW + id + this.constants.ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => { alert(err.response.data.message) });
+          .catch(err => {
+            if (err.response) {
+              alert(err.response.data.message) 
+            } else {
+              console.log(err);
+            }
+          });
       }
     }
   }

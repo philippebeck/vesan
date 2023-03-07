@@ -67,9 +67,7 @@
           <template #item-4>
             <FieldElt type="textarea"
               v-model:value="alt"
-              :info="constants.INFO_ALT"
-              :min="constants.TEXT_MIN"
-              :max="constants.TEXT_MAX">
+              :info="constants.INFO_ALT">
 
               <template #legend>
                 {{ constants.LEGEND_ALT }}
@@ -178,7 +176,7 @@ export default {
     createProduct() {
       if (this.$serve.checkString(this.name) && 
         this.$serve.checkString(this.description, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
-        this.$serve.checkString(this.alt, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
+        this.$serve.checkString(this.alt)) {
 
         if (this.cat === "") { this.cat = this.constants.CAT_PRODUCT }
         let image = document.getElementById("image").files[0];
@@ -201,7 +199,13 @@ export default {
               alert(this.name + this.constants.ALERT_CREATED);
               this.$router.go();
             })
-            .catch(err => { alert(err.response.data.message) });
+            .catch(err => {
+              if (err.response) {
+                alert(err.response.data.message) 
+              } else {
+                console.log(err);
+              }
+            });
 
         } else {
           alert(this.constants.ALERT_IMG);
