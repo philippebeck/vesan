@@ -177,7 +177,7 @@ export default {
     updateArticle() {
       if (this.$serve.checkString(this.article.name) && 
         this.$serve.checkString(this.article.text, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
-        this.$serve.checkString(this.article.alt, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
+        this.$serve.checkString(this.article.alt)) {
 
         let data  = new FormData();
         let image = document.getElementById("image").files[0] ?? this.article.image;

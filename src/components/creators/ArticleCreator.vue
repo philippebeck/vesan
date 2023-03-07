@@ -68,9 +68,7 @@
             <FieldElt type="textarea"
               v-model:value="alt"
               @keyup.enter="createArticle()"
-              :info="constants.INFO_ALT"
-              :min="constants.TEXT_MIN"
-              :max="constants.TEXT_MAX">
+              :info="constants.INFO_ALT">
 
               <template #legend>
                 {{ constants.LEGEND_ALT }}
@@ -143,7 +141,7 @@ export default {
     createArticle() {
       if (this.$serve.checkString(this.name) && 
         this.$serve.checkString(this.text, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
-        this.$serve.checkString(this.alt, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
+        this.$serve.checkString(this.alt)) {
 
         if (this.cat === "") { this.cat = this.constants.CAT_ARTICLE }
         let image = document.getElementById("image").files[0];
