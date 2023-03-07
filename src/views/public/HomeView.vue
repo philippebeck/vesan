@@ -5,7 +5,8 @@
     <template #header>
 
       <!-- Slider -->
-      <SliderElt :slides="constants.SLIDES"
+      <SliderElt  v-if="constants.HOME_MEDIA === 'slider'"
+        :slides="constants.SLIDES"
         :delay="constants.SLIDER_DELAY"
         class="anima-grow">
 
@@ -16,6 +17,12 @@
           <i :class="`fa-${constants.SLIDER_FA} fa-${slotProps.slide.toLowerCase()}`"></i>
         </template>
       </SliderElt>
+
+      <MediaElt v-else
+        :type="constants.HOME_MEDIA"
+        :src="constants.HOME_SRC"
+        :width="constants.HOME_WIDTH"
+        :loop="constants.HOME_LOOP"/>
 
       <!-- Main Title -->
       <h1 class="blue anima-shrink">
