@@ -126,7 +126,13 @@ export default {
                   alert(link.get("name") + this.constants.ALERT_UPDATED);
                   this.$router.go();
                 })
-                .catch(err => { alert(err.response.data.message) });
+              .catch(err => {
+                if (err.response) {
+                  alert(err.response.data.message) 
+                } else {
+                  console.log(err);
+                }
+              });
           }
         }
       }
@@ -151,7 +157,13 @@ export default {
             alert(linkName + this.constants.ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => { alert(err.response.data.message) });
+          .catch(err => {
+            if (err.response) {
+              alert(err.response.data.message) 
+            } else {
+              console.log(err);
+            }
+          });
       }
     }
   }

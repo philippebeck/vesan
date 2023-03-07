@@ -119,7 +119,13 @@ export default {
                 alert(this.constants.ALERT_COMMENT + id + this.constants.ALERT_UPDATED);
                 this.$router.go();
               })
-              .catch(err => { alert(err.response.data.message) });
+              .catch(err => {
+                if (err.response) {
+                  alert(err.response.data.message) 
+                } else {
+                  console.log(err);
+                }
+              });
           }
         }
       }
@@ -137,7 +143,13 @@ export default {
             alert(this.constants.ALERT_COMMENT + id + this.constants.ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => { alert(err.response.data.message) });
+          .catch(err => {
+            if (err.response) {
+              alert(err.response.data.message) 
+            } else {
+              console.log(err);
+            }
+          });
       }
     }
   }

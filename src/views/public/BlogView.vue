@@ -214,14 +214,19 @@ export default {
 
           this.$serve.putData(`/api/articles/${id}`, article)
             .then(() => {
-
               if (hasLiked === true) {
                 console.log(this.article.name + this.constants.ALERT_DISLIKED);
               } else {
                 console.log(this.article.name + this.constants.ALERT_LIKED);
               }
             })
-            .catch(err => { alert(err.response.data.message) });
+            .catch(err => {
+              if (err.response) {
+                alert(err.response.data.message) 
+              } else {
+                console.log(err);
+              }
+            });
         }
       }
     }
