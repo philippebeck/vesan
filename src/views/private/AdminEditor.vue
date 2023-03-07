@@ -12,23 +12,28 @@
       <!-- Sidebar -->
       <NavElt class="sidebar">
         <template #first>
-          <a href="#product"
+          <a v-if="products.length > 0" 
+            href="#product"
             :title="constants.INTRO_PRODUCTS">
             <i class="fa-regular fa-rectangle-list fa-fw"></i>
           </a>
-          <a href="#review"
+          <a v-if="reviews.length > 0" 
+            href="#review"
             :title="constants.INTRO_REVIEWS">
             <i class="fa-solid fa-ranking-star fa-fw"></i>
           </a>
-          <a href="#order"
+          <a v-if="orders.length > 0" 
+            href="#order"
             :title="constants.INTRO_ORDERS">
             <i class="fa-solid fa-gifts fa-fw"></i>
           </a>
-          <a href="#article"
+          <a v-if="articles.length > 0" 
+            href="#article"
             :title="constants.INTRO_ARTICLES">
             <i class="fa-regular fa-newspaper fa-fw"></i>
           </a>
-          <a href="#comment"
+          <a v-if="comments.length > 0" 
+            href="#comment"
             :title="constants.INTRO_COMMENTS">
             <i class="fa-regular fa-comments fa-fw"></i>
           </a>
