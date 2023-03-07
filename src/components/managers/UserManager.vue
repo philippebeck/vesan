@@ -119,7 +119,7 @@ export default {
           if (this.$serve.checkString(user.name) && this.$serve.checkEmail(user.email)) {
 
             let data  = new FormData();
-            let image = document.getElementById(id).querySelector("[type='file']").files[0] ?? user.image;
+            let image = document.getElementById(id).files[0] ?? user.image;
 
             data.append("name", user.name);
             data.append("email", user.email);

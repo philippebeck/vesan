@@ -49,7 +49,8 @@
 
           <!-- Product Image -->
           <template #item-3>
-            <FieldElt type="file"
+            <FieldElt id="image"
+              type="file"
               v-model:value="image"
               :info="constants.INFO_IMAGE">
 
@@ -180,7 +181,7 @@ export default {
         this.$serve.checkString(this.alt, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
 
         if (this.cat === "") { this.cat = this.constants.CAT_PRODUCT }
-        let image = document.querySelector("[type='file']").files[0];
+        let image = document.getElementById("image").files[0];
 
         if (image !== undefined) {
           let product = new FormData();
