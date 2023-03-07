@@ -5,4 +5,5 @@ constants.js
 dist/
 node_modules/
 public/img/
+public/video/
 src/style/style.css
