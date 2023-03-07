@@ -22,6 +22,7 @@
       <MediaElt v-else
         :type="constants.HOME_MEDIA"
         :src="constants.HOME_SRC"
+        :alt="constants.HOME_ALT"
         :width="constants.HOME_WIDTH"
         :loop="constants.HOME_LOOP"/>
 

@@ -17,6 +17,7 @@ export default {
 
   ERROR_ALT : "Erreur 404",
 
+  HOME_ALT : "Home image",
   HOME_LOOP : true,
   HOME_MEDIA : "slider",
   HOME_SRC : "/video/home.mp4",
