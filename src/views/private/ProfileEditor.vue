@@ -52,7 +52,8 @@
               :src="'/img/thumbnails/users/' + user.image"
               :alt="user.name" />
 
-            <FieldElt type="file"
+            <FieldElt id="image"
+              type="file"
               v-model:value="image"
               :info="constants.INFO_IMAGE">
 
@@ -214,7 +215,7 @@ export default {
       if (this.$serve.checkString(this.user.name) && this.$serve.checkEmail(this.user.email)) {
 
         let user  = new FormData();
-        let image = document.querySelector("[type='file']").files[0] ?? this.user.image;
+        let image = document.getElementById("image").files[0] ?? this.user.image;
 
         user.append("name", this.user.name);
         user.append("email", this.user.email);
@@ -233,7 +234,7 @@ export default {
             alert(this.user.name + this.constants.ALERT_UPDATED);
             this.$router.go();
           })
-          .catch(err => { alert(err.response.data.message) });
+          .catch(err => { console.log(err)/*alert(err.response.data.message)*/ });
       }
     },
 

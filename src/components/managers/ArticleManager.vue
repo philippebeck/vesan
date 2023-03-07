@@ -159,7 +159,7 @@ export default {
             this.$serve.checkString(article.alt, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
 
             let data  = new FormData();
-            let image = document.getElementById(id).querySelector("[type='file']").files[0] ?? article.image;
+            let image = document.getElementById(id).files[0] ?? article.image;
 
             data.append("name", article.name);
             data.append("text", article.text);

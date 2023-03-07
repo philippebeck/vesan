@@ -5,7 +5,8 @@
     <template #header>
 
       <!-- Slider -->
-      <SliderElt :slides="constants.SLIDES"
+      <SliderElt  v-if="constants.HOME_MEDIA === 'slider'"
+        :slides="constants.SLIDES"
         :delay="constants.SLIDER_DELAY"
         class="anima-grow">
 
@@ -17,7 +18,15 @@
         </template>
       </SliderElt>
 
-      <!-- Main Title -->
+      <!-- Video or Image -->
+      <MediaElt v-else
+        :type="constants.HOME_MEDIA"
+        :src="constants.HOME_SRC"
+        :alt="constants.HOME_ALT"
+        :width="constants.HOME_WIDTH"
+        :loop="constants.HOME_LOOP"/>
+
+      <!-- Title -->
       <h1 class="blue anima-shrink">
         {{ constants.HOME_VIEW }}
       </h1>

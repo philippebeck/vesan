@@ -160,7 +160,7 @@ export default {
             this.$serve.checkString(product.options, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
 
             let data  = new FormData();
-            let image = document.getElementById(id).querySelector("[type='file']").files[0] ?? product.image;
+            let image = document.getElementById(id).files[0] ?? product.image;
 
             data.append("name", product.name);
             data.append("description", product.description);
