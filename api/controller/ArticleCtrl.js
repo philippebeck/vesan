@@ -33,8 +33,8 @@ exports.checkArticleData = (name, text, alt, cat, res) => {
     return res.status(403).json({ message: process.env.CHECK_TEXT });
   }
 
-  if (!nem.checkString(alt, process.env.TEXT_MIN, process.env.TEXT_MAX)) {
-    return res.status(403).json({ message: process.env.CHECK_TEXT });
+  if (!nem.checkString(alt)) {
+    return res.status(403).json({ message: process.env.CHECK_NAME });
   }
 
   if (!nem.checkString(cat)) {
