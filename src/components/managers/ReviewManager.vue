@@ -136,7 +136,6 @@ export default {
           this.$serve.putData(`/api/reviews/${id}`, data)
             .then(() => {
               alert(this.constants.ALERT_REVIEW + id + this.constants.ALERT_MODERATED);
-              this.$router.go();
             })
             .catch(err => {
               if (err.response) {

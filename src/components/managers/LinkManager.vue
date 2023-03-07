@@ -124,7 +124,6 @@ export default {
             this.$serve.putData(`/api/links/${this.links[i]._id}`, link)
               .then(() => {
                 alert(link.get("name") + this.constants.ALERT_UPDATED);
-                this.$router.go();
               })
               .catch(err => {
                 if (err.response) {

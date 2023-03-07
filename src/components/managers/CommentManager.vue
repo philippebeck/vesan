@@ -131,7 +131,6 @@ export default {
           this.$serve.putData(`/api/comments/${id}`, data)
             .then(() => {
               alert(this.constants.ALERT_COMMENT + id + this.constants.ALERT_MODERATED);
-              this.$router.go();
             })
             .catch(err => {
               if (err.response) {

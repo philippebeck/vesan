@@ -139,7 +139,6 @@ export default {
           this.$serve.putData(`/api/orders/${id}`, data)
             .then(() => {
               alert(this.constants.ALERT_ORDER + id + this.constants.ALERT_UPDATED);
-              this.$router.go();
             })
             .catch(err => {
               if (err.response) {

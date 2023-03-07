@@ -130,7 +130,6 @@ export default {
             this.$serve.putData(`/api/users/${id}`, data)
               .then(() => {
                 alert(user.name + this.constants.ALERT_UPDATED);
-                this.$router.go();
               })
               .catch(err => {
                 if (err.response) {
