@@ -60,7 +60,23 @@ exports.listArticleComments = (req, res) => {
 exports.listComments = (req, res) => {
   CommentModel
     .find()
-    .then((comments) => res.status(200).json(comments))
+    .then((comments) => {
+
+      UserModel
+        .find()
+        .then((users) => {
+
+          for (let comment of comments) {
+            for (let user of users) {
+              if (comment.user === user._id.toString()) {
+                comment.user = user.name + "-" + comment.user;
+              }
+            }
+          }
+          res.status(200).json(comments);
+        })
+      .catch(() => res.status(404).json({ message: process.env.USERS_NOT_FOUND }));
+    })
     .catch(() => res.status(404).json({ message: process.env.COMMENTS_NOT_FOUND }));
 };
 

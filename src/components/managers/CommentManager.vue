@@ -31,8 +31,8 @@
 
           <!-- User -->
           <template #cell-user="slotProps">
-            <b>{{ getUserName(comments[slotProps.index].user) }}</b>
-            ({{ comments[slotProps.index].user }})
+            <b>{{ comments[slotProps.index].user.split('-')[0] }}</b>
+            ({{ comments[slotProps.index].user.split('-')[1] }})
           </template>
 
           <!-- Moderate -->
@@ -105,15 +105,6 @@ export default {
      */
     getArticleName(id) {
       return this.$serve.getItemName(id, this.articles);
-    },
-
-    /**
-     * GET USER NAME
-     * @param {string} id
-     * @returns
-     */
-    getUserName(id) {
-      return this.$serve.getItemName(id, this.users);
     },
 
     /**
