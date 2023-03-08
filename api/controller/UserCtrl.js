@@ -132,7 +132,7 @@ exports.getUserNoPass = (name, email, image, role, updated) => {
  * @returns 
  */
 exports.getImageUpdated = (id, name, newFilename) => {
-  let image = nem.getImgName(name);
+  let image = nem.getImageName(name);
   nem.setThumbnail("users/" + newFilename, "users/" + image);
 
   UserModel
@@ -199,7 +199,7 @@ exports.createUser = (req, res, next) => {
           this.checkUserUnique(fields.name, fields.email, user, res);
         }
 
-        let image = nem.getImgName(fields.name);
+        let image = nem.getImageName(fields.name);
         nem.setThumbnail("users/" + files.image.newFilename, "users/" + image);
 
         bcrypt

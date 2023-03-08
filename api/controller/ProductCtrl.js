@@ -103,7 +103,7 @@ exports.getProduct = (name, description, image, alt, price, options, cat, create
  * @returns 
  */
 exports.getImageUpdated = (id, name, newFilename) => {
-  let image = nem.getImgName(name);
+  let image = nem.getImageName(name);
   nem.setImage("products/" + newFilename, "products/" + image);
   nem.setThumbnail("products/" + newFilename, "products/" + image);
   
@@ -173,7 +173,7 @@ exports.createProduct = (req, res, next) => {
         }
 
         let options = nem.getArrayFromString(fields.options);
-        let image   = nem.getImgName(fields.name);
+        let image   = nem.getImageName(fields.name);
 
         nem.setImage("products/" + files.image.newFilename, "products/" + image);
         nem.setThumbnail("products/" + files.image.newFilename, "products/" + image);

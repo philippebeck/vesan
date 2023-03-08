@@ -132,7 +132,7 @@ exports.forgotPass = (req, res, next) => {
       .findOne({ email: fields.email })
       .then((user) => {
         if (user !== null) {
-          let pass = nem.getGeneratePass();
+          let pass = nem.getNewPass();
 
           fields.html = `
             <p>${fields.html}</p>
