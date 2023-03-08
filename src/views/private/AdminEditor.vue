@@ -148,10 +148,13 @@ export default {
           if (this.checkRole("editor")) {
             this.$store.dispatch("listArticles");
             this.$store.dispatch("listComments");
-            this.$store.dispatch("listLinks");
             this.$store.dispatch("listOrders");
             this.$store.dispatch("listProducts");
             this.$store.dispatch("listReviews");
+          } 
+
+          if (this.checkRole("admin")) {
+            this.$store.dispatch("listLinks");
             this.$store.dispatch("listUsers");
           }
         })
