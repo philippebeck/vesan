@@ -71,8 +71,8 @@
 
           <!-- User -->
           <template #cell-user="slotProps">
-            <b>{{ getUserName(articles[slotProps.index].user) }}</b>
-            ({{ articles[slotProps.index].user }})
+            <b>{{ articles[slotProps.index].user.split('-')[0] }}</b>
+            ({{ articles[slotProps.index].user.split('-')[1] }})
           </template>
 
           <!-- Likes -->
@@ -133,15 +133,6 @@ export default {
      */
     getArticles() {
       return this.articles;
-    },
-
-    /**
-     * GET USER NAME
-     * @param {string} id 
-     * @returns
-     */
-    getUserName(id) {
-      return this.$serve.getItemName(id, this.users);
     },
 
     /**

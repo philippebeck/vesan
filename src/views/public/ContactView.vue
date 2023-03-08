@@ -3,7 +3,7 @@
   <!-- CONTACT PAGE -->
   <CardElt>
     <template #header>
-      <h1 class="sky anima-slideL">
+      <h1 class="sky ani-slideL-it">
         <i class="fa-solid fa-envelope-open-text fa-lg"
           aria-hidden="true">
         </i>
@@ -18,10 +18,9 @@
 
           <!-- Email -->
           <template #item-1>
-            <FieldElt id="email"
-              type="email"
+            <FieldElt type="email"
               v-model:value="email"
-              class="anima-slideR"
+              class="ani-slideR-it"
               :info="constants.INFO_EMAIL">
 
               <template #legend>
@@ -35,11 +34,9 @@
 
           <!-- Subject -->
           <template #item-2>
-            <FieldElt id="subject"
-              v-model:value="subject"
-              class="anima-slideL"
-              :info="constants.INFO_SUBJECT"
-              :min="2">
+            <FieldElt v-model:value="subject"
+              class="ani-slideL-it"
+              :info="constants.INFO_SUBJECT">
 
               <template #legend>
                 {{ constants.LEGEND_SUBJECT }}
@@ -52,12 +49,12 @@
 
           <!-- Text -->
           <template #item-3>
-            <FieldElt id="text"
-              type="textarea"
+            <FieldElt type="textarea"
               v-model:value="text"
-              class="anima-slideR"
+              class="ani-slideR-it"
               :info="constants.INFO_TEXT"
-              :max="100">
+              :mix="constants.TEXT_MIN"
+              :max="constants.TEXT_MAX">
 
               <template #legend>
                 {{ constants.LEGEND_TEXT }}
@@ -73,7 +70,7 @@
         <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY">
           <BtnElt type="button"
             @click="send()" 
-            class="btn-green anima-slideL"
+            class="btn-green ani-slideL-it"
             :content="constants.CONTENT_SEND"
             :title="constants.TITLE_MESSAGE">
 

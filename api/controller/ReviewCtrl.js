@@ -65,7 +65,23 @@ exports.listProductReviews = (req, res) => {
 exports.listReviews = (req, res) => {
   ReviewModel
     .find()
-    .then((reviews) => res.status(200).json(reviews))
+    .then((reviews) => {
+
+      UserModel
+        .find()
+        .then((users) => {
+
+          for (let review of reviews) {
+            for (let user of users) {
+              if (review.user === user._id.toString()) {
+                review.user = user.name + "-" + review.user;
+              }
+            }
+          }
+          res.status(200).json(reviews);
+        })
+        .catch(() => res.status(404).json({ message: process.env.USERS_NOT_FOUND }));
+    })
     .catch(() => res.status(404).json({ message: process.env.REVIEWS_NOT_FOUND }));
 };
 

@@ -1,7 +1,7 @@
 <template>
   <CardElt id="top">
     <template #header>
-      <h1 class="sky anima-turn3D">
+      <h1 class="sky ani-turn3D-it">
         <i class="fa-solid fa-gears fa-2x"
           aria-hidden="true">
         </i>
@@ -11,6 +11,10 @@
 
       <!-- Sidebar -->
       <NavElt class="sidebar">
+        <template #hide>
+          <i class="fa-solid fa-eye fa-fw"></i>
+        </template>
+
         <template #first>
           <a v-if="products.length > 0" 
             href="#product"
@@ -144,10 +148,13 @@ export default {
           if (this.checkRole("editor")) {
             this.$store.dispatch("listArticles");
             this.$store.dispatch("listComments");
-            this.$store.dispatch("listLinks");
             this.$store.dispatch("listOrders");
             this.$store.dispatch("listProducts");
             this.$store.dispatch("listReviews");
+          } 
+
+          if (this.checkRole("admin")) {
+            this.$store.dispatch("listLinks");
             this.$store.dispatch("listUsers");
           }
         })

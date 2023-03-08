@@ -20,7 +20,7 @@
 
   <CardElt id="top">
     <template #header>
-      <h1 class="sky anima-slideR">
+      <h1 class="sky ani-slideR-it">
         <i class="fa-solid fa-link fa-lg"
           aria-hidden="true">
         </i>
@@ -34,7 +34,7 @@
         :dynamic="true">
         <template #items="slotProps">
           <i :id="slotProps.index"
-            :class="`fa-brands fa-${slotProps.index.toLowerCase()} fa-5x sky shatex-blur-md anima-grow mar-lg`">
+            :class="`fa-brands fa-${slotProps.index.toLowerCase()} fa-5x sky ani-grow-it mar-lg`">
           </i>
         </template>
 

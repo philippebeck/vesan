@@ -8,7 +8,7 @@
       <SliderElt  v-if="constants.HOME_MEDIA === 'slider'"
         :slides="constants.SLIDES"
         :delay="constants.SLIDER_DELAY"
-        class="anima-grow">
+        class="ani-grow-it">
 
         <template #slide="slotProps">
           <i :class="`fa-${constants.SLIDER_FA} fa-${slotProps.slide.toLowerCase()} fa-9x blue`"></i>
@@ -27,7 +27,7 @@
         :loop="constants.HOME_LOOP"/>
 
       <!-- Title -->
-      <h1 class="blue anima-shrink">
+      <h1 class="blue ani-shrink-it">
         {{ constants.HOME_VIEW }}
       </h1>
     </template>

@@ -1,7 +1,7 @@
 <template>
   <CardElt>
     <template #header>
-      <h1 class="sky anima-flipperY">
+      <h1 class="sky ani-flipperY-it">
         <i class="fa-solid fa-basket-shopping fa-lg"
           aria-hidden="true">
         </i>
