@@ -11,6 +11,10 @@
 
       <!-- Sidebar -->
       <NavElt class="sidebar">
+        <template #hide>
+          <i class="fa-solid fa-eye fa-fw"></i>
+        </template>
+
         <template #first>
           <a v-if="products.length > 0" 
             href="#product"

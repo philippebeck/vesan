@@ -1,6 +1,9 @@
 <template>
   <NavElt :items="getCats"
     class="sidebar">
+    <template #hide>
+      <i class="fa-solid fa-eye fa-fw"></i>
+    </template>
 
     <template #last v-if="checkRole('editor')">
       <a href="#create-product"
