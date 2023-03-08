@@ -18,8 +18,7 @@
 
           <!-- Email -->
           <template #item-1>
-            <FieldElt id="email"
-              type="email"
+            <FieldElt type="email"
               v-model:value="email"
               class="anima-slideR"
               :info="constants.INFO_EMAIL">
@@ -35,11 +34,9 @@
 
           <!-- Subject -->
           <template #item-2>
-            <FieldElt id="subject"
-              v-model:value="subject"
+            <FieldElt v-model:value="subject"
               class="anima-slideL"
-              :info="constants.INFO_SUBJECT"
-              :min="2">
+              :info="constants.INFO_SUBJECT">
 
               <template #legend>
                 {{ constants.LEGEND_SUBJECT }}
@@ -52,12 +49,12 @@
 
           <!-- Text -->
           <template #item-3>
-            <FieldElt id="text"
-              type="textarea"
+            <FieldElt type="textarea"
               v-model:value="text"
               class="anima-slideR"
               :info="constants.INFO_TEXT"
-              :max="100">
+              :mix="constants.TEXT_MIN"
+              :max="constants.TEXT_MAX">
 
               <template #legend>
                 {{ constants.LEGEND_TEXT }}
