@@ -151,7 +151,23 @@ exports.getImageUpdated = (id, name, newFilename, res) => {
 exports.listArticles = (req, res) => {
   ArticleModel
     .find()
-    .then((articles) => res.status(200).json(articles))
+    .then((articles) => {
+
+      UserModel
+        .find()
+        .then((users) => {
+
+          for (let article of articles) {
+            for (let user of users) {
+              if (article.user === user._id.toString()) {
+                article.user = user.name + "-" + article.user;
+              }
+            }
+          }
+          res.status(200).json(articles);
+        })
+      .catch(() => res.status(404).json({ message: process.env.USERS_NOT_FOUND }));
+    })
     .catch(() => res.status(404).json({ message: process.env.ARTICLES_NOT_FOUND }));
 }
 
