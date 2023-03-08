@@ -82,7 +82,23 @@ exports.createMessage = (total, payment, products) => {
 exports.listOrders = (req, res) => {
   OrderModel
     .find()
-    .then((orders) => res.status(200).json(orders))
+    .then((orders) => {
+
+      UserModel
+        .find()
+        .then((users) => {
+
+          for (let order of orders) {
+            for (let user of users) {
+              if (order.user === user._id.toString()) {
+                order.user = user.name + "-" + order.user;
+              }
+            }
+          }
+          res.status(200).json(orders);
+        })
+      .catch(() => res.status(404).json({ message: process.env.USERS_NOT_FOUND }));
+    })
     .catch(() => res.status(404).json({ message: process.env.ORDERS_NOT_FOUND }));
 };
 
