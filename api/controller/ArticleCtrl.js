@@ -123,7 +123,7 @@ exports.getArticleUpdated = (name, text, image, alt, likes, cat, updated) => {
  * @returns 
  */
 exports.getImageUpdated = (id, name, newFilename, res) => {
-  let image = nem.getImgName(name);
+  let image = nem.getImageName(name);
   nem.setImage( "articles/" + newFilename, "articles/" + image);
   nem.setThumbnail("articles/" + newFilename, "articles/" + image);
 
@@ -218,7 +218,7 @@ exports.createArticle = (req, res, next) => {
         }
 
         let likes = nem.getArrayFromString(fields.likes);
-        let image = nem.getImgName(fields.name);
+        let image = nem.getImageName(fields.name);
 
         nem.setImage("articles/" + files.image.newFilename, "articles/" + image);
         nem.setThumbnail("articles/" + files.image.newFilename, "articles/" + image);
