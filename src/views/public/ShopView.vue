@@ -51,7 +51,7 @@
             </template>
 
             <template #body>
-              <BtnElt v-if="getScoreAverage(slotProps.value._id) !== undefined"
+              <BtnElt v-if="getAverage(slotProps.value._id) !== undefined"
                 :href="`product/${slotProps.value._id}#reviews`"
                 itemprop="aggregateRating"
                 itemscope
@@ -61,7 +61,7 @@
 
                 <template #btn>
                   <b itemprop="ratingValue">
-                    {{ getScoreAverage(slotProps.value._id) }}
+                    {{ getAverage(slotProps.value._id) }}
                   </b> <i class="fa-solid fa-star"></i>
                 </template>
               </BtnElt>
@@ -179,8 +179,8 @@ export default {
      * GET SCORES AVERAGE
      * @returns
      */
-    getScoreAverage(productId) {
-      return this.$serve.getScoreAverage(productId, this.reviews);
+    getAverage(productId) {
+      return this.$serve.getAverage(productId, this.reviews);
     }
   }
 }
