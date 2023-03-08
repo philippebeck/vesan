@@ -16,7 +16,7 @@
 
   <CardElt id="top">
     <template #header>
-      <h1 class="sky anima-openY">
+      <h1 class="sky ani-openY-it">
         <i class="fa-solid fa-store fa-lg"
           aria-hidden="true">
         </i>
@@ -31,7 +31,7 @@
 
         <template #items="slotProps">
           <h2 :id="slotProps.item[0].cat"
-            class="blue anima-openX">
+            class="blue ani-openX-it">
             {{ slotProps.item[0].cat }}
           </h2>
         </template>

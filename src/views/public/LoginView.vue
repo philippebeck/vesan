@@ -1,7 +1,7 @@
 <template>
   <CardElt v-if="type === 'SignUp'">
     <template #header>
-      <h1 class="sky anima-turnXZ">
+      <h1 class="sky ani-turnXZ-it">
         <i class="fa-solid fa-sign-in-alt fa-lg"
           aria-hidden="true">
         </i>
@@ -41,7 +41,7 @@
 
   <CardElt v-if="type === 'SignIn'">
     <template #header>
-      <h1 class="sky anima-turnYZ">
+      <h1 class="sky ani-turnYZ-it">
         <i class="fa-solid fa-sign-in-alt fa-lg"
           aria-hidden="true">
         </i>
@@ -81,7 +81,7 @@
 
   <CardElt v-if="type === 'ForgotPass'">
     <template #header>
-      <h1 class="sky anima-turn3D">
+      <h1 class="sky ani-turn3D-it">
         <i class="fa-solid fa-key fa-lg"
           aria-hidden="true">
         </i>

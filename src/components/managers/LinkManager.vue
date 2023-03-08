@@ -18,7 +18,7 @@
           :id="table[0].cat">
 
           <template #title>
-            <i :class="`fa-brands fa-${table[0].cat.toLowerCase()} fa-5x sky anima-grow`"></i>
+            <i :class="`fa-brands fa-${table[0].cat.toLowerCase()} fa-5x sky ani-grow-it`"></i>
           </template>
 
           <template #head>up/del</template>

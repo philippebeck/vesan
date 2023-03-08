@@ -5,7 +5,7 @@
 
     <!-- Brand Logo -->
     <template #brand>
-      <img class="anima-slideB"
+      <img class="ani-slideB-it"
         :src="constants.LOGO_SRC"
         :alt="constants.LOGO_ALT">
     </template>
