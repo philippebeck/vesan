@@ -229,7 +229,7 @@ export default {
           }
         }
 
-        this.$serve.putData(`/api/users/${this.user._id}`, user)
+        this.$serve.putData(`/users/${this.user._id}`, user)
           .then(() => {
             alert(this.user.name + this.constants.ALERT_UPDATED);
             this.$router.go();
@@ -251,7 +251,7 @@ export default {
       let userName = this.user.name;
 
       if (confirm(`${this.constants.TITLE_DELETE} ${userName} ?`) === true) {
-        this.$serve.deleteData(`/api/users/${this.user._id}`)
+        this.$serve.deleteData(`/users/${this.user._id}`)
           .then(() => {
             localStorage.removeItem("userId");
             localStorage.removeItem("userToken");

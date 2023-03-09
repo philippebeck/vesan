@@ -158,7 +158,7 @@ export default {
             data.append("cat", article.cat);
             data.append("updated", Date.now());
 
-            this.$serve.putData(`/api/articles/${id}`, data)
+            this.$serve.putData(`/articles/${id}`, data)
               .then(() => {
                 alert(article.name + this.constants.ALERT_UPDATED);
               })
@@ -188,7 +188,7 @@ export default {
       }
 
       if (confirm(`${this.constants.TITLE_DELETE} ${articleName} ?`) === true) {
-        this.$serve.deleteData(`/api/articles/${id}`)
+        this.$serve.deleteData(`/articles/${id}`)
           .then(() => {
             alert(articleName + this.constants.ALERT_DELETED);
             this.$router.go();

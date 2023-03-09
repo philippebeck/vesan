@@ -127,7 +127,7 @@ export default {
             data.append("role", user.role);
             data.append("updated", Date.now());
 
-            this.$serve.putData(`/api/users/${id}`, data)
+            this.$serve.putData(`/users/${id}`, data)
               .then(() => {
                 alert(user.name + this.constants.ALERT_UPDATED);
               })
@@ -157,7 +157,7 @@ export default {
       }
 
       if (confirm(`${this.constants.TITLE_DELETE} ${userName} ?`) === true) {
-        this.$serve.deleteData(`/api/users/${id}`)
+        this.$serve.deleteData(`/users/${id}`)
           .then(() => {
             alert(userName + this.constants.ALERT_DELETED);
             this.$router.go();

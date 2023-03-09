@@ -97,86 +97,86 @@ export default createStore({
   actions: {
     /* ARTICLE */
     async readArticle(context, id) {
-      app.config.globalProperties.$serve.getData("/api/articles/" + id)
+      app.config.globalProperties.$serve.getData("/articles/" + id)
         .then(res => { context.commit("SET_ARTICLE", res) })
         .catch(err => { console.log(err) });
     },
     async listArticles(context) {
-      app.config.globalProperties.$serve.getData("/api/articles")
+      app.config.globalProperties.$serve.getData("/articles")
         .then(res => { context.commit("SET_ARTICLES", res) })
         .catch(err => { console.log(err) });
     },
 
     /* AUTH */
     async readAvatar(context, id) {
-      app.config.globalProperties.$serve.getData("/api/auth/" + id)
+      app.config.globalProperties.$serve.getData("/auth/" + id)
         .then(res => { context.commit("SET_USER", res) })
         .catch(err => { console.log(err) });
     },
 
     /* COMMENT */
     async listArticleComments(context, id) {
-      app.config.globalProperties.$serve.getData("/api/comments/" + id)
+      app.config.globalProperties.$serve.getData("/comments/" + id)
         .then(res => { context.commit("SET_COMMENTS", res) })
         .catch(err => { console.log(err) });
     },
     async listComments(context) {
-      app.config.globalProperties.$serve.getData("/api/comments")
+      app.config.globalProperties.$serve.getData("/comments")
         .then(res => { context.commit("SET_COMMENTS", res) })
         .catch(err => { console.log(err) });
     },
 
     /* LINK */
     async listLinks(context) {
-      app.config.globalProperties.$serve.getData("/api/links")
+      app.config.globalProperties.$serve.getData("/links")
         .then(res => { context.commit("SET_LINKS", res) })
         .catch(err => { console.log(err) });
     },
 
     /* ORDER */
     async listUserOrders(context, id) {
-      app.config.globalProperties.$serve.getData("/api/orders/" + id)
+      app.config.globalProperties.$serve.getData("/orders/" + id)
         .then(res => { context.commit("SET_USER_ORDERS", res) })
         .catch(err => { console.log(err) });
     },
     async listOrders(context) {
-      app.config.globalProperties.$serve.getData("/api/orders")
+      app.config.globalProperties.$serve.getData("/orders")
         .then(res => { context.commit("SET_ORDERS", res) })
         .catch(err => { console.log(err) });
     },
 
     /* PRODUCT */
     async readProduct(context, id) {
-      app.config.globalProperties.$serve.getData("/api/products/" + id)
+      app.config.globalProperties.$serve.getData("/products/" + id)
         .then(res => { context.commit("SET_PRODUCT", res) })
         .catch(err => { console.log(err) });
     },
     async listProducts(context) {
-      app.config.globalProperties.$serve.getData("/api/products")
+      app.config.globalProperties.$serve.getData("/products")
         .then(res => { context.commit("SET_PRODUCTS", res) })
         .catch(err => { console.log(err) });
     },
 
     /* REVIEW */
     async listProductReviews(context, id) {
-      app.config.globalProperties.$serve.getData("/api/reviews/" + id)
+      app.config.globalProperties.$serve.getData("/reviews/" + id)
         .then(res => { context.commit("SET_REVIEWS", res) })
         .catch(err => { console.log(err) });
     },
     async listReviews(context) {
-      app.config.globalProperties.$serve.getData("/api/reviews")
+      app.config.globalProperties.$serve.getData("/reviews")
         .then(res => { context.commit("SET_REVIEWS", res) })
         .catch(err => { console.log(err) });
     },
 
     /* USER */
     async readUser(context, id) {
-      app.config.globalProperties.$serve.getData("/api/users/" + id)
+      app.config.globalProperties.$serve.getData("/users/" + id)
         .then(res => { context.commit("SET_USER", res) })
         .catch(err => { console.log(err) });
     },
     async listUsers(context) {
-      app.config.globalProperties.$serve.getData("/api/users")
+      app.config.globalProperties.$serve.getData("/users")
         .then(res => { context.commit("SET_USERS", res) })
         .catch(err => { console.log(err) });
     }

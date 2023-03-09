@@ -104,7 +104,7 @@ export default {
         link.append("url", this.url);
         link.append("cat", this.cat);
 
-        this.$serve.postData("/api/links", link)
+        this.$serve.postData("/links", link)
           .then(() => {
             alert(this.name + this.constants.ALERT_CREATED);
             this.$router.go();

@@ -44,6 +44,10 @@ const errorHandler = error => {
   }
 };
 
+if (typeof(PhusionPassenger) !== 'undefined') {
+  PhusionPassenger.configure({ autoInstall: false });
+}
+
 const server = http.createServer(app);
 
 server.on("error", errorHandler);
@@ -55,4 +59,9 @@ server.on("listening", () => {
   console.log("Listening on " + bind);
 });
 
-server.listen(port);
+if (typeof(PhusionPassenger) !== 'undefined') {
+  server.listen('passenger');
+
+} else {
+  server.listen(port);
+}

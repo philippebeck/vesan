@@ -215,7 +215,7 @@ export default {
           article.append("cat", this.articles[i].cat);
           article.append("updated", this.articles[i].updated);
 
-          this.$serve.putData(`/api/articles/${id}`, article)
+          this.$serve.putData(`/articles/${id}`, article)
             .then(() => {
               if (hasLiked === true) {
                 console.log(this.article.name + this.constants.ALERT_DISLIKED);
