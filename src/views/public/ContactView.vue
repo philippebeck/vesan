@@ -115,7 +115,7 @@ export default {
         message.append("subject", this.subject);
         message.append("html", this.text);
 
-        this.$serve.postData("/api/users/message", message)
+        this.$serve.postData("/users/message", message)
           .then(() => {
             alert(this.subject + this.constants.ALERT_SENDED);
             this.$router.push("/");

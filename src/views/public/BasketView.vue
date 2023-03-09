@@ -149,7 +149,7 @@ export default {
   },
 
   mounted() {
-    this.$serve.getData("/api/products")
+    this.$serve.getData("/products")
       .then(res => { 
         this.products = res;
         this.setBasket();
@@ -327,7 +327,7 @@ export default {
       order.append("created", Date.now());
       order.append("updated", Date.now());
 
-      this.$serve.postData("/api/orders", order)
+      this.$serve.postData("/orders", order)
         .then(() => {
           alert(this.constants.ALERT_ORDER_CREATED);
           localStorage.removeItem("basket");
