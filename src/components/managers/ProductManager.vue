@@ -170,7 +170,7 @@ export default {
             data.append("created", product.created);
             data.append("updated", Date.now());
 
-            this.$serve.putData(`/api/products/${id}`, data)
+            this.$serve.putData(`/products/${id}`, data)
               .then(() => {
                 alert(product.name + this.constants.ALERT_UPDATED);
               })
@@ -200,7 +200,7 @@ export default {
       }
       
       if (confirm(`${this.constants.TITLE_DELETE} ${productName} ?`) === true) {
-        this.$serve.deleteData(`/api/products/${id}`)
+        this.$serve.deleteData(`/products/${id}`)
           .then(() => {
             alert(productName + this.constants.ALERT_DELETED);
             this.$router.go();

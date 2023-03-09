@@ -71,7 +71,7 @@ export default {
         auth.append("email", this.email);
         auth.append("pass", this.pass);
 
-        this.$serve.postData("/api/auth", auth)
+        this.$serve.postData("/auth", auth)
           .then((res) => {
 
             let token   = JSON.stringify(res.token);

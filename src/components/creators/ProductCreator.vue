@@ -194,7 +194,7 @@ export default {
           product.append("created", Date.now());
           product.append("updated", Date.now());
 
-          this.$serve.postData("/api/products", product)
+          this.$serve.postData("/products", product)
             .then(() => {
               alert(this.name + this.constants.ALERT_CREATED);
               this.$router.go();

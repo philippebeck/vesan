@@ -133,7 +133,7 @@ export default {
             data.append("moderate", "false");
             data.append("updated", Date.now());
 
-            this.$serve.putData(`/api/reviews/${id}`, data)
+            this.$serve.putData(`/reviews/${id}`, data)
               .then(() => {
                 alert(this.constants.ALERT_REVIEW + id + this.constants.ALERT_UPDATED);
                 this.$router.go();
@@ -157,7 +157,7 @@ export default {
     deleteReview(id) {
       if (confirm(`${this.constants.TITLE_DELETE_REVIEW}${id} ?`) === true) {
 
-        this.$serve.deleteData(`/api/reviews/${id}`)
+        this.$serve.deleteData(`/reviews/${id}`)
           .then(() => {
             alert(this.constants.ALERT_REVIEW + id + this.constants.ALERT_DELETED);
             this.$router.go();

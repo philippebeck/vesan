@@ -89,7 +89,7 @@ export default {
         review.append("created", Date.now());
         review.append("updated", Date.now());
 
-        this.$serve.postData("/api/reviews", review)
+        this.$serve.postData("/reviews", review)
           .then(() => {
             alert(this.constants.ALERT_NEW_REVIEW);
             this.$router.go();

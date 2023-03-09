@@ -119,7 +119,7 @@ export default {
           data.append("text", comment.text);
           data.append("moderate", comment.moderate);
 
-          this.$serve.putData(`/api/comments/${id}`, data)
+          this.$serve.putData(`/comments/${id}`, data)
             .then(() => {
               alert(this.constants.ALERT_COMMENT + id + this.constants.ALERT_MODERATED);
             })
@@ -141,7 +141,7 @@ export default {
     deleteComment(id) {
       if (confirm(`${this.constants.TITLE_DELETE_COMMENT}${id} ?`) === true) {
 
-        this.$serve.deleteData(`/api/comments/${id}`)
+        this.$serve.deleteData(`/comments/${id}`)
           .then(() => {
             alert(this.constants.ALERT_COMMENT + id + this.constants.ALERT_DELETED);
             this.$router.go();

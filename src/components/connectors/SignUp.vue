@@ -120,7 +120,7 @@ export default {
           user.append("created", Date.now());
           user.append("updated", Date.now());
 
-          this.$serve.postData("/api/users", user)
+          this.$serve.postData("/users", user)
             .then(() => {
               alert(this.name + this.constants.ALERT_CREATED);
               this.$router.go();

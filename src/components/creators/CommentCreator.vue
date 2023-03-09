@@ -70,7 +70,7 @@ export default {
         comment.append("created", Date.now());
         comment.append("updated", Date.now());
 
-        this.$serve.postData("/api/comments", comment)
+        this.$serve.postData("/comments", comment)
           .then(() => {
             alert(this.constants.ALERT_NEW_COMMENT);
             this.$router.go();
