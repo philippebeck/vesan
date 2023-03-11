@@ -7,7 +7,8 @@
     <template #brand>
       <img class="ani-slideB-it"
         :src="constants.LOGO_SRC"
-        :alt="constants.LOGO_ALT">
+        :alt="constants.LOGO_ALT"
+        :width="constants.LOGO_WIDTH">
     </template>
 
     <!-- Admin Part -->

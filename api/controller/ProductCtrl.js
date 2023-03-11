@@ -102,7 +102,7 @@ exports.getProduct = (name, description, image, alt, price, options, cat, create
  * @param {object} res 
  * @returns 
  */
-exports.getImageUpdated = (id, name, newFilename) => {
+exports.getImageUpdated = (id, name, newFilename, res) => {
   let image = nem.getImageName(name);
   nem.setImage("products/" + newFilename, "products/" + image);
   nem.setThumbnail("products/" + newFilename, "products/" + image);
@@ -222,7 +222,7 @@ exports.updateProduct = (req, res, next) => {
         let image   = fields.image;
     
         if (Object.keys(files).length !== 0) {
-          image = this.getImageUpdated(req.params.id, fields.name, files.image.newFilename);
+          image = this.getImageUpdated(req.params.id, fields.name, files.image.newFilename, res);
         }
     
         let product = this.getProduct(
