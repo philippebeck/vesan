@@ -129,9 +129,10 @@ exports.getUserNoPass = (name, email, image, role, updated) => {
  * @param {string} id 
  * @param {string} name 
  * @param {string} newFilename 
+ * @param {object} res
  * @returns 
  */
-exports.getImageUpdated = (id, name, newFilename) => {
+exports.getImageUpdated = (id, name, newFilename, res) => {
   let image = nem.getImageName(name);
   nem.setThumbnail("users/" + newFilename, "users/" + image);
 
@@ -313,7 +314,7 @@ exports.updateUser = (req, res, next) => {
         let image = fields.image;
 
         if (Object.keys(files).length !== 0) {
-          image = this.getImageUpdated(req.params.id, fields.name, files.image.newFilename);
+          image = this.getImageUpdated(req.params.id, fields.name, files.image.newFilename, res);
         }
 
         if (fields.pass) {
