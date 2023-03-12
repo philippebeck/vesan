@@ -606,13 +606,13 @@ footer {
   --ve-foot-ul-place-content: center;
   --ve-foot-ul-place-items: center;
   --ve-foot-ul-padding: 20px;
-  --ve-foot-ul-background-color: var(--ani-sky);
+  --ve-foot-ul-background-color: var(--ani-blue);
   --ve-foot-title-margin-bottom: 5px;
   --ve-foot-title-font-size: 2rem;
   --ve-foot-title-font-family: var(--ani-monospace);
   --ve-foot-title-color: var(--ani-yellow);
   --ve-foot-section-a-color: var(--ani-white);
-  --ve-foot-section-a-hover-color: var(--ani-gray);
+  --ve-foot-section-a-hover-color: var(--ani-yellow);
 }
 
 aside {
@@ -775,4 +775,4 @@ aside {
 }
 
 /* Author: Philippe Beck <philippe@philippebeck.net>
- Updated: 11th Mar 2023 @ 7:46:05 PM */
+ Updated: 12th Mar 2023 @ 5:55:24 PM */
