@@ -1,40 +1,37 @@
 <template>
+  <header>
+    <SliderElt  v-if="constants.HOME_MEDIA === 'slider'"
+      :slides="constants.SLIDES"
+      :delay="constants.SLIDER_DELAY"
+      class="ani-grow-it">
 
-  <!-- HOME PAGE -->
+      <template #slide="slotProps">
+        <i :class="`fa-${constants.SLIDER_FA} fa-${slotProps.slide.toLowerCase()} fa-9x sky`"></i>
+      </template>
+      <template #gallery="slotProps">
+        <i :class="`fa-${constants.SLIDER_FA} fa-${slotProps.slide.toLowerCase()}`"></i>
+      </template>
+    </SliderElt>
+
+    <MediaElt v-else
+      :type="constants.HOME_MEDIA"
+      :src="constants.HOME_SRC"
+      :alt="constants.HOME_ALT"
+      :width="constants.HOME_WIDTH"
+      :loop="constants.HOME_LOOP"/>
+
+    <h1 class="blue ani-shrink-it">
+      {{ constants.HOME_VIEW }}
+    </h1>
+  </header>
+
   <CardElt>
     <template #header>
-
-      <!-- Slider -->
-      <SliderElt  v-if="constants.HOME_MEDIA === 'slider'"
-        :slides="constants.SLIDES"
-        :delay="constants.SLIDER_DELAY"
-        class="ani-grow-it">
-
-        <template #slide="slotProps">
-          <i :class="`fa-${constants.SLIDER_FA} fa-${slotProps.slide.toLowerCase()} fa-9x blue`"></i>
-        </template>
-        <template #gallery="slotProps">
-          <i :class="`fa-${constants.SLIDER_FA} fa-${slotProps.slide.toLowerCase()}`"></i>
-        </template>
-      </SliderElt>
-
-      <!-- Video or Image -->
-      <MediaElt v-else
-        :type="constants.HOME_MEDIA"
-        :src="constants.HOME_SRC"
-        :alt="constants.HOME_ALT"
-        :width="constants.HOME_WIDTH"
-        :loop="constants.HOME_LOOP"/>
-
-      <!-- Title -->
-      <h1 class="blue ani-shrink-it">
-        {{ constants.HOME_VIEW }}
-      </h1>
+      <h2>{{ constants.HOME_SUB }}</h2>
+      <b>{{ constants.INTRO_HOME }}</b>
     </template>
 
-    <!-- Main Content -->
     <template #body>
-      <strong>{{ constants.INTRO_HOME }}</strong>
       <ListElt :dynamic="true"
         :items="constants.HOME_CONTENT"/>
     </template>

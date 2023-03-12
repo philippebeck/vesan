@@ -40,7 +40,7 @@
           <button type="button"
             @click="logout()"
             :title="constants.TITLE_LOGOUT">
-            <i class="fa-solid fa-sign-out-alt fa-fw"></i>
+            <i class="fa-solid fa-arrow-left-to-bracket fa-fw"></i>
           </button>
         </template>
       </ListElt>
@@ -64,7 +64,7 @@
           <button type="button"
             @click="logout()"
             :title="constants.TITLE_LOGOUT">
-            <i class="fa-solid fa-sign-out-alt fa-fw"></i>
+            <i class="fa-solid fa-arrow-left-to-bracket fa-fw"></i>
           </button>
         </template>
       </ListElt>
@@ -73,7 +73,7 @@
       <a v-else
         href="/login"
         :title="constants.TITLE_LOGIN">
-        <i class="fa-solid fa-sign-in-alt fa-fw"></i>
+        <i class="fa-solid fa-arrow-right-to-bracket fa-fw"></i>
       </a>
     </template>
   </NavElt>

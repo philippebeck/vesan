@@ -1,22 +1,23 @@
 <template>
+  <header>
+    <h1 class="blue ani-slideL-it">
+      <i class="fa-solid fa-envelope-open-text fa-lg"
+        aria-hidden="true">
+      </i>
+      {{ constants.CONTACT_VIEW }}
+    </h1>
+  </header>
 
-  <!-- CONTACT PAGE -->
   <CardElt>
     <template #header>
-      <h1 class="sky ani-slideL-it">
-        <i class="fa-solid fa-envelope-open-text fa-lg"
-          aria-hidden="true">
-        </i>
-        {{ constants.CONTACT_VIEW }}
-      </h1>
-      <p>{{ constants.INTRO_CONTACT }}</p>
+      <h2>{{ constants.CONTACT_SUB }}</h2>
+      <b>{{ constants.INTRO_CONTACT }}</b>
     </template>
 
     <template #body>
       <form>
         <ListElt :items="constants.CONTACT_FORM">
 
-          <!-- Email -->
           <template #item-1>
             <FieldElt type="email"
               v-model:value="email"

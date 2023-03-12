@@ -1,12 +1,16 @@
 <template>
+  <header>
+    <h1 class="blue ani-slideB-it">
+      <i class="fa-solid fa-user-gear fa-lg"
+        aria-hidden="true"></i>
+      {{ constants.PROFILE_EDITOR }}
+    </h1>
+  </header>
+
   <CardElt>
     <template #header>
-      <h1 class="sky ani-slideB-it">
-        <i class="fa-solid fa-user-gear fa-lg"
-          aria-hidden="true"></i>
-        {{ constants.PROFILE_EDITOR }}
-      </h1>
-      <p>{{ constants.INTRO_PROFILE }}</p>
+      <h2>{{ constants.PROFILE_SUB }}</h2>
+      <b>{{ constants.INTRO_PROFILE }}</b>
     </template>
 
     <template #body>
@@ -107,12 +111,16 @@
           </template>
         </BtnElt>
       </form>
+    </template>
+  </CardElt>
+  
+  <CardElt v-if="orders.length !== 0">
+    <template #header>
+      <h2>{{ constants.ORDERS_SUB }}</h2>
+    </template>
 
-      <TableElt v-if="orders.length !== 0"
-        :items="orders">
-        <template #title>
-          {{ constants.PROFILE_ORDERS }}
-        </template>
+    <template #body>
+      <TableElt :items="orders">
 
         <!-- Id -->
         <template #cell-_id="slotProps">

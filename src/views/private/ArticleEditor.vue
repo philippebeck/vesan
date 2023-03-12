@@ -1,13 +1,16 @@
 <template>
+  <header>
+    <h1>
+      <i class="fa-regular fa-pen-to-square fa-lg"
+        aria-hidden="true">
+      </i>
+      {{ constants.EDITOR }}
+    </h1>
+  </header>
+
   <CardElt id="create-article">
     <template #header>
-      <h3>
-        <i class="fa-regular fa-pen-to-square fa-lg"
-          aria-hidden="true">
-        </i>
-        {{ constants.EDIT }}
-        {{ article.name }}
-      </h3>
+      <h2>{{ article.name }}</h2>
     </template>
 
     <template #body>
@@ -40,7 +43,6 @@
             <Editor id="text"
               :api-key="constants.TINY_KEY"
               v-model="article.text"
-              @keyup.enter="updateArticle()"
               :init="{
                 toolbar:
                   'undo redo outdent indent align lineheight | \

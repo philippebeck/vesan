@@ -1,12 +1,21 @@
 <template>
+  <header>
+    <h1 class="blue">
+      <i class="fa-solid fa-arrow-right-to-bracket fa-lg"
+        aria-hidden="true">
+      </i>
+      {{ constants.LOGIN_VIEW }}
+    </h1>
+  </header>
+
   <CardElt v-if="type === 'SignUp'">
     <template #header>
-      <h1 class="sky ani-turnXZ-it">
-        <i class="fa-solid fa-sign-in-alt fa-lg"
+      <h2 class="blue ani-turnXZ-it">
+        <i class="fa-solid fa-user-plus fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.SIGN_UP }}
-      </h1>
+      </h2>
       <p>{{ constants.INTRO_SIGNUP }}</p>
     </template>
 
@@ -17,11 +26,11 @@
       <BtnElt type="button"
         @click="setType('SignIn')"
         class="btn-green"
-        :content="constants.SIGN_IN"
+        :content="constants.CONTENT_ENTER"
         :title="constants.TITLE_GO + constants.SIGN_IN">
 
         <template #btn>
-          <i class="fa-solid fa-right-to-bracket fa-lg"></i>
+          <i class="fa-solid fa-door-open fa-lg"></i>
         </template>
       </BtnElt>
 
@@ -29,7 +38,7 @@
       <BtnElt type="button"
         @click="setType('ForgotPass')"
         class="btn-orange"
-        :content="constants.FORGOT_PASS"
+        :content="constants.CONTENT_SEND"
         :title="constants.TITLE_GO + constants.FORGOT_PASS">
 
         <template #btn>
@@ -41,12 +50,12 @@
 
   <CardElt v-if="type === 'SignIn'">
     <template #header>
-      <h1 class="sky ani-turnYZ-it">
-        <i class="fa-solid fa-sign-in-alt fa-lg"
+      <h2 class="blue ani-turnYZ-it">
+        <i class="fa-solid fa-door-open fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.SIGN_IN }}
-      </h1>
+      </h2>
       <p>{{ constants.INTRO_SIGNIN }}</p>
     </template>
 
@@ -57,7 +66,7 @@
       <BtnElt type="button"
         @click="setType('SignUp')"
         class="btn-blue"
-        :content="constants.SIGN_UP"
+        :content="constants.CONTENT_SIGNUP"
         :title="constants.TITLE_GO + constants.SIGN_UP">
 
         <template #btn>
@@ -69,7 +78,7 @@
       <BtnElt type="button"
         @click="setType('ForgotPass')"
         class="btn-orange"
-        :content="constants.FORGOT_PASS"
+        :content="constants.CONTENT_SEND"
         :title="constants.TITLE_GO + constants.FORGOT_PASS">
 
         <template #btn>
@@ -81,12 +90,12 @@
 
   <CardElt v-if="type === 'ForgotPass'">
     <template #header>
-      <h1 class="sky ani-turn3D-it">
+      <h2 class="blue ani-turn3D-it">
         <i class="fa-solid fa-key fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.FORGOT_PASS }}
-      </h1>
+      </h2>
       <p>{{ constants.INTRO_FORGOT }}</p>
     </template>
 
@@ -97,7 +106,7 @@
       <BtnElt type="button"
         @click="setType('SignUp')"
         class="btn-blue"
-        :content="constants.SIGN_UP"
+        :content="constants.CONTENT_SIGNUP"
         :title="constants.TITLE_GO + constants.SIGN_UP">
 
         <template #btn>
@@ -109,11 +118,11 @@
       <BtnElt type="button"
         @click="setType('SignIn')"
         class="btn-green"
-        :content="constants.SIGN_IN"
+        :content="constants.CONTENT_ENTER"
         :title="constants.TITLE_GO + constants.SIGN_IN">
 
         <template #btn>
-          <i class="fa-solid fa-right-to-bracket fa-lg"></i>
+          <i class="fa-solid fa-door-open fa-lg"></i>
         </template>
       </BtnElt>
     </template>

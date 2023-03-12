@@ -19,7 +19,7 @@
 
   <CardElt id="top">
     <template #header>
-      <h1 class="sky ani-openY-it">
+      <h1 class="blue ani-openY-it">
         <i class="fa-solid fa-store fa-lg"
           aria-hidden="true">
         </i>
@@ -45,7 +45,7 @@
             itemtype="https://schema.org/Product">
             <template #header>
                 <h3 itemprop="name"
-                  class="sky">
+                  class="blue">
                   {{ slotProps.value.name }}
                 </h3>
             </template>
@@ -84,7 +84,7 @@
 
                 <MediaElt :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
                   :src="`img/thumbnails/products/${slotProps.value.image}`" 
-                  :alt="`${slotProps.value.description}`" 
+                  :alt="`${slotProps.value.alt}`" 
                   itemprop="image">
 
                   <template #figcaption>

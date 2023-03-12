@@ -20,7 +20,7 @@
   <CardElt id="top"
       :isArticle="true">
     <template #header>
-      <h1 class="sky ani-flipY-it">
+      <h1 class="blue ani-flipY-it">
         <i class="fa-solid fa-blog fa-lg"
           aria-hidden="true">
         </i>
@@ -46,7 +46,7 @@
             itemtype="https://schema.org/Article">
             <template #header>
               <h3 itemprop="name"
-                class="sky">
+                class="blue">
                 {{ slotProps.value.name }}
               </h3>
             </template>
@@ -70,7 +70,7 @@
                 :id="`like-${slotProps.value._id}`"
                 type="button"
                 @click="addLike(slotProps.value._id)"
-                class="btn-blue"
+                class="btn-sky"
                 :title="constants.TITLE_LIKE + slotProps.value.name">
 
                 <template #btn>
