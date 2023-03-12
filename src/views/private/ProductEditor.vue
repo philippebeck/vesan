@@ -43,7 +43,6 @@
             <Editor id="description"
               :api-key="constants.TINY_KEY"
               v-model="product.description"
-              @keyup.enter="updateProduct()"
               :init="{
                 toolbar:
                   'undo redo outdent indent align lineheight | \
