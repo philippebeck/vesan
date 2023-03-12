@@ -6,7 +6,7 @@
       class="ani-grow-it">
 
       <template #slide="slotProps">
-        <i :class="`fa-${constants.SLIDER_FA} fa-${slotProps.slide.toLowerCase()} fa-9x blue`"></i>
+        <i :class="`fa-${constants.SLIDER_FA} fa-${slotProps.slide.toLowerCase()} fa-9x sky`"></i>
       </template>
       <template #gallery="slotProps">
         <i :class="`fa-${constants.SLIDER_FA} fa-${slotProps.slide.toLowerCase()}`"></i>

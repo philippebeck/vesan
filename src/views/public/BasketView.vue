@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1 class="sky ani-flipperY-it">
+    <h1 class="blue ani-flipperY-it">
       <i class="fa-solid fa-basket-shopping fa-lg"
         aria-hidden="true">
       </i>

@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1 class="sky ani-slideR-it">
+    <h1 class="blue ani-slideR-it">
       <i class="fa-solid fa-link fa-lg"
         aria-hidden="true">
       </i>

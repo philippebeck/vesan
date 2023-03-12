@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1 class="sky">
+    <h1 class="blue">
       <i class="fa-solid fa-arrow-right-to-bracket fa-lg"
         aria-hidden="true">
       </i>
