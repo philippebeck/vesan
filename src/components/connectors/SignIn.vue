@@ -38,7 +38,7 @@
         :title="constants.TITLE_SIGNIN">
 
         <template #btn>
-          <i class="fa-solid fa-right-to-bracket fa-lg"></i>
+          <i class="fa-solid fa-door-open fa-lg"></i>
         </template>
       </BtnElt>
     </vue-recaptcha>

@@ -2,7 +2,7 @@
   <CardElt v-if="type === 'SignUp'">
     <template #header>
       <h1 class="sky ani-turnXZ-it">
-        <i class="fa-solid fa-sign-in-alt fa-lg"
+        <i class="fa-solid fa-user-plus fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.SIGN_UP }}
@@ -21,7 +21,7 @@
         :title="constants.TITLE_GO + constants.SIGN_IN">
 
         <template #btn>
-          <i class="fa-solid fa-right-to-bracket fa-lg"></i>
+          <i class="fa-solid fa-door-open fa-lg"></i>
         </template>
       </BtnElt>
 
@@ -42,7 +42,7 @@
   <CardElt v-if="type === 'SignIn'">
     <template #header>
       <h1 class="sky ani-turnYZ-it">
-        <i class="fa-solid fa-sign-in-alt fa-lg"
+        <i class="fa-solid fa-door-open fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.SIGN_IN }}
@@ -113,7 +113,7 @@
         :title="constants.TITLE_GO + constants.SIGN_IN">
 
         <template #btn>
-          <i class="fa-solid fa-right-to-bracket fa-lg"></i>
+          <i class="fa-solid fa-door-open fa-lg"></i>
         </template>
       </BtnElt>
     </template>
