@@ -1,17 +1,21 @@
 <template>
-  <CardElt>
+  <header>
+    <h1 class="sky ani-flipperY-it">
+      <i class="fa-solid fa-basket-shopping fa-lg"
+        aria-hidden="true">
+      </i>
+      {{ constants.BASKET_VIEW }}
+    </h1>
+  </header>
+
+  <CardElt v-if="basket[0] !== undefined">
     <template #header>
-      <h1 class="sky ani-flipperY-it">
-        <i class="fa-solid fa-basket-shopping fa-lg"
-          aria-hidden="true">
-        </i>
-        {{ constants.BASKET_VIEW }}
-      </h1>
-      <p>{{ constants.INTRO_BASKET }}</p>
+      <h2>{{ constants.BASKET_SUB }}</h2>
+      <b>{{ constants.INTRO_BASKET }}</b>
     </template>
 
     <template #body>
-      <form v-if="basket[0] !== undefined">
+      <form>
         <TableElt :items="order">
           <template #head>
             {{ constants.TOTAL }}
@@ -125,10 +129,10 @@
             </template>
           </BtnElt>
       </form>
-
-      <b v-else>{{ constants.BASKET_EMPTY }}</b>
     </template>
   </CardElt>
+
+  <b v-else>{{ constants.BASKET_EMPTY }}</b>
 </template>
 
 <script>

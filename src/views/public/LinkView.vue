@@ -1,6 +1,18 @@
 <template>
+  <header>
+    <h1 class="sky ani-slideR-it">
+      <i class="fa-solid fa-link fa-lg"
+        aria-hidden="true">
+      </i>
+      {{ constants.LINK_VIEW }}
+    </h1>
+  </header>
+
   <NavElt :items="getCats"
     class="sidebar">
+    <template #hide>
+      <i class="fa-solid fa-eye fa-fw"></i>
+    </template>
 
     <template #items="slotProps">
       <i :class="`fa-brands fa-${slotProps.item.toLowerCase()} fa-fw`"></i>
@@ -20,13 +32,8 @@
 
   <CardElt id="top">
     <template #header>
-      <h1 class="sky ani-slideR-it">
-        <i class="fa-solid fa-link fa-lg"
-          aria-hidden="true">
-        </i>
-        {{ constants.LINK_VIEW }}
-      </h1>
-      <p>{{ constants.INTRO_LINK }}</p>
+      <h2>{{ constants.LINK_SUB }}</h2>
+      <b>{{ constants.INTRO_LINK }}</b>
     </template>
 
     <template #body>

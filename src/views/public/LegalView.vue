@@ -1,11 +1,17 @@
 <template>
+  <header>
+    <h1>{{ constants.LEGAL_VIEW }}</h1>
+    <p>{{ constants.INTRO_LEGAL }}</p>
+
+    <a v-if="constants.LEGAL_LINK" 
+      :href="constants.LEGAL_LINK">
+      {{ constants.LEGAL_LINK }}
+    </a>
+  </header>
+
   <CardElt class="container-90sm-80lg-70xl">
     <template #header>
-      <h1>{{ constants.LEGAL_VIEW }}</h1>
-      <p>{{ constants.INTRO_LEGAL }}</p>
-      <a :href="constants.LEGAL_LINK">
-        {{ constants.LEGAL_LINK }}
-      </a>
+      <h2>{{ constants.LEGAL_SUB }}</h2>
     </template>
 
     <template #body>
