@@ -70,7 +70,7 @@
       <BtnElt type="button"
         @click="createUser()" 
         class="btn-blue"
-        :content="constants.CONTENT_CREATE"
+        :content="constants.CONTENT_SIGNUP"
         :title="constants.TITLE_SIGNUP">
 
         <template #btn>
