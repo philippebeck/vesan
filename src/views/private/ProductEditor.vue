@@ -1,13 +1,16 @@
 <template>
+  <header>
+    <h1>
+      <i class="fa-regular fa-pen-to-square fa-lg"
+        aria-hidden="true">
+      </i>
+      {{ constants.EDITOR }}
+    </h1>
+  </header>
+
   <CardElt id="create-product">
     <template #header>
-      <h3>
-        <i class="fa-regular fa-lightbulb fa-lg"
-          aria-hidden="true">
-        </i>
-        {{ constants.EDIT }}
-        {{ product.name }}
-      </h3>
+      <h2>{{ product.name }}</h2>
     </template>
 
     <template #body>
