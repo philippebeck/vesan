@@ -1,7 +1,7 @@
 <template>
   <header>
     <h1 class="blue">
-      <i class="fa-solid fa-arrow-right-to-bracket fa-lg"
+      <i class="fa-solid fa-right-to-bracket fa-lg"
         aria-hidden="true">
       </i>
       {{ constants.LOGIN_VIEW }}
