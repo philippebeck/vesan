@@ -41,8 +41,8 @@
         itemprop="image">
 
         <template #figcaption>
-          <p v-html="product.description"
-            itemprop="description">
+          <p id="figcaption"
+            v-html="product.description">
           </p>
           <p itemprop="offers"
             itemscope
@@ -153,6 +153,11 @@ export default {
 
     this.$store.dispatch("readProduct", this.$route.params.id);
     this.$store.dispatch("listProductReviews", this.$route.params.id);
+  },
+
+  updated () {
+    const descriptionElt = document.getElementById("figcaption");
+    descriptionElt.firstChild.setAttribute("itemprop", "description");
   },
 
   computed: {
