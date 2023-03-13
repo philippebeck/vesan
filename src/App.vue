@@ -156,7 +156,7 @@ export default {
     }
   },
 
-  mounted() {
+  created() {
     this.constants = constants;
 
     if (constants.USER_ID) {
