@@ -88,9 +88,8 @@
                   itemprop="image">
 
                   <template #figcaption>
-                    <p v-html="slotProps.value.description.slice(0, 60)"
-                      itemprop="description"
-                      class="monospace">
+                    <p v-html="slotProps.value.description.slice(0, 50)"
+                      class="monospace figcaption">
                     </p>
 
                     <p itemprop="offers"
@@ -141,6 +140,14 @@ export default {
 
     this.$store.dispatch("listProducts");
     this.$store.dispatch("listReviews");
+  },
+
+  updated () {
+    const descriptionArray = document.getElementsByClassName("figcaption");
+
+    for (let descriptionElt of descriptionArray) {
+      descriptionElt.firstChild.setAttribute("itemprop", "description");
+    }
   },
 
   computed: {
