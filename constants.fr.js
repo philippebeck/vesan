@@ -352,7 +352,7 @@ export default {
   EDITOR : "Éditeur",
   // PUBLIC VIEWS
   BASKET_VIEW : "Panier",
-  BASKET_SUB : "Vos services",
+  BASKET_SUB : "Vos produits",
   BLOG_VIEW : "Blog",
   CONTACT_VIEW : "Contact",
   CONTACT_SUB : "Envoyez-moi un message",

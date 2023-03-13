@@ -25,6 +25,7 @@ export default {
 
   LOGO_ALT : "Logo",
   LOGO_SRC : "/img/logo.svg",
+  LOGO_WIDTH : "30",
 
   NUM_MAX : 5,
   NUM_MIN : 0,
@@ -345,15 +346,24 @@ export default {
 
   // PRIVATE VIEWS
   ADMIN_EDITOR : "Admin",
-  PROFILE_EDITOR : "Profile",
+  PROFILE_EDITOR : "Account",
+  PROFILE_SUB : "Profile",
+  ORDERS_SUB : "Orders",
+  EDITOR : "Editor",
   // PUBLIC VIEWS
   BASKET_VIEW : "Basket",
+  BASKET_SUB : "Your products",
   BLOG_VIEW : "Blog",
   CONTACT_VIEW : "Contact",
+  CONTACT_SUB : "Send me a message",
   ERROR_VIEW : "Error",
   HOME_VIEW : "Vesan",
+  HOME_SUB : "CMS with Vue-Elt, Servidio, Animadio & Nemjs",
   LEGAL_VIEW : "Apache License",
+  LEGAL_SUB : "TERMS & CONDITIONS FOR USE, REPRODUCTION & DISTRIBUTION",
+  LOGIN_VIEW : "Connection",
   LINK_VIEW : "Links",
+  LINK_SUB : "Links for developers",
   SHOP_VIEW : "Shop",
   // CONNECTOR COMPONENTS
   FORGOT_PASS : "Forgot password",
@@ -377,7 +387,6 @@ export default {
   REVIEW_MANAGER : "Review manager",
   USER_MANAGER : "User manager",
   // OTHERS
-  PROFILE_ORDERS : "Your orders",
   ADMIN_USERS : "Users",
 
   /******************** INTRO ********************/
@@ -386,7 +395,6 @@ export default {
   INTRO_ARTICLE : "Articles to read !",
   INTRO_ARTICLES : "Manage articles",
   INTRO_BASKET : "Use the Paypal button to order",
-  INTRO_BLOG : "Manage articles & comments",
   INTRO_COMMENTS : "Manage comments",
   INTRO_CONTACT : "Contact me if you have any question",
   INTRO_ERROR : "Page not found !",
@@ -489,6 +497,7 @@ export default {
   CONTENT_REVIEW_LOGIN : "Login to review",
   CONTENT_REVIEW_WRITE : "Write a review",
   CONTENT_SEND : "Send ",
+  CONTENT_SIGNUP : "Signup",
   CONTENT_UPDATE : "Update ",
 
   /******************** TITLE ********************/
@@ -563,6 +572,7 @@ export default {
   BASKET_EMPTY : "Your basket is empty !",
   BASKET_TOTAL : "The total of your basket is ",
   CREATE_BY : "Created by ",
+  EDIT : "Edit",
   ERROR_LINK : "Go back home ?",
   HEAD_MOD : "mod/del",
   HEAD_UP : "up/del",
