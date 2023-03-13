@@ -38,7 +38,7 @@
     "core-js": "^3.8.3",
     "servidio": "^1.0.0",
     "vue": "^3.2.45",
-    "vue-elt": "^1.0.2",
+    "vue-elt": "^1.0.3",
     "vue-recaptcha": "^2.0.3",
     "vue-router": "^4.1.6",
     "vuex": "^4.0.2"
