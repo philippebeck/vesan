@@ -41,7 +41,7 @@
         itemprop="image">
 
         <template #figcaption>
-          <p id="figcaption"
+          <p class="figcaption"
             v-html="product.description">
           </p>
           <p itemprop="offers"
@@ -156,8 +156,11 @@ export default {
   },
 
   updated () {
-    const descriptionElt = document.getElementById("figcaption");
-    descriptionElt.firstChild.setAttribute("itemprop", "description");
+    const descriptionArray = document.getElementsByClassName("figcaption");
+
+    for (let descriptionElt of descriptionArray) {
+      descriptionElt.firstChild.setAttribute("itemprop", "description");
+    }
   },
 
   computed: {
