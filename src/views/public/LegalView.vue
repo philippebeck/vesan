@@ -23,6 +23,15 @@
 <script>
 export default {
   name: "LegalView",
-  props: ["constants"]
+  props: ["constants"],
+
+  created() {
+    this.$serve.setMeta(
+      this.constants.HEAD_LEGAL, 
+      this.constants.META_LEGAL,
+      this.constants.UI_URL + "/legal",
+      this.constants.UI_URL + "/img/logo.svg"
+    );
+  }
 }
 </script>

@@ -105,7 +105,7 @@
                   itemprop="image">
 
                   <template #figcaption>
-                    <blockquote v-html="slotProps.value.text.slice(0, 60)" 
+                    <blockquote v-html="slotProps.value.text.slice(0, 50)" 
                       itemprop="text"
                       class="monospace">
                     </blockquote>
@@ -133,6 +133,15 @@ export default {
   name: "BlogView",
   components: { ArticleCreator },
   props: ["constants"],
+
+  created() {
+    this.$serve.setMeta(
+      this.constants.HEAD_BLOG, 
+      this.constants.META_BLOG,
+      this.constants.UI_URL + "/blog",
+      this.constants.UI_URL + "/img/logo.svg"
+    );
+  },
 
   mounted () {
     this.$store.dispatch("listArticles");

@@ -5,6 +5,7 @@ export default {
   /******************** CONFIG ********************/
 
   API_URL : "http://localhost:3000",
+  UI_URL : "http://localhost:8080",
 
   CAT_ARTICLE : "Informations",
   CAT_LINK : "HTML5",
@@ -22,6 +23,8 @@ export default {
   HOME_MEDIA : "slider",
   HOME_SRC : "/video/home.mp4",
   HOME_WIDTH : 500,
+
+  LANG : "fr",
 
   LOGO_ALT : "Logo",
   LOGO_SRC : "/img/logo.svg",
@@ -59,6 +62,8 @@ export default {
   TINY_KEY : "{votre-tiny-key}",
 
   TOKEN : JSON.parse(localStorage.getItem("userToken")),
+
+  TW_ID : "",
 
   URL_MAX : 100,
   URL_MIN : 5,
@@ -341,6 +346,37 @@ export default {
     "js", 
     "css3"
   ],
+
+  /******************** HEAD TITLES ********************/
+
+  HEAD : "",
+  HEAD_ADMIN : "Admin",
+  HEAD_ARTICLE : "Éditeur d'article",
+  HEAD_BASKET : "Panier",
+  HEAD_BLOG : "Blog",
+  HEAD_CONTACT : "Contact",
+  HEAD_HOME : "Accueil",
+  HEAD_LEGAL : "Conditions générales",
+  HEAD_LINK : "Liens",
+  HEAD_LOGIN : "Connexion",
+  HEAD_PRODUCT : "Éditeur de service",
+  HEAD_PROFILE : "Profil",
+  HEAD_SHOP : "Services",
+
+  /******************** META DESCRIPTION ********************/
+
+  META_ADMIN : "Administration",
+  META_ARTICLE : "Éditer un article du blog",
+  META_BASKET : "Panier de services en ligne",
+  META_BLOG : "Blog pour ...",
+  META_CONTACT : "Contactez-moi pour toute question",
+  META_HOME : "Bienvenue sur le site Web de ...",
+  META_LEGAL : "Conditions générales d'utilisation",
+  META_LINK : "Liens pour ...",
+  META_LOGIN : "Connexion & inscription",
+  META_PRODUCT : "Éditer un service du shop",
+  META_PROFILE : "Gestion de son profil & de ses commandes",
+  META_SHOP : "Services de ...",
 
   /******************** TITLES ********************/
 

@@ -101,6 +101,15 @@ export default {
     }
   },
 
+  created() {
+    this.$serve.setMeta(
+      this.constants.HEAD_CONTACT, 
+      this.constants.META_CONTACT,
+      this.constants.UI_URL + "/contact",
+      this.constants.UI_URL + "/img/logo.svg"
+    );
+  },
+
   methods: {
     /**
      * SEND A CONTACT MESSAGE

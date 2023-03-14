@@ -5,6 +5,7 @@ export default {
   /******************** CONFIG ********************/
 
   API_URL : "http://localhost:3000",
+  UI_URL : "http://localhost:8080",
 
   CAT_ARTICLE : "News",
   CAT_LINK : "HTML5",
@@ -22,6 +23,8 @@ export default {
   HOME_MEDIA : "slider",
   HOME_SRC : "/video/home.mp4",
   HOME_WIDTH : 500,
+
+  LANG : "en",
 
   LOGO_ALT : "Logo",
   LOGO_SRC : "/img/logo.svg",
@@ -59,6 +62,8 @@ export default {
   TINY_KEY : "{your-tiny-key}",
 
   TOKEN : JSON.parse(localStorage.getItem("userToken")),
+
+  TW_ID : "",
 
   URL_MAX : 100,
   URL_MIN : 5,
@@ -341,6 +346,37 @@ export default {
     "js", 
     "css3"
   ],
+
+  /******************** HEAD TITLES ********************/
+
+  HEAD: "",
+  HEAD_ADMIN: "Admin",
+  HEAD_ARTICLE: "Article Editor",
+  HEAD_BASKET: "Basket",
+  HEAD_BLOG: "Blog",
+  HEAD_CONTACT: "Contact",
+  HEAD_HOME: "Home",
+  HEAD_LEGAL: "General Conditions",
+  HEAD_LINK: "Links",
+  HEAD_LOGIN: "Login",
+  HEAD_PRODUCT: "Service Editor",
+  HEAD_PROFILE: "Profile",
+  HEAD_SHOP: "Services",
+
+  /********************META DESCRIPTION********************/
+
+  META_ADMIN: "Administration",
+  META_ARTICLE: "Edit a blog article",
+  META_BASKET: "Basket of online services",
+  META_BLOG: "Blog for...",
+  META_CONTACT: "Contact me for any questions",
+  META_HOME: "Welcome to the ... website",
+  META_LEGAL: "General terms of use",
+  META_LINK: "Links for...",
+  META_LOGIN: "Login & registration",
+  META_PRODUCT: "Edit a shop service",
+  META_PROFILE: "Profile & order management",
+  META_SHOP: "Services of...",
 
   /******************** TITLES ********************/
 
