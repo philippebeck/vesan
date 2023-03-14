@@ -44,7 +44,12 @@ export default {
   props: ["constants"],
 
   created() {
-    this.$serve.setMeta(this.constants.HEAD_HOME, this.constants.META_HOME);
+    this.$serve.setMeta(
+      this.constants.HEAD_HOME, 
+      this.constants.META_HOME,
+      this.constants.UI_URL,
+      this.constants.UI_URL + "/img/logo.svg"
+      );
   }
 }
 </script>

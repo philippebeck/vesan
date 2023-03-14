@@ -156,7 +156,9 @@ export default {
 
         this.$serve.setMeta(
           product.name + this.constants.HEAD, 
-          product.description.slice(0, 160)
+          product.description.slice(0, 160),
+          this.constants.UI_URL + "/product/" + this.$route.params.id,
+          this.constants.UI_URL + "/img/thumbnails/products/" + product.image
         );
       }))
       .catch(err => { alert(err.response.data.message) });

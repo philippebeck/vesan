@@ -140,7 +140,12 @@ export default {
   },
 
   created() {
-    this.$serve.setMeta(this.constants.HEAD_ADMIN, this.constants.META_ADMIN);
+    this.$serve.setMeta(
+      this.constants.HEAD_ADMIN, 
+      this.constants.META_ADMIN,
+      this.constants.UI_URL,
+      this.constants.UI_URL + "/img/logo.svg"
+    );
   },
 
   mounted () {

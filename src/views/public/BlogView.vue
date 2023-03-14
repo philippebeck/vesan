@@ -135,7 +135,12 @@ export default {
   props: ["constants"],
 
   created() {
-    this.$serve.setMeta(this.constants.HEAD_BLOG, this.constants.META_BLOG);
+    this.$serve.setMeta(
+      this.constants.HEAD_BLOG, 
+      this.constants.META_BLOG,
+      this.constants.UI_URL + "/blog",
+      this.constants.UI_URL + "/img/logo.svg"
+    );
   },
 
   mounted () {

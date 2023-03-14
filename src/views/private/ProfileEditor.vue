@@ -184,7 +184,12 @@ export default {
   },
 
   created() {
-    this.$serve.setMeta(this.constants.HEAD_PROFILE, this.constants.META_PROFILE);
+    this.$serve.setMeta(
+      this.constants.HEAD_PROFILE, 
+      this.constants.META_PROFILE,
+      this.constants.UI_URL,
+      this.constants.UI_URL + "/img/logo.svg"
+    );
   },
 
   mounted() {

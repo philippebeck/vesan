@@ -150,7 +150,12 @@ export default {
   },
 
   created() {
-    this.$serve.setMeta(this.constants.HEAD_LOGIN, this.constants.META_LOGIN);
+    this.$serve.setMeta(
+      this.constants.HEAD_LOGIN, 
+      this.constants.META_LOGIN,
+      this.constants.UI_URL + "/login",
+      this.constants.UI_URL + "/img/logo.svg"
+    );
   },
 
   mounted() {

@@ -153,7 +153,12 @@ export default {
   },
 
   created() {
-    this.$serve.setMeta(this.constants.HEAD_BASKET, this.constants.META_BASKET);
+    this.$serve.setMeta(
+      this.constants.HEAD_BASKET, 
+      this.constants.META_BASKET,
+      this.constants.UI_URL + "/basket",
+      this.constants.UI_URL + "/img/logo.svg"
+    );
   },
 
   mounted() {
