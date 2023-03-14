@@ -149,6 +149,10 @@ export default {
     }
   },
 
+  created() {
+    this.$serve.setMeta(this.constants.HEAD_LOGIN, this.constants.META_LOGIN);
+  },
+
   mounted() {
     if (localStorage.userId) {
       this.$router.push("/");

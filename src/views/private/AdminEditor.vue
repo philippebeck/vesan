@@ -139,6 +139,10 @@ export default {
     }
   },
 
+  created() {
+    this.$serve.setMeta(this.constants.HEAD_ADMIN, this.constants.META_ADMIN);
+  },
+
   mounted () {
     if (this.constants.USER_ID) {
       this.$serve.getData("/auth/" + this.constants.USER_ID)

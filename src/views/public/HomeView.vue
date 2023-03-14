@@ -41,6 +41,10 @@
 <script>
 export default {
   name: "HomeView",
-  props: ["constants"]
+  props: ["constants"],
+
+  created() {
+    this.$serve.setMeta(this.constants.HEAD_HOME, this.constants.META_HOME);
+  }
 }
 </script>

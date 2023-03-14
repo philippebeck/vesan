@@ -72,6 +72,10 @@ export default {
   },
   props: ["constants"],
 
+  created() {
+    this.$serve.setMeta(this.constants.HEAD_LINK, this.constants.META_LINK);
+  },
+
   mounted () {
     this.$store.dispatch("listLinks");
   },

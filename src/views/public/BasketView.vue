@@ -152,6 +152,10 @@ export default {
     }
   },
 
+  created() {
+    this.$serve.setMeta(this.constants.HEAD_BASKET, this.constants.META_BASKET);
+  },
+
   mounted() {
     this.$serve.getData("/products")
       .then(res => { 

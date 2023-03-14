@@ -183,6 +183,10 @@ export default {
     }
   },
 
+  created() {
+    this.$serve.setMeta(this.constants.HEAD_PROFILE, this.constants.META_PROFILE);
+  },
+
   mounted() {
     if (this.constants.USER_ID) {
       this.$store.dispatch("readUser", this.constants.USER_ID);

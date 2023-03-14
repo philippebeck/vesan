@@ -135,6 +135,10 @@ export default {
     }
   },
 
+  created() {
+    this.$serve.setMeta(this.constants.HEAD_SHOP, this.constants.META_SHOP);
+  },
+
   mounted () {
     this.priceCurrency = this.constants.CURRENCY_ISO;
 
