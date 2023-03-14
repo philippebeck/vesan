@@ -36,7 +36,7 @@
     "@tinymce/tinymce-vue": "^5.0.0",
     "animadio": "^6.0.0",
     "core-js": "^3.8.3",
-    "servidio": "^1.0.0",
+    "servidio": "^1.1.0",
     "vue": "^3.2.45",
     "vue-elt": "^1.0.3",
     "vue-recaptcha": "^2.0.3",
