@@ -172,6 +172,15 @@ export default {
     }
   },
 
+  created() {
+    this.$serve.setMeta(
+      this.constants.HEAD_PRODUCT, 
+      this.constants.META_PRODUCT,
+      this.constants.UI_URL,
+      this.constants.UI_URL + "/img/logo.svg"
+    );
+  },
+
   mounted() {
     if (this.constants.USER_ID) {
       this.$serve.getData("/auth/" + this.constants.USER_ID)
