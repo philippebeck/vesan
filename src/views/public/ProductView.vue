@@ -140,6 +140,7 @@ export default {
   data() {
     return {
       basket: [],
+      product: {},
       order: {},
       option: "",
       priceCurrency: "",
@@ -148,11 +149,23 @@ export default {
     }
   },
 
+  created() {
+    this.$serve.getData("/products/" + this.$route.params.id)
+      .then((product => {
+        this.product = product;
+
+        this.$serve.setMeta(
+          product.name + this.constants.HEAD, 
+          product.description.slice(0, 160)
+        );
+      }))
+      .catch(err => { alert(err.response.data.message) });
+
+    this.$store.dispatch("listProductReviews", this.$route.params.id);
+  },
+
   mounted () {
     this.priceCurrency = this.constants.CURRENCY_ISO;
-
-    this.$store.dispatch("readProduct", this.$route.params.id);
-    this.$store.dispatch("listProductReviews", this.$route.params.id);
   },
 
   updated () {

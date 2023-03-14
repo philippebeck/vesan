@@ -105,11 +105,27 @@ export default {
     CommentCreator,
     CommentList
   },
-  props: ["constants"],
 
-  mounted () {
-    this.$store.dispatch("readArticle", this.$route.params.id);
-    this.$store.dispatch("listArticleComments", this.$route.params.id);
+  props: ["constants"],
+  data() {
+    return {
+      article: {}
+    }
+  },
+
+  created () {
+    this.$serve.getData("/articles/" + this.$route.params.id)
+      .then((article => {
+        this.article = article;
+
+        this.$serve.setMeta(
+          article.name + this.constants.HEAD, 
+          article.text.slice(0, 160)
+        );
+      }))
+      .catch(err => { alert(err.response.data.message) });
+
+      this.$store.dispatch("listArticleComments", this.$route.params.id);
 },
 
   computed: {
