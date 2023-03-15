@@ -66,9 +66,9 @@
     </ListElt>
 
     <!-- Create -->
-    <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY">
+    <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY"
+      @verify="onVerify">
       <BtnElt type="button"
-        @click="createUser()" 
         class="btn-blue"
         :content="constants.CONTENT_SIGNUP"
         :title="constants.TITLE_SIGNUP">
@@ -100,42 +100,66 @@ export default {
 
   methods: {
     /**
-     * CREATE USER
+     * ON VERIFY
+     * @param {object} response 
      */
-    createUser() {
+    onVerify(response) {
       if (this.$serve.checkString(this.name) && 
         this.$serve.checkEmail(this.email) && 
         this.$serve.checkPass(this.pass)) {
 
-        let image = document.getElementById("image").files[0];
+        this.$serve.postData('/auth/recaptcha', { response: response })
+          .then(result => {
+            if (result.success) {
+              this.createUser();
 
-        if (image !== undefined) {
-          let user = new FormData();
+            } else {
+              alert("Failed captcha verification");
+            }
+          })
+          .catch(err => {
+            if (err.response) {
+              alert(err.response.data.message) 
+            } else {
+              console.log(err);
+            }
+            this.$router.go();
+          });
+      }
+    },
 
-          user.append("name", this.name);
-          user.append("email", this.email);
-          user.append("image", image);
-          user.append("pass", this.pass);
-          user.append("role", "user");
-          user.append("created", Date.now());
-          user.append("updated", Date.now());
+    /**
+     * CREATE USER
+     */
+    createUser() {
+      let image = document.getElementById("image").files[0];
 
-          this.$serve.postData("/users", user)
-            .then(() => {
-              alert(this.name + this.constants.ALERT_CREATED);
-              this.$router.go();
-            })
-            .catch(err => {
-              if (err.response) {
-                alert(err.response.data.message) 
-              } else {
-                console.log(err);
-              }
-            });
+      if (image !== undefined) {
+        let user = new FormData();
 
-        } else {
-          alert(this.constants.ALERT_IMG);
-        }
+        user.append("name", this.name);
+        user.append("email", this.email);
+        user.append("image", image);
+        user.append("pass", this.pass);
+        user.append("role", "user");
+        user.append("created", Date.now());
+        user.append("updated", Date.now());
+
+        this.$serve.postData("/users", user)
+          .then(() => {
+            alert(this.name + this.constants.ALERT_CREATED);
+            this.$router.go();
+          })
+          .catch(err => {
+            if (err.response) {
+              alert(err.response.data.message) 
+            } else {
+              console.log(err);
+            }
+          });
+
+      } else {
+        alert(this.constants.ALERT_IMG);
       }
     }
   }

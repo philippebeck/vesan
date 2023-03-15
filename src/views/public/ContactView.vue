@@ -68,9 +68,9 @@
         </ListElt>
 
         <!-- Send -->
-        <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY">
+        <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY"
+          @verify="onVerify">
           <BtnElt type="button"
-            @click="send()" 
             class="btn-green ani-slideL-it"
             :content="constants.CONTENT_SEND"
             :title="constants.TITLE_MESSAGE">
@@ -112,23 +112,22 @@ export default {
 
   methods: {
     /**
-     * SEND A CONTACT MESSAGE
+     * ON VERIFY
+     * @param {object} response 
      */
-    send() {
+    onVerify(response) {
       if (this.$serve.checkEmail(this.email) && 
         this.$serve.checkString(this.subject) && 
         this.$serve.checkString(this.text, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
 
-        let message = new FormData();
+        this.$serve.postData('/auth/recaptcha', { response: response })
+          .then(result => {
+            if (result.success) {
+              this.send();
 
-        message.append("email", this.email);
-        message.append("subject", this.subject);
-        message.append("html", this.text);
-
-        this.$serve.postData("/users/message", message)
-          .then(() => {
-            alert(this.subject + this.constants.ALERT_SENDED);
-            this.$router.push("/");
+            } else {
+              alert("Failed captcha verification");
+            }
           })
           .catch(err => {
             if (err.response) {
@@ -136,8 +135,33 @@ export default {
             } else {
               console.log(err);
             }
+            this.$router.go();
           });
       }
+    },
+
+    /**
+     * SEND A CONTACT MESSAGE
+     */
+    send() {
+      let message = new FormData();
+
+      message.append("email", this.email);
+      message.append("subject", this.subject);
+      message.append("html", this.text);
+
+      this.$serve.postData("/users/message", message)
+        .then(() => {
+          alert(this.subject + this.constants.ALERT_SENDED);
+          this.$router.push("/");
+        })
+        .catch(err => {
+          if (err.response) {
+            alert(err.response.data.message) 
+          } else {
+            console.log(err);
+          }
+        });
     }
   }
 }

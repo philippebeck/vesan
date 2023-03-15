@@ -15,9 +15,9 @@
     </FieldElt>
 
     <!-- Send -->
-    <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY">
+    <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY"
+      @verify="onVerify">
       <BtnElt type="button"
-        @click="forgotPass()"
         class="btn-orange"
         :content="constants.CONTENT_SEND"
         :title="constants.TITLE_FORGOT">
@@ -46,10 +46,37 @@ export default {
 
   methods: {
     /**
+     * ON VERIFY
+     * @param {object} response 
+     */
+    onVerify(response) {
+      if (this.$serve.checkEmail(this.email)) {
+
+        this.$serve.postData('/auth/recaptcha', { response: response })
+          .then(result => {
+            if (result.success) {
+              this.forgotPass();
+
+            } else {
+              alert("Failed captcha verification");
+            }
+          })
+          .catch(err => {
+            if (err.response) {
+              alert(err.response.data.message) 
+            } else {
+              console.log(err);
+            }
+            this.$router.go();
+          });
+      }
+    },
+
+    /**
      * FORGOT PASSWORD
      */
     forgotPass() {
-      if (this.$serve.checkEmail(this.email) && confirm(this.constants.CONFIRM_FORGOT) === true) {
+      if (confirm(this.constants.CONFIRM_FORGOT) === true) {
         let message = new FormData();
 
         message.append("email", this.email);

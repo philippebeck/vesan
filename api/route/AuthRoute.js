@@ -10,5 +10,6 @@ const AuthCtrl = require("../controller/AuthCtrl");
 router.get("/:id", AuthCtrl.readAvatar);
 router.post("/", AuthCtrl.loginUser);
 router.post("/pass", AuthCtrl.forgotPass);
+router.post('/recaptcha', AuthCtrl.checkRecaptcha);
 
 module.exports = router;

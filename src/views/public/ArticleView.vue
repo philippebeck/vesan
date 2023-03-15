@@ -120,7 +120,7 @@ export default {
 
         this.$serve.setMeta(
           article.name + this.constants.HEAD, 
-          article.text.slice(0, 160),
+          article.text.slice(0, 160).replace( /(<([^>]+)>)/gi, ""),
           this.constants.UI_URL + "/article/" + this.$route.params.id,
           this.constants.UI_URL + "/img/thumbnails/articles/" + article.image
         );
