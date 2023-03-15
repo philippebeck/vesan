@@ -3,11 +3,14 @@
 const bcrypt      = require("bcrypt");
 const formidable  = require("formidable");
 const nem         = require("nemjs");
+const Recaptcha   = require("google-recaptcha");
 
 const UserModel = require("../model/UserModel");
 
 require("dotenv").config();
+
 const form = formidable();
+const recaptcha = new Recaptcha({ secret: process.env.RECAPTCHA_SECRET });
 
 //! ****************************** CHECKER ******************************
 
@@ -158,5 +161,32 @@ exports.forgotPass = (req, res, next) => {
         }
       })
       .catch(() => res.status(404).json({ message: process.env.USER_NOT_FOUND }));
+  })
+}
+
+/**
+ * CHECK RECAPTCHA
+ * @param {object} req 
+ * @param {object} res 
+ */
+exports.checkRecaptcha = (req, res) => {
+  form.parse(req, (err, fields) => {
+
+    if (err) {
+      next(err);
+      return;
+    }
+
+    const response = fields.response;
+    const remoteip = req.connection.remoteAddress;
+
+    recaptcha.verify({ response, remoteip }, (err, data) => {
+
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.send(data);
+      }
+    });
   })
 }
