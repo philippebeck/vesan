@@ -71,7 +71,6 @@
         <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY"
           @verify="onVerify">
           <BtnElt type="button"
-            @click="send()" 
             class="btn-green ani-slideL-it"
             :content="constants.CONTENT_SEND"
             :title="constants.TITLE_MESSAGE">
