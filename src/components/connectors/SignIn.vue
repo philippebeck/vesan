@@ -30,9 +30,9 @@
     </FieldElt>
 
     <!-- Login Button -->
-    <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY">
+    <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY"
+      @verify="onVerify">
       <BtnElt type="button"
-        @click="signIn()"
         class="btn-green"
         :content="constants.CONTENT_ENTER"
         :title="constants.TITLE_SIGNIN">
@@ -62,25 +62,20 @@ export default {
 
   methods: {
     /**
-     * USER SIGN IN
+     * ON VERIFY
+     * @param {object} response 
      */
-    signIn() {
+    onVerify(response) {
       if (this.$serve.checkEmail(this.email) && this.$serve.checkPass(this.pass)) {
-        let auth = new FormData();
 
-        auth.append("email", this.email);
-        auth.append("pass", this.pass);
+        this.$serve.postData('/auth/recaptcha', { response: response })
+          .then(result => {
+            if (result.success) {
+              this.signIn();
 
-        this.$serve.postData("/auth", auth)
-          .then((res) => {
-
-            let token   = JSON.stringify(res.token);
-            let userId  = JSON.stringify(res.userId);
-
-            localStorage.setItem("userToken", token);
-            localStorage.setItem("userId", userId);
-
-            this.$router.go("/");
+            } else {
+              alert("Failed captcha verification");
+            }
           })
           .catch(err => {
             if (err.response) {
@@ -88,8 +83,38 @@ export default {
             } else {
               console.log(err);
             }
+            this.$router.go();
           });
       }
+    },
+
+    /**
+     * USER SIGN IN
+     */
+    signIn() {
+      let auth = new FormData();
+
+      auth.append("email", this.email);
+      auth.append("pass", this.pass);
+
+      this.$serve.postData("/auth", auth)
+        .then((res) => {
+
+          let token   = JSON.stringify(res.token);
+          let userId  = JSON.stringify(res.userId);
+
+          localStorage.setItem("userToken", token);
+          localStorage.setItem("userId", userId);
+
+          this.$router.push("/");
+        })
+        .catch(err => {
+          if (err.response) {
+            alert(err.response.data.message) 
+          } else {
+            console.log(err);
+          }
+        });
     }
   }
 }
