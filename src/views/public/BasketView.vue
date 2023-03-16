@@ -174,7 +174,13 @@ export default {
           }
         }
       })
-      .catch(err => { console.log(err) });
+      .catch(err => {
+        if (err.response) {
+          alert(err.response.data.message) 
+        } else {
+          console.log(err);
+        }
+      });
   },
 
   computed: {

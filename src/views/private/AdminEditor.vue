@@ -158,7 +158,13 @@ export default {
             this.$store.dispatch("listUsers");
           }
         })
-        .catch(err => { alert(err.response.data.message) });
+        .catch(err => {
+          if (err.response) {
+            alert(err.response.data.message) 
+          } else {
+            console.log(err);
+          }
+        });
 
     } else {
       alert(this.constants.ALERT_HOME);
