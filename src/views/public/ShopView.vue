@@ -149,7 +149,7 @@ export default {
     this.priceCurrency = this.constants.CURRENCY_ISO;
   },
 
-  updated () {
+  updated() {
     const descriptionArray = document.getElementsByClassName("figcaption");
 
     for (let descriptionElt of descriptionArray) {
