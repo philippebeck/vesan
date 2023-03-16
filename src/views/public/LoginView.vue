@@ -156,9 +156,7 @@ export default {
       this.constants.UI_URL + "/login",
       this.constants.UI_URL + "/img/logo.svg"
     );
-  },
 
-  mounted() {
     if (localStorage.userId) {
       this.$router.push("/");
     }

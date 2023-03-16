@@ -184,18 +184,16 @@ export default {
   },
 
   created() {
-    this.$serve.setMeta(
+    if (this.constants.USER_ID) {
+      this.$store.dispatch("readUser", this.constants.USER_ID);
+      this.$store.dispatch("listUserOrders", this.constants.USER_ID);
+
+      this.$serve.setMeta(
       this.constants.HEAD_PROFILE, 
       this.constants.META_PROFILE,
       this.constants.UI_URL,
       this.constants.UI_URL + "/img/logo.svg"
     );
-  },
-
-  mounted() {
-    if (this.constants.USER_ID) {
-      this.$store.dispatch("readUser", this.constants.USER_ID);
-      this.$store.dispatch("listUserOrders", this.constants.USER_ID);
 
     } else {
       alert("Go back Home !");

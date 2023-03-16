@@ -164,13 +164,10 @@ export default {
       .catch(err => { alert(err.response.data.message) });
 
     this.$store.dispatch("listProductReviews", this.$route.params.id);
-  },
-
-  mounted () {
     this.priceCurrency = this.constants.CURRENCY_ISO;
   },
 
-  updated () {
+  updated() {
     const descriptionArray = document.getElementsByClassName("figcaption");
 
     for (let descriptionElt of descriptionArray) {
@@ -237,9 +234,9 @@ export default {
         localStorage.setItem("basket", []);
         this.basket = localStorage.getItem("basket").split();
 
-        } else {
+      } else {
         this.basket = JSON.parse(localStorage.getItem("basket"));
-        }
+      }
     },
 
     /**

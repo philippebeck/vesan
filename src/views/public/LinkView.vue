@@ -73,16 +73,14 @@ export default {
   props: ["constants"],
 
   created() {
+    this.$store.dispatch("listLinks");
+
     this.$serve.setMeta(
       this.constants.HEAD_LINK, 
       this.constants.META_LINK,
       this.constants.UI_URL + "/link",
       this.constants.UI_URL + "/img/logo.svg"
     );
-  },
-
-  mounted () {
-    this.$store.dispatch("listLinks");
   },
 
   computed: {

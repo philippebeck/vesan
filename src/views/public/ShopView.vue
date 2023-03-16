@@ -136,19 +136,17 @@ export default {
   },
 
   created() {
+    this.$store.dispatch("listProducts");
+    this.$store.dispatch("listReviews");
+
     this.$serve.setMeta(
       this.constants.HEAD_SHOP, 
       this.constants.META_SHOP,
       this.constants.UI_URL + "/shop",
       this.constants.UI_URL + "/img/logo.svg"
     );
-  },
 
-  mounted () {
     this.priceCurrency = this.constants.CURRENCY_ISO;
-
-    this.$store.dispatch("listProducts");
-    this.$store.dispatch("listReviews");
   },
 
   updated () {

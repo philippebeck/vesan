@@ -173,15 +173,6 @@ export default {
   },
 
   created() {
-    this.$serve.setMeta(
-      this.constants.HEAD_PRODUCT, 
-      this.constants.META_PRODUCT,
-      this.constants.UI_URL,
-      this.constants.UI_URL + "/img/logo.svg"
-    );
-  },
-
-  mounted() {
     if (this.constants.USER_ID) {
       this.$serve.getData("/auth/" + this.constants.USER_ID)
         .then((res) => { 
@@ -189,6 +180,13 @@ export default {
 
           if (this.checkRole("editor")) {
             this.$store.dispatch("readProduct", this.$route.params.id);
+
+            this.$serve.setMeta(
+              this.constants.HEAD_PRODUCT, 
+              this.constants.META_PRODUCT,
+              this.constants.UI_URL,
+              this.constants.UI_URL + "/img/logo.svg"
+            );
           }
         })
         .catch(err => { alert(err.response.data.message) });

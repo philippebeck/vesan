@@ -135,16 +135,14 @@ export default {
   props: ["constants"],
 
   created() {
+    this.$store.dispatch("listArticles");
+
     this.$serve.setMeta(
       this.constants.HEAD_BLOG, 
       this.constants.META_BLOG,
       this.constants.UI_URL + "/blog",
       this.constants.UI_URL + "/img/logo.svg"
     );
-  },
-
-  mounted () {
-    this.$store.dispatch("listArticles");
   },
 
   computed: {
