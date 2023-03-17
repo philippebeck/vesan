@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1 class="blue ani-slideL-it">
+    <h1 class="sky-dark ani-slideL-it">
       <i class="fa-solid fa-envelope-open-text fa-lg"
         aria-hidden="true">
       </i>

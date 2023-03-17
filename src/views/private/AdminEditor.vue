@@ -1,7 +1,7 @@
 <template>
   <CardElt id="top">
     <template #header>
-      <h1 class="blue ani-turn3D-it">
+      <h1 class="sky-dark ani-turn3D-it">
         <i class="fa-solid fa-gears fa-2x"
           aria-hidden="true">
         </i>
@@ -140,15 +140,6 @@ export default {
   },
 
   created() {
-    this.$serve.setMeta(
-      this.constants.HEAD_ADMIN, 
-      this.constants.META_ADMIN,
-      this.constants.UI_URL,
-      this.constants.UI_URL + "/img/logo.svg"
-    );
-  },
-
-  mounted () {
     if (this.constants.USER_ID) {
       this.$serve.getData("/auth/" + this.constants.USER_ID)
         .then((res) => { 
@@ -167,12 +158,25 @@ export default {
             this.$store.dispatch("listUsers");
           }
         })
-        .catch(err => { alert(err.response.data.message) });
+        .catch(err => {
+          if (err.response) {
+            alert(err.response.data.message) 
+          } else {
+            console.log(err);
+          }
+        });
 
     } else {
       alert(this.constants.ALERT_HOME);
       this.$router.push("/");
     }
+
+    this.$serve.setMeta(
+      this.constants.HEAD_ADMIN, 
+      this.constants.META_ADMIN,
+      this.constants.UI_URL,
+      this.constants.UI_URL + "/img/logo.svg"
+    );
   },
 
   computed: {

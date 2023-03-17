@@ -4,6 +4,7 @@ api/node_modules/
 constants.js
 dist/
 node_modules/
+public/fonts/
 public/img/
+public/css/style.css
 public/video/
-src/style/style.css

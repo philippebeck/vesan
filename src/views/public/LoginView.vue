@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1 class="blue">
+    <h1 class="sky">
       <i class="fa-solid fa-right-to-bracket fa-lg"
         aria-hidden="true">
       </i>
@@ -10,7 +10,7 @@
 
   <CardElt v-if="type === 'SignUp'">
     <template #header>
-      <h2 class="blue ani-turnXZ-it">
+      <h2 class="sky ani-turnXZ-it">
         <i class="fa-solid fa-user-plus fa-lg"
           aria-hidden="true">
         </i>
@@ -50,7 +50,7 @@
 
   <CardElt v-if="type === 'SignIn'">
     <template #header>
-      <h2 class="blue ani-turnYZ-it">
+      <h2 class="sky ani-turnYZ-it">
         <i class="fa-solid fa-door-open fa-lg"
           aria-hidden="true">
         </i>
@@ -65,7 +65,7 @@
       <!-- Toggle Button to SignUp Component -->
       <BtnElt type="button"
         @click="setType('SignUp')"
-        class="btn-blue"
+        class="btn-sky"
         :content="constants.CONTENT_SIGNUP"
         :title="constants.TITLE_GO + constants.SIGN_UP">
 
@@ -90,7 +90,7 @@
 
   <CardElt v-if="type === 'ForgotPass'">
     <template #header>
-      <h2 class="blue ani-turn3D-it">
+      <h2 class="sky ani-turn3D-it">
         <i class="fa-solid fa-key fa-lg"
           aria-hidden="true">
         </i>
@@ -105,7 +105,7 @@
       <!-- Toggle Button to SignUp Component -->
       <BtnElt type="button"
         @click="setType('SignUp')"
-        class="btn-blue"
+        class="btn-sky"
         :content="constants.CONTENT_SIGNUP"
         :title="constants.TITLE_GO + constants.SIGN_UP">
 
@@ -156,9 +156,7 @@ export default {
       this.constants.UI_URL + "/login",
       this.constants.UI_URL + "/img/logo.svg"
     );
-  },
 
-  mounted() {
     if (localStorage.userId) {
       this.$router.push("/");
     }

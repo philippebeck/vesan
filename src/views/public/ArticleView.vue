@@ -105,8 +105,8 @@ export default {
     CommentCreator,
     CommentList
   },
-
   props: ["constants"],
+
   data() {
     return {
       article: {}

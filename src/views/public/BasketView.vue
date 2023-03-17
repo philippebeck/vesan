@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1 class="blue ani-flipperY-it">
+    <h1 class="sky-dark ani-flipperY-it">
       <i class="fa-solid fa-basket-shopping fa-lg"
         aria-hidden="true">
       </i>
@@ -153,19 +153,17 @@ export default {
   },
 
   created() {
-    this.$serve.setMeta(
-      this.constants.HEAD_BASKET, 
-      this.constants.META_BASKET,
-      this.constants.UI_URL + "/basket",
-      this.constants.UI_URL + "/img/logo.svg"
-    );
-  },
-
-  mounted() {
     this.$serve.getData("/products")
       .then(res => { 
         this.products = res;
         this.setBasket();
+
+        this.$serve.setMeta(
+          this.constants.HEAD_BASKET, 
+          this.constants.META_BASKET,
+          this.constants.UI_URL + "/basket",
+          this.constants.UI_URL + "/img/logo.svg"
+        );
 
         if (this.basket[0] !== undefined) {
           this.setOrder();
@@ -176,7 +174,13 @@ export default {
           }
         }
       })
-      .catch(err => { console.log(err) });
+      .catch(err => {
+        if (err.response) {
+          alert(err.response.data.message) 
+        } else {
+          console.log(err);
+        }
+      });
   },
 
   computed: {

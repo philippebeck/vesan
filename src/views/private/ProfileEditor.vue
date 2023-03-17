@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1 class="blue ani-slideB-it">
+    <h1 class="sky-dark ani-slideB-it">
       <i class="fa-solid fa-user-gear fa-lg"
         aria-hidden="true"></i>
       {{ constants.PROFILE_EDITOR }}
@@ -90,7 +90,7 @@
         <!-- Update -->
         <BtnElt type="button"
           @click="updateUser()" 
-          class="btn-blue"
+          class="btn-sky"
           :content="constants.TITLE_UPDATE"
           :title="constants.INFO_UP_PROFILE">
 
@@ -184,18 +184,16 @@ export default {
   },
 
   created() {
-    this.$serve.setMeta(
+    if (this.constants.USER_ID) {
+      this.$store.dispatch("readUser", this.constants.USER_ID);
+      this.$store.dispatch("listUserOrders", this.constants.USER_ID);
+
+      this.$serve.setMeta(
       this.constants.HEAD_PROFILE, 
       this.constants.META_PROFILE,
       this.constants.UI_URL,
       this.constants.UI_URL + "/img/logo.svg"
     );
-  },
-
-  mounted() {
-    if (this.constants.USER_ID) {
-      this.$store.dispatch("readUser", this.constants.USER_ID);
-      this.$store.dispatch("listUserOrders", this.constants.USER_ID);
 
     } else {
       alert("Go back Home !");

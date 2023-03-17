@@ -20,7 +20,7 @@
       :width="constants.HOME_WIDTH"
       :loop="constants.HOME_LOOP"/>
 
-    <h1 class="blue ani-shrink-it">
+    <h1 class="sky-dark ani-shrink-it">
       {{ constants.HOME_VIEW }}
     </h1>
   </header>
