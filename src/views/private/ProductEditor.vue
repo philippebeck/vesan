@@ -142,7 +142,7 @@
         <!-- Create -->
         <BtnElt type="button"
           @click="updateProduct()" 
-          class="btn-blue"
+          class="btn-sky"
           :content="constants.CONTENT_UPDATE"
           :title="constants.TITLE_UPDATE + product.name">
 

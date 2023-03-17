@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1 class="blue ani-slideB-it">
+    <h1 class="sky-dark ani-slideB-it">
       <i class="fa-solid fa-user-gear fa-lg"
         aria-hidden="true"></i>
       {{ constants.PROFILE_EDITOR }}
@@ -90,7 +90,7 @@
         <!-- Update -->
         <BtnElt type="button"
           @click="updateUser()" 
-          class="btn-blue"
+          class="btn-sky"
           :content="constants.TITLE_UPDATE"
           :title="constants.INFO_UP_PROFILE">
 

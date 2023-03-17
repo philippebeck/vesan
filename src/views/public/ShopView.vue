@@ -19,7 +19,7 @@
 
   <CardElt id="top">
     <template #header>
-      <h1 class="blue ani-openY-it">
+      <h1 class="sky-dark ani-openY-it">
         <i class="fa-solid fa-store fa-lg"
           aria-hidden="true">
         </i>
@@ -34,7 +34,7 @@
 
         <template #items="slotProps">
           <h2 :id="slotProps.item[0].cat"
-            class="blue ani-openX-it">
+            class="sky-dark ani-openX-it">
             {{ slotProps.item[0].cat }}
           </h2>
         </template>
@@ -45,7 +45,7 @@
             itemtype="https://schema.org/Product">
             <template #header>
                 <h3 itemprop="name"
-                  class="blue">
+                  class="sky-dark">
                   {{ slotProps.value.name }}
                 </h3>
             </template>

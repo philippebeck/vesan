@@ -20,7 +20,7 @@
   <CardElt id="top"
       :isArticle="true">
     <template #header>
-      <h1 class="blue ani-flipY-it">
+      <h1 class="sky-dark ani-flipY-it">
         <i class="fa-solid fa-blog fa-lg"
           aria-hidden="true">
         </i>
@@ -35,7 +35,7 @@
 
         <template #items="slotProps">
           <h2 :id="slotProps.item[0].cat"
-            class="blue ani-flipX-it">
+            class="sky-dark ani-flipX-it">
             {{ slotProps.item[0].cat }}
           </h2>
         </template>
@@ -46,7 +46,7 @@
             itemtype="https://schema.org/Article">
             <template #header>
               <h3 itemprop="name"
-                class="blue">
+                class="sky-dark">
                 {{ slotProps.value.name }}
               </h3>
             </template>
@@ -55,7 +55,7 @@
               <BtnElt v-if="!checkRole('user')"
                 :id="`like-${slotProps.value._id}`"
                 href="/login"
-                class="btn-blue"
+                class="btn-sky-dark"
                 :title="constants.TITLE_LIKE_LOGIN + slotProps.value.name">
 
                 <template #btn>

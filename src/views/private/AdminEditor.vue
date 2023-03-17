@@ -1,7 +1,7 @@
 <template>
   <CardElt id="top">
     <template #header>
-      <h1 class="blue ani-turn3D-it">
+      <h1 class="sky-dark ani-turn3D-it">
         <i class="fa-solid fa-gears fa-2x"
           aria-hidden="true">
         </i>
