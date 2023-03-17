@@ -562,6 +562,8 @@ export default {
   TITLE_SIGNIN : "SignIn to your account",
   TITLE_SIGNUP : "SignUp a new user",
   TITLE_UPDATE : "Update ",
+  TITLE_TOGGLE : "Basculer",
+  TITLE_TOP : "Remonter",
   TITLE_WATCH : "Watch ",
 
   /******************** ALERT ********************/

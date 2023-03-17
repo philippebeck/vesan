@@ -12,7 +12,8 @@
       <!-- Sidebar -->
       <NavElt class="sidebar">
         <template #hide>
-          <i class="fa-solid fa-eye fa-fw"></i>
+          <i class="fa-solid fa-eye fa-fw" 
+          :title="constants.TITLE_TOGGLE"></i>
         </template>
 
         <template #first>
@@ -54,7 +55,8 @@
         </template>
 
         <template #top>
-          <i class="fa-solid fa-chevron-circle-up fa-fw"></i>
+          <i class="fa-solid fa-chevron-circle-up fa-fw" 
+            :title="constants.TITLE_TOP"></i>
         </template>
       </NavElt>
     </template>
