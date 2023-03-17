@@ -32,7 +32,7 @@
           <!-- Text -->
           <template #cell-text="slotProps">
             <BtnElt :href="`/article/edit/${articles[slotProps.index]._id}`"
-              class="btn-blue"
+              class="btn-cyan"
               :title="constants.TITLE_UPDATE + articles[slotProps.index].name">
 
               <template #btn>

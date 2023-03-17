@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1 class="blue ani-slideR-it">
+    <h1 class="sky-dark ani-slideR-it">
       <i class="fa-solid fa-link fa-lg"
         aria-hidden="true">
       </i>
@@ -41,13 +41,13 @@
         :dynamic="true">
         <template #items="slotProps">
           <i :id="slotProps.index"
-            :class="`fa-brands fa-${slotProps.index.toLowerCase()} fa-5x sky ani-grow-it mar-lg`">
+            :class="`fa-brands fa-${slotProps.index.toLowerCase()} fa-5x blue-light ani-grow-it mar-lg`">
           </i>
         </template>
 
         <template #nested="slotProps">
           <BtnElt :href="`https://${slotProps.value.url}`" 
-            class="btn-blue"
+            class="btn-sky"
             :content="slotProps.value.name"
             :title="slotProps.value.url"/>
         </template>
