@@ -8,11 +8,11 @@ module.exports = function(grunt) {
       },
       css: {
         src: [
-          "src/style/import.css",
+          "public/style/import.css",
           "node_modules/vue-elt/dist/style.css",
-          "src/style/overload.css"
+          "public/style/overload.css"
         ], 
-        dest: "src/style/style.ui.css"
+        dest: "public/style/style.ui.css"
       }
     }
   });

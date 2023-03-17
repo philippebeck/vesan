@@ -6,5 +6,5 @@ dist/
 node_modules/
 public/fonts/
 public/img/
+public/style/style.css
 public/video/
-src/style/style.css

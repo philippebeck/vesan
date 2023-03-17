@@ -1,7 +1,31 @@
 /*! vesan v1.0.7 | https://github.com/philippebeck/vesan | Apache-2.0 License */
 
-@import url('https://fonts.googleapis.com/css2?family=Geo&family=Rozha+One&family=Syne+Mono&display=swap');
-@import url("../../node_modules/@fortawesome/fontawesome-free/css/all.min.css");
+@font-face {
+  font-family: 'Geo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Geo-Regular'),
+       url('../fonts/Geo-Regular.ttf') format('truetype'),
+}
+
+@font-face {
+  font-family: 'Rozha One';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('RozhaOne-Regular'),
+       url('../fonts/RozhaOne-Regular.ttf') format('truetype'),
+}
+
+@font-face {
+  font-family: 'Syne Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('SyneMono-Regular'),
+       url('../fonts/SyneMono-Regular.ttf') format('truetype'),
+}
 
 /********** VARS **********/
 :root {
@@ -19,11 +43,11 @@
   --ani-max: 100%;
   /* lightness */
   --ani-base: 50%;
-  --ani-dark: 40%;
-  --ani-light: 60%;
+  --ani-dark: 30%;
+  --ani-light: 70%;
   /* opacity */
-  --ani-darker: 0.7;
-  --ani-lighter: 0.3;
+  --ani-darker: 0.8;
+  --ani-lighter: 0.2;
   /* color hues */
   --ani-red-hue: 0;
   --ani-orange-hue: 30;
@@ -644,7 +668,7 @@ section {
   --ve-card-padding: 10px;
   --ve-card-width: 95%;
   --ve-card-background-color: transparent;
-  --ve-card-color: var(--ani-gray);
+  --ve-card-color: var(--ani-slate);
 }
 
 /********** FOOT ELT **********/
@@ -661,7 +685,7 @@ footer {
   --ve-foot-ul-place-content: center;
   --ve-foot-ul-place-items: center;
   --ve-foot-ul-padding: 20px;
-  --ve-foot-ul-background-color: var(--ani-violet-dark);
+  --ve-foot-ul-background-color: var(--ani-sky-dark);
   --ve-foot-title-margin-bottom: 5px;
   --ve-foot-title-font-size: 2rem;
   --ve-foot-title-font-family: var(--ani-monospace);
@@ -719,7 +743,7 @@ aside {
   --ve-nav-bottom: unset;
   --ve-nav-left: 0;
   --ve-nav-z-index: 1000;
-  --ve-nav-background-color: var(--ani-blue-darker);
+  --ve-nav-background-color: var(--ani-sky-dark);
   --ve-nav-color: var(--ani-white);
   --ve-nav-a-padding: 10px;
   --ve-nav-a-color: var(--ani-white);
@@ -769,7 +793,7 @@ aside {
   --ve-side-a-padding: 5px;
   --ve-side-a-width: 100%;
   --ve-side-a-background-color: var(--ani-white-lighter);
-  --ve-side-a-color: var(--ani-sky-dark);
+  --ve-side-a-color: var(--ani-sky);
   --ve-side-a-cursor: crosshair;
   --ve-side-a-hover-border-radius: 10px;
   --ve-side-a-hover-background-color: var(--ani-sky-darker);
@@ -832,4 +856,4 @@ aside {
 }
 
 /* Author: Philippe Beck <philippe@philippebeck.net>
- Updated: 17th Mar 2023 @ 4:16:37 AM */
+ Updated: 17th Mar 2023 @ 7:59:06 PM */
