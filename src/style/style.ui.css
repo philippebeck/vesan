@@ -12,60 +12,114 @@
   --ani-cursive: Mistral, cursive;
   --ani-fantasy: Impact, fantasy;
   /********** COLORS **********/
-  /* hsl values */
-  --ani-red-hsl: 348, 83%, 47%;
-  --ani-orange-hsl: 33, 100%, 50%;
-  --ani-yellow-hsl: 51, 100%, 50%;
-  --ani-green-hsl: 120, 61%, 50%;
-  --ani-sky-hsl: 195, 100%, 50%;
-  --ani-blue-hsl: 210, 100%, 56%;
-  --ani-violet-hsl: 271, 76%, 53%;
-  --ani-pink-hsl: 328, 100%, 54%;
-  --ani-black-hsl: 0, 0%, 0%;
-  --ani-gray-hsl: 0, 0%, 33%;
-  --ani-silver-hsl: 0, 0%, 67%;
-  --ani-white-hsl: 0, 0%, 100%;
-  /* opaque colors */
-  --ani-red: hsl(var(--ani-red-hsl));
-  --ani-orange: hsl(var(--ani-orange-hsl));
-  --ani-yellow: hsl(var(--ani-yellow-hsl));
-  --ani-green: hsl(var(--ani-green-hsl));
-  --ani-sky: hsl(var(--ani-sky-hsl));
-  --ani-blue: hsl(var(--ani-blue-hsl));
-  --ani-violet: hsl(var(--ani-violet-hsl));
-  --ani-pink: hsl(var(--ani-pink-hsl));
-  --ani-black: hsl(var(--ani-black-hsl));
-  --ani-gray: hsl(var(--ani-gray-hsl));
-  --ani-silver: hsl(var(--ani-silver-hsl));
-  --ani-white: hsl(var(--ani-white-hsl));
+  /* hue */
+  --ani-hue: 0;
+  /* saturation */
+  --ani-min: 0%;
+  --ani-max: 100%;
+  /* lightness */
+  --ani-base: 50%;
+  --ani-dark: 40%;
+  --ani-light: 60%;
   /* opacity */
-  --ani-dark: 0.8;
-  --ani-light: 0.2;
-  /* transparent colors */
-  --ani-red-dark: hsla(var(--ani-red-hsl), var(--ani-dark));
-  --ani-red-light: hsla(var(--ani-red-hsl), var(--ani-light));
-  --ani-orange-dark: hsla(var(--ani-orange-hsl), var(--ani-dark));
-  --ani-orange-light: hsla(var(--ani-orange-hsl), var(--ani-light));
-  --ani-yellow-dark: hsla(var(--ani-yellow-hsl), var(--ani-dark));
-  --ani-yellow-light: hsla(var(--ani-yellow-hsl), var(--ani-light));
-  --ani-green-dark: hsla(var(--ani-green-hsl), var(--ani-dark));
-  --ani-green-light: hsla(var(--ani-green-hsl), var(--ani-light));
-  --ani-sky-dark: hsla(var(--ani-sky-hsl), var(--ani-dark));
-  --ani-sky-light: hsla(var(--ani-sky-hsl), var(--ani-light));
-  --ani-blue-dark: hsla(var(--ani-blue-hsl), var(--ani-dark));
-  --ani-blue-light: hsla(var(--ani-blue-hsl), var(--ani-light));
-  --ani-violet-dark: hsla(var(--ani-violet-hsl), var(--ani-dark));
-  --ani-violet-light: hsla(var(--ani-violet-hsl), var(--ani-light));
-  --ani-pink-dark: hsla(var(--ani-pink-hsl), var(--ani-dark));
-  --ani-pink-light: hsla(var(--ani-pink-hsl), var(--ani-light));
-  --ani-black-dark: hsla(var(--ani-black-hsl), var(--ani-dark));
-  --ani-black-light: hsla(var(--ani-black-hsl), var(--ani-light));
-  --ani-gray-dark: hsla(var(--ani-gray-hsl), var(--ani-dark));
-  --ani-gray-light: hsla(var(--ani-gray-hsl), var(--ani-light));
-  --ani-silver-dark: hsla(var(--ani-silver-hsl), var(--ani-dark));
-  --ani-silver-light: hsla(var(--ani-silver-hsl), var(--ani-light));
-  --ani-white-dark: hsla(var(--ani-white-hsl), var(--ani-dark));
-  --ani-white-light: hsla(var(--ani-white-hsl), var(--ani-light));
+  --ani-darker: 0.7;
+  --ani-lighter: 0.3;
+  /* color hues */
+  --ani-red-hue: 0;
+  --ani-orange-hue: 30;
+  --ani-yellow-hue: 60;
+  --ani-lime-hue: 90;
+  --ani-green-hue: 120;
+  --ani-aqua-hue: 150;
+  --ani-cyan-hue: 180;
+  --ani-sky-hue: 210;
+  --ani-blue-hue: 240;
+  --ani-violet-hue: 270;
+  --ani-magenta-hue: 300;
+  --ani-pink-hue: 330;
+  /* grayscale lightness */
+  --ani-black-scale: 0%;
+  --ani-slate-scale: 30%;
+  --ani-gray-scale: 50%;
+  --ani-silver-scale: 70%;
+  --ani-white-scale: 100%;
+  /* colors */
+  --ani-red: hsl(var(--ani-red-hue), var(--ani-max), var(--ani-base));
+  --ani-red-dark: hsl(var(--ani-red-hue), var(--ani-max), var(--ani-dark));
+  --ani-red-light: hsl(var(--ani-red-hue), var(--ani-max), var(--ani-light));
+  --ani-red-darker: hsla(var(--ani-red-hue), var(--ani-max), var(--ani-dark), var(--ani-darker));
+  --ani-red-lighter: hsla(var(--ani-red-hue), var(--ani-max), var(--ani-light), var(--ani-lighter));
+  --ani-orange: hsl(var(--ani-orange-hue), var(--ani-max), var(--ani-base));
+  --ani-orange-dark: hsl(var(--ani-orange-hue), var(--ani-max), var(--ani-dark));
+  --ani-orange-light: hsl(var(--ani-orange-hue), var(--ani-max), var(--ani-light));
+  --ani-orange-darker: hsla(var(--ani-orange-hue), var(--ani-max), var(--ani-dark), var(--ani-darker));
+  --ani-orange-lighter: hsla(var(--ani-orange-hue), var(--ani-max), var(--ani-light), var(--ani-lighter));
+  --ani-yellow: hsl(var(--ani-yellow-hue), var(--ani-max), var(--ani-base));
+  --ani-yellow-dark: hsl(var(--ani-yellow-hue), var(--ani-max), var(--ani-dark));
+  --ani-yellow-light: hsl(var(--ani-yellow-hue), var(--ani-max), var(--ani-light));
+  --ani-yellow-darker: hsla(var(--ani-yellow-hue), var(--ani-max), var(--ani-dark), var(--ani-darker));
+  --ani-yellow-lighter: hsla(var(--ani-yellow-hue), var(--ani-max), var(--ani-light), var(--ani-lighter));
+  --ani-lime: hsl(var(--ani-lime-hue), var(--ani-max), var(--ani-base));
+  --ani-lime-dark: hsl(var(--ani-lime-hue), var(--ani-max), var(--ani-dark));
+  --ani-lime-light: hsl(var(--ani-lime-hue), var(--ani-max), var(--ani-light));
+  --ani-lime-darker: hsla(var(--ani-lime-hue), var(--ani-max), var(--ani-dark), var(--ani-darker));
+  --ani-lime-lighter: hsla(var(--ani-lime-hue), var(--ani-max), var(--ani-light), var(--ani-lighter));
+  --ani-green: hsl(var(--ani-green-hue), var(--ani-max), var(--ani-base));
+  --ani-green-dark: hsl(var(--ani-green-hue), var(--ani-max), var(--ani-dark));
+  --ani-green-light: hsl(var(--ani-green-hue), var(--ani-max), var(--ani-light));
+  --ani-green-darker: hsla(var(--ani-green-hue), var(--ani-max), var(--ani-dark), var(--ani-darker));
+  --ani-green-lighter: hsla(var(--ani-green-hue), var(--ani-max), var(--ani-light), var(--ani-lighter));
+  --ani-aqua: hsl(var(--ani-aqua-hue), var(--ani-max), var(--ani-base));
+  --ani-aqua-dark: hsl(var(--ani-aqua-hue), var(--ani-max), var(--ani-dark));
+  --ani-aqua-light: hsl(var(--ani-aqua-hue), var(--ani-max), var(--ani-light));
+  --ani-aqua-darker: hsla(var(--ani-aqua-hue), var(--ani-max), var(--ani-dark), var(--ani-darker));
+  --ani-aqua-lighter: hsla(var(--ani-aqua-hue), var(--ani-max), var(--ani-light), var(--ani-lighter));
+  --ani-cyan: hsl(var(--ani-cyan-hue), var(--ani-max), var(--ani-base));
+  --ani-cyan-dark: hsl(var(--ani-cyan-hue), var(--ani-max), var(--ani-dark));
+  --ani-cyan-light: hsl(var(--ani-cyan-hue), var(--ani-max), var(--ani-light));
+  --ani-cyan-darker: hsla(var(--ani-cyan-hue), var(--ani-max), var(--ani-dark), var(--ani-darker));
+  --ani-cyan-lighter: hsla(var(--ani-cyan-hue), var(--ani-max), var(--ani-light), var(--ani-lighter));
+  --ani-sky: hsl(var(--ani-sky-hue), var(--ani-max), var(--ani-base));
+  --ani-sky-dark: hsl(var(--ani-sky-hue), var(--ani-max), var(--ani-dark));
+  --ani-sky-light: hsl(var(--ani-sky-hue), var(--ani-max), var(--ani-light));
+  --ani-sky-darker: hsla(var(--ani-sky-hue), var(--ani-max), var(--ani-dark), var(--ani-darker));
+  --ani-sky-lighter: hsla(var(--ani-sky-hue), var(--ani-max), var(--ani-light), var(--ani-lighter));
+  --ani-blue: hsl(var(--ani-blue-hue), var(--ani-max), var(--ani-base));
+  --ani-blue-dark: hsl(var(--ani-blue-hue), var(--ani-max), var(--ani-dark));
+  --ani-blue-light: hsl(var(--ani-blue-hue), var(--ani-max), var(--ani-light));
+  --ani-blue-darker: hsla(var(--ani-blue-hue), var(--ani-max), var(--ani-dark), var(--ani-darker));
+  --ani-blue-lighter: hsla(var(--ani-blue-hue), var(--ani-max), var(--ani-light), var(--ani-lighter));
+  --ani-violet: hsl(var(--ani-violet-hue), var(--ani-max), var(--ani-base));
+  --ani-violet-dark: hsl(var(--ani-violet-hue), var(--ani-max), var(--ani-dark));
+  --ani-violet-light: hsl(var(--ani-violet-hue), var(--ani-max), var(--ani-light));
+  --ani-violet-darker: hsla(var(--ani-violet-hue), var(--ani-max), var(--ani-dark), var(--ani-darker));
+  --ani-violet-lighter: hsla(var(--ani-violet-hue), var(--ani-max), var(--ani-light), var(--ani-lighter));
+  --ani-magenta: hsl(var(--ani-magenta-hue), var(--ani-max), var(--ani-base));
+  --ani-magenta-dark: hsl(var(--ani-magenta-hue), var(--ani-max), var(--ani-dark));
+  --ani-magenta-light: hsl(var(--ani-magenta-hue), var(--ani-max), var(--ani-light));
+  --ani-magenta-darker: hsla(var(--ani-magenta-hue), var(--ani-max), var(--ani-dark), var(--ani-darker));
+  --ani-magenta-lighter: hsla(var(--ani-magenta-hue), var(--ani-max), var(--ani-light), var(--ani-lighter));
+  --ani-pink: hsl(var(--ani-pink-hue), var(--ani-max), var(--ani-base));
+  --ani-pink-dark: hsl(var(--ani-pink-hue), var(--ani-max), var(--ani-dark));
+  --ani-pink-light: hsl(var(--ani-pink-hue), var(--ani-max), var(--ani-light));
+  --ani-pink-darker: hsla(var(--ani-pink-hue), var(--ani-max), var(--ani-dark), var(--ani-darker));
+  --ani-pink-lighter: hsla(var(--ani-pink-hue), var(--ani-max), var(--ani-light), var(--ani-lighter));
+  /* grayscale */
+  --ani-black: hsl(var(--ani-hue), var(--ani-min), var(--ani-black-scale));
+  --ani-black-darker: hsla(var(--ani-hue), var(--ani-min), var(--ani-black-scale), var(--ani-darker));
+  --ani-black-lighter: hsla(var(--ani-hue), var(--ani-min), var(--ani-black-scale), var(--ani-lighter));
+  --ani-slate: hsl(var(--ani-hue), var(--ani-min), var(--ani-slate-scale));
+  --ani-slate-darker: hsla(var(--ani-hue), var(--ani-min), var(--ani-slate-scale), var(--ani-darker));
+  --ani-slate-lighter: hsla(var(--ani-hue), var(--ani-min), var(--ani-slate-scale), var(--ani-lighter));
+  --ani-gray: hsl(var(--ani-hue), var(--ani-min), var(--ani-gray-scale));
+  --ani-gray-darker: hsla(var(--ani-hue), var(--ani-min), var(--ani-gray-scale), var(--ani-darker));
+  --ani-gray-lighter: hsla(var(--ani-hue), var(--ani-min), var(--ani-gray-scale), var(--ani-lighter));
+  --ani-silver: hsl(var(--ani-hue), var(--ani-min), var(--ani-silver-scale));
+  --ani-silver-darker: hsla(var(--ani-hue), var(--ani-min), var(--ani-silver-scale), var(--ani-darker));
+  --ani-silver-lighter: hsla(var(--ani-hue), var(--ani-min), var(--ani-silver-scale), var(--ani-lighter));
+  --ani-white: hsl(var(--ani-hue), var(--ani-min), var(--ani-white-scale));
+  --ani-white-darker: hsla(var(--ani-hue), var(--ani-min), var(--ani-white-scale), var(--ani-darker));
+  --ani-white-lighter: hsla(var(--ani-hue), var(--ani-min), var(--ani-white-scale), var(--ani-lighter));
   /********** TRANSFORM **********/
   --ani-slideT: translate(0, 10vh);
   --ani-slideR: translate(-10vw, 0);
@@ -292,29 +346,29 @@ a,
 button {
   --ve-btn-display: inline-block;
   --ve-btn-margin: 10px;
-  --ve-btn-border: solid 2px var(--ani-white);
+  --ve-btn-border: none;
   --ve-btn-border-radius: 10px;
-  --ve-btn-padding: 5px 10px;
+  --ve-btn-padding: 10px 15px;
   --ve-btn-font-family: var(--ani-monospace);
   --ve-btn-font-size: 1.5rem;
   --ve-btn-font-weight: bold;
   --ve-btn-text-align: center;
   --ve-btn-text-decoration: none;
-  --ve-btn-background-color: var(--ani-black);
+  --ve-btn-background-color: transparent;
   --ve-btn-color: var(--ani-white);
   --ve-btn-cursor: pointer;
-  --ve-btn-hover-border-color: var(--ani-black);
   --ve-btn-hover-border-radius: 5px;
-  --ve-btn-hover-background-color: var(--ani-white);
-  --ve-btn-hover-color: var(--ani-black);
+  --ve-btn-hover-background-color: transparent;
+  --ve-btn-hover-color: var(--ani-white);
   --ve-btn-hover-box-shadow: inset 0 0 5px 2px;
   --ve-btn-hover-transition: all 200ms;
   --ve-btn-child-display: block;
   --ve-btn-child-margin: auto;
+  --ve-label-border: solid 2px var(--ani-slate);
   --ve-label-border-radius: 20px;
   --ve-label-background-color: var(--ani-white);
-  --ve-label-border-color: var(--ani-white);
-  --ve-label-color: var(--ani-white);
+  --ve-label-border-color: var(--ani-slate);
+  --ve-label-color: var(--ani-slate);
   --ve-label-hover-border-radius: 20px;
 }
 
@@ -337,7 +391,7 @@ fieldset {
 legend {
   --ve-field-legend-width: 93%;
   --ve-field-legend-font-size: 2rem;
-  --ve-field-legend-color: var(--ani-gray);
+  --ve-field-legend-color: var(--ani-slate);
   --ve-field-hover-legend-color: var(--ani-black);
 }
 
@@ -346,7 +400,7 @@ label {
   --ve-field-label-visibility: hidden;
   --ve-field-label-font-size: 1.5rem;
   --ve-field-label-font-style: italic;
-  --ve-field-label-color: var(--ani-blue);
+  --ve-field-label-color: var(--ani-blue-dark);
   --ve-field-hover-label-visibility: visible;
   --ve-field-hover-label-transform: scale(1.1);
   --ve-field-hover-label-transition: all 1s;
@@ -355,7 +409,7 @@ label {
 input,
 select,
 textarea {
-  --ve-field-input-border: 1px solid var(--ani-blue);
+  --ve-field-input-border: 1px solid var(--ani-sky-light);
   --ve-field-input-border-radius: 10px;
   --ve-field-input-outline: none;
   --ve-field-input-width: 100%;
@@ -376,7 +430,7 @@ figure {
 }
 
 img {
-  --ve-media-img-border: 2px solid var(--ani-gray);
+  --ve-media-img-border: 2px solid var(--ani-slate);
   --ve-media-img-border-radius: 20px;
   --ve-media-img-padding: 1px;
   --ve-media-img-max-width: 100%;
@@ -386,12 +440,12 @@ img {
 }
 
 audio {
-  --ve-media-audio-border: 2px solid var(--ani-gray);
+  --ve-media-audio-border: 2px solid var(--ani-slate);
   --ve-media-audio-border-radius: 10px;
 }
 
 video {
-  --ve-media-video-border: 2px solid var(--ani-gray);
+  --ve-media-video-border: 2px solid var(--ani-black);
   --ve-media-video-border-radius: 20px;
 }
 
@@ -509,11 +563,11 @@ tr {
   --ve-table-tr-display: flex;
   --ve-table-tr-flex-flow: column;
   --ve-table-tr-padding: 20px;
-  --ve-table-tbody-tr-even-background-color: var(--ani-gray-light);
+  --ve-table-tbody-tr-even-background-color: var(--ani-silver);
   --ve-table-tbody-tr-even-color: var(--ani-black);
   --ve-table-tbody-tr-odd-background-color: var(--ani-white);
-  --ve-table-tbody-tr-odd-color: var(--ani-gray);
-  --ve-table-tbody-tr-hover-background-color: var(--ani-silver);
+  --ve-table-tbody-tr-odd-color: var(--ani-slate);
+  --ve-table-tbody-tr-hover-background-color: var(--ani-gray);
   --ve-table-tbody-tr-hover-color: var(--ani-black);
 }
 
@@ -525,7 +579,7 @@ th {
   --ve-table-th-text-align: center;
   --ve-table-th-text-transform: uppercase;
   --ve-table-th-vertical-align: middle;
-  --ve-table-th-background-color: var(--ani-blue);
+  --ve-table-th-background-color: var(--ani-sky);
   --ve-table-th-color: var(--ani-white);
 }
 
@@ -607,13 +661,13 @@ footer {
   --ve-foot-ul-place-content: center;
   --ve-foot-ul-place-items: center;
   --ve-foot-ul-padding: 20px;
-  --ve-foot-ul-background-color: var(--ani-blue);
+  --ve-foot-ul-background-color: var(--ani-violet-dark);
   --ve-foot-title-margin-bottom: 5px;
   --ve-foot-title-font-size: 2rem;
   --ve-foot-title-font-family: var(--ani-monospace);
-  --ve-foot-title-color: var(--ani-yellow);
+  --ve-foot-title-color: var(--ani-yellow-light);
   --ve-foot-section-a-color: var(--ani-white);
-  --ve-foot-section-a-hover-color: var(--ani-yellow);
+  --ve-foot-section-a-hover-color: var(--ani-yellow-light);
 }
 
 aside {
@@ -665,7 +719,7 @@ aside {
   --ve-nav-bottom: unset;
   --ve-nav-left: 0;
   --ve-nav-z-index: 1000;
-  --ve-nav-background-color: var(--ani-blue-dark);
+  --ve-nav-background-color: var(--ani-blue-darker);
   --ve-nav-color: var(--ani-white);
   --ve-nav-a-padding: 10px;
   --ve-nav-a-color: var(--ani-white);
@@ -678,9 +732,9 @@ aside {
   --ve-nav-ul-a-display: flex;
   --ve-nav-ul-a-not-i-display: none;
   --ve-nav-ul-a-flex-direction: column;
-  --ve-nav-ul-a-hover-color: var(--ani-yellow);
+  --ve-nav-ul-a-hover-color: var(--ani-yellow-light);
   --ve-nav-ul-a-hover-transform: scale(0.9);
-  --ve-nav-last-ul-a-hover-color: var(--ani-red);
+  --ve-nav-last-ul-a-hover-color: var(--ani-red-light);
   --ve-nav-button-background-color: transparent;
   --ve-nav-button-border: none;
   --ve-nav-button-cursor: pointer;
@@ -714,12 +768,12 @@ aside {
   --ve-side-a-outline: none;
   --ve-side-a-padding: 5px;
   --ve-side-a-width: 100%;
-  --ve-side-a-background-color: var(--ani-white-dark);
-  --ve-side-a-color: var(--ani-blue-dark);
+  --ve-side-a-background-color: var(--ani-white-lighter);
+  --ve-side-a-color: var(--ani-sky-dark);
   --ve-side-a-cursor: crosshair;
   --ve-side-a-hover-border-radius: 10px;
-  --ve-side-a-hover-background-color: var(--ani-blue-dark);
-  --ve-side-a-hover-color: var(--ani-white-dark);
+  --ve-side-a-hover-background-color: var(--ani-sky-darker);
+  --ve-side-a-hover-color: var(--ani-white);
   --ve-side-a-hover-transform: scale(1.1);
   --ve-side-a-hover-transition: all 500ms;
 }
@@ -778,4 +832,4 @@ aside {
 }
 
 /* Author: Philippe Beck <philippe@philippebeck.net>
- Updated: 15th Mar 2023 @ 5:13:56 PM */
+ Updated: 17th Mar 2023 @ 4:16:37 AM */
