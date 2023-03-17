@@ -5,7 +5,7 @@ import store from "./store"
 
 import font from '@fortawesome/fontawesome-free/css/all.min.css'
 import anima from "animadio/dist/animadio.min.css"
-import style from "/public/style/style.css"
+import style from "/public/css/style.css"
 
 import serve from "servidio/dist/serve.min.js"
 import element from "vue-elt"
