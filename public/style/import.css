@@ -1,0 +1,26 @@
+@font-face {
+  font-family: 'Geo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Geo-Regular'),
+       url('../fonts/Geo-Regular.ttf') format('truetype'),
+}
+
+@font-face {
+  font-family: 'Rozha One';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('RozhaOne-Regular'),
+       url('../fonts/RozhaOne-Regular.ttf') format('truetype'),
+}
+
+@font-face {
+  font-family: 'Syne Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('SyneMono-Regular'),
+       url('../fonts/SyneMono-Regular.ttf') format('truetype'),
+}
