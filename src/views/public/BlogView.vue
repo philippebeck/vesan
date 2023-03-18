@@ -2,7 +2,8 @@
   <NavElt :items="getCats"
     class="sidebar">
     <template #hide>
-      <i class="fa-solid fa-eye fa-fw"></i>
+      <i class="fa-solid fa-eye fa-fw" 
+        :title="constants.TITLE_TOGGLE"></i>
     </template>
 
     <template #last  v-if="checkRole('editor')">
@@ -13,7 +14,8 @@
     </template>
 
     <template #top>
-      <i class="fa-solid fa-chevron-circle-up fa-fw"></i>
+      <i class="fa-solid fa-chevron-circle-up fa-fw" 
+        :title="constants.TITLE_TOP"></i>
     </template>
   </NavElt>
 
@@ -127,11 +129,25 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
+
+import BtnElt from "@/assets/BtnElt"
+import ListElt from "@/assets/ListElt"
+import MediaElt from "@/assets/MediaElt"
+import NavElt from "@/assets/NavElt"
+import CardElt from "@/assets/CardElt"
+
 import ArticleCreator from "@/components/creators/ArticleCreator"
 
 export default {
   name: "BlogView",
-  components: { ArticleCreator },
+  components: {
+    BtnElt,
+    ListElt,
+    MediaElt,
+    NavElt,
+    CardElt,
+    ArticleCreator 
+  },
   props: ["constants"],
 
   created() {

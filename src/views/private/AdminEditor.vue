@@ -12,7 +12,8 @@
       <!-- Sidebar -->
       <NavElt class="sidebar">
         <template #hide>
-          <i class="fa-solid fa-eye fa-fw"></i>
+          <i class="fa-solid fa-eye fa-fw" 
+          :title="constants.TITLE_TOGGLE"></i>
         </template>
 
         <template #first>
@@ -54,7 +55,8 @@
         </template>
 
         <template #top>
-          <i class="fa-solid fa-chevron-circle-up fa-fw"></i>
+          <i class="fa-solid fa-chevron-circle-up fa-fw" 
+            :title="constants.TITLE_TOP"></i>
         </template>
       </NavElt>
     </template>
@@ -63,32 +65,27 @@
 
       <!-- Shop Part -->
       <ProductManager v-if="products.length > 0"
-        id="product"
         :constants="constants"
         :products="products"/>
 
       <ReviewManager v-if="reviews.length > 0"
-        id="review"
         :constants="constants"
         :products="products"
         :reviews="reviews"
         :users="users"/>
 
       <OrderManager v-if="orders.length > 0"
-        id="order"
         :constants="constants"
         :orders="orders"
         :users="users"/>
 
       <!-- Blog Part -->
       <ArticleManager v-if="articles.length > 0"
-        id="article"
         :articles="articles"
         :constants="constants"
         :users="users"/>
 
       <CommentManager v-if="comments.length > 0"
-        id="comment"
         :articles="articles"
         :comments="comments"
         :constants="constants"
@@ -96,13 +93,11 @@
 
       <!-- Users Part -->
       <UserManager v-if="users.length > 0"
-        id="user"
         :constants="constants"
         :users="users"/>
 
       <!-- Links Part -->
       <LinkManager v-if="links.length > 0"
-        id="link"
         :constants="constants"
         :links="links"/>
     </template>
@@ -111,6 +106,9 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
+
+import CardElt from "@/assets/CardElt"
+import NavElt from "@/assets/NavElt"
 
 import ProductManager from "@/components/managers/ProductManager"
 import ReviewManager from "@/components/managers/ReviewManager"
@@ -123,6 +121,8 @@ import LinkManager from "@/components/managers/LinkManager"
 export default {
   name: "AdminEditor",
   components: {
+    CardElt,
+    NavElt,
     ProductManager,
     ReviewManager,
     OrderManager,

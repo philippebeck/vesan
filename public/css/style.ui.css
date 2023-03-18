@@ -1,12 +1,11 @@
-/*! vesan v1.1.0 | https://github.com/philippebeck/vesan | Apache-2.0 License */
-
 @font-face {
   font-family: 'Geo';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: local('Geo-Regular'),
-       url('../fonts/Geo-Regular.ttf') format('truetype'),
+  src: 
+    local('Geo-Regular'),
+    url('../fonts/Geo-Regular.ttf') format('truetype')
 }
 
 @font-face {
@@ -14,8 +13,9 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: local('RozhaOne-Regular'),
-       url('../fonts/RozhaOne-Regular.ttf') format('truetype'),
+  src: 
+    local('RozhaOne-Regular'),
+    url('../fonts/RozhaOne-Regular.ttf') format('truetype')
 }
 
 @font-face {
@@ -23,8 +23,9 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: local('SyneMono-Regular'),
-       url('../fonts/SyneMono-Regular.ttf') format('truetype'),
+  src: 
+    local('SyneMono-Regular'),
+    url('../fonts/SyneMono-Regular.ttf') format('truetype')
 }
 
 /********** VARS **********/
@@ -854,6 +855,3 @@ aside {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-
-/* Author: Philippe Beck <philippe@philippebeck.net>
- Updated: 17th Mar 2023 @ 8:59:14 PM */

@@ -1,6 +1,6 @@
 <template>
   <header>
-    <SliderElt  v-if="constants.HOME_MEDIA === 'slider'"
+    <SliderElt v-if="constants.HOME_MEDIA === 'slider'"
       :slides="constants.SLIDES"
       :delay="constants.SLIDER_DELAY"
       class="ani-grow-it">
@@ -8,6 +8,7 @@
       <template #slide="slotProps">
         <i :class="`fa-${constants.SLIDER_FA} fa-${slotProps.slide.toLowerCase()} fa-9x sky`"></i>
       </template>
+
       <template #gallery="slotProps">
         <i :class="`fa-${constants.SLIDER_FA} fa-${slotProps.slide.toLowerCase()}`"></i>
       </template>
@@ -39,8 +40,19 @@
 </template>
 
 <script>
+import CardElt from "@/assets/CardElt"
+import ListElt from "@/assets/ListElt"
+import MediaElt from "@/assets/MediaElt"
+import SliderElt from "@/assets/SliderElt"
+
 export default {
   name: "HomeView",
+  components: {
+    CardElt,
+    ListElt,
+    SliderElt,
+    MediaElt
+  },
   props: ["constants"],
 
   created() {

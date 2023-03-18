@@ -1,7 +1,7 @@
 <template>
     <CardElt>
     <template #header>
-      <h2>
+      <h2 id="link">
         <i class="fa-solid fa-link fa-lg"
           aria-hidden="true">
         </i>
@@ -82,9 +82,24 @@
 </template>
 
 <script>
+import BtnElt from "@/assets/BtnElt"
+import CardElt from "@/assets/CardElt"
+import FieldElt from "@/assets/FieldElt"
+import TableElt from "@/assets/TableElt"
+
 export default {
   name: "LinkManager",
-  props: ["constants", "links"],
+  components: {
+    BtnElt,
+    CardElt,
+    FieldElt,
+    TableElt
+  },
+
+  props: [
+    "constants", 
+    "links"
+  ],
 
   methods: {
     /**

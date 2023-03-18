@@ -1,7 +1,7 @@
 <template>
   <CardElt>
     <template #header>
-      <h2>
+      <h2 id="comment">
         <i class="fa-regular fa-comments fa-lg"
           aria-hidden="true">
         </i>
@@ -85,9 +85,26 @@
 </template>
 
 <script>
+import BtnElt from "@/assets/BtnElt"
+import CardElt from "@/assets/CardElt"
+import FieldElt from "@/assets/FieldElt"
+import TableElt from "@/assets/TableElt"
+
 export default {
   name: "CommentManager",
-  props: ["articles", "comments", "constants", "users"],
+  components: {
+    BtnElt,
+    CardElt,
+    FieldElt,
+    TableElt
+  },
+
+  props: [
+    "articles", 
+    "comments", 
+    "constants", 
+    "users"
+  ],
 
   methods: {
     /**

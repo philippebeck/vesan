@@ -139,10 +139,23 @@
 import { mapState } from "vuex"
 import { loadScript } from "@paypal/paypal-js";
 
+import BtnElt from "@/assets/BtnElt"
+import CardElt from "@/assets/CardElt"
+import FieldElt from "@/assets/FieldElt"
+import MediaElt from "@/assets/MediaElt"
+import TableElt from "@/assets/TableElt"
+
 export default {
   name: "BasketView",
-  props: ["constants"],
+  components: {
+    BtnElt,
+    CardElt,
+    FieldElt,
+    MediaElt,
+    TableElt
+  },
 
+  props: ["constants"],
   data() {
     return {
       products: [],

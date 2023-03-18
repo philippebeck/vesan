@@ -21,8 +21,11 @@
 </template>
 
 <script>
+import CardElt from "@/assets/CardElt"
+
 export default {
   name: "LegalView",
+  components: { CardElt },
   props: ["constants"],
 
   created() {

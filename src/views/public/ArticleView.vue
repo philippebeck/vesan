@@ -96,12 +96,20 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
+
+import BtnElt from "@/assets/BtnElt"
+import CardElt from "@/assets/CardElt"
+import MediaElt from "@/assets/MediaElt"
+
 import CommentCreator from "@/components/creators/CommentCreator"
 import CommentList from "@/components/lists/CommentList"
 
 export default {
   name: "ArticleView",
   components: {
+    BtnElt,
+    CardElt,
+    MediaElt,
     CommentCreator,
     CommentList
   },

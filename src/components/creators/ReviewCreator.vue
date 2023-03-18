@@ -61,10 +61,19 @@
 </template>
 
 <script>
+import BtnElt from "@/assets/BtnElt"
+import CardElt from "@/assets/CardElt"
+import FieldElt from "@/assets/FieldElt"
+
 export default {
   name: "ReviewCreator",
-  props: ["constants"],
+  components: {
+    BtnElt,
+    CardElt,
+    FieldElt
+  },
 
+  props: ["constants"],
   data() {
     return {
       text: "",

@@ -1,7 +1,7 @@
 <template>
   <CardElt>
     <template #header>
-      <h2>
+      <h2 id="product">
         <i class="fa-regular fa-rectangle-list fa-lg"
           aria-hidden="true">
         </i>
@@ -130,9 +130,26 @@
 </template>
 
 <script>
+import BtnElt from "@/assets/BtnElt"
+import CardElt from "@/assets/CardElt"
+import FieldElt from "@/assets/FieldElt"
+import MediaElt from "@/assets/MediaElt"
+import TableElt from "@/assets/TableElt"
+
 export default {
   name: "ProductManager",
-  props: ["constants", "products"],
+  components: {
+    BtnElt,
+    CardElt,
+    FieldElt,
+    MediaElt,
+    TableElt
+  },
+
+  props: [
+    "constants", 
+    "products"
+  ],
 
   methods: {
     /**

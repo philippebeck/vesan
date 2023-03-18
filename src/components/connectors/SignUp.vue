@@ -82,13 +82,22 @@
 </template>
 
 <script>
+import BtnElt from "@/assets/BtnElt"
+import FieldElt from "@/assets/FieldElt"
+import ListElt from "@/assets/ListElt"
+
 import { VueRecaptcha } from "vue-recaptcha";
 
 export default {
   name: "CreateUser",
-  components: { VueRecaptcha },
-  props: ["constants"],
+  components: {  
+    BtnElt,
+    FieldElt,
+    ListElt,
+    VueRecaptcha 
+  },
 
+  props: ["constants"],
   data() {
     return {
       name: "",

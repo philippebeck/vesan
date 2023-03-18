@@ -1,7 +1,7 @@
 <template>
   <CardElt>
     <template #header>
-      <h2>
+      <h2 id="review">
         <i class="fa-solid fa-ranking-star fa-lg"
           aria-hidden="true">
         </i>
@@ -90,9 +90,26 @@
 </template>
 
 <script>
+import BtnElt from "@/assets/BtnElt"
+import CardElt from "@/assets/CardElt"
+import FieldElt from "@/assets/FieldElt"
+import TableElt from "@/assets/TableElt"
+
 export default {
   name: "ReviewManager",
-  props: ["constants", "products", "reviews", "users"],
+  components: {
+    BtnElt,
+    CardElt,
+    FieldElt,
+    TableElt
+  },
+
+  props: [
+    "constants", 
+    "products", 
+    "reviews", 
+    "users"
+  ],
 
   methods: {
     /**

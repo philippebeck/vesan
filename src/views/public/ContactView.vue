@@ -86,13 +86,24 @@
 </template>
 
 <script>
+import BtnElt from "@/assets/BtnElt"
+import CardElt from "@/assets/CardElt"
+import FieldElt from "@/assets/FieldElt"
+import ListElt from "@/assets/ListElt"
+
 import { VueRecaptcha } from "vue-recaptcha";
 
 export default {
   name: "ContactView",
-  components: { VueRecaptcha },
-  props: ["constants"],
+  components: { 
+    BtnElt,
+    CardElt,
+    FieldElt,
+    ListElt,
+    VueRecaptcha 
+  },
 
+  props: ["constants"],
   data() {
     return {
       email: "",

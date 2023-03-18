@@ -130,6 +130,9 @@
 </template>
 
 <script>
+import BtnElt from "@/assets/BtnElt"
+import CardElt from "@/assets/CardElt"
+
 import SignUp from "@/components/connectors/SignUp"
 import SignIn from "@/components/connectors/SignIn"
 import ForgotPass from "@/components/connectors/ForgotPass"
@@ -137,6 +140,8 @@ import ForgotPass from "@/components/connectors/ForgotPass"
 export default {
   name: "LoginView",
   components: {
+    BtnElt,
+    CardElt,
     SignUp,
     SignIn,
     ForgotPass

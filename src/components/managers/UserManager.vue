@@ -1,7 +1,7 @@
 <template>
   <CardElt>
     <template #header>
-      <h2>
+      <h2 id="user">
         <i class="fa-solid fa-users-gear fa-lg"
           aria-hidden="true">
         </i>
@@ -95,9 +95,26 @@
 </template>
 
 <script>
+import BtnElt from "@/assets/BtnElt"
+import CardElt from "@/assets/CardElt"
+import FieldElt from "@/assets/FieldElt"
+import MediaElt from "@/assets/MediaElt"
+import TableElt from "@/assets/TableElt"
+
 export default {
   name: "UserManager",
-  props: ["constants", "users"],
+  components: {
+    BtnElt,
+    CardElt,
+    FieldElt,
+    MediaElt,
+    TableElt
+  },
+
+  props: [
+    "constants", 
+    "users"
+  ],
 
   methods: {
     /**

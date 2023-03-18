@@ -11,7 +11,8 @@
   <NavElt :items="getCats"
     class="sidebar">
     <template #hide>
-      <i class="fa-solid fa-eye fa-fw"></i>
+      <i class="fa-solid fa-eye fa-fw" 
+        :title="constants.TITLE_TOGGLE"></i>
     </template>
 
     <template #items="slotProps">
@@ -26,7 +27,8 @@
     </template>
 
     <template #top>
-      <i class="fa-solid fa-chevron-circle-up fa-fw"></i>
+      <i class="fa-solid fa-chevron-circle-up fa-fw" 
+        :title="constants.TITLE_TOP"></i>
     </template>
   </NavElt>
 
@@ -63,11 +65,21 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
+
+import BtnElt from "@/assets/BtnElt"
+import CardElt from "@/assets/CardElt"
+import ListElt from "@/assets/ListElt"
+import NavElt from "@/assets/NavElt"
+
 import LinkCreator from "@/components/creators/LinkCreator"
 
 export default {
   name: "LinkView",
   components: {
+    BtnElt,
+    CardElt,
+    ListElt,
+    NavElt,
     LinkCreator
   },
   props: ["constants"],
