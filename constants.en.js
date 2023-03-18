@@ -129,19 +129,19 @@ export default {
       "href": "https://www.linkedin.com/in/philippebeck",
       "title": "Philippe Beck @LinkedIn",
       "fa": "linkedin-in",
-      "color": "blue"
+      "color": "sky-dark"
     }, 
     {
       "href": "https://medium.com/@philippebeck",
       "title": "Philippe Beck @Medium",
       "fa": "medium",
-      "color": "green"
+      "color": "green-dark"
     }, 
     {
       "href": "https://www.npmjs.com/~philippebeck",
       "title": "Philippe Beck @NPM",
       "fa": "npm",
-      "color": "red"
+      "color": "red-dark"
     }, 
     {
       "href": "https://twitter.com/ph_beck",
