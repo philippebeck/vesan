@@ -114,6 +114,9 @@
 <script>
 import { mapState, mapActions } from "vuex"
 
+import CardElt from "@/assets/CardElt"
+import NavElt from "@/assets/NavElt"
+
 import ProductManager from "@/components/managers/ProductManager"
 import ReviewManager from "@/components/managers/ReviewManager"
 import OrderManager from "@/components/managers/OrderManager"
@@ -125,6 +128,8 @@ import LinkManager from "@/components/managers/LinkManager"
 export default {
   name: "AdminEditor",
   components: {
+    CardElt,
+    NavElt,
     ProductManager,
     ReviewManager,
     OrderManager,

@@ -129,11 +129,25 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
+
+import BtnElt from "@/assets/BtnElt"
+import ListElt from "@/assets/ListElt"
+import MediaElt from "@/assets/MediaElt"
+import NavElt from "@/assets/NavElt"
+import CardElt from "@/assets/CardElt"
+
 import ArticleCreator from "@/components/creators/ArticleCreator"
 
 export default {
   name: "BlogView",
-  components: { ArticleCreator },
+  components: {
+    BtnElt,
+    ListElt,
+    MediaElt,
+    NavElt,
+    CardElt,
+    ArticleCreator 
+  },
   props: ["constants"],
 
   created() {

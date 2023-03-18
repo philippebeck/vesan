@@ -148,15 +148,24 @@
 </template>
 
 <script>
+import BtnElt from "@/assets/BtnElt"
+import CardElt from "@/assets/CardElt"
+import FieldElt from "@/assets/FieldElt"
+import ListElt from "@/assets/ListElt"
+
 import Editor from "@tinymce/tinymce-vue"
 
 export default {
   name: "ProductCreator",
   components: {
+    BtnElt,
+    CardElt,
+    FieldElt,
+    ListElt,
     Editor
   },
-  props: ["constants"],
 
+  props: ["constants"],
   data() {
     return {
       name: "",

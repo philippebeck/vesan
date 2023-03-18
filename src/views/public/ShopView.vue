@@ -121,11 +121,23 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
+
+import BtnElt from "@/assets/BtnElt"
+import ListElt from "@/assets/ListElt"
+import MediaElt from "@/assets/MediaElt"
+import NavElt from "@/assets/NavElt"
+import CardElt from "@/assets/CardElt"
+
 import ProductCreator from "@/components/creators/ProductCreator"
 
 export default {
   name: "ShopView",
   components: {
+    BtnElt,
+    ListElt,
+    MediaElt,
+    NavElt,
+    CardElt,
     ProductCreator
   },
   props: ["constants"],

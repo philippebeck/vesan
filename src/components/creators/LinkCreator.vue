@@ -77,10 +77,21 @@
 </template>
 
 <script>
+import BtnElt from "@/assets/BtnElt"
+import CardElt from "@/assets/CardElt"
+import FieldElt from "@/assets/FieldElt"
+import ListElt from "@/assets/ListElt"
+
 export default {
   name: "LinkCreator",
-  props: ["constants"],
+  components: {
+    BtnElt,
+    CardElt,
+    FieldElt,
+    ListElt
+  },
 
+  props: ["constants"],
   data() {
     return {
       name: "",

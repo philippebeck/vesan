@@ -39,8 +39,17 @@
 </template>
 
 <script>
+import MediaElt from "@/assets/MediaElt"
+import SliderElt from "@/assets/SliderElt"
+import CardElt from "@/assets/CardElt"
+
 export default {
   name: "HomeView",
+  components: {
+    CardElt,
+    SliderElt,
+    MediaElt
+  },
   props: ["constants"],
 
   created() {

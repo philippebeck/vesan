@@ -85,9 +85,26 @@
 </template>
 
 <script>
+import BtnElt from "@/assets/BtnElt"
+import CardElt from "@/assets/CardElt"
+import FieldElt from "@/assets/FieldElt"
+import TableElt from "@/assets/TableElt"
+
 export default {
   name: "CommentManager",
-  props: ["articles", "comments", "constants", "users"],
+  components: {
+    BtnElt,
+    CardElt,
+    FieldElt,
+    TableElt
+  },
+
+  props: [
+    "articles", 
+    "comments", 
+    "constants", 
+    "users"
+  ],
 
   methods: {
     /**

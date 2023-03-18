@@ -27,8 +27,18 @@
 </template>
 
 <script>
+import BtnElt from "@/assets/BtnElt"
+import CardElt from "@/assets/CardElt"
+import MediaElt from "@/assets/MediaElt"
+
 export default {
   name: 'ErrorView',
+  components: {
+    BtnElt,
+    CardElt,
+    MediaElt
+  },
+
   props: ["constants"]
 }
 </script>

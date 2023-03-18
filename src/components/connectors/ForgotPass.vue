@@ -31,13 +31,20 @@
 </template>
 
 <script>
+import BtnElt from "@/assets/BtnElt"
+import FieldElt from "@/assets/FieldElt"
+
 import { VueRecaptcha } from "vue-recaptcha";
 
 export default {
   name: "ForgotPass",
-  components: { VueRecaptcha },
-  props: ["constants"],
+  components: { 
+    BtnElt,
+    FieldElt,
+    VueRecaptcha 
+  },
 
+  props: ["constants"],
   data() {
     return {
       email: ""
