@@ -65,32 +65,27 @@
 
       <!-- Shop Part -->
       <ProductManager v-if="products.length > 0"
-        id="product"
         :constants="constants"
         :products="products"/>
 
       <ReviewManager v-if="reviews.length > 0"
-        id="review"
         :constants="constants"
         :products="products"
         :reviews="reviews"
         :users="users"/>
 
       <OrderManager v-if="orders.length > 0"
-        id="order"
         :constants="constants"
         :orders="orders"
         :users="users"/>
 
       <!-- Blog Part -->
       <ArticleManager v-if="articles.length > 0"
-        id="article"
         :articles="articles"
         :constants="constants"
         :users="users"/>
 
       <CommentManager v-if="comments.length > 0"
-        id="comment"
         :articles="articles"
         :comments="comments"
         :constants="constants"
@@ -98,13 +93,11 @@
 
       <!-- Users Part -->
       <UserManager v-if="users.length > 0"
-        id="user"
         :constants="constants"
         :users="users"/>
 
       <!-- Links Part -->
       <LinkManager v-if="links.length > 0"
-        id="link"
         :constants="constants"
         :links="links"/>
     </template>

@@ -1,7 +1,7 @@
 <template>
   <CardElt>
     <template #header>
-      <h2>
+      <h2 id="user">
         <i class="fa-solid fa-users-gear fa-lg"
           aria-hidden="true">
         </i>

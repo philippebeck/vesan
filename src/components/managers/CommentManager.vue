@@ -1,7 +1,7 @@
 <template>
   <CardElt>
     <template #header>
-      <h2>
+      <h2 id="comment">
         <i class="fa-regular fa-comments fa-lg"
           aria-hidden="true">
         </i>

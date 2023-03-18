@@ -1,7 +1,7 @@
 <template>
   <CardElt>
     <template #header>
-      <h2>
+      <h2 id="article">
         <i class="fa-regular fa-newspaper fa-lg"
           aria-hidden="true">
         </i>

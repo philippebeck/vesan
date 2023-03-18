@@ -1,7 +1,7 @@
 <template>
-  <CardElt id="create-article">
+  <CardElt>
     <template #header>
-      <h3>
+      <h3 id="create-article">
         <i class="fa-regular fa-pen-to-square fa-lg"
           aria-hidden="true">
         </i>

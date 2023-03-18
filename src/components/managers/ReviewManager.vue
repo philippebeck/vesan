@@ -1,7 +1,7 @@
 <template>
   <CardElt>
     <template #header>
-      <h2>
+      <h2 id="review">
         <i class="fa-solid fa-ranking-star fa-lg"
           aria-hidden="true">
         </i>

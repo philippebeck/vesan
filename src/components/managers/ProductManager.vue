@@ -1,7 +1,7 @@
 <template>
   <CardElt>
     <template #header>
-      <h2>
+      <h2 id="product">
         <i class="fa-regular fa-rectangle-list fa-lg"
           aria-hidden="true">
         </i>

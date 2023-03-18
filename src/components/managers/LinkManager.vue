@@ -1,7 +1,7 @@
 <template>
     <CardElt>
     <template #header>
-      <h2>
+      <h2 id="link">
         <i class="fa-solid fa-link fa-lg"
           aria-hidden="true">
         </i>

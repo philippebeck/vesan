@@ -1,7 +1,7 @@
 <template>
   <CardElt>
     <template #header>
-      <h2>
+      <h2 id="order">
         <i class="fa-solid fa-gifts fa-lg"
           aria-hidden="true">
         </i>

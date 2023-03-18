@@ -1,7 +1,7 @@
 <template>
-  <CardElt id="create-product">
+  <CardElt>
     <template #header>
-      <h3>
+      <h3 id="create-product">
         <i class="fa-regular fa-lightbulb fa-lg"
           aria-hidden="true">
         </i>
