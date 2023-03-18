@@ -168,8 +168,9 @@ exports.forgotPass = (req, res, next) => {
  * CHECK RECAPTCHA
  * @param {object} req 
  * @param {object} res 
+ * @param {function} next 
  */
-exports.checkRecaptcha = (req, res) => {
+exports.checkRecaptcha = (req, res, next) => {
   form.parse(req, (err, fields) => {
 
     if (err) {
