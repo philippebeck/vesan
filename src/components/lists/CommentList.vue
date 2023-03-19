@@ -62,16 +62,15 @@
             </p>
           </form>
 
-          <figure v-else
+          <MediaElt v-else
+            type="quote"
+            content="slotProps.item.text"
+            class="container-90sm-80md-70lg-60xl-50wd bord bord-sky blue"
             itemscope
-            itemtype="https://schema.org/Comment">
-            <blockquote itemprop="text"
-              class="container-90sm-80md-70lg-60xl-50wd bord bord-sky blue">
-              {{ slotProps.item.text }}
-            </blockquote>
-            <br>
+            itemtype="https://schema.org/Comment"
+            itemprop="text">
 
-            <figcaption class="silver">
+            <template #figcaption>
               {{ constants.CREATE_BY }}
               <b itemprop="author">
                 {{ slotProps.item.user.split("-")[0] }}
@@ -84,8 +83,8 @@
               <i itemprop="dateModified">
                 {{ new Date(slotProps.item.updated).toLocaleDateString() }}
               </i>
-            </figcaption>
-          </figure>
+            </template>
+          </MediaElt>
 
         </template>
       </ListElt>
@@ -98,6 +97,7 @@ import BtnElt from "@/assets/BtnElt"
 import CardElt from "@/assets/CardElt"
 import FieldElt from "@/assets/FieldElt"
 import ListElt from "@/assets/ListElt"
+import MediaElt from "@/assets/MediaElt"
 
 export default {
   name: "CommentList",
@@ -105,7 +105,8 @@ export default {
     BtnElt,
     CardElt,
     FieldElt,
-    ListElt
+    ListElt,
+    MediaElt
   },
 
   props: [
