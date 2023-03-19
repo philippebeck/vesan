@@ -58,6 +58,8 @@
       <MediaElt v-if="article.image"
         :src="`/img/articles/${article.image}`"
         :alt="article.alt"
+        :width="constants.IMG_WIDTH"
+        :height="constants.IMG_HEIGHT"
         itemprop="image">
 
         <template #figcaption>

@@ -62,10 +62,11 @@ Yarn : `yarn add vesan`
 
 From the root of your App with Vesan :  
 
-1. Install the frontend dependencies :  
+1. Install the frontend dependencies & create assets components :  
 `$ npm install`  
+`$ grunt`  
 
-2. Install the backend dependencies :  
+1. Install the backend dependencies :  
 `$ cd api`  
 `$ npm install`  
 
@@ -78,10 +79,10 @@ From the root of your App with Vesan :
 1. To configure the backend, replace values :  
 `api/.env.en  || api/.env.fr` *(then rename it .env)*  
 
-1. To configure the frontend, replace values :  
+2. To configure the frontend, replace values :  
 `constants.en.js || constants.fr.js` *(then rename it constants.js)*  
 
-1. To configure the design, replaces values :  
+3. To configure the design, replaces values :  
 `src/style/style.ui.css` *(then rename it style.css)*  
 
 ---

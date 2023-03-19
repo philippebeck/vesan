@@ -69,15 +69,15 @@
             </p>
           </form>
 
-          <figure v-else
+          <MediaElt v-else
+            type="quote"
+            :content="slotProps.item.text"
+            class="container-90sm-80md-70lg-60xl-50wd bord bord-sky blue"
             itemscope
-            itemtype="https://schema.org/Review">
-            <blockquote itemprop="text"
-              class="container-90sm-80md-70lg-60xl-50wd bord bord-sky blue">
-              {{ slotProps.item.text }}
-            </blockquote>
+            itemtype="https://schema.org/Review"
+            itemprop="text">
 
-            <figcaption>
+            <template #figcaption>
               <p itemprop="reviewRating"
                 itemscope
                 itemtype="https://schema.org/Rating"
@@ -101,8 +101,8 @@
                   {{ new Date(slotProps.item.updated).toLocaleDateString() }}
                 </i>
               </p>
-            </figcaption>
-          </figure>
+            </template>
+          </MediaElt>
 
         </template>
       </ListElt>
@@ -115,6 +115,7 @@ import BtnElt from "@/assets/BtnElt"
 import CardElt from "@/assets/CardElt"
 import FieldElt from "@/assets/FieldElt"
 import ListElt from "@/assets/ListElt"
+import MediaElt from "@/assets/MediaElt"
 
 export default {
   name: "ReviewManager",
@@ -122,7 +123,8 @@ export default {
     BtnElt,
     CardElt,
     FieldElt,
-    ListElt
+    ListElt,
+    MediaElt
   },
 
   props: [
