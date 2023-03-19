@@ -2,7 +2,7 @@
   font-family: 'Geo';
   font-style: normal;
   font-weight: 400;
-  font-display: optional;
+  font-display: swap;
   src: 
     local('Geo-Regular'),
     url('../fonts/Geo-Regular.ttf') format('truetype')
@@ -12,7 +12,7 @@
   font-family: 'Trocchi';
   font-style: normal;
   font-weight: 400;
-  font-display: optional;
+  font-display: swap;
   src: 
     local('Trocchi-Regular'),
     url('../fonts/Trocchi-Regular.ttf') format('truetype')
@@ -22,7 +22,7 @@
   font-family: 'Syne Mono';
   font-style: normal;
   font-weight: 400;
-  font-display: optional;
+  font-display: swap;
   src: 
     local('SyneMono-Regular'),
     url('../fonts/SyneMono-Regular.ttf') format('truetype')
