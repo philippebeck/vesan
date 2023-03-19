@@ -44,8 +44,8 @@
   --ani-max: 100%;
   /* lightness */
   --ani-base: 50%;
-  --ani-dark: 30%;
-  --ani-light: 70%;
+  --ani-dark: 20%;
+  --ani-light: 80%;
   /* opacity */
   --ani-darker: 0.8;
   --ani-lighter: 0.2;
@@ -63,11 +63,11 @@
   --ani-magenta-hue: 300;
   --ani-pink-hue: 330;
   /* grayscale lightness */
-  --ani-black-scale: 0%;
-  --ani-slate-scale: 30%;
-  --ani-gray-scale: 50%;
-  --ani-silver-scale: 70%;
-  --ani-white-scale: 100%;
+  --ani-black-light: 0%;
+  --ani-slate-light: 20%;
+  --ani-gray-light: 50%;
+  --ani-silver-light: 80%;
+  --ani-white-light: 100%;
   /* colors */
   --ani-red: hsl(var(--ani-red-hue), var(--ani-max), var(--ani-base));
   --ani-red-dark: hsl(var(--ani-red-hue), var(--ani-max), var(--ani-dark));
@@ -130,21 +130,21 @@
   --ani-pink-darker: hsla(var(--ani-pink-hue), var(--ani-max), var(--ani-dark), var(--ani-darker));
   --ani-pink-lighter: hsla(var(--ani-pink-hue), var(--ani-max), var(--ani-light), var(--ani-lighter));
   /* grayscale */
-  --ani-black: hsl(var(--ani-hue), var(--ani-min), var(--ani-black-scale));
-  --ani-black-darker: hsla(var(--ani-hue), var(--ani-min), var(--ani-black-scale), var(--ani-darker));
-  --ani-black-lighter: hsla(var(--ani-hue), var(--ani-min), var(--ani-black-scale), var(--ani-lighter));
-  --ani-slate: hsl(var(--ani-hue), var(--ani-min), var(--ani-slate-scale));
-  --ani-slate-darker: hsla(var(--ani-hue), var(--ani-min), var(--ani-slate-scale), var(--ani-darker));
-  --ani-slate-lighter: hsla(var(--ani-hue), var(--ani-min), var(--ani-slate-scale), var(--ani-lighter));
-  --ani-gray: hsl(var(--ani-hue), var(--ani-min), var(--ani-gray-scale));
-  --ani-gray-darker: hsla(var(--ani-hue), var(--ani-min), var(--ani-gray-scale), var(--ani-darker));
-  --ani-gray-lighter: hsla(var(--ani-hue), var(--ani-min), var(--ani-gray-scale), var(--ani-lighter));
-  --ani-silver: hsl(var(--ani-hue), var(--ani-min), var(--ani-silver-scale));
-  --ani-silver-darker: hsla(var(--ani-hue), var(--ani-min), var(--ani-silver-scale), var(--ani-darker));
-  --ani-silver-lighter: hsla(var(--ani-hue), var(--ani-min), var(--ani-silver-scale), var(--ani-lighter));
-  --ani-white: hsl(var(--ani-hue), var(--ani-min), var(--ani-white-scale));
-  --ani-white-darker: hsla(var(--ani-hue), var(--ani-min), var(--ani-white-scale), var(--ani-darker));
-  --ani-white-lighter: hsla(var(--ani-hue), var(--ani-min), var(--ani-white-scale), var(--ani-lighter));
+  --ani-black: hsl(var(--ani-hue), var(--ani-min), var(--ani-black-light));
+  --ani-black-darker: hsla(var(--ani-hue), var(--ani-min), var(--ani-black-light), var(--ani-darker));
+  --ani-black-lighter: hsla(var(--ani-hue), var(--ani-min), var(--ani-black-light), var(--ani-lighter));
+  --ani-slate: hsl(var(--ani-hue), var(--ani-min), var(--ani-slate-light));
+  --ani-slate-darker: hsla(var(--ani-hue), var(--ani-min), var(--ani-slate-light), var(--ani-darker));
+  --ani-slate-lighter: hsla(var(--ani-hue), var(--ani-min), var(--ani-slate-light), var(--ani-lighter));
+  --ani-gray: hsl(var(--ani-hue), var(--ani-min), var(--ani-gray-light));
+  --ani-gray-darker: hsla(var(--ani-hue), var(--ani-min), var(--ani-gray-light), var(--ani-darker));
+  --ani-gray-lighter: hsla(var(--ani-hue), var(--ani-min), var(--ani-gray-light), var(--ani-lighter));
+  --ani-silver: hsl(var(--ani-hue), var(--ani-min), var(--ani-silver-light));
+  --ani-silver-darker: hsla(var(--ani-hue), var(--ani-min), var(--ani-silver-light), var(--ani-darker));
+  --ani-silver-lighter: hsla(var(--ani-hue), var(--ani-min), var(--ani-silver-light), var(--ani-lighter));
+  --ani-white: hsl(var(--ani-hue), var(--ani-min), var(--ani-white-light));
+  --ani-white-darker: hsla(var(--ani-hue), var(--ani-min), var(--ani-white-light), var(--ani-darker));
+  --ani-white-lighter: hsla(var(--ani-hue), var(--ani-min), var(--ani-white-light), var(--ani-lighter));
   /********** TRANSFORM **********/
   --ani-slideT: translate(0, 10vh);
   --ani-slideR: translate(-10vw, 0);
@@ -379,22 +379,207 @@ button {
   --ve-btn-font-weight: bold;
   --ve-btn-text-align: center;
   --ve-btn-text-decoration: none;
-  --ve-btn-background-color: transparent;
+  --ve-btn-background-color: var(--ani-black);
   --ve-btn-color: var(--ani-white);
   --ve-btn-cursor: pointer;
   --ve-btn-hover-border-radius: 5px;
-  --ve-btn-hover-background-color: transparent;
+  --ve-btn-hover-background-color: var(--ani-slate);
   --ve-btn-hover-color: var(--ani-white);
   --ve-btn-hover-box-shadow: inset 0 0 5px 2px;
   --ve-btn-hover-transition: all 200ms;
   --ve-btn-child-display: block;
   --ve-btn-child-margin: auto;
-  --ve-label-border: solid 2px var(--ani-slate);
+}
+
+[class*="label"] {
+  --ve-label-border: solid 2px var(--ani-black);
   --ve-label-border-radius: 20px;
   --ve-label-background-color: var(--ani-white);
-  --ve-label-border-color: var(--ani-slate);
-  --ve-label-color: var(--ani-slate);
+  --ve-label-color: var(--ani-black);
   --ve-label-hover-border-radius: 20px;
+  --ve-label-hover-background-color: var(--ani-black);
+  --ve-label-hover-border-color: var(--ani-white);
+  --ve-label-hover-color: var(--ani-white);
+}
+
+/* RED */
+
+.btn-red {
+  --ve-btn-red-background-color: var(--ani-red-dark);
+  --ve-btn-red-hover-background-color: var(--ani-red);
+  --ve-btn-red-hover-color: var(--ani-white);
+}
+
+.label-red {
+  --ve-label-red-border-color: var(--ani-red-dark);
+  --ve-label-red-color: var(--ani-red-dark);
+  --ve-label-red-hover-border-color: var(--ani-red-light);
+  --ve-label-red-hover-color: var(--ani-red-light);
+}
+
+/* ORANGE */
+
+.btn-orange {
+  --ve-btn-orange-background-color: var(--ani-orange-dark);
+  --ve-btn-orange-hover-background-color: var(--ani-orange);
+  --ve-btn-orange-hover-color: var(--ani-white);
+}
+
+.label-orange {
+  --ve-label-orange-border-color: var(--ani-orange-dark);
+  --ve-label-orange-color: var(--ani-orange-dark);
+  --ve-label-orange-hover-border-color: var(--ani-orange-light);
+  --ve-label-orange-hover-color: var(--ani-orange-light);
+}
+
+/* YELLOW */
+
+.btn-yellow {
+  --ve-btn-yellow-background-color: var(--ani-yellow-dark);
+  --ve-btn-yellow-hover-background-color: var(--ani-yellow);
+  --ve-btn-yellow-hover-color: var(--ani-black);
+}
+
+.label-yellow {
+  --ve-label-yellow-border-color: var(--ani-yellow-dark);
+  --ve-label-yellow-color: var(--ani-yellow-dark);
+  --ve-label-yellow-hover-border-color: var(--ani-yellow-light);
+  --ve-label-yellow-hover-color: var(--ani-yellow-light);
+}
+
+/* LIME */
+
+.btn-lime {
+  --ve-btn-lime-background-color: var(--ani-lime-dark);
+  --ve-btn-lime-hover-background-color: var(--ani-lime);
+  --ve-btn-lime-hover-color: var(--ani-black);
+}
+
+.label-lime {
+  --ve-label-lime-border-color: var(--ani-lime-dark);
+  --ve-label-lime-color: var(--ani-lime-dark);
+  --ve-label-lime-hover-border-color: var(--ani-lime-light);
+  --ve-label-lime-hover-color: var(--ani-lime-light);
+}
+
+/* GREEN */
+
+.btn-green {
+  --ve-btn-green-background-color: var(--ani-green-dark);
+  --ve-btn-green-hover-background-color: var(--ani-green);
+  --ve-btn-green-hover-color: var(--ani-black);
+}
+
+.label-green {
+  --ve-label-green-border-color: var(--ani-green-dark);
+  --ve-label-green-color: var(--ani-green-dark);
+  --ve-label-green-hover-border-color: var(--ani-green-light);
+  --ve-label-green-hover-color: var(--ani-green-light);
+}
+
+/* AQUA */
+
+.btn-aqua {
+  --ve-btn-aqua-background-color: var(--ani-aqua-dark);
+  --ve-btn-aqua-hover-background-color: var(--ani-aqua);
+  --ve-btn-aqua-hover-color: var(--ani-black);
+}
+
+.label-aqua {
+  --ve-label-aqua-border-color: var(--ani-aqua-dark);
+  --ve-label-aqua-color: var(--ani-aqua-dark);
+  --ve-label-aqua-hover-border-color: var(--ani-aqua-light);
+  --ve-label-aqua-hover-color: var(--ani-aqua-light);
+}
+
+/* CYAN */
+
+.btn-cyan {
+  --ve-btn-cyan-background-color: var(--ani-cyan-dark);
+  --ve-btn-cyan-hover-background-color: var(--ani-cyan);
+  --ve-btn-cyan-hover-color: var(--ani-black);
+}
+
+.label-cyan {
+  --ve-label-cyan-border-color: var(--ani-cyan-dark);
+  --ve-label-cyan-color: var(--ani-cyan-dark);
+  --ve-label-cyan-hover-border-color: var(--ani-cyan-light);
+  --ve-label-cyan-hover-color: var(--ani-cyan-light);
+}
+
+/* SKY */
+
+.btn-sky {
+  --ve-btn-sky-background-color: var(--ani-sky-dark);
+  --ve-btn-sky-hover-background-color: var(--ani-sky);
+  --ve-btn-sky-hover-color: var(--ani-black);
+}
+
+.label-sky {
+  --ve-label-sky-border-color: var(--ani-sky-dark);
+  --ve-label-sky-color: var(--ani-sky-dark);
+  --ve-label-sky-hover-border-color: var(--ani-sky-light);
+  --ve-label-sky-hover-color: var(--ani-sky-light);
+}
+
+/* BLUE */
+
+.btn-blue {
+  --ve-btn-blue-background-color: var(--ani-blue-dark);
+  --ve-btn-blue-hover-background-color: var(--ani-blue);
+  --ve-btn-blue-hover-color: var(--ani-white);
+}
+
+.label-blue {
+  --ve-label-blue-border-color: var(--ani-blue-dark);
+  --ve-label-blue-color: var(--ani-blue-dark);
+  --ve-label-blue-hover-border-color: var(--ani-blue-light);
+  --ve-label-blue-hover-color: var(--ani-blue-light);
+}
+
+/* VIOLET */
+
+.btn-violet {
+  --ve-btn-violet-background-color: var(--ani-violet-dark);
+  --ve-btn-violet-hover-background-color: var(--ani-violet);
+  --ve-btn-violet-hover-color: var(--ani-white);
+}
+
+.label-violet {
+  --ve-label-violet-border-color: var(--ani-violet-dark);
+  --ve-label-violet-color: var(--ani-violet-dark);
+  --ve-label-violet-hover-border-color: var(--ani-violet-light);
+  --ve-label-violet-hover-color: var(--ani-violet-light);
+}
+
+/* MAGENTA */
+
+.btn-magenta {
+  --ve-btn-magenta-background-color: var(--ani-magenta-dark);
+  --ve-btn-magenta-hover-background-color: var(--ani-magenta);
+  --ve-btn-magenta-hover-color: var(--ani-white);
+}
+
+.label-magenta {
+  --ve-label-magenta-border-color: var(--ani-magenta-dark);
+  --ve-label-magenta-color: var(--ani-magenta-dark);
+  --ve-label-magenta-hover-border-color: var(--ani-magenta-light);
+  --ve-label-magenta-hover-color: var(--ani-magenta-light);
+}
+
+/* PINK */
+
+.btn-pink {
+  --ve-btn-pink-background-color: var(--ani-pink-dark);
+  --ve-btn-pink-hover-background-color: var(--ani-pink);
+  --ve-btn-pink-hover-color: var(--ani-white);
+}
+
+.label-pink {
+  --ve-label-pink-border-color: var(--ani-pink-dark);
+  --ve-label-pink-color: var(--ani-pink-dark);
+  --ve-label-pink-hover-border-color: var(--ani-pink-light);
+  --ve-label-pink-hover-color: var(--ani-pink-light);
 }
 
 /********** FIELD ELT **********/
@@ -450,14 +635,14 @@ textarea {
 figure {
   --ve-media-figure-border: 1px solid transparent;
   --ve-media-figure-border-radius: 20px;
-  --ve-media-figure-padding: 0;
+  --ve-media-figure-padding: 10px;
   --ve-media-figure-background-color: transparent;
 }
 
 img {
   --ve-media-img-border: 2px solid var(--ani-slate);
   --ve-media-img-border-radius: 20px;
-  --ve-media-img-padding: 1px;
+  --ve-media-img-padding: 0;
   --ve-media-img-max-width: 100%;
   --ve-media-img-height: auto;
   --ve-media-img-object-fit: contain;
@@ -474,11 +659,20 @@ video {
   --ve-media-video-border-radius: 20px;
 }
 
+blockquote {
+  --ve-media-blockquote-color: var(--ani-blue-dark);
+  --ve-media-blockquote-font-size: 2rem;
+  --ve-media-blockquote-margin: auto;
+  --ve-media-blockquote-max-width: 700px;
+}
+
 figcaption {
   --ve-media-figcaption-display: flex;
   --ve-media-figcaption-flex-flow: column nowrap;
   --ve-media-figcaption-place-content: center center;
-  --ve-media-figcaption-color: var(--ani-black);
+  --ve-media-figcaption-font-size: 1.6rem;
+  --ve-media-figcaption-font-style: normal;
+  --ve-media-figcaption-color: var(--ani-slate);
 }
 
 /********** LIST ELT **********/
@@ -576,7 +770,7 @@ caption {
   --ve-table-caption-margin-bottom: 20px;
   --ve-table-caption-font-size: 1.5rem;
   --ve-table-caption-font-weight: bold;
-  --ve-table-caption-color: var(--ani-gray);
+  --ve-table-caption-color: var(--ani-slate);
   --ve-table-caption-text-shadow: 1px 1px 2px;
 }
 
@@ -604,7 +798,7 @@ th {
   --ve-table-th-text-align: center;
   --ve-table-th-text-transform: uppercase;
   --ve-table-th-vertical-align: middle;
-  --ve-table-th-background-color: var(--ani-sky);
+  --ve-table-th-background-color: var(--ani-sky-dark);
   --ve-table-th-color: var(--ani-white);
 }
 
@@ -745,7 +939,6 @@ aside {
   --ve-nav-left: 0;
   --ve-nav-z-index: 1000;
   --ve-nav-background-color: var(--ani-sky-dark);
-  --ve-nav-color: var(--ani-white);
   --ve-nav-a-padding: 10px;
   --ve-nav-a-color: var(--ani-white);
   --ve-nav-a-cursor: pointer;
@@ -794,10 +987,10 @@ aside {
   --ve-side-a-padding: 5px;
   --ve-side-a-width: 100%;
   --ve-side-a-background-color: var(--ani-white-lighter);
-  --ve-side-a-color: var(--ani-sky);
+  --ve-side-a-color: var(--ani-sky-darker);
   --ve-side-a-cursor: crosshair;
   --ve-side-a-hover-border-radius: 10px;
-  --ve-side-a-hover-background-color: var(--ani-sky-darker);
+  --ve-side-a-hover-background-color: var(--ani-sky);
   --ve-side-a-hover-color: var(--ani-white);
   --ve-side-a-hover-transform: scale(1.1);
   --ve-side-a-hover-transition: all 500ms;
