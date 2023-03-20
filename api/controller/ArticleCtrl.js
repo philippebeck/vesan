@@ -25,20 +25,15 @@ const form = formidable({ uploadDir: ARTICLES_IMG, keepExtensions: true });
  * @param {object} res 
  */
 exports.checkArticleData = (name, text, alt, cat, res) => {
-  if (!nem.checkString(name)) {
-    return res.status(403).json({ message: process.env.CHECK_NAME });
-  }
+  let alert = "";
 
-  if (!nem.checkString(text, process.env.TEXT_MIN, process.env.TEXT_MAX)) {
-    return res.status(403).json({ message: process.env.CHECK_TEXT });
-  }
+  if (!nem.checkString(cat)) { alert = process.env.CHECK_CAT }
+  if (!nem.checkString(alt)) { alert = process.env.CHECK_NAME }
+  if (!nem.checkString(text, process.env.TEXT_MIN, process.env.TEXT_MAX)) { alert = process.env.CHECK_TEXT }
+  if (!nem.checkString(name)) { alert = process.env.CHECK_NAME }
 
-  if (!nem.checkString(alt)) {
-    return res.status(403).json({ message: process.env.CHECK_NAME });
-  }
-
-  if (!nem.checkString(cat)) {
-    return res.status(403).json({ message: process.env.CHECK_CAT });
+  if (alert !== "") { 
+    return res.status(403).json({ message: alert }) 
   }
 }
 
