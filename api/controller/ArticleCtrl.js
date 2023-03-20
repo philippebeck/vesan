@@ -213,9 +213,7 @@ exports.createArticle = (req, res, next) => {
     ArticleModel
       .find()
       .then((articles) => {
-        for (let article of articles) {
-          this.checkArticleUnique(fields.name, fields.text, article, res);
-        }
+        for (let article of articles) { this.checkArticleUnique(fields.name, fields.text, article, res) }
 
         let likes = nem.getArrayFromString(fields.likes);
         let image = nem.getImageName(fields.name);
@@ -257,21 +255,14 @@ exports.updateArticle = (req, res, next) => {
       .find()
       .then((articles) => {
         for (let article of articles) {
-          if (!article._id.equals(req.params.id)) {
-            this.checkArticleUnique(fields.name, fields.text, article, res);
-          }
+          if (!article._id.equals(req.params.id)) { this.checkArticleUnique(fields.name, fields.text, article, res) }
         }
 
-        let likes = nem.getArrayFromString(fields.likes);
         let image = fields.image;
+        if (Object.keys(files).length !== 0) { image = this.getImageUpdated(req.params.id, fields.name, files.image.newFilename, res) }
 
-        if (Object.keys(files).length !== 0) {
-          image = this.getImageUpdated(req.params.id, fields.name, files.image.newFilename, res);
-        }
-
-        let article = this.getArticleUpdated(
-          fields.name, fields.text, image, fields.alt, likes, fields.cat, fields.updated
-        );
+        let likes   = nem.getArrayFromString(fields.likes);
+        let article = this.getArticleUpdated(fields.name, fields.text, image, fields.alt, likes, fields.cat, fields.updated);
 
         ArticleModel
           .findByIdAndUpdate(req.params.id, { ...article, _id: req.params.id })
