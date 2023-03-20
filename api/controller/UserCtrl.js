@@ -181,24 +181,15 @@ exports.setMessage = (fields, res) => {
  */
 exports.createUser = (req, res, next) => {
   form.parse(req, (err, fields, files) => {
-
-    if (err) {
-      next(err);
-      return;
-    }
+    if (err) { next(err); return; }
 
     this.checkUserData(fields.name, fields.email, fields.role, res);
-
-    if (!nem.checkPass(fields.pass)) {
-      return res.status(403).json({ message: process.env.CHECK_PASS });
-    }
+    if (!nem.checkPass(fields.pass)) { return res.status(403).json({ message: process.env.CHECK_PASS }) }
 
     UserModel
       .find()
       .then((users) => {
-        for (let user of users) {
-          this.checkUserUnique(fields.name, fields.email, user, res);
-        }
+        for (let user of users) { this.checkUserUnique(fields.name, fields.email, user, res) }
 
         let image = nem.getImageName(fields.name);
         nem.setThumbnail("users/" + files.image.newFilename, "users/" + image);
@@ -206,9 +197,7 @@ exports.createUser = (req, res, next) => {
         bcrypt
           .hash(fields.pass, 10)
           .then((hash) => {
-            let user = new UserModel(this.getUserCreated(
-              fields.name, fields.email, image, hash, fields.role, fields.created, fields.updated
-            ));
+            let user = new UserModel(this.getUserCreated(fields.name, fields.email, image, hash, fields.role, fields.created, fields.updated));
 
             fs.unlink(USERS_IMG + files.image.newFilename, () => {
               user
@@ -294,11 +283,7 @@ exports.readUser = (req, res) => {
  */
 exports.updateUser = (req, res, next) => {
   form.parse(req, (err, fields, files) => {
-
-    if (err) {
-      next(err);
-      return;
-    }
+    if (err) { next(err); return; }
 
     this.checkUserData(fields.name, fields.email, fields.role, res);
 
@@ -306,29 +291,20 @@ exports.updateUser = (req, res, next) => {
       .find()
       .then((users) => {
         for (let user of users) {
-          if (!user._id.equals(req.params.id)) {
-            this.checkUserUnique(fields.name, fields.email, user, res);
-          }
+          if (!user._id.equals(req.params.id)) { this.checkUserUnique(fields.name, fields.email, user, res) }
         }
 
         let image = fields.image;
-
-        if (Object.keys(files).length !== 0) {
-          image = this.getImageUpdated(req.params.id, fields.name, files.image.newFilename, res);
-        }
+        if (Object.keys(files).length !== 0) { image = this.getImageUpdated(req.params.id, fields.name, files.image.newFilename, res) }
 
         if (fields.pass) {
-          if (!nem.checkPass(fields.pass)) {
-            return res.status(403).json({ message: process.env.CHECK_PASS });
-          }
+          if (!nem.checkPass(fields.pass)) { return res.status(403).json({ message: process.env.CHECK_PASS }) }
 
           bcrypt
           .hash(fields.pass, 10)
           .then((hash) => {
 
-            let user = this.getUserWithPass(
-              fields.name, fields.email, image, hash, fields.role, fields.updated
-            );
+            let user = this.getUserWithPass(fields.name, fields.email, image, hash, fields.role, fields.updated);
 
             UserModel
               .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
@@ -338,9 +314,7 @@ exports.updateUser = (req, res, next) => {
           .catch(() => res.status(400).json({ message: process.env.USER_NOT_PASS }));
 
         } else {
-          let user = this.getUserNoPass(
-            fields.name, fields.email, image, fields.role, fields.updated
-          );
+          let user = this.getUserNoPass(fields.name, fields.email, image, fields.role, fields.updated);
 
           UserModel
             .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
