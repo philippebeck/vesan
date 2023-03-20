@@ -123,11 +123,7 @@ exports.loginUser = (req, res, next) => {
  */
 exports.forgotPass = (req, res, next) => {
   form.parse(req, (err, fields) => {
-
-    if (err) {
-      next(err);
-      return;
-    }
+    if (err) { next(err); return; }
 
     this.checkAuthData(fields.email, res);
 
@@ -139,15 +135,12 @@ exports.forgotPass = (req, res, next) => {
 
           fields.html = `
             <p>${fields.html}</p>
-            <b>${pass}</b>
-          `;
+            <b>${pass}</b>`;
 
           bcrypt
             .hash(pass, 10)
             .then((hash) => {
-              let newUser = this.getUser(
-                user.name, user.email, user.image, hash, user.role, user.created, user.updated
-              );
+              let newUser = this.getUser(user.name, user.email, user.image, hash, user.role, user.created, user.updated);
 
               UserModel
                 .findByIdAndUpdate(user._id, { ...newUser, _id: user._id })
