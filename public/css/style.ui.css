@@ -9,13 +9,13 @@
 }
 
 @font-face {
-  font-family: 'Rozha One';
+  font-family: 'Trocchi';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
   src: 
-    local('RozhaOne-Regular'),
-    url('../fonts/RozhaOne-Regular.ttf') format('truetype')
+    local('Trocchi-Regular'),
+    url('../fonts/Trocchi-Regular.ttf') format('truetype')
 }
 
 @font-face {
@@ -1029,7 +1029,7 @@ aside {
 /********** OVERLOADING **********/
 :root {
   --ani-sans-serif: Geo, sans-serif;
-  --ani-serif: "Rozha One", serif;
+  --ani-serif: Trocchi, serif;
   --ani-monospace: "Syne Mono", monospace;
 }
 

@@ -51,8 +51,7 @@ exports.createMessage = (total, payment, products) => {
       ${process.env.ORDER_PAYMENT} 
       <b>#${payment}</b> !
     </p>
-    <p>${process.env.ORDER_LIST}</p>
-  `;
+    <p>${process.env.ORDER_LIST}</p>`;
 
   for (let product of products) {
     message.products += `
@@ -62,8 +61,7 @@ exports.createMessage = (total, payment, products) => {
         <li><i>option</i> : <b>${product.option}</b></li>
         <li><i>${process.env.ORDER_QUANTITY}</i> : ${product.quantity}</li>
         <li><i>${process.env.ORDER_PRICE}</i> : ${product.price} ${process.env.CURRENCY_SYMBOL}</li>
-      </ul>
-    `;
+      </ul>`;
   }
 
   message.products  = message.products.split('undefined')[1];

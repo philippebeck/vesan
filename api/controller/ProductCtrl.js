@@ -25,24 +25,16 @@ const form = formidable({ uploadDir: PRODUCTS_IMG, keepExtensions: true });
  * @param {object} res 
  */
 exports.checkProductData = (name, description, alt, price, cat, res) => {
-  if (!nem.checkString(name)) {
-    return res.status(403).json({ message: process.env.CHECK_NAME });
-  }
+  let alert = "";
 
-  if (!nem.checkString(description, process.env.TEXT_MIN, process.env.TEXT_MAX)) {
-    return res.status(403).json({ message: process.env.CHECK_TEXT });
-  }
+  if (!nem.checkString(cat)) { alert = process.env.CHECK_CAT }
+  if (!nem.checkNumber(price, process.env.PRICE_MIN, process.env.PRICE_MAX)) { alert = process.env.CHECK_PRICE }
+  if (!nem.checkString(alt)) { alert = process.env.CHECK_NAME }
+  if (!nem.checkString(description, process.env.TEXT_MIN, process.env.TEXT_MAX)) { alert = process.env.CHECK_TEXT }
+  if (!nem.checkString(name)) { alert = process.env.CHECK_NAME }
 
-  if (!nem.checkString(alt)) {
-    return res.status(403).json({ message: process.env.CHECK_NAME });
-  }
-
-  if (!nem.checkNumber(price, process.env.PRICE_MIN, process.env.PRICE_MAX)) {
-    return res.status(403).json({ message: process.env.CHECK_PRICE });
-  }
-
-  if (!nem.checkString(cat)) {
-    return res.status(403).json({ message: process.env.CHECK_CAT });
+  if (alert !== "") { 
+    return res.status(403).json({ message: alert }) 
   }
 }
 
@@ -168,9 +160,7 @@ exports.createProduct = (req, res, next) => {
     ProductModel
       .find()
       .then((products) => {
-        for (let product of products) {
-          this.checkProductUnique(fields.name, fields.description, product, res);
-        }
+        for (let product of products) { this.checkProductUnique(fields.name, fields.description, product, res) }
 
         let options = nem.getArrayFromString(fields.options);
         let image   = nem.getImageName(fields.name);
@@ -212,22 +202,14 @@ exports.updateProduct = (req, res, next) => {
       .find()
       .then((products) => {
         for (let product of products) {
-
-          if (!product._id.equals(req.params.id)) {
-            this.checkProductUnique(fields.name, fields.description, product, res);
-          }
+          if (!product._id.equals(req.params.id)) { this.checkProductUnique(fields.name, fields.description, product, res) }
         }
 
+        let image = fields.image;
+        if (Object.keys(files).length !== 0) { image = this.getImageUpdated(req.params.id, fields.name, files.image.newFilename, res) }
+    
         let options = nem.getArrayFromString(fields.options);
-        let image   = fields.image;
-    
-        if (Object.keys(files).length !== 0) {
-          image = this.getImageUpdated(req.params.id, fields.name, files.image.newFilename, res);
-        }
-    
-        let product = this.getProduct(
-          fields.name, fields.description, image, fields.alt, fields.price, options, fields.cat, fields.created, fields.updated
-        );
+        let product = this.getProduct(fields.name, fields.description, image, fields.alt, fields.price, options, fields.cat, fields.created, fields.updated);
     
         ProductModel
           .findByIdAndUpdate(req.params.id, { ...product, _id: req.params.id })
