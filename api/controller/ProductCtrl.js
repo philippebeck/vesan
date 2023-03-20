@@ -25,24 +25,16 @@ const form = formidable({ uploadDir: PRODUCTS_IMG, keepExtensions: true });
  * @param {object} res 
  */
 exports.checkProductData = (name, description, alt, price, cat, res) => {
-  if (!nem.checkString(name)) {
-    return res.status(403).json({ message: process.env.CHECK_NAME });
-  }
+  let alert = "";
 
-  if (!nem.checkString(description, process.env.TEXT_MIN, process.env.TEXT_MAX)) {
-    return res.status(403).json({ message: process.env.CHECK_TEXT });
-  }
+  if (!nem.checkString(cat)) { alert = process.env.CHECK_CAT }
+  if (!nem.checkNumber(price, process.env.PRICE_MIN, process.env.PRICE_MAX)) { alert = process.env.CHECK_PRICE }
+  if (!nem.checkString(alt)) { alert = process.env.CHECK_NAME }
+  if (!nem.checkString(description, process.env.TEXT_MIN, process.env.TEXT_MAX)) { alert = process.env.CHECK_TEXT }
+  if (!nem.checkString(name)) { alert = process.env.CHECK_NAME }
 
-  if (!nem.checkString(alt)) {
-    return res.status(403).json({ message: process.env.CHECK_NAME });
-  }
-
-  if (!nem.checkNumber(price, process.env.PRICE_MIN, process.env.PRICE_MAX)) {
-    return res.status(403).json({ message: process.env.CHECK_PRICE });
-  }
-
-  if (!nem.checkString(cat)) {
-    return res.status(403).json({ message: process.env.CHECK_CAT });
+  if (alert !== "") { 
+    return res.status(403).json({ message: alert }) 
   }
 }
 
