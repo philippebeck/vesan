@@ -17,16 +17,14 @@ const form = formidable();
  * @param {object} res 
  */
 exports.checkLinkData = (name, url, cat, res) => {
-  if (!nem.checkString(name)) {
-    return res.status(403).json({ message: process.env.CHECK_NAME });
-  }
+  let alert = "";
 
-  if (!nem.checkUrl("https://" + url)) {
-    return res.status(403).json({ message: process.env.CHECK_URL });
-  }
+  if (!nem.checkString(cat)) { alert = process.env.CHECK_CAT }
+  if (!nem.checkUrl("https://" + url)) { alert = process.env.CHECK_URL }
+  if (!nem.checkString(name)) { alert = process.env.CHECK_NAME }
 
-  if (!nem.checkString(cat)) {
-    return res.status(403).json({ message: process.env.CHECK_CAT });
+  if (alert !== "") {
+    return res.status(403).json({ message: alert });
   }
 }
 
@@ -73,11 +71,7 @@ exports.listLinks = (req, res) => {
  */
 exports.createLink = (req, res, next) => {
   form.parse(req, (err, fields) => {
-
-    if (err) {
-      next(err);
-      return;
-    }
+    if (err) { next(err); return }
 
     this.checkLinkData(fields.name, fields.url, fields.cat, res);
 
@@ -108,11 +102,7 @@ exports.createLink = (req, res, next) => {
  */
 exports.updateLink = (req, res, next) => {
   form.parse(req, (err, fields) => {
-
-    if (err) {
-      next(err);
-      return;
-    }
+    if (err) { next(err); return }
 
     this.checkLinkData(fields.name, fields.url, fields.cat, res);
 

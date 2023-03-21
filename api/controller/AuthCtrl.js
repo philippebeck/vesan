@@ -54,11 +54,11 @@ exports.getUser = (name, email, image, pass, role, created, updated) => {
 //! ****************************** SETTER ******************************
 
 /**
- * SET MESSAGE
+ * SET MAILER
  * @param {string} fields 
  * @param {object} res 
  */
-exports.setMessage = (fields, res) => {
+exports.setMailer = (fields, res) => {
   const mailer = nem.getMailer();
 
   (async function(){
@@ -70,6 +70,21 @@ exports.setMessage = (fields, res) => {
       });
     } catch(e){ console.error(e); }
   })();
+}
+
+/**
+ * SET MESSAGE
+ * @param {array} fields 
+ * @param {string} pass 
+ * @returns 
+ */
+exports.setMessage = (fields, pass) => {
+  fields.html = `
+    <p>${fields.html}</p>
+    <b>${pass}</b>
+  `;
+
+  return fields;
 }
 
 //! ****************************** PUBLIC ******************************
@@ -95,6 +110,30 @@ exports.readAvatar = (req, res) => {
 }
 
 /**
+ * CHECK RECAPTCHA
+ * @param {object} req 
+ * @param {object} res 
+ * @param {function} next 
+ */
+exports.checkRecaptcha = (req, res, next) => {
+  form.parse(req, (err, fields) => {
+    if (err) { next(err); return }
+
+    const response = fields.response;
+    const remoteip = req.connection.remoteAddress;
+
+    recaptcha.verify({ response, remoteip }, (err, data) => {
+
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.send(data);
+      }
+    });
+  })
+}
+
+/**
  * LOGIN USER
  * @param {object} req 
  * @param {object} res 
@@ -102,11 +141,7 @@ exports.readAvatar = (req, res) => {
  */
 exports.loginUser = (req, res, next) => {
   form.parse(req, (err, fields) => {
-
-    if (err) {
-      next(err);
-      return;
-    }
+    if (err) { next(err); return }
 
     UserModel
       .findOne({ email: fields.email })
@@ -123,7 +158,7 @@ exports.loginUser = (req, res, next) => {
  */
 exports.forgotPass = (req, res, next) => {
   form.parse(req, (err, fields) => {
-    if (err) { next(err); return; }
+    if (err) { next(err); return }
 
     this.checkAuthData(fields.email, res);
 
@@ -131,11 +166,9 @@ exports.forgotPass = (req, res, next) => {
       .findOne({ email: fields.email })
       .then((user) => {
         if (user !== null) {
-          let pass = nem.getNewPass();
 
-          fields.html = `
-            <p>${fields.html}</p>
-            <b>${pass}</b>`;
+          let pass    = nem.getNewPass();
+          fields.html = this.setMessage(fields, pass);
 
           bcrypt
             .hash(pass, 10)
@@ -144,7 +177,7 @@ exports.forgotPass = (req, res, next) => {
 
               UserModel
                 .findByIdAndUpdate(user._id, { ...newUser, _id: user._id })
-                .then(() => { this.setMessage(fields, res) })
+                .then(() => { this.setMailer(fields, res) })
                 .catch(() => res.status(400).json({ message: process.env.USER_NOT_UPDATED }));
             })
             .catch(() => res.status(400).json({ message: process.env.USER_NOT_PASS }));
@@ -154,33 +187,5 @@ exports.forgotPass = (req, res, next) => {
         }
       })
       .catch(() => res.status(404).json({ message: process.env.USER_NOT_FOUND }));
-  })
-}
-
-/**
- * CHECK RECAPTCHA
- * @param {object} req 
- * @param {object} res 
- * @param {function} next 
- */
-exports.checkRecaptcha = (req, res, next) => {
-  form.parse(req, (err, fields) => {
-
-    if (err) {
-      next(err);
-      return;
-    }
-
-    const response = fields.response;
-    const remoteip = req.connection.remoteAddress;
-
-    recaptcha.verify({ response, remoteip }, (err, data) => {
-
-      if (err) {
-        res.status(500).send(err);
-      } else {
-        res.send(data);
-      }
-    });
   })
 }

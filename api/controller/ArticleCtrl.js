@@ -119,6 +119,7 @@ exports.getArticleUpdated = (name, text, image, alt, likes, cat, updated) => {
  */
 exports.getImageUpdated = (id, name, newFilename, res) => {
   let image = nem.getImageName(name);
+
   nem.setImage( "articles/" + newFilename, "articles/" + image);
   nem.setThumbnail("articles/" + newFilename, "articles/" + image);
 
@@ -134,6 +135,25 @@ exports.getImageUpdated = (id, name, newFilename, res) => {
     .catch(() => res.status(404).json({ message: process.env.ARTICLE_NOT_FOUND }));
 
   return image;
+}
+
+//! ****************************** SETTERS ******************************
+
+/**
+ * SET ARTICLES
+ * @param {array} articles 
+ * @param {array} users 
+ * @returns 
+ */
+exports.setArticles = (articles, users) => {
+  for (let article of articles) {
+    for (let user of users) {
+      if (article.user === user._id.toString()) {
+        article.user = user.name + "-" + article.user;
+      }
+    }
+  }
+  return articles;
 }
 
 //! ****************************** PUBLIC ******************************
@@ -152,13 +172,7 @@ exports.listArticles = (req, res) => {
         .find()
         .then((users) => {
 
-          for (let article of articles) {
-            for (let user of users) {
-              if (article.user === user._id.toString()) {
-                article.user = user.name + "-" + article.user;
-              }
-            }
-          }
+          articles = this.setArticles(articles, users);
           res.status(200).json(articles);
         })
       .catch(() => res.status(404).json({ message: process.env.USERS_NOT_FOUND }));
@@ -197,11 +211,7 @@ exports.readArticle = (req, res) => {
  */
 exports.createArticle = (req, res, next) => {
   form.parse(req, (err, fields, files) => {
-
-    if (err) {
-      next(err);
-      return;
-    }
+    if (err) { next(err); return }
 
     this.checkArticleData(fields.name, fields.text, fields.alt, fields.cat, res);
 
@@ -238,11 +248,7 @@ exports.createArticle = (req, res, next) => {
  */
 exports.updateArticle = (req, res, next) => {
   form.parse(req, (err, fields, files) => {
-
-    if (err) {
-      next(err);
-      return;
-    }
+    if (err) { next(err); return }
 
     this.checkArticleData(fields.name, fields.text, fields.alt, fields.cat, res);
 

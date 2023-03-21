@@ -9,14 +9,14 @@ const UserModel   = require("../model/UserModel");
 require("dotenv").config();
 const form = formidable();
 
-//! ****************************** SETTER ******************************
+//! ****************************** SETTERS ******************************
 
 /**
- * SET MESSAGE
+ * SET MAILER
  * @param {string} fields 
  * @param {object} res 
  */
-exports.setMessage = (fields, res) => {
+exports.setMailer = (fields, res) => {
   const mailer = nem.getMailer();
 
   (async function(){
@@ -30,16 +30,14 @@ exports.setMessage = (fields, res) => {
   })();
 }
 
-//! ****************************** CRUD ******************************
-
 /**
- * CREATE MESSAGE
+ * SET MESSAGE
  * @param {number} total 
  * @param {string} payment 
  * @param {array} products 
  * @returns 
  */
-exports.createMessage = (total, payment, products) => {
+exports.setMessage = (total, payment, products) => {
   let message     = {};
   message.subject = process.env.ORDER_SUBJECT;
 
@@ -70,6 +68,23 @@ exports.createMessage = (total, payment, products) => {
   return message;
 }
 
+/**
+ * SET ORDERS
+ * @param {array} orders 
+ * @param {array} users 
+ * @returns 
+ */
+exports.setOrders = (orders, users) => {
+  for (let order of orders) {
+    for (let user of users) {
+      if (order.user === user._id.toString()) {
+        order.user = user.name + "-" + order.user;
+      }
+    }
+  }
+  return orders;
+}
+
 //! ****************************** PRIVATE ******************************
 
 /**
@@ -81,18 +96,10 @@ exports.listOrders = (req, res) => {
   OrderModel
     .find()
     .then((orders) => {
-
       UserModel
         .find()
         .then((users) => {
-
-          for (let order of orders) {
-            for (let user of users) {
-              if (order.user === user._id.toString()) {
-                order.user = user.name + "-" + order.user;
-              }
-            }
-          }
+          orders = this.setOrders(orders, users);
           res.status(200).json(orders);
         })
       .catch(() => res.status(404).json({ message: process.env.USERS_NOT_FOUND }));
@@ -120,14 +127,10 @@ exports.listUserOrders = (req, res) => {
  */
 exports.createOrder = (req, res, next) => {
   form.parse(req, (err, fields) => {
-
-    if (err) {
-      next(err);
-      return;
-    }
+    if (err) { next(err); return }
 
     fields.products = JSON.parse(fields.products);
-    let message     = this.createMessage(fields.total, fields.payment, fields.products);
+    let message     = this.setMessage(fields.total, fields.payment, fields.products);
     let order       = new OrderModel(fields);
 
     order
@@ -137,7 +140,7 @@ exports.createOrder = (req, res, next) => {
           .findOne({ _id: fields.user })
           .then((user) => {
             message.email = user.email;
-            this.setMessage(message, res);
+            this.setMailer(message, res);
           })
           .catch(() => res.status(404).json({ message: process.env.USER_NOT_FOUND }));
       })
@@ -155,14 +158,8 @@ exports.createOrder = (req, res, next) => {
 exports.updateOrder = (req, res, next) => {
   form.parse(req, (err, fields) => {
 
-    if (err) {
-      next(err);
-      return;
-    }
-
-    if (fields.products) {
-      fields.products = JSON.parse(fields.products);
-    }
+    if (err) { next(err); return }
+    if (fields.products) { fields.products = JSON.parse(fields.products) }
 
     OrderModel
       .findByIdAndUpdate(req.params.id, { ...fields, _id: req.params.id })

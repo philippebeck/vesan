@@ -149,11 +149,7 @@ exports.readProduct = (req, res) => {
  */
 exports.createProduct = (req, res, next) => {
   form.parse(req, (err, fields, files) => {
-
-    if (err) {
-      next(err);
-      return;
-    }
+    if (err) { next(err); return }
 
     this.checkProductData(fields.name, fields.description, fields.alt, fields.price, fields.cat, res);
 
@@ -190,11 +186,7 @@ exports.createProduct = (req, res, next) => {
  */
 exports.updateProduct = (req, res, next) => {
   form.parse(req, (err, fields, files) => {
-
-    if (err) {
-      next(err);
-      return;
-    }
+    if (err) { next(err); return }
 
     this.checkProductData(fields.name, fields.description, fields.alt, fields.price, fields.cat, res);
 

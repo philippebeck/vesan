@@ -179,7 +179,7 @@ exports.setMessage = (fields, res) => {
  */
 exports.createUser = (req, res, next) => {
   form.parse(req, (err, fields, files) => {
-    if (err) { next(err); return; }
+    if (err) { next(err); return }
 
     this.checkUserData(fields.name, fields.email, fields.role, res);
     if (!nem.checkPass(fields.pass)) { return res.status(403).json({ message: process.env.CHECK_PASS }) }
@@ -218,14 +218,9 @@ exports.createUser = (req, res, next) => {
  */
 exports.sendMessage = (req, res, next) => {
   form.parse(req, (err, fields) => {
-
-    if (err) {
-      next(err);
-      return;
-    }
+    if (err) { next(err); return }
 
     fields.html = `<p>${fields.html}</p>`;
-
     this.setMessage(fields, res);
   })
 }
@@ -281,7 +276,7 @@ exports.readUser = (req, res) => {
  */
 exports.updateUser = (req, res, next) => {
   form.parse(req, (err, fields, files) => {
-    if (err) { next(err); return; }
+    if (err) { next(err); return }
 
     this.checkUserData(fields.name, fields.email, fields.role, res);
 

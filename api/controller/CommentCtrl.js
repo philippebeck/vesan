@@ -9,6 +9,8 @@ const UserModel     = require("../model/UserModel");
 require("dotenv").config();
 const form = formidable();
 
+//! ****************************** CHECKER ******************************
+
 /**
  * CHECK COMMENT DATA
  * @param {string} text 
@@ -18,6 +20,25 @@ exports.checkCommentData = (text, res) => {
   if (!nem.checkString(text, process.env.TEXT_MIN, process.env.TEXT_MAX)) {
     return res.status(403).json({ message: process.env.CHECK_TEXT });
   }
+}
+
+//! ****************************** SETTER ******************************
+
+/**
+ * SET COMMENTS
+ * @param {array} comments 
+ * @param {array} users 
+ * @returns 
+ */
+exports.setComments = (comments, users) => {
+  for (let comment of comments) {
+    for (let user of users) {
+      if (comment.user === user._id.toString()) {
+        comment.user = user.name + "-" + comment.user;
+      }
+    }
+  }
+  return comments;
 }
 
 //! ****************************** PUBLIC ******************************
@@ -36,13 +57,7 @@ exports.listArticleComments = (req, res) => {
         .find()
         .then((users) => {
 
-          for (let comment of comments) {
-            for (let user of users) {
-              if (comment.user === user._id.toString()) {
-                comment.user = user.name + "-" + comment.user;
-              }
-            }
-          }
+          comments = this.setComments(comments, users);
           res.status(200).json(comments);
         })
       .catch(() => res.status(404).json({ message: process.env.USERS_NOT_FOUND }));
@@ -66,13 +81,7 @@ exports.listComments = (req, res) => {
         .find()
         .then((users) => {
 
-          for (let comment of comments) {
-            for (let user of users) {
-              if (comment.user === user._id.toString()) {
-                comment.user = user.name + "-" + comment.user;
-              }
-            }
-          }
+          comments = this.setComments(comments, users);
           res.status(200).json(comments);
         })
       .catch(() => res.status(404).json({ message: process.env.USERS_NOT_FOUND }));
@@ -89,11 +98,7 @@ exports.listComments = (req, res) => {
  */
 exports.createComment = (req, res, next) => {
   form.parse(req, (err, fields) => {
-
-    if (err) {
-      next(err);
-      return;
-    }
+    if (err) { next(err); return }
 
     this.checkCommentData(fields.text, res);
     let comment = new CommentModel(fields);
@@ -113,11 +118,7 @@ exports.createComment = (req, res, next) => {
  */
 exports.updateComment = (req, res, next) => {
   form.parse(req, (err, fields) => {
-
-    if (err) {
-      next(err);
-      return;
-    }
+    if (err) { next(err); return }
 
     this.checkCommentData(fields.text, res);
 
