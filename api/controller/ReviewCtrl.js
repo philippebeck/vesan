@@ -77,9 +77,11 @@ exports.listReviews = (req, res) => {
   ReviewModel
     .find()
     .then((reviews) => {
+
       UserModel
         .find()
         .then((users) => {
+
           reviews = nem.getArrayWithUsername(reviews, users);
           res.status(200).json(reviews);
         })
