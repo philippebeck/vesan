@@ -9,6 +9,8 @@ const UserModel   = require("../model/UserModel");
 require("dotenv").config();
 const form = formidable();
 
+//! ****************************** CHECKER ******************************
+
 /**
  * CHECK REVIEW DATA
  * @param {string} text 
@@ -23,6 +25,25 @@ exports.checkReviewData = (text, score, res) => {
   if (!nem.checkNumber(score)) {
     return res.status(403).json({ message: process.env.CHECK_SCORE });
   }
+}
+
+//! ****************************** SETTER ******************************
+
+/**
+ * SET REVIEWS
+ * @param {array} reviews 
+ * @param {array} users 
+ * @returns 
+ */
+exports.setReviews = (reviews, users) => {
+  for (let review of reviews) {
+    for (let user of users) {
+      if (review.user === user._id.toString()) {
+        review.user = user.name + "-" + review.user;
+      }
+    }
+  }
+  return reviews;
 }
 
 //! ****************************** PUBLIC ******************************
@@ -41,13 +62,7 @@ exports.listProductReviews = (req, res) => {
         .find()
         .then((users) => {
 
-          for (let review of reviews) {
-            for (let user of users) {
-              if (review.user === user._id.toString()) {
-                review.user = user.name + "-" + review.user;
-              }
-            }
-          }
+          reviews = this.setReviews(reviews, users);
           res.status(200).json(reviews);
         })
         .catch(() => res.status(404).json({ message: process.env.USERS_NOT_FOUND }));
@@ -66,18 +81,10 @@ exports.listReviews = (req, res) => {
   ReviewModel
     .find()
     .then((reviews) => {
-
       UserModel
         .find()
         .then((users) => {
-
-          for (let review of reviews) {
-            for (let user of users) {
-              if (review.user === user._id.toString()) {
-                review.user = user.name + "-" + review.user;
-              }
-            }
-          }
+          reviews = this.setReviews(reviews, users);
           res.status(200).json(reviews);
         })
         .catch(() => res.status(404).json({ message: process.env.USERS_NOT_FOUND }));
@@ -93,11 +100,7 @@ exports.listReviews = (req, res) => {
  */
 exports.createReview = (req, res, next) => {
   form.parse(req, (err, fields) => {
-
-    if (err) {
-      next(err);
-      return;
-    }
+    if (err) { next(err); return }
 
     this.checkReviewData(fields.text, fields.score, res);
 
@@ -105,7 +108,6 @@ exports.createReview = (req, res, next) => {
       .find()
       .then((reviews) => {
         for (let review of reviews) {
-
           if (review.product === fields.product && review.user === fields.user) {
             return res.status(403).json({ message: process.env.DISPO_REVIEW });
           }
@@ -130,11 +132,7 @@ exports.createReview = (req, res, next) => {
  */
 exports.updateReview = (req, res, next) => {
   form.parse(req, (err, fields) => {
-
-    if (err) {
-      next(err);
-      return;
-    }
+    if (err) { next(err); return }
 
     this.checkReviewData(fields.text, fields.score, res);
 
