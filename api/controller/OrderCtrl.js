@@ -38,7 +38,7 @@ exports.setMailer = (fields, res) => {
  * @returns 
  */
 exports.setMessage = (total, payment, products) => {
-  let message     = {};
+  let message = {};
   message.subject = process.env.ORDER_SUBJECT;
 
   message.text = `
@@ -79,9 +79,11 @@ exports.listOrders = (req, res) => {
   OrderModel
     .find()
     .then((orders) => {
+
       UserModel
         .find()
         .then((users) => {
+
           orders = nem.getArrayWithUsername(orders, users);
           res.status(200).json(orders);
         })
@@ -119,9 +121,11 @@ exports.createOrder = (req, res, next) => {
     order
       .save()
       .then(() => {
+
         UserModel
           .findOne({ _id: fields.user })
           .then((user) => {
+
             message.email = user.email;
             this.setMailer(message, res);
           })

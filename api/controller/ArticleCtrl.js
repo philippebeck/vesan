@@ -27,10 +27,21 @@ const form = formidable({ uploadDir: ARTICLES_IMG, keepExtensions: true });
 exports.checkArticleData = (name, text, alt, cat, res) => {
   let alert = "";
 
-  if (!nem.checkString(cat)) { alert = process.env.CHECK_CAT }
-  if (!nem.checkString(alt)) { alert = process.env.CHECK_NAME }
-  if (!nem.checkString(text, process.env.TEXT_MIN, process.env.TEXT_MAX)) { alert = process.env.CHECK_TEXT }
-  if (!nem.checkString(name)) { alert = process.env.CHECK_NAME }
+  if (!nem.checkString(cat)) { 
+    alert = process.env.CHECK_CAT 
+  }
+
+  if (!nem.checkString(alt)) { 
+    alert = process.env.CHECK_NAME 
+  }
+
+  if (!nem.checkString(text, process.env.TEXT_MIN, process.env.TEXT_MAX)) { 
+    alert = process.env.CHECK_TEXT 
+  }
+
+  if (!nem.checkString(name)) { 
+    alert = process.env.CHECK_NAME 
+  }
 
   if (alert !== "") { 
     return res.status(403).json({ message: alert }) 
@@ -52,6 +63,21 @@ exports.checkArticleUnique = (name, text, article, res) => {
 
   if (article.text === text) {
     return res.status(403).json({ message: process.env.DISPO_TEXT });
+  }
+}
+
+/**
+ * CHECK ARTICLES FOR UNIQUE
+ * @param {string} id 
+ * @param {array} articles 
+ * @param {object} fields 
+ * @param {object} res 
+ */
+exports.checkArticlesForUnique = (id, articles, fields, res) => {
+  for (let article of articles) {
+    if (!article._id.equals(id)) { 
+      this.checkArticleUnique(fields.name, fields.text, article, res) 
+    }
   }
 }
 
@@ -126,6 +152,7 @@ exports.getImageUpdated = (id, name, newFilename, res) => {
   ArticleModel
     .findById(id)
     .then((article) => 
+
       fs.unlink(ARTICLES_THUMB + article.image, () => {
         fs.unlink(ARTICLES_IMG + article.image, () => {
           fs.unlink(ARTICLES_IMG + newFilename, () => {})
@@ -174,6 +201,7 @@ exports.readArticle = (req, res) => {
     UserModel
       .findById(article.user)
       .then((user) => {
+
         article.user = user.name;
         res.status(200).json(article);
       })
@@ -199,7 +227,9 @@ exports.createArticle = (req, res, next) => {
     ArticleModel
       .find()
       .then((articles) => {
-        for (let article of articles) { this.checkArticleUnique(fields.name, fields.text, article, res) }
+        for (let article of articles) { 
+          this.checkArticleUnique(fields.name, fields.text, article, res) 
+        }
 
         let likes = nem.getArrayFromString(fields.likes);
         let image = nem.getImageName(fields.name);
@@ -236,12 +266,13 @@ exports.updateArticle = (req, res, next) => {
     ArticleModel
       .find()
       .then((articles) => {
-        for (let article of articles) {
-          if (!article._id.equals(req.params.id)) { this.checkArticleUnique(fields.name, fields.text, article, res) }
-        }
+        this.checkArticlesForUnique(req.params.id, articles, fields, res);
 
         let image = fields.image;
-        if (Object.keys(files).length !== 0) { image = this.getImageUpdated(req.params.id, fields.name, files.image.newFilename, res) }
+
+        if (Object.keys(files).length !== 0) { 
+          image = this.getImageUpdated(req.params.id, fields.name, files.image.newFilename, res) 
+        }
 
         let likes   = nem.getArrayFromString(fields.likes);
         let article = this.getArticleUpdated(fields.name, fields.text, image, fields.alt, likes, fields.cat, fields.updated);
@@ -269,7 +300,8 @@ exports.deleteArticle = (req, res) => {
 
           CommentModel
             .deleteMany({ article: req.params.id })
-            .then(() => 
+            .then(() =>
+
               ArticleModel
                 .findByIdAndDelete(req.params.id)
                 .then(() => res.status(204).json({ message: process.env.ARTICLE_DELETED }))

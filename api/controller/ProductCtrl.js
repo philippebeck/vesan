@@ -27,11 +27,25 @@ const form = formidable({ uploadDir: PRODUCTS_IMG, keepExtensions: true });
 exports.checkProductData = (name, description, alt, price, cat, res) => {
   let alert = "";
 
-  if (!nem.checkString(cat)) { alert = process.env.CHECK_CAT }
-  if (!nem.checkNumber(price, process.env.PRICE_MIN, process.env.PRICE_MAX)) { alert = process.env.CHECK_PRICE }
-  if (!nem.checkString(alt)) { alert = process.env.CHECK_NAME }
-  if (!nem.checkString(description, process.env.TEXT_MIN, process.env.TEXT_MAX)) { alert = process.env.CHECK_TEXT }
-  if (!nem.checkString(name)) { alert = process.env.CHECK_NAME }
+  if (!nem.checkString(cat)) { 
+    alert = process.env.CHECK_CAT 
+  }
+
+  if (!nem.checkNumber(price, process.env.PRICE_MIN, process.env.PRICE_MAX)) { 
+    alert = process.env.CHECK_PRICE 
+  }
+
+  if (!nem.checkString(alt)) { 
+    alert = process.env.CHECK_NAME 
+  }
+
+  if (!nem.checkString(description, process.env.TEXT_MIN, process.env.TEXT_MAX)) { 
+    alert = process.env.CHECK_TEXT 
+  }
+
+  if (!nem.checkString(name)) { 
+    alert = process.env.CHECK_NAME 
+  }
 
   if (alert !== "") { 
     return res.status(403).json({ message: alert }) 
@@ -53,6 +67,21 @@ exports.checkProductUnique = (name, description, product, res) => {
 
   if (product.description === description) {
     return res.status(403).json({ message: process.env.DISPO_DESCRIPTION });
+  }
+}
+
+/**
+ * CHECK PRODUCTS FOR UNIQUE
+ * @param {string} id 
+ * @param {array} products 
+ * @param {object} fields 
+ * @param {object} res 
+ */
+exports.checkProductsForUnique = (id, products, fields, res) => {
+  for (let product of products) {
+    if (!product._id.equals(id)) { 
+      this.checkProductUnique(fields.name, fields.description, product, res) 
+    }
   }
 }
 
@@ -102,7 +131,8 @@ exports.getImageUpdated = (id, name, newFilename, res) => {
   
   ProductModel
     .findById(id)
-    .then((product) => 
+    .then((product) =>
+
       fs.unlink(PRODUCTS_THUMB + product.image, () => {
         fs.unlink(PRODUCTS_IMG + product.image, () => {
           fs.unlink(PRODUCTS_IMG + newFilename, () => {})
@@ -194,12 +224,13 @@ exports.updateProduct = (req, res, next) => {
     ProductModel
       .find()
       .then((products) => {
-        for (let product of products) {
-          if (!product._id.equals(req.params.id)) { this.checkProductUnique(fields.name, fields.description, product, res) }
-        }
+        this.checkProductsForUnique(req.params.id, products, fields, res);
 
         let image = fields.image;
-        if (Object.keys(files).length !== 0) { image = this.getImageUpdated(req.params.id, fields.name, files.image.newFilename, res) }
+
+        if (Object.keys(files).length !== 0) { 
+          image = this.getImageUpdated(req.params.id, fields.name, files.image.newFilename, res) 
+        }
     
         let options = nem.getArrayFromString(fields.options);
         let product = this.getProduct(fields.name, fields.description, image, fields.alt, fields.price, options, fields.cat, fields.created, fields.updated);
@@ -228,6 +259,7 @@ exports.deleteProduct = (req, res) => {
           ReviewModel
             .deleteMany({ product: req.params.id })
             .then(() => 
+
               ProductModel
                 .findByIdAndDelete(req.params.id)
                 .then(() => res.status(204).json({ message: process.env.PRODUCT_DELETED }))
