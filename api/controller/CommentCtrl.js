@@ -22,25 +22,6 @@ exports.checkCommentData = (text, res) => {
   }
 }
 
-//! ****************************** SETTER ******************************
-
-/**
- * SET COMMENTS
- * @param {array} comments 
- * @param {array} users 
- * @returns 
- */
-exports.setComments = (comments, users) => {
-  for (let comment of comments) {
-    for (let user of users) {
-      if (comment.user === user._id.toString()) {
-        comment.user = user.name + "-" + comment.user;
-      }
-    }
-  }
-  return comments;
-}
-
 //! ****************************** PUBLIC ******************************
 
 /**
@@ -57,7 +38,7 @@ exports.listArticleComments = (req, res) => {
         .find()
         .then((users) => {
 
-          comments = this.setComments(comments, users);
+          comments = nem.getArrayWithUsername(comments, users);
           res.status(200).json(comments);
         })
       .catch(() => res.status(404).json({ message: process.env.USERS_NOT_FOUND }));
@@ -81,7 +62,7 @@ exports.listComments = (req, res) => {
         .find()
         .then((users) => {
 
-          comments = this.setComments(comments, users);
+          comments = nem.getArrayWithUsername(comments, users);
           res.status(200).json(comments);
         })
       .catch(() => res.status(404).json({ message: process.env.USERS_NOT_FOUND }));

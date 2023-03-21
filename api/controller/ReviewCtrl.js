@@ -42,25 +42,6 @@ exports.checkReviewUser = (reviews, fields, res) => {
   }
 }
 
-//! ****************************** SETTER ******************************
-
-/**
- * SET REVIEWS
- * @param {array} reviews 
- * @param {array} users 
- * @returns 
- */
-exports.setReviews = (reviews, users) => {
-  for (let review of reviews) {
-    for (let user of users) {
-      if (review.user === user._id.toString()) {
-        review.user = user.name + "-" + review.user;
-      }
-    }
-  }
-  return reviews;
-}
-
 //! ****************************** PUBLIC ******************************
 
 /**
@@ -77,7 +58,7 @@ exports.listProductReviews = (req, res) => {
         .find()
         .then((users) => {
 
-          reviews = this.setReviews(reviews, users);
+          reviews = nem.getArrayWithUsername(reviews, users);
           res.status(200).json(reviews);
         })
         .catch(() => res.status(404).json({ message: process.env.USERS_NOT_FOUND }));
@@ -99,7 +80,7 @@ exports.listReviews = (req, res) => {
       UserModel
         .find()
         .then((users) => {
-          reviews = this.setReviews(reviews, users);
+          reviews = nem.getArrayWithUsername(reviews, users);
           res.status(200).json(reviews);
         })
         .catch(() => res.status(404).json({ message: process.env.USERS_NOT_FOUND }));
