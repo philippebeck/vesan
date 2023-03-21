@@ -19,9 +19,17 @@ const form = formidable();
 exports.checkLinkData = (name, url, cat, res) => {
   let alert = "";
 
-  if (!nem.checkString(cat)) { alert = process.env.CHECK_CAT }
-  if (!nem.checkUrl("https://" + url)) { alert = process.env.CHECK_URL }
-  if (!nem.checkString(name)) { alert = process.env.CHECK_NAME }
+  if (!nem.checkString(cat)) { 
+    alert = process.env.CHECK_CAT 
+  }
+
+  if (!nem.checkUrl("https://" + url)) { 
+    alert = process.env.CHECK_URL 
+  }
+
+  if (!nem.checkString(name)) { 
+    alert = process.env.CHECK_NAME 
+  }
 
   if (alert !== "") {
     return res.status(403).json({ message: alert });
@@ -43,6 +51,21 @@ exports.checkLinkUnique = (name, url, link, res) => {
 
   if (link.url === url) {
     return res.status(403).json({ message: process.env.DISPO_URL });
+  }
+}
+
+/**
+ * CHECK LINKS FOR UNIQUE
+ * @param {string} id 
+ * @param {array} links 
+ * @param {object} fields 
+ * @param {object} res 
+ */
+exports.checkLinksForUnique = (id, links, fields, res) => {
+  for (let link of links) {
+    if (!link._id.equals(id)) {
+      this.checkLinkUnique(fields.name, fields.url, link, res);
+    }
   }
 }
 
@@ -109,12 +132,7 @@ exports.updateLink = (req, res, next) => {
     LinkModel
       .find()
       .then((links) => {
-        for (let link of links) {
-
-          if (!link._id.equals(req.params.id)) {
-            this.checkLinkUnique(fields.name, fields.url, link, res);
-          }
-        }
+        this.checkLinksForUnique(req.params.id, links, fields, res);
 
         LinkModel
           .findByIdAndUpdate(req.params.id, { ...fields, _id: req.params.id })
