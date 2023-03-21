@@ -54,6 +54,21 @@ exports.checkUserUnique = (name, email, user, res) => {
   }
 }
 
+/**
+ * CHECK USERS FOR UNIQUE
+ * @param {string} id 
+ * @param {array} users 
+ * @param {object} fields 
+ * @param {object} res 
+ */
+exports.checkUsersForUnique = (id, users, fields, res) => {
+  for (let user of users) { 
+    if (!user._id.equals(id)) { 
+      this.checkUserUnique(fields.name, fields.email, user, res) 
+    } 
+  }
+}
+
 //! ****************************** GETTERS ******************************
 
 /**
@@ -120,6 +135,35 @@ exports.getUserNoPass = (name, email, image, role, updated) => {
     role: role,
     updated: updated
   }
+}
+
+/**
+ * GET USER UPDATED
+ * @param {object} fields 
+ * @param {string} image 
+ * @param {object} res 
+ * @returns 
+ */
+exports.getUserUpdated = (fields, image, res) => {
+  let user;
+
+  if (fields.pass) {
+    if (!nem.checkPass(fields.pass)) { 
+      return res.status(403).json({ message: process.env.CHECK_PASS }) 
+    }
+
+    bcrypt
+    .hash(fields.pass, 10)
+    .then((hash) => { 
+      user = this.getUserWithPass(fields.name, fields.email, image, hash, fields.role, fields.updated) 
+    })
+    .catch(() => res.status(400).json({ message: process.env.USER_NOT_PASS }));
+
+  } else { 
+    user = this.getUserNoPass(fields.name, fields.email, image, fields.role, fields.updated) 
+  }
+
+  return user;
 }
 
 /**
@@ -283,21 +327,15 @@ exports.updateUser = (req, res, next) => {
     UserModel
       .find()
       .then((users) => {
-        for (let user of users) { if (!user._id.equals(req.params.id)) { this.checkUserUnique(fields.name, fields.email, user, res) } }
+        this.checkUsersForUnique(req.params.id, users, fields, res);
 
         let image = fields.image;
-        if (Object.keys(files).length !== 0) { image = this.getImageUpdated(req.params.id, fields.name, files.image.newFilename, res) }
 
-        let user;
-        if (fields.pass) {
-          if (!nem.checkPass(fields.pass)) { return res.status(403).json({ message: process.env.CHECK_PASS }) }
+        if (Object.keys(files).length !== 0) { 
+          image = this.getImageUpdated(req.params.id, fields.name, files.image.newFilename, res) 
+        }
 
-          bcrypt
-          .hash(fields.pass, 10)
-          .then((hash) => { user = this.getUserWithPass(fields.name, fields.email, image, hash, fields.role, fields.updated) })
-          .catch(() => res.status(400).json({ message: process.env.USER_NOT_PASS }));
-
-        } else { user = this.getUserNoPass(fields.name, fields.email, image, fields.role, fields.updated) }
+        let user = this.getUserUpdated(fields, image, res);
 
         UserModel
           .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
@@ -322,6 +360,7 @@ exports.deleteUser = (req, res) => {
         CommentModel
           .deleteMany({ user: req.params.id })
           .then(() =>
+
             ReviewModel
               .deleteMany({ user: req.params.id })
               .then(() => 
