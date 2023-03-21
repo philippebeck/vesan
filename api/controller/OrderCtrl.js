@@ -68,23 +68,6 @@ exports.setMessage = (total, payment, products) => {
   return message;
 }
 
-/**
- * SET ORDERS
- * @param {array} orders 
- * @param {array} users 
- * @returns 
- */
-exports.setOrders = (orders, users) => {
-  for (let order of orders) {
-    for (let user of users) {
-      if (order.user === user._id.toString()) {
-        order.user = user.name + "-" + order.user;
-      }
-    }
-  }
-  return orders;
-}
-
 //! ****************************** PRIVATE ******************************
 
 /**
@@ -99,7 +82,7 @@ exports.listOrders = (req, res) => {
       UserModel
         .find()
         .then((users) => {
-          orders = this.setOrders(orders, users);
+          orders = nem.getArrayWithUsername(orders, users);
           res.status(200).json(orders);
         })
       .catch(() => res.status(404).json({ message: process.env.USERS_NOT_FOUND }));

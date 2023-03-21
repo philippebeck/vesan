@@ -137,25 +137,6 @@ exports.getImageUpdated = (id, name, newFilename, res) => {
   return image;
 }
 
-//! ****************************** SETTERS ******************************
-
-/**
- * SET ARTICLES
- * @param {array} articles 
- * @param {array} users 
- * @returns 
- */
-exports.setArticles = (articles, users) => {
-  for (let article of articles) {
-    for (let user of users) {
-      if (article.user === user._id.toString()) {
-        article.user = user.name + "-" + article.user;
-      }
-    }
-  }
-  return articles;
-}
-
 //! ****************************** PUBLIC ******************************
 
 /**
@@ -172,7 +153,7 @@ exports.listArticles = (req, res) => {
         .find()
         .then((users) => {
 
-          articles = this.setArticles(articles, users);
+          articles = nem.getArrayWithUsername(articles, users);
           res.status(200).json(articles);
         })
       .catch(() => res.status(404).json({ message: process.env.USERS_NOT_FOUND }));

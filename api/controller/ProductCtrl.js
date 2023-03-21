@@ -96,6 +96,7 @@ exports.getProduct = (name, description, image, alt, price, options, cat, create
  */
 exports.getImageUpdated = (id, name, newFilename, res) => {
   let image = nem.getImageName(name);
+
   nem.setImage("products/" + newFilename, "products/" + image);
   nem.setThumbnail("products/" + newFilename, "products/" + image);
   
