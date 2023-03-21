@@ -22,7 +22,7 @@
   <CardElt id="top"
       :isArticle="true">
     <template #header>
-      <h1 class="sky-dark ani-flipY-it">
+      <h1 class="sky-dark">
         <i class="fa-solid fa-blog fa-lg"
           aria-hidden="true">
         </i>
@@ -37,7 +37,7 @@
 
         <template #items="slotProps">
           <h2 :id="slotProps.item[0].cat"
-            class="sky-dark ani-flipX-it">
+            class="sky-dark">
             {{ slotProps.item[0].cat }}
           </h2>
         </template>
