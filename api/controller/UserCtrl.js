@@ -283,37 +283,26 @@ exports.updateUser = (req, res, next) => {
     UserModel
       .find()
       .then((users) => {
-        for (let user of users) {
-          if (!user._id.equals(req.params.id)) { this.checkUserUnique(fields.name, fields.email, user, res) }
-        }
+        for (let user of users) { if (!user._id.equals(req.params.id)) { this.checkUserUnique(fields.name, fields.email, user, res) } }
 
         let image = fields.image;
         if (Object.keys(files).length !== 0) { image = this.getImageUpdated(req.params.id, fields.name, files.image.newFilename, res) }
 
+        let user;
         if (fields.pass) {
           if (!nem.checkPass(fields.pass)) { return res.status(403).json({ message: process.env.CHECK_PASS }) }
 
           bcrypt
           .hash(fields.pass, 10)
-          .then((hash) => {
-
-            let user = this.getUserWithPass(fields.name, fields.email, image, hash, fields.role, fields.updated);
-
-            UserModel
-              .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
-              .then(() => res.status(200).json({ message: process.env.USER_UPDATED }))
-              .catch(() => res.status(400).json({ message: process.env.USER_NOT_UPDATED }));
-          })
+          .then((hash) => { user = this.getUserWithPass(fields.name, fields.email, image, hash, fields.role, fields.updated) })
           .catch(() => res.status(400).json({ message: process.env.USER_NOT_PASS }));
 
-        } else {
-          let user = this.getUserNoPass(fields.name, fields.email, image, fields.role, fields.updated);
+        } else { user = this.getUserNoPass(fields.name, fields.email, image, fields.role, fields.updated) }
 
-          UserModel
-            .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
-            .then(() => res.status(200).json({ message: process.env.USER_UPDATED }))
-            .catch(() => res.status(400).json({ message: process.env.USER_NOT_UPDATED }));
-        }
+        UserModel
+          .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
+          .then(() => res.status(200).json({ message: process.env.USER_UPDATED }))
+          .catch(() => res.status(400).json({ message: process.env.USER_NOT_UPDATED }));
       })
       .catch(() => res.status(404).json({ message: process.env.USERS_NOT_FOUND }));
   })
