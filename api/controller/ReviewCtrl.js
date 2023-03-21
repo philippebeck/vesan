@@ -27,6 +27,21 @@ exports.checkReviewData = (text, score, res) => {
   }
 }
 
+/**
+ * CHECK REVIEW USER
+ * @param {array} reviews 
+ * @param {object} fields 
+ * @param {object} res 
+ * @returns 
+ */
+exports.checkReviewUser = (reviews, fields, res) => {
+  for (let review of reviews) {
+    if (review.product === fields.product && review.user === fields.user) {
+      return res.status(403).json({ message: process.env.DISPO_REVIEW });
+    }
+  }
+}
+
 //! ****************************** SETTER ******************************
 
 /**
@@ -107,12 +122,7 @@ exports.createReview = (req, res, next) => {
     ReviewModel
       .find()
       .then((reviews) => {
-        for (let review of reviews) {
-          if (review.product === fields.product && review.user === fields.user) {
-            return res.status(403).json({ message: process.env.DISPO_REVIEW });
-          }
-        }
-
+        this.checkReviewUser(reviews, fields, res);
         let review = new ReviewModel(fields);
 
         review
