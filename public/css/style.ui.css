@@ -1,31 +1,31 @@
 @font-face {
-  font-family: 'Geo';
+  font-family: "Geo";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
   src: 
-    local('Geo-Regular'),
-    url('../fonts/Geo-Regular.ttf') format('truetype')
+    local("Geo-Regular"),
+    url("../fonts/Geo-Regular.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: 'Trocchi';
+  font-family: "Trocchi";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
   src: 
-    local('Trocchi-Regular'),
-    url('../fonts/Trocchi-Regular.ttf') format('truetype')
+    local("Trocchi-Regular"),
+    url("../fonts/Trocchi-Regular.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: 'Syne Mono';
+  font-family: "Syne Mono";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
   src: 
-    local('SyneMono-Regular'),
-    url('../fonts/SyneMono-Regular.ttf') format('truetype')
+    local("SyneMono-Regular"),
+    url("../fonts/SyneMono-Regular.ttf") format("truetype");
 }
 
 /********** VARS **********/
