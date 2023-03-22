@@ -1,9 +1,8 @@
 "use strict";
 
-const express = require("express");
-const router  = express.Router();
-const nem     = require("nemjs");
-
+const express   = require("express");
+const router    = express.Router();
+const nem       = require("nemjs");
 const OrderCtrl = require("../controller/OrderCtrl");
 
 /* Private */

@@ -1,10 +1,8 @@
 "use strict";
 
-const express = require("express");
-const router  = express.Router();
-const nem     = require("nemjs");
-
-const AuthCtrl = require("../controller/AuthCtrl");
+const express   = require("express");
+const router    = express.Router();
+const AuthCtrl  = require("../controller/AuthCtrl");
 
 /* Public */
 router.get("/:id", AuthCtrl.readAvatar);

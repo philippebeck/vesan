@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1 class="sky-dark ani-slideB-it">
+    <h1 class="sky-dark">
       <i class="fa-solid fa-user-gear fa-lg"
         aria-hidden="true"></i>
       {{ constants.PROFILE_EDITOR }}

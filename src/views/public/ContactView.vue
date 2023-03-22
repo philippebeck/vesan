@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1 class="sky-dark ani-slideL-it">
+    <h1 class="sky-dark">
       <i class="fa-solid fa-envelope-open-text fa-lg"
         aria-hidden="true">
       </i>
@@ -21,7 +21,6 @@
           <template #item-1>
             <FieldElt type="email"
               v-model:value="email"
-              class="ani-slideR-it"
               :info="constants.INFO_EMAIL">
 
               <template #legend>
@@ -36,7 +35,6 @@
           <!-- Subject -->
           <template #item-2>
             <FieldElt v-model:value="subject"
-              class="ani-slideL-it"
               :info="constants.INFO_SUBJECT">
 
               <template #legend>
@@ -52,7 +50,6 @@
           <template #item-3>
             <FieldElt type="textarea"
               v-model:value="text"
-              class="ani-slideR-it"
               :info="constants.INFO_TEXT"
               :mix="constants.TEXT_MIN"
               :max="constants.TEXT_MAX">
@@ -71,7 +68,7 @@
         <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY"
           @verify="onVerify">
           <BtnElt type="button"
-            class="btn-green ani-slideL-it"
+            class="btn-green"
             :content="constants.CONTENT_SEND"
             :title="constants.TITLE_MESSAGE">
 

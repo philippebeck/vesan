@@ -53,7 +53,7 @@
               </template>
             </BtnElt>
 
-            <p class="silver">
+            <p class="gray">
               {{ constants.CREATE_BY }}
               <b itemprop="author">
                 {{ slotProps.item.user.split("-")[0] }}
@@ -87,7 +87,7 @@
                 </b> <i class="fa-solid fa-star"></i>
               </p>
 
-              <p class="silver">
+              <p class="gray">
                 {{ constants.CREATE_BY }}
                 <b itemprop="author">
                   {{ slotProps.item.user.split("-")[0] }}

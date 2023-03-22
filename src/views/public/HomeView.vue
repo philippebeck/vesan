@@ -2,8 +2,7 @@
   <header>
     <SliderElt v-if="constants.HOME_MEDIA === 'slider'"
       :slides="constants.SLIDES"
-      :delay="constants.SLIDER_DELAY"
-      class="ani-grow-it">
+      :delay="constants.SLIDER_DELAY">
 
       <template #slide="slotProps">
         <i :class="`fa-${constants.SLIDER_FA} fa-${slotProps.slide.toLowerCase()} fa-9x sky`"></i>
@@ -21,7 +20,7 @@
       :width="constants.HOME_WIDTH"
       :loop="constants.HOME_LOOP"/>
 
-    <h1 class="sky-dark ani-shrink-it">
+    <h1 class="sky-dark">
       {{ constants.HOME_VIEW }}
     </h1>
   </header>

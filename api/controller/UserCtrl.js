@@ -27,12 +27,32 @@ const form = formidable({ uploadDir: USERS_IMG, keepExtensions: true });
 exports.checkUserData = (name, email, role, res) => {
   let alert = "";
 
-  if (!nem.checkString(role)) { alert = process.env.CHECK_ROLE }
-  if (!nem.checkEmail(email)) { alert = process.env.CHECK_EMAIL }
-  if (!nem.checkString(name)) { alert = process.env.CHECK_NAME }
+  if (!nem.checkString(role)) { 
+    alert = process.env.CHECK_ROLE 
+  }
+
+  if (!nem.checkEmail(email)) { 
+    alert = process.env.CHECK_EMAIL 
+  }
+
+  if (!nem.checkString(name)) {
+    alert = process.env.CHECK_NAME 
+  }
 
   if (alert !== "") {
     return res.status(403).json({ message: alert });
+  }
+}
+
+/**
+ * CHECK USER PASSWORD
+ * @param {string} pass 
+ * @param {object} res 
+ * @returns 
+ */
+exports.checkUserPass = (pass, res) => {
+  if (!nem.checkPass(pass)) { 
+    return res.status(403).json({ message: process.env.CHECK_PASS }) 
   }
 }
 
@@ -148,9 +168,7 @@ exports.getUserUpdated = (fields, image, res) => {
   let user;
 
   if (fields.pass) {
-    if (!nem.checkPass(fields.pass)) { 
-      return res.status(403).json({ message: process.env.CHECK_PASS }) 
-    }
+    this.checkUserPass(fields.pass, res);
 
     bcrypt
     .hash(fields.pass, 10)
@@ -226,7 +244,7 @@ exports.createUser = (req, res, next) => {
     if (err) { next(err); return }
 
     this.checkUserData(fields.name, fields.email, fields.role, res);
-    if (!nem.checkPass(fields.pass)) { return res.status(403).json({ message: process.env.CHECK_PASS }) }
+    this.checkUserPass(fields.pass, res);
 
     UserModel
       .find()
