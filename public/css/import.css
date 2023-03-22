@@ -3,7 +3,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: 
+  src:
     local("Geo-Regular"),
     url("../fonts/Geo-Regular.ttf") format("truetype");
 }
@@ -13,7 +13,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: 
+  src:
     local("Trocchi-Regular"),
     url("../fonts/Trocchi-Regular.ttf") format("truetype");
 }
@@ -23,7 +23,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: 
+  src:
     local("SyneMono-Regular"),
     url("../fonts/SyneMono-Regular.ttf") format("truetype");
 }
