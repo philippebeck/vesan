@@ -1,10 +1,9 @@
 "use strict";
 
-const express = require("express");
-const router  = express.Router();
-const nem     = require("nemjs");
-
-const ReviewCtrl = require("../controller/ReviewCtrl");
+const express     = require("express");
+const router      = express.Router();
+const nem         = require("nemjs");
+const ReviewCtrl  = require("../controller/ReviewCtrl");
 
 /* Public */
 router.get("/", ReviewCtrl.listReviews);
