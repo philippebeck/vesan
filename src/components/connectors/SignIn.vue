@@ -113,7 +113,7 @@ export default {
           localStorage.setItem("userToken", token);
           localStorage.setItem("userId", userId);
 
-          this.$router.push("/");
+          this.$router.go();
         })
         .catch(err => {
           if (err.response) {
