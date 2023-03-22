@@ -57,7 +57,7 @@
           </p>
           
 
-          <p class="silver">
+          <p class="gray">
             {{ constants.RELEASE_ON }}
             <i itemprop="releaseDate">
               {{ new Date(product.created).toLocaleDateString() }}

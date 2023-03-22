@@ -68,7 +68,7 @@
             class="container width-sm bord bord-sky blue">
           </blockquote>
           
-          <p class="silver">
+          <p class="gray">
             {{ constants.CREATE_BY }}
             <b itemprop="author">
               {{ article.user }}
