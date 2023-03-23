@@ -1,5 +1,6 @@
 <template>
-  <CardElt itemscope
+  <main>
+    <CardElt itemscope
     itemtype="https://schema.org/Product">
     <template #header>
       <h1 itemprop="name">{{ product.name }}</h1>
@@ -124,6 +125,7 @@
         :constants="constants"/>
     </template>
   </CardElt>
+  </main>
 </template>
 
 <script>

@@ -1,41 +1,43 @@
 <template>
-  <header>
-    <SliderElt v-if="constants.HOME_MEDIA === 'slider'"
-      :slides="constants.SLIDES"
-      :delay="constants.SLIDER_DELAY">
+  <main>
+    <header>
+      <SliderElt v-if="constants.HOME_MEDIA === 'slider'"
+        :slides="constants.SLIDES"
+        :delay="constants.SLIDER_DELAY">
 
-      <template #slide="slotProps">
-        <i :class="`fa-${constants.SLIDER_FA} fa-${slotProps.slide.toLowerCase()} fa-9x sky`"></i>
+        <template #slide="slotProps">
+          <i :class="`fa-${constants.SLIDER_FA} fa-${slotProps.slide.toLowerCase()} fa-9x sky`"></i>
+        </template>
+
+        <template #gallery="slotProps">
+          <i :class="`fa-${constants.SLIDER_FA} fa-${slotProps.slide.toLowerCase()}`"></i>
+        </template>
+      </SliderElt>
+
+      <MediaElt v-else
+        :type="constants.HOME_MEDIA"
+        :src="constants.HOME_SRC"
+        :alt="constants.HOME_ALT"
+        :width="constants.HOME_WIDTH"
+        :loop="constants.HOME_LOOP"/>
+
+      <h1 class="sky-dark">
+        {{ constants.HOME_VIEW }}
+      </h1>
+    </header>
+
+    <CardElt>
+      <template #header>
+        <h2>{{ constants.HOME_SUB }}</h2>
+        <b>{{ constants.INTRO_HOME }}</b>
       </template>
 
-      <template #gallery="slotProps">
-        <i :class="`fa-${constants.SLIDER_FA} fa-${slotProps.slide.toLowerCase()}`"></i>
+      <template #body>
+        <ListElt :dynamic="true"
+          :items="constants.HOME_CONTENT"/>
       </template>
-    </SliderElt>
-
-    <MediaElt v-else
-      :type="constants.HOME_MEDIA"
-      :src="constants.HOME_SRC"
-      :alt="constants.HOME_ALT"
-      :width="constants.HOME_WIDTH"
-      :loop="constants.HOME_LOOP"/>
-
-    <h1 class="sky-dark">
-      {{ constants.HOME_VIEW }}
-    </h1>
-  </header>
-
-  <CardElt>
-    <template #header>
-      <h2>{{ constants.HOME_SUB }}</h2>
-      <b>{{ constants.INTRO_HOME }}</b>
-    </template>
-
-    <template #body>
-      <ListElt :dynamic="true"
-        :items="constants.HOME_CONTENT"/>
-    </template>
-  </CardElt>
+    </CardElt>
+  </main>
 </template>
 
 <script>

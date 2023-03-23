@@ -1,158 +1,160 @@
 <template>
-  <header>
-    <h1>
-      <i class="fa-regular fa-pen-to-square fa-lg"
-        aria-hidden="true">
-      </i>
-      {{ constants.EDITOR }}
-    </h1>
-  </header>
+  <main>
+    <header>
+      <h1>
+        <i class="fa-regular fa-pen-to-square fa-lg"
+          aria-hidden="true">
+        </i>
+        {{ constants.EDITOR }}
+      </h1>
+    </header>
 
-  <CardElt id="create-product">
-    <template #header>
-      <h2>{{ product.name }}</h2>
-    </template>
+    <CardElt id="create-product">
+      <template #header>
+        <h2>{{ product.name }}</h2>
+      </template>
 
-    <template #body>
-      <form method="post"
-        enctype="multipart/form-data">
-        <ListElt :items="constants.PRODUCT_FORM">
+      <template #body>
+        <form method="post"
+          enctype="multipart/form-data">
+          <ListElt :items="constants.PRODUCT_FORM">
 
-          <!-- Name -->
-          <template #item-1>
-            <FieldElt v-model:value="product.name"
-              @keyup.enter="updateProduct()"
-              :info="constants.INFO_NAME"
-              :min="2">
+            <!-- Name -->
+            <template #item-1>
+              <FieldElt v-model:value="product.name"
+                @keyup.enter="updateProduct()"
+                :info="constants.INFO_NAME"
+                :min="2">
 
-              <template #legend>
-                {{ constants.LEGEND_NAME }}
-              </template>
-              <template #label>
-                {{ constants.LABEL_NAME }}
-              </template>
-            </FieldElt>
-          </template>
+                <template #legend>
+                  {{ constants.LEGEND_NAME }}
+                </template>
+                <template #label>
+                  {{ constants.LABEL_NAME }}
+                </template>
+              </FieldElt>
+            </template>
 
-          <!-- Description -->
-          <template #item-2>
-            <label for="description">
-              {{ constants.LEGEND_DESCRIPTION }}
-            </label>
+            <!-- Description -->
+            <template #item-2>
+              <label for="description">
+                {{ constants.LEGEND_DESCRIPTION }}
+              </label>
 
-            <Editor id="description"
-              :api-key="constants.TINY_KEY"
-              v-model="product.description"
-              :init="{
-                toolbar:
-                  'undo redo outdent indent align lineheight | \
-                  bold italic underline strikethrough backcolor | \
-                  blocks fontfamily fontsize'
-              }"/>
-          </template>
+              <Editor id="description"
+                :api-key="constants.TINY_KEY"
+                v-model="product.description"
+                :init="{
+                  toolbar:
+                    'undo redo outdent indent align lineheight | \
+                    bold italic underline strikethrough backcolor | \
+                    blocks fontfamily fontsize'
+                }"/>
+            </template>
 
-          <!-- Image -->
-          <template #item-3>
-            <MediaElt v-if="product.image"
-              :src="'/img/thumbnails/products/' + product.image"
-              :alt="product.alt" />
+            <!-- Image -->
+            <template #item-3>
+              <MediaElt v-if="product.image"
+                :src="'/img/thumbnails/products/' + product.image"
+                :alt="product.alt" />
 
-            <FieldElt id="image"
-              type="file"
-              v-model:value="image"
-              :info="constants.INFO_IMAGE">
+              <FieldElt id="image"
+                type="file"
+                v-model:value="image"
+                :info="constants.INFO_IMAGE">
 
-              <template #legend>
-                {{ constants.LEGEND_IMAGE }}
-              </template>
-              <template #label>
-                {{ constants.LABEL_IMAGE }}
-              </template>
-            </FieldElt>
-          </template>
+                <template #legend>
+                  {{ constants.LEGEND_IMAGE }}
+                </template>
+                <template #label>
+                  {{ constants.LABEL_IMAGE }}
+                </template>
+              </FieldElt>
+            </template>
 
-          <!-- Alt -->
-          <template #item-4>
-            <FieldElt type="textarea"
-              v-model:value="product.alt"
-              :info="constants.INFO_ALT">
+            <!-- Alt -->
+            <template #item-4>
+              <FieldElt type="textarea"
+                v-model:value="product.alt"
+                :info="constants.INFO_ALT">
 
-              <template #legend>
-                {{ constants.LEGEND_ALT }}
-              </template>
-              <template #label>
-                {{ constants.LABEL_ALT }}
-              </template>
-            </FieldElt>
-          </template>
+                <template #legend>
+                  {{ constants.LEGEND_ALT }}
+                </template>
+                <template #label>
+                  {{ constants.LABEL_ALT }}
+                </template>
+              </FieldElt>
+            </template>
 
-          <!-- Price -->
-          <template #item-5>
-            <FieldElt type="number"
-              v-model:value="product.price"
-              @keyup.enter="updateProduct()"
-              :info="constants.INFO_PRICE"
-              :min="1"
-              :max="1000">
+            <!-- Price -->
+            <template #item-5>
+              <FieldElt type="number"
+                v-model:value="product.price"
+                @keyup.enter="updateProduct()"
+                :info="constants.INFO_PRICE"
+                :min="1"
+                :max="1000">
 
-              <template #legend>
-                {{ constants.LEGEND_PRICE }}
-              </template>
-              <template #label>
-                {{ constants.LABEL_PRICE }}
-              </template>
-            </FieldElt>
-          </template>
+                <template #legend>
+                  {{ constants.LEGEND_PRICE }}
+                </template>
+                <template #label>
+                  {{ constants.LABEL_PRICE }}
+                </template>
+              </FieldElt>
+            </template>
 
-          <!-- Options -->
-          <template #item-6>
-            <FieldElt type="textarea"
-              v-model:value="product.options"
-              @keyup.enter="updateProduct()"
-              :info="constants.INFO_OPTIONS"
-              :max="100">
+            <!-- Options -->
+            <template #item-6>
+              <FieldElt type="textarea"
+                v-model:value="product.options"
+                @keyup.enter="updateProduct()"
+                :info="constants.INFO_OPTIONS"
+                :max="100">
 
-              <template #legend>
-                {{ constants.LEGEND_OPTIONS }}
-              </template>
-              <template #label>
-                {{ constants.LABEL_OPTIONS }}
-              </template>
-            </FieldElt>
-          </template>
+                <template #legend>
+                  {{ constants.LEGEND_OPTIONS }}
+                </template>
+                <template #label>
+                  {{ constants.LABEL_OPTIONS }}
+                </template>
+              </FieldElt>
+            </template>
 
-          <!-- Category -->
-          <template #item-7>
-            <FieldElt type="select"
-              :list="constants.CATS_PRODUCT"
-              v-model:value="product.cat"
-              @keyup.enter="updateProduct()"
-              :info="constants.INFO_CATEGORY">
+            <!-- Category -->
+            <template #item-7>
+              <FieldElt type="select"
+                :list="constants.CATS_PRODUCT"
+                v-model:value="product.cat"
+                @keyup.enter="updateProduct()"
+                :info="constants.INFO_CATEGORY">
 
-              <template #legend>
-                {{ constants.LEGEND_CATEGORY }}
-              </template>
-              <template #label>
-                {{ constants.LABEL_CATEGORY }}
-              </template>
-            </FieldElt>
-          </template>
-        </ListElt>
+                <template #legend>
+                  {{ constants.LEGEND_CATEGORY }}
+                </template>
+                <template #label>
+                  {{ constants.LABEL_CATEGORY }}
+                </template>
+              </FieldElt>
+            </template>
+          </ListElt>
 
-        <!-- Create -->
-        <BtnElt type="button"
-          @click="updateProduct()" 
-          class="btn-sky"
-          :content="constants.CONTENT_UPDATE"
-          :title="constants.TITLE_UPDATE + product.name">
+          <!-- Create -->
+          <BtnElt type="button"
+            @click="updateProduct()" 
+            class="btn-sky"
+            :content="constants.CONTENT_UPDATE"
+            :title="constants.TITLE_UPDATE + product.name">
 
-          <template #btn>
-            <i class="fa-solid fa-cloud-arrow-up fa-lg"></i>
-          </template>
-        </BtnElt>
-      </form>
-    </template>
-  </CardElt>
+            <template #btn>
+              <i class="fa-solid fa-cloud-arrow-up fa-lg"></i>
+            </template>
+          </BtnElt>
+        </form>
+      </template>
+    </CardElt>
+  </main>
 </template>
 
 <script>

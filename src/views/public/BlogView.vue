@@ -1,132 +1,134 @@
 <template>
-  <NavElt :items="getCats"
-    class="sidebar">
-    <template #hide>
-      <i class="fa-solid fa-eye fa-fw" 
-        :title="constants.TITLE_TOGGLE"></i>
-    </template>
+  <main>
+    <NavElt :items="getCats"
+      class="sidebar">
+      <template #hide>
+        <i class="fa-solid fa-eye fa-fw" 
+          :title="constants.TITLE_TOGGLE"></i>
+      </template>
 
-    <template #last  v-if="checkRole('editor')">
-      <a href="#create-article"
-        :title="constants.ARTICLE_CREATOR">
-        <i class="fa-regular fa-pen-to-square fa-fw"></i>
-      </a>
-    </template>
+      <template #last  v-if="checkRole('editor')">
+        <a href="#create-article"
+          :title="constants.ARTICLE_CREATOR">
+          <i class="fa-regular fa-pen-to-square fa-fw"></i>
+        </a>
+      </template>
 
-    <template #top>
-      <i class="fa-solid fa-chevron-circle-up fa-fw" 
-        :title="constants.TITLE_TOP"></i>
-    </template>
-  </NavElt>
+      <template #top>
+        <i class="fa-solid fa-chevron-circle-up fa-fw" 
+          :title="constants.TITLE_TOP"></i>
+      </template>
+    </NavElt>
 
-  <CardElt id="top"
-      :isArticle="true">
-    <template #header>
-      <h1 class="sky-dark">
-        <i class="fa-solid fa-blog fa-lg"
-          aria-hidden="true">
-        </i>
-        {{ constants.BLOG_VIEW }}
-      </h1>
-      <p>{{ constants.INTRO_ARTICLE }}</p>
-    </template>
+    <CardElt id="top"
+        :isArticle="true">
+      <template #header>
+        <h1 class="sky-dark">
+          <i class="fa-solid fa-blog fa-lg"
+            aria-hidden="true">
+          </i>
+          {{ constants.BLOG_VIEW }}
+        </h1>
+        <p>{{ constants.INTRO_ARTICLE }}</p>
+      </template>
 
-    <template #body>
-      <ListElt :items="getItemsByCat(articles)"
-        :dynamic="true">
+      <template #body>
+        <ListElt :items="getItemsByCat(articles)"
+          :dynamic="true">
 
-        <template #items="slotProps">
-          <h2 :id="slotProps.item[0].cat"
-            class="sky-dark">
-            {{ slotProps.item[0].cat }}
-          </h2>
-        </template>
+          <template #items="slotProps">
+            <h2 :id="slotProps.item[0].cat"
+              class="sky-dark">
+              {{ slotProps.item[0].cat }}
+            </h2>
+          </template>
 
-        <template #nested="slotProps">
+          <template #nested="slotProps">
 
-          <CardElt itemscope
-            itemtype="https://schema.org/Article">
-            <template #header>
-              <h3 itemprop="name"
-                class="sky-dark">
-                {{ slotProps.value.name }}
-              </h3>
-            </template>
+            <CardElt itemscope
+              itemtype="https://schema.org/Article">
+              <template #header>
+                <h3 itemprop="name"
+                  class="sky-dark">
+                  {{ slotProps.value.name }}
+                </h3>
+              </template>
 
-            <template #body>
-              <BtnElt v-if="!checkRole('user')"
-                :id="`like-${slotProps.value._id}`"
-                href="/login"
-                class="btn-sky-dark"
-                :title="constants.TITLE_LIKE_LOGIN + slotProps.value.name">
+              <template #body>
+                <BtnElt v-if="!checkRole('user')"
+                  :id="`like-${slotProps.value._id}`"
+                  href="/login"
+                  class="btn-sky-dark"
+                  :title="constants.TITLE_LIKE_LOGIN + slotProps.value.name">
 
-                <template #btn>
-                  <i class="fa-regular fa-thumbs-up fa-lg">
-                  </i> <b itemprop="contentRating">
-                    {{ slotProps.value.likes.length }}
-                  </b>
-                </template>
-              </BtnElt>
-
-              <BtnElt v-else-if="checkLikes(slotProps.value._id) === false"
-                :id="`like-${slotProps.value._id}`"
-                type="button"
-                @click="addLike(slotProps.value._id)"
-                class="btn-sky"
-                :title="constants.TITLE_LIKE + slotProps.value.name">
-
-                <template #btn>
-                  <i class="fa-regular fa-thumbs-up fa-lg">
-                  </i> <b itemprop="contentRating">
-                    {{ slotProps.value.likes.length }}
-                  </b>
-                </template>
-              </BtnElt>
-
-              <BtnElt v-else-if="checkLikes(slotProps.value._id) === true"
-                :id="`like-${slotProps.value._id}`"
-                type="button"
-                @click="addLike(slotProps.value._id)"
-                class="btn-sky"
-                :title="constants.TITLE_DISLIKE + slotProps.value.name">
-
-                <template #btn>
-                  <i class="fa-regular fa-thumbs-up fa-lg">
-                  </i> <b itemprop="contentRating">
-                    {{ slotProps.value.likes.length }}
-                  </b>
-                </template>
-              </BtnElt>
-
-              <a :href="`article/${slotProps.value._id}`"
-                :title="constants.TITLE_READ + slotProps.value.name">
-
-                <MediaElt :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
-                  :src="`img/thumbnails/articles/${slotProps.value.image}`" 
-                  :alt="`${slotProps.value.alt}`" 
-                  :width="constants.THUMB_WIDTH"
-                  :height="constants.THUMB_HEIGHT"
-                  itemprop="image">
-
-                  <template #figcaption>
-                    <blockquote v-html="slotProps.value.text.slice(0, 50)" 
-                      itemprop="text"
-                      class="monospace">
-                    </blockquote>
+                  <template #btn>
+                    <i class="fa-regular fa-thumbs-up fa-lg">
+                    </i> <b itemprop="contentRating">
+                      {{ slotProps.value.likes.length }}
+                    </b>
                   </template>
-                </MediaElt>
-              </a>
+                </BtnElt>
 
-            </template>
-          </CardElt>
-        </template>
-      </ListElt>
-    </template>
+                <BtnElt v-else-if="checkLikes(slotProps.value._id) === false"
+                  :id="`like-${slotProps.value._id}`"
+                  type="button"
+                  @click="addLike(slotProps.value._id)"
+                  class="btn-sky"
+                  :title="constants.TITLE_LIKE + slotProps.value.name">
 
-    <template #aside v-if="checkRole('editor')">
-      <ArticleCreator :constants="constants"/>
-    </template>
-  </CardElt>
+                  <template #btn>
+                    <i class="fa-regular fa-thumbs-up fa-lg">
+                    </i> <b itemprop="contentRating">
+                      {{ slotProps.value.likes.length }}
+                    </b>
+                  </template>
+                </BtnElt>
+
+                <BtnElt v-else-if="checkLikes(slotProps.value._id) === true"
+                  :id="`like-${slotProps.value._id}`"
+                  type="button"
+                  @click="addLike(slotProps.value._id)"
+                  class="btn-sky"
+                  :title="constants.TITLE_DISLIKE + slotProps.value.name">
+
+                  <template #btn>
+                    <i class="fa-regular fa-thumbs-up fa-lg">
+                    </i> <b itemprop="contentRating">
+                      {{ slotProps.value.likes.length }}
+                    </b>
+                  </template>
+                </BtnElt>
+
+                <a :href="`article/${slotProps.value._id}`"
+                  :title="constants.TITLE_READ + slotProps.value.name">
+
+                  <MediaElt :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
+                    :src="`img/thumbnails/articles/${slotProps.value.image}`" 
+                    :alt="`${slotProps.value.alt}`" 
+                    :width="constants.THUMB_WIDTH"
+                    :height="constants.THUMB_HEIGHT"
+                    itemprop="image">
+
+                    <template #figcaption>
+                      <blockquote v-html="slotProps.value.text.slice(0, 50)" 
+                        itemprop="text"
+                        class="monospace">
+                      </blockquote>
+                    </template>
+                  </MediaElt>
+                </a>
+
+              </template>
+            </CardElt>
+          </template>
+        </ListElt>
+      </template>
+
+      <template #aside v-if="checkRole('editor')">
+        <ArticleCreator :constants="constants"/>
+      </template>
+    </CardElt>
+  </main>
 </template>
 
 <script>

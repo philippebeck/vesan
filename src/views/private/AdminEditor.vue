@@ -1,107 +1,109 @@
 <template>
-  <CardElt id="top">
-    <template #header>
-      <h1 class="sky-dark">
-        <i class="fa-solid fa-gears fa-2x"
-          aria-hidden="true">
-        </i>
-        {{ constants.ADMIN_EDITOR }}
-      </h1>
-      <p>{{ constants.INTRO_ADMIN }}</p>
+  <main>
+    <CardElt id="top">
+      <template #header>
+        <h1 class="sky-dark">
+          <i class="fa-solid fa-gears fa-2x"
+            aria-hidden="true">
+          </i>
+          {{ constants.ADMIN_EDITOR }}
+        </h1>
+        <p>{{ constants.INTRO_ADMIN }}</p>
 
-      <!-- Sidebar -->
-      <NavElt class="sidebar">
-        <template #hide>
-          <i class="fa-solid fa-eye fa-fw" 
-          :title="constants.TITLE_TOGGLE"></i>
-        </template>
+        <!-- Sidebar -->
+        <NavElt class="sidebar">
+          <template #hide>
+            <i class="fa-solid fa-eye fa-fw" 
+            :title="constants.TITLE_TOGGLE"></i>
+          </template>
 
-        <template #first>
-          <a v-if="products.length > 0" 
-            href="#product"
-            :title="constants.INTRO_PRODUCTS">
-            <i class="fa-regular fa-rectangle-list fa-fw"></i>
-          </a>
-          <a v-if="reviews.length > 0" 
-            href="#review"
-            :title="constants.INTRO_REVIEWS">
-            <i class="fa-solid fa-ranking-star fa-fw"></i>
-          </a>
-          <a v-if="orders.length > 0" 
-            href="#order"
-            :title="constants.INTRO_ORDERS">
-            <i class="fa-solid fa-gifts fa-fw"></i>
-          </a>
-          <a v-if="articles.length > 0" 
-            href="#article"
-            :title="constants.INTRO_ARTICLES">
-            <i class="fa-regular fa-newspaper fa-fw"></i>
-          </a>
-          <a v-if="comments.length > 0" 
-            href="#comment"
-            :title="constants.INTRO_COMMENTS">
-            <i class="fa-regular fa-comments fa-fw"></i>
-          </a>
-          <a v-if="checkRole('admin')"
-            href="#user"
-            :title="constants.INTRO_USERS">
-            <i class="fa-solid fa-users-gear fa-fw"></i>
-          </a>
-          <a v-if="checkRole('admin')"
-            href="#link"
-            :title="constants.INTRO_LINKS">
-            <i class="fa-solid fa-link fa-fw"></i>
-          </a>
-        </template>
+          <template #first>
+            <a v-if="products.length > 0" 
+              href="#product"
+              :title="constants.INTRO_PRODUCTS">
+              <i class="fa-regular fa-rectangle-list fa-fw"></i>
+            </a>
+            <a v-if="reviews.length > 0" 
+              href="#review"
+              :title="constants.INTRO_REVIEWS">
+              <i class="fa-solid fa-ranking-star fa-fw"></i>
+            </a>
+            <a v-if="orders.length > 0" 
+              href="#order"
+              :title="constants.INTRO_ORDERS">
+              <i class="fa-solid fa-gifts fa-fw"></i>
+            </a>
+            <a v-if="articles.length > 0" 
+              href="#article"
+              :title="constants.INTRO_ARTICLES">
+              <i class="fa-regular fa-newspaper fa-fw"></i>
+            </a>
+            <a v-if="comments.length > 0" 
+              href="#comment"
+              :title="constants.INTRO_COMMENTS">
+              <i class="fa-regular fa-comments fa-fw"></i>
+            </a>
+            <a v-if="checkRole('admin')"
+              href="#user"
+              :title="constants.INTRO_USERS">
+              <i class="fa-solid fa-users-gear fa-fw"></i>
+            </a>
+            <a v-if="checkRole('admin')"
+              href="#link"
+              :title="constants.INTRO_LINKS">
+              <i class="fa-solid fa-link fa-fw"></i>
+            </a>
+          </template>
 
-        <template #top>
-          <i class="fa-solid fa-chevron-circle-up fa-fw" 
-            :title="constants.TITLE_TOP"></i>
-        </template>
-      </NavElt>
-    </template>
+          <template #top>
+            <i class="fa-solid fa-chevron-circle-up fa-fw" 
+              :title="constants.TITLE_TOP"></i>
+          </template>
+        </NavElt>
+      </template>
 
-    <template #body>
+      <template #body>
 
-      <!-- Shop Part -->
-      <ProductManager v-if="products.length > 0"
-        :constants="constants"
-        :products="products"/>
+        <!-- Shop Part -->
+        <ProductManager v-if="products.length > 0"
+          :constants="constants"
+          :products="products"/>
 
-      <ReviewManager v-if="reviews.length > 0"
-        :constants="constants"
-        :products="products"
-        :reviews="reviews"
-        :users="users"/>
+        <ReviewManager v-if="reviews.length > 0"
+          :constants="constants"
+          :products="products"
+          :reviews="reviews"
+          :users="users"/>
 
-      <OrderManager v-if="orders.length > 0"
-        :constants="constants"
-        :orders="orders"
-        :users="users"/>
+        <OrderManager v-if="orders.length > 0"
+          :constants="constants"
+          :orders="orders"
+          :users="users"/>
 
-      <!-- Blog Part -->
-      <ArticleManager v-if="articles.length > 0"
-        :articles="articles"
-        :constants="constants"
-        :users="users"/>
+        <!-- Blog Part -->
+        <ArticleManager v-if="articles.length > 0"
+          :articles="articles"
+          :constants="constants"
+          :users="users"/>
 
-      <CommentManager v-if="comments.length > 0"
-        :articles="articles"
-        :comments="comments"
-        :constants="constants"
-        :users="users"/>
+        <CommentManager v-if="comments.length > 0"
+          :articles="articles"
+          :comments="comments"
+          :constants="constants"
+          :users="users"/>
 
-      <!-- Users Part -->
-      <UserManager v-if="users.length > 0"
-        :constants="constants"
-        :users="users"/>
+        <!-- Users Part -->
+        <UserManager v-if="users.length > 0"
+          :constants="constants"
+          :users="users"/>
 
-      <!-- Links Part -->
-      <LinkManager v-if="links.length > 0"
-        :constants="constants"
-        :links="links"/>
-    </template>
-  </CardElt>
+        <!-- Links Part -->
+        <LinkManager v-if="links.length > 0"
+          :constants="constants"
+          :links="links"/>
+      </template>
+    </CardElt>
+  </main>
 </template>
 
 <script>
