@@ -28,7 +28,9 @@
 
     <CardElt>
       <template #header>
-        <h2>{{ constants.HOME_SUB }}</h2>
+        <h2 class="ani-flipperX-loop-altrev-into">
+          {{ constants.HOME_SUB }}
+        </h2>
         <b>{{ constants.INTRO_HOME }}</b>
       </template>
 

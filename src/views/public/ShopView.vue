@@ -37,7 +37,7 @@
 
           <template #items="slotProps">
             <h2 :id="slotProps.item[0].cat"
-              class="sky-dark">
+              class="sky-dark ani-turn3D-loop-altrev-into">
               {{ slotProps.item[0].cat }}
             </h2>
           </template>

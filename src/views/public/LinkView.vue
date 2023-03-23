@@ -35,7 +35,9 @@
 
     <CardElt id="top">
       <template #header>
-        <h2>{{ constants.LINK_SUB }}</h2>
+        <h2 class="ani-shrink-loop-altrev-into">
+          {{ constants.LINK_SUB }}
+        </h2>
         <b>{{ constants.INTRO_LINK }}</b>
       </template>
 

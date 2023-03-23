@@ -11,7 +11,9 @@
 
     <CardElt>
       <template #header>
-        <h2>{{ constants.CONTACT_SUB }}</h2>
+        <h2 class="ani-flipX-loop-altrev-into">
+          {{ constants.CONTACT_SUB }}
+        </h2>
         <b>{{ constants.INTRO_CONTACT }}</b>
       </template>
 
