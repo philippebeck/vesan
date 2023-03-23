@@ -80,8 +80,7 @@
   <!-- VIEWS -->
   <router-view v-slot="{ Component }"
     :constants="constants">
-    <transition name="slide" 
-      mode="out-in">
+    <transition name="slide">
       <component :is="Component" 
         :key="$route.path"/>
     </transition>
@@ -209,12 +208,12 @@ export default {
 <style>
 .slide-enter-active,
 .slide-leave-active {
-  transition: opacity 1s, transform 1s;
+  transition: opacity 500ms, transform 500ms;
 }
 
 .slide-enter-from,
 .slide-leave-to {
   opacity: 0;
-  transform: translateY(50%);
+  transform: translateY(10%);
 }
 </style>
