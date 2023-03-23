@@ -1,99 +1,101 @@
 <template>
-  <CardElt itemscope
-    itemtype="https://schema.org/Article">
-    <template #header>
-      <h1 itemprop="name">{{ article.name }}</h1>
-      <strong>{{ article.cat }}</strong>
-    </template>
+  <main>
+    <CardElt itemscope
+      itemtype="https://schema.org/Article">
+      <template #header>
+        <h1 itemprop="name">{{ article.name }}</h1>
+        <strong>{{ article.cat }}</strong>
+      </template>
 
-    <template #body>
+      <template #body>
 
-      <BtnElt v-if="!checkRole('user')"
-        id="likes"
-        href="/login"
-        class="btn-blue"
-        :title="constants.TITLE_LIKE_LOGIN + article.name">
+        <BtnElt v-if="!checkRole('user')"
+          id="likes"
+          href="/login"
+          class="btn-blue"
+          :title="constants.TITLE_LIKE_LOGIN + article.name">
 
-        <template #btn>
-          <i class="fa-regular fa-thumbs-up fa-lg">
-          </i> <b v-if="article.likes"
-            itemprop="contentRating">
-            {{ article.likes.length }}
-          </b>
-        </template>
-      </BtnElt>
-
-      <BtnElt v-else-if="checkLikes() === false"
-        id="likes"
-        type="button"
-        @click="addLike()"
-        class="btn-blue"
-        :title="constants.TITLE_LIKE + article.name">
-
-        <template #btn>
-          <i class="fa-regular fa-thumbs-up fa-lg">
-          </i> <b v-if="article.likes"
-            itemprop="contentRating">
-            {{ article.likes.length }}
-          </b>
-        </template>
-      </BtnElt>
-
-      <BtnElt v-else-if="checkLikes() === true"
-        id="likes"
-        type="button"
-        @click="addLike()"
-        class="btn-sky"
-        :title="constants.TITLE_DISLIKE + article.name">
-
-        <template #btn>
-          <i class="fa-regular fa-thumbs-up fa-lg">
-          </i> <b v-if="article.likes"
-            itemprop="contentRating">
-            {{ article.likes.length }}
-          </b>
-        </template>
-      </BtnElt>
-
-      <MediaElt v-if="article.image"
-        :src="`/img/articles/${article.image}`"
-        :alt="article.alt"
-        :width="constants.IMG_WIDTH"
-        :height="constants.IMG_HEIGHT"
-        itemprop="image">
-
-        <template #figcaption>
-          <blockquote v-html="article.text"
-            itemprop="text"
-            class="container width-sm bord bord-sky blue">
-          </blockquote>
-          
-          <p class="gray">
-            {{ constants.CREATE_BY }}
-            <b itemprop="author">
-              {{ article.user }}
+          <template #btn>
+            <i class="fa-regular fa-thumbs-up fa-lg">
+            </i> <b v-if="article.likes"
+              itemprop="contentRating">
+              {{ article.likes.length }}
             </b>
-            {{ constants.ON }} 
-            <i itemprop="dateCreated">
-              {{ new Date(article.created).toLocaleDateString() }}
-            </i>
-            / {{ constants.UPDATE_ON }}
-            <i itemprop="dateModified">
-              {{ new Date(article.updated).toLocaleDateString() }}
-            </i>
-          </p>
-        </template>
-      </MediaElt>
+          </template>
+        </BtnElt>
 
-      <CommentList v-if="comments.length > 0"
-        :comments="comments"
-        :constants="constants"/>
-    </template>
+        <BtnElt v-else-if="checkLikes() === false"
+          id="likes"
+          type="button"
+          @click="addLike()"
+          class="btn-blue"
+          :title="constants.TITLE_LIKE + article.name">
 
-    <template #aside  v-if="checkRole('user')">
-      <CommentCreator :constants="constants"/>
-    </template>
-  </CardElt>
+          <template #btn>
+            <i class="fa-regular fa-thumbs-up fa-lg">
+            </i> <b v-if="article.likes"
+              itemprop="contentRating">
+              {{ article.likes.length }}
+            </b>
+          </template>
+        </BtnElt>
+
+        <BtnElt v-else-if="checkLikes() === true"
+          id="likes"
+          type="button"
+          @click="addLike()"
+          class="btn-sky"
+          :title="constants.TITLE_DISLIKE + article.name">
+
+          <template #btn>
+            <i class="fa-regular fa-thumbs-up fa-lg">
+            </i> <b v-if="article.likes"
+              itemprop="contentRating">
+              {{ article.likes.length }}
+            </b>
+          </template>
+        </BtnElt>
+
+        <MediaElt v-if="article.image"
+          :src="`/img/articles/${article.image}`"
+          :alt="article.alt"
+          :width="constants.IMG_WIDTH"
+          :height="constants.IMG_HEIGHT"
+          itemprop="image">
+
+          <template #figcaption>
+            <blockquote v-html="article.text"
+              itemprop="text"
+              class="container width-sm bord bord-sky blue">
+            </blockquote>
+            
+            <p class="gray">
+              {{ constants.CREATE_BY }}
+              <b itemprop="author">
+                {{ article.user }}
+              </b>
+              {{ constants.ON }} 
+              <i itemprop="dateCreated">
+                {{ new Date(article.created).toLocaleDateString() }}
+              </i>
+              / {{ constants.UPDATE_ON }}
+              <i itemprop="dateModified">
+                {{ new Date(article.updated).toLocaleDateString() }}
+              </i>
+            </p>
+          </template>
+        </MediaElt>
+
+        <CommentList v-if="comments.length > 0"
+          :comments="comments"
+          :constants="constants"/>
+      </template>
+
+      <template #aside  v-if="checkRole('user')">
+        <CommentCreator :constants="constants"/>
+      </template>
+    </CardElt>
+  </main>
 </template>
 
 <script>

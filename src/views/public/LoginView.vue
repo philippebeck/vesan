@@ -1,132 +1,134 @@
 <template>
-  <header>
-    <h1 class="sky">
-      <i class="fa-solid fa-right-to-bracket fa-lg"
-        aria-hidden="true">
-      </i>
-      {{ constants.LOGIN_VIEW }}
-    </h1>
-  </header>
-
-  <CardElt v-if="type === 'SignUp'">
-    <template #header>
-      <h2 class="sky">
-        <i class="fa-solid fa-user-plus fa-lg"
+  <main>
+    <header>
+      <h1 class="sky-dark">
+        <i class="fa-solid fa-right-to-bracket fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.SIGN_UP }}
-      </h2>
-      <p>{{ constants.INTRO_SIGNUP }}</p>
-    </template>
+        {{ constants.LOGIN_VIEW }}
+      </h1>
+    </header>
 
-    <template #body>
-      <SignUp :constants="constants"/>
+    <CardElt v-if="type === 'SignUp'">
+      <template #header>
+        <h2 class="sky-dark">
+          <i class="fa-solid fa-user-plus fa-lg"
+            aria-hidden="true">
+          </i>
+          {{ constants.SIGN_UP }}
+        </h2>
+        <p>{{ constants.INTRO_SIGNUP }}</p>
+      </template>
 
-      <!-- Toggle Button to SignIn Component -->
-      <BtnElt type="button"
-        @click="setType('SignIn')"
-        class="btn-green"
-        :content="constants.CONTENT_ENTER"
-        :title="constants.TITLE_GO + constants.SIGN_IN">
+      <template #body>
+        <SignUp :constants="constants"/>
 
-        <template #btn>
-          <i class="fa-solid fa-door-open fa-lg"></i>
-        </template>
-      </BtnElt>
+        <!-- Toggle Button to SignIn Component -->
+        <BtnElt type="button"
+          @click="setType('SignIn')"
+          class="btn-green"
+          :content="constants.CONTENT_ENTER"
+          :title="constants.TITLE_GO + constants.SIGN_IN">
 
-      <!-- Toggle Button to Forgot Password Component -->
-      <BtnElt type="button"
-        @click="setType('ForgotPass')"
-        class="btn-orange"
-        :content="constants.CONTENT_SEND"
-        :title="constants.TITLE_GO + constants.FORGOT_PASS">
+          <template #btn>
+            <i class="fa-solid fa-door-open fa-lg"></i>
+          </template>
+        </BtnElt>
 
-        <template #btn>
-          <i class="fa-regular fa-paper-plane fa-lg"></i>
-        </template>
-      </BtnElt>
-    </template>
-  </CardElt>
+        <!-- Toggle Button to Forgot Password Component -->
+        <BtnElt type="button"
+          @click="setType('ForgotPass')"
+          class="btn-orange"
+          :content="constants.CONTENT_SEND"
+          :title="constants.TITLE_GO + constants.FORGOT_PASS">
 
-  <CardElt v-if="type === 'SignIn'">
-    <template #header>
-      <h2 class="sky">
-        <i class="fa-solid fa-door-open fa-lg"
-          aria-hidden="true">
-        </i>
-        {{ constants.SIGN_IN }}
-      </h2>
-      <p>{{ constants.INTRO_SIGNIN }}</p>
-    </template>
+          <template #btn>
+            <i class="fa-regular fa-paper-plane fa-lg"></i>
+          </template>
+        </BtnElt>
+      </template>
+    </CardElt>
 
-    <template #body>
-      <SignIn :constants="constants"/>
+    <CardElt v-if="type === 'SignIn'">
+      <template #header>
+        <h2 class="sky-dark">
+          <i class="fa-solid fa-door-open fa-lg"
+            aria-hidden="true">
+          </i>
+          {{ constants.SIGN_IN }}
+        </h2>
+        <p>{{ constants.INTRO_SIGNIN }}</p>
+      </template>
 
-      <!-- Toggle Button to SignUp Component -->
-      <BtnElt type="button"
-        @click="setType('SignUp')"
-        class="btn-sky"
-        :content="constants.CONTENT_SIGNUP"
-        :title="constants.TITLE_GO + constants.SIGN_UP">
+      <template #body>
+        <SignIn :constants="constants"/>
 
-        <template #btn>
-          <i class="fa-solid fa-user-plus fa-lg"></i>
-        </template>
-      </BtnElt>
+        <!-- Toggle Button to SignUp Component -->
+        <BtnElt type="button"
+          @click="setType('SignUp')"
+          class="btn-sky-dark"
+          :content="constants.CONTENT_SIGNUP"
+          :title="constants.TITLE_GO + constants.SIGN_UP">
 
-      <!-- Toggle Button to Forgot Password Component -->
-      <BtnElt type="button"
-        @click="setType('ForgotPass')"
-        class="btn-orange"
-        :content="constants.CONTENT_SEND"
-        :title="constants.TITLE_GO + constants.FORGOT_PASS">
+          <template #btn>
+            <i class="fa-solid fa-user-plus fa-lg"></i>
+          </template>
+        </BtnElt>
 
-        <template #btn>
-          <i class="fa-regular fa-paper-plane fa-lg"></i>
-        </template>
-      </BtnElt>
-    </template>
-  </CardElt>
+        <!-- Toggle Button to Forgot Password Component -->
+        <BtnElt type="button"
+          @click="setType('ForgotPass')"
+          class="btn-orange"
+          :content="constants.CONTENT_SEND"
+          :title="constants.TITLE_GO + constants.FORGOT_PASS">
 
-  <CardElt v-if="type === 'ForgotPass'">
-    <template #header>
-      <h2 class="sky">
-        <i class="fa-solid fa-key fa-lg"
-          aria-hidden="true">
-        </i>
-        {{ constants.FORGOT_PASS }}
-      </h2>
-      <p>{{ constants.INTRO_FORGOT }}</p>
-    </template>
+          <template #btn>
+            <i class="fa-regular fa-paper-plane fa-lg"></i>
+          </template>
+        </BtnElt>
+      </template>
+    </CardElt>
 
-    <template #body>
-      <ForgotPass :constants="constants"/>
+    <CardElt v-if="type === 'ForgotPass'">
+      <template #header>
+        <h2 class="sky-dark">
+          <i class="fa-solid fa-key fa-lg"
+            aria-hidden="true">
+          </i>
+          {{ constants.FORGOT_PASS }}
+        </h2>
+        <p>{{ constants.INTRO_FORGOT }}</p>
+      </template>
 
-      <!-- Toggle Button to SignUp Component -->
-      <BtnElt type="button"
-        @click="setType('SignUp')"
-        class="btn-sky"
-        :content="constants.CONTENT_SIGNUP"
-        :title="constants.TITLE_GO + constants.SIGN_UP">
+      <template #body>
+        <ForgotPass :constants="constants"/>
 
-        <template #btn>
-          <i class="fa-solid fa-user-plus fa-lg"></i>
-        </template>
-      </BtnElt>
+        <!-- Toggle Button to SignUp Component -->
+        <BtnElt type="button"
+          @click="setType('SignUp')"
+          class="btn-sky-dark"
+          :content="constants.CONTENT_SIGNUP"
+          :title="constants.TITLE_GO + constants.SIGN_UP">
 
-      <!-- Toggle Button to SignIn Component -->
-      <BtnElt type="button"
-        @click="setType('SignIn')"
-        class="btn-green"
-        :content="constants.CONTENT_ENTER"
-        :title="constants.TITLE_GO + constants.SIGN_IN">
+          <template #btn>
+            <i class="fa-solid fa-user-plus fa-lg"></i>
+          </template>
+        </BtnElt>
 
-        <template #btn>
-          <i class="fa-solid fa-door-open fa-lg"></i>
-        </template>
-      </BtnElt>
-    </template>
-  </CardElt>
+        <!-- Toggle Button to SignIn Component -->
+        <BtnElt type="button"
+          @click="setType('SignIn')"
+          class="btn-green"
+          :content="constants.CONTENT_ENTER"
+          :title="constants.TITLE_GO + constants.SIGN_IN">
+
+          <template #btn>
+            <i class="fa-solid fa-door-open fa-lg"></i>
+          </template>
+        </BtnElt>
+      </template>
+    </CardElt>
+  </main>
 </template>
 
 <script>

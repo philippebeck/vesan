@@ -78,9 +78,13 @@
   </NavElt>
 
   <!-- VIEWS -->
-  <main>
-    <router-view :constants="constants"/>
-  </main>
+  <router-view v-slot="{ Component }"
+    :constants="constants">
+    <transition name="slide">
+      <component :is="Component" 
+        :key="$route.path"/>
+    </transition>
+  </router-view>
 
   <!-- FOOTER -->
   <FootElt
@@ -200,3 +204,16 @@ export default {
   }
 };
 </script>
+
+<style>
+.slide-enter-active,
+.slide-leave-active {
+  transition: opacity 500ms, transform 500ms;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  opacity: 0;
+  transform: translateY(10%);
+}
+</style>

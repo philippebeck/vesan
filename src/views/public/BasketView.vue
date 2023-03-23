@@ -1,138 +1,140 @@
 <template>
-  <header>
-    <h1 class="sky-dark">
-      <i class="fa-solid fa-basket-shopping fa-lg"
-        aria-hidden="true">
-      </i>
-      {{ constants.BASKET_VIEW }}
-    </h1>
-  </header>
+  <main>
+    <header>
+      <h1 class="sky-dark">
+        <i class="fa-solid fa-basket-shopping fa-lg"
+          aria-hidden="true">
+        </i>
+        {{ constants.BASKET_VIEW }}
+      </h1>
+    </header>
 
-  <CardElt v-if="basket[0] !== undefined">
-    <template #header>
-      <h2>{{ constants.BASKET_SUB }}</h2>
-      <b>{{ constants.INTRO_BASKET }}</b>
-    </template>
+    <CardElt v-if="basket[0] !== undefined">
+      <template #header>
+        <h2>{{ constants.BASKET_SUB }}</h2>
+        <b>{{ constants.INTRO_BASKET }}</b>
+      </template>
 
-    <template #body>
-      <form>
-        <TableElt :items="order">
-          <template #head>
-            {{ constants.TOTAL }}
-          </template>
+      <template #body>
+        <form>
+          <TableElt :items="order">
+            <template #head>
+              {{ constants.TOTAL }}
+            </template>
 
-          <!-- Id -->
-          <template #cell-id="slotProps">
-            <a :href="`/product/${order[slotProps.index].id}`">
-              #{{ slotProps.index + 1 }}
-              ({{ slotProps.item.id }})
-            </a>
-          </template>
+            <!-- Id -->
+            <template #cell-id="slotProps">
+              <a :href="`/product/${order[slotProps.index].id}`">
+                #{{ slotProps.index + 1 }}
+                ({{ slotProps.item.id }})
+              </a>
+            </template>
 
-          <!-- Name -->
-          <template #cell-name="slotProps">
-            <a :href="`/product/${order[slotProps.index].id}`">
-              <strong>{{ slotProps.item.name }}</strong>
-            </a>
-          </template>
+            <!-- Name -->
+            <template #cell-name="slotProps">
+              <a :href="`/product/${order[slotProps.index].id}`">
+                <strong>{{ slotProps.item.name }}</strong>
+              </a>
+            </template>
 
-          <!-- Image -->
-          <template #cell-image="slotProps">
-            <a :href="`/product/${order[slotProps.index].id}`">
-              <MediaElt :src="'img/thumbnails/products/' + slotProps.item.image"
-                :alt="slotProps.item.name"
-                :title="slotProps.item.name">
-              </MediaElt>
-            </a>
-          </template>
+            <!-- Image -->
+            <template #cell-image="slotProps">
+              <a :href="`/product/${order[slotProps.index].id}`">
+                <MediaElt :src="'img/thumbnails/products/' + slotProps.item.image"
+                  :alt="slotProps.item.name"
+                  :title="slotProps.item.name">
+                </MediaElt>
+              </a>
+            </template>
 
-          <!-- Option -->
-          <template #cell-option="slotProps">
-            <a :href="`/product/${order[slotProps.index].id}`">
-              <b>{{ slotProps.item.option }}</b>
-            </a>
-          </template>
+            <!-- Option -->
+            <template #cell-option="slotProps">
+              <a :href="`/product/${order[slotProps.index].id}`">
+                <b>{{ slotProps.item.option }}</b>
+              </a>
+            </template>
 
-          <!-- Quantity -->
-          <template #cell-quantity="slotProps">
-            <FieldElt :id="`quantity-${slotProps.index}`"
-              type="number"
-              v-model:value="slotProps.item.quantity"
-              @change="updateProductQuantity(`${slotProps.item.id}`, `${slotProps.item.option}`)"
-              :info="constants.INFO_UP_QUANTITY"
-              :min="1"
-              :max="100">
-            </FieldElt>
-          </template>
+            <!-- Quantity -->
+            <template #cell-quantity="slotProps">
+              <FieldElt :id="`quantity-${slotProps.index}`"
+                type="number"
+                v-model:value="slotProps.item.quantity"
+                @change="updateProductQuantity(`${slotProps.item.id}`, `${slotProps.item.option}`)"
+                :info="constants.INFO_UP_QUANTITY"
+                :min="1"
+                :max="100">
+              </FieldElt>
+            </template>
 
-          <!-- Price -->
-          <template #cell-price="slotProps">
-            <b>{{ slotProps.item.price }} €</b>
-          </template>
+            <!-- Price -->
+            <template #cell-price="slotProps">
+              <b>{{ slotProps.item.price }} €</b>
+            </template>
 
-          <!-- Total -->
-          <template #body="slotProps">
-            <b>
-              {{ slotProps.item.price * slotProps.item.quantity }} €
-            </b>
-            <br>
+            <!-- Total -->
+            <template #body="slotProps">
+              <b>
+                {{ slotProps.item.price * slotProps.item.quantity }} €
+              </b>
+              <br>
 
-            <!-- Delete -->
-            <BtnElt type="button"
-              @click="deleteProduct(`${slotProps.item.id}`, `${slotProps.item.option}`)"
-              class="btn-orange"
-              :content="constants.TITLE_DELETE"
-              :title="constants.TITLE_DELETE + slotProps.item.name">
+              <!-- Delete -->
+              <BtnElt type="button"
+                @click="deleteProduct(`${slotProps.item.id}`, `${slotProps.item.option}`)"
+                class="btn-orange"
+                :content="constants.TITLE_DELETE"
+                :title="constants.TITLE_DELETE + slotProps.item.name">
+
+                <template #btn>
+                  <i class="fa-solid fa-trash fa-lg"></i>
+                </template>
+              </BtnElt>
+            </template>
+            </TableElt>
+
+            <!-- Total -->
+            <p class="bord bord-violet container-60sm-50md">
+              {{ constants.BASKET_TOTAL }}
+              <b class="black">
+                {{ total }}
+                {{ constants.CURRENCY_SYMBOL }}
+              </b>
+            </p>
+
+            <!-- Order -->
+            <div v-if="checkRole('user')"
+              id="paypal"
+              class="mar-lg">
+            </div>
+
+            <BtnElt v-else
+              href="/login"
+              class="btn-green width-sm"
+              :content="constants.CONTENT_ORDER"
+              :title="constants.TITLE_BASKET">
 
               <template #btn>
-                <i class="fa-solid fa-trash fa-lg"></i>
+                <i class="fa-solid fa-cash-register fa-lg"></i>
               </template>
             </BtnElt>
-          </template>
-          </TableElt>
 
-          <!-- Total -->
-          <p class="bord bord-violet container-60sm-50md">
-            {{ constants.BASKET_TOTAL }}
-            <b class="black">
-              {{ total }}
-              {{ constants.CURRENCY_SYMBOL }}
-            </b>
-          </p>
+            <!-- Clear -->
+            <BtnElt type="button"
+              @click="deleteBasket()"
+              class="btn-red width-sm"
+              :content="constants.CONTENT_CLEAR"
+              :title="constants.TITLE_CLEAR">
 
-          <!-- Order -->
-          <div v-if="checkRole('user')"
-            id="paypal"
-            class="mar-lg">
-          </div>
+              <template #btn>
+                <i class="fa-solid fa-trash-can fa-lg"></i>
+              </template>
+            </BtnElt>
+        </form>
+      </template>
+    </CardElt>
 
-          <BtnElt v-else
-            href="/login"
-            class="btn-green width-sm"
-            :content="constants.CONTENT_ORDER"
-            :title="constants.TITLE_BASKET">
-
-            <template #btn>
-              <i class="fa-solid fa-cash-register fa-lg"></i>
-            </template>
-          </BtnElt>
-
-          <!-- Clear -->
-          <BtnElt type="button"
-            @click="deleteBasket()"
-            class="btn-red width-sm"
-            :content="constants.CONTENT_CLEAR"
-            :title="constants.TITLE_CLEAR">
-
-            <template #btn>
-              <i class="fa-solid fa-trash-can fa-lg"></i>
-            </template>
-          </BtnElt>
-      </form>
-    </template>
-  </CardElt>
-
-  <b v-else>{{ constants.BASKET_EMPTY }}</b>
+    <b v-else>{{ constants.BASKET_EMPTY }}</b>
+  </main>
 </template>
 
 <script>

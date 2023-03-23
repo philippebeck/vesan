@@ -1,85 +1,89 @@
 <template>
-  <header>
-    <h1 class="sky-dark">
-      <i class="fa-solid fa-envelope-open-text fa-lg"
-        aria-hidden="true">
-      </i>
-      {{ constants.CONTACT_VIEW }}
-    </h1>
-  </header>
+  <main>
+    <header>
+      <h1 class="sky-dark">
+        <i class="fa-solid fa-envelope-open-text fa-lg"
+          aria-hidden="true">
+        </i>
+        {{ constants.CONTACT_VIEW }}
+      </h1>
+    </header>
 
-  <CardElt>
-    <template #header>
-      <h2>{{ constants.CONTACT_SUB }}</h2>
-      <b>{{ constants.INTRO_CONTACT }}</b>
-    </template>
+    <CardElt>
+      <template #header>
+        <h2 class="ani-flipX-loop-altrev-into">
+          {{ constants.CONTACT_SUB }}
+        </h2>
+        <b>{{ constants.INTRO_CONTACT }}</b>
+      </template>
 
-    <template #body>
-      <form>
-        <ListElt :items="constants.CONTACT_FORM">
+      <template #body>
+        <form>
+          <ListElt :items="constants.CONTACT_FORM">
 
-          <template #item-1>
-            <FieldElt type="email"
-              v-model:value="email"
-              :info="constants.INFO_EMAIL">
+            <template #item-1>
+              <FieldElt type="email"
+                v-model:value="email"
+                :info="constants.INFO_EMAIL">
 
-              <template #legend>
-                {{ constants.LEGEND_EMAIL }}
-              </template>
-              <template #label>
-                {{ constants.LABEL_EMAIL }}
-              </template>
-            </FieldElt>
-          </template>
-
-          <!-- Subject -->
-          <template #item-2>
-            <FieldElt v-model:value="subject"
-              :info="constants.INFO_SUBJECT">
-
-              <template #legend>
-                {{ constants.LEGEND_SUBJECT }}
-              </template>
-              <template #label>
-                {{ constants.LABEL_SUBJECT }}
-              </template>
-            </FieldElt>
-          </template>
-
-          <!-- Text -->
-          <template #item-3>
-            <FieldElt type="textarea"
-              v-model:value="text"
-              :info="constants.INFO_TEXT"
-              :mix="constants.TEXT_MIN"
-              :max="constants.TEXT_MAX">
-
-              <template #legend>
-                {{ constants.LEGEND_TEXT }}
-              </template>
-              <template #label>
-                {{ constants.LABEL_TEXT }}
-              </template>
-            </FieldElt>
-          </template>
-        </ListElt>
-
-        <!-- Send -->
-        <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY"
-          @verify="onVerify">
-          <BtnElt type="button"
-            class="btn-green"
-            :content="constants.CONTENT_SEND"
-            :title="constants.TITLE_MESSAGE">
-
-            <template #btn>
-              <i class="fa-regular fa-paper-plane fa-lg"></i>
+                <template #legend>
+                  {{ constants.LEGEND_EMAIL }}
+                </template>
+                <template #label>
+                  {{ constants.LABEL_EMAIL }}
+                </template>
+              </FieldElt>
             </template>
-          </BtnElt>
-        </vue-recaptcha>
-      </form>
-    </template>
-  </CardElt>
+
+            <!-- Subject -->
+            <template #item-2>
+              <FieldElt v-model:value="subject"
+                :info="constants.INFO_SUBJECT">
+
+                <template #legend>
+                  {{ constants.LEGEND_SUBJECT }}
+                </template>
+                <template #label>
+                  {{ constants.LABEL_SUBJECT }}
+                </template>
+              </FieldElt>
+            </template>
+
+            <!-- Text -->
+            <template #item-3>
+              <FieldElt type="textarea"
+                v-model:value="text"
+                :info="constants.INFO_TEXT"
+                :mix="constants.TEXT_MIN"
+                :max="constants.TEXT_MAX">
+
+                <template #legend>
+                  {{ constants.LEGEND_TEXT }}
+                </template>
+                <template #label>
+                  {{ constants.LABEL_TEXT }}
+                </template>
+              </FieldElt>
+            </template>
+          </ListElt>
+
+          <!-- Send -->
+          <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY"
+            @verify="onVerify">
+            <BtnElt type="button"
+              class="btn-green"
+              :content="constants.CONTENT_SEND"
+              :title="constants.TITLE_MESSAGE">
+
+              <template #btn>
+                <i class="fa-regular fa-paper-plane fa-lg"></i>
+              </template>
+            </BtnElt>
+          </vue-recaptcha>
+        </form>
+      </template>
+    </CardElt>
+  </main>
 </template>
 
 <script>

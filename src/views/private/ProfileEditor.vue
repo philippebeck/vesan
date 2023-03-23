@@ -1,173 +1,175 @@
 <template>
-  <header>
-    <h1 class="sky-dark">
-      <i class="fa-solid fa-user-gear fa-lg"
-        aria-hidden="true"></i>
-      {{ constants.PROFILE_EDITOR }}
-    </h1>
-  </header>
+  <main>
+    <header>
+      <h1 class="sky-dark">
+        <i class="fa-solid fa-user-gear fa-lg"
+          aria-hidden="true"></i>
+        {{ constants.PROFILE_EDITOR }}
+      </h1>
+    </header>
 
-  <CardElt>
-    <template #header>
-      <h2>{{ constants.PROFILE_SUB }}</h2>
-      <b>{{ constants.INTRO_PROFILE }}</b>
-    </template>
+    <CardElt>
+      <template #header>
+        <h2>{{ constants.PROFILE_SUB }}</h2>
+        <b>{{ constants.INTRO_PROFILE }}</b>
+      </template>
 
-    <template #body>
-      <form method="post"
-        enctype="multipart/form-data">
-        <ListElt :items="constants.USER_FORM">
+      <template #body>
+        <form method="post"
+          enctype="multipart/form-data">
+          <ListElt :items="constants.USER_FORM">
 
-          <!-- Name -->
-          <template #item-1>
-            <FieldElt v-model:value="user.name"
-              @keyup.enter="updateUser()"
-              :info="constants.INFO_NAME"
-              :min="2">
+            <!-- Name -->
+            <template #item-1>
+              <FieldElt v-model:value="user.name"
+                @keyup.enter="updateUser()"
+                :info="constants.INFO_NAME"
+                :min="2">
 
-              <template #legend>
-                {{ constants.LEGEND_NAME }}
-              </template>
-              <template #label>
-                {{ constants.LABEL_NAME }}
-              </template>
-            </FieldElt>
+                <template #legend>
+                  {{ constants.LEGEND_NAME }}
+                </template>
+                <template #label>
+                  {{ constants.LABEL_NAME }}
+                </template>
+              </FieldElt>
+            </template>
+
+            <!-- Email -->
+            <template #item-2>
+              <FieldElt type="email"
+                v-model:value="user.email"
+                @keyup.enter="updateUser()"
+                :info="constants.INFO_EMAIL">
+
+                <template #legend>
+                  {{ constants.LEGEND_EMAIL }}
+                </template>
+                <template #label>
+                  {{ constants.LABEL_EMAIL }}
+                </template>
+              </FieldElt>
+            </template>
+            
+            <!-- Image -->
+            <template #item-3>
+              <MediaElt v-if="user.image"
+                :src="'/img/thumbnails/users/' + user.image"
+                :alt="user.name" />
+
+              <FieldElt id="image"
+                type="file"
+                v-model:value="image"
+                :info="constants.INFO_IMAGE">
+
+                <template #legend>
+                  {{ constants.LEGEND_IMAGE }}
+                </template>
+                <template #label>
+                  {{ constants.LABEL_IMAGE }}
+                </template>
+              </FieldElt>
+            </template>
+
+            <!-- Pass -->
+            <template #item-4>
+              <FieldElt type="password"
+                v-model:value="pass"
+                @keyup.enter="updateUser()"
+                :info="constants.INFO_PASSWORD">
+
+                <template #legend>
+                  {{ constants.LEGEND_PASSWORD }}
+                </template>
+                <template #label>
+                  {{ constants.LABEL_PASSWORD }}
+                </template>
+              </FieldElt>
+            </template>
+          </ListElt>
+
+          <!-- Update -->
+          <BtnElt type="button"
+            @click="updateUser()" 
+            class="btn-sky"
+            :content="constants.TITLE_UPDATE"
+            :title="constants.INFO_UP_PROFILE">
+
+            <template #btn>
+              <i class="fa-solid fa-user-pen fa-lg"></i>
+            </template>
+          </BtnElt>
+
+          <!-- Delete -->
+          <BtnElt type="button"
+            @click="deleteUser()" 
+            class="btn-red"
+            :content="constants.TITLE_DELETE"
+            :title="constants.TITLE_DELETE_ACCOUNT">
+
+            <template #btn>
+              <i class="fa-solid fa-user-slash fa-lg"></i>
+            </template>
+          </BtnElt>
+        </form>
+      </template>
+    </CardElt>
+    
+    <CardElt v-if="orders.length !== 0">
+      <template #header>
+        <h2>{{ constants.ORDERS_SUB }}</h2>
+      </template>
+
+      <template #body>
+        <TableElt :items="orders">
+
+          <!-- Id -->
+          <template #cell-_id="slotProps">
+            <b>#{{ slotProps.index + 1 }}</b>
+            ({{ orders[slotProps.index]._id }})
           </template>
 
-          <!-- Email -->
-          <template #item-2>
-            <FieldElt type="email"
-              v-model:value="user.email"
-              @keyup.enter="updateUser()"
-              :info="constants.INFO_EMAIL">
+          <!-- Products -->
+          <template #cell-products="slotProps">
+            <ul>
+              <li v-for="(item, index) in orders[slotProps.index].products"
+                :key="index">
+                <a :href="`/product/${item.id}`">
 
-              <template #legend>
-                {{ constants.LEGEND_EMAIL }}
-              </template>
-              <template #label>
-                {{ constants.LABEL_EMAIL }}
-              </template>
-            </FieldElt>
-          </template>
-          
-          <!-- Image -->
-          <template #item-3>
-            <MediaElt v-if="user.image"
-              :src="'/img/thumbnails/users/' + user.image"
-              :alt="user.name" />
-
-            <FieldElt id="image"
-              type="file"
-              v-model:value="image"
-              :info="constants.INFO_IMAGE">
-
-              <template #legend>
-                {{ constants.LEGEND_IMAGE }}
-              </template>
-              <template #label>
-                {{ constants.LABEL_IMAGE }}
-              </template>
-            </FieldElt>
+                  <ul :title="constants.TITLE_GO + item.name">
+                    <li>
+                      <b>{{ item.name }}</b>
+                    </li>
+                    <li>
+                      <i>({{ item.option }})</i>
+                    </li>
+                    <li class="black">
+                      {{ item.quantity }}x {{ item.price }}€
+                    </li>
+                  </ul>
+                </a>
+              </li>
+            </ul>
           </template>
 
-          <!-- Pass -->
-          <template #item-4>
-            <FieldElt type="password"
-              v-model:value="pass"
-              @keyup.enter="updateUser()"
-              :info="constants.INFO_PASSWORD">
-
-              <template #legend>
-                {{ constants.LEGEND_PASSWORD }}
-              </template>
-              <template #label>
-                {{ constants.LABEL_PASSWORD }}
-              </template>
-            </FieldElt>
+          <!-- Total -->
+          <template #cell-total="slotProps">
+            <b>{{ orders[slotProps.index].total }} €</b>
           </template>
-        </ListElt>
 
-        <!-- Update -->
-        <BtnElt type="button"
-          @click="updateUser()" 
-          class="btn-sky"
-          :content="constants.TITLE_UPDATE"
-          :title="constants.INFO_UP_PROFILE">
-
-          <template #btn>
-            <i class="fa-solid fa-user-pen fa-lg"></i>
+          <!-- Created -->
+          <template #cell-created="slotProps">
+            {{ new Date(orders[slotProps.index].created).toLocaleString() }}
           </template>
-        </BtnElt>
 
-        <!-- Delete -->
-        <BtnElt type="button"
-          @click="deleteUser()" 
-          class="btn-red"
-          :content="constants.TITLE_DELETE"
-          :title="constants.TITLE_DELETE_ACCOUNT">
-
-          <template #btn>
-            <i class="fa-solid fa-user-slash fa-lg"></i>
+          <!-- Updated -->
+          <template #cell-updated="slotProps">
+            {{ new Date(orders[slotProps.index].updated).toLocaleString() }}
           </template>
-        </BtnElt>
-      </form>
-    </template>
-  </CardElt>
-  
-  <CardElt v-if="orders.length !== 0">
-    <template #header>
-      <h2>{{ constants.ORDERS_SUB }}</h2>
-    </template>
-
-    <template #body>
-      <TableElt :items="orders">
-
-        <!-- Id -->
-        <template #cell-_id="slotProps">
-          <b>#{{ slotProps.index + 1 }}</b>
-          ({{ orders[slotProps.index]._id }})
-        </template>
-
-        <!-- Products -->
-        <template #cell-products="slotProps">
-          <ul>
-            <li v-for="(item, index) in orders[slotProps.index].products"
-              :key="index">
-              <a :href="`/product/${item.id}`">
-
-                <ul :title="constants.TITLE_GO + item.name">
-                  <li>
-                    <b>{{ item.name }}</b>
-                  </li>
-                  <li>
-                    <i>({{ item.option }})</i>
-                  </li>
-                  <li class="black">
-                    {{ item.quantity }}x {{ item.price }}€
-                  </li>
-                </ul>
-              </a>
-            </li>
-          </ul>
-        </template>
-
-        <!-- Total -->
-        <template #cell-total="slotProps">
-          <b>{{ orders[slotProps.index].total }} €</b>
-        </template>
-
-        <!-- Created -->
-        <template #cell-created="slotProps">
-          {{ new Date(orders[slotProps.index].created).toLocaleString() }}
-        </template>
-
-        <!-- Updated -->
-        <template #cell-updated="slotProps">
-          {{ new Date(orders[slotProps.index].updated).toLocaleString() }}
-        </template>
-      </TableElt>
-    </template>
-  </CardElt>
+        </TableElt>
+      </template>
+    </CardElt>
+  </main>
 </template>
 
 <script>
