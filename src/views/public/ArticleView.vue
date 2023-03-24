@@ -65,7 +65,7 @@
 
           <template #figcaption>
             <blockquote v-html="article.text"
-              itemprop="text"
+              id="figcaption"
               class="container width-sm bord bord-sky blue">
             </blockquote>
             
@@ -143,7 +143,14 @@ export default {
       });
 
       this.$store.dispatch("listArticleComments", this.$route.params.id);
-},
+  },
+
+  updated() {
+    if (document.getElementById("figcaption")) {
+      const textElt = document.getElementById("figcaption");
+      textElt.firstChild.setAttribute("itemprop", "text");
+    }
+  },
 
   computed: {
     ...mapState(["article", "comments", "user"])
