@@ -202,14 +202,8 @@ export default {
      * @param {string} id 
      */
     deleteProduct(id) {
-      let productName = "";
+      let productName = this.$serve.getItemName(id, this.products);
 
-      for (let product of this.products) {
-        if (product._id === id) {
-          productName = product.name;
-        }
-      }
-      
       if (confirm(`${this.constants.TITLE_DELETE} ${productName} ?`) === true) {
         this.$serve.deleteData(`/products/${id}`)
           .then(() => {

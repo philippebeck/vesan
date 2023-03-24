@@ -159,13 +159,7 @@ export default {
      * @param {string} id 
      */
     deleteUser(id) {
-      let userName = "";
-
-      for (let i = 0; i < this.users.length; i++ ) {
-        if (this.users[i]._id === id) {
-          userName = this.users[i].name;
-        }
-      }
+      let userName = this.$serve.getItemName(id, this.users);
 
       if (confirm(`${this.constants.TITLE_DELETE} ${userName} ?`) === true) {
         this.$serve.deleteData(`/users/${id}`)

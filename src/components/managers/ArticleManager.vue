@@ -191,13 +191,7 @@ export default {
      * @param {string} id 
      */
     deleteArticle(id) {
-      let articleName = "";
-
-      for (let article of this.articles) {
-        if (article._id === id) {
-          articleName = article.name;
-        }
-      }
+      let articleName = this.$serve.getItemName(id, this.articles);
 
       if (confirm(`${this.constants.TITLE_DELETE} ${articleName} ?`) === true) {
         this.$serve.deleteData(`/articles/${id}`)
