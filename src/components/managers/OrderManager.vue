@@ -159,7 +159,6 @@ export default {
      */
     deleteOrder(id) {
       if (confirm(`${this.constants.TITLE_DELETE_ORDER}${id} ?`) === true) {
-
         this.$serve.deleteData(`/orders/${id}`)
           .then(() => {
             alert(this.constants.ALERT_ORDER + id + this.constants.ALERT_DELETED);

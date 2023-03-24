@@ -156,7 +156,6 @@ export default {
      */
     deleteReview(id) {
       if (confirm(`${this.constants.TITLE_DELETE_REVIEW}${id} ?`) === true) {
-
         this.$serve.deleteData(`/reviews/${id}`)
           .then(() => {
             alert(this.constants.ALERT_REVIEW + id + this.constants.ALERT_DELETED);
