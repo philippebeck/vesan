@@ -175,7 +175,10 @@ export default {
           this.constants.UI_URL + "/img/thumbnails/products/" + product.image
         );
       }))
-      .catch(err => { alert(err.response.data.message) });
+      .catch(err => { 
+        alert(err.response.data.message);
+        this.$router.push("/shop");
+      });
 
     this.$store.dispatch("listProductReviews", this.$route.params.id);
     this.priceCurrency = this.constants.CURRENCY_ISO;

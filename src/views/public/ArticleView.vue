@@ -137,7 +137,10 @@ export default {
           this.constants.UI_URL + "/img/thumbnails/articles/" + article.image
         );
       }))
-      .catch(err => { alert(err.response.data.message) });
+      .catch(err => { 
+        alert(err.response.data.message);
+        this.$router.push("/blog");
+      });
 
       this.$store.dispatch("listArticleComments", this.$route.params.id);
 },
