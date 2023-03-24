@@ -161,45 +161,54 @@ export default {
     },
 
     /**
+     * GET PRODUCT
+     * @param {string} id 
+     * @param {object} product 
+     */
+    getProduct(id, product) {
+      let data  = new FormData();
+      let image = document.getElementById(id).files[0] ?? product.image;
+
+      data.append("name", product.name);
+      data.append("description", product.description);
+      data.append("image", image);
+      data.append("alt", product.alt);
+      data.append("price", product.price);
+      data.append("options", product.options);
+      data.append("cat", product.cat);
+      data.append("created", product.created);
+      data.append("updated", Date.now());
+
+      return data;
+    },
+
+    /**
+     * CHECK PRODUCT
+     * @param {string} id 
+     * @param {object} product 
+     */
+    checkProduct(id, product) {
+      if (this.$serve.checkString(product.name) && 
+        this.$serve.checkString(product.description, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
+        this.$serve.checkString(product.alt) && 
+        this.$serve.checkNumber(product.price, this.constants.PRICE_MIN, this.constants.PRICE_MAX) && 
+        this.$serve.checkString(product.options, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
+
+        this.$serve.putData(`/products/${id}`, this.getProduct(id, product))
+          .then(() => {
+            alert(product.name + this.constants.ALERT_UPDATED);
+          })
+          .catch(err => { this.$serve.checkError(err) });
+      }
+    },
+
+    /**
      * UPDATE PRODUCT
      * @param {string} id 
      */
     updateProduct(id) {
       for (let product of this.products) {
-        if (product._id === id) {
-
-          if (this.$serve.checkString(product.name) && 
-            this.$serve.checkString(product.description, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
-            this.$serve.checkString(product.alt) && 
-            this.$serve.checkNumber(product.price, this.constants.PRICE_MIN, this.constants.PRICE_MAX) && 
-            this.$serve.checkString(product.options, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
-
-            let data  = new FormData();
-            let image = document.getElementById(id).files[0] ?? product.image;
-
-            data.append("name", product.name);
-            data.append("description", product.description);
-            data.append("image", image);
-            data.append("alt", product.alt);
-            data.append("price", product.price);
-            data.append("options", product.options);
-            data.append("cat", product.cat);
-            data.append("created", product.created);
-            data.append("updated", Date.now());
-
-            this.$serve.putData(`/products/${id}`, data)
-              .then(() => {
-                alert(product.name + this.constants.ALERT_UPDATED);
-              })
-              .catch(err => {
-                if (err.response) {
-                  alert(err.response.data.message) 
-                } else {
-                  console.log(err);
-                }
-              });
-          }
-        }
+        if (product._id === id) { this.checkProduct(id, product) }
       }
     },
 
@@ -208,27 +217,15 @@ export default {
      * @param {string} id 
      */
     deleteProduct(id) {
-      let productName = "";
+      let productName = this.$serve.getItemName(id, this.products);
 
-      for (let product of this.products) {
-        if (product._id === id) {
-          productName = product.name;
-        }
-      }
-      
       if (confirm(`${this.constants.TITLE_DELETE} ${productName} ?`) === true) {
         this.$serve.deleteData(`/products/${id}`)
           .then(() => {
             alert(productName + this.constants.ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => {
-            if (err.response) {
-              alert(err.response.data.message) 
-            } else {
-              console.log(err);
-            }
-          });
+          .catch(err => { this.$serve.checkError(err) });
       }
     }
   }

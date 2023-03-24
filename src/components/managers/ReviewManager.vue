@@ -145,13 +145,7 @@ export default {
             .then(() => {
               alert(this.constants.ALERT_REVIEW + id + this.constants.ALERT_MODERATED);
             })
-            .catch(err => {
-              if (err.response) {
-                alert(err.response.data.message) 
-              } else {
-                console.log(err);
-              }
-            });
+            .catch(err => { this.$serve.checkError(err) });
         }
       }
     },
@@ -162,19 +156,12 @@ export default {
      */
     deleteReview(id) {
       if (confirm(`${this.constants.TITLE_DELETE_REVIEW}${id} ?`) === true) {
-
         this.$serve.deleteData(`/reviews/${id}`)
           .then(() => {
             alert(this.constants.ALERT_REVIEW + id + this.constants.ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => {
-            if (err.response) {
-              alert(err.response.data.message) 
-            } else {
-              console.log(err);
-            }
-          });
+          .catch(err => { this.$serve.checkError(err) });
       }
     }
   }

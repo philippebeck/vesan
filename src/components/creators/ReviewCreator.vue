@@ -103,13 +103,7 @@ export default {
             alert(this.constants.ALERT_NEW_REVIEW);
             this.$router.go();
           })
-          .catch(err => {
-            if (err.response) {
-              alert(err.response.data.message) 
-            } else {
-              console.log(err);
-            }
-          });
+          .catch(err => { this.$serve.checkError(err) });
       }
     }
   }

@@ -68,12 +68,8 @@ export default {
               alert("Failed captcha verification");
             }
           })
-          .catch(err => {
-            if (err.response) {
-              alert(err.response.data.message) 
-            } else {
-              console.log(err);
-            }
+          .catch(err => { 
+            this.$serve.checkError(err);
             this.$router.go();
           });
       }
@@ -95,13 +91,7 @@ export default {
             alert(message.get("subject") + this.constants.ALERT_SENDED);
             this.$router.push("/login");
           })
-          .catch(err => {
-            if (err.response) {
-              alert(err.response.data.message) 
-            } else {
-              console.log(err);
-            }
-          });
+          .catch(err => { this.$serve.checkError(err) });
       }
     }
   }

@@ -126,37 +126,45 @@ export default {
     },
 
     /**
+     * GET USER
+     * @param {string} id 
+     * @param {object} user 
+     */
+    getUser(id, user) {
+      let data  = new FormData();
+      let image = document.getElementById(id).files[0] ?? user.image;
+
+      data.append("name", user.name);
+      data.append("email", user.email);
+      data.append("image", image);
+      data.append("role", user.role);
+      data.append("updated", Date.now());
+
+      return data;
+    },
+
+    /**
+     * CHECK USER
+     * @param {string} id 
+     * @param {object} user 
+     */
+    checkUser(id, user) {
+      if (this.$serve.checkString(user.name) && this.$serve.checkEmail(user.email)) {
+        this.$serve.putData(`/users/${id}`, this.getUser(id, user))
+          .then(() => {
+            alert(user.name + this.constants.ALERT_UPDATED);
+          })
+          .catch(err => { this.$serve.checkError(err) });
+        }
+    },
+
+    /**
      * UPDATE USER
      * @param {string} id 
      */
     updateUser(id) {
       for (let user of this.users) {
-        if (user._id === id) {
-
-          if (this.$serve.checkString(user.name) && this.$serve.checkEmail(user.email)) {
-
-            let data  = new FormData();
-            let image = document.getElementById(id).files[0] ?? user.image;
-
-            data.append("name", user.name);
-            data.append("email", user.email);
-            data.append("image", image);
-            data.append("role", user.role);
-            data.append("updated", Date.now());
-
-            this.$serve.putData(`/users/${id}`, data)
-              .then(() => {
-                alert(user.name + this.constants.ALERT_UPDATED);
-              })
-              .catch(err => {
-                if (err.response) {
-                  alert(err.response.data.message) 
-                } else {
-                  console.log(err);
-                }
-              });
-          }
-        }
+        if (user._id === id) { this.checkUser(id, user) }
       }
     },
 
@@ -165,13 +173,7 @@ export default {
      * @param {string} id 
      */
     deleteUser(id) {
-      let userName = "";
-
-      for (let i = 0; i < this.users.length; i++ ) {
-        if (this.users[i]._id === id) {
-          userName = this.users[i].name;
-        }
-      }
+      let userName = this.$serve.getItemName(id, this.users);
 
       if (confirm(`${this.constants.TITLE_DELETE} ${userName} ?`) === true) {
         this.$serve.deleteData(`/users/${id}`)
@@ -179,13 +181,7 @@ export default {
             alert(userName + this.constants.ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => {
-            if (err.response) {
-              alert(err.response.data.message) 
-            } else {
-              console.log(err);
-            }
-          });
+          .catch(err => { this.$serve.checkError(err) });
       }
     }
   }

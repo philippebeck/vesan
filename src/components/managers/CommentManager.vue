@@ -114,7 +114,7 @@ export default {
     getComments() {
       return this.comments;
     },
-    
+
     /**
      * GET ARTICLE NAME
      * @param {string} id
@@ -140,13 +140,7 @@ export default {
             .then(() => {
               alert(this.constants.ALERT_COMMENT + id + this.constants.ALERT_MODERATED);
             })
-            .catch(err => {
-              if (err.response) {
-                alert(err.response.data.message) 
-              } else {
-                console.log(err);
-              }
-            });
+            .catch(err => { this.$serve.checkError(err) });
         }
       }
     },
@@ -157,19 +151,12 @@ export default {
      */
     deleteComment(id) {
       if (confirm(`${this.constants.TITLE_DELETE_COMMENT}${id} ?`) === true) {
-
         this.$serve.deleteData(`/comments/${id}`)
           .then(() => {
             alert(this.constants.ALERT_COMMENT + id + this.constants.ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => {
-            if (err.response) {
-              alert(err.response.data.message) 
-            } else {
-              console.log(err);
-            }
-          });
+          .catch(err => { this.$serve.checkError(err) });
       }
     }
   }

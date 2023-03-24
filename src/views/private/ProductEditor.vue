@@ -203,13 +203,7 @@ export default {
             );
           }
         })
-        .catch(err => {
-          if (err.response) {
-            alert(err.response.data.message) 
-          } else {
-            console.log(err);
-          }
-        });
+        .catch(err => { this.$serve.checkError(err) });
 
     } else {
       alert(this.constants.ALERT_HOME);
@@ -261,13 +255,7 @@ export default {
             alert(this.product.name + this.constants.ALERT_UPDATED);
             this.$router.push("/admin");
           })
-          .catch(err => {
-            if (err.response) {
-              alert(err.response.data.message) 
-            } else {
-              console.log(err);
-            }
-          });
+          .catch(err => { this.$serve.checkError(err) });
       }
     }
   }

@@ -189,13 +189,7 @@ export default {
           }
         }
       })
-      .catch(err => {
-        if (err.response) {
-          alert(err.response.data.message) 
-        } else {
-          console.log(err);
-        }
-      });
+      .catch(err => { this.$serve.checkError(err) });
   },
 
   computed: {
@@ -365,13 +359,7 @@ export default {
           localStorage.removeItem("basket");
           this.$router.push("/profile");
         })
-        .catch(err => {
-          if (err.response) {
-            alert(err.response.data.message) 
-          } else {
-            console.log(err);
-          }
-        });
+        .catch(err => { this.$serve.checkError(err) });
     },
 
     /**
