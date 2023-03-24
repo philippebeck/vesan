@@ -65,7 +65,7 @@
 
           <template #figcaption>
             <blockquote v-html="article.text"
-              itemprop="text"
+              id="figcaption"
               class="container width-sm bord bord-sky blue">
             </blockquote>
             
@@ -137,10 +137,20 @@ export default {
           this.constants.UI_URL + "/img/thumbnails/articles/" + article.image
         );
       }))
-      .catch(err => { alert(err.response.data.message) });
+      .catch(err => { 
+        alert(err.response.data.message);
+        this.$router.push("/blog");
+      });
 
       this.$store.dispatch("listArticleComments", this.$route.params.id);
-},
+  },
+
+  updated() {
+    if (document.getElementById("figcaption")) {
+      const textElt = document.getElementById("figcaption");
+      textElt.firstChild.setAttribute("itemprop", "text");
+    }
+  },
 
   computed: {
     ...mapState(["article", "comments", "user"])

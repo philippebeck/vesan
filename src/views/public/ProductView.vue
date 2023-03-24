@@ -44,7 +44,7 @@
         itemprop="image">
 
         <template #figcaption>
-          <p class="figcaption"
+          <p id="figcaption"
             v-html="product.description">
           </p>
           <p itemprop="offers"
@@ -175,16 +175,18 @@ export default {
           this.constants.UI_URL + "/img/thumbnails/products/" + product.image
         );
       }))
-      .catch(err => { alert(err.response.data.message) });
+      .catch(err => { 
+        alert(err.response.data.message);
+        this.$router.push("/shop");
+      });
 
     this.$store.dispatch("listProductReviews", this.$route.params.id);
     this.priceCurrency = this.constants.CURRENCY_ISO;
   },
 
   updated() {
-    const descriptionArray = document.getElementsByClassName("figcaption");
-
-    for (let descriptionElt of descriptionArray) {
+    if (document.getElementById("figcaption")) {
+      const descriptionElt = document.getElementById("figcaption");
       descriptionElt.firstChild.setAttribute("itemprop", "description");
     }
   },

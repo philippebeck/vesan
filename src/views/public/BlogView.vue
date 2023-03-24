@@ -111,8 +111,7 @@
 
                     <template #figcaption>
                       <blockquote v-html="slotProps.value.text.slice(0, 50)" 
-                        itemprop="text"
-                        class="monospace">
+                        class="monospace figcaption">
                       </blockquote>
                     </template>
                   </MediaElt>
@@ -163,6 +162,14 @@ export default {
       this.constants.UI_URL + "/blog",
       this.constants.UI_URL + "/img/logo.svg"
     );
+  },
+
+  updated() {
+    const textArray = document.getElementsByClassName("figcaption");
+
+    for (let textElt of textArray) {
+      textElt.firstChild.setAttribute("itemprop", "text");
+    }
   },
 
   computed: {
