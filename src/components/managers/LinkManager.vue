@@ -118,31 +118,38 @@ export default {
     },
 
     /**
+     * GET LINK
+     * @param {object} link 
+     */
+    getLink(link) {
+      let data = new FormData();
+
+      data.append("name", link.name);
+      data.append("url", link.url);
+      data.append("cat", link.cat);
+
+      return data;
+    },
+
+    checkLink(link) {
+      if (link.url.startsWith("http")) { link.url = link.url.split('//')[1] }
+
+      if (this.$serve.checkString(link.name) && this.$serve.checkUrl(`https://${link.url}`)) {
+        this.$serve.putData(`/links/${link._id}`, this.getLink(link))
+          .then(() => {
+            alert(link.name + this.constants.ALERT_UPDATED);
+          })
+          .catch(err => { this.$serve.checkError(err) });
+      }
+    },
+
+    /**
      * UPDATE LINK
      * @param {string} id
      */
     updateLink(id) {
-      for (let i = 0; i < this.links.length; i++ ) {
-        if (this.links[i]._id === id) {
-
-          if (this.links[i].url.startsWith("http")) {
-            this.getLinks()[i].url = this.links[i].url.split('//')[1];
-          }
-
-          if (this.$serve.checkString(this.links[i].name) && this.$serve.checkUrl(`https://${this.links[i].url}`)) {
-
-            let link = new FormData();
-            link.append("name", this.links[i].name);
-            link.append("url", this.links[i].url);
-            link.append("cat", this.links[i].cat);
-
-            this.$serve.putData(`/links/${this.links[i]._id}`, link)
-              .then(() => {
-                alert(link.get("name") + this.constants.ALERT_UPDATED);
-              })
-              .catch(err => { this.$serve.checkError(err) });
-          }
-        }
+      for (let link of this.links) {
+        if (link._id === id) { this.checkLink(link) }
       }
     },
 
@@ -151,13 +158,7 @@ export default {
      * @param {string} id 
      */
     deleteLink(id) {
-      let linkName = "";
-      
-      for (let link of this.links) {
-        if (link._id === id) {
-          linkName = link.name;
-        }
-      }
+      let linkName = this.$serve.getItemName(id, this.links);
 
       if (confirm(`${this.constants.TITLE_DELETE} ${linkName} ?`) === true) {
         this.$serve.deleteData(`/links/${id}`)

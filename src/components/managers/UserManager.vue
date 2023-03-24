@@ -126,31 +126,45 @@ export default {
     },
 
     /**
+     * GET USER
+     * @param {string} id 
+     * @param {object} user 
+     */
+    getUser(id, user) {
+      let data  = new FormData();
+      let image = document.getElementById(id).files[0] ?? user.image;
+
+      data.append("name", user.name);
+      data.append("email", user.email);
+      data.append("image", image);
+      data.append("role", user.role);
+      data.append("updated", Date.now());
+
+      return data;
+    },
+
+    /**
+     * CHECK USER
+     * @param {string} id 
+     * @param {object} user 
+     */
+    checkUser(id, user) {
+      if (this.$serve.checkString(user.name) && this.$serve.checkEmail(user.email)) {
+        this.$serve.putData(`/users/${id}`, this.getUser(id, user))
+          .then(() => {
+            alert(user.name + this.constants.ALERT_UPDATED);
+          })
+          .catch(err => { this.$serve.checkError(err) });
+        }
+    },
+
+    /**
      * UPDATE USER
      * @param {string} id 
      */
     updateUser(id) {
       for (let user of this.users) {
-        if (user._id === id) {
-
-          if (this.$serve.checkString(user.name) && this.$serve.checkEmail(user.email)) {
-
-            let data  = new FormData();
-            let image = document.getElementById(id).files[0] ?? user.image;
-
-            data.append("name", user.name);
-            data.append("email", user.email);
-            data.append("image", image);
-            data.append("role", user.role);
-            data.append("updated", Date.now());
-
-            this.$serve.putData(`/users/${id}`, data)
-              .then(() => {
-                alert(user.name + this.constants.ALERT_UPDATED);
-              })
-              .catch(err => { this.$serve.checkError(err) });
-          }
-        }
+        if (user._id === id) { this.checkUser(id, user) }
       }
     },
 

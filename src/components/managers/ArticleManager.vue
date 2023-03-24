@@ -154,35 +154,50 @@ export default {
     },
 
     /**
+     * GET ARTICLE
+     * @param {string} id 
+     * @param {object} article 
+     */
+    getArticle(id, article) {
+      let data  = new FormData();
+      let image = document.getElementById(id).files[0] ?? article.image;
+
+      data.append("name", article.name);
+      data.append("text", article.text);
+      data.append("image", image);
+      data.append("alt", article.alt);
+      data.append("likes", article.likes);
+      data.append("cat", article.cat);
+      data.append("updated", Date.now());
+
+      return data;
+    },
+
+    /**
+     * CHECK ARTICLE
+     * @param {string} id 
+     * @param {object} article 
+     */
+    checkArticle(id, article) {
+      if (this.$serve.checkString(article.name) && 
+        this.$serve.checkString(article.text, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
+        this.$serve.checkString(article.alt)) {
+
+        this.$serve.putData(`/articles/${id}`, this.getArticle(id, article))
+          .then(() => {
+            alert(article.name + this.constants.ALERT_UPDATED);
+          })
+          .catch(err => { this.$serve.checkError(err) });
+      }
+    },
+
+    /**
      * UPDATE ARTICLE
      * @param {string} id 
      */
     updateArticle(id) {
       for (let article of this.articles) {
-        if (article._id === id) {
-
-          if (this.$serve.checkString(article.name) && 
-            this.$serve.checkString(article.text, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
-            this.$serve.checkString(article.alt)) {
-
-            let data  = new FormData();
-            let image = document.getElementById(id).files[0] ?? article.image;
-
-            data.append("name", article.name);
-            data.append("text", article.text);
-            data.append("image", image);
-            data.append("alt", article.alt);
-            data.append("likes", article.likes);
-            data.append("cat", article.cat);
-            data.append("updated", Date.now());
-
-            this.$serve.putData(`/articles/${id}`, data)
-              .then(() => {
-                alert(article.name + this.constants.ALERT_UPDATED);
-              })
-              .catch(err => { this.$serve.checkError(err) });
-          }
-        }
+        if (article._id === id) { this.checkArticle(id, article) }
       }
     },
 
