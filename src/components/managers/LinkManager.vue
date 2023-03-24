@@ -140,13 +140,7 @@ export default {
               .then(() => {
                 alert(link.get("name") + this.constants.ALERT_UPDATED);
               })
-              .catch(err => {
-                if (err.response) {
-                  alert(err.response.data.message) 
-                } else {
-                  console.log(err);
-                }
-              });
+              .catch(err => { this.$serve.checkError(err) });
           }
         }
       }
@@ -171,13 +165,7 @@ export default {
             alert(linkName + this.constants.ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => {
-            if (err.response) {
-              alert(err.response.data.message) 
-            } else {
-              console.log(err);
-            }
-          });
+          .catch(err => { this.$serve.checkError(err) });
       }
     }
   }

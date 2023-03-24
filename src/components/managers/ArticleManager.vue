@@ -180,13 +180,7 @@ export default {
               .then(() => {
                 alert(article.name + this.constants.ALERT_UPDATED);
               })
-              .catch(err => {
-                if (err.response) {
-                  alert(err.response.data.message) 
-                } else {
-                  console.log(err);
-                }
-              });
+              .catch(err => { this.$serve.checkError(err) });
           }
         }
       }
@@ -211,13 +205,7 @@ export default {
             alert(articleName + this.constants.ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => {
-            if (err.response) {
-              alert(err.response.data.message) 
-            } else {
-              console.log(err);
-            }
-          });
+          .catch(err => { this.$serve.checkError(err) });
       }
     }
   }

@@ -173,13 +173,7 @@ export default {
               alert(this.name + this.constants.ALERT_CREATED);
               this.$router.go();
             })
-            .catch(err => {
-              if (err.response) {
-                alert(err.response.data.message) 
-              } else {
-                console.log(err);
-              }
-            });
+            .catch(err => { this.$serve.checkError(err) });
 
         } else {
           alert(this.constants.ALERT_IMG);
