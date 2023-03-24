@@ -257,13 +257,7 @@ export default {
                 console.log(this.article.name + this.constants.ALERT_LIKED);
               }
             })
-            .catch(err => {
-              if (err.response) {
-                alert(err.response.data.message) 
-              } else {
-                console.log(err);
-              }
-            });
+            .catch(err => { this.$serve.checkError(err) });
         }
       }
     }

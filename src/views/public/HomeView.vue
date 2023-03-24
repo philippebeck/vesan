@@ -64,7 +64,7 @@ export default {
       this.constants.META_HOME,
       this.constants.UI_URL,
       this.constants.UI_URL + "/img/logo.svg"
-      );
+    );
   }
 }
 </script>

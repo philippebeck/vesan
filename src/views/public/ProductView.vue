@@ -176,7 +176,7 @@ export default {
         );
       }))
       .catch(err => { 
-        alert(err.response.data.message);
+        this.$serve.checkError(err);
         this.$router.push("/shop");
       });
 
