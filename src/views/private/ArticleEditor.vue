@@ -170,7 +170,10 @@ export default {
             );
           }
         })
-        .catch(err => { this.$serve.checkError(err) });
+        .catch(err => { 
+          this.$serve.checkError(err);
+          this.$router.push("/admin");
+        });
 
     } else {
       alert(this.constants.ALERT_HOME);
