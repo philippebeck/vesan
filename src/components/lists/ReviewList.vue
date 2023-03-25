@@ -118,7 +118,7 @@ import ListElt from "@/assets/ListElt"
 import MediaElt from "@/assets/MediaElt"
 
 export default {
-  name: "ReviewManager",
+  name: "ReviewList",
   components: {
     BtnElt,
     CardElt,
@@ -141,8 +141,10 @@ export default {
       for (let review of this.reviews) {
         if (review._id === id) {
 
+          console.log(typeof review.score, review.score);
+
           if (this.$serve.checkString(review.text, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
-            this.$serve.checkNumber(this.score)) {
+            this.$serve.checkNumber(review.score)) {
             let data = new FormData();
 
             data.append("text", review.text);
