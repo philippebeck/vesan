@@ -33,6 +33,7 @@ Vesan uses many other well-known packages, like ExpressJS, Mongoose, etc...
   - [Installation](#installation)
   - [Configuration](#configuration)
   - [Usage](#usage)
+  - [Production](#production)
   - [Content](#content)
   - [Documentation](#documentation)
 
@@ -95,11 +96,28 @@ From the root of your App with Vesan :
 `$ cd api`  
 `$ npm run start`  
 
-2. To run the frontend server :  
+1. To run the frontend :  
 `$ npm run serve`  
 
 ---
 
+## Production
+
+From the root of your App with Vesan :  
+
+1. To compile all style (import.css + packages + overload.css) :  
+`$ grunt`  
+
+2. So you can copy the content of style.ui.css to style.css  
+
+3. Then compile the frontend :  
+`$ npm run build`  
+
+4. Finally, use the files of the dist folder for your prod UI
+
+5. Nothing special for the API, except maybe your own server configuration (for myself, Passenger app in server.js)
+
+---
 ## Content
 
 Available API Files :

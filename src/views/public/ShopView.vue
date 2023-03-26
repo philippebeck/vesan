@@ -93,7 +93,7 @@
                     itemprop="image">
 
                     <template #figcaption>
-                      <p v-html="slotProps.value.description.slice(0, 50)"
+                      <p v-html="slotProps.value.description.split(':')[0]"
                         class="monospace figcaption">
                       </p>
 

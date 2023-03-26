@@ -110,7 +110,7 @@
                     itemprop="image">
 
                     <template #figcaption>
-                      <blockquote v-html="slotProps.value.text.slice(0, 50)" 
+                      <blockquote v-html="slotProps.value.text.split(':')[0]" 
                         class="monospace figcaption">
                       </blockquote>
                     </template>
