@@ -166,7 +166,7 @@ export default {
               this.constants.HEAD_ARTICLE, 
               this.constants.META_ARTICLE,
               this.constants.UI_URL,
-              this.constants.UI_URL + "/img/logo.svg"
+              this.constants.UI_URL + this.constants.LOGO_SRC
             );
           }
         })

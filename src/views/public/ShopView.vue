@@ -161,7 +161,7 @@ export default {
       this.constants.HEAD_SHOP, 
       this.constants.META_SHOP,
       this.constants.UI_URL + "/shop",
-      this.constants.UI_URL + "/img/logo.svg"
+      this.constants.UI_URL + this.constants.LOGO_SRC
     );
 
     this.priceCurrency = this.constants.CURRENCY_ISO;

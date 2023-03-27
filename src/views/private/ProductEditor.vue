@@ -199,7 +199,7 @@ export default {
               this.constants.HEAD_PRODUCT, 
               this.constants.META_PRODUCT,
               this.constants.UI_URL,
-              this.constants.UI_URL + "/img/logo.svg"
+              this.constants.UI_URL + this.constants.LOGO_SRC
             );
           }
         })

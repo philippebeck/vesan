@@ -210,7 +210,7 @@ export default {
       this.constants.HEAD_PROFILE, 
       this.constants.META_PROFILE,
       this.constants.UI_URL,
-      this.constants.UI_URL + "/img/logo.svg"
+      this.constants.UI_URL + this.constants.LOGO_SRC
     );
 
     } else {
