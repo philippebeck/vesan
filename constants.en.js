@@ -27,7 +27,7 @@ export default {
   LANG : "en",
 
   LOGO_ALT : "Logo",
-  LOGO_SRC : "/img/logo.svg",
+  LOGO_SRC : "/img/logo.png",
   LOGO_WIDTH : "30",
 
   NUM_MAX : 5,
