@@ -177,7 +177,7 @@ export default {
           this.constants.HEAD_BASKET, 
           this.constants.META_BASKET,
           this.constants.UI_URL + "/basket",
-          this.constants.UI_URL + "/img/logo.svg"
+          this.constants.UI_URL + this.constants.LOGO_SRC
         );
 
         if (this.basket[0] !== undefined) {

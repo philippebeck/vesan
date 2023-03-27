@@ -95,7 +95,7 @@ export default {
       this.constants.HEAD_LINK, 
       this.constants.META_LINK,
       this.constants.UI_URL + "/link",
-      this.constants.UI_URL + "/img/logo.svg"
+      this.constants.UI_URL + this.constants.LOGO_SRC
     );
   },
 

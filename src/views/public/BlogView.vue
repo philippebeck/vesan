@@ -160,7 +160,7 @@ export default {
       this.constants.HEAD_BLOG, 
       this.constants.META_BLOG,
       this.constants.UI_URL + "/blog",
-      this.constants.UI_URL + "/img/logo.svg"
+      this.constants.UI_URL + this.constants.LOGO_SRC
     );
   },
 

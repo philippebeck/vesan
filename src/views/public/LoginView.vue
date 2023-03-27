@@ -161,7 +161,7 @@ export default {
       this.constants.HEAD_LOGIN, 
       this.constants.META_LOGIN,
       this.constants.UI_URL + "/login",
-      this.constants.UI_URL + "/img/logo.svg"
+      this.constants.UI_URL + this.constants.LOGO_SRC
     );
 
     if (localStorage.userId) {
