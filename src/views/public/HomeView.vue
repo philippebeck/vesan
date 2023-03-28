@@ -15,11 +15,12 @@
       </SliderElt>
 
       <MediaElt v-else
-        :type="constants.HOME_MEDIA"
-        :src="constants.HOME_SRC"
-        :alt="constants.HOME_ALT"
+        :type="media.media_type"
+        :src="media.url"
+        :alt="media.title"
         :width="constants.HOME_WIDTH"
-        :loop="constants.HOME_LOOP"/>
+        :loop="constants.HOME_LOOP"
+        :title="media.title + ' : ' + media.explanation + ' Credits : ' + media.copyright"/>
 
       <h1 class="sky-dark">
         {{ constants.HOME_VIEW }}
@@ -57,6 +58,11 @@ export default {
     MediaElt
   },
   props: ["constants"],
+  data() {
+    return {
+      media: {}
+    }
+  },
 
   created() {
     this.$serve.setMeta(
@@ -65,6 +71,12 @@ export default {
       this.constants.UI_URL,
       this.constants.UI_URL + this.constants.LOGO_SRC
     );
+
+    if (this.constants.HOME_API_URL !== "") {
+      this.$serve.getData(this.constants.HOME_API_URL + this.constants.HOME_API_KEY)
+      .then((media) => { this.media = media })
+      .catch(err => this.$serve.checkError(err));
+    }
   }
 }
 </script>
