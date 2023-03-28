@@ -5,7 +5,6 @@ export default {
   /******************** CONFIG ********************/
 
   API_URL : "http://localhost:3000",
-  UI_URL : "http://localhost:8080",
 
   CAT_ARTICLE : "News",
   CAT_LINK : "HTML5",
@@ -19,10 +18,17 @@ export default {
   ERROR_ALT : "404 Error",
 
   HOME_ALT : "Home image",
+  HOME_API_KEY : "",
+  HOME_API_URL : "",
   HOME_LOOP : true,
   HOME_MEDIA : "slider",
   HOME_SRC : "/video/home.mp4",
   HOME_WIDTH : 500,
+
+  ICON : "/img/favicon.png",
+  
+  IMG_WIDTH : 500,
+  IMG_HEIGHT : 500,
 
   LANG : "en",
 
@@ -59,11 +65,16 @@ export default {
   TEXT_MAX : 5000,
   TEXT_MIN : 8,
 
+  THUMB_WIDTH : 200,
+  THUMB_HEIGHT : 200,
+
   TINY_KEY : "{your-tiny-key}",
 
   TOKEN : JSON.parse(localStorage.getItem("userToken")),
 
   TW_ID : "",
+
+  UI_URL : "http://localhost:8080",
 
   URL_MAX : 100,
   URL_MIN : 5,
