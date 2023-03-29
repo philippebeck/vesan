@@ -49,7 +49,7 @@ exports.getImageUpdated = (id, name, newFilename, res) => {
         })
       })
     )
-    .catch(() => res.status(404).json({ message: process.env.GALLERY_NOT_FOUND }));
+    .catch(() => res.status(404).json({ message: process.env.IMAGE_NOT_FOUND }));
 
   return image;
 }
