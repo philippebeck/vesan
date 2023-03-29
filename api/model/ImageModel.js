@@ -1,0 +1,29 @@
+"use strict";
+
+const mongoose = require("mongoose");
+const uniqueValidator = require("mongoose-unique-validator");
+
+const ImageModel = mongoose.Schema(
+  {
+    name: { 
+      type: String, 
+      required: true,
+      unique: true
+    },
+    legend: { 
+      type: String, 
+      required: true
+    },
+    gallery: { 
+      type: String, 
+      required: true
+    }
+  },
+  {
+    versionKey: false
+  }
+);
+
+ImageModel.plugin(uniqueValidator);
+
+module.exports = mongoose.model("Image", ImageModel);
