@@ -2,6 +2,7 @@
 
 const formidable  = require("formidable");
 const nem         = require("nemjs");
+const GalleryModel = require("../model/GalleryModel");
 const ImageModel  = require("../model/ImageModel");
 
 require("dotenv").config();
@@ -94,12 +95,31 @@ exports.createImage = (req, res, next) => {
     if (err) { next(err); return }
 
     this.checkImageData(fields.legend, res);
-    let image = new ImageModel(fields);
 
-    image
-      .save()
-      .then(() => res.status(201).json({ message: process.env.IMAGE_CREATED }))
-      .catch(() => res.status(400).json({ message: process.env.IMAGE_NOT_CREATED }));
+    GalleryModel
+      .findById(fields.gallery)
+      .then((gallery) => {
+
+        ImageModel
+        .find({ gallery: fields.gallery })
+        .then((images) => { 
+          let index = images.length + 1;
+          let name  = nem.getGalleryName(gallery.name) + "-" + index + "." + process.env.IMG_EXT;
+
+          let image = new ImageModel({
+            name: name,
+            legend: fields.legend,
+            gallery: fields.gallery
+          });
+
+          image
+            .save()
+            .then(() => res.status(201).json({ message: process.env.IMAGE_CREATED }))
+            .catch(() => res.status(400).json({ message: process.env.IMAGE_NOT_CREATED }));
+        })
+        .catch(() => res.status(404).json({ message: process.env.IMAGES_NOT_FOUND }));
+      })
+      .catch(() => res.status(404).json({ message: process.env.GALLERY_NOT_FOUND }));
   })
 };
 
