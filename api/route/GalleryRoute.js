@@ -6,7 +6,7 @@ const nem         = require("nemjs");
 const GalleryCtrl = require("../controller/GalleryCtrl");
 
 /* Public */
-router.get("/", GalleryCtrl.listGallery);
+router.get("/", GalleryCtrl.listGalleries);
 router.get("/:id", GalleryCtrl.readGallery);
 
 /* Private */
