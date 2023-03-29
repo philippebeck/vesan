@@ -129,7 +129,17 @@ exports.updateImage = (req, res, next) => {
  */
 exports.deleteImage = (req, res) => {
   ImageModel
-    .findByIdAndDelete(req.params.id)
-    .then(() => res.status(204).json({ message: process.env.IMAGE_DELETED }))
-    .catch(() => res.status(400).json({ message: process.env.IMAGE_NOT_DELETED }))
+    .findById(req.params.id)
+    .then((image) => {
+      fs.unlink(GALLERIES_THUMB + image.name, () => {
+        fs.unlink(GALLERIES_IMG + image.name, () => {
+
+          ImageModel
+            .findByIdAndDelete(req.params.id)
+            .then(() => res.status(204).json({ message: process.env.IMAGE_DELETED }))
+            .catch(() => res.status(400).json({ message: process.env.IMAGE_NOT_DELETED }));
+        })
+      })
+    })
+    .catch(() => res.status(400).json({ message: process.env.IMAGE_NOT_FOUND }));
 };
