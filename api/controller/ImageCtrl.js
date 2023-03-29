@@ -39,12 +39,12 @@ exports.getImageUpdated = (id, name, newFilename, res) => {
   nem.setImage( "galleries/" + newFilename, "galleries/" + image);
   nem.setThumbnail("galleries/" + newFilename, "galleries/" + image);
 
-  GalleryModel
+  ImageModel
     .findById(id)
-    .then((gallery) => 
+    .then((image) => 
 
-      fs.unlink(GALLERIES_THUMB + gallery.image, () => {
-        fs.unlink(GALLERIES_IMG + gallery.image, () => {
+      fs.unlink(GALLERIES_THUMB + image.name, () => {
+        fs.unlink(GALLERIES_IMG + image.name, () => {
           fs.unlink(GALLERIES_IMG + newFilename, () => {})
         })
       })
@@ -64,17 +64,7 @@ exports.getImageUpdated = (id, name, newFilename, res) => {
 exports.listGalleryImages = (req, res) => {
   ImageModel
     .find({ gallery: req.params.id })
-    .then((images) => {
-
-      GalleryModel
-        .find()
-        .then((galleries) => {
-
-          images = nem.getArrayWithUsername(images, galleries);
-          res.status(200).json(images);
-        })
-      .catch(() => res.status(404).json({ message: process.env.GALLERIES_NOT_FOUND }));
-    })
+    .then((images) => { res.status(200).json(images) })
     .catch(() => res.status(404).json({ message: process.env.IMAGES_NOT_FOUND }));
 };
 
@@ -88,17 +78,7 @@ exports.listGalleryImages = (req, res) => {
 exports.listImages = (req, res) => {
   ImageModel
     .find()
-    .then((images) => {
-
-      GalleryModel
-        .find()
-        .then((galleries) => {
-
-          images = nem.getArrayWithUsername(images, galleries);
-          res.status(200).json(images);
-        })
-      .catch(() => res.status(404).json({ message: process.env.GALLERIES_NOT_FOUND }));
-    })
+    .then((images) => { res.status(200).json(images) })
     .catch(() => res.status(404).json({ message: process.env.IMAGES_NOT_FOUND }));
 };
 
