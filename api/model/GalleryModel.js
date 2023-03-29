@@ -14,12 +14,9 @@ const GalleryModel = mongoose.Schema(
       type: String, 
       required: true
     },
-    year: { 
-      type: Number, 
-      required: true
-    },
-    url: { 
-      type: String
+    cover: { 
+      type: String,
+      default: ""
     }
   },
   {
