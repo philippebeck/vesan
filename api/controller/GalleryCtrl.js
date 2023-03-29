@@ -94,7 +94,7 @@ exports.readGallery = (req, res) => {
  * @param {function} next 
  */
 exports.createGallery = (req, res, next) => {
-  form.parse(req, (err, fields, files) => {
+  form.parse(req, (err, fields) => {
     if (err) { next(err); return }
 
     this.checkGalleryData(fields.name, fields.author, res);
@@ -130,7 +130,7 @@ exports.createGallery = (req, res, next) => {
  * @param {function} next 
  */
 exports.updateGallery = (req, res, next) => {
-  form.parse(req, (err, fields, files) => {
+  form.parse(req, (err, fields) => {
     if (err) { next(err); return }
 
     this.checkGalleryData(fields.name, fields.author, res);
