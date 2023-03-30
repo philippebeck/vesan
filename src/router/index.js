@@ -10,7 +10,9 @@ import BasketView from "@/views/public/BasketView"
 import BlogView from "@/views/public/BlogView"
 import ContactView from "@/views/public/ContactView"
 import ErrorView from "@/views/public/ErrorView"
+import GalleryView from "@/views/public/GalleryView"
 import HomeView from "@/views/public/HomeView"
+import ImageView from "@/views/public/ImageView"
 import LegalView from "@/views/public/LegalView"
 import LinkView from "@/views/public/LinkView"
 import LoginView from "@/views/public/LoginView"
@@ -62,10 +64,22 @@ const routes = [
     alias: ["/cart"]
   },
   {
-    path: "/link",
+    path: "/galleries",
+    name: "gallery",
+    component: GalleryView,
+    alias: ["/images"]
+  },
+  {
+    path: "/gallery/:id",
+    name: "image",
+    component: ImageView,
+    alias: ["/images/:id"]
+  },
+  {
+    path: "/links",
     name: "link",
     component: LinkView,
-    alias: ["/links"]
+    alias: ["/link"]
   },
   {
     path: "/legal",
