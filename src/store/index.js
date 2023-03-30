@@ -16,6 +16,8 @@ export default createStore({
 
     articles: [],
     comments: [],
+    galleries: [],
+    images: [],
     links: [],
     orders: [],
     products: [],
@@ -28,6 +30,10 @@ export default createStore({
     getArticles: state => state.articles,
 
     getComments: state => state.comments,
+
+    getGalleries: state => state.galleries,
+
+    getImages: state => state.images,
 
     getLinks: state => state.links,
 
@@ -54,6 +60,14 @@ export default createStore({
     /* COMMENT */
     SET_COMMENTS(state, comments) {
       state.comments = comments
+    },
+
+    /* GALLERIES */
+    SET_GALLERIES(state, galleries) {
+      state.galleries = galleries
+    },
+    SET_IMAGES(state, images) {
+      state.images = images
     },
 
     /* LINK */
@@ -99,170 +113,105 @@ export default createStore({
     async readArticle(context, id) {
       app.config.globalProperties.$serve.getData("/articles/" + id)
         .then(res => { context.commit("SET_ARTICLE", res) })
-        .catch(err => {
-          if (err.response) {
-            alert(err.response.data.message) 
-          } else {
-            console.log(err);
-          }
-        });
+        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
+
     async listArticles(context) {
       app.config.globalProperties.$serve.getData("/articles")
         .then(res => { context.commit("SET_ARTICLES", res) })
-        .catch(err => {
-          if (err.response) {
-            alert(err.response.data.message) 
-          } else {
-            console.log(err);
-          }
-        });
+        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
 
     /* AUTH */
     async readAvatar(context, id) {
       app.config.globalProperties.$serve.getData("/auth/" + id)
         .then(res => { context.commit("SET_USER", res) })
-        .catch(err => {
-          if (err.response) {
-            alert(err.response.data.message) 
-          } else {
-            console.log(err);
-          }
-        });
+        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
 
     /* COMMENT */
     async listArticleComments(context, id) {
       app.config.globalProperties.$serve.getData("/comments/" + id)
         .then(res => { context.commit("SET_COMMENTS", res) })
-        .catch(err => {
-          if (err.response) {
-            alert(err.response.data.message) 
-          } else {
-            console.log(err);
-          }
-        });
+        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
+
     async listComments(context) {
       app.config.globalProperties.$serve.getData("/comments")
         .then(res => { context.commit("SET_COMMENTS", res) })
-        .catch(err => {
-          if (err.response) {
-            alert(err.response.data.message) 
-          } else {
-            console.log(err);
-          }
-        });
+        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+    },
+
+    /* GALLERY */
+    async listGalleries(context) {
+      app.config.globalProperties.$serve.getData("/galleries")
+        .then(res => { context.commit("SET_GALLERIES", res) })
+        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+    },
+
+    async listImages(context) {
+      app.config.globalProperties.$serve.getData("/images")
+        .then(res => { context.commit("SET_IMAGES", res) })
+        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
 
     /* LINK */
     async listLinks(context) {
       app.config.globalProperties.$serve.getData("/links")
         .then(res => { context.commit("SET_LINKS", res) })
-        .catch(err => {
-          if (err.response) {
-            alert(err.response.data.message) 
-          } else {
-            console.log(err);
-          }
-        });
+        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
 
     /* ORDER */
     async listUserOrders(context, id) {
       app.config.globalProperties.$serve.getData("/orders/" + id)
         .then(res => { context.commit("SET_USER_ORDERS", res) })
-        .catch(err => {
-          if (err.response) {
-            alert(err.response.data.message) 
-          } else {
-            console.log(err);
-          }
-        });
+        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
+
     async listOrders(context) {
       app.config.globalProperties.$serve.getData("/orders")
         .then(res => { context.commit("SET_ORDERS", res) })
-        .catch(err => {
-          if (err.response) {
-            alert(err.response.data.message) 
-          } else {
-            console.log(err);
-          }
-        });
+        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
 
     /* PRODUCT */
     async readProduct(context, id) {
       app.config.globalProperties.$serve.getData("/products/" + id)
         .then(res => { context.commit("SET_PRODUCT", res) })
-        .catch(err => {
-          if (err.response) {
-            alert(err.response.data.message) 
-          } else {
-            console.log(err);
-          }
-        });
+        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
+
     async listProducts(context) {
       app.config.globalProperties.$serve.getData("/products")
         .then(res => { context.commit("SET_PRODUCTS", res) })
-        .catch(err => {
-          if (err.response) {
-            alert(err.response.data.message) 
-          } else {
-            console.log(err);
-          }
-        });
+        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
 
     /* REVIEW */
     async listProductReviews(context, id) {
       app.config.globalProperties.$serve.getData("/reviews/" + id)
         .then(res => { context.commit("SET_REVIEWS", res) })
-        .catch(err => {
-          if (err.response) {
-            alert(err.response.data.message) 
-          } else {
-            console.log(err);
-          }
-        });
+        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
+
     async listReviews(context) {
       app.config.globalProperties.$serve.getData("/reviews")
         .then(res => { context.commit("SET_REVIEWS", res) })
-        .catch(err => {
-          if (err.response) {
-            alert(err.response.data.message) 
-          } else {
-            console.log(err);
-          }
-        });
+        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
 
     /* USER */
     async readUser(context, id) {
       app.config.globalProperties.$serve.getData("/users/" + id)
         .then(res => { context.commit("SET_USER", res) })
-        .catch(err => {
-          if (err.response) {
-            alert(err.response.data.message) 
-          } else {
-            console.log(err);
-          }
-        });
+        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
+
     async listUsers(context) {
       app.config.globalProperties.$serve.getData("/users")
         .then(res => { context.commit("SET_USERS", res) })
-        .catch(err => {
-          if (err.response) {
-            alert(err.response.data.message) 
-          } else {
-            console.log(err);
-          }
-        });
+        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     }
   }
 })
