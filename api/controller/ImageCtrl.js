@@ -15,11 +15,11 @@ const form = formidable({ uploadDir: GALLERIES_IMG, keepExtensions: true });
 
 /**
  * CHECK IMAGE DATA
- * @param {string} legend 
+ * @param {string} description 
  * @param {object} res 
  */
-exports.checkImageData = (legend, res) => {
-  if (!nem.checkString(legend)) {
+exports.checkImageData = (description, res) => {
+  if (!nem.checkString(description)) {
     return res.status(403).json({ message: process.env.CHECK_NAME });
   }
 }
@@ -94,7 +94,7 @@ exports.createImage = (req, res, next) => {
   form.parse(req, (err, fields) => {
     if (err) { next(err); return }
 
-    this.checkImageData(fields.legend, res);
+    this.checkImageData(fields.description, res);
 
     GalleryModel
       .findById(fields.gallery)
@@ -108,7 +108,7 @@ exports.createImage = (req, res, next) => {
 
           let image = new ImageModel({
             name: name,
-            legend: fields.legend,
+            description: fields.description,
             gallery: fields.gallery
           });
 
@@ -133,7 +133,7 @@ exports.updateImage = (req, res, next) => {
   form.parse(req, (err, fields) => {
     if (err) { next(err); return }
 
-    this.checkImageData(fields.legend, res);
+    this.checkImageData(fields.description, res);
 
     ImageModel
       .findByIdAndUpdate(req.params.id, { ...fields, _id: req.params.id })
