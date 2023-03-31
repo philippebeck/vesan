@@ -10,7 +10,7 @@
     </template>
 
     <template #body>
-      <form method="post">
+      <form>
         <TableElt :items="orders">
 
           <!-- Id -->
