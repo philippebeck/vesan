@@ -30,7 +30,7 @@
 
                   <MediaElt :id="`${slotProps.value.name.toLowerCase()}`"
                     :src="`img/thumbnails/galleries/${slotProps.value.name}`" 
-                    :alt="`${slotProps.value.alt}`" 
+                    :alt="`${slotProps.value.name}`" 
                     :width="constants.THUMB_WIDTH"
                     :height="constants.THUMB_HEIGHT">
 
