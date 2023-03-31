@@ -14,7 +14,6 @@
         enctype="multipart/form-data">
         <ListElt :items="constants.ARTICLE_FORM">
 
-          <!-- Name -->
           <template #item-1>
             <FieldElt v-model:value="name"
               @keyup.enter="createArticle()"
@@ -29,7 +28,6 @@
             </FieldElt>
           </template>
 
-          <!-- Text -->
           <template #item-2>
             <label for="text">
               {{ constants.LEGEND_TEXT }}
@@ -47,7 +45,6 @@
               }"/>
           </template>
 
-          <!-- Image -->
           <template #item-3>
             <FieldElt id="image" 
               type="file"
@@ -63,7 +60,6 @@
             </FieldElt>
           </template>
 
-          <!-- Alternative Text -->
           <template #item-4>
             <FieldElt type="textarea"
               v-model:value="alt"
@@ -79,7 +75,6 @@
             </FieldElt>
           </template>
 
-          <!-- Category -->
           <template #item-5>
             <FieldElt type="select"
               :list="constants.CATS_ARTICLE"
@@ -98,7 +93,6 @@
         </ListElt>
         <br>
 
-        <!-- Create Button -->
         <BtnElt type="button"
           @click="createArticle()" 
           class="btn-green"
