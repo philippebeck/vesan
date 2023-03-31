@@ -103,7 +103,7 @@ export default {
 
           this.$serve.putData(`/galleries/${id}`, data)
             .then(() => {
-              alert(this.constants.ALERT_GALLERY + id + this.constants.ALERT_MODERATED);
+              alert(this.constants.ALERT_GALLERY + id + this.constants.ALERT_UPDATED);
             })
             .catch(err => { this.$serve.checkError(err) });
         }
