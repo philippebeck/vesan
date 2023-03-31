@@ -103,7 +103,7 @@ export default {
     ...mapState(["links", "user"]),
 
     /**
-     * SET CATEGORIES
+     * GET CATEGORIES
      * @returns
      */
     getCats() {
