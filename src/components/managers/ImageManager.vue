@@ -91,15 +91,7 @@ export default {
     "constants"
   ],
 
-  methods: {
-    /**
-     * GET ALL IMAGES
-     * @returns
-     */
-    getImages() {
-      return this.images;
-    },
-
+  computed: {
     /**
      * GET GALLERIES
      * @returns
@@ -112,6 +104,16 @@ export default {
       }
 
       return Array.from(galleries); 
+    }
+  },
+
+  methods: {
+    /**
+     * GET ALL IMAGES
+     * @returns
+     */
+    getImages() {
+      return this.images;
     },
 
     /**
