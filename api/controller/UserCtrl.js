@@ -11,9 +11,8 @@ const ReviewModel   = require("../model/ReviewModel");
 
 require("dotenv").config();
 
-const USERS_IMG = process.env.IMG_URL + "users/";
 const USERS_THUMB = process.env.THUMB_URL + "users/";
-const form = formidable({ uploadDir: USERS_IMG, keepExtensions: true });
+const form = formidable({ uploadDir: USERS_THUMB, keepExtensions: true });
 
 //! ****************************** CHECKERS ******************************
 
@@ -200,7 +199,7 @@ exports.getImageUpdated = (id, name, newFilename, res) => {
     .findById(id)
     .then((user) => 
       fs.unlink(USERS_THUMB + user.image, () => {
-        fs.unlink(USERS_IMG + newFilename, () => {
+        fs.unlink(USERS_THUMB + newFilename, () => {
           console.log("Images ok !");
         })
       })
@@ -259,7 +258,7 @@ exports.createUser = (req, res, next) => {
           .then((hash) => {
             let user = new UserModel(this.getUserCreated(fields.name, fields.email, image, hash, fields.role, fields.created, fields.updated));
 
-            fs.unlink(USERS_IMG + files.image.newFilename, () => {
+            fs.unlink(USERS_THUMB + files.image.newFilename, () => {
               user
                 .save()
                 .then(() => res.status(201).json({ message: process.env.USER_CREATED }))
