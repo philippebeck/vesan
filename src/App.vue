@@ -79,7 +79,8 @@
 
   <!-- VIEWS -->
   <router-view v-slot="{ Component }"
-    :constants="constants">
+    :constants="constants"
+    :user="user">
     <transition name="slide">
       <component :is="Component" 
         :key="$route.path"/>
