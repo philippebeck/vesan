@@ -10,7 +10,7 @@
   </template>
 
   <template #body>
-    <form>
+    <form enctype="multipart/form-data">
       <ListElt :items="constants.IMAGE_FORM">
 
         <template #item-1>
@@ -44,7 +44,7 @@
         
         <template #item-3>
           <FieldElt type="select"
-            :list="constants.CATS_GALLERY"
+            :list="getGalleries"
             v-model:value="gallery"
             @keyup.enter="createImage()"
             :info="constants.INFO_GALLERY">
@@ -89,13 +89,29 @@ export default {
     ListElt
   },
 
-  props: ["constants"],
+  props: ["constants", "galleries"],
   data() {
     return {
       description: "",
       gallery: ""
     }
   },
+
+  computed: {
+    /**
+     * GET GALLERIES
+     * @returns
+     */
+    getGalleries() {
+      const galleries = new Set();
+
+      for (let gallery of this.galleries) {
+        galleries.add(gallery.name)
+      }
+
+      return Array.from(galleries); 
+    }
+  },  
 
   methods: {
     /**
@@ -109,6 +125,7 @@ export default {
           if (this.gallery !== "") { 
             let image = new FormData();
 
+            image.append("image", img);
             image.append("description", this.description);
             image.append("gallery", this.gallery);
 
