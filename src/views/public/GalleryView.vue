@@ -20,23 +20,23 @@
             <CardElt>
               <template #header>
                   <h2 class="sky-dark">
-                    {{ slotProps.value.author }}
+                    {{ slotProps.item.author }}
                   </h2>
               </template>
 
               <template #body>
-                <a :href="`gallery/${slotProps.value._id}`"
-                  :title="constants.TITLE_WATCH + slotProps.value.name">
+                <a :href="`gallery/${slotProps.item._id}`"
+                  :title="constants.TITLE_WATCH + slotProps.item.name">
 
-                  <MediaElt :id="`${slotProps.value.name.toLowerCase()}`"
-                    :src="`img/thumbnails/galleries/${slotProps.value.name}`" 
-                    :alt="`${slotProps.value.name}`" 
+                  <MediaElt :id="`${slotProps.item.name.toLowerCase()}`"
+                    :src="`img/thumbnails/galleries/${slotProps.item.name}`" 
+                    :alt="`${slotProps.item.name}`" 
                     :width="constants.THUMB_WIDTH"
                     :height="constants.THUMB_HEIGHT">
 
                     <template #figcaption>
                       <p class="monospace figcaption">
-                        {{ slotProps.value.name }}
+                        {{ slotProps.item.name }}
                       </p>
                     </template>
 
