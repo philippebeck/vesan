@@ -91,20 +91,26 @@ exports.listImages = (req, res) => {
  * @returns
  */
 exports.createImage = (req, res, next) => {
-  form.parse(req, (err, fields) => {
+  form.parse(req, (err, fields, files) => {
     if (err) { next(err); return }
 
     this.checkImageData(fields.description, res);
 
     GalleryModel
-      .findById(fields.gallery)
+      .findOne({ name: fields.gallery })
       .then((gallery) => {
 
         ImageModel
         .find({ gallery: fields.gallery })
         .then((images) => { 
           let index = images.length + 1;
+
+          if (index < 10) { index = "0" + index }
+
           let name  = nem.getGalleryName(gallery.name) + "-" + index + "." + process.env.IMG_EXT;
+
+          nem.setImage("galleries/" + files.image.newFilename, "galleries/" + name);
+          nem.setThumbnail("galleries/" + files.image.newFilename, "galleries/" + name);
 
           let image = new ImageModel({
             name: name,
