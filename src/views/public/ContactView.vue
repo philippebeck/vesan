@@ -104,7 +104,7 @@ export default {
     VueRecaptcha 
   },
 
-  props: ["constants"],
+  props: ["constants", "user"],
   data() {
     return {
       email: "",

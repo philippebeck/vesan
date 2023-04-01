@@ -72,7 +72,7 @@ export default {
     CardElt,
     GalleryCreator
   },
-  props: ["constants"],
+  props: ["constants", "user"],
 
   created() {
     this.$store.dispatch("listGalleries");
@@ -94,7 +94,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["galleries", "user"]),
+    ...mapState(["galleries"]),
   },
 
   methods: {

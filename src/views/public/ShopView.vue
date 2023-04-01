@@ -144,7 +144,7 @@ export default {
     CardElt,
     ProductCreator
   },
-  props: ["constants"],
+  props: ["constants", "user"],
 
   data() {
     return {
@@ -176,7 +176,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["products", "reviews", "user"]),
+    ...mapState(["products", "reviews"]),
 
     /**
      * SET CATEGORIES

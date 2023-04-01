@@ -86,7 +86,7 @@ export default {
     NavElt,
     LinkCreator
   },
-  props: ["constants"],
+  props: ["constants", "user"],
 
   created() {
     this.$store.dispatch("listLinks");
@@ -100,7 +100,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["links", "user"]),
+    ...mapState(["links"]),
 
     /**
      * GET CATEGORIES

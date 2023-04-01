@@ -28,7 +28,7 @@ import CardElt from "@/assets/CardElt"
 export default {
   name: "LegalView",
   components: { CardElt },
-  props: ["constants"],
+  props: ["constants", "user"],
 
   created() {
     this.$serve.setMeta(

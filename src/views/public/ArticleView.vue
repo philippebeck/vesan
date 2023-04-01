@@ -153,7 +153,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["article", "comments", "user"])
+    ...mapState(["article", "comments"])
   },
 
   methods: {
