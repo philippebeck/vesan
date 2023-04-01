@@ -149,6 +149,12 @@ export default createStore({
         .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
 
+    async listGalleryImages(context, id) {
+      app.config.globalProperties.$serve.getData("/images" + id)
+        .then(res => { context.commit("SET_IMAGES", res) })
+        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+    },
+
     async listImages(context) {
       app.config.globalProperties.$serve.getData("/images")
         .then(res => { context.commit("SET_IMAGES", res) })
