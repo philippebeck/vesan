@@ -85,14 +85,6 @@ export default {
     );
   },
 
-  updated() {
-    const descriptionArray = document.getElementsByClassName("figcaption");
-
-    for (let descriptionElt of descriptionArray) {
-      descriptionElt.firstChild.setAttribute("itemprop", "description");
-    }
-  },
-
   computed: {
     ...mapState(["galleries"]),
   },
