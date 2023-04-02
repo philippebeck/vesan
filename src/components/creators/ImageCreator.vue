@@ -1,12 +1,12 @@
 <template>
   <CardElt>
   <template #header>
-    <h3 id="create-image">
+    <h2 id="create-image">
       <i class="fa-regular fa-image fa-lg"
         aria-hidden="true">
       </i>
       {{ constants.IMAGE_CREATOR }}
-    </h3>
+    </h2>
   </template>
 
   <template #body>

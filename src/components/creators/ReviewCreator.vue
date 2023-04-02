@@ -1,12 +1,12 @@
 <template>
   <CardElt>
     <template #header>
-      <h3>
+      <h2>
         <i class="fa-solid fa-star-half-stroke fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.REVIEW_CREATOR }}
-      </h3>
+      </h2>
     </template>
 
     <template #body>

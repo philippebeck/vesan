@@ -1,12 +1,12 @@
 <template>
   <CardElt>
     <template #header>
-      <h3 id="create-product">
+      <h2 id="create-product">
         <i class="fa-regular fa-lightbulb fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.PRODUCT_CREATOR }}
-      </h3>
+      </h2>
     </template>
 
     <template #body>

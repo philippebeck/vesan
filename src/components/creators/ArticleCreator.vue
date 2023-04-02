@@ -1,12 +1,12 @@
 <template>
   <CardElt>
     <template #header>
-      <h3 id="create-article">
+      <h2 id="create-article">
         <i class="fa-regular fa-pen-to-square fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.ARTICLE_CREATOR }}
-      </h3>
+      </h2>
     </template>
 
     <template #body>
