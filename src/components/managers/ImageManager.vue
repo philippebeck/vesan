@@ -127,8 +127,8 @@ export default {
         if (image._id === id) {
 
           let data = new FormData();
-          data.append("text", image.text);
-          data.append("moderate", image.moderate);
+          data.append("description", image.description);
+          data.append("gallery", image.gallery);
 
           this.$serve.putData(`/images/${id}`, data)
             .then(() => {
