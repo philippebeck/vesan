@@ -138,7 +138,6 @@
 </template>
 
 <script>
-import { mapState } from "vuex"
 import { loadScript } from "@paypal/paypal-js";
 
 import BtnElt from "@/assets/BtnElt"
@@ -157,7 +156,7 @@ export default {
     TableElt
   },
 
-  props: ["constants"],
+  props: ["constants", "user"],
   data() {
     return {
       products: [],
@@ -190,10 +189,6 @@ export default {
         }
       })
       .catch(err => { this.$serve.checkError(err) });
-  },
-
-  computed: {
-    ...mapState(["user"]),
   },
 
   methods: {

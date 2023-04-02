@@ -137,18 +137,36 @@ exports.getArticleUpdated = (name, text, image, alt, likes, cat, updated) => {
 
 /**
  * GET IMAGE UPDATED
- * @param {string} id 
  * @param {string} name 
  * @param {string} newFilename 
- * @param {object} res 
  * @returns 
  */
-exports.getImageUpdated = (id, name, newFilename, res) => {
+exports.getImage = (name, newFilename) => {
   let image = nem.getImageName(name);
 
-  nem.setImage( "articles/" + newFilename, "articles/" + image);
-  nem.setThumbnail("articles/" + newFilename, "articles/" + image);
+  let input   = "articles/" + newFilename;
+  let output  = "articles/" + image;
 
+  nem.setThumbnail(input, process.env.THUMB_URL + output);
+  nem.setThumbnail(
+    input, 
+    process.env.IMG_URL + output, 
+    process.env.IMG_WIDTH, 
+    process.env.IMG_HEIGHT
+  );
+
+  return image;
+}
+
+//! ****************************** SETTER ******************************
+
+/**
+ * SET IMAGES UNLINK
+ * @param {string} id 
+ * @param {string} newFilename 
+ * @param {object} res 
+ */
+exports.setImagesUnlink = (id, newFilename, res) => {
   ArticleModel
     .findById(id)
     .then((article) => 
@@ -160,8 +178,6 @@ exports.getImageUpdated = (id, name, newFilename, res) => {
       })
     )
     .catch(() => res.status(404).json({ message: process.env.ARTICLE_NOT_FOUND }));
-
-  return image;
 }
 
 //! ****************************** PUBLIC ******************************
@@ -228,14 +244,11 @@ exports.createArticle = (req, res, next) => {
       .find()
       .then((articles) => {
         for (let article of articles) { 
-          this.checkArticleUnique(fields.name, fields.text, article, res) 
+          this.checkArticleUnique(fields.name, fields.text, article, res);
         }
 
         let likes = nem.getArrayFromString(fields.likes);
-        let image = nem.getImageName(fields.name);
-
-        nem.setImage("articles/" + files.image.newFilename, "articles/" + image);
-        nem.setThumbnail("articles/" + files.image.newFilename, "articles/" + image);
+        let image = this.getImage(fields.name, files.image.newFilename);
 
         let article = new ArticleModel(this.getArticleCreated(
           fields.name, fields.text, image, fields.alt, fields.user, likes, fields.cat, fields.created, fields.updated
@@ -243,8 +256,9 @@ exports.createArticle = (req, res, next) => {
 
         article
           .save()
-          .then(() => fs.unlink(ARTICLES_IMG + files.image.newFilename, () => {}))
-          .then(() => res.status(201).json({ message: process.env.ARTICLE_CREATED }))
+          .then(() => fs.unlink(ARTICLES_IMG + files.image.newFilename, () => {
+            res.status(201).json({ message: process.env.ARTICLE_CREATED })
+          }))
           .catch(() => res.status(400).json({ message: process.env.ARTICLE_NOT_CREATED }));
       })
       .catch(() => res.status(404).json({ message: process.env.ARTICLES_NOT_FOUND }));
@@ -271,7 +285,8 @@ exports.updateArticle = (req, res, next) => {
         let image = fields.image;
 
         if (Object.keys(files).length !== 0) { 
-          image = this.getImageUpdated(req.params.id, fields.name, files.image.newFilename, res) 
+          image = this.getImage(fields.name, files.image.newFilename);
+          this.setImagesUnlink(req.params.id, files.image.newFilename, res);
         }
 
         let likes   = nem.getArrayFromString(fields.likes);

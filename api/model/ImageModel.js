@@ -10,7 +10,7 @@ const ImageModel = mongoose.Schema(
       required: true,
       unique: true
     },
-    legend: { 
+    description: { 
       type: String, 
       required: true
     },

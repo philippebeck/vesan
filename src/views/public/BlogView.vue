@@ -151,7 +151,7 @@ export default {
     CardElt,
     ArticleCreator 
   },
-  props: ["constants"],
+  props: ["constants", "user"],
 
   created() {
     this.$store.dispatch("listArticles");
@@ -173,7 +173,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["articles", "user"]),
+    ...mapState(["articles"]),
 
     /**
      * SET CATEGORIES

@@ -43,15 +43,26 @@
               :title="constants.INTRO_COMMENTS">
               <i class="fa-regular fa-comments fa-fw"></i>
             </a>
+
+            <a v-if="checkRole('admin') && galleries.length > 0"
+              href="#gallery"
+              :title="constants.INTRO_GALLERIES">
+              <i class="fa-regular fa-images fa-fw"></i>
+            </a>
+            <a v-if="checkRole('admin') && images.length > 0"
+              href="#image"
+              :title="constants.INTRO_IMAGES">
+              <i class="fa-regular fa-image fa-fw"></i>
+            </a>
+            <a v-if="checkRole('admin') && links.length > 0"
+              href="#link"
+              :title="constants.INTRO_LINKS">
+              <i class="fa-solid fa-link fa-fw"></i>
+            </a>
             <a v-if="checkRole('admin')"
               href="#user"
               :title="constants.INTRO_USERS">
               <i class="fa-solid fa-users-gear fa-fw"></i>
-            </a>
-            <a v-if="checkRole('admin')"
-              href="#link"
-              :title="constants.INTRO_LINKS">
-              <i class="fa-solid fa-link fa-fw"></i>
             </a>
           </template>
 
@@ -92,15 +103,25 @@
           :constants="constants"
           :users="users"/>
 
-        <!-- Users Part -->
-        <UserManager v-if="users.length > 0"
+        <!-- Galleries Part -->
+        <GalleryManager v-if="galleries.length > 0"
           :constants="constants"
-          :users="users"/>
+          :galleries="galleries"/>
+
+        <ImageManager v-if="images.length > 0"
+          :constants="constants"
+          :galleries="galleries"
+          :images="images"/>
 
         <!-- Links Part -->
         <LinkManager v-if="links.length > 0"
           :constants="constants"
           :links="links"/>
+
+        <!-- Users Part -->
+        <UserManager v-if="users.length > 0"
+          :constants="constants"
+          :users="users"/>
       </template>
     </CardElt>
   </main>
@@ -117,8 +138,10 @@ import ReviewManager from "@/components/managers/ReviewManager"
 import OrderManager from "@/components/managers/OrderManager"
 import ArticleManager from "@/components/managers/ArticleManager"
 import CommentManager from "@/components/managers/CommentManager"
-import UserManager from "@/components/managers/UserManager"
+import GalleryManager from "@/components/managers/GalleryManager"
+import ImageManager from "@/components/managers/ImageManager"
 import LinkManager from "@/components/managers/LinkManager"
+import UserManager from "@/components/managers/UserManager"
 
 export default {
   name: "AdminEditor",
@@ -130,8 +153,10 @@ export default {
     OrderManager,
     ArticleManager,
     CommentManager,
-    UserManager,
-    LinkManager
+    GalleryManager,
+    ImageManager,
+    LinkManager,
+    UserManager
   },
 
   props: ["constants"],
@@ -156,6 +181,8 @@ export default {
           } 
 
           if (this.checkRole("admin")) {
+            this.$store.dispatch("listGalleries");
+            this.$store.dispatch("listImages");
             this.$store.dispatch("listLinks");
             this.$store.dispatch("listUsers");
           }
@@ -179,6 +206,8 @@ export default {
     ...mapState([
       "articles", 
       "comments", 
+      "galleries", 
+      "images", 
       "links", 
       "orders",
       "products", 
@@ -191,6 +220,8 @@ export default {
     ...mapActions([
       "listArticles", 
       "listComments", 
+      "listGalleries", 
+      "listImages", 
       "listLinks", 
       "listOrders", 
       "listProducts", 

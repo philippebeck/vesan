@@ -640,7 +640,7 @@ figure {
 }
 
 img {
-  --ve-media-img-border: 2px solid var(--ani-slate);
+  --ve-media-img-border: 2px solid transparent;
   --ve-media-img-border-radius: 20px;
   --ve-media-img-padding: 0;
   --ve-media-img-max-width: 100%;

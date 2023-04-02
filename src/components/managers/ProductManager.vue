@@ -10,8 +10,7 @@
     </template>
 
     <template #body>
-      <form method="post"
-        enctype="multipart/form-data">
+      <form enctype="multipart/form-data">
         <TableElt :items="products">
 
           <!-- Id -->

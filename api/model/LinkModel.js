@@ -1,6 +1,7 @@
 "use strict";
 
 const mongoose = require("mongoose");
+const uniqueValidator = require("mongoose-unique-validator");
 
 const LinkModel = mongoose.Schema(
   {
@@ -23,5 +24,7 @@ const LinkModel = mongoose.Schema(
     versionKey: false
   }
 );
+
+LinkModel.plugin(uniqueValidator);
 
 module.exports = mongoose.model("Link", LinkModel);

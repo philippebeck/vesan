@@ -57,7 +57,10 @@ export default {
     SliderElt,
     MediaElt
   },
-  props: ["constants"],
+  props: [
+    "constants",
+    "user"
+  ],
   data() {
     return {
       media: {}

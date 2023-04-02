@@ -1,20 +1,18 @@
 <template>
   <CardElt>
     <template #header>
-      <h3 id="create-article">
+      <h2 id="create-article">
         <i class="fa-regular fa-pen-to-square fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.ARTICLE_CREATOR }}
-      </h3>
+      </h2>
     </template>
 
     <template #body>
-      <form method="post"
-        enctype="multipart/form-data">
+      <form enctype="multipart/form-data">
         <ListElt :items="constants.ARTICLE_FORM">
 
-          <!-- Name -->
           <template #item-1>
             <FieldElt v-model:value="name"
               @keyup.enter="createArticle()"
@@ -29,7 +27,6 @@
             </FieldElt>
           </template>
 
-          <!-- Text -->
           <template #item-2>
             <label for="text">
               {{ constants.LEGEND_TEXT }}
@@ -47,7 +44,6 @@
               }"/>
           </template>
 
-          <!-- Image -->
           <template #item-3>
             <FieldElt id="image" 
               type="file"
@@ -63,7 +59,6 @@
             </FieldElt>
           </template>
 
-          <!-- Alternative Text -->
           <template #item-4>
             <FieldElt type="textarea"
               v-model:value="alt"
@@ -79,7 +74,6 @@
             </FieldElt>
           </template>
 
-          <!-- Category -->
           <template #item-5>
             <FieldElt type="select"
               :list="constants.CATS_ARTICLE"
@@ -98,7 +92,6 @@
         </ListElt>
         <br>
 
-        <!-- Create Button -->
         <BtnElt type="button"
           @click="createArticle()" 
           class="btn-green"

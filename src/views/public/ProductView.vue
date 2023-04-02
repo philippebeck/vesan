@@ -149,7 +149,7 @@ export default {
     ReviewCreator,
     ReviewList
   },
-  props: ["constants"],
+  props: ["constants", "user"],
 
   data() {
     return {
@@ -192,7 +192,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["product", "reviews", "user"]),
+    ...mapState(["product", "reviews"]),
   },
 
   methods: {

@@ -1,12 +1,12 @@
 <template>
     <CardElt>
     <template #header>
-      <h3 id="create-link">
+      <h2 id="create-link">
         <i class="fa-solid fa-link fa-lg"
           aria-hidden="true">
         </i>
         {{ constants.LINK_CREATOR }}
-      </h3>
+      </h2>
     </template>
 
     <template #body>
