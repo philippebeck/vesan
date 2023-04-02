@@ -12,17 +12,17 @@
     <template #body>
       <form>
         <TableElt :items="images">
-          <template #head>up/del</template>
+          <template #head>{{ constants.HEAD_UP }}</template>
 
           <template #cell-_id="slotProps">
             <b>#{{ slotProps.index + 1 }}</b>
             ({{ images[slotProps.index]._id }})
           </template>
 
-          <template #cell-name="slotProps">
-            <MediaElt :src="'/img/thumbnails/galleries/' + images[slotProps.index].name"
-              :alt="images[slotProps.index].alt"
-              :title="images[slotProps.index].name"/>
+          <template #cell-image="slotProps">
+            <MediaElt :src="'/img/thumbnails/galleries/' + images[slotProps.index].image"
+              :alt="images[slotProps.index].description"
+              :title="images[slotProps.index].image"/>
 
             <FieldElt :id="images[slotProps.index]._id"
               type="file"
