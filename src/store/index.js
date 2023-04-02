@@ -12,11 +12,11 @@ export default createStore({
   state: {
     article: {},
     product: {},
+    gallery: {},
     user: {},
 
     articles: [],
     comments: [],
-    gallery: [],
     galleries: [],
     images: [],
     links: [],
@@ -71,6 +71,8 @@ export default createStore({
     SET_GALLERIES(state, galleries) {
       state.galleries = galleries
     },
+
+    /* IMAGES */
     SET_IMAGES(state, images) {
       state.images = images
     },
@@ -149,7 +151,7 @@ export default createStore({
 
     /* GALLERY */
     async readGallery(context, id) {
-      app.config.globalProperties.$serve.getData("/galleries" + id)
+      app.config.globalProperties.$serve.getData("/galleries/" + id)
         .then(res => { context.commit("SET_GALLERY", res) })
         .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
@@ -160,8 +162,9 @@ export default createStore({
         .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
 
+    /* IMAGE */
     async listGalleryImages(context, id) {
-      app.config.globalProperties.$serve.getData("/images" + id)
+      app.config.globalProperties.$serve.getData("/images/" + id)
         .then(res => { context.commit("SET_IMAGES", res) })
         .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
