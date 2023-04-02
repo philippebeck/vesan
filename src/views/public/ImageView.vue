@@ -77,6 +77,7 @@ export default {
   props: ["constants", "user"],
 
   created() {
+    this.$store.dispatch("readGallery");
     this.$store.dispatch("listGalleryImages", this.$route.params.id);
     this.$store.dispatch("listGalleries");
 
@@ -89,11 +90,11 @@ export default {
   },
 
   computed: {
-    ...mapState(["images", "galleries"])
+    ...mapState(["gallery", "images", "galleries"])
   },
 
   methods: {
-    ...mapActions(["listGalleryImages", "listGalleries"]),
+    ...mapActions(["readGallery", "listGalleryImages", "listGalleries"]),
 
     /**
      * CHECK ROLE
