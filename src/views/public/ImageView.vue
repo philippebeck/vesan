@@ -6,9 +6,9 @@
           <i class="fa-regular fa-image fa-lg"
             aria-hidden="true">
           </i>
-          {{ constants.IMAGE_VIEW }}
+          {{ gallery.name }}
         </h1>
-        <b>{{ constants.INTRO_IMAGE }}</b>
+        <b>{{ gallery.author }}</b>
       </template>
 
       <template #body>
@@ -16,34 +16,23 @@
           :dynamic="true">
 
           <template #items="slotProps">
+            <a :href="`/img/galleries/${slotProps.item.image}`"
+              :title="constants.TITLE_WATCH + slotProps.item.image">
 
-            <CardElt>
-              <template #header>
-                  <h2 class="sky-dark">
-                    {{ slotProps.item.author }}
-                  </h2>
-              </template>
+              <MediaElt :id="`${slotProps.item.image.toLowerCase()}`"
+                :src="`/img/thumbnails/galleries/${slotProps.item.image}`" 
+                :alt="`${slotProps.item.image}`" 
+                :width="constants.THUMB_WIDTH"
+                :height="constants.THUMB_HEIGHT">
 
-              <template #body>
-                <a :href="`image/${slotProps.item._id}`"
-                  :title="constants.TITLE_WATCH + slotProps.item.name">
+                <template #figcaption>
+                  <p class="monospace figcaption">
+                    {{ slotProps.item.description }}
+                  </p>
+                </template>
 
-                  <MediaElt :id="`${slotProps.item.name.toLowerCase()}`"
-                    :src="`img/thumbnails/images/${slotProps.item.name}`" 
-                    :alt="`${slotProps.item.name}`" 
-                    :width="constants.THUMB_WIDTH"
-                    :height="constants.THUMB_HEIGHT">
-
-                    <template #figcaption>
-                      <p class="monospace figcaption">
-                        {{ slotProps.item.name }}
-                      </p>
-                    </template>
-
-                  </MediaElt>
-                </a>
-              </template>
-            </CardElt>
+              </MediaElt>
+            </a>
           </template>
         </ListElt>
       </template>
@@ -77,7 +66,7 @@ export default {
   props: ["constants", "user"],
 
   created() {
-    this.$store.dispatch("readGallery");
+    this.$store.dispatch("readGallery", this.$route.params.id);
     this.$store.dispatch("listGalleryImages", this.$route.params.id);
     this.$store.dispatch("listGalleries");
 
