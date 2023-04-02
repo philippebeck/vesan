@@ -13,37 +13,25 @@
 
       <template #body>
         <ListElt :items="galleries"
-          :dynamic="true">
+          :dynamic="true"
+          class="flex-wrap content-center">
 
           <template #items="slotProps">
+            <a :href="`gallery/${slotProps.item._id}`"
+              :title="constants.TITLE_WATCH + slotProps.item.name">
 
-            <CardElt>
-              <template #header>
-                  <h2 class="sky-dark">
-                    {{ slotProps.item.author }}
-                  </h2>
-              </template>
+              <MediaElt :id="`${slotProps.item.name.toLowerCase()}`"
+                :src="`/img/thumbnails/galleries/${slotProps.item.cover}`" 
+                :alt="`${slotProps.item.name}`" 
+                :width="constants.THUMB_WIDTH"
+                :height="constants.THUMB_HEIGHT">
 
-              <template #body>
-                <a :href="`gallery/${slotProps.item._id}`"
-                  :title="constants.TITLE_WATCH + slotProps.item.name">
+                <template #figcaption>
+                  {{ slotProps.item.name }}
+                </template>
 
-                  <MediaElt :id="`${slotProps.item.name.toLowerCase()}`"
-                    :src="`/img/thumbnails/galleries/${slotProps.item.cover}`" 
-                    :alt="`${slotProps.item.name}`" 
-                    :width="constants.THUMB_WIDTH"
-                    :height="constants.THUMB_HEIGHT">
-
-                    <template #figcaption>
-                      <p class="monospace figcaption">
-                        {{ slotProps.item.name }}
-                      </p>
-                    </template>
-
-                  </MediaElt>
-                </a>
-              </template>
-            </CardElt>
+              </MediaElt>
+            </a>
           </template>
         </ListElt>
       </template>
