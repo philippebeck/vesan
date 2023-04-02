@@ -89,16 +89,12 @@ export default {
       if (this.$serve.checkString(this.description)) {
         let image = document.getElementById("image").files[0];
 
-        console.log(image);
-
         if (image !== undefined) {
           let data = new FormData();
 
           data.append("image", image);
           data.append("description", this.description);
           data.append("gallery", this.$route.params.id);
-
-          console.log(data);
 
           this.$serve.postData("/images", data)
             .then(() => {
