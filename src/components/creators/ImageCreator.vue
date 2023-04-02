@@ -73,29 +73,13 @@ export default {
     ListElt
   },
 
-  props: ["constants", "galleries"],
+  props: ["constants"],
   data() {
     return {
       description: "",
       gallery: ""
     }
   },
-
-  computed: {
-    /**
-     * GET GALLERIES
-     * @returns
-     */
-    getGalleries() {
-      const galleries = new Set();
-
-      for (let gallery of this.galleries) {
-        galleries.add(gallery.name)
-      }
-
-      return Array.from(galleries); 
-    }
-  },  
 
   methods: {
     /**
