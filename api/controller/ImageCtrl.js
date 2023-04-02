@@ -26,28 +26,20 @@ exports.checkImageData = (description, res) => {
   }
 }
 
-//! ****************************** GETTER ******************************
+//! ****************************** SETTER ******************************
 
 /**
- * GET IMAGE
- * @param {number} index 
- * @param {string} name 
+ * SET IMAGE
+ * @param {string} image 
  * @param {string} newFilename 
- * @returns 
  */
-exports.getImage = (index, name, newFilename) => {
-  let image = nem.getGalleryName(name) + "-" + index + "." + process.env.IMG_EXT;
-
+exports.setImage = (image, newFilename) => {
   let input   = "galleries/" + newFilename;
   let output  = "galleries/" + image;
 
   nem.setImage(input, process.env.IMG_URL + output);
   nem.setThumbnail(input, process.env.THUMB_URL + output);
-
-  return image;
 }
-
-//! ****************************** SETTER ******************************
 
 /**
  * UNLINK IMAGES
@@ -122,7 +114,8 @@ exports.createImage = (req, res, next) => {
 
           if (index < 10) { index = "0" + index }
 
-          let name = this.getImage(index, gallery.name, files.image.newFilename);
+          let name = nem.getGalleryName(gallery.name) + "-" + index + "." + process.env.IMG_EXT;
+          this.setImage(name, files.image.newFilename);
 
           let image = new ImageModel({
             name: name,
@@ -154,8 +147,21 @@ exports.updateImage = (req, res, next) => {
 
     this.checkImageData(fields.description, res);
 
+    let name = fields.name;
+
+    if (Object.keys(files).length !== 0) { 
+      this.setImage(name, files.image.newFilename);
+      this.setImagesUnlink(req.params.id, files.image.newFilename, res);
+    }
+
+    let image = {
+      name: name,
+      description: fields.description,
+      gallery: fields.gallery
+    };
+
     ImageModel
-      .findByIdAndUpdate(req.params.id, { ...fields, _id: req.params.id })
+      .findByIdAndUpdate(req.params.id, { ...image, _id: req.params.id })
       .then(() => res.status(200).json({ message: process.env.IMAGE_UPDATED }))
       .catch(() => res.status(400).json({ message: process.env.IMAGE_NOT_UPDATED }));
   })
