@@ -1,9 +1,11 @@
 "use strict";
 
 const formidable  = require("formidable");
+const fs          = require("fs");
 const nem         = require("nemjs");
-const GalleryModel = require("../model/GalleryModel");
-const ImageModel  = require("../model/ImageModel");
+
+const GalleryModel  = require("../model/GalleryModel");
+const ImageModel    = require("../model/ImageModel");
 
 require("dotenv").config();
 
@@ -28,12 +30,13 @@ exports.checkImageData = (description, res) => {
 
 /**
  * GET IMAGE
+ * @param {number} index 
  * @param {string} name 
  * @param {string} newFilename 
  * @returns 
  */
-exports.getImage = (name, newFilename) => {
-  let image = nem.getImageName(name);
+exports.getImage = (index, name, newFilename) => {
+  let image = nem.getGalleryName(name) + "-" + index + "." + process.env.IMG_EXT;
 
   let input   = "galleries/" + newFilename;
   let output  = "galleries/" + image;
@@ -57,8 +60,8 @@ exports.setImagesUnlink = (id, newFilename, res) => {
     .findById(id)
     .then((image) => 
 
-      fs.unlink(GALLERIES_THUMB + image.name, () => {
-        fs.unlink(GALLERIES_IMG + image.name, () => {
+      fs.unlink(GALLERIES_THUMB + image.image, () => {
+        fs.unlink(GALLERIES_IMG + image.image, () => {
           fs.unlink(GALLERIES_IMG + newFilename, () => {})
         })
       })
@@ -108,7 +111,7 @@ exports.createImage = (req, res, next) => {
     this.checkImageData(fields.description, res);
 
     GalleryModel
-      .findOne({ name: fields.gallery })
+      .findById(fields.gallery)
       .then((gallery) => {
 
         ImageModel
@@ -117,23 +120,23 @@ exports.createImage = (req, res, next) => {
           let index = images.length + 1;
 
           if (index < 10) { index = "0" + index }
-          let name = nem.getGalleryName(gallery.name) + "-" + index + "." + process.env.IMG_EXT;
-
-          let input   = "galleries/" + files.image.newFilename;
-          let output  = "galleries/" + name;
-
-          nem.setImage(input, process.env.IMG_URL + output);
-          nem.setThumbnail(input, process.env.THUMB_URL + output);
+          
+          let name = this.getImage(index, gallery.name, files.image.newFilename);
 
           let image = new ImageModel({
-            name: name,
+            image: name,
             description: fields.description,
             gallery: fields.gallery
           });
 
+          console.log("1 => ", image);
+          console.log("2 => ", GALLERIES_IMG + files.image.newFilename);
+
           image
             .save()
-            .then(() => res.status(201).json({ message: process.env.IMAGE_CREATED }))
+            .then(() => fs.unlink(GALLERIES_IMG + files.image.newFilename, () => {
+              res.status(201).json({ message: process.env.IMAGE_CREATED });
+            }))
             .catch(() => res.status(400).json({ message: process.env.IMAGE_NOT_CREATED }));
         })
         .catch(() => res.status(404).json({ message: process.env.IMAGES_NOT_FOUND }));
@@ -170,8 +173,8 @@ exports.deleteImage = (req, res) => {
   ImageModel
     .findById(req.params.id)
     .then((image) => {
-      fs.unlink(GALLERIES_THUMB + image.name, () => {
-        fs.unlink(GALLERIES_IMG + image.name, () => {
+      fs.unlink(GALLERIES_THUMB + image.image, () => {
+        fs.unlink(GALLERIES_IMG + image.image, () => {
 
           ImageModel
             .findByIdAndDelete(req.params.id)
