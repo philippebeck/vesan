@@ -41,22 +41,6 @@
             </template>
           </FieldElt>
         </template>
-        
-        <template #item-3>
-          <FieldElt type="select"
-            :list="getGalleries"
-            v-model:value="gallery"
-            @keyup.enter="createImage()"
-            :info="constants.INFO_GALLERY">
-
-            <template #legend>
-              {{ constants.LEGEND_GALLERY }}
-            </template>
-            <template #label>
-              {{ constants.LABEL_GALLERY }}
-            </template>
-          </FieldElt>
-        </template>
       </ListElt>
 
       <BtnElt type="button"
@@ -119,26 +103,25 @@ export default {
      */
     createImage() {
       if (this.$serve.checkString(this.description)) {
-        let img = document.getElementById("image").files[0];
+        let image = document.getElementById("image").files[0];
 
-        if (img !== undefined) {
-          if (this.gallery !== "") { 
-            let image = new FormData();
+        console.log(image);
 
-            image.append("image", img);
-            image.append("description", this.description);
-            image.append("gallery", this.gallery);
+        if (image !== undefined) {
+          let data = new FormData();
 
-            this.$serve.postData("/images", image)
-              .then(() => {
-                alert(this.name + this.constants.ALERT_CREATED);
-                this.$router.go();
-              })
-              .catch(err => { this.$serve.checkError(err) });
+          data.append("image", image);
+          data.append("description", this.description);
+          data.append("gallery", this.$route.params.id);
 
-          } else {
-          alert(this.constants.ALERT_GALLERY);
-          }
+          console.log(data);
+
+          this.$serve.postData("/images", data)
+            .then(() => {
+              alert(this.name + this.constants.ALERT_CREATED);
+              this.$router.go();
+            })
+            .catch(err => { this.$serve.checkError(err) });
 
         } else {
           alert(this.constants.ALERT_IMG);
