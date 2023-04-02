@@ -127,6 +127,7 @@ export default {
         if (image._id === id) {
 
           let data = new FormData();
+          data.append("name", image.name);
           data.append("description", image.description);
           data.append("gallery", image.gallery);
 
