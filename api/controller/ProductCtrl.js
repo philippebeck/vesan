@@ -116,19 +116,37 @@ exports.getProduct = (name, description, image, alt, price, options, cat, create
 }
 
 /**
- * GET IMAGE UPDATED
- * @param {string} id 
+ * GET IMAGE
  * @param {string} name 
+ * @param {string} newFilename 
+ */
+exports.getImage = (name, newFilename) => {
+  let image = nem.getImageName(name);
+
+  let input   = "products/" + newFilename;
+  let output  = "products/" + image;
+
+  nem.setThumbnail(input, process.env.THUMB_URL + output);
+  nem.setThumbnail(
+    input, 
+    process.env.IMG_URL + output, 
+    process.env.IMG_WIDTH, 
+    process.env.IMG_HEIGHT
+  );
+
+  return image;
+}
+
+//! ****************************** SETTER ******************************
+
+/**
+ * SET IMAGES UNLINK
+ * @param {string} id 
  * @param {string} newFilename 
  * @param {object} res 
  * @returns 
  */
-exports.getImageUpdated = (id, name, newFilename, res) => {
-  let image = nem.getImageName(name);
-
-  nem.setImage("products/" + newFilename, "products/" + image);
-  nem.setThumbnail("products/" + newFilename, "products/" + image);
-  
+exports.setImagesUnlink = (id, newFilename, res) => {
   ProductModel
     .findById(id)
     .then((product) =>
@@ -140,8 +158,6 @@ exports.getImageUpdated = (id, name, newFilename, res) => {
       })
     )
     .catch(() => res.status(404).json({ message: process.env.PRODUCT_NOT_FOUND }));
-
-  return image;
 }
 
 //! ****************************** PUBLIC ******************************
@@ -187,13 +203,12 @@ exports.createProduct = (req, res, next) => {
     ProductModel
       .find()
       .then((products) => {
-        for (let product of products) { this.checkProductUnique(fields.name, fields.description, product, res) }
+        for (let product of products) { 
+          this.checkProductUnique(fields.name, fields.description, product, res);
+        }
 
         let options = nem.getArrayFromString(fields.options);
-        let image   = nem.getImageName(fields.name);
-
-        nem.setImage("products/" + files.image.newFilename, "products/" + image);
-        nem.setThumbnail("products/" + files.image.newFilename, "products/" + image);
+        let image   = this.getImage(fields.name, files.image.newFilename);
 
         let product = new ProductModel(this.getProduct(
           fields.name, fields.description, image, fields.alt, fields.price, options, fields.cat, fields.created, fields.updated
@@ -201,8 +216,9 @@ exports.createProduct = (req, res, next) => {
 
         product
           .save()
-          .then(() => fs.unlink(PRODUCTS_IMG + files.image.newFilename, () => { console.log("image ok !") }))
-          .then(() => res.status(201).json({ message: process.env.PRODUCT_CREATED }))
+          .then(() => fs.unlink(PRODUCTS_IMG + files.image.newFilename, () => {
+            res.status(201).json({ message: process.env.PRODUCT_CREATED })
+          }))
           .catch(() => res.status(400).json({ message: process.env.PRODUCT_NOT_CREATED }));
       })
       .catch(() => res.status(404).json({ message: process.env.PRODUCTS_NOT_FOUND }));
@@ -229,7 +245,8 @@ exports.updateProduct = (req, res, next) => {
         let image = fields.image;
 
         if (Object.keys(files).length !== 0) { 
-          image = this.getImageUpdated(req.params.id, fields.name, files.image.newFilename, res) 
+          image = this.getImage(fields.name, files.image.newFilename);
+          this.setImagesUnlink(req.params.id, files.image.newFilename, res);
         }
     
         let options = nem.getArrayFromString(fields.options);

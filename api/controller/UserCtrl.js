@@ -184,32 +184,42 @@ exports.getUserUpdated = (fields, image, res) => {
 }
 
 /**
- * GET IMAGE UPDATED
- * @param {string} id 
+ * GET IMAGE
  * @param {string} name 
  * @param {string} newFilename 
- * @param {object} res
  * @returns 
  */
-exports.getImageUpdated = (id, name, newFilename, res) => {
+exports.getImage = (name, newFilename) => {
   let image = nem.getImageName(name);
-  nem.setThumbnail("users/" + newFilename, "users/" + image);
 
-  UserModel
-    .findById(id)
-    .then((user) => 
-      fs.unlink(USERS_THUMB + user.image, () => {
-        fs.unlink(USERS_THUMB + newFilename, () => {
-          console.log("Images ok !");
-        })
-      })
-    )
-    .catch(() => res.status(404).json({ message: process.env.USER_NOT_FOUND }));
+  nem.setThumbnail(
+    "users/" + newFilename, 
+    process.env.THUMB_URL + "users/" + image
+  );
 
   return image;
 }
 
-//! ****************************** SETTER ******************************
+//! ****************************** SETTERS ******************************
+
+/**
+ * SET IMAGES UNLINK
+ * @param {string} id 
+ * @param {string} newFilename 
+ * @param {object} res
+ * @returns 
+ */
+exports.setImagesUnlink = (id, newFilename, res) => {
+  UserModel
+    .findById(id)
+    .then((user) => 
+
+      fs.unlink(USERS_THUMB + user.image, () => {
+        fs.unlink(USERS_THUMB + newFilename, () => {})
+      })
+    )
+    .catch(() => res.status(404).json({ message: process.env.USER_NOT_FOUND }));
+}
 
 /**
  * SET MESSAGE
@@ -248,10 +258,11 @@ exports.createUser = (req, res, next) => {
     UserModel
       .find()
       .then((users) => {
-        for (let user of users) { this.checkUserUnique(fields.name, fields.email, user, res) }
+        for (let user of users) { 
+          this.checkUserUnique(fields.name, fields.email, user, res);
+        }
 
-        let image = nem.getImageName(fields.name);
-        nem.setThumbnail("users/" + files.image.newFilename, "users/" + image);
+        let image = this.getImage(fields.name, files.image.newFilename);
 
         bcrypt
           .hash(fields.pass, 10)
@@ -349,7 +360,8 @@ exports.updateUser = (req, res, next) => {
         let image = fields.image;
 
         if (Object.keys(files).length !== 0) { 
-          image = this.getImageUpdated(req.params.id, fields.name, files.image.newFilename, res) 
+          image = this.getImage(fields.name, files.image.newFilename);
+          this.setImagesUnlink(req.params.id, files.image.newFilename, res);
         }
 
         let user = this.getUserUpdated(fields, image, res);
