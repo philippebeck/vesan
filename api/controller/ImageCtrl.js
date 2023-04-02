@@ -27,19 +27,32 @@ exports.checkImageData = (description, res) => {
 //! ****************************** GETTER ******************************
 
 /**
- * GET IMAGE UPDATED
- * @param {string} id 
+ * GET IMAGE
  * @param {string} name 
  * @param {string} newFilename 
- * @param {object} res 
  * @returns 
  */
-exports.getImageUpdated = (id, name, newFilename, res) => {
+exports.getImage = (name, newFilename) => {
   let image = nem.getImageName(name);
 
-  nem.setImage( "galleries/" + newFilename, "galleries/" + image);
-  nem.setThumbnail("galleries/" + newFilename, "galleries/" + image);
+  let input   = "galleries/" + newFilename;
+  let output  = "galleries/" + image;
 
+  nem.setImage(input, process.env.IMG_URL + output);
+  nem.setThumbnail(input, process.env.THUMB_URL + output);
+
+  return image;
+}
+
+//! ****************************** SETTER ******************************
+
+/**
+ * UNLINK IMAGES
+ * @param {string} id 
+ * @param {string} newFilename 
+ * @param {object} res 
+ */
+exports.setImagesUnlink = (id, newFilename, res) => {
   ImageModel
     .findById(id)
     .then((image) => 
@@ -51,8 +64,6 @@ exports.getImageUpdated = (id, name, newFilename, res) => {
       })
     )
     .catch(() => res.status(404).json({ message: process.env.IMAGE_NOT_FOUND }));
-
-  return image;
 }
 
 //! ****************************** PUBLIC ******************************
@@ -106,11 +117,13 @@ exports.createImage = (req, res, next) => {
           let index = images.length + 1;
 
           if (index < 10) { index = "0" + index }
+          let name = nem.getGalleryName(gallery.name) + "-" + index + "." + process.env.IMG_EXT;
 
-          let name  = nem.getGalleryName(gallery.name) + "-" + index + "." + process.env.IMG_EXT;
+          let input   = "galleries/" + files.image.newFilename;
+          let output  = "galleries/" + name;
 
-          nem.setImage("galleries/" + files.image.newFilename, "galleries/" + name);
-          nem.setThumbnail("galleries/" + files.image.newFilename, "galleries/" + name);
+          nem.setImage(input, process.env.IMG_URL + output);
+          nem.setThumbnail(input, process.env.THUMB_URL + output);
 
           let image = new ImageModel({
             name: name,
