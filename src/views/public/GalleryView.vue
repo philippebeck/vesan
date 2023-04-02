@@ -29,7 +29,7 @@
                   :title="constants.TITLE_WATCH + slotProps.item.name">
 
                   <MediaElt :id="`${slotProps.item.name.toLowerCase()}`"
-                    :src="`img/thumbnails/galleries/${slotProps.item.name}`" 
+                    :src="`/img/thumbnails/galleries/${slotProps.item.cover}`" 
                     :alt="`${slotProps.item.name}`" 
                     :width="constants.THUMB_WIDTH"
                     :height="constants.THUMB_HEIGHT">
