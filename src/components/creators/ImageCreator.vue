@@ -98,7 +98,7 @@ export default {
 
           this.$serve.postData("/images", data)
             .then(() => {
-              alert(this.name + this.constants.ALERT_CREATED);
+              alert(image + this.constants.ALERT_CREATED);
               this.$router.go();
             })
             .catch(err => { this.$serve.checkError(err) });
