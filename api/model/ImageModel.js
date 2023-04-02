@@ -5,7 +5,7 @@ const uniqueValidator = require("mongoose-unique-validator");
 
 const ImageModel = mongoose.Schema(
   {
-    name: { 
+    image: { 
       type: String, 
       required: true,
       unique: true
