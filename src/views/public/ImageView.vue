@@ -38,8 +38,7 @@
       </template>
 
       <template #aside v-if="checkRole('admin')">
-        <ImageCreator :constants="constants"
-          :galleries="galleries"/>
+        <ImageCreator :constants="constants"/>
       </template>
     </CardElt>
   </main>
@@ -68,7 +67,6 @@ export default {
   created() {
     this.$store.dispatch("readGallery", this.$route.params.id);
     this.$store.dispatch("listGalleryImages", this.$route.params.id);
-    this.$store.dispatch("listGalleries");
 
     this.$serve.setMeta(
       this.constants.HEAD_IMAGE, 
@@ -79,11 +77,11 @@ export default {
   },
 
   computed: {
-    ...mapState(["gallery", "images", "galleries"])
+    ...mapState(["gallery", "images"])
   },
 
   methods: {
-    ...mapActions(["readGallery", "listGalleryImages", "listGalleries"]),
+    ...mapActions(["readGallery", "listGalleryImages"]),
 
     /**
      * CHECK ROLE
