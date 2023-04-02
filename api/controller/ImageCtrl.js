@@ -117,10 +117,11 @@ exports.createImage = (req, res, next) => {
         ImageModel
         .find({ gallery: fields.gallery })
         .then((images) => { 
+
           let index = images.length + 1;
 
           if (index < 10) { index = "0" + index }
-          
+
           let name = this.getImage(index, gallery.name, files.image.newFilename);
 
           let image = new ImageModel({
@@ -129,14 +130,10 @@ exports.createImage = (req, res, next) => {
             gallery: fields.gallery
           });
 
-          console.log("1 => ", image);
-          console.log("2 => ", GALLERIES_IMG + files.image.newFilename);
-
           image
             .save()
-            .then(() => fs.unlink(GALLERIES_IMG + files.image.newFilename, () => {
-              res.status(201).json({ message: process.env.IMAGE_CREATED });
-            }))
+            .then(() => fs.unlink(GALLERIES_IMG + files.image.newFilename, () => {}))
+            .then(() => res.status(201).json({ message: process.env.IMAGE_CREATED }))
             .catch(() => res.status(400).json({ message: process.env.IMAGE_NOT_CREATED }));
         })
         .catch(() => res.status(404).json({ message: process.env.IMAGES_NOT_FOUND }));
