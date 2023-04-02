@@ -16,12 +16,12 @@
           :dynamic="true">
 
           <template #items="slotProps">
-            <a :href="`/img/galleries/${slotProps.item.image}`"
-              :title="constants.TITLE_WATCH + slotProps.item.image">
+            <a :href="`/img/galleries/${slotProps.item.name}`"
+              :title="constants.TITLE_WATCH + slotProps.item.name">
 
-              <MediaElt :id="`${slotProps.item.image.toLowerCase()}`"
-                :src="`/img/thumbnails/galleries/${slotProps.item.image}`" 
-                :alt="`${slotProps.item.image}`" 
+              <MediaElt :id="`${slotProps.item.name.toLowerCase()}`"
+                :src="`/img/thumbnails/galleries/${slotProps.item.name}`" 
+                :alt="`${slotProps.item.description}`" 
                 :width="constants.THUMB_WIDTH"
                 :height="constants.THUMB_HEIGHT">
 

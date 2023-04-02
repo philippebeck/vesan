@@ -60,8 +60,8 @@ exports.setImagesUnlink = (id, newFilename, res) => {
     .findById(id)
     .then((image) => 
 
-      fs.unlink(GALLERIES_THUMB + image.image, () => {
-        fs.unlink(GALLERIES_IMG + image.image, () => {
+      fs.unlink(GALLERIES_THUMB + image.name, () => {
+        fs.unlink(GALLERIES_IMG + image.name, () => {
           fs.unlink(GALLERIES_IMG + newFilename, () => {})
         })
       })
@@ -124,7 +124,7 @@ exports.createImage = (req, res, next) => {
           let name = this.getImage(index, gallery.name, files.image.newFilename);
 
           let image = new ImageModel({
-            image: name,
+            name: name,
             description: fields.description,
             gallery: fields.gallery
           });
@@ -173,8 +173,8 @@ exports.deleteImage = (req, res) => {
   ImageModel
     .findById(req.params.id)
     .then((image) => {
-      fs.unlink(GALLERIES_THUMB + image.image, () => {
-        fs.unlink(GALLERIES_IMG + image.image, () => {
+      fs.unlink(GALLERIES_THUMB + image.name, () => {
+        fs.unlink(GALLERIES_IMG + image.name, () => {
 
           ImageModel
             .findByIdAndDelete(req.params.id)

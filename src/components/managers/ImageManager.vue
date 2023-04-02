@@ -19,10 +19,10 @@
             ({{ images[slotProps.index]._id }})
           </template>
 
-          <template #cell-image="slotProps">
-            <MediaElt :src="'/img/thumbnails/galleries/' + images[slotProps.index].image"
+          <template #cell-name="slotProps">
+            <MediaElt :src="'/img/thumbnails/galleries/' + images[slotProps.index].name"
               :alt="images[slotProps.index].description"
-              :title="images[slotProps.index].image"/>
+              :title="images[slotProps.index].name"/>
 
             <FieldElt :id="images[slotProps.index]._id"
               type="file"
