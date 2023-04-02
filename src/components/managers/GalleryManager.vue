@@ -12,7 +12,7 @@
     <template #body>
       <form>
         <TableElt :items="galleries">
-          <template #head>up/del</template>
+          <template #head>{{ constants.HEAD_UP }}</template>
 
           <template #cell-_id="slotProps">
             <a :href="`/gallery/${galleries[slotProps.index]._id}`">

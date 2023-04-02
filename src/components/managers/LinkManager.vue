@@ -21,7 +21,7 @@
             <i :class="`fa-brands fa-${table[0].cat.toLowerCase()} fa-5x sky`"></i>
           </template>
 
-          <template #head>up/del</template>
+          <template #head>{{ constants.HEAD_UP }}</template>
 
           <!-- Id -->
           <template #cell-_id="slotProps">
