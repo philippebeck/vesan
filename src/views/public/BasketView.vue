@@ -111,7 +111,7 @@
               href="/login"
               class="btn-green width-sm"
               :content="constants.CONTENT_ORDER"
-              :title="constants.TITLE_BASKET">
+              :title="constants.TITLE_ORDER">
 
               <template #btn>
                 <i class="fa-solid fa-cash-register fa-lg"></i>
