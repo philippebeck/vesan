@@ -21,7 +21,7 @@ const form = formidable({ uploadDir: GALLERIES_IMG, keepExtensions: true });
  * @param {object} res 
  */
 exports.checkImageData = (description, res) => {
-  if (!nem.checkString(description)) {
+  if (!nem.checkString(description, process.env.STRING_MIN, process.env.TEXT_MAX)) {
     return res.status(403).json({ message: process.env.CHECK_NAME });
   }
 }
