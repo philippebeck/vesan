@@ -550,7 +550,7 @@ export default {
   /******************** TITLE ********************/
 
   TITLE_ADMIN : "Admin",
-  TITLE_BASKET : "Connectez-vous pour commander ces produits",
+  TITLE_BASKET : "Voir mon panier",
   TITLE_CLEAR : "Vider le panier",
   TITLE_COMMENT_MODERATE : "Modérer le commentaire #",
   TITLE_DELETE : "Supprimer ",
@@ -566,6 +566,7 @@ export default {
   TITLE_LOGIN : "Connexion",
   TITLE_LOGOUT : "Déconnexion",
   TITLE_MESSAGE : "Envoyer un message",
+  TITLE_ORDER : "Connectez-vous pour commander ces produits",
   TITLE_READ : "Lire ",
   TITLE_REVIEW_FIRST : "Soyez le premier à rédiger un avis sur ",
   TITLE_REVIEW_MODERATE : "Modérer l'avis #",
