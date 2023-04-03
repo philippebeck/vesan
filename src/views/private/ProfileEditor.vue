@@ -6,6 +6,28 @@
           aria-hidden="true"></i>
         {{ constants.PROFILE_EDITOR }}
       </h1>
+
+      <BtnElt type="button"
+        @click="logout()" 
+        class="btn-orange"
+        :content="constants.CONTENT_LOGOUT"
+        :title="constants.TITLE_LOGOUT">
+
+        <template #btn>
+          <i class="fa-solid fa-right-from-bracket fa-lg"></i>
+        </template>
+      </BtnElt>
+
+      <BtnElt v-if="checkRole('admin') || checkRole('editor')"
+        href="/admin"
+        class="btn-green"
+        :content="constants.CONTENT_ADMIN"
+        :title="constants.TITLE_ADMIN">
+
+        <template #btn>
+          <i class="fa-solid fa-gears fa-lg"></i>
+        </template>
+      </BtnElt>
     </header>
 
     <CardElt>
@@ -239,6 +261,15 @@ export default {
      */
     checkRole(role) {
       return this.$serve.checkRole(this.user.role, role);
+    },
+
+    /**
+     * LOGOUT
+     */
+    logout() {
+      localStorage.removeItem("userId");
+      localStorage.removeItem("userToken");
+      this.$router.go();
     },
 
     /**
