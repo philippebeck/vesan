@@ -1,74 +1,22 @@
 <template>
-
-  <!-- NAVBAR -->
   <NavElt :items="constants.NAV_MAIN">
-
-    <!-- Brand Logo -->
     <template #brand>
       <img :src="constants.LOGO_SRC"
         :alt="constants.LOGO_ALT"
         :width="constants.LOGO_WIDTH">
     </template>
 
-    <!-- Admin Part -->
     <template #admin>
+      <a v-if="checkRole('user')"
+        href="/profile"
+        :title="constants.PROFILE_OF + user.name">
+        <img :src="`/img/thumbnails/users/${user.image}`"
+          :alt="user.name"
+          :height="40"
+          :width="40"
+          class="bord bord-circle">
+      </a>
 
-      <!-- Admin & Editor -->
-      <ListElt v-if="checkRole('admin') || checkRole('editor')"
-        :items="constants.NAV_ADMIN">
-
-        <template #item-1>
-          <a href="/admin"
-            :title="constants.TITLE_ADMIN">
-            <i class="fa-solid fa-gears fa-fw"></i>
-          </a>
-        </template>
-
-        <template #item-2>
-          <a href="/profile"
-            :title="constants.PROFILE_OF + user.name">
-            <img :src="`/img/thumbnails/users/${user.image}`"
-              :alt="user.name"
-              :height="40"
-              :width="40"
-              class="bord bord-circle">
-          </a>
-        </template>
-
-        <template #item-3>
-          <button type="button"
-            @click="logout()"
-            :title="constants.TITLE_LOGOUT">
-            <i class="fa-solid fa-right-from-bracket fa-fw"></i>
-          </button>
-        </template>
-      </ListElt>
-
-      <!-- User -->
-      <ListElt v-else-if="checkRole('user')"
-        :items="constants.NAV_USER">
-
-        <template #item-1>
-          <a href="/profile"
-            :title="constants.PROFILE_OF + user.name">
-            <img :src="`/img/thumbnails/users/${user.image}`"
-              :alt="user.name"
-              :height="40"
-              :width="40"
-              class="bord bord-circle">
-          </a>
-        </template>
-
-        <template #item-2>
-          <button type="button"
-            @click="logout()"
-            :title="constants.TITLE_LOGOUT">
-            <i class="fa-solid fa-arrow-left-to-bracket fa-fw"></i>
-          </button>
-        </template>
-      </ListElt>
-
-      <!-- Visitor -->
       <a v-else
         href="/login"
         :title="constants.TITLE_LOGIN">
@@ -77,7 +25,6 @@
     </template>
   </NavElt>
 
-  <!-- VIEWS -->
   <router-view v-slot="{ Component }"
     :constants="constants"
     :user="user">
@@ -87,13 +34,11 @@
     </transition>
   </router-view>
 
-  <!-- FOOTER -->
   <FootElt
     :title1="constants.FOOT_TITLE1"
     :title2="constants.FOOT_TITLE2"
     :title3="constants.FOOT_TITLE3">
 
-    <!-- Websites -->
     <template #foot1>
       <ListElt :dynamic="true"
         :items="constants.FOOT1">
@@ -106,7 +51,6 @@
       </ListElt>
     </template>
 
-    <!-- Tools -->
     <template #foot2>
       <ListElt :dynamic="true"
         :items="constants.FOOT2">
@@ -119,7 +63,6 @@
       </ListElt>
     </template>
 
-    <!-- Links -->
     <template #foot3>
       <ListElt :dynamic="true"
         :items="constants.FOOT3">
@@ -132,7 +75,6 @@
       </ListElt>
     </template>
 
-    <!-- Social Networks -->
     <template #foot>
       <ListElt :dynamic="true"
         :items="constants.FOOT">
@@ -192,15 +134,6 @@ export default {
      */
     checkRole(role) {
       return this.$serve.checkRole(this.user.role, role);
-    },
-
-    /**
-     * LOGOUT
-     */
-    logout() {
-      localStorage.removeItem("userId");
-      localStorage.removeItem("userToken");
-      this.$router.go();
     }
   }
 };
