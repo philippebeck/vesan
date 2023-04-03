@@ -13,7 +13,6 @@
       <form enctype="multipart/form-data">
         <TableElt :items="products">
 
-          <!-- Id -->
           <template #cell-_id="slotProps">
             <a :href="`/product/${products[slotProps.index]._id}`">
               <b>#{{ slotProps.index + 1 }}</b>
@@ -21,14 +20,12 @@
             </a>
           </template>
 
-          <!-- Name -->
           <template #cell-name="slotProps">
             <FieldElt v-model:value="getProducts()[slotProps.index].name"
               @keyup.enter="updateProduct(products[slotProps.index]._id)"
               :info="constants.INFO_UP_NAME"/>
           </template>
 
-          <!-- Description -->
           <template #cell-description="slotProps">
             <BtnElt :href="`/product/edit/${products[slotProps.index]._id}`"
               class="btn-cyan"
@@ -40,7 +37,6 @@
             </BtnElt>
           </template>
 
-          <!-- Image -->
           <template #cell-image="slotProps">
             <MediaElt :src="'/img/thumbnails/products/' + products[slotProps.index].image"
               :alt="products[slotProps.index].alt"
@@ -52,7 +48,6 @@
               :info="constants.INFO_UP_IMAGE"/>
           </template>
 
-          <!-- Alt -->
           <template #cell-alt="slotProps">
             <FieldElt type="textarea"
               v-model:value="getProducts()[slotProps.index].alt"
@@ -60,7 +55,6 @@
               :info="constants.INFO_UP_ALT"/>
           </template>
 
-          <!-- Price -->
           <template #cell-price="slotProps">
             <FieldElt type="number"
               v-model:value="getProducts()[slotProps.index].price"
@@ -70,7 +64,6 @@
               :max="constants.PRICE_MAX"/>
           </template>
 
-          <!-- Options -->
           <template #cell-options="slotProps">
             <FieldElt type="textarea"
               v-model:value="getProducts()[slotProps.index].options"
@@ -80,7 +73,6 @@
               :max="constants.TEXT_MAX"/>
           </template>
 
-          <!-- Category -->
           <template #cell-cat="slotProps">
             <FieldElt type="select"
               :list="constants.CATS_PRODUCT"
@@ -89,7 +81,6 @@
               :info="constants.INFO_UP_CATEGORY"/>
           </template>
 
-          <!-- Created -->
           <template #cell-created="slotProps">
             <p>
               {{ new Date(products[slotProps.index].created).toLocaleString() }}
@@ -106,7 +97,6 @@
             </BtnElt>
           </template>
 
-          <!-- Updated -->
           <template #cell-updated="slotProps">
             <p>
               {{ new Date(products[slotProps.index].updated).toLocaleString() }}
