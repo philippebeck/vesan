@@ -125,8 +125,9 @@ exports.createImage = (req, res, next) => {
 
           image
             .save()
-            .then(() => fs.unlink(GALLERIES_IMG + files.image.newFilename, () => {}))
-            .then(() => res.status(201).json({ message: process.env.IMAGE_CREATED }))
+            .then(() => fs.unlink(GALLERIES_IMG + files.image.newFilename, () => {
+              res.status(201).json({ message: process.env.IMAGE_CREATED });
+            }))
             .catch(() => res.status(400).json({ message: process.env.IMAGE_NOT_CREATED }));
         })
         .catch(() => res.status(404).json({ message: process.env.IMAGES_NOT_FOUND }));
