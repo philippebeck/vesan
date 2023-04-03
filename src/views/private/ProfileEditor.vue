@@ -37,11 +37,9 @@
       </template>
 
       <template #body>
-        <form method="post"
-          enctype="multipart/form-data">
+        <form enctype="multipart/form-data">
           <ListElt :items="constants.USER_FORM">
 
-            <!-- Name -->
             <template #item-1>
               <FieldElt v-model:value="user.name"
                 @keyup.enter="updateUser()"
@@ -57,7 +55,6 @@
               </FieldElt>
             </template>
 
-            <!-- Email -->
             <template #item-2>
               <FieldElt type="email"
                 v-model:value="user.email"
@@ -73,7 +70,6 @@
               </FieldElt>
             </template>
             
-            <!-- Image -->
             <template #item-3>
               <MediaElt v-if="user.image"
                 :src="'/img/thumbnails/users/' + user.image"
@@ -93,7 +89,6 @@
               </FieldElt>
             </template>
 
-            <!-- Pass -->
             <template #item-4>
               <FieldElt type="password"
                 v-model:value="pass"
@@ -110,7 +105,6 @@
             </template>
           </ListElt>
 
-          <!-- Update -->
           <BtnElt type="button"
             @click="updateUser()" 
             class="btn-sky"
@@ -122,7 +116,6 @@
             </template>
           </BtnElt>
 
-          <!-- Delete -->
           <BtnElt type="button"
             @click="deleteUser()" 
             class="btn-red"
@@ -145,13 +138,11 @@
       <template #body>
         <TableElt :items="orders">
 
-          <!-- Id -->
           <template #cell-_id="slotProps">
             <b>#{{ slotProps.index + 1 }}</b>
             ({{ orders[slotProps.index]._id }})
           </template>
 
-          <!-- Products -->
           <template #cell-products="slotProps">
             <ul>
               <li v-for="(item, index) in orders[slotProps.index].products"
@@ -174,17 +165,14 @@
             </ul>
           </template>
 
-          <!-- Total -->
           <template #cell-total="slotProps">
             <b>{{ orders[slotProps.index].total }} €</b>
           </template>
 
-          <!-- Created -->
           <template #cell-created="slotProps">
             {{ new Date(orders[slotProps.index].created).toLocaleString() }}
           </template>
 
-          <!-- Updated -->
           <template #cell-updated="slotProps">
             {{ new Date(orders[slotProps.index].updated).toLocaleString() }}
           </template>
