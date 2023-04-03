@@ -31,7 +31,8 @@
         <template #item-2>
           <FieldElt v-model:value="description"
             @keyup.enter="createImage()"
-            :info="constants.INFO_DESCRIPTION">
+            :info="constants.INFO_DESCRIPTION"
+            :max="constants.TEXT_MAX">
 
             <template #legend>
               {{ constants.LEGEND_DESCRIPTION }}
@@ -86,7 +87,7 @@ export default {
      * CREATE IMAGE
      */
     createImage() {
-      if (this.$serve.checkString(this.description)) {
+      if (this.$serve.checkString(this.description, this.constants.STRING_MIN, this.constants.TEXT_MAX)) {
         let image = document.getElementById("image").files[0];
 
         if (image !== undefined) {

@@ -14,7 +14,7 @@
       <template #body>
         <ListElt :items="galleries"
           :dynamic="true"
-          class="flex-wrap content-center">
+          class="grid-2sm-3md-4lg-5xl-6wd content-center">
 
           <template #items="slotProps">
             <a :href="`gallery/${slotProps.item._id}`"

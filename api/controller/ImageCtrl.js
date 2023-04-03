@@ -21,7 +21,7 @@ const form = formidable({ uploadDir: GALLERIES_IMG, keepExtensions: true });
  * @param {object} res 
  */
 exports.checkImageData = (description, res) => {
-  if (!nem.checkString(description)) {
+  if (!nem.checkString(description, process.env.STRING_MIN, process.env.TEXT_MAX)) {
     return res.status(403).json({ message: process.env.CHECK_NAME });
   }
 }
@@ -125,8 +125,9 @@ exports.createImage = (req, res, next) => {
 
           image
             .save()
-            .then(() => fs.unlink(GALLERIES_IMG + files.image.newFilename, () => {}))
-            .then(() => res.status(201).json({ message: process.env.IMAGE_CREATED }))
+            .then(() => fs.unlink(GALLERIES_IMG + files.image.newFilename, () => {
+              res.status(201).json({ message: process.env.IMAGE_CREATED });
+            }))
             .catch(() => res.status(400).json({ message: process.env.IMAGE_NOT_CREATED }));
         })
         .catch(() => res.status(404).json({ message: process.env.IMAGES_NOT_FOUND }));

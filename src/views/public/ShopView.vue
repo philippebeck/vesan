@@ -7,6 +7,13 @@
         :title="constants.TITLE_TOGGLE"></i>
       </template>
 
+      <template #first>
+        <a href="/basket"
+          :title="constants.TITLE_BASKET">
+          <i class="fa-solid fa-basket-shopping fa-fw"></i>
+        </a>
+      </template>
+
       <template #last v-if="checkRole('editor')">
         <a href="#create-product"
           :title="constants.PRODUCT_CREATOR">
