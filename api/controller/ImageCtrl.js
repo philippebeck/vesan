@@ -41,26 +41,6 @@ exports.setImage = (image, newFilename) => {
   nem.setThumbnail(input, process.env.THUMB_URL + output);
 }
 
-/**
- * UNLINK IMAGES
- * @param {string} id 
- * @param {string} newFilename 
- * @param {object} res 
- */
-exports.setImagesUnlink = (id, newFilename, res) => {
-  ImageModel
-    .findById(id)
-    .then((image) => 
-
-      fs.unlink(GALLERIES_THUMB + image.name, () => {
-        fs.unlink(GALLERIES_IMG + image.name, () => {
-          fs.unlink(GALLERIES_IMG + newFilename, () => {})
-        })
-      })
-    )
-    .catch(() => res.status(404).json({ message: process.env.IMAGE_NOT_FOUND }));
-}
-
 //! ****************************** PUBLIC ******************************
 
 /**
@@ -85,7 +65,22 @@ exports.listGalleryImages = (req, res) => {
 exports.listImages = (req, res) => {
   ImageModel
     .find()
-    .then((images) => { res.status(200).json(images) })
+    .then((images) => { 
+
+      GalleryModel
+        .find()
+        .then((galleries) => {
+          for (let image of images) {
+            for (let gallery of galleries) {
+        
+              if (image.gallery === gallery._id.toString()) {
+                image.gallery = image.gallery + "-" + gallery.name;
+              }
+            }
+          }
+          res.status(200).json(images);
+        })
+    })
     .catch(() => res.status(404).json({ message: process.env.IMAGES_NOT_FOUND }));
 };
 
@@ -143,16 +138,16 @@ exports.createImage = (req, res, next) => {
  * @param {function} next 
  */
 exports.updateImage = (req, res, next) => {
-  form.parse(req, (err, fields) => {
+  form.parse(req, (err, fields, files) => {
     if (err) { next(err); return }
 
     this.checkImageData(fields.description, res);
 
     let name = fields.name;
 
-    if (Object.keys(files).length !== 0) { 
+    if (Object.keys(files).length !== 0) {
       this.setImage(name, files.image.newFilename);
-      this.setImagesUnlink(req.params.id, files.image.newFilename, res);
+      fs.unlink(GALLERIES_IMG + files.image.newFilename, () => {});
     }
 
     let image = {

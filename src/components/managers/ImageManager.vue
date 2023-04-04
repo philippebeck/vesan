@@ -39,6 +39,7 @@
             <FieldElt type="select"
               :list="getGalleries"
               v-model:value="getImages()[slotProps.index].gallery"
+              :content="images[slotProps.index].gallery.split('-')[1]"
               @keyup.enter="updateImage(images[slotProps.index]._id)"
               :info="constants.INFO_UP_GALLERY"/>
           </template>
@@ -99,13 +100,16 @@ export default {
      * @returns
      */
     getGalleries() {
-      const galleries = new Set();
+      const galleries = [];
 
-      for (let gallery of this.galleries) {
-        galleries.add(gallery.name)
+      for (let i = 0; i < this.galleries.length; i++) {
+        galleries.push({
+          content: this.galleries[i].name,
+          value: this.galleries[i]._id
+        })
       }
 
-      return Array.from(galleries); 
+      return galleries; 
     }
   },
 
@@ -127,9 +131,12 @@ export default {
         if (image._id === id) {
 
           let data = new FormData();
+          let img = document.getElementById(id).files[0] ?? image.name;
+
           data.append("name", image.name);
+          data.append("image", img);
           data.append("description", image.description);
-          data.append("gallery", image.gallery);
+          data.append("gallery", image.gallery.split('-')[0]);
 
           this.$serve.putData(`/images/${id}`, data)
             .then(() => {

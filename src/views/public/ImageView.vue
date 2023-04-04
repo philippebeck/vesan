@@ -64,25 +64,38 @@ export default {
   },
 
   props: ["constants", "user"],
+  data() {
+    return {
+      gallery: {}
+    }
+  },
 
   created() {
-    this.$store.dispatch("readGallery", this.$route.params.id);
-    this.$store.dispatch("listGalleryImages", this.$route.params.id);
+    this.$serve.getData("/galleries/" + this.$route.params.id)
+      .then((gallery) => {
+        this.gallery = gallery;
 
-    this.$serve.setMeta(
-      this.constants.HEAD_IMAGE, 
-      this.constants.META_IMAGE,
-      this.constants.UI_URL + "/images",
-      this.constants.UI_URL + this.constants.LOGO_SRC
-    );
+        this.$serve.setMeta(
+          gallery.name + this.constants.HEAD, 
+          this.constants.META_IMAGE + gallery.author,
+          this.constants.UI_URL + "/gallery/" + gallery._id,
+          this.constants.UI_URL + "/img/thumbnails/galleries/" + gallery.cover
+        );
+      })
+      .catch(err => { 
+        this.$serve.checkError(err);
+        this.$router.push("/galleries");
+      });
+
+    this.$store.dispatch("listGalleryImages", this.$route.params.id);
   },
 
   computed: {
-    ...mapState(["gallery", "images"])
+    ...mapState(["images"])
   },
 
   methods: {
-    ...mapActions(["readGallery", "listGalleryImages"]),
+    ...mapActions(["listGalleryImages"]),
 
     /**
      * CHECK ROLE
