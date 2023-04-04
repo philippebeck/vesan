@@ -14,14 +14,17 @@
       <template #body>
         <SliderElt :slides="images">
           <template #slide="slotProps">
-            <MediaElt :src="`/img/thumbnails/galleries/${slotProps.slide.name}`"
-              :alt="slotProps.slide.description"
-              :width="constants.MEDIA_WIDTH">
+            <a :href="`/img/galleries/${slotProps.slide.name}`"
+              :title="constants.TITLE_WATCH + slotProps.slide.name">
+              <MediaElt :src="`/img/galleries/${slotProps.slide.name}`"
+                :alt="slotProps.slide.description"
+                :width="constants.MEDIA_WIDTH">
 
-              <template #figcaption>
-                {{ slotProps.slide.description }}
-              </template>
-            </MediaElt>
+                <template #figcaption>
+                  {{ slotProps.slide.description }}
+                </template>
+              </MediaElt>
+            </a>
           </template>
         </SliderElt>
 
