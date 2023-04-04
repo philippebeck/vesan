@@ -959,14 +959,6 @@ aside {
   --ve-nav-i-place-self: center;
 }
 
-.admin {
-  --ve-nav-hide-display: none;
-}
-
-.nav {
-  --ve-nav-show-display: flex;
-}
-
 .sidebar {
   --ve-side-display: flex;
   --ve-side-flex-flow: column;
@@ -1019,10 +1011,6 @@ aside {
   .navbar {
     --ve-nav-button-display: none;
     --ve-nav-ul-a-not-i-display: flex;
-  }
-
-  .admin {
-    --ve-nav-hide-display: flex;
   }
 }
 
