@@ -12,6 +12,19 @@
       </template>
 
       <template #body>
+        <SliderElt :slides="images">
+          <template #slide="slotProps">
+            <MediaElt :src="`/img/thumbnails/galleries/${slotProps.slide.name}`"
+              :alt="slotProps.slide.description"
+              :width="constants.MEDIA_WIDTH">
+
+              <template #figcaption>
+                {{ slotProps.slide.description }}
+              </template>
+            </MediaElt>
+          </template>
+        </SliderElt>
+
         <ListElt :items="images"
           :dynamic="true"
           class="grid-2sm-3md-4lg-5xl-6wd content-center">
@@ -48,18 +61,20 @@
 <script>
 import { mapState, mapActions } from "vuex"
 
+import CardElt from "@/assets/CardElt"
 import ListElt from "@/assets/ListElt"
 import MediaElt from "@/assets/MediaElt"
-import CardElt from "@/assets/CardElt"
+import SliderElt from "@/assets/SliderElt"
 
 import ImageCreator from "@/components/creators/ImageCreator"
 
 export default {
   name: "ImageView",
   components: {
+    CardElt,
     ListElt,
     MediaElt,
-    CardElt,
+    SliderElt,
     ImageCreator
   },
 
