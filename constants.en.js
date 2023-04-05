@@ -36,6 +36,8 @@ export default {
   LOGO_SRC : "/img/logo.png",
   LOGO_WIDTH : "30",
 
+  MEDIA_WIDTH: 300,
+
   NUM_MAX : 5,
   NUM_MIN : 0,
 
@@ -557,6 +559,7 @@ export default {
   TITLE_DELETE : "Delete ",
   TITLE_DELETE_ACCOUNT : "Delete your account",
   TITLE_DELETE_COMMENT : "Delete comment #",
+  TITLE_DELETE_IMAGE : "Delete image #",
   TITLE_DELETE_ORDER : "Delete order #",
   TITLE_DELETE_REVIEW : "Delete review #",
   TITLE_DISLIKE : "Dislike ",
