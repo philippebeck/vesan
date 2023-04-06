@@ -1,8 +1,17 @@
 /********** OVERLOADING **********/
 :root {
-  --ani-sans-serif: Geo, sans-serif;
-  --ani-serif: Trocchi, serif;
-  --ani-monospace: "Syne Mono", monospace;
+  --ani-sans-serif: Geo, Helvetica, sans-serif;
+  --ani-serif: Trocchi, Times, serif;
+  --ani-monospace: "Syne Mono", Courier, monospace;
+}
+
+/* SHOP */
+.figcaption {
+  height: 100px;
+}
+
+[itemprop="offers"] {
+  font-size: 2.5rem;
 }
 
 /* TINYMCE EDITOR */

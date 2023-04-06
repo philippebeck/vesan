@@ -639,7 +639,7 @@ figure {
   --ve-media-figure-place-items: center;
   --ve-media-figure-border: 1px solid transparent;
   --ve-media-figure-border-radius: 20px;
-  --ve-media-figure-padding: 20px;
+  --ve-media-figure-padding: 10px;
   --ve-media-figure-background-color: transparent;
 }
 
@@ -674,7 +674,7 @@ figcaption {
   --ve-media-figcaption-display: flex;
   --ve-media-figcaption-flex-flow: column nowrap;
   --ve-media-figcaption-place-content: center center;
-  --ve-media-figcaption-width: 200px;
+  --ve-media-figcaption-width: 300px;
   --ve-media-figcaption-font-size: 1.6rem;
   --ve-media-figcaption-font-style: normal;
   --ve-media-figcaption-color: var(--ani-slate);
@@ -690,7 +690,7 @@ ul {
   --ve-list-li-ul-flex-flow: wrap;
   --ve-list-li-ul-gap: 20px;
   --ve-list-li-ul-place-content: center;
-  --ve-list-li-ul-place-items: end;
+  --ve-list-li-ul-place-items: baseline;
   --ve-list-li-li-max-width: 300px;
 }
 
@@ -1021,9 +1021,18 @@ aside {
 
 /********** OVERLOADING **********/
 :root {
-  --ani-sans-serif: Geo, sans-serif;
-  --ani-serif: Trocchi, serif;
-  --ani-monospace: "Syne Mono", monospace;
+  --ani-sans-serif: Geo, Helvetica, sans-serif;
+  --ani-serif: Trocchi, Times, serif;
+  --ani-monospace: "Syne Mono", Courier, monospace;
+}
+
+/* SHOP */
+.figcaption {
+  height: 100px;
+}
+
+[itemprop="offers"] {
+  font-size: 2.5rem;
 }
 
 /* TINYMCE EDITOR */

@@ -126,20 +126,24 @@ Available API Files :
 -   **OrderModel, OrderCtrl, OrderRoute** *(Product Orders)*  
 -   **ArticleModel, ArticleCtrl, ArticleRoute** *(Articles)*  
 -   **CommentModel, CommentCtrl, CommentRoute** *(Article Comments)*  
+-   **GalleryModel, GalleryCtrl, GalleryRoute** *(Galleries)*  
+-   **ImageModel, ImageCtrl, ImageRoute** *(Gallery Images)*  
 -   **AuthCtrl, AuthRoute** *(Auth)*  
 -   **UserModel, UserCtrl, UserRoute** *(Users)*  
 -   **LinkModel, LinkCtrl, LinkRoute** *(Links)*  
 
 Public Views :  
 -   **HomeView** *(Home)*  
--   **ShopView** *(Shop with products list)*  
--   **ProductView** *(Product of the shop)*  
 -   **BlogView** *(Blog with articles list)*  
 -   **ArticleView** *(Article of the blog)*  
--   **ContactView** *(Contact)*  
+-   **ShopView** *(Shop with products list)*  
+-   **ProductView** *(Product of the shop)*  
 -   **BasketView** *(Basket & order process)*  
--   **LoginView** *(Login with connector components)*  
+-   **GalleryView** *(Galleries list)*  
+-   **ImageView** *(Images of a gallery)*  
 -   **LinkView** *(Links list)*  
+-   **LoginView** *(Login with connector components)*  
+-   **ContactView** *(Contact)*  
 -   **LegalView** *(Legal notice)*  
 -   **ErrorView** *(Error)*  
 
@@ -159,20 +163,24 @@ Private Views :
 -   **ProductEditor** *(Editor for product)*  
 
 Creator Components *(private)* :  
--   **ProductCreator** *(Create product)*  
--   **ReviewCreator** *(Create review)*  
 -   **ArticleCreator** *(Create article)*  
 -   **CommentCreator** *(Create comment)*  
+-   **ProductCreator** *(Create product)*  
+-   **ReviewCreator** *(Create review)*  
+-   **GalleryCreator** *(Create gallery)*  
+-   **ImageCreator** *(Create image)*  
 -   **LinkCreator** *(Create link)*  
 
 Manager Components *(private)* :  
+-   **ArticleManager** *(Manage articles)*  
+-   **CommentManager** *(Manage comments)*  
 -   **ProductManager** *(Manage products)*  
 -   **ReviewManager** *(Manage reviews)*  
 -   **OrderManager** *(Manage orders)*  
--   **ArticleManager** *(Manage articles)*  
--   **CommentManager** *(Manage comments)*  
--   **UserManager** *(Manage users)*  
+-   **GalleryManager** *(Manage galleries)*  
+-   **ImageManager** *(Manage images)*  
 -   **LinkManager** *(Manage links)*  
+-   **UserManager** *(Manage users)*  
 
 ---
 
