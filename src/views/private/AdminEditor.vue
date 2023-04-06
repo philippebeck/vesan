@@ -10,7 +10,6 @@
         </h1>
         <p>{{ constants.INTRO_ADMIN }}</p>
 
-        <!-- Sidebar -->
         <NavElt class="sidebar">
           <template #hide>
             <i class="fa-solid fa-eye fa-fw" 
@@ -75,7 +74,6 @@
 
       <template #body>
 
-        <!-- Shop Part -->
         <ProductManager v-if="products.length > 0"
           :constants="constants"
           :products="products"/>
@@ -91,7 +89,6 @@
           :orders="orders"
           :users="users"/>
 
-        <!-- Blog Part -->
         <ArticleManager v-if="articles.length > 0"
           :articles="articles"
           :constants="constants"
@@ -103,7 +100,6 @@
           :constants="constants"
           :users="users"/>
 
-        <!-- Galleries Part -->
         <GalleryManager v-if="galleries.length > 0"
           :constants="constants"
           :galleries="galleries"/>
@@ -113,12 +109,10 @@
           :galleries="galleries"
           :images="images"/>
 
-        <!-- Links Part -->
         <LinkManager v-if="links.length > 0"
           :constants="constants"
           :links="links"/>
 
-        <!-- Users Part -->
         <UserManager v-if="users.length > 0"
           :constants="constants"
           :users="users"/>

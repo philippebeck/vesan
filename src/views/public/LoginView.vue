@@ -23,7 +23,6 @@
       <template #body>
         <SignUp :constants="constants"/>
 
-        <!-- Toggle Button to SignIn Component -->
         <BtnElt type="button"
           @click="setType('SignIn')"
           class="btn-green"
@@ -35,7 +34,6 @@
           </template>
         </BtnElt>
 
-        <!-- Toggle Button to Forgot Password Component -->
         <BtnElt type="button"
           @click="setType('ForgotPass')"
           class="btn-orange"
@@ -63,7 +61,6 @@
       <template #body>
         <SignIn :constants="constants"/>
 
-        <!-- Toggle Button to SignUp Component -->
         <BtnElt type="button"
           @click="setType('SignUp')"
           class="btn-sky-dark"
@@ -75,7 +72,6 @@
           </template>
         </BtnElt>
 
-        <!-- Toggle Button to Forgot Password Component -->
         <BtnElt type="button"
           @click="setType('ForgotPass')"
           class="btn-orange"
@@ -103,7 +99,6 @@
       <template #body>
         <ForgotPass :constants="constants"/>
 
-        <!-- Toggle Button to SignUp Component -->
         <BtnElt type="button"
           @click="setType('SignUp')"
           class="btn-sky-dark"
@@ -115,7 +110,6 @@
           </template>
         </BtnElt>
 
-        <!-- Toggle Button to SignIn Component -->
         <BtnElt type="button"
           @click="setType('SignIn')"
           class="btn-green"

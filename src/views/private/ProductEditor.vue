@@ -19,7 +19,6 @@
           enctype="multipart/form-data">
           <ListElt :items="constants.PRODUCT_FORM">
 
-            <!-- Name -->
             <template #item-1>
               <FieldElt v-model:value="product.name"
                 @keyup.enter="updateProduct()"
@@ -35,7 +34,6 @@
               </FieldElt>
             </template>
 
-            <!-- Description -->
             <template #item-2>
               <label for="description">
                 {{ constants.LEGEND_DESCRIPTION }}
@@ -52,7 +50,6 @@
                 }"/>
             </template>
 
-            <!-- Image -->
             <template #item-3>
               <MediaElt v-if="product.image"
                 :src="'/img/thumbnails/products/' + product.image"
@@ -72,7 +69,6 @@
               </FieldElt>
             </template>
 
-            <!-- Alt -->
             <template #item-4>
               <FieldElt type="textarea"
                 v-model:value="product.alt"
@@ -87,7 +83,6 @@
               </FieldElt>
             </template>
 
-            <!-- Price -->
             <template #item-5>
               <FieldElt type="number"
                 v-model:value="product.price"
@@ -105,7 +100,6 @@
               </FieldElt>
             </template>
 
-            <!-- Options -->
             <template #item-6>
               <FieldElt type="textarea"
                 v-model:value="product.options"
@@ -122,7 +116,6 @@
               </FieldElt>
             </template>
 
-            <!-- Category -->
             <template #item-7>
               <FieldElt type="select"
                 :list="constants.CATS_PRODUCT"
@@ -140,7 +133,6 @@
             </template>
           </ListElt>
 
-          <!-- Create -->
           <BtnElt type="button"
             @click="updateProduct()" 
             class="btn-sky"
