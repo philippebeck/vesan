@@ -5,6 +5,15 @@
   --ani-monospace: "Syne Mono", Courier, monospace;
 }
 
+/* SHOP */
+.figcaption {
+  height: 100px;
+}
+
+[itemprop="offers"] {
+  font-size: 2.5rem;
+}
+
 /* TINYMCE EDITOR */
 [id="text"] ~ *,
 [id="description"] ~ * {
