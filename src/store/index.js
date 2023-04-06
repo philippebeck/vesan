@@ -10,116 +10,104 @@ export default createStore({
   namespaced: true,
 
   state: {
-    article: {},
-    product: {},
-    gallery: {},
-    user: {},
+    // OBJECT
+    article:  {},
+    gallery:  {},
+    product:  {},
+    user:     {},
 
-    articles: [],
-    comments: [],
-    galleries: [],
-    images: [],
-    links: [],
-    orders: [],
-    products: [],
-    reviews: [],
-    users: []
+    // ARRAY
+    articles:   [],
+    comments:   [],
+    galleries:  [],
+    images:     [],
+    links:      [],
+    orders:     [],
+    products:   [],
+    reviews:    [],
+    users:      []
   },
 
   getters: {
+    // OBJECT
     getArticle: state => state.article,
-    getArticles: state => state.articles,
-
-    getComments: state => state.comments,
-
     getGallery: state => state.gallery,
-    getGalleries: state => state.galleries,
-
-    getImages: state => state.images,
-
-    getLinks: state => state.links,
-
-    getOrders: state => state.orders,
-
     getProduct: state => state.product,
-    getProducts: state => state.products,
+    getUser:    state => state.user,
 
-    getReviews: state => state.reviews,
-
-    getUser: state => state.user,
-    getUsers: state => state.users,
+    // ARRAY
+    getArticles:  state => state.articles,
+    getComments:  state => state.comments,
+    getGalleries: state => state.galleries,
+    getImages:    state => state.images,
+    getLinks:     state => state.links,
+    getOrders:    state => state.orders,
+    getProducts:  state => state.products,
+    getReviews:   state => state.reviews,
+    getUsers:     state => state.users,
   },
 
   mutations: {
-    /* ARTICLE */
-    SET_ARTICLE(state, article) {
-      state.article = article
-    },
-    SET_ARTICLES(state, articles) {
-      state.articles = articles
-    },
+    // OBJECT
+    SET_ARTICLE(state, article) { state.article = article },
+    SET_GALLERY(state, gallery) { state.gallery = gallery },
+    SET_PRODUCT(state, product) { state.product = product },
+    SET_USER(state, user) { state.user = user },
 
-    /* COMMENT */
-    SET_COMMENTS(state, comments) {
-      state.comments = comments
-    },
+    // ARRAY
+    SET_ARTICLES(state, articles) { state.articles = articles },
+    SET_COMMENTS(state, comments) { state.comments = comments },
+    SET_GALLERIES(state, galleries) { state.galleries = galleries },
+    SET_IMAGES(state, images) { state.images = images },
+    SET_LINKS(state, links) { state.links = links },
 
-    /* GALLERIES */
-    SET_GALLERY(state, gallery) {
-      state.gallery = gallery
-    },
-    SET_GALLERIES(state, galleries) {
-      state.galleries = galleries
-    },
-
-    /* IMAGES */
-    SET_IMAGES(state, images) {
-      state.images = images
-    },
-
-    /* LINK */
-    SET_LINKS(state, links) {
-      state.links = links
-    },
-
-    /* ORDER */
     SET_USER_ORDERS(state, orders) {
-      for (let order of orders) {
-        delete order.user;
-      }
-      state.orders = orders
-    },
-    SET_ORDERS(state, orders) {
+      for (let order of orders) { delete order.user }
       state.orders = orders
     },
 
-    /* PRODUCT */
-    SET_PRODUCT(state, product) {
-      state.product = product
-    },
-    SET_PRODUCTS(state, products) {
-      state.products = products
-    },
-
-    /* REVIEW */
-    SET_REVIEWS(state, reviews) {
-      state.reviews = reviews
-    },
-
-    /* USER */
-    SET_USER(state, user) {
-      state.user = user
-    },
-    SET_USERS(state, users) {
-      state.users = users
-    }
+    SET_ORDERS(state, orders) { state.orders = orders },
+    SET_PRODUCTS(state, products) { state.products = products },
+    SET_REVIEWS(state, reviews) { state.reviews = reviews },
+    SET_USERS(state, users) { state.users = users }
   },
 
   actions: {
-    /* ARTICLE */
+    // OBJECT
     async readArticle(context, id) {
       app.config.globalProperties.$serve.getData("/articles/" + id)
         .then(res => { context.commit("SET_ARTICLE", res) })
+        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+    },
+
+    async readAvatar(context, id) {
+      app.config.globalProperties.$serve.getData("/auth/" + id)
+        .then(res => { context.commit("SET_USER", res) })
+        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+    },
+
+    async readGallery(context, id) {
+      app.config.globalProperties.$serve.getData("/galleries/" + id)
+        .then(res => { context.commit("SET_GALLERY", res) })
+        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+    },
+
+    async readProduct(context, id) {
+      app.config.globalProperties.$serve.getData("/products/" + id)
+        .then(res => { context.commit("SET_PRODUCT", res) })
+        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+    },
+
+    async readUser(context, id) {
+      app.config.globalProperties.$serve.getData("/users/" + id)
+        .then(res => { context.commit("SET_USER", res) })
+        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+    },
+
+    // ARRAY
+    async listArticleComments(context, id) {
+      app.config.globalProperties.$serve.getData("/comments/" + id)
+        .then(res => { context.commit("SET_COMMENTS", res) })
         .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
 
@@ -129,30 +117,9 @@ export default createStore({
         .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
 
-    /* AUTH */
-    async readAvatar(context, id) {
-      app.config.globalProperties.$serve.getData("/auth/" + id)
-        .then(res => { context.commit("SET_USER", res) })
-        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
-    },
-
-    /* COMMENT */
-    async listArticleComments(context, id) {
-      app.config.globalProperties.$serve.getData("/comments/" + id)
-        .then(res => { context.commit("SET_COMMENTS", res) })
-        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
-    },
-
     async listComments(context) {
       app.config.globalProperties.$serve.getData("/comments")
         .then(res => { context.commit("SET_COMMENTS", res) })
-        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
-    },
-
-    /* GALLERY */
-    async readGallery(context, id) {
-      app.config.globalProperties.$serve.getData("/galleries/" + id)
-        .then(res => { context.commit("SET_GALLERY", res) })
         .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
 
@@ -162,7 +129,6 @@ export default createStore({
         .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
 
-    /* IMAGE */
     async listGalleryImages(context, id) {
       app.config.globalProperties.$serve.getData("/images/" + id)
         .then(res => { context.commit("SET_IMAGES", res) })
@@ -175,14 +141,12 @@ export default createStore({
         .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
 
-    /* LINK */
     async listLinks(context) {
       app.config.globalProperties.$serve.getData("/links")
         .then(res => { context.commit("SET_LINKS", res) })
         .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
 
-    /* ORDER */
     async listUserOrders(context, id) {
       app.config.globalProperties.$serve.getData("/orders/" + id)
         .then(res => { context.commit("SET_USER_ORDERS", res) })
@@ -195,10 +159,9 @@ export default createStore({
         .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
 
-    /* PRODUCT */
-    async readProduct(context, id) {
-      app.config.globalProperties.$serve.getData("/products/" + id)
-        .then(res => { context.commit("SET_PRODUCT", res) })
+    async listProductReviews(context, id) {
+      app.config.globalProperties.$serve.getData("/reviews/" + id)
+        .then(res => { context.commit("SET_REVIEWS", res) })
         .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
 
@@ -208,23 +171,9 @@ export default createStore({
         .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
 
-    /* REVIEW */
-    async listProductReviews(context, id) {
-      app.config.globalProperties.$serve.getData("/reviews/" + id)
-        .then(res => { context.commit("SET_REVIEWS", res) })
-        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
-    },
-
     async listReviews(context) {
       app.config.globalProperties.$serve.getData("/reviews")
         .then(res => { context.commit("SET_REVIEWS", res) })
-        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
-    },
-
-    /* USER */
-    async readUser(context, id) {
-      app.config.globalProperties.$serve.getData("/users/" + id)
-        .then(res => { context.commit("SET_USER", res) })
         .catch(err => { app.config.globalProperties.$serve.checkError(err) });
     },
 
