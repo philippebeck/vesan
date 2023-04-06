@@ -21,7 +21,8 @@
     </NavElt>
 
     <CardElt id="top"
-        :isArticle="true">
+      :isArticle="true"
+      class="container-90md-80lg-70wd">
       <template #header>
         <h1 class="sky-dark">
           <i class="fa-solid fa-blog fa-lg"

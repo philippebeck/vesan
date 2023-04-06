@@ -30,7 +30,7 @@
 
         <ListElt :items="images"
           :dynamic="true"
-          class="grid-2sm-3md-4lg-5xl-6wd content-center">
+          class="grid-2md-3lg-4wd content-center">
 
           <template #items="slotProps">
             <a :href="`/img/galleries/${slotProps.item.name}`"
