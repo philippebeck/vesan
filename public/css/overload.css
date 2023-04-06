@@ -1,8 +1,8 @@
 /********** OVERLOADING **********/
 :root {
-  --ani-sans-serif: Geo, sans-serif;
-  --ani-serif: Trocchi, serif;
-  --ani-monospace: "Syne Mono", monospace;
+  --ani-sans-serif: Geo, Helvetica, sans-serif;
+  --ani-serif: Trocchi, Times, serif;
+  --ani-monospace: "Syne Mono", Courier, monospace;
 }
 
 /* TINYMCE EDITOR */

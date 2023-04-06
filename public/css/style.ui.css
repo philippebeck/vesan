@@ -690,7 +690,7 @@ ul {
   --ve-list-li-ul-flex-flow: wrap;
   --ve-list-li-ul-gap: 20px;
   --ve-list-li-ul-place-content: center;
-  --ve-list-li-ul-place-items: end;
+  --ve-list-li-ul-place-items: baseline;
   --ve-list-li-li-max-width: 300px;
 }
 
@@ -1021,9 +1021,9 @@ aside {
 
 /********** OVERLOADING **********/
 :root {
-  --ani-sans-serif: Geo, sans-serif;
-  --ani-serif: Trocchi, serif;
-  --ani-monospace: "Syne Mono", monospace;
+  --ani-sans-serif: Geo, Helvetica, sans-serif;
+  --ani-serif: Trocchi, Times, serif;
+  --ani-monospace: "Syne Mono", Courier, monospace;
 }
 
 /* TINYMCE EDITOR */
