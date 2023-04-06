@@ -20,7 +20,10 @@
         :alt="media.title"
         :width="constants.HOME_WIDTH"
         :loop="constants.HOME_LOOP"
-        :title="media.title + ' : ' + media.explanation + ' Credits : ' + media.copyright"/>
+        :title="
+          media.title + ' : ' + 
+          media.explanation + 
+          (media.copyright ? ' Credits : ' + media.copyright : '')"/>
 
       <h1 class="sky-dark">
         {{ constants.HOME_VIEW }}

@@ -13,7 +13,6 @@
       <form enctype="multipart/form-data">
         <TableElt :items="articles">
 
-          <!-- Id -->
           <template #cell-_id="slotProps">
             <a :href="`/article/${articles[slotProps.index]._id}`">
               <b>#{{ slotProps.index + 1 }}</b>
@@ -21,14 +20,12 @@
             </a>
           </template>
 
-          <!-- Name -->
           <template #cell-name="slotProps">
             <FieldElt v-model:value="getArticles()[slotProps.index].name"
               @keyup.enter="updateArticle(articles[slotProps.index]._id)"
               :info="constants.INFO_UP_NAME"/>
           </template>
 
-          <!-- Text -->
           <template #cell-text="slotProps">
             <BtnElt :href="`/article/edit/${articles[slotProps.index]._id}`"
               class="btn-cyan"
@@ -40,7 +37,6 @@
             </BtnElt>
           </template>
 
-          <!-- Image -->
           <template #cell-image="slotProps">
             <MediaElt :src="'/img/thumbnails/articles/' + articles[slotProps.index].image"
               :alt="articles[slotProps.index].alt"
@@ -51,7 +47,6 @@
               :info="constants.INFO_UP_IMAGE"/>
           </template>
 
-          <!-- Alt -->
           <template #cell-alt="slotProps">
             <FieldElt type="textarea"
               v-model:value="getArticles()[slotProps.index].alt"
@@ -59,7 +54,6 @@
               :info="constants.INFO_UP_ALT"/>
           </template>
 
-          <!-- Category -->
           <template #cell-cat="slotProps">
             <FieldElt type="select"
               :list="constants.CATS_ARTICLE"
@@ -68,20 +62,17 @@
               :info="constants.INFO_UP_CATEGORY"/>
           </template>
 
-          <!-- User -->
           <template #cell-user="slotProps">
             <b>{{ articles[slotProps.index].user.split('-')[0] }}</b>
             ({{ articles[slotProps.index].user.split('-')[1] }})
           </template>
 
-          <!-- Likes -->
           <template #cell-likes="slotProps">
             <ListElt :id="'likes-' + articles[slotProps.index]._id"
               :dynamic="true"
               :items="articles[slotProps.index].likes"/>
           </template>
 
-          <!-- Created -->
           <template #cell-created="slotProps">
             <p>
               {{ new Date(articles[slotProps.index].created).toLocaleString() }}
@@ -98,7 +89,6 @@
             </BtnElt>
           </template>
 
-          <!-- Updated -->
           <template #cell-updated="slotProps">
             <p>
               {{ new Date(articles[slotProps.index].updated).toLocaleString() }}

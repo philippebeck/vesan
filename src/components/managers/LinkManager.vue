@@ -23,20 +23,17 @@
 
           <template #head>{{ constants.HEAD_UP }}</template>
 
-          <!-- Id -->
           <template #cell-_id="slotProps">
             #{{ slotProps.index + 1 }}
             ({{ slotProps.item._id }})
           </template>
 
-          <!-- Name -->
           <template #cell-name="slotProps">
             <FieldElt v-model:value="table[slotProps.index].name"
               @keyup.enter="updateLink(table[slotProps.index]._id)"
               :info="constants.INFO_UP_NAME"/>
           </template>
 
-          <!-- URL -->
           <template #cell-url="slotProps">
             <FieldElt type="url"
               v-model:value="table[slotProps.index].url"
@@ -45,7 +42,6 @@
               :max="parseInt('100')"/>
           </template>
 
-          <!-- Category -->
           <template #cell-cat="slotProps">
             <FieldElt type="select"
               :list="constants.CATS_LINK"
@@ -54,7 +50,6 @@
               :info="constants.INFO_UP_CATEGORY"/>
           </template>
 
-          <!-- Update -->
           <template #body="slotProps">
             <BtnElt type="button"
               @click="updateLink(table[slotProps.index]._id)" 
@@ -65,7 +60,6 @@
               </template>
             </BtnElt>
 
-          <!-- Delete -->
             <BtnElt type="button"
               @click="deleteLink(table[slotProps.index]._id)" 
               class="btn-red"

@@ -8,12 +8,10 @@
 
       <template #body>
 
-        <!-- Image 404 -->
         <MediaElt src="/img/errors/error-404.webp" 
           :alt="constants.ERROR_ALT">
         </MediaElt>
 
-        <!-- Link to Home -->
         <BtnElt href="/">
           <template #btn>
             <i class="fa-regular fa-hand-point-right"></i>

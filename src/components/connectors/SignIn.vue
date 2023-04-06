@@ -1,7 +1,5 @@
 <template>
   <form>
-
-    <!-- User Email -->
     <FieldElt id="email"
       type="email"
       v-model:value="email"
@@ -15,7 +13,6 @@
       </template>
     </FieldElt>
 
-    <!-- User Pass -->
     <FieldElt id="pass"
       type="password"
       v-model:value="pass"
@@ -29,7 +26,6 @@
       </template>
     </FieldElt>
 
-    <!-- Login Button -->
     <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY"
       @verify="onVerify">
       <BtnElt type="button"

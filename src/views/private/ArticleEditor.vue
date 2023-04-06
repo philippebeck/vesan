@@ -19,7 +19,6 @@
           enctype="multipart/form-data">
           <ListElt :items="constants.ARTICLE_FORM">
 
-            <!-- Name -->
             <template #item-1>
               <FieldElt v-model:value="article.name"
                 @keyup.enter="updateArticle()"
@@ -35,7 +34,6 @@
               </FieldElt>
             </template>
 
-            <!-- Text -->
             <template #item-2>
               <label for="text">
                 {{ constants.LEGEND_TEXT }}
@@ -52,7 +50,6 @@
                 }"/>
             </template>
 
-            <!-- Image -->
             <template #item-3>
               <MediaElt v-if="article.image"
                 :src="'/img/thumbnails/articles/' + article.image"
@@ -72,7 +69,6 @@
               </FieldElt>
             </template>
 
-            <!-- Alternative Text -->
             <template #item-4>
               <FieldElt type="textarea"
                 v-model:value="article.alt"
@@ -88,7 +84,6 @@
               </FieldElt>
             </template>
 
-            <!-- Category -->
             <template #item-5>
               <FieldElt type="select"
                 :list="constants.CATS_ARTICLE"
@@ -107,7 +102,6 @@
           </ListElt>
           <br>
 
-          <!-- Update -->
           <BtnElt type="button"
             @click="updateArticle()" 
             class="btn-sky"

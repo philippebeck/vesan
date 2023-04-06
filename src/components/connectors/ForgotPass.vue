@@ -1,6 +1,5 @@
 <template>
   <form>
-    <!-- Email -->
     <FieldElt type="email"
       v-model:value="email"
       :info="constants.INFO_EMAIL"
@@ -14,7 +13,6 @@
       </template>
     </FieldElt>
 
-    <!-- Send -->
     <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY"
       @verify="onVerify">
       <BtnElt type="button"

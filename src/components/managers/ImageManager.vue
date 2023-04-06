@@ -11,18 +11,27 @@
 
     <template #body>
       <form>
-        <TableElt :items="images">
+        <TableElt v-for="table in getItemsByGallery(images)"
+          :items="table"
+          :key="table"
+          :title="table[0].gallery"
+          :id="table[0].gallery">
+
+          <template #title>
+            <h3 class="sky">{{ table[0].gallery.split('-')[1] }}</h3>
+          </template>
+
           <template #head>{{ constants.HEAD_UP }}</template>
 
           <template #cell-_id="slotProps">
             <b>#{{ slotProps.index + 1 }}</b>
-            ({{ images[slotProps.index]._id }})
+            ({{ table[slotProps.index]._id }})
           </template>
 
           <template #cell-name="slotProps">
-            <MediaElt :src="'/img/thumbnails/galleries/' + images[slotProps.index].name"
-              :alt="images[slotProps.index].description"
-              :title="images[slotProps.index].name"/>
+            <MediaElt :src="'/img/thumbnails/galleries/' + table[slotProps.index].name"
+              :alt="table[slotProps.index].description"
+              :title="table[slotProps.index].name"/>
 
             <FieldElt :id="images[slotProps.index]._id"
               type="file"
@@ -30,25 +39,25 @@
           </template>
 
           <template #cell-description="slotProps">
-            <FieldElt v-model:value="getImages()[slotProps.index].description"
-              @keyup.enter="updateImage(images[slotProps.index]._id)"
+            <FieldElt v-model:value="table[slotProps.index].description"
+              @keyup.enter="updateImage(table[slotProps.index]._id)"
               :info="constants.INFO_UP_DESCRIPTION"/>
           </template>
 
           <template #cell-gallery="slotProps">
             <FieldElt type="select"
               :list="getGalleries"
-              v-model:value="getImages()[slotProps.index].gallery"
-              :content="images[slotProps.index].gallery.split('-')[1]"
-              @keyup.enter="updateImage(images[slotProps.index]._id)"
+              v-model:value="table[slotProps.index].gallery"
+              :content="table[slotProps.index].gallery.split('-')[1]"
+              @keyup.enter="updateImage(table[slotProps.index]._id)"
               :info="constants.INFO_UP_GALLERY"/>
           </template>
 
           <template #body="slotProps">
             <BtnElt type="button"
-              @click="updateImage(images[slotProps.index]._id)" 
+              @click="updateImage(table[slotProps.index]._id)" 
               class="btn-sky"
-              :title="constants.TITLE_IMAGE_UPDATE + images[slotProps.index]._id">
+              :title="constants.TITLE_IMAGE_UPDATE + table[slotProps.index]._id">
 
               <template #btn>
                 <i class="fa-solid fa-cloud-arrow-up fa-lg fa-fw"></i>
@@ -56,9 +65,9 @@
             </BtnElt>
 
             <BtnElt type="button"
-              @click="deleteImage(images[slotProps.index]._id)" 
+              @click="deleteImage(table[slotProps.index]._id)" 
               class="btn-red"
-              :title="constants.TITLE_DELETE_IMAGE + images[slotProps.index]._id">
+              :title="constants.TITLE_DELETE_IMAGE + table[slotProps.index]._id">
 
               <template #btn>
                 <i class="fa-solid fa-trash-arrow-up fa-lg fa-fw"></i>
@@ -120,6 +129,26 @@ export default {
      */
     getImages() {
       return this.images;
+    },
+
+    /**
+     * SORT ITEMS BY GALLERY
+     * @param {array} items 
+     */
+    getItemsByGallery(items) {
+      const itemsByGallery = {};
+
+      for (let item of items) {
+
+        if (!itemsByGallery[item.gallery]) {
+          itemsByGallery[item.gallery] = [];
+        }
+
+        itemsByGallery[item.gallery].push(item);
+        itemsByGallery[item.gallery].sort((a, b) => (a.name > b.name) ? 1 : -1);
+      }
+
+      return itemsByGallery;
     },
 
     /**

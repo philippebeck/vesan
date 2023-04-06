@@ -1,130 +1,130 @@
 <template>
   <main>
     <CardElt itemscope
-    itemtype="https://schema.org/Product">
-    <template #header>
-      <h1 itemprop="name">{{ product.name }}</h1>
-      <strong itemprop="category">{{ product.cat }}</strong>
-    </template>
+      itemtype="https://schema.org/Product">
+      <template #header>
+        <h1 itemprop="name">{{ product.name }}</h1>
+        <strong itemprop="category">{{ product.cat }}</strong>
+      </template>
 
-    <template #body>
+      <template #body>
 
-      <BtnElt v-if="getAverage(product._id) !== undefined"
-        href="#reviews"
-        itemprop="aggregateRating"
-        itemscope
-        itemtype="https://schema.org/AggregateRating" 
-        class="btn-violet"
-        :title="constants.TITLE_REVIEW_READ + product.name">
-
-        <template #btn>
-          <b itemprop="ratingValue">
-            {{ getAverage(product._id) }}
-          </b> <i class="fa-solid fa-star fa-lg"></i>
-        </template>
-      </BtnElt>
-
-      <BtnElt v-else-if="checkRole('user')" 
-        href="#review"
-        class="btn-violet"
-        :content="constants.CONTENT_REVIEW_WRITE"
-        :title="constants.TITLE_REVIEW_FIRST + product.name" />
-
-      <BtnElt v-else 
-          href="/login"
+        <BtnElt v-if="getAverage(product._id) !== undefined"
+          href="#reviews"
+          itemprop="aggregateRating"
+          itemscope
+          itemtype="https://schema.org/AggregateRating" 
           class="btn-violet"
-          :content="constants.CONTENT_REVIEW_LOGIN"
-          :title="constants.TITLE_REVIEW_FIRST + product.name" />
-
-      <MediaElt v-if="product.image"
-        :src="`/img/products/${product.image}`"
-        :alt="product.alt"
-        :width="constants.IMG_WIDTH"
-        :height="constants.IMG_HEIGHT"
-        itemprop="image">
-
-        <template #figcaption>
-          <p id="figcaption"
-            v-html="product.description">
-          </p>
-          <p itemprop="offers"
-            itemscope
-            itemtype="https://schema.org/Offer">
-            <b itemprop="price">
-              {{ product.price }}
-            </b> <b itemprop="priceCurrency">
-              {{ this.priceCurrency }}
-            </b>
-          </p>
-          
-
-          <p class="gray">
-            {{ constants.RELEASE_ON }}
-            <i itemprop="releaseDate">
-              {{ new Date(product.created).toLocaleDateString() }}
-            </i>
-            / {{ constants.UPDATE_ON }}
-            <i>
-              {{ new Date(product.updated).toLocaleDateString() }}
-            </i>
-          </p>
-        </template>
-      </MediaElt>
-
-      <form>
-        <FieldElt id="basket-option"
-          type="select"
-          :list="product.options"
-          v-model:value="option"
-          @keyup.enter="addToBasket()"
-          :info="constants.INFO_OPTION">
-
-          <template #legend>
-            {{ constants.LEGEND_OPTION }}
-          </template>
-          <template #label>
-            {{ constants.LABEL_OPTION }}
-          </template>
-        </FieldElt>
-
-        <FieldElt id="basket-quantity"
-          type="number"
-          v-model:value="quantity"
-          @keyup.enter="addToBasket()"
-          :info="constants.INFO_QUANTITY"
-          :min="1">
-
-          <template #legend>
-            {{ constants.LEGEND_QUANTITY }}
-          </template>
-          <template #label>
-            {{ constants.LABEL_QUANTITY }}
-          </template>
-        </FieldElt>
-
-        <BtnElt type="button"
-          @click="addToBasket()"
-          class="btn-green width-sm"
-          :content="constants.CONTENT_ADD"
-          :title="constants.CONTENT_ADD + product.name">
+          :title="constants.TITLE_REVIEW_READ + product.name">
 
           <template #btn>
-            <i class="fa-solid fa-basket-shopping fa-lg"></i>
+            <b itemprop="ratingValue">
+              {{ getAverage(product._id) }}
+            </b> <i class="fa-solid fa-star fa-lg"></i>
           </template>
         </BtnElt>
-      </form>
 
-      <ReviewList v-if="reviews.length > 0"
-        id="reviews"
-        :constants="constants"
-        :reviews="reviews"/>
-    </template>
+        <BtnElt v-else-if="checkRole('user')" 
+          href="#review"
+          class="btn-violet"
+          :content="constants.CONTENT_REVIEW_WRITE"
+          :title="constants.TITLE_REVIEW_FIRST + product.name" />
 
-    <template #aside  v-if="checkRole('user')">
-      <ReviewCreator id="review"
-        :constants="constants"/>
-    </template>
-  </CardElt>
+        <BtnElt v-else 
+            href="/login"
+            class="btn-violet"
+            :content="constants.CONTENT_REVIEW_LOGIN"
+            :title="constants.TITLE_REVIEW_FIRST + product.name" />
+
+        <MediaElt v-if="product.image"
+          :src="`/img/products/${product.image}`"
+          :alt="product.alt"
+          :width="constants.IMG_WIDTH"
+          :height="constants.IMG_HEIGHT"
+          itemprop="image">
+
+          <template #figcaption>
+            <p id="figcaption"
+              v-html="product.description">
+            </p>
+            <p itemprop="offers"
+              itemscope
+              itemtype="https://schema.org/Offer">
+              <b itemprop="price">
+                {{ product.price }}
+              </b> <b itemprop="priceCurrency">
+                {{ this.priceCurrency }}
+              </b>
+            </p>
+            
+
+            <p class="gray">
+              {{ constants.RELEASE_ON }}
+              <i itemprop="releaseDate">
+                {{ new Date(product.created).toLocaleDateString() }}
+              </i>
+              / {{ constants.UPDATE_ON }}
+              <i>
+                {{ new Date(product.updated).toLocaleDateString() }}
+              </i>
+            </p>
+          </template>
+        </MediaElt>
+
+        <form>
+          <FieldElt id="basket-option"
+            type="select"
+            :list="product.options"
+            v-model:value="option"
+            @keyup.enter="addToBasket()"
+            :info="constants.INFO_OPTION">
+
+            <template #legend>
+              {{ constants.LEGEND_OPTION }}
+            </template>
+            <template #label>
+              {{ constants.LABEL_OPTION }}
+            </template>
+          </FieldElt>
+
+          <FieldElt id="basket-quantity"
+            type="number"
+            v-model:value="quantity"
+            @keyup.enter="addToBasket()"
+            :info="constants.INFO_QUANTITY"
+            :min="1">
+
+            <template #legend>
+              {{ constants.LEGEND_QUANTITY }}
+            </template>
+            <template #label>
+              {{ constants.LABEL_QUANTITY }}
+            </template>
+          </FieldElt>
+
+          <BtnElt type="button"
+            @click="addToBasket()"
+            class="btn-green width-sm"
+            :content="constants.CONTENT_ADD"
+            :title="constants.CONTENT_ADD + product.name">
+
+            <template #btn>
+              <i class="fa-solid fa-basket-shopping fa-lg"></i>
+            </template>
+          </BtnElt>
+        </form>
+
+        <ReviewList v-if="reviews.length > 0"
+          id="reviews"
+          :constants="constants"
+          :reviews="reviews"/>
+      </template>
+
+      <template #aside  v-if="checkRole('user')">
+        <ReviewCreator id="review"
+          :constants="constants"/>
+      </template>
+    </CardElt>
   </main>
 </template>
 

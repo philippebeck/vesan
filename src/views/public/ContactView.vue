@@ -35,7 +35,6 @@
               </FieldElt>
             </template>
 
-            <!-- Subject -->
             <template #item-2>
               <FieldElt v-model:value="subject"
                 :info="constants.INFO_SUBJECT">
@@ -49,7 +48,6 @@
               </FieldElt>
             </template>
 
-            <!-- Text -->
             <template #item-3>
               <FieldElt type="textarea"
                 v-model:value="text"
@@ -67,7 +65,6 @@
             </template>
           </ListElt>
 
-          <!-- Send -->
           <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY"
             @verify="onVerify">
             <BtnElt type="button"
