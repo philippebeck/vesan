@@ -12,7 +12,6 @@
     <template #body>
       <form method="post">
 
-      <!-- Comment Text -->
       <FieldElt type="textarea"
         v-model:value="text"
         @keyup.enter="createComment()"
@@ -28,7 +27,6 @@
         </template>
       </FieldElt>
 
-      <!-- Create Button -->
       <BtnElt type="button"
         @click="createComment()" 
         class="btn-green"

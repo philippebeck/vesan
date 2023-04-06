@@ -12,7 +12,6 @@
     <template #body>
       <form method="post">
 
-        <!-- Review Text -->
         <FieldElt type="textarea"
           v-model:value="text"
           @keyup.enter="createReview()"
@@ -28,7 +27,6 @@
           </template>
         </FieldElt>
 
-        <!-- Review Score -->
         <FieldElt type="number"
           v-model:value="score"
           @keyup.enter="createReview()"
@@ -44,7 +42,6 @@
           </template>
         </FieldElt>
 
-        <!-- Create Button -->
         <BtnElt type="button"
           @click="createReview()" 
           class="btn-green"

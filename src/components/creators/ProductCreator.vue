@@ -14,7 +14,6 @@
         enctype="multipart/form-data">
         <ListElt :items="constants.PRODUCT_FORM">
 
-          <!-- Product Name -->
           <template #item-1>
             <FieldElt v-model:value="name"
               @keyup.enter="createProduct()"
@@ -29,7 +28,6 @@
             </FieldElt>
           </template>
 
-          <!-- Product Description -->
           <template #item-2>
             <label for="description">
               {{ constants.LEGEND_DESCRIPTION }}
@@ -47,7 +45,6 @@
               }"/>
           </template>
 
-          <!-- Product Image -->
           <template #item-3>
             <FieldElt id="image"
               type="file"
@@ -63,7 +60,6 @@
             </FieldElt>
           </template>
 
-          <!-- Product Alt -->
           <template #item-4>
             <FieldElt type="textarea"
               v-model:value="alt"
@@ -78,7 +74,6 @@
             </FieldElt>
           </template>
 
-          <!-- Product Price -->
           <template #item-5>
             <FieldElt type="number"
               v-model:value="price"
@@ -96,7 +91,6 @@
             </FieldElt>
           </template>
 
-          <!-- Product Options -->
           <template #item-6>
             <FieldElt type="textarea"
               v-model:value="options"
@@ -113,7 +107,6 @@
             </FieldElt>
           </template>
 
-          <!-- Product Category -->
           <template #item-7>
             <FieldElt type="select"
               :list="constants.CATS_PRODUCT"
@@ -131,7 +124,6 @@
           </template>
         </ListElt>
 
-        <!-- Create Button -->
         <BtnElt type="button"
           @click="createProduct()" 
           class="btn-green"

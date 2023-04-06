@@ -1,9 +1,7 @@
 <template>
-  <form method="post"
-    enctype="multipart/form-data">
+  <form enctype="multipart/form-data">
     <ListElt :items="constants.USER_FORM">
 
-      <!-- Name -->
       <template #item-1>
         <FieldElt v-model:value="name"
           :info="constants.INFO_NAME"
@@ -18,7 +16,6 @@
         </FieldElt>
       </template>
 
-      <!-- Email -->
       <template #item-2>
         <FieldElt type="email"
           v-model:value="email"
@@ -33,7 +30,6 @@
         </FieldElt>
       </template>
       
-      <!-- Image -->
       <template #item-3>
         <FieldElt id="image"
           type="file"
@@ -49,7 +45,6 @@
         </FieldElt>
       </template>
 
-      <!-- Pass -->
       <template #item-4>
         <FieldElt type="password"
           v-model:value="pass"
@@ -65,7 +60,6 @@
       </template>
     </ListElt>
 
-    <!-- Create -->
     <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY"
       @verify="onVerify">
       <BtnElt type="button"

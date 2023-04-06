@@ -1,5 +1,5 @@
 <template>
-    <CardElt>
+  <CardElt>
     <template #header>
       <h2 id="create-link">
         <i class="fa-solid fa-link fa-lg"

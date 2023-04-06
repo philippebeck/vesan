@@ -13,20 +13,17 @@
       <form enctype="multipart/form-data">
         <TableElt :items="users">
 
-          <!-- Id -->
           <template #cell-_id="slotProps">
             <b>#{{ slotProps.index + 1 }}</b>
             ({{ users[slotProps.index]._id }})
           </template>
 
-          <!-- Name -->
           <template #cell-name="slotProps">
             <FieldElt v-model:value="getUsers()[slotProps.index].name"
               @keyup.enter="updateUser(users[slotProps.index]._id)"
               :info="constants.INFO_UP_NAME"/>
           </template>
 
-          <!-- Email -->
           <template #cell-email="slotProps">
             <FieldElt type="email"
               v-model:value="getUsers()[slotProps.index].email"
@@ -34,7 +31,6 @@
               :info="constants.INFO_UP_EMAIL"/>
           </template>
 
-          <!-- Image -->
           <template #cell-image="slotProps">
             <MediaElt :src="'/img/thumbnails/users/' + users[slotProps.index].image"
               :alt="users[slotProps.index].name"
@@ -45,7 +41,6 @@
               :info="constants.INFO_UP_IMAGE"/>
           </template>
 
-          <!-- Role -->
           <template #cell-role="slotProps">
             <FieldElt type="select"
               :list="constants.ROLES_USER"
@@ -54,7 +49,6 @@
               :info="constants.INFO_UP_ROLE"/>
           </template>
 
-          <!-- Created -->
           <template #cell-created="slotProps">
             <p>
               {{ new Date(getUsers()[slotProps.index].created).toLocaleString() }}
@@ -71,7 +65,6 @@
             </BtnElt>
           </template>
 
-          <!-- Updated -->
           <template #cell-updated="slotProps">
             <p>
               {{ new Date(getUsers()[slotProps.index].updated).toLocaleString() }}

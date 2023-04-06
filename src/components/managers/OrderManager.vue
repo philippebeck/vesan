@@ -13,13 +13,11 @@
       <form>
         <TableElt :items="orders">
 
-          <!-- Id -->
           <template #cell-_id="slotProps">
             <b>#{{ slotProps.index + 1 }}</b>
             ({{ orders[slotProps.index]._id }})
           </template>
 
-          <!-- Products -->
           <template #cell-products="slotProps">
             <ul :id="'products-' + orders[slotProps.index]._id">
               <li v-for="(item, index) in orders[slotProps.index].products"
@@ -41,17 +39,14 @@
             </ul>
           </template>
 
-          <!-- Total -->
           <template #cell-total="slotProps">
             <b>{{ orders[slotProps.index].total }} €</b>
           </template>
 
-          <!-- Payment -->
           <template #cell-payment="slotProps">
             <b>{{ orders[slotProps.index].payment }}</b>
           </template>
 
-          <!-- Status -->
           <template #cell-status="slotProps">
             <FieldElt type="select"
               :list="constants.CATS_ORDER"
@@ -60,13 +55,11 @@
               :info="constants.INFO_UP_STATUS"/>
           </template>
 
-          <!-- User -->
           <template #cell-user="slotProps">
             <b>{{ orders[slotProps.index].user.split('-')[0] }}</b>
             ({{ orders[slotProps.index].user.split('-')[1] }})
           </template>
 
-          <!-- Created -->
           <template #cell-created="slotProps">
             <p>
               {{ new Date(orders[slotProps.index].created).toLocaleString() }}
@@ -82,7 +75,6 @@
             </BtnElt>
           </template>
 
-          <!-- Updated -->
           <template #cell-updated="slotProps">
             <p>
               {{ new Date(orders[slotProps.index].updated).toLocaleString() }}

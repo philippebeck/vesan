@@ -13,7 +13,6 @@
       <form>
         <TableElt :items="comments">
 
-          <!-- Id -->
           <template #cell-_id="slotProps">
             <a :href="`/article/${comments[slotProps.index].article}`">
               <b>#{{ slotProps.index + 1 }}</b>
@@ -21,7 +20,6 @@
             </a>
           </template>
 
-          <!-- Article -->
           <template #cell-article="slotProps">
             <a :href="`/article/${comments[slotProps.index].article}`">
               <b>{{ getArticleName(comments[slotProps.index].article) }}</b>
@@ -29,13 +27,11 @@
             </a>
             </template>
 
-          <!-- User -->
           <template #cell-user="slotProps">
             <b>{{ comments[slotProps.index].user.split('-')[0] }}</b>
             ({{ comments[slotProps.index].user.split('-')[1] }})
           </template>
 
-          <!-- Moderate -->
           <template #cell-moderate="slotProps">
             <FieldElt :id="'text-' + comments[slotProps.index]._id"
               type="select"
@@ -45,7 +41,6 @@
               :info="constants.INFO_UP_MODERATE"/>
           </template>
 
-          <!-- Created -->
           <template #cell-created="slotProps">
             <p>
               {{ new Date(comments[slotProps.index].created).toLocaleString() }}
@@ -62,7 +57,6 @@
             </BtnElt>
           </template>
 
-          <!-- Updated -->
           <template #cell-updated="slotProps">
             <p>
               {{ new Date(comments[slotProps.index].updated).toLocaleString() }}
