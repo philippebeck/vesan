@@ -167,7 +167,7 @@ exports.forgotPass = (req, res, next) => {
       .then((user) => {
         if (user !== null) {
 
-          let pass    = nem.getNewPass();
+          let pass    = nem.getPassword();
           fields.html = this.setMessage(fields, pass);
 
           bcrypt
