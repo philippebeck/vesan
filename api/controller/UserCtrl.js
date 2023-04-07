@@ -183,23 +183,6 @@ exports.getUserUpdated = (fields, image, res) => {
   return user;
 }
 
-/**
- * GET IMAGE
- * @param {string} name 
- * @param {string} newFilename 
- * @returns 
- */
-exports.getImage = (name, newFilename) => {
-  let image = nem.getName(name) + "." + process.env.IMG_EXT;
-
-  nem.setThumbnail(
-    "users/" + newFilename, 
-    process.env.THUMB_URL + "users/" + image
-  );
-
-  return image;
-}
-
 //! ****************************** SETTERS ******************************
 
 /**
@@ -243,7 +226,8 @@ exports.createUser = (req, res, next) => {
           this.checkUserUnique(fields.name, fields.email, user, res);
         }
 
-        let image = this.getImage(fields.name, files.image.newFilename);
+        let image = nem.getUniqueName(fields.name) + "." + process.env.IMG_EXT;
+        nem.setThumbnail("users/" + files.image.newFilename, process.env.THUMB_URL + "users/" + image);
 
         bcrypt
           .hash(fields.pass, 10)
@@ -344,7 +328,7 @@ exports.updateUser = (req, res, next) => {
         let image = fields.image;
 
         if (files.image.newFilename) { 
-          image = this.getImage(fields.name, files.image.newFilename);
+          nem.setThumbnail("users/" + files.image.newFilename, process.env.THUMB_URL + "users/" + image);
         }
 
         let user = this.getUserUpdated(fields, image, res);
