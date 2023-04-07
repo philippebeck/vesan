@@ -135,17 +135,17 @@ exports.getArticleUpdated = (name, text, image, alt, likes, cat, updated) => {
   }
 }
 
+//! ****************************** SETTER ******************************
+
 /**
- * GET IMAGE UPDATED
+ * SET IMAGE
  * @param {string} name 
  * @param {string} newFilename 
  * @returns 
  */
-exports.getImage = (name, newFilename) => {
-  let image = nem.getName(name) + "." + process.env.IMG_EXT;
-
+exports.setImage = (name, newFilename) => {
   let input   = "articles/" + newFilename;
-  let output  = "articles/" + image;
+  let output  = "articles/" + name;
 
   nem.setThumbnail(input, process.env.THUMB_URL + output);
   nem.setThumbnail(
@@ -154,10 +154,6 @@ exports.getImage = (name, newFilename) => {
     process.env.IMG_WIDTH, 
     process.env.IMG_HEIGHT
   );
-
-  fs.unlink(ARTICLES_IMG + newFilename, () => {});
-
-  return image;
 }
 
 //! ****************************** PUBLIC ******************************
@@ -228,7 +224,8 @@ exports.createArticle = (req, res, next) => {
         }
 
         let likes = nem.getArrayFromString(fields.likes);
-        let image = this.getImage(fields.name, files.image.newFilename);
+        let image = nem.getUniqueName(fields.name) + "." + process.env.IMG_EXT;
+        this.setImage(image, files.image.newFilename);
 
         let article = new ArticleModel(this.getArticleCreated(
           fields.name, fields.text, image, fields.alt, fields.user, likes, fields.cat, fields.created, fields.updated
@@ -236,7 +233,11 @@ exports.createArticle = (req, res, next) => {
 
         article
           .save()
-          .then(() => res.status(201).json({ message: process.env.ARTICLE_CREATED }))
+          .then(() => {
+            fs.unlink(ARTICLES_IMG + files.image.newFilename, () => {
+              res.status(201).json({ message: process.env.ARTICLE_CREATED })
+            })
+          })
           .catch(() => res.status(400).json({ message: process.env.ARTICLE_NOT_CREATED }));
       })
       .catch(() => res.status(404).json({ message: process.env.ARTICLES_NOT_FOUND }));
@@ -261,17 +262,17 @@ exports.updateArticle = (req, res, next) => {
         this.checkArticlesForUnique(req.params.id, articles, fields, res);
 
         let image = fields.image;
-
-        if (Object.keys(files).length !== 0) { 
-          image = this.getImage(fields.name, files.image.newFilename);
-        }
+        if (files.image.newFilename) { this.setImage(image, files.image.newFilename) }
 
         let likes   = nem.getArrayFromString(fields.likes);
         let article = this.getArticleUpdated(fields.name, fields.text, image, fields.alt, likes, fields.cat, fields.updated);
 
         ArticleModel
           .findByIdAndUpdate(req.params.id, { ...article, _id: req.params.id })
-          .then(() => res.status(200).json({ message: process.env.ARTICLE_UPDATED }))
+          .then(() => {
+            if (files.image.newFilename) { fs.unlink(ARTICLES_IMG + files.image.newFilename, () => {}) }
+            res.status(200).json({ message: process.env.ARTICLE_UPDATED });
+          })
           .catch(() => res.status(400).json({ message: process.env.ARTICLE_NOT_UPDATED }));
       })
       .catch(() => res.status(404).json({ message: process.env.ARTICLES_NOT_FOUND }));

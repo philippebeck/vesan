@@ -183,25 +183,6 @@ exports.getUserUpdated = (fields, image, res) => {
   return user;
 }
 
-/**
- * GET IMAGE
- * @param {string} name 
- * @param {string} newFilename 
- * @returns 
- */
-exports.getImage = (name, newFilename) => {
-  let image = nem.getName(name) + "." + process.env.IMG_EXT;
-
-  nem.setThumbnail(
-    "users/" + newFilename, 
-    process.env.THUMB_URL + "users/" + image
-  );
-
-  fs.unlink(USERS_THUMB + newFilename, () => {})
-
-  return image;
-}
-
 //! ****************************** SETTERS ******************************
 
 /**
@@ -245,7 +226,8 @@ exports.createUser = (req, res, next) => {
           this.checkUserUnique(fields.name, fields.email, user, res);
         }
 
-        let image = this.getImage(fields.name, files.image.newFilename);
+        let image = nem.getUniqueName(fields.name) + "." + process.env.IMG_EXT;
+        nem.setThumbnail("users/" + files.image.newFilename, process.env.THUMB_URL + "users/" + image);
 
         bcrypt
           .hash(fields.pass, 10)
@@ -254,7 +236,11 @@ exports.createUser = (req, res, next) => {
 
             user
               .save()
-              .then(() => res.status(201).json({ message: process.env.USER_CREATED }))
+              .then(() => {
+                fs.unlink(USERS_THUMB + files.image.newFilename, () => {
+                  res.status(201).json({ message: process.env.USER_CREATED })
+                })
+              })
               .catch(() => res.status(400).json({ message: process.env.USER_NOT_CREATED }));
 
           })
@@ -341,15 +327,18 @@ exports.updateUser = (req, res, next) => {
 
         let image = fields.image;
 
-        if (Object.keys(files).length !== 0) { 
-          image = this.getImage(fields.name, files.image.newFilename);
+        if (files.image.newFilename) { 
+          nem.setThumbnail("users/" + files.image.newFilename, process.env.THUMB_URL + "users/" + image);
         }
 
         let user = this.getUserUpdated(fields, image, res);
 
         UserModel
           .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
-          .then(() => res.status(200).json({ message: process.env.USER_UPDATED }))
+          .then(() => {
+            if (files.image.newFilename) { fs.unlink(USERS_THUMB + files.image.newFilename, () => {}) }
+            res.status(200).json({ message: process.env.USER_UPDATED });
+          })
           .catch(() => res.status(400).json({ message: process.env.USER_NOT_UPDATED }));
       })
       .catch(() => res.status(404).json({ message: process.env.USERS_NOT_FOUND }));
