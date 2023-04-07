@@ -115,16 +115,16 @@ exports.getProduct = (name, description, image, alt, price, options, cat, create
   }
 }
 
+//! ****************************** SETTER ******************************
+
 /**
- * GET IMAGE
+ * SET IMAGE
  * @param {string} name 
  * @param {string} newFilename 
  */
-exports.getImage = (name, newFilename) => {
-  let image = nem.getName(name) + "." + process.env.IMG_EXT;
-
+exports.setImage = (name, newFilename) => {
   let input   = "products/" + newFilename;
-  let output  = "products/" + image;
+  let output  = "products/" + name;
 
   nem.setThumbnail(input, process.env.THUMB_URL + output);
   nem.setThumbnail(
@@ -133,8 +133,6 @@ exports.getImage = (name, newFilename) => {
     process.env.IMG_WIDTH, 
     process.env.IMG_HEIGHT
   );
-
-  return image;
 }
 
 //! ****************************** PUBLIC ******************************
@@ -185,7 +183,8 @@ exports.createProduct = (req, res, next) => {
         }
 
         let options = nem.getArrayFromString(fields.options);
-        let image   = this.getImage(fields.name, files.image.newFilename);
+        let image   = nem.getUniqueName(fields.name) + "." + process.env.IMG_EXT;
+        this.setImage(image, files.image.newFilename);
 
         let product = new ProductModel(this.getProduct(
           fields.name, fields.description, image, fields.alt, fields.price, options, fields.cat, fields.created, fields.updated
@@ -222,7 +221,7 @@ exports.updateProduct = (req, res, next) => {
         this.checkProductsForUnique(req.params.id, products, fields, res);
 
         let image = fields.image;
-        if (files.image.newFilename) { image = this.getImage(fields.name, files.image.newFilename) }
+        if (files.image.newFilename) { this.setImage(image, files.image.newFilename) }
 
         let options = nem.getArrayFromString(fields.options);
         let product = this.getProduct(fields.name, fields.description, image, fields.alt, fields.price, options, fields.cat, fields.created, fields.updated);

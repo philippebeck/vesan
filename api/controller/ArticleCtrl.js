@@ -135,17 +135,17 @@ exports.getArticleUpdated = (name, text, image, alt, likes, cat, updated) => {
   }
 }
 
+//! ****************************** SETTER ******************************
+
 /**
- * GET IMAGE UPDATED
+ * SET IMAGE
  * @param {string} name 
  * @param {string} newFilename 
  * @returns 
  */
-exports.getImage = (name, newFilename) => {
-  let image = nem.getName(name) + "." + process.env.IMG_EXT;
-
+exports.setImage = (name, newFilename) => {
   let input   = "articles/" + newFilename;
-  let output  = "articles/" + image;
+  let output  = "articles/" + name;
 
   nem.setThumbnail(input, process.env.THUMB_URL + output);
   nem.setThumbnail(
@@ -154,8 +154,6 @@ exports.getImage = (name, newFilename) => {
     process.env.IMG_WIDTH, 
     process.env.IMG_HEIGHT
   );
-
-  return image;
 }
 
 //! ****************************** PUBLIC ******************************
@@ -226,7 +224,8 @@ exports.createArticle = (req, res, next) => {
         }
 
         let likes = nem.getArrayFromString(fields.likes);
-        let image = this.getImage(fields.name, files.image.newFilename);
+        let image = nem.getUniqueName(fields.name) + "." + process.env.IMG_EXT;
+        this.setImage(image, files.image.newFilename);
 
         let article = new ArticleModel(this.getArticleCreated(
           fields.name, fields.text, image, fields.alt, fields.user, likes, fields.cat, fields.created, fields.updated
@@ -263,10 +262,7 @@ exports.updateArticle = (req, res, next) => {
         this.checkArticlesForUnique(req.params.id, articles, fields, res);
 
         let image = fields.image;
-
-        if (files.image.newFilename) { 
-          image = this.getImage(fields.name, files.image.newFilename);
-        }
+        if (files.image.newFilename) { this.setImage(image, files.image.newFilename) }
 
         let likes   = nem.getArrayFromString(fields.likes);
         let article = this.getArticleUpdated(fields.name, fields.text, image, fields.alt, likes, fields.cat, fields.updated);
