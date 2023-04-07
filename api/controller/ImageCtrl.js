@@ -39,8 +39,6 @@ exports.setImage = (image, newFilename) => {
 
   nem.setImage(input, process.env.IMG_URL + output);
   nem.setThumbnail(input, process.env.THUMB_URL + output);
-
-  fs.unlink(GALLERIES_IMG + files.image.newFilename, () => {});
 }
 
 //! ****************************** PUBLIC ******************************
@@ -122,7 +120,11 @@ exports.createImage = (req, res, next) => {
 
           image
             .save()
-            .then(() => res.status(201).json({ message: process.env.IMAGE_CREATED }))
+            .then(() => {
+              fs.unlink(GALLERIES_IMG + files.image.newFilename, () => {
+                res.status(201).json({ message: process.env.IMAGE_CREATED });
+              })
+            })
             .catch(() => res.status(400).json({ message: process.env.IMAGE_NOT_CREATED }));
         })
         .catch(() => res.status(404).json({ message: process.env.IMAGES_NOT_FOUND }));
@@ -145,7 +147,7 @@ exports.updateImage = (req, res, next) => {
 
     let name = fields.name;
 
-    if (Object.keys(files).length !== 0) {
+    if (files.image.newFilename) {
       this.setImage(name, files.image.newFilename);
     }
 
@@ -157,7 +159,10 @@ exports.updateImage = (req, res, next) => {
 
     ImageModel
       .findByIdAndUpdate(req.params.id, { ...image, _id: req.params.id })
-      .then(() => res.status(200).json({ message: process.env.IMAGE_UPDATED }))
+      .then(() => {
+        if (files.image.newFilename) { fs.unlink(GALLERIES_IMG + files.image.newFilename, () => {}) }
+        res.status(200).json({ message: process.env.IMAGE_UPDATED });
+      })
       .catch(() => res.status(400).json({ message: process.env.IMAGE_NOT_UPDATED }));
   })
 };

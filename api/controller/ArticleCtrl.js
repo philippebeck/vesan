@@ -155,8 +155,6 @@ exports.getImage = (name, newFilename) => {
     process.env.IMG_HEIGHT
   );
 
-  fs.unlink(ARTICLES_IMG + newFilename, () => {});
-
   return image;
 }
 
@@ -236,7 +234,11 @@ exports.createArticle = (req, res, next) => {
 
         article
           .save()
-          .then(() => res.status(201).json({ message: process.env.ARTICLE_CREATED }))
+          .then(() => {
+            fs.unlink(ARTICLES_IMG + files.image.newFilename, () => {
+              res.status(201).json({ message: process.env.ARTICLE_CREATED })
+            })
+          })
           .catch(() => res.status(400).json({ message: process.env.ARTICLE_NOT_CREATED }));
       })
       .catch(() => res.status(404).json({ message: process.env.ARTICLES_NOT_FOUND }));
@@ -262,7 +264,7 @@ exports.updateArticle = (req, res, next) => {
 
         let image = fields.image;
 
-        if (Object.keys(files).length !== 0) { 
+        if (files.image.newFilename) { 
           image = this.getImage(fields.name, files.image.newFilename);
         }
 
@@ -271,7 +273,10 @@ exports.updateArticle = (req, res, next) => {
 
         ArticleModel
           .findByIdAndUpdate(req.params.id, { ...article, _id: req.params.id })
-          .then(() => res.status(200).json({ message: process.env.ARTICLE_UPDATED }))
+          .then(() => {
+            if (files.image.newFilename) { fs.unlink(ARTICLES_IMG + files.image.newFilename, () => {}) }
+            res.status(200).json({ message: process.env.ARTICLE_UPDATED });
+          })
           .catch(() => res.status(400).json({ message: process.env.ARTICLE_NOT_UPDATED }));
       })
       .catch(() => res.status(404).json({ message: process.env.ARTICLES_NOT_FOUND }));

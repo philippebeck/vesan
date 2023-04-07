@@ -197,8 +197,6 @@ exports.getImage = (name, newFilename) => {
     process.env.THUMB_URL + "users/" + image
   );
 
-  fs.unlink(USERS_THUMB + newFilename, () => {})
-
   return image;
 }
 
@@ -254,7 +252,11 @@ exports.createUser = (req, res, next) => {
 
             user
               .save()
-              .then(() => res.status(201).json({ message: process.env.USER_CREATED }))
+              .then(() => {
+                fs.unlink(USERS_THUMB + files.image.newFilename, () => {
+                  res.status(201).json({ message: process.env.USER_CREATED })
+                })
+              })
               .catch(() => res.status(400).json({ message: process.env.USER_NOT_CREATED }));
 
           })
@@ -341,7 +343,7 @@ exports.updateUser = (req, res, next) => {
 
         let image = fields.image;
 
-        if (Object.keys(files).length !== 0) { 
+        if (files.image.newFilename) { 
           image = this.getImage(fields.name, files.image.newFilename);
         }
 
@@ -349,7 +351,10 @@ exports.updateUser = (req, res, next) => {
 
         UserModel
           .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
-          .then(() => res.status(200).json({ message: process.env.USER_UPDATED }))
+          .then(() => {
+            if (files.image.newFilename) { fs.unlink(USERS_THUMB + files.image.newFilename, () => {}) }
+            res.status(200).json({ message: process.env.USER_UPDATED });
+          })
           .catch(() => res.status(400).json({ message: process.env.USER_NOT_UPDATED }));
       })
       .catch(() => res.status(404).json({ message: process.env.USERS_NOT_FOUND }));

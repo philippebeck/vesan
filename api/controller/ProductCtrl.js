@@ -134,8 +134,6 @@ exports.getImage = (name, newFilename) => {
     process.env.IMG_HEIGHT
   );
 
-  fs.unlink(PRODUCTS_IMG + newFilename, () => {});
-
   return image;
 }
 
@@ -195,7 +193,11 @@ exports.createProduct = (req, res, next) => {
 
         product
           .save()
-          .then(() => res.status(201).json({ message: process.env.PRODUCT_CREATED }))
+          .then(() => {
+            fs.unlink(PRODUCTS_IMG + files.image.newFilename, () => {
+              res.status(201).json({ message: process.env.PRODUCT_CREATED })
+            })
+          })
           .catch(() => res.status(400).json({ message: process.env.PRODUCT_NOT_CREATED }));
       })
       .catch(() => res.status(404).json({ message: process.env.PRODUCTS_NOT_FOUND }));
@@ -220,17 +222,17 @@ exports.updateProduct = (req, res, next) => {
         this.checkProductsForUnique(req.params.id, products, fields, res);
 
         let image = fields.image;
+        if (files.image.newFilename) { image = this.getImage(fields.name, files.image.newFilename) }
 
-        if (Object.keys(files).length !== 0) { 
-          image = this.getImage(fields.name, files.image.newFilename);
-        }
-    
         let options = nem.getArrayFromString(fields.options);
         let product = this.getProduct(fields.name, fields.description, image, fields.alt, fields.price, options, fields.cat, fields.created, fields.updated);
-    
+
         ProductModel
           .findByIdAndUpdate(req.params.id, { ...product, _id: req.params.id })
-          .then(() => res.status(200).json({ message: process.env.PRODUCT_UPDATED }))
+          .then(() => {
+            if (files.image.newFilename) { fs.unlink(PRODUCTS_IMG + files.image.newFilename, () => {}) }
+            res.status(200).json({ message: process.env.PRODUCT_UPDATED });
+          })
           .catch(() => res.status(400).json({ message: process.env.PRODUCT_NOT_UPDATED }));
       })
       .catch(() => res.status(404).json({ message: process.env.PRODUCTS_NOT_FOUND }));
