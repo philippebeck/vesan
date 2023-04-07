@@ -39,6 +39,8 @@ exports.setImage = (image, newFilename) => {
 
   nem.setImage(input, process.env.IMG_URL + output);
   nem.setThumbnail(input, process.env.THUMB_URL + output);
+
+  fs.unlink(GALLERIES_IMG + files.image.newFilename, () => {});
 }
 
 //! ****************************** PUBLIC ******************************
@@ -109,7 +111,7 @@ exports.createImage = (req, res, next) => {
 
           if (index < 10) { index = "0" + index }
 
-          let name = nem.getGalleryName(gallery.name) + "-" + index + "." + process.env.IMG_EXT;
+          let name = nem.getName(gallery.name) + "-" + index + "." + process.env.IMG_EXT;
           this.setImage(name, files.image.newFilename);
 
           let image = new ImageModel({
@@ -120,9 +122,7 @@ exports.createImage = (req, res, next) => {
 
           image
             .save()
-            .then(() => fs.unlink(GALLERIES_IMG + files.image.newFilename, () => {
-              res.status(201).json({ message: process.env.IMAGE_CREATED });
-            }))
+            .then(() => res.status(201).json({ message: process.env.IMAGE_CREATED }))
             .catch(() => res.status(400).json({ message: process.env.IMAGE_NOT_CREATED }));
         })
         .catch(() => res.status(404).json({ message: process.env.IMAGES_NOT_FOUND }));
@@ -147,7 +147,6 @@ exports.updateImage = (req, res, next) => {
 
     if (Object.keys(files).length !== 0) {
       this.setImage(name, files.image.newFilename);
-      fs.unlink(GALLERIES_IMG + files.image.newFilename, () => {});
     }
 
     let image = {

@@ -106,7 +106,7 @@ exports.createGallery = (req, res, next) => {
           this.checkGalleryUnique(fields.name, gallery, res) 
         }
 
-        let cover = nem.getGalleryCoverName(fields.name);
+        let cover = nem.getPosterName(fields.name);
 
         let gallery = new GalleryModel({
           name: fields.name,

@@ -142,7 +142,7 @@ exports.getArticleUpdated = (name, text, image, alt, likes, cat, updated) => {
  * @returns 
  */
 exports.getImage = (name, newFilename) => {
-  let image = nem.getImageName(name);
+  let image = nem.getName(name) + "." + process.env.IMG_EXT;
 
   let input   = "articles/" + newFilename;
   let output  = "articles/" + image;
@@ -155,29 +155,9 @@ exports.getImage = (name, newFilename) => {
     process.env.IMG_HEIGHT
   );
 
+  fs.unlink(ARTICLES_IMG + newFilename, () => {});
+
   return image;
-}
-
-//! ****************************** SETTER ******************************
-
-/**
- * SET IMAGES UNLINK
- * @param {string} id 
- * @param {string} newFilename 
- * @param {object} res 
- */
-exports.setImagesUnlink = (id, newFilename, res) => {
-  ArticleModel
-    .findById(id)
-    .then((article) => 
-
-      fs.unlink(ARTICLES_THUMB + article.image, () => {
-        fs.unlink(ARTICLES_IMG + article.image, () => {
-          fs.unlink(ARTICLES_IMG + newFilename, () => {})
-        })
-      })
-    )
-    .catch(() => res.status(404).json({ message: process.env.ARTICLE_NOT_FOUND }));
 }
 
 //! ****************************** PUBLIC ******************************
@@ -256,9 +236,7 @@ exports.createArticle = (req, res, next) => {
 
         article
           .save()
-          .then(() => fs.unlink(ARTICLES_IMG + files.image.newFilename, () => {
-            res.status(201).json({ message: process.env.ARTICLE_CREATED })
-          }))
+          .then(() => res.status(201).json({ message: process.env.ARTICLE_CREATED }))
           .catch(() => res.status(400).json({ message: process.env.ARTICLE_NOT_CREATED }));
       })
       .catch(() => res.status(404).json({ message: process.env.ARTICLES_NOT_FOUND }));
@@ -286,7 +264,6 @@ exports.updateArticle = (req, res, next) => {
 
         if (Object.keys(files).length !== 0) { 
           image = this.getImage(fields.name, files.image.newFilename);
-          this.setImagesUnlink(req.params.id, files.image.newFilename, res);
         }
 
         let likes   = nem.getArrayFromString(fields.likes);
