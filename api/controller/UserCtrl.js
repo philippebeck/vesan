@@ -190,36 +190,19 @@ exports.getUserUpdated = (fields, image, res) => {
  * @returns 
  */
 exports.getImage = (name, newFilename) => {
-  let image = nem.getImageName(name);
+  let image = nem.getName(name) + "." + process.env.IMG_EXT;
 
   nem.setThumbnail(
     "users/" + newFilename, 
     process.env.THUMB_URL + "users/" + image
   );
 
+  fs.unlink(USERS_THUMB + newFilename, () => {})
+
   return image;
 }
 
 //! ****************************** SETTERS ******************************
-
-/**
- * SET IMAGES UNLINK
- * @param {string} id 
- * @param {string} newFilename 
- * @param {object} res
- * @returns 
- */
-exports.setImagesUnlink = (id, newFilename, res) => {
-  UserModel
-    .findById(id)
-    .then((user) => 
-
-      fs.unlink(USERS_THUMB + user.image, () => {
-        fs.unlink(USERS_THUMB + newFilename, () => {})
-      })
-    )
-    .catch(() => res.status(404).json({ message: process.env.USER_NOT_FOUND }));
-}
 
 /**
  * SET MESSAGE
@@ -269,12 +252,11 @@ exports.createUser = (req, res, next) => {
           .then((hash) => {
             let user = new UserModel(this.getUserCreated(fields.name, fields.email, image, hash, fields.role, fields.created, fields.updated));
 
-            fs.unlink(USERS_THUMB + files.image.newFilename, () => {
-              user
-                .save()
-                .then(() => res.status(201).json({ message: process.env.USER_CREATED }))
-                .catch(() => res.status(400).json({ message: process.env.USER_NOT_CREATED }));
-            });
+            user
+              .save()
+              .then(() => res.status(201).json({ message: process.env.USER_CREATED }))
+              .catch(() => res.status(400).json({ message: process.env.USER_NOT_CREATED }));
+
           })
           .catch(() => res.status(400).json({ message: process.env.USER_NOT_PASS }));
       })
@@ -361,7 +343,6 @@ exports.updateUser = (req, res, next) => {
 
         if (Object.keys(files).length !== 0) { 
           image = this.getImage(fields.name, files.image.newFilename);
-          this.setImagesUnlink(req.params.id, files.image.newFilename, res);
         }
 
         let user = this.getUserUpdated(fields, image, res);
