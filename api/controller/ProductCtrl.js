@@ -121,7 +121,7 @@ exports.getProduct = (name, description, image, alt, price, options, cat, create
  * @param {string} newFilename 
  */
 exports.getImage = (name, newFilename) => {
-  let image = nem.getImageName(name);
+  let image = nem.getName(name) + "." + process.env.IMG_EXT;
 
   let input   = "products/" + newFilename;
   let output  = "products/" + image;
@@ -134,30 +134,9 @@ exports.getImage = (name, newFilename) => {
     process.env.IMG_HEIGHT
   );
 
+  fs.unlink(PRODUCTS_IMG + newFilename, () => {});
+
   return image;
-}
-
-//! ****************************** SETTER ******************************
-
-/**
- * SET IMAGES UNLINK
- * @param {string} id 
- * @param {string} newFilename 
- * @param {object} res 
- * @returns 
- */
-exports.setImagesUnlink = (id, newFilename, res) => {
-  ProductModel
-    .findById(id)
-    .then((product) =>
-
-      fs.unlink(PRODUCTS_THUMB + product.image, () => {
-        fs.unlink(PRODUCTS_IMG + product.image, () => {
-          fs.unlink(PRODUCTS_IMG + newFilename, () => {})
-        })
-      })
-    )
-    .catch(() => res.status(404).json({ message: process.env.PRODUCT_NOT_FOUND }));
 }
 
 //! ****************************** PUBLIC ******************************
@@ -216,9 +195,7 @@ exports.createProduct = (req, res, next) => {
 
         product
           .save()
-          .then(() => fs.unlink(PRODUCTS_IMG + files.image.newFilename, () => {
-            res.status(201).json({ message: process.env.PRODUCT_CREATED })
-          }))
+          .then(() => res.status(201).json({ message: process.env.PRODUCT_CREATED }))
           .catch(() => res.status(400).json({ message: process.env.PRODUCT_NOT_CREATED }));
       })
       .catch(() => res.status(404).json({ message: process.env.PRODUCTS_NOT_FOUND }));
@@ -246,7 +223,6 @@ exports.updateProduct = (req, res, next) => {
 
         if (Object.keys(files).length !== 0) { 
           image = this.getImage(fields.name, files.image.newFilename);
-          this.setImagesUnlink(req.params.id, files.image.newFilename, res);
         }
     
         let options = nem.getArrayFromString(fields.options);
