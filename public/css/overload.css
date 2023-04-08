@@ -22,6 +22,11 @@
   height: 500px;
 }
 
+/* ADMIN IMG */
+[id="admin"] img {
+  max-width: 100px;
+}
+
 /* ADMIN TABLES */
 [id*="products-"] > *,
 [id*="likes-"] {

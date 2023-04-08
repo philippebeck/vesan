@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main id="admin">
     <CardElt id="top">
       <template #header>
         <h1 class="sky-dark">
