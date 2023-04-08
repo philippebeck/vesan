@@ -87,12 +87,6 @@ export default {
 
   NAV_MAIN : [
     {
-      "href": "/home",
-      "name": "Accueil",
-      "type": "solid",
-      "icon": "laptop-house"
-    },
-    {
       "href": "/shop",
       "name": "Boutique",
       "type": "solid",
@@ -105,28 +99,17 @@ export default {
       "icon": "blog"
     },
     {
-      "href": "/contact",
-      "name": "Contact",
-      "type": "brands",
-      "icon": "at"
+      "href": "/galleries",
+      "name": "Galeries",
+      "type": "regular",
+      "icon": "images"
     },
     {
-      "href": "/basket",
-      "name": "Panier",
+      "href": "/links",
+      "name": "Liens",
       "type": "solid",
-      "icon": "basket-shopping"
+      "icon": "link"
     }
-  ],
-
-  NAV_ADMIN : [
-    "admin", 
-    "profile", 
-    "logout"
-  ],
-
-  NAV_USER : [
-    "profile", 
-    "logout"
   ],
 
   /******************** FOOT ********************/
@@ -170,67 +153,23 @@ export default {
     }
   ],
 
-  FOOT_TITLE1 : "Sites",
-  FOOT_TITLE2 : "Outils",
-  FOOT_TITLE3 : "Liens",
+  FOOT_TITLE1 : "Infos",
+  FOOT_TITLE2 : "Support",
 
   FOOT1 : [
     {
-      "href": "https://asperger.philippebeck.net",
-      "title": "Tests for Asperger's Syndrome",
-      "content": "Asperger"
-    }, 
+      "href": "/contact",
+      "title": "Messagerie",
+      "content": "Contact"
+    },
     {
-      "href": "https://astronomy.philippebeck.net",
-      "title": "NASA & CDS APIs",
-      "content": "AStronomy"
-    }, 
-    {
-      "href": "https://philippebeck.net",
-      "title": "Portal",
-      "content": "Philippe Beck"
-    }
+      "href": "/legal",
+      "title": "Conditions générales de vente",
+      "content": "CGV"
+    } 
   ],
 
   FOOT2 : [
-    {
-      "href": "https://www.npmjs.com/package/vue-elt",
-      "title": "Vuejs SFC Library",
-      "content": "Vue-Elt"
-    }, 
-    {
-      "href": "https://www.npmjs.com/package/servidio",
-      "title": "JavaScript Frontend Services",
-      "content": "Servidio"
-    }, 
-    {
-      "href": "https://www.npmjs.com/package/animadio",
-      "title": "Animadio CSS Library",
-      "content": "Animadio"
-    }, 
-    {
-      "href": "https://www.npmjs.com/package/nemjs",
-      "title": "JavaScript Backend Services",
-      "content": "Nemjs"
-    }, 
-    {
-      "href": "https://www.npmjs.com/package/vesan",
-      "title": "CMS with Vue-Elt, Servidio, Animadio & NemJS",
-      "content": "Vesan"
-    }
-  ],
-
-  FOOT3 : [
-    {
-      "href": "/link",
-      "title": "Find links for coding",
-      "content": "Links for Dev"
-    }, 
-    {
-      "href": "/legal",
-      "title": "Read the legal notice",
-      "content": "Legal Notice"
-    }, 
     {
       "href": "https://paypal.me/philippebeck",
       "title": "Donation @Philippe Beck",

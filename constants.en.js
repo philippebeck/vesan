@@ -87,12 +87,6 @@ export default {
 
   NAV_MAIN : [
     {
-      "href": "/home",
-      "name": "Home",
-      "type": "solid",
-      "icon": "laptop-house"
-    },
-    {
       "href": "/shop",
       "name": "Shop",
       "type": "solid",
@@ -105,28 +99,17 @@ export default {
       "icon": "blog"
     },
     {
-      "href": "/contact",
-      "name": "Contact",
-      "type": "brands",
-      "icon": "at"
+      "href": "/galleries",
+      "name": "Galleries",
+      "type": "regular",
+      "icon": "images"
     },
     {
-      "href": "/basket",
-      "name": "Basket",
+      "href": "/links",
+      "name": "Links",
       "type": "solid",
-      "icon": "basket-shopping"
+      "icon": "link"
     }
-  ],
-
-  NAV_ADMIN : [
-    "admin", 
-    "profile", 
-    "logout"
-  ],
-
-  NAV_USER : [
-    "profile", 
-    "logout"
   ],
 
   /******************** FOOT ********************/
@@ -170,26 +153,20 @@ export default {
     }
   ],
 
-  FOOT_TITLE1 : "Websites",
-  FOOT_TITLE2 : "Tools",
-  FOOT_TITLE3 : "Links",
+  FOOT_TITLE1 : "Infos",
+  FOOT_TITLE2 : "Support",
 
   FOOT1 : [
     {
-      "href": "https://asperger.philippebeck.net",
-      "title": "Tests for Asperger's Syndrome",
-      "content": "Asperger"
-    }, 
+      "href": "/contact",
+      "title": "Messenger",
+      "content": "Contact"
+    },
     {
-      "href": "https://astronomy.philippebeck.net",
-      "title": "NASA & CDS APIs",
-      "content": "AStronomy"
-    }, 
-    {
-      "href": "https://philippebeck.net",
-      "title": "Portal",
-      "content": "Philippe Beck"
-    }
+      "href": "/legal",
+      "title": "Terms & conditions",
+      "content": "T&C"
+    } 
   ],
 
   FOOT2 : [
@@ -217,29 +194,6 @@ export default {
       "href": "https://www.npmjs.com/package/vesan",
       "title": "CMS with Vue-Elt, Servidio, Animadio & NemJS",
       "content": "Vesan"
-    }
-  ],
-
-  FOOT3 : [
-    {
-      "href": "/link",
-      "title": "Find links for coding",
-      "content": "Links for Dev"
-    }, 
-    {
-      "href": "/legal",
-      "title": "Read the legal notice",
-      "content": "Legal Notice"
-    }, 
-    {
-      "href": "https://paypal.me/philippebeck",
-      "title": "Donation @Philippe Beck",
-      "content": "Donation"
-    }, 
-    {
-      "href": "https://github.com/sponsors/philippebeck",
-      "title": "Sponsor @Philippe Beck",
-      "content": "Sponsor"
     }
   ],
 
