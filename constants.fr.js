@@ -368,6 +368,7 @@ export default {
   HEAD_BASKET : "Panier",
   HEAD_BLOG : "Blog",
   HEAD_CONTACT : "Contact",
+  HEAD_GALLERY : "Galeries",
   HEAD_HOME : "Accueil",
   HEAD_LEGAL : "Conditions générales",
   HEAD_LINK : "Liens",
@@ -383,6 +384,7 @@ export default {
   META_BASKET : "Panier de services en ligne",
   META_BLOG : "Blog pour ...",
   META_CONTACT : "Contactez-moi pour toute question",
+  META_GALLERY : "Galeries d'images",
   META_HOME : "Bienvenue sur le site Web de ...",
   META_IMAGE : "Images produites par ",
   META_LEGAL : "Conditions générales d'utilisation",
@@ -407,6 +409,7 @@ export default {
   CONTACT_VIEW : "Contact",
   CONTACT_SUB : "Envoyez-moi un message",
   ERROR_VIEW : "Erreur",
+  GALLERY_VIEW : "Galeries d'images",
   HOME_VIEW : "Vesan",
   HOME_SUB : "CMS avec Vue-Elt, Servidio, Animadio & Nemjs",
   LEGAL_VIEW : "Licence Apache",
@@ -422,6 +425,8 @@ export default {
   // CREATOR COMPONENTS
   ARTICLE_CREATOR : "Créer un article",
   COMMENT_CREATOR : "Créer un commentaire",
+  GALLERY_CREATOR : "Créer une galerie",
+  IMAGE_CREATOR : "Créer une image",
   LINK_CREATOR : "Créer un lien",
   PRODUCT_CREATOR : "Créer un service",
   REVIEW_CREATOR : "Créer un avis",
@@ -431,13 +436,13 @@ export default {
   // MANAGER COMPONENTS
   ARTICLE_MANAGER : "Gestionnaire d'articles",
   COMMENT_MANAGER : "Gestionnaire de commentaires",
+  GALLERY_MANAGER : "Gestionnaire de galeries",
+  IMAGE_MANAGER : "Gestionnaire d'images",
   LINK_MANAGER : "Gestionnaire de liens",
   ORDER_MANAGER : "Gestionnaire de commandes",
   PRODUCT_MANAGER : "Gestionnaire de services",
   REVIEW_MANAGER : "Gestionnaire d'avis",
   USER_MANAGER : "Gestionnaire d'utilisateurs",
-  // OTHERS
-  ADMIN_USERS : "Utilisateurs",
 
   /******************** INTRO ********************/
 
@@ -449,6 +454,7 @@ export default {
   INTRO_CONTACT : "Pour toute question, demande de devis personnalisé ou soucis technique",
   INTRO_ERROR : "Page non trouvée !",
   INTRO_FORGOT : "Besoin d'un nouveau mot de passe ?",
+  INTRO_GALLERY : "Regarder les galeries !",
   INTRO_HOME : "100% online !",
   INTRO_LEGAL : "Version 2.0, Janvier 2004",
   INTRO_LINK : "Soyez curieux !",
@@ -458,7 +464,6 @@ export default {
   INTRO_PRODUCTS : "Gérer les produits",
   INTRO_PROFILE : "Gérer vos informations personnelles",
   INTRO_REVIEWS : "Gérer les avis",
-  INTRO_SHOP : "Gérer les produits, les avis et les commandes",
   INTRO_SIGNIN : "Connectez-vous à votre compte !",
   INTRO_SIGNUP : "Inscrivez-vous pour commenter et écrire vos avis !",
   INTRO_USERS : "Gérer les utilisateurs",
@@ -502,9 +507,11 @@ export default {
   /******************** LEGEND ********************/
 
   LEGEND_ALT : "Alt",
+  LEGEND_AUTHOR : "Auteur",
   LEGEND_CATEGORY : "Catégorie",
   LEGEND_DESCRIPTION : "Description",
   LEGEND_EMAIL : "Email",
+  LEGEND_GALLERY : "Galerie",
   LEGEND_IMAGE : "Image",
   LEGEND_NAME : "Nom",
   LEGEND_OPTION : "Option",
@@ -521,10 +528,12 @@ export default {
   /******************** LABEL ********************/
   
   LABEL_ALT : "Ecrivez le texte alternatif",
+  LABEL_AUTHOR : "Indiquer le nom de l'auteur",
   LABEL_CATEGORY : "Choisissez la catégorie la plus appropriée",
   LABEL_DESCRIPTION : "Ecrivez la description",
   LABEL_EMAIL : "Ecrivez votre email",
   LABEL_IMAGE : "Fournissez une image",
+  LABEL_GALLERY : "Choisissez une galerie",
   LABEL_NAME : "Ecrivez un nom",
   LABEL_OPTION : "Indiquez l'option du produit",
   LABEL_OPTIONS : "Ecrivez les options",
@@ -540,9 +549,11 @@ export default {
   /******************** CONTENT ********************/
 
   CONTENT_ADD : "Ajouter ",
+  CONTENT_ADMIN : "Administrer",
   CONTENT_CLEAR : "Vider ",
   CONTENT_CREATE : "Créer ",
   CONTENT_ENTER : "Entrer ",
+  CONTENT_LOGOUT : "Se Déconnecter",
   CONTENT_ORDER : "Commande ",
   CONTENT_REVIEW_LOGIN : "Connectez-vous pour évaluer",
   CONTENT_REVIEW_WRITE : "Ecrivez un avis",

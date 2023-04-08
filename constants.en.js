@@ -368,6 +368,7 @@ export default {
   HEAD_BASKET: "Basket",
   HEAD_BLOG: "Blog",
   HEAD_CONTACT: "Contact",
+  HEAD_GALLERY : "Galleries",
   HEAD_HOME: "Home",
   HEAD_LEGAL: "General Conditions",
   HEAD_LINK: "Links",
@@ -383,6 +384,7 @@ export default {
   META_BASKET: "Basket of online services",
   META_BLOG: "Blog for...",
   META_CONTACT: "Contact me for any questions",
+  META_GALLERY : "Images galleries",
   META_HOME: "Welcome to the ... website",
   META_IMAGE : "Images product by ",
   META_LEGAL: "General terms of use",
@@ -407,6 +409,7 @@ export default {
   CONTACT_VIEW : "Contact",
   CONTACT_SUB : "Send me a message",
   ERROR_VIEW : "Error",
+  GALLERY_VIEW : "Images galleries",
   HOME_VIEW : "Vesan",
   HOME_SUB : "CMS with Vue-Elt, Servidio, Animadio & Nemjs",
   LEGAL_VIEW : "Apache License",
@@ -422,6 +425,8 @@ export default {
   // CREATOR COMPONENTS
   ARTICLE_CREATOR : "Create article",
   COMMENT_CREATOR : "Create comment",
+  GALLERY_CREATOR : "Create gallery",
+  IMAGE_CREATOR : "Create image",
   LINK_CREATOR : "Create link",
   PRODUCT_CREATOR : "Create product",
   REVIEW_CREATOR : "Create review",
@@ -431,13 +436,13 @@ export default {
   // MANAGER COMPONENTS
   ARTICLE_MANAGER : "Article manager",
   COMMENT_MANAGER : "Comment manager",
+  GALLERY_MANAGER : "Gallery manager",
+  IMAGE_MANAGER : "Image Manager",
   LINK_MANAGER : "Link manager",
   ORDER_MANAGER : "Order manager",
   PRODUCT_MANAGER : "Product manager",
   REVIEW_MANAGER : "Review manager",
   USER_MANAGER : "User manager",
-  // OTHERS
-  ADMIN_USERS : "Users",
 
   /******************** INTRO ********************/
 
@@ -449,6 +454,7 @@ export default {
   INTRO_CONTACT : "Contact me if you have any question",
   INTRO_ERROR : "Page not found !",
   INTRO_FORGOT : "Need a new password ?",
+  INTRO_GALLERY : "Watch the galleries !",
   INTRO_HOME : "CMS with Vue-Elt, Servidio, Animadio & NemJS",
   INTRO_LEGAL : "Version 2.0, January 2004",
   INTRO_LINK : "Links for dev !",
@@ -458,7 +464,6 @@ export default {
   INTRO_PRODUCTS : "Manage products",
   INTRO_PROFILE : "Manage your profile & your orders",
   INTRO_REVIEWS : "Manage reviews",
-  INTRO_SHOP : "Manage products, reviews & orders",
   INTRO_SIGNIN : "Sign in to your account !",
   INTRO_SIGNUP : "Sign up to comment & review !",
   INTRO_USERS : "Manage users",
@@ -502,9 +507,11 @@ export default {
   /******************** LEGEND ********************/
 
   LEGEND_ALT : "Alt",
+  LEGEND_AUTHOR : "Author",
   LEGEND_CATEGORY : "Category",
   LEGEND_DESCRIPTION : "Description",
   LEGEND_EMAIL : "Email",
+  LEGEND_GALLERY : "Gallerie",
   LEGEND_IMAGE : "Image",
   LEGEND_NAME : "Name",
   LEGEND_OPTION : "Option",
@@ -521,9 +528,11 @@ export default {
   /******************** LABEL ********************/
   
   LABEL_ALT : "Write the alternative text",
+  LABEL_AUTHOR : "Provide the author name",
   LABEL_CATEGORY : "Choose the most appropriate category",
   LABEL_DESCRIPTION : "Write the description",
   LABEL_EMAIL : "Write your email",
+  LABEL_GALLERY : "Choose a gallerie",
   LABEL_IMAGE : "Provide an image",
   LABEL_NAME : "Write a name",
   LABEL_OPTION : "Indicate the product option",
@@ -540,9 +549,11 @@ export default {
   /******************** CONTENT ********************/
 
   CONTENT_ADD : "Add ",
+  CONTENT_ADMIN : "Administer",
   CONTENT_CLEAR : "Clear ",
   CONTENT_CREATE : "Create ",
   CONTENT_ENTER : "Enter ",
+  CONTENT_LOGOUT : "Logout",
   CONTENT_ORDER : "Order ",
   CONTENT_REVIEW_LOGIN : "Login to review",
   CONTENT_REVIEW_WRITE : "Write a review",
