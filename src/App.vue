@@ -91,7 +91,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
-import constants from "/constants"
+import constants from "../constants"
 
 import ListElt from "@/assets/ListElt"
 import NavElt from "@/assets/NavElt"
