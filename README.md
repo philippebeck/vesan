@@ -36,6 +36,7 @@ Vesan uses many other well-known packages, like ExpressJS, Mongoose, etc...
   - [Production](#production)
   - [Content](#content)
   - [Documentation](#documentation)
+  - [Tests](#tests)
 
 ---
 
@@ -195,3 +196,10 @@ Available Readme :
 -   [**Servidio**](https://github.com/philippebeck/servidio)  
 -   [**Animadio**](https://github.com/philippebeck/animadio)  
 -   [**NemJS**](https://github.com/philippebeck/nemjs)  
+
+---
+
+## Tests
+
+Tests are "on the road" (incomplete for the moment), but you can launch them with :  
+`npm test`  
