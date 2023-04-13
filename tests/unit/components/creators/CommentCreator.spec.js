@@ -1,21 +1,54 @@
-import { shallowMount } from "@vue/test-utils"
+import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import CommentCreator from "@/components/creators/CommentCreator"
 
-describe("CommentCreator", () => {
+let wrapper;
 
-  test("has data", () => {
-    expect(typeof CommentCreator.data).toBe("function")
+beforeEach(() => {
+  wrapper = shallowMount(CommentCreator, {
+    propsData: {},
+    mocks: {},
+    stubs: {},
+    methods: {},
+  });
+});
+
+enableAutoUnmount(afterEach)
+
+describe("CommentCreator", () => {
+  test("name", () => { 
+    expect(CommentCreator.name).toBe("CommentCreator") 
   })
 
-  test("has props", () => {
-    expect(typeof CommentCreator.props).toBe("object")
+  test("components", () => { 
+    expect(typeof CommentCreator.components).toBe("object") 
+    expect(typeof CommentCreator.components.BtnElt).toBe("object") 
+    expect(typeof CommentCreator.components.CardElt).toBe("object") 
+    expect(typeof CommentCreator.components.FieldElt).toBe("object") 
+  })
+
+  test("props", () => { 
+    expect(typeof CommentCreator.props).toBe("object") 
+    expect(CommentCreator.props).toContain("constants") 
+  })
+
+  test("data", () => { 
+    expect(typeof CommentCreator.data).toBe("function") 
+    expect(CommentCreator.data()).toEqual({ text: "" }) 
+  })
+
+  test("methods", () => { 
+    expect(typeof CommentCreator.methods.createComment).toBe("function") 
   })
 })
 
 describe('Mounted CommentCreator', () => {
-  const wrapper = shallowMount(CommentCreator);
-
-  test('does a wrapper exist', () => {
-    expect(wrapper.exists()).toBe(true)
+  test('wrapper', () => { 
+    expect(wrapper.exists()).toBe(true) 
   })
-})
+
+  test('wrapper components', () => { 
+    expect(wrapper.findComponent({ name: 'BtnElt' })).toBeDefined() 
+    expect(wrapper.findComponent({ name: 'CardElt' })).toBeDefined() 
+    expect(wrapper.findComponent({ name: 'FieldElt' })).toBeDefined() 
+  })
+});
