@@ -1,17 +1,58 @@
-import { shallowMount } from "@vue/test-utils"
+import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import CommentManager from "@/components/managers/CommentManager"
 
-describe("CommentManager", () => {
+let wrapper;
 
-  test("has props", () => {
+beforeEach(() => {
+  wrapper = shallowMount(CommentManager, {
+    propsData: {},
+    mocks: {},
+    stubs: {},
+    methods: {},
+  });
+});
+
+enableAutoUnmount(afterEach)
+
+describe("CommentManager", () => {
+  test("name", () => { 
+    expect(CommentManager.name).toBe("CommentManager") 
+  })
+
+  test("components", () => { 
+    expect(typeof CommentManager.components).toBe("object") 
+    expect(typeof CommentManager.components.BtnElt).toBe("object") 
+    expect(typeof CommentManager.components.CardElt).toBe("object") 
+    expect(typeof CommentManager.components.FieldElt).toBe("object") 
+    expect(typeof CommentManager.components.TableElt).toBe("object")
+  })
+
+  test("props", () => {
     expect(typeof CommentManager.props).toBe("object")
+    expect(CommentManager.props).toContain("constants") 
+    expect(CommentManager.props).toContain("comments") 
+    expect(CommentManager.props).toContain("articles") 
+    expect(CommentManager.props).toContain("users") 
+  })
+
+  test("methods", () => { 
+    expect(typeof CommentManager.methods.getComments).toBe("function") 
+    expect(typeof CommentManager.methods.getArticleName).toBe("function") 
+    expect(typeof CommentManager.methods.moderateComment).toBe("function") 
+    expect(typeof CommentManager.methods.deleteComment).toBe("function") 
   })
 })
 
 describe('Mounted CommentManager', () => {
-  const wrapper = shallowMount(CommentManager);
 
-  test('does a wrapper exist', () => {
+  test('wrapper', () => {
     expect(wrapper.exists()).toBe(true)
+  })
+
+  test('wrapper components', () => { 
+    expect(wrapper.findComponent({ name: 'BtnElt' })).toBeDefined() 
+    expect(wrapper.findComponent({ name: 'CardElt' })).toBeDefined() 
+    expect(wrapper.findComponent({ name: 'FieldElt' })).toBeDefined() 
+    expect(wrapper.findComponent({ name: 'TableElt' })).toBeDefined() 
   })
 })
