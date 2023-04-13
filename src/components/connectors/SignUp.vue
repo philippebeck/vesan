@@ -83,7 +83,7 @@ import ListElt from "@/assets/ListElt"
 import { VueRecaptcha } from "vue-recaptcha";
 
 export default {
-  name: "CreateUser",
+  name: "SignUp",
   components: {  
     BtnElt,
     FieldElt,
