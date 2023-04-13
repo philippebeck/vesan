@@ -1,17 +1,58 @@
-import { shallowMount } from "@vue/test-utils"
+import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import LinkManager from "@/components/managers/LinkManager"
 
-describe("LinkManager", () => {
+let wrapper;
 
-  test("has props", () => {
+beforeEach(() => {
+  wrapper = shallowMount(LinkManager, {
+    propsData: {},
+    mocks: {},
+    stubs: {},
+    methods: {},
+  });
+});
+
+enableAutoUnmount(afterEach)
+
+describe("LinkManager", () => {
+  test("name", () => { 
+    expect(LinkManager.name).toBe("LinkManager") 
+  })
+
+  test("components", () => { 
+    expect(typeof LinkManager.components).toBe("object") 
+    expect(typeof LinkManager.components.BtnElt).toBe("object") 
+    expect(typeof LinkManager.components.CardElt).toBe("object") 
+    expect(typeof LinkManager.components.FieldElt).toBe("object") 
+    expect(typeof LinkManager.components.TableElt).toBe("object")
+  })
+
+  test("props", () => {
     expect(typeof LinkManager.props).toBe("object")
+    expect(LinkManager.props).toContain("constants") 
+    expect(LinkManager.props).toContain("links") 
+  })
+
+  test("methods", () => { 
+    expect(typeof LinkManager.methods.getLinks).toBe("function") 
+    expect(typeof LinkManager.methods.getItemsByCat).toBe("function") 
+    expect(typeof LinkManager.methods.getLink).toBe("function") 
+    expect(typeof LinkManager.methods.checkLink).toBe("function") 
+    expect(typeof LinkManager.methods.updateLink).toBe("function") 
+    expect(typeof LinkManager.methods.deleteLink).toBe("function") 
   })
 })
 
 describe('Mounted LinkManager', () => {
-  const wrapper = shallowMount(LinkManager);
 
-  test('does a wrapper exist', () => {
+  test('wrapper', () => {
     expect(wrapper.exists()).toBe(true)
+  })
+
+  test('wrapper components', () => { 
+    expect(wrapper.findComponent({ name: 'BtnElt' })).toBeDefined() 
+    expect(wrapper.findComponent({ name: 'CardElt' })).toBeDefined() 
+    expect(wrapper.findComponent({ name: 'FieldElt' })).toBeDefined() 
+    expect(wrapper.findComponent({ name: 'TableElt' })).toBeDefined() 
   })
 })
