@@ -201,5 +201,6 @@ Available Readme :
 
 ## Tests
 
-Tests are "on the road" (incomplete for the moment), but you can launch them with :  
-`npm test`  
+Tests are "on the road" (incomplete for the moment), but you can launch them :  
+-  for the frontend, from the root of the app (/) : `npm test src`  
+-  for the backend, from the "api" folder of the app (/api/) : `npm test`  

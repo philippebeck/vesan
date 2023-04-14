@@ -15,7 +15,8 @@
     "mongo"
   ],
   "scripts": {
-    "start": "nodemon server"
+    "start": "nodemon server",
+    "test": "jest"
   },
   "license": "Apache-2.0 License",
   "main": "server.js",
@@ -38,5 +39,10 @@
     "name": "Philippe Beck",
     "email": "philippe@philippebeck.net",
     "url": "https://philippebeck.net"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "jest": "^29.5.0",
+    "supertest": "^6.3.3"
   }
 }
