@@ -1,9 +1,23 @@
-import { mount } from "@vue/test-utils"
 import App from "@/App"
 
 describe("App", () => {
+  test("name", () => { 
+    expect(App.name).toBe("App") 
+  })
 
-  test("has data", () => {
-    expect(typeof App.data).toBe("function")
+  test("components", () => { 
+    expect(typeof App.components).toBe("object") 
+    expect(typeof App.components.FootElt).toBe("object") 
+    expect(typeof App.components.ListElt).toBe("object") 
+    expect(typeof App.components.NavElt).toBe("object") 
+  })
+
+  test("data", () => { 
+    expect(typeof App.data).toBe("function") 
+    expect(App.data()).toEqual({ constants: {} }) 
+  })
+
+  test("methods", () => { 
+    expect(typeof App.methods.checkRole).toBe("function") 
   })
 })
