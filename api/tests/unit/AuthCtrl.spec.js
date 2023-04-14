@@ -12,8 +12,9 @@ afterEach(async () => {
   await mongoose.connection.close();
 });
 
-describe("GET /auth/:id", () => {
-  test("get a gallery", async () => {
+describe("AuthCtrl", () => {
+
+  test("get an avatar", async () => {
     const res = await request(app)
       .get("/auth/640cde6a7163d1f1a0dbbaef");
 

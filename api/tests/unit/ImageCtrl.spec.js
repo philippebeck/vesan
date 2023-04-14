@@ -12,8 +12,9 @@ afterEach(async () => {
   await mongoose.connection.close();
 });
 
-describe("GET /images/:id", () => {
-  test("get all images", async () => {
+describe("ImageCtrl", () => {
+
+  test("get images of a gallery", async () => {
     const res = await request(app)
       .get("/images/642982fde24b20699b7a37e5");
 

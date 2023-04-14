@@ -14,7 +14,7 @@ afterEach(async () => {
 
 describe("ProductCtrl", () => {
 
-  test("GET /products", async () => {
+  test("get all products", async () => {
     const res = await request(app)
       .get("/products");
 
@@ -22,7 +22,7 @@ describe("ProductCtrl", () => {
     expect(res.body.length).toBeGreaterThan(0);
   });
 
-  test("GET /products/:id", async () => {
+  test("get a product", async () => {
     const res = await request(app)
       .get("/products/642025c27596058bd79a8df5");
 

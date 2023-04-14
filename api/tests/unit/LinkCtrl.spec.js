@@ -12,7 +12,8 @@ afterEach(async () => {
   await mongoose.connection.close();
 });
 
-describe("GET /links", () => {
+describe("LinkCtrl", () => {
+
   test("get all links", async () => {
     const res = await request(app)
       .get("/links");

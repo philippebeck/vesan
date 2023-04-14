@@ -12,7 +12,8 @@ afterEach(async () => {
   await mongoose.connection.close();
 });
 
-describe("GET /galleries", () => {
+describe("GalleryCtrl", () => {
+
   test("get all galleries", async () => {
     const res = await request(app)
       .get("/galleries");
@@ -20,9 +21,7 @@ describe("GET /galleries", () => {
     expect(res.statusCode).toBe(200);
     expect(res.body.length).toBeGreaterThan(0);
   });
-});
 
-describe("GET /galleries/:id", () => {
   test("get a gallery", async () => {
     const res = await request(app)
       .get("/galleries/642982fde24b20699b7a37e5");
