@@ -15,7 +15,8 @@
     "mongo"
   ],
   "scripts": {
-    "start": "nodemon server"
+    "start": "nodemon server",
+    "test": "jest"
   },
   "license": "Apache-2.0 License",
   "main": "server.js",
