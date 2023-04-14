@@ -18,10 +18,11 @@ const form = formidable({ uploadDir: USERS_THUMB, keepExtensions: true });
 
 /**
  * CHECK USER DATA
- * @param {string} name 
+ * @param {string} name
  * @param {string} email 
  * @param {string} role 
  * @param {object} res 
+ * @returns
  */
 exports.checkUserData = (name, email, role, res) => {
   let alert = "";
