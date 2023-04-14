@@ -57,8 +57,8 @@ export default {
   components: {
     CardElt,
     ListElt,
-    SliderElt,
-    MediaElt
+    MediaElt,
+    SliderElt
   },
   props: [
     "constants",

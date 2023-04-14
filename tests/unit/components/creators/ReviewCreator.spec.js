@@ -33,7 +33,10 @@ describe("ReviewCreator", () => {
 
   test("data", () => { 
     expect(typeof ReviewCreator.data).toBe("function") 
-    expect(ReviewCreator.data()).toEqual({ text: "", score: null }) 
+    expect(ReviewCreator.data()).toEqual({ 
+      text: "", 
+      score: null 
+    }) 
   })
 
   test("methods", () => { 

@@ -93,16 +93,16 @@
 import { mapState, mapActions } from "vuex"
 import constants from "../constants"
 
+import FootElt from "@/assets/FootElt"
 import ListElt from "@/assets/ListElt"
 import NavElt from "@/assets/NavElt"
-import FootElt from "@/assets/FootElt"
 
 export default {
   name: 'App',
   components: {
+    FootElt,
     ListElt,
-    NavElt,
-    FootElt
+    NavElt
   },
 
   data() {

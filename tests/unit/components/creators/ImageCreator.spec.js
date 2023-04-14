@@ -34,7 +34,10 @@ describe("ImageCreator", () => {
 
   test("data", () => { 
     expect(typeof ImageCreator.data).toBe("function") 
-    expect(ImageCreator.data()).toEqual({ description: "", gallery: "" }) 
+    expect(ImageCreator.data()).toEqual({ 
+      description: "", 
+      gallery: "" 
+    }) 
   })
 
   test("methods", () => { 

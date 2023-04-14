@@ -34,7 +34,11 @@ describe("LinkCreator", () => {
 
   test("data", () => { 
     expect(typeof LinkCreator.data).toBe("function") 
-    expect(LinkCreator.data()).toEqual({ name: "", url: "", cat: "" }) 
+    expect(LinkCreator.data()).toEqual({ 
+      name: "", 
+      url: "", 
+      cat: "" 
+    }) 
   })
 
   test("methods", () => { 

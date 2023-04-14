@@ -146,10 +146,10 @@ export default {
   name: "BlogView",
   components: {
     BtnElt,
+    CardElt,
     ListElt,
     MediaElt,
     NavElt,
-    CardElt,
     ArticleCreator 
   },
   props: ["constants", "user"],

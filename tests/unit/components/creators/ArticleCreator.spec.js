@@ -35,7 +35,13 @@ describe("ArticleCreator", () => {
 
   test("data", () => { 
     expect(typeof ArticleCreator.data).toBe("function") 
-    expect(ArticleCreator.data()).toEqual({ name: "", text: "", image: "", alt: "", cat: "" }) 
+    expect(ArticleCreator.data()).toEqual({ 
+      name: "", 
+      text: "", 
+      image: "", 
+      alt: "", 
+      cat: "" 
+    }) 
   })
 
   test("methods", () => { 
