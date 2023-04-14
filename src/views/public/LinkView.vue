@@ -88,7 +88,11 @@ export default {
     NavElt,
     LinkCreator
   },
-  props: ["constants", "user"],
+
+  props: [
+    "constants", 
+    "user"
+  ],
 
   created() {
     this.$store.dispatch("listLinks");

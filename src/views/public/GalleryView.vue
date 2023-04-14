@@ -46,9 +46,9 @@
 <script>
 import { mapState, mapActions } from "vuex"
 
+import CardElt from "@/assets/CardElt"
 import ListElt from "@/assets/ListElt"
 import MediaElt from "@/assets/MediaElt"
-import CardElt from "@/assets/CardElt"
 
 import GalleryCreator from "@/components/creators/GalleryCreator"
 

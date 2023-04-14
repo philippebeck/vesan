@@ -136,10 +136,10 @@
 import { mapState, mapActions } from "vuex"
 
 import BtnElt from "@/assets/BtnElt"
+import CardElt from "@/assets/CardElt"
 import ListElt from "@/assets/ListElt"
 import MediaElt from "@/assets/MediaElt"
 import NavElt from "@/assets/NavElt"
-import CardElt from "@/assets/CardElt"
 
 import ProductCreator from "@/components/creators/ProductCreator"
 
@@ -147,10 +147,10 @@ export default {
   name: "ShopView",
   components: {
     BtnElt,
+    CardElt,
     ListElt,
     MediaElt,
     NavElt,
-    CardElt,
     ProductCreator
   },
   props: ["constants", "user"],
