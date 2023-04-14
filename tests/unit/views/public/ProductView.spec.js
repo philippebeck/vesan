@@ -1,13 +1,46 @@
-import { mount } from "@vue/test-utils"
 import ProductView from "@/views/public/ProductView"
 
 describe("ProductView", () => {
-
-  test("has data", () => {
-    expect(typeof ProductView.data).toBe("function")
+  test("name", () => { 
+    expect(ProductView.name).toBe("ProductView") 
   })
 
-  test("has props", () => {
-    expect(typeof ProductView.props).toBe("object")
+  test("components", () => { 
+    expect(typeof ProductView.components).toBe("object") 
+    expect(typeof ProductView.components.BtnElt).toBe("object") 
+    expect(typeof ProductView.components.CardElt).toBe("object") 
+    expect(typeof ProductView.components.FieldElt).toBe("object") 
+    expect(typeof ProductView.components.MediaElt).toBe("object") 
+    expect(typeof ProductView.components.ReviewCreator).toBe("object") 
+    expect(typeof ProductView.components.ReviewList).toBe("object") 
+  })
+
+  test("props", () => { 
+    expect(typeof ProductView.props).toBe("object") 
+    expect(ProductView.props).toContain("constants") 
+    expect(ProductView.props).toContain("user") 
+  })
+
+  test("data", () => { 
+    expect(typeof ProductView.data).toBe("function") 
+    expect(ProductView.data()).toEqual({ 
+      basket: [], 
+      product: {}, 
+      order: {}, 
+      option: "",
+      priceCurrency: "",
+      quantity: 1,
+      isInBasket: false
+    }) 
+  })
+
+  test("methods", () => { 
+    expect(typeof ProductView.methods.checkRole).toBe("function") 
+    expect(typeof ProductView.methods.getAverage).toBe("function") 
+    expect(typeof ProductView.methods.addToBasket).toBe("function") 
+    expect(typeof ProductView.methods.createOrder).toBe("function") 
+    expect(typeof ProductView.methods.getBasket).toBe("function") 
+    expect(typeof ProductView.methods.checkBasket).toBe("function") 
+    expect(typeof ProductView.methods.setBasket).toBe("function") 
   })
 })
