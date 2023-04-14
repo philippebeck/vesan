@@ -34,7 +34,10 @@ describe("GalleryCreator", () => {
 
   test("data", () => { 
     expect(typeof GalleryCreator.data).toBe("function") 
-    expect(GalleryCreator.data()).toEqual({ name: "", author: "" }) 
+    expect(GalleryCreator.data()).toEqual({ 
+      name: "", 
+      author: "" 
+    }) 
   })
 
   test("methods", () => { 

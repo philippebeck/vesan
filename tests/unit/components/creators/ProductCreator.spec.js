@@ -35,7 +35,15 @@ describe("ProductCreator", () => {
 
   test("data", () => { 
     expect(typeof ProductCreator.data).toBe("function") 
-    expect(ProductCreator.data()).toEqual({ name: "", description: "", image: "", alt: "", price: null, options: "", cat: "" }) 
+    expect(ProductCreator.data()).toEqual({ 
+      name: "", 
+      description: "", 
+      image: "", 
+      alt: "", 
+      price: null, 
+      options: "", 
+      cat: "" 
+    }) 
   })
 
   test("methods", () => { 
