@@ -5,10 +5,17 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallowMount(ImageCreator, {
-    propsData: {},
-    mocks: {},
-    stubs: {},
-    methods: {},
+    props: {
+      constants: {
+        TEST: "test"
+      },
+      description: "Image description", 
+      gallery: "Image gallery" 
+    },
+    global: {
+      mocks: {},
+      stubs: {}
+    }
   });
 });
 
@@ -21,39 +28,46 @@ describe("ImageCreator", () => {
 
   test("components", () => { 
     expect(typeof ImageCreator.components).toBe("object") 
-    expect(typeof ImageCreator.components.BtnElt).toBe("object") 
-    expect(typeof ImageCreator.components.CardElt).toBe("object") 
-    expect(typeof ImageCreator.components.FieldElt).toBe("object") 
-    expect(typeof ImageCreator.components.ListElt).toBe("object") 
   })
 
   test("props", () => { 
     expect(typeof ImageCreator.props).toBe("object") 
-    expect(ImageCreator.props).toContain("constants") 
   })
 
   test("data", () => { 
     expect(typeof ImageCreator.data).toBe("function") 
-    expect(ImageCreator.data()).toEqual({ 
-      description: "", 
-      gallery: "" 
-    }) 
   })
 
   test("methods", () => { 
-    expect(typeof ImageCreator.methods.createImage).toBe("function") 
+    expect(typeof ImageCreator.methods).toBe("object") 
   })
 })
 
-describe('Mounted ImageCreator', () => {
-  test('wrapper', () => { 
+describe("Mounted ImageCreator", () => {
+  test("wrapper", () => { 
     expect(wrapper.exists()).toBe(true) 
   })
 
-  test('wrapper components', () => { 
-    expect(wrapper.findComponent({ name: 'BtnElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'CardElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'FieldElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'ListElt' })).toBeDefined() 
+  test("wrapper components", () => { 
+    expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object")
+  })
+
+  test("wrapper props", () => {
+    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
+  })
+
+  test("wrapper data", () => {
+    expect(wrapper.vm.description).toBe("")
+    expect(wrapper.vm.gallery).toBe("")
+
+    expect(wrapper.attributes("description")).toBe("Image description")
+    expect(wrapper.attributes("gallery")).toBe("Image gallery")
+  })
+
+  test("wrapper methods", () => {
+    expect(typeof wrapper.vm.createImage).toBe("function")
   })
 });

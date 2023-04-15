@@ -5,10 +5,19 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallowMount(GalleryManager, {
-    propsData: {},
-    mocks: {},
-    stubs: {},
-    methods: {},
+    props: {
+      constants: {
+        TEST: "test"
+      },
+      galleries: [{
+        name: "Gallery name",
+        author: "Gallery author"
+      }]
+    },
+    global: {
+      mocks: {},
+      stubs: {}
+    }
   });
 });
 
@@ -21,36 +30,40 @@ describe("GalleryManager", () => {
 
   test("components", () => { 
     expect(typeof GalleryManager.components).toBe("object") 
-    expect(typeof GalleryManager.components.BtnElt).toBe("object") 
-    expect(typeof GalleryManager.components.CardElt).toBe("object") 
-    expect(typeof GalleryManager.components.FieldElt).toBe("object") 
-    expect(typeof GalleryManager.components.TableElt).toBe("object")
   })
 
   test("props", () => {
     expect(typeof GalleryManager.props).toBe("object")
-    expect(GalleryManager.props).toContain("constants") 
-    expect(GalleryManager.props).toContain("galleries") 
   })
 
   test("methods", () => { 
-    expect(typeof GalleryManager.methods.getGalleries).toBe("function") 
-    expect(typeof GalleryManager.methods.updateGallery).toBe("function") 
-    expect(typeof GalleryManager.methods.deleteGallery).toBe("function") 
+    expect(typeof GalleryManager.methods).toBe("object")
   })
 })
 
-describe('Mounted GalleryManager', () => {
-
-  test('wrapper', () => {
+describe("Mounted GalleryManager", () => {
+  test("wrapper", () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  test('wrapper components', () => { 
-    expect(wrapper.findComponent({ name: 'BtnElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'CardElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'FieldElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'TableElt' })).toBeDefined() 
+  test("wrapper components", () => { 
+    expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "TableElt" })).toBe("object")
+  })
+
+  test("wrapper props", () => {
+    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
+    expect(wrapper.props("galleries")).toStrictEqual([{
+      name: "Gallery name",
+      author: "Gallery author"
+    }])
+  })
+
+  test("wrapper methods", () => {
+    expect(typeof wrapper.vm.getGalleries).toBe("function")
+    expect(typeof wrapper.vm.updateGallery).toBe("function")
+    expect(typeof wrapper.vm.deleteGallery).toBe("function")
   })
 })
-

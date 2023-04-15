@@ -25,6 +25,14 @@ describe("ProfileEditor", () => {
     expect(ProfileEditor.data()).toEqual({ pass: "" }) 
   })
 
+  test("created()", () => {
+    expect(typeof ProfileEditor.created).toBe("function")
+  })
+
+  test("computed", () => {
+    expect(typeof ProfileEditor.computed).toBe("object")
+  })
+
   test("methods", () => { 
     expect(typeof ProfileEditor.methods.checkRole).toBe("function") 
     expect(typeof ProfileEditor.methods.logout).toBe("function") 

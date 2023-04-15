@@ -15,4 +15,8 @@ describe("LegalView", () => {
     expect(LegalView.props).toContain("constants") 
     expect(LegalView.props).toContain("user") 
   })
+
+  test("created()", () => {
+    expect(typeof LegalView.created).toBe("function")
+  })
 })

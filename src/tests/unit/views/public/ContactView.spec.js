@@ -29,6 +29,10 @@ describe("ContactView", () => {
     }) 
   })
 
+  test("created()", () => {
+    expect(typeof ContactView.created).toBe("function")
+  })
+
   test("methods", () => { 
     expect(typeof ContactView.methods.onVerify).toBe("function") 
     expect(typeof ContactView.methods.send).toBe("function") 

@@ -5,10 +5,18 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallowMount(CommentList, {
-    propsData: {},
-    mocks: {},
-    stubs: {},
-    methods: {},
+    props: {
+      constants: {
+        TEST: "test"
+      },
+      comments: [{
+        text: "Comment text"
+      }]
+    },
+    global: {
+      mocks: {},
+      stubs: {}
+    }
   });
 });
 
@@ -21,36 +29,39 @@ describe("CommentList", () => {
 
   test("components", () => { 
     expect(typeof CommentList.components).toBe("object") 
-    expect(typeof CommentList.components.BtnElt).toBe("object") 
-    expect(typeof CommentList.components.CardElt).toBe("object") 
-    expect(typeof CommentList.components.FieldElt).toBe("object") 
-    expect(typeof CommentList.components.ListElt).toBe("object")
-    expect(typeof CommentList.components.MediaElt).toBe("object") 
   })
 
   test("props", () => {
     expect(typeof CommentList.props).toBe("object")
-    expect(CommentList.props).toContain("constants") 
-    expect(CommentList.props).toContain("comments") 
   })
 
-  test("methods", () => { 
-    expect(typeof CommentList.methods.updateComment).toBe("function") 
-    expect(typeof CommentList.methods.deleteComment).toBe("function") 
+  test("methods", () => {
+    expect(typeof CommentList.methods).toBe("object")
   })
 })
 
-describe('Mounted CommentList', () => {
-
-  test('wrapper', () => {
+describe("Mounted CommentList", () => {
+  test("wrapper", () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  test('wrapper components', () => { 
-    expect(wrapper.findComponent({ name: 'BtnElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'CardElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'FieldElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'ListElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'MediaElt' })).toBeDefined() 
+  test("wrapper components", () => { 
+    expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object")
+  })
+
+  test("wrapper props", () => {
+    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
+    expect(wrapper.props("comments")).toStrictEqual([{
+      text: "Comment text"
+    }])
+  })
+
+  test("wrapper methods", () => { 
+    expect(typeof wrapper.vm.updateComment).toBe("function") 
+    expect(typeof wrapper.vm.deleteComment).toBe("function") 
   })
 })

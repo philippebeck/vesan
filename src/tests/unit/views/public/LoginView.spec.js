@@ -24,6 +24,10 @@ describe("LoginView", () => {
     expect(LoginView.data()).toEqual({ type: "SignIn" }) 
   })
 
+  test("created()", () => {
+    expect(typeof LoginView.created).toBe("function")
+  })
+
   test("methods", () => { 
     expect(typeof LoginView.methods.setType).toBe("function") 
   })

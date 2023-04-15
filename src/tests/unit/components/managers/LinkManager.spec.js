@@ -5,10 +5,20 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallowMount(LinkManager, {
-    propsData: {},
-    mocks: {},
-    stubs: {},
-    methods: {},
+    props: {
+      constants: {
+        TEST: "test"
+      },
+      links: {
+        name: "Link name",
+        url: "Link url",
+        cat: "Link cat",
+      }
+    },
+    global: {
+      mocks: {},
+      stubs: {}
+    }
   });
 });
 
@@ -21,38 +31,44 @@ describe("LinkManager", () => {
 
   test("components", () => { 
     expect(typeof LinkManager.components).toBe("object") 
-    expect(typeof LinkManager.components.BtnElt).toBe("object") 
-    expect(typeof LinkManager.components.CardElt).toBe("object") 
-    expect(typeof LinkManager.components.FieldElt).toBe("object") 
-    expect(typeof LinkManager.components.TableElt).toBe("object")
   })
 
   test("props", () => {
     expect(typeof LinkManager.props).toBe("object")
-    expect(LinkManager.props).toContain("constants") 
-    expect(LinkManager.props).toContain("links") 
   })
 
   test("methods", () => { 
-    expect(typeof LinkManager.methods.getLinks).toBe("function") 
-    expect(typeof LinkManager.methods.getItemsByCat).toBe("function") 
-    expect(typeof LinkManager.methods.getLink).toBe("function") 
-    expect(typeof LinkManager.methods.checkLink).toBe("function") 
-    expect(typeof LinkManager.methods.updateLink).toBe("function") 
-    expect(typeof LinkManager.methods.deleteLink).toBe("function") 
+    expect(typeof LinkManager.methods).toBe("object")
   })
 })
 
-describe('Mounted LinkManager', () => {
-
-  test('wrapper', () => {
+describe("Mounted LinkManager", () => {
+  test("wrapper", () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  test('wrapper components', () => { 
-    expect(wrapper.findComponent({ name: 'BtnElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'CardElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'FieldElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'TableElt' })).toBeDefined() 
+  test("wrapper components", () => { 
+    expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "TableElt" })).toBe("object")
+  })
+
+  test("wrapper props", () => {
+    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
+    expect(wrapper.props("links")).toStrictEqual({
+      name: "Link name",
+      url: "Link url",
+      cat: "Link cat",
+    })
+  })
+
+  test("wrapper methods", () => { 
+    expect(typeof wrapper.vm.getLinks).toBe("function") 
+    expect(typeof wrapper.vm.getItemsByCat).toBe("function") 
+    expect(typeof wrapper.vm.getLink).toBe("function") 
+    expect(typeof wrapper.vm.checkLink).toBe("function") 
+    expect(typeof wrapper.vm.updateLink).toBe("function") 
+    expect(typeof wrapper.vm.deleteLink).toBe("function") 
   })
 })

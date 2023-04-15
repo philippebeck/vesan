@@ -23,4 +23,8 @@ describe("HomeView", () => {
     expect(typeof HomeView.data).toBe("function") 
     expect(HomeView.data()).toEqual({ media: {} }) 
   })
+
+  test("created()", () => {
+    expect(typeof HomeView.created).toBe("function")
+  })
 })

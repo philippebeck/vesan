@@ -25,6 +25,14 @@ describe("ProductEditor", () => {
     expect(ProductEditor.data()).toEqual({ user: {} }) 
   })
 
+  test("created()", () => {
+    expect(typeof ProductEditor.created).toBe("function")
+  })
+
+  test("computed", () => {
+    expect(typeof ProductEditor.computed).toBe("object")
+  })
+
   test("methods", () => { 
     expect(typeof ProductEditor.methods.checkRole).toBe("function") 
     expect(typeof ProductEditor.methods.updateProduct).toBe("function") 

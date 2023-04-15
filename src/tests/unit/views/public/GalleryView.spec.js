@@ -18,6 +18,14 @@ describe("GalleryView", () => {
     expect(GalleryView.props).toContain("user") 
   })
 
+  test("created()", () => {
+    expect(typeof GalleryView.created).toBe("function")
+  })
+
+  test("computed", () => {
+    expect(typeof GalleryView.computed).toBe("object")
+  })
+
   test("methods", () => { 
     expect(typeof GalleryView.methods.checkRole).toBe("function") 
   })

@@ -20,6 +20,15 @@ describe("LinkView", () => {
     expect(LinkView.props).toContain("user") 
   })
 
+  test("created()", () => {
+    expect(typeof LinkView.created).toBe("function")
+  })
+
+  test("computed", () => {
+    expect(typeof LinkView.computed).toBe("object")
+    expect(typeof LinkView.computed.getCats).toBe("function")
+  })
+
   test("methods", () => { 
     expect(typeof LinkView.methods.checkRole).toBe("function") 
     expect(typeof LinkView.methods.getItemsByCat).toBe("function") 

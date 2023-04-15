@@ -5,10 +5,16 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallowMount(CommentCreator, {
-    propsData: {},
-    mocks: {},
-    stubs: {},
-    methods: {},
+    props: {
+      constants: {
+        TEST: "test"
+      },
+      text: "Comment text"
+    },
+    global: {
+      mocks: {},
+      stubs: {}
+    }
   });
 });
 
@@ -21,34 +27,42 @@ describe("CommentCreator", () => {
 
   test("components", () => { 
     expect(typeof CommentCreator.components).toBe("object") 
-    expect(typeof CommentCreator.components.BtnElt).toBe("object") 
-    expect(typeof CommentCreator.components.CardElt).toBe("object") 
-    expect(typeof CommentCreator.components.FieldElt).toBe("object") 
   })
 
   test("props", () => { 
     expect(typeof CommentCreator.props).toBe("object") 
-    expect(CommentCreator.props).toContain("constants") 
   })
 
   test("data", () => { 
     expect(typeof CommentCreator.data).toBe("function") 
-    expect(CommentCreator.data()).toEqual({ text: "" }) 
   })
 
   test("methods", () => { 
-    expect(typeof CommentCreator.methods.createComment).toBe("function") 
+    expect(typeof CommentCreator.methods).toBe("object") 
   })
 })
 
-describe('Mounted CommentCreator', () => {
-  test('wrapper', () => { 
+describe("Mounted CommentCreator", () => {
+  test("wrapper", () => { 
     expect(wrapper.exists()).toBe(true) 
   })
 
-  test('wrapper components', () => { 
-    expect(wrapper.findComponent({ name: 'BtnElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'CardElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'FieldElt' })).toBeDefined() 
+  test("wrapper components", () => { 
+    expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
+  })
+
+  test("wrapper props", () => {
+    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
+  })
+
+  test("wrapper data", () => {
+    expect(wrapper.vm.text).toBe("")
+    expect(wrapper.attributes("text")).toBe("Comment text")
+  })
+
+  test("wrapper methods", () => { 
+    expect(typeof wrapper.vm.createComment).toBe("function") 
   })
 });

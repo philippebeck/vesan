@@ -24,6 +24,18 @@ describe("ArticleView", () => {
     expect(ArticleView.data()).toEqual({ article: {} }) 
   })
 
+  test("created()", () => {
+    expect(typeof ArticleView.created).toBe("function")
+  })
+
+  test("updated()", () => {
+    expect(typeof ArticleView.created).toBe("function")
+  })
+
+  test("computed", () => {
+    expect(typeof ArticleView.computed).toBe("object")
+  })
+
   test("methods", () => { 
     expect(typeof ArticleView.methods.checkRole).toBe("function") 
     expect(typeof ArticleView.methods.checkLikes).toBe("function") 

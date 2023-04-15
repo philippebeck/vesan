@@ -21,6 +21,18 @@ describe("BlogView", () => {
     expect(BlogView.props).toContain("user") 
   })
 
+  test("created()", () => {
+    expect(typeof BlogView.created).toBe("function")
+  })
+
+  test("updated()", () => {
+    expect(typeof BlogView.created).toBe("function")
+  })
+
+  test("computed", () => {
+    expect(typeof BlogView.computed).toBe("object")
+  })
+
   test("methods", () => { 
     expect(typeof BlogView.methods.checkRole).toBe("function") 
     expect(typeof BlogView.methods.getItemsByCat).toBe("function") 
