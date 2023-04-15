@@ -50,10 +50,10 @@ describe("Mounted ImageCreator", () => {
   })
 
   test("wrapper components", () => { 
-    expect(wrapper.findComponent({ name: "BtnElt" })).toBeDefined() 
-    expect(wrapper.findComponent({ name: "CardElt" })).toBeDefined() 
-    expect(wrapper.findComponent({ name: "FieldElt" })).toBeDefined() 
-    expect(wrapper.findComponent({ name: "ListElt" })).toBeDefined() 
+    expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object")
   })
 
   test("wrapper data", () => {

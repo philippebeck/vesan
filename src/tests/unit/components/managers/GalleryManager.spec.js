@@ -46,10 +46,10 @@ describe("Mounted GalleryManager", () => {
   })
 
   test("wrapper components", () => { 
-    expect(wrapper.findComponent({ name: "BtnElt" })).toBeDefined() 
-    expect(wrapper.findComponent({ name: "CardElt" })).toBeDefined() 
-    expect(wrapper.findComponent({ name: "FieldElt" })).toBeDefined() 
-    expect(wrapper.findComponent({ name: "TableElt" })).toBeDefined() 
+    expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "TableElt" })).toBe("object")
   })
 
   test("wrapper methods", () => {
