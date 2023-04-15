@@ -29,6 +29,19 @@ describe("ShopView", () => {
     }) 
   })
 
+  test("created()", () => {
+    expect(typeof ShopView.created).toBe("function")
+  })
+
+  test("updated()", () => {
+    expect(typeof ShopView.created).toBe("function")
+  })
+
+  test("computed", () => {
+    expect(typeof ShopView.computed).toBe("object")
+    expect(typeof ShopView.computed.getCats).toBe("function")
+  })
+
   test("methods", () => { 
     expect(typeof ShopView.methods.checkRole).toBe("function") 
     expect(typeof ShopView.methods.getItemsByCat).toBe("function") 

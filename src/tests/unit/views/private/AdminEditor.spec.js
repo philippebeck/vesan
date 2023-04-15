@@ -30,6 +30,14 @@ describe("AdminEditor", () => {
     expect(AdminEditor.data()).toEqual({ user: {} }) 
   })
 
+  test("created()", () => {
+    expect(typeof AdminEditor.created).toBe("function")
+  })
+
+  test("computed", () => {
+    expect(typeof AdminEditor.computed).toBe("object")
+  })
+
   test("methods", () => { 
     expect(typeof AdminEditor.methods.checkRole).toBe("function") 
   })

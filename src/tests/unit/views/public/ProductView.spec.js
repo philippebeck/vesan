@@ -34,6 +34,18 @@ describe("ProductView", () => {
     }) 
   })
 
+  test("created()", () => {
+    expect(typeof ProductView.created).toBe("function")
+  })
+
+  test("updated()", () => {
+    expect(typeof ProductView.created).toBe("function")
+  })
+
+  test("computed", () => {
+    expect(typeof ProductView.computed).toBe("object")
+  })
+
   test("methods", () => { 
     expect(typeof ProductView.methods.checkRole).toBe("function") 
     expect(typeof ProductView.methods.getAverage).toBe("function") 

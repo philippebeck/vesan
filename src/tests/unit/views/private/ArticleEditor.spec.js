@@ -25,6 +25,14 @@ describe("ArticleEditor", () => {
     expect(ArticleEditor.data()).toEqual({ user: {} }) 
   })
 
+  test("created()", () => {
+    expect(typeof ArticleEditor.created).toBe("function")
+  })
+
+  test("computed", () => {
+    expect(typeof ArticleEditor.computed).toBe("object")
+  })
+
   test("methods", () => { 
     expect(typeof ArticleEditor.methods.checkRole).toBe("function") 
     expect(typeof ArticleEditor.methods.updateArticle).toBe("function")

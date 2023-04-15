@@ -25,6 +25,14 @@ describe("ImageView", () => {
     expect(ImageView.data()).toEqual({ gallery: {} }) 
   })
 
+  test("created()", () => {
+    expect(typeof ImageView.created).toBe("function")
+  })
+
+  test("computed", () => {
+    expect(typeof ImageView.computed).toBe("object")
+  })
+
   test("methods", () => { 
     expect(typeof ImageView.methods.checkRole).toBe("function") 
   })

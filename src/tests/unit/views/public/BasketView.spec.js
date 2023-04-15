@@ -30,6 +30,10 @@ describe("BasketView", () => {
     }) 
   })
 
+  test("created()", () => {
+    expect(typeof BasketView.created).toBe("function")
+  })
+
   test("methods", () => { 
     expect(typeof BasketView.methods.checkRole).toBe("function") 
     expect(typeof BasketView.methods.getTotal).toBe("function") 
