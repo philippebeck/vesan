@@ -5,7 +5,15 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallowMount(ProductCreator, {
-    propsData: {},
+    propsData: {
+      name: "Product name", 
+      description: "Product description", 
+      image: "Product image",
+      alt: "Product alt",
+      price: 100,
+      options: "Product options", 
+      cat: "Product cat"
+    },
     mocks: {},
     stubs: {}
   });
@@ -71,6 +79,14 @@ describe("Mounted ProductCreator", () => {
     expect(wrapper.vm.price).toBe(null)
     expect(wrapper.vm.options).toBe("")
     expect(wrapper.vm.cat).toBe("")
+
+    expect(wrapper.attributes("name")).toBe("Product name")
+    expect(wrapper.attributes("description")).toBe("Product description")
+    expect(wrapper.attributes("image")).toBe("Product image")
+    expect(wrapper.attributes("alt")).toBe("Product alt")
+    expect(wrapper.attributes("price")).toBe("100")
+    expect(wrapper.attributes("options")).toBe("Product options")
+    expect(wrapper.attributes("cat")).toBe("Product cat")
   })
 
   test("wrapper methods", () => { 

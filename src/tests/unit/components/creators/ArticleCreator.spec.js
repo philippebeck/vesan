@@ -73,6 +73,12 @@ describe("Mounted ArticleCreator", () => {
     expect(wrapper.vm.image).toBe("")
     expect(wrapper.vm.alt).toBe("")
     expect(wrapper.vm.cat).toBe("")
+
+    expect(wrapper.attributes("name")).toBe("Article name")
+    expect(wrapper.attributes("text")).toBe("Article text")
+    expect(wrapper.attributes("image")).toBe("Article image")
+    expect(wrapper.attributes("alt")).toBe("Article alt")
+    expect(wrapper.attributes("cat")).toBe("Article cat")
   })
 
   test("wrapper methods", () => {

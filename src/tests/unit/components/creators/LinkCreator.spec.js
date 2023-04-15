@@ -5,7 +5,11 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallowMount(LinkCreator, {
-    propsData: {},
+    propsData: {
+      name: "Link name", 
+      url: "Link url", 
+      cat: "Link cat" 
+    },
     mocks: {},
     stubs: {}
   });
@@ -61,6 +65,10 @@ describe("Mounted LinkCreator", () => {
     expect(wrapper.vm.name).toBe("")
     expect(wrapper.vm.url).toBe("")
     expect(wrapper.vm.cat).toBe("")
+
+    expect(wrapper.attributes("name")).toBe("Link name")
+    expect(wrapper.attributes("url")).toBe("Link url")
+    expect(wrapper.attributes("cat")).toBe("Link cat")
   })
 
   test("wrapper methods", () => { 

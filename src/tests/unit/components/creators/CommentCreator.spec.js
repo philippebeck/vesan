@@ -5,7 +5,9 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallowMount(CommentCreator, {
-    propsData: {},
+    propsData: {
+      text: "Comment text"
+    },
     mocks: {},
     stubs: {}
   });
@@ -53,6 +55,7 @@ describe("Mounted CommentCreator", () => {
 
   test("wrapper data", () => {
     expect(wrapper.vm.text).toBe("")
+    expect(wrapper.attributes("text")).toBe("Comment text")
   })
 
   test("wrapper methods", () => { 

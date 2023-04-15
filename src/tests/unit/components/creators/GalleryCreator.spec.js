@@ -5,7 +5,10 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallowMount(GalleryCreator, {
-    propsData: {},
+    propsData: {
+      name: "Gallery name", 
+      author: "Gallery author" 
+    },
     mocks: {},
     stubs: {}
   });
@@ -59,6 +62,9 @@ describe("Mounted GalleryCreator", () => {
   test("wrapper data", () => {
     expect(wrapper.vm.name).toBe("")
     expect(wrapper.vm.author).toBe("")
+
+    expect(wrapper.attributes("name")).toBe("Gallery name")
+    expect(wrapper.attributes("author")).toBe("Gallery author")
   })
 
   test("wrapper methods", () => { 

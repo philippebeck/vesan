@@ -5,7 +5,10 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallowMount(ReviewCreator, {
-    propsData: {},
+    propsData: {
+      text: "Review text", 
+      score: 5 
+    },
     mocks: {},
     stubs: {}
   });
@@ -57,6 +60,9 @@ describe("Mounted ReviewCreator", () => {
   test("wrapper data", () => {
     expect(wrapper.vm.text).toBe("")
     expect(wrapper.vm.score).toBe(null)
+
+    expect(wrapper.attributes("text")).toBe("Review text")
+    expect(wrapper.attributes("score")).toBe("5")
   })
 
   test("wrapper methods", () => { 
