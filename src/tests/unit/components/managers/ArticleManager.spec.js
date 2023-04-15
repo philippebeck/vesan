@@ -43,18 +43,19 @@ describe("ArticleManager", () => {
   })
 })
 
-describe('Mounted ArticleManager', () => {
+describe("Mounted ArticleManager", () => {
 
-  test('wrapper', () => {
+  test("wrapper", () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  test('wrapper components', () => { 
-    expect(wrapper.findComponent({ name: 'BtnElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'CardElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'FieldElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'MediaElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'TableElt' })).toBeDefined() 
+  test("wrapper components", () => { 
+    expect(wrapper.findComponent({ name: "BtnElt" })).toBeDefined() 
+    expect(wrapper.findComponent({ name: "CardElt" })).toBeDefined() 
+    expect(wrapper.findComponent({ name: "FieldElt" })).toBeDefined() 
+    expect(wrapper.findComponent({ name: "MediaElt" })).toBeDefined() 
+    expect(wrapper.findComponent({ name: "TableElt" })).toBeDefined() 
+  })
 
   test("wrapper methods", () => {
     expect(typeof wrapper.vm.getArticles).toBe("function")

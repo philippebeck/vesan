@@ -50,17 +50,17 @@ describe("ProductCreator", () => {
   })
 })
 
-describe('Mounted ProductCreator', () => {
-  test('wrapper', () => { 
+describe("Mounted ProductCreator", () => {
+  test("wrapper", () => { 
     expect(wrapper.exists()).toBe(true) 
   })
 
-  test('wrapper components', () => { 
-    expect(wrapper.findComponent({ name: 'BtnElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'CardElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'FieldElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'ListElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'Editor' })).toBeDefined() 
+  test("wrapper components", () => { 
+    expect(wrapper.findComponent({ name: "BtnElt" })).toBeDefined() 
+    expect(wrapper.findComponent({ name: "CardElt" })).toBeDefined() 
+    expect(wrapper.findComponent({ name: "FieldElt" })).toBeDefined() 
+    expect(wrapper.findComponent({ name: "ListElt" })).toBeDefined() 
+    expect(wrapper.findComponent({ name: "Editor" })).toBeDefined() 
   })
 
   test("wrapper data", () => {

@@ -43,15 +43,15 @@ describe("ReviewCreator", () => {
   })
 })
 
-describe('Mounted ReviewCreator', () => {
-  test('wrapper', () => { 
+describe("Mounted ReviewCreator", () => {
+  test("wrapper", () => { 
     expect(wrapper.exists()).toBe(true) 
   })
 
-  test('wrapper components', () => { 
-    expect(wrapper.findComponent({ name: 'BtnElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'CardElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'FieldElt' })).toBeDefined() 
+  test("wrapper components", () => { 
+    expect(wrapper.findComponent({ name: "BtnElt" })).toBeDefined() 
+    expect(wrapper.findComponent({ name: "CardElt" })).toBeDefined() 
+    expect(wrapper.findComponent({ name: "FieldElt" })).toBeDefined() 
   })
 
   test("wrapper data", () => {

@@ -44,16 +44,16 @@ describe("GalleryCreator", () => {
   })
 })
 
-describe('Mounted GalleryCreator', () => {
-  test('wrapper', () => { 
+describe("Mounted GalleryCreator", () => {
+  test("wrapper", () => { 
     expect(wrapper.exists()).toBe(true) 
   })
 
-  test('wrapper components', () => { 
-    expect(wrapper.findComponent({ name: 'BtnElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'CardElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'FieldElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'ListElt' })).toBeDefined() 
+  test("wrapper components", () => { 
+    expect(wrapper.findComponent({ name: "BtnElt" })).toBeDefined() 
+    expect(wrapper.findComponent({ name: "CardElt" })).toBeDefined() 
+    expect(wrapper.findComponent({ name: "FieldElt" })).toBeDefined() 
+    expect(wrapper.findComponent({ name: "ListElt" })).toBeDefined() 
   })
 
   test("wrapper data", () => {

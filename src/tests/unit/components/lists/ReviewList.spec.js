@@ -39,18 +39,18 @@ describe("ReviewList", () => {
   })
 })
 
-describe('Mounted ReviewList', () => {
+describe("Mounted ReviewList", () => {
 
-  test('wrapper', () => {
+  test("wrapper", () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  test('wrapper components', () => { 
-    expect(wrapper.findComponent({ name: 'BtnElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'CardElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'FieldElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'ListElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'MediaElt' })).toBeDefined() 
+  test("wrapper components", () => { 
+    expect(wrapper.findComponent({ name: "BtnElt" })).toBeDefined() 
+    expect(wrapper.findComponent({ name: "CardElt" })).toBeDefined() 
+    expect(wrapper.findComponent({ name: "FieldElt" })).toBeDefined() 
+    expect(wrapper.findComponent({ name: "ListElt" })).toBeDefined() 
+    expect(wrapper.findComponent({ name: "MediaElt" })).toBeDefined() 
   })
 
   test("wrapper methods", () => { 

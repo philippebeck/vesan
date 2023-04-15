@@ -39,17 +39,17 @@ describe("GalleryManager", () => {
   })
 })
 
-describe('Mounted GalleryManager', () => {
+describe("Mounted GalleryManager", () => {
 
-  test('wrapper', () => {
+  test("wrapper", () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  test('wrapper components', () => { 
-    expect(wrapper.findComponent({ name: 'BtnElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'CardElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'FieldElt' })).toBeDefined() 
-    expect(wrapper.findComponent({ name: 'TableElt' })).toBeDefined() 
+  test("wrapper components", () => { 
+    expect(wrapper.findComponent({ name: "BtnElt" })).toBeDefined() 
+    expect(wrapper.findComponent({ name: "CardElt" })).toBeDefined() 
+    expect(wrapper.findComponent({ name: "FieldElt" })).toBeDefined() 
+    expect(wrapper.findComponent({ name: "TableElt" })).toBeDefined() 
   })
 
   test("wrapper methods", () => {
