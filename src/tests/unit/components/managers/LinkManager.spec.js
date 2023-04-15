@@ -7,8 +7,7 @@ beforeEach(() => {
   wrapper = shallowMount(LinkManager, {
     propsData: {},
     mocks: {},
-    stubs: {},
-    methods: {},
+    stubs: {}
   });
 });
 

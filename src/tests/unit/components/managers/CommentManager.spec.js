@@ -7,8 +7,7 @@ beforeEach(() => {
   wrapper = shallowMount(CommentManager, {
     propsData: {},
     mocks: {},
-    stubs: {},
-    methods: {},
+    stubs: {}
   });
 });
 

@@ -7,8 +7,7 @@ beforeEach(() => {
   wrapper = shallowMount(GalleryManager, {
     propsData: {},
     mocks: {},
-    stubs: {},
-    methods: {},
+    stubs: {}
   });
 });
 

@@ -7,8 +7,7 @@ beforeEach(() => {
   wrapper = shallowMount(ProductManager, {
     propsData: {},
     mocks: {},
-    stubs: {},
-    methods: {},
+    stubs: {}
   });
 });
 

@@ -13,8 +13,7 @@ beforeEach(() => {
       cat: "Article cat"
     },
     mocks: {},
-    stubs: {},
-    methods: {},
+    stubs: {}
   });
 });
 

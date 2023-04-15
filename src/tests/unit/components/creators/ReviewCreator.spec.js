@@ -7,8 +7,7 @@ beforeEach(() => {
   wrapper = shallowMount(ReviewCreator, {
     propsData: {},
     mocks: {},
-    stubs: {},
-    methods: {},
+    stubs: {}
   });
 });
 
