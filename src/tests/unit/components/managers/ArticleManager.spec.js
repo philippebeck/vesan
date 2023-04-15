@@ -60,6 +60,7 @@ describe("Mounted ArticleManager", () => {
     expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object") 
     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object") 
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object") 
+    expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object") 
     expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object") 
     expect(typeof wrapper.findComponent({ name: "TableElt" })).toBe("object") 
   })
