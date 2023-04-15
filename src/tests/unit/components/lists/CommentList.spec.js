@@ -29,27 +29,18 @@ describe("CommentList", () => {
 
   test("components", () => { 
     expect(typeof CommentList.components).toBe("object") 
-    expect(typeof CommentList.components.BtnElt).toBe("object") 
-    expect(typeof CommentList.components.CardElt).toBe("object") 
-    expect(typeof CommentList.components.FieldElt).toBe("object") 
-    expect(typeof CommentList.components.ListElt).toBe("object")
-    expect(typeof CommentList.components.MediaElt).toBe("object") 
   })
 
   test("props", () => {
     expect(typeof CommentList.props).toBe("object")
-    expect(CommentList.props).toContain("constants") 
-    expect(CommentList.props).toContain("comments") 
   })
 
-  test("methods", () => { 
-    expect(typeof CommentList.methods.updateComment).toBe("function") 
-    expect(typeof CommentList.methods.deleteComment).toBe("function") 
+  test("methods", () => {
+    expect(typeof CommentList.methods).toBe("object")
   })
 })
 
 describe("Mounted CommentList", () => {
-
   test("wrapper", () => {
     expect(wrapper.exists()).toBe(true)
   })

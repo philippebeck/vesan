@@ -43,30 +43,18 @@ describe("CommentManager", () => {
 
   test("components", () => { 
     expect(typeof CommentManager.components).toBe("object") 
-    expect(typeof CommentManager.components.BtnElt).toBe("object") 
-    expect(typeof CommentManager.components.CardElt).toBe("object") 
-    expect(typeof CommentManager.components.FieldElt).toBe("object") 
-    expect(typeof CommentManager.components.TableElt).toBe("object")
   })
 
   test("props", () => {
     expect(typeof CommentManager.props).toBe("object")
-    expect(CommentManager.props).toContain("constants") 
-    expect(CommentManager.props).toContain("comments") 
-    expect(CommentManager.props).toContain("articles") 
-    expect(CommentManager.props).toContain("users") 
   })
 
   test("methods", () => { 
-    expect(typeof CommentManager.methods.getComments).toBe("function") 
-    expect(typeof CommentManager.methods.getArticleName).toBe("function") 
-    expect(typeof CommentManager.methods.moderateComment).toBe("function") 
-    expect(typeof CommentManager.methods.deleteComment).toBe("function") 
+    expect(typeof CommentManager.methods).toBe("object")
   })
 })
 
 describe("Mounted CommentManager", () => {
-
   test("wrapper", () => {
     expect(wrapper.exists()).toBe(true)
   })

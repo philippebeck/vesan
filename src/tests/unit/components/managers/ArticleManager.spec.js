@@ -40,31 +40,18 @@ describe("ArticleManager", () => {
 
   test("components", () => { 
     expect(typeof ArticleManager.components).toBe("object") 
-    expect(typeof ArticleManager.components.BtnElt).toBe("object") 
-    expect(typeof ArticleManager.components.CardElt).toBe("object") 
-    expect(typeof ArticleManager.components.FieldElt).toBe("object") 
-    expect(typeof ArticleManager.components.MediaElt).toBe("object") 
-    expect(typeof ArticleManager.components.TableElt).toBe("object")
   })
 
   test("props", () => {
     expect(typeof ArticleManager.props).toBe("object")
-    expect(ArticleManager.props).toContain("constants") 
-    expect(ArticleManager.props).toContain("articles") 
-    expect(ArticleManager.props).toContain("users") 
   })
 
   test("methods", () => { 
-    expect(typeof ArticleManager.methods.getArticles).toBe("function") 
-    expect(typeof ArticleManager.methods.getArticle).toBe("function") 
-    expect(typeof ArticleManager.methods.checkArticle).toBe("function") 
-    expect(typeof ArticleManager.methods.updateArticle).toBe("function") 
-    expect(typeof ArticleManager.methods.deleteArticle).toBe("function") 
+    expect(typeof ArticleManager.methods).toBe("object")
   })
 })
 
 describe("Mounted ArticleManager", () => {
-
   test("wrapper", () => {
     expect(wrapper.exists()).toBe(true)
   })

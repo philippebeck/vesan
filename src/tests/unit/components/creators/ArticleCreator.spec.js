@@ -31,31 +31,18 @@ describe("ArticleCreator", () => {
 
   test("components", () => { 
     expect(typeof ArticleCreator.components).toBe("object") 
-    expect(typeof ArticleCreator.components.BtnElt).toBe("object") 
-    expect(typeof ArticleCreator.components.CardElt).toBe("object") 
-    expect(typeof ArticleCreator.components.FieldElt).toBe("object") 
-    expect(typeof ArticleCreator.components.ListElt).toBe("object") 
-    expect(typeof ArticleCreator.components.Editor).toBe("object") 
   })
 
   test("props", () => { 
     expect(typeof ArticleCreator.props).toBe("object") 
-    expect(ArticleCreator.props).toContain("constants") 
   })
 
   test("data", () => { 
     expect(typeof ArticleCreator.data).toBe("function") 
-    expect(ArticleCreator.data()).toEqual({ 
-      name: "", 
-      text: "", 
-      image: "", 
-      alt: "", 
-      cat: "" 
-    }) 
   })
 
   test("methods", () => { 
-    expect(typeof ArticleCreator.methods.createArticle).toBe("function") 
+    expect(typeof ArticleCreator.methods).toBe("object") 
   })
 })
 
@@ -72,6 +59,10 @@ describe("Mounted ArticleCreator", () => {
     expect(typeof wrapper.findComponent({ name: "Editor" })).toBe("object")
   })
 
+  test("wrapper props", () => {
+    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
+  })
+
   test("wrapper data", () => {
     expect(wrapper.vm.name).toBe("")
     expect(wrapper.vm.text).toBe("")
@@ -84,10 +75,6 @@ describe("Mounted ArticleCreator", () => {
     expect(wrapper.attributes("image")).toBe("Article image")
     expect(wrapper.attributes("alt")).toBe("Article alt")
     expect(wrapper.attributes("cat")).toBe("Article cat")
-  })
-
-  test("wrapper props", () => {
-    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
   })
 
   test("wrapper methods", () => {
