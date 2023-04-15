@@ -6,6 +6,9 @@ let wrapper;
 beforeEach(() => {
   wrapper = shallowMount(ImageCreator, {
     props: {
+      constants: {
+        TEST: "test"
+      },
       description: "Image description", 
       gallery: "Image gallery" 
     },
@@ -59,6 +62,10 @@ describe("Mounted ImageCreator", () => {
     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object")
+  })
+
+  test("wrapper props", () => {
+    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
   })
 
   test("wrapper data", () => {

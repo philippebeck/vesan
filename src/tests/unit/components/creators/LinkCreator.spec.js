@@ -6,6 +6,9 @@ let wrapper;
 beforeEach(() => {
   wrapper = shallowMount(LinkCreator, {
     props: {
+      constants: {
+        TEST: "test"
+      },
       name: "Link name", 
       url: "Link url", 
       cat: "Link cat" 
@@ -61,6 +64,10 @@ describe("Mounted LinkCreator", () => {
     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object")
+  })
+
+  test("wrapper props", () => {
+    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
   })
 
   test("wrapper data", () => {

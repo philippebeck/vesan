@@ -5,7 +5,28 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallowMount(CommentManager, {
-    props: {},
+    props: {
+      constants: {
+        TEST: "test"
+      },
+      articles: [{
+        name: "Article name",
+        text: "Article text",
+        image: "Article image",
+        alt: "Article alt",
+        cat: "Article cat"
+      }],
+      comments: [{
+        text: "Comment text"
+      }],
+      users: [{
+        name: "User name",
+        email: "User email",
+        image: "User image",
+        password: "User password",
+        role: "User role"
+      }]
+    },
     global: {
       mocks: {},
       stubs: {}
@@ -55,6 +76,27 @@ describe("Mounted CommentManager", () => {
     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object") 
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object") 
     expect(typeof wrapper.findComponent({ name: "TableElt" })).toBe("object") 
+  })
+
+  test("wrapper props", () => {
+    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
+    expect(wrapper.props("articles")).toStrictEqual([{
+      name: "Article name",
+      text: "Article text",
+      image: "Article image",
+      alt: "Article alt",
+      cat: "Article cat"
+    }])
+    expect(wrapper.props("comments")).toStrictEqual([{
+      text: "Comment text"
+    }])
+    expect(wrapper.props("users")).toStrictEqual([{
+      name: "User name",
+      email: "User email",
+      image: "User image",
+      password: "User password",
+      role: "User role"
+    }])
   })
 
   test("wrapper methods", () => {

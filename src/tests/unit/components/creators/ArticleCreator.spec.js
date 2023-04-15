@@ -6,6 +6,9 @@ let wrapper;
 beforeEach(() => {
   wrapper = shallowMount(ArticleCreator, {
     props: {
+      constants: {
+        TEST: "test"
+      },
       name: "Article name",
       text: "Article text",
       image: "Article image",
@@ -81,6 +84,10 @@ describe("Mounted ArticleCreator", () => {
     expect(wrapper.attributes("image")).toBe("Article image")
     expect(wrapper.attributes("alt")).toBe("Article alt")
     expect(wrapper.attributes("cat")).toBe("Article cat")
+  })
+
+  test("wrapper props", () => {
+    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
   })
 
   test("wrapper methods", () => {

@@ -5,7 +5,18 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallowMount(UserManager, {
-    props: {},
+    props: {
+      constants: {
+        TEST: "test"
+      },
+      users: [{
+        name: "User name",
+        email: "User email",
+        image: "User image",
+        password: "User password",
+        role: "User role"
+      }]
+    },
     global: {
       mocks: {},
       stubs: {}
@@ -56,6 +67,17 @@ describe("Mounted UserManager", () => {
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "TableElt" })).toBe("object")
+  })
+
+  test("wrapper props", () => {
+    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
+    expect(wrapper.props("users")).toStrictEqual([{
+      name: "User name",
+      email: "User email",
+      image: "User image",
+      password: "User password",
+      role: "User role"
+    }])
   })
 
   test("wrapper methods", () => {

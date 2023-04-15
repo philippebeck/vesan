@@ -6,6 +6,9 @@ let wrapper;
 beforeEach(() => {
   wrapper = shallowMount(GalleryCreator, {
     props: {
+      constants: {
+        TEST: "test"
+      },
       name: "Gallery name", 
       author: "Gallery author" 
     },
@@ -59,6 +62,10 @@ describe("Mounted GalleryCreator", () => {
     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object")
+  })
+
+  test("wrapper props", () => {
+    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
   })
 
   test("wrapper data", () => {

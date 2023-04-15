@@ -5,7 +5,20 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallowMount(ProductManager, {
-    props: {},
+    props: {
+      constants: {
+        TEST: "test"
+      },
+      products: [{
+        name: "Product name",
+        description: "Product description",
+        image: "Product image",
+        alt: "Product alt",
+        price: "Product price",
+        options: "Product options",
+        cat: "Product cat"
+      }]
+    },
     global: {
       mocks: {},
       stubs: {}
@@ -56,6 +69,19 @@ describe("Mounted ProductManager", () => {
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "TableElt" })).toBe("object")
+  })
+
+  test("wrapper props", () => {
+    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
+    expect(wrapper.props("products")).toStrictEqual([{
+      name: "Product name",
+      description: "Product description",
+      image: "Product image",
+      alt: "Product alt",
+      price: "Product price",
+      options: "Product options",
+      cat: "Product cat"
+    }])
   })
 
   test("wrapper methods", () => {

@@ -5,7 +5,28 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallowMount(OrderManager, {
-    props: {},
+    props: {
+      constants: {
+        TEST: "test"
+      },
+      orders: [{
+        products: [{
+          name: "Product name",
+          price: "Product price",
+          quantity: "Product quantity"
+        }],
+        total: "Order total",
+        payment: "Order payment",
+        status: "Order status"
+      }],
+      users: [{
+        name: "User name",
+        email: "User email",
+        image: "User image",
+        password: "User password",
+        role: "User role"
+      }]
+    },
     global: {
       mocks: {},
       stubs: {}
@@ -53,6 +74,27 @@ describe("Mounted OrderManager", () => {
     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "TableElt" })).toBe("object")
+  })
+
+  test("wrapper props", () => {
+    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
+    expect(wrapper.props("orders")).toStrictEqual([{ 
+      products: [{
+        name: "Product name",
+        price: "Product price",
+        quantity: "Product quantity"
+      }],
+      total: "Order total",
+      payment: "Order payment",
+      status: "Order status"
+    }])
+    expect(wrapper.props("users")).toStrictEqual([{
+      name: "User name",
+      email: "User email",
+      image: "User image",
+      password: "User password",
+      role: "User role"
+    }])
   })
 
   test("wrapper methods", () => { 

@@ -6,6 +6,9 @@ let wrapper;
 beforeEach(() => {
   wrapper = shallowMount(ProductCreator, {
     props: {
+      constants: {
+        TEST: "test"
+      },
       name: "Product name", 
       description: "Product description", 
       image: "Product image",
@@ -71,6 +74,10 @@ describe("Mounted ProductCreator", () => {
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "Editor" })).toBe("object")
+  })
+
+  test("wrapper props", () => {
+    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
   })
 
   test("wrapper data", () => {

@@ -5,7 +5,15 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallowMount(GalleryManager, {
-    props: {},
+    props: {
+      constants: {
+        TEST: "test"
+      },
+      galleries: [{
+        name: "Gallery name",
+        author: "Gallery author"
+      }]
+    },
     global: {
       mocks: {},
       stubs: {}
@@ -54,10 +62,17 @@ describe("Mounted GalleryManager", () => {
     expect(typeof wrapper.findComponent({ name: "TableElt" })).toBe("object")
   })
 
+  test("wrapper props", () => {
+    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
+    expect(wrapper.props("galleries")).toStrictEqual([{
+      name: "Gallery name",
+      author: "Gallery author"
+    }])
+  })
+
   test("wrapper methods", () => {
     expect(typeof wrapper.vm.getGalleries).toBe("function")
     expect(typeof wrapper.vm.updateGallery).toBe("function")
     expect(typeof wrapper.vm.deleteGallery).toBe("function")
   })
 })
-

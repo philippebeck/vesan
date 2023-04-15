@@ -5,7 +5,31 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallowMount(ReviewManager, {
-    props: {},
+    props: {
+      constants: {
+        TEST: "test"
+      },
+      products: [{
+        name: "Product name",
+        description: "Product description",
+        image: "Product image",
+        alt: "Product alt",
+        price: "Product price",
+        options: "Product options",
+        cat: "Product cat"
+      }],
+      reviews: [{
+        text: "Review text",
+        score: "Review score"
+      }],
+      users: [{
+        name: "User name",
+        email: "User email",
+        image: "User image",
+        password: "User password",
+        role: "User role"
+      }]
+    },
     global: {
       mocks: {},
       stubs: {}
@@ -55,6 +79,30 @@ describe("Mounted ReviewManager", () => {
     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "TableElt" })).toBe("object")
+  })
+
+  test("wrapper props", () => {
+    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
+    expect(wrapper.props("products")).toStrictEqual([{
+      name: "Product name",
+      description: "Product description",
+      image: "Product image",
+      alt: "Product alt",
+      price: "Product price",
+      options: "Product options",
+      cat: "Product cat"
+    }])
+    expect(wrapper.props("reviews")).toStrictEqual([{
+      text: "Review text",
+      score: "Review score"
+    }])
+    expect(wrapper.props("users")).toStrictEqual([{
+      name: "User name",
+      email: "User email",
+      image: "User image",
+      password: "User password",
+      role: "User role"
+    }])
   })
 
   test("wrapper methods", () => { 

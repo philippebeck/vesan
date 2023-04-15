@@ -5,7 +5,16 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallowMount(LinkManager, {
-    props: {},
+    props: {
+      constants: {
+        TEST: "test"
+      },
+      links: {
+        name: "Link name",
+        url: "Link url",
+        cat: "Link cat",
+      }
+    },
     global: {
       mocks: {},
       stubs: {}
@@ -55,6 +64,15 @@ describe("Mounted LinkManager", () => {
     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "TableElt" })).toBe("object")
+  })
+
+  test("wrapper props", () => {
+    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
+    expect(wrapper.props("links")).toStrictEqual({
+      name: "Link name",
+      url: "Link url",
+      cat: "Link cat",
+    })
   })
 
   test("wrapper methods", () => { 

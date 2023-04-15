@@ -5,7 +5,15 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallowMount(ReviewList, {
-    props: {},
+    props: {
+      constants: {
+        TEST: "test"
+      },
+      reviews: [{
+        text: "Review text",
+        score: "Review score"
+      }]
+    },
     global: {
       mocks: {},
       stubs: {}
@@ -53,6 +61,14 @@ describe("Mounted ReviewList", () => {
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object")
+  })
+
+  test("wrapper props", () => {
+    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
+    expect(wrapper.props("reviews")).toStrictEqual([{
+      text: "Review text",
+      score: "Review score"
+    }])
   })
 
   test("wrapper methods", () => { 
