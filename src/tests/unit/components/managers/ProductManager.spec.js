@@ -56,4 +56,12 @@ describe('Mounted ProductManager', () => {
     expect(wrapper.findComponent({ name: 'MediaElt' })).toBeDefined() 
     expect(wrapper.findComponent({ name: 'TableElt' })).toBeDefined() 
   })
+
+  test("wrapper methods", () => {
+    expect(typeof wrapper.vm.getProducts).toBe("function")
+    expect(typeof wrapper.vm.getProduct).toBe("function")
+    expect(typeof wrapper.vm.checkProduct).toBe("function")
+    expect(typeof wrapper.vm.updateProduct).toBe("function")
+    expect(typeof wrapper.vm.deleteProduct).toBe("function")
+  })
 })

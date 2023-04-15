@@ -56,4 +56,12 @@ describe('Mounted UserManager', () => {
     expect(wrapper.findComponent({ name: 'MediaElt' })).toBeDefined() 
     expect(wrapper.findComponent({ name: 'TableElt' })).toBeDefined() 
   })
+
+  test("wrapper methods", () => {
+    expect(typeof wrapper.vm.getUsers).toBe("function")
+    expect(typeof wrapper.vm.getUser).toBe("function")
+    expect(typeof wrapper.vm.checkUser).toBe("function")
+    expect(typeof wrapper.vm.updateUser).toBe("function")
+    expect(typeof wrapper.vm.deleteUser).toBe("function")
+  })
 })

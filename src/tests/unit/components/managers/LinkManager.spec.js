@@ -55,4 +55,13 @@ describe('Mounted LinkManager', () => {
     expect(wrapper.findComponent({ name: 'FieldElt' })).toBeDefined() 
     expect(wrapper.findComponent({ name: 'TableElt' })).toBeDefined() 
   })
+
+  test("wrapper methods", () => { 
+    expect(typeof wrapper.vm.getLinks).toBe("function") 
+    expect(typeof wrapper.vm.getItemsByCat).toBe("function") 
+    expect(typeof wrapper.vm.getLink).toBe("function") 
+    expect(typeof wrapper.vm.checkLink).toBe("function") 
+    expect(typeof wrapper.vm.updateLink).toBe("function") 
+    expect(typeof wrapper.vm.deleteLink).toBe("function") 
+  })
 })

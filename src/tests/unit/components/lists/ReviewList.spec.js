@@ -53,4 +53,9 @@ describe('Mounted ReviewList', () => {
     expect(wrapper.findComponent({ name: 'ListElt' })).toBeDefined() 
     expect(wrapper.findComponent({ name: 'MediaElt' })).toBeDefined() 
   })
+
+  test("wrapper methods", () => { 
+    expect(typeof wrapper.vm.updateReview).toBe("function") 
+    expect(typeof wrapper.vm.deleteReview).toBe("function") 
+  })
 })

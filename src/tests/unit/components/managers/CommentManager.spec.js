@@ -55,4 +55,11 @@ describe('Mounted CommentManager', () => {
     expect(wrapper.findComponent({ name: 'FieldElt' })).toBeDefined() 
     expect(wrapper.findComponent({ name: 'TableElt' })).toBeDefined() 
   })
+
+  test("wrapper methods", () => {
+    expect(typeof wrapper.vm.getComments).toBe("function")
+    expect(typeof wrapper.vm.getArticleName).toBe("function")
+    expect(typeof wrapper.vm.moderateComment).toBe("function")
+    expect(typeof wrapper.vm.deleteComment).toBe("function")
+  })
 })

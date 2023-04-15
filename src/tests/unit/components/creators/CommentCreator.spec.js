@@ -51,4 +51,8 @@ describe('Mounted CommentCreator', () => {
     expect(wrapper.findComponent({ name: 'CardElt' })).toBeDefined() 
     expect(wrapper.findComponent({ name: 'FieldElt' })).toBeDefined() 
   })
+
+  test("wrapper methods", () => { 
+    expect(typeof wrapper.vm.createComment).toBe("function") 
+  })
 });

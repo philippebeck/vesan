@@ -56,5 +56,12 @@ describe('Mounted ArticleManager', () => {
     expect(wrapper.findComponent({ name: 'FieldElt' })).toBeDefined() 
     expect(wrapper.findComponent({ name: 'MediaElt' })).toBeDefined() 
     expect(wrapper.findComponent({ name: 'TableElt' })).toBeDefined() 
+
+  test("wrapper methods", () => {
+    expect(typeof wrapper.vm.getArticles).toBe("function")
+    expect(typeof wrapper.vm.getArticle).toBe("function")
+    expect(typeof wrapper.vm.checkArticle).toBe("function")
+    expect(typeof wrapper.vm.updateArticle).toBe("function")
+    expect(typeof wrapper.vm.deleteArticle).toBe("function")
   })
 })

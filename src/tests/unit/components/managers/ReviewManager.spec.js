@@ -55,4 +55,11 @@ describe('Mounted ReviewManager', () => {
     expect(wrapper.findComponent({ name: 'FieldElt' })).toBeDefined() 
     expect(wrapper.findComponent({ name: 'TableElt' })).toBeDefined() 
   })
+
+  test("wrapper methods", () => { 
+    expect(typeof wrapper.vm.getReviews).toBe("function") 
+    expect(typeof wrapper.vm.getProductName).toBe("function") 
+    expect(typeof wrapper.vm.moderateReview).toBe("function") 
+    expect(typeof wrapper.vm.deleteReview).toBe("function") 
+  })
 })

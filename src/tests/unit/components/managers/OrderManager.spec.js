@@ -53,4 +53,10 @@ describe('Mounted OrderManager', () => {
     expect(wrapper.findComponent({ name: 'FieldElt' })).toBeDefined() 
     expect(wrapper.findComponent({ name: 'TableElt' })).toBeDefined() 
   })
+
+  test("wrapper methods", () => { 
+    expect(typeof wrapper.vm.getOrders).toBe("function") 
+    expect(typeof wrapper.vm.updateStatus).toBe("function") 
+    expect(typeof wrapper.vm.deleteOrder).toBe("function") 
+  })
 })

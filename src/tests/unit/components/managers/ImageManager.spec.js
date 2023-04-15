@@ -56,4 +56,11 @@ describe('Mounted ImageManager', () => {
     expect(wrapper.findComponent({ name: 'MediaElt' })).toBeDefined() 
     expect(wrapper.findComponent({ name: 'TableElt' })).toBeDefined() 
   })
+
+  test("wrapper methods", () => {
+    expect(typeof wrapper.vm.getImages).toBe("function")
+    expect(typeof wrapper.vm.getItemsByGallery).toBe("function")
+    expect(typeof wrapper.vm.updateImage).toBe("function")
+    expect(typeof wrapper.vm.deleteImage).toBe("function")
+  })
 })

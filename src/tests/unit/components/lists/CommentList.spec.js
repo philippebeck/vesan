@@ -53,4 +53,9 @@ describe('Mounted CommentList', () => {
     expect(wrapper.findComponent({ name: 'ListElt' })).toBeDefined() 
     expect(wrapper.findComponent({ name: 'MediaElt' })).toBeDefined() 
   })
+
+  test("wrapper methods", () => { 
+    expect(typeof wrapper.vm.updateComment).toBe("function") 
+    expect(typeof wrapper.vm.deleteComment).toBe("function") 
+  })
 })

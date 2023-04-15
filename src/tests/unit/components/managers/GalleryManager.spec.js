@@ -52,5 +52,11 @@ describe('Mounted GalleryManager', () => {
     expect(wrapper.findComponent({ name: 'FieldElt' })).toBeDefined() 
     expect(wrapper.findComponent({ name: 'TableElt' })).toBeDefined() 
   })
+
+  test("wrapper methods", () => {
+    expect(typeof wrapper.vm.getGalleries).toBe("function")
+    expect(typeof wrapper.vm.updateGallery).toBe("function")
+    expect(typeof wrapper.vm.deleteGallery).toBe("function")
+  })
 })
 

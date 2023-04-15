@@ -54,4 +54,8 @@ describe('Mounted ReviewCreator', () => {
     expect(wrapper.findComponent({ name: 'CardElt' })).toBeDefined() 
     expect(wrapper.findComponent({ name: 'FieldElt' })).toBeDefined() 
   })
+
+  test("wrapper methods", () => { 
+    expect(typeof wrapper.vm.createReview).toBe("function") 
+  })
 });

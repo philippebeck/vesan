@@ -63,4 +63,8 @@ describe('Mounted ProductCreator', () => {
     expect(wrapper.findComponent({ name: 'ListElt' })).toBeDefined() 
     expect(wrapper.findComponent({ name: 'Editor' })).toBeDefined() 
   })
+
+  test("wrapper methods", () => { 
+    expect(typeof wrapper.vm.createProduct).toBe("function") 
+  })
 });

@@ -66,5 +66,8 @@ describe('Mounted ArticleCreator', () => {
     expect(wrapper.findComponent({ name: 'FieldElt' })).toBeDefined() 
     expect(wrapper.findComponent({ name: 'ListElt' })).toBeDefined() 
     expect(wrapper.findComponent({ name: 'Editor' })).toBeDefined() 
+
+  test("wrapper methods", () => {
+    expect(typeof wrapper.vm.createArticle).toBe("function")
   })
 });
