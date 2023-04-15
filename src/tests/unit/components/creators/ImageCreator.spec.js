@@ -56,6 +56,11 @@ describe('Mounted ImageCreator', () => {
     expect(wrapper.findComponent({ name: 'ListElt' })).toBeDefined() 
   })
 
+  test("wrapper data", () => {
+    expect(wrapper.vm.description).toBe("")
+    expect(wrapper.vm.gallery).toBe("")
+  })
+
   test("wrapper methods", () => {
     expect(typeof wrapper.vm.createImage).toBe("function")
   })

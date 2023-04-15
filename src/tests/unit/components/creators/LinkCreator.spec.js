@@ -57,6 +57,12 @@ describe('Mounted LinkCreator', () => {
     expect(wrapper.findComponent({ name: 'ListElt' })).toBeDefined() 
   })
 
+  test("wrapper data", () => {
+    expect(wrapper.vm.name).toBe("")
+    expect(wrapper.vm.url).toBe("")
+    expect(wrapper.vm.cat).toBe("")
+  })
+
   test("wrapper methods", () => { 
     expect(typeof wrapper.vm.createLink).toBe("function") 
   })

@@ -63,6 +63,16 @@ describe('Mounted ProductCreator', () => {
     expect(wrapper.findComponent({ name: 'Editor' })).toBeDefined() 
   })
 
+  test("wrapper data", () => {
+    expect(wrapper.vm.name).toBe("")
+    expect(wrapper.vm.description).toBe("")
+    expect(wrapper.vm.image).toBe("")
+    expect(wrapper.vm.alt).toBe("")
+    expect(wrapper.vm.price).toBe(null)
+    expect(wrapper.vm.options).toBe("")
+    expect(wrapper.vm.cat).toBe("")
+  })
+
   test("wrapper methods", () => { 
     expect(typeof wrapper.vm.createProduct).toBe("function") 
   })

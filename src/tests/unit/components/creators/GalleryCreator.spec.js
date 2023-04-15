@@ -56,6 +56,11 @@ describe('Mounted GalleryCreator', () => {
     expect(wrapper.findComponent({ name: 'ListElt' })).toBeDefined() 
   })
 
+  test("wrapper data", () => {
+    expect(wrapper.vm.name).toBe("")
+    expect(wrapper.vm.author).toBe("")
+  })
+
   test("wrapper methods", () => { 
     expect(typeof wrapper.vm.createGallery).toBe("function") 
   })
