@@ -5,12 +5,14 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallowMount(ReviewCreator, {
-    propsData: {
+    props: {
       text: "Review text", 
       score: 5 
     },
-    mocks: {},
-    stubs: {}
+    global: {
+      mocks: {},
+      stubs: {}
+    }
   });
 });
 

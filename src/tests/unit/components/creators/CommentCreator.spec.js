@@ -5,11 +5,13 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallowMount(CommentCreator, {
-    propsData: {
+    props: {
       text: "Comment text"
     },
-    mocks: {},
-    stubs: {}
+    global: {
+      mocks: {},
+      stubs: {}
+    }
   });
 });
 

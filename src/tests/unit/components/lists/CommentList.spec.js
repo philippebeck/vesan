@@ -5,9 +5,11 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallowMount(CommentList, {
-    propsData: {},
-    mocks: {},
-    stubs: {}
+    props: {},
+    global: {
+      mocks: {},
+      stubs: {}
+    }
   });
 });
 

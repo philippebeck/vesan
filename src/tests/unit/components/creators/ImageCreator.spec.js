@@ -5,12 +5,14 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallowMount(ImageCreator, {
-    propsData: {
+    props: {
       description: "Image description", 
       gallery: "Image gallery" 
     },
-    mocks: {},
-    stubs: {}
+    global: {
+      mocks: {},
+      stubs: {}
+    }
   });
 });
 

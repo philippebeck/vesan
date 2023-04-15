@@ -5,12 +5,14 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallowMount(GalleryCreator, {
-    propsData: {
+    props: {
       name: "Gallery name", 
       author: "Gallery author" 
     },
-    mocks: {},
-    stubs: {}
+    global: {
+      mocks: {},
+      stubs: {}
+    }
   });
 });
 

@@ -5,7 +5,7 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallowMount(ProductCreator, {
-    propsData: {
+    props: {
       name: "Product name", 
       description: "Product description", 
       image: "Product image",
@@ -14,8 +14,10 @@ beforeEach(() => {
       options: "Product options", 
       cat: "Product cat"
     },
-    mocks: {},
-    stubs: {}
+    global: {
+      mocks: {},
+      stubs: {}
+    }
   });
 });
 

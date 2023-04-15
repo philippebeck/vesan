@@ -5,13 +5,15 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallowMount(LinkCreator, {
-    propsData: {
+    props: {
       name: "Link name", 
       url: "Link url", 
       cat: "Link cat" 
     },
-    mocks: {},
-    stubs: {}
+    global: {
+      mocks: {},
+      stubs: {}
+    }
   });
 });
 
