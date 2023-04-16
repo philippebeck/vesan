@@ -14,7 +14,7 @@
         </template>
       </SliderElt>
 
-      <MediaElt v-else
+      <MediaElt v-else-if="constants.HOME_MEDIA === 'api'"
         :type="media.media_type"
         :src="media.url"
         :alt="media.title"
@@ -24,6 +24,14 @@
           media.title + ' : ' + 
           media.explanation + 
           (media.copyright ? ' Credits : ' + media.copyright : '')"/>
+
+      <MediaElt v-else
+        :type="media.media_type"
+        :src="constants.HOME_SRC"
+        :alt="constants.HOME_ALT"
+        :width="constants.HOME_WIDTH"
+        :loop="constants.HOME_LOOP"
+        :title="constants.HOME_ALT"/>
 
       <h1 class="sky-dark">
         {{ constants.HOME_VIEW }}
@@ -78,7 +86,7 @@ export default {
       this.constants.UI_URL + this.constants.LOGO_SRC
     );
 
-    if (this.constants.HOME_API_URL !== "") {
+    if (this.constants.HOME_MEDIA === "api") {
       this.$serve.getData(this.constants.HOME_API_URL + this.constants.HOME_API_KEY)
       .then((media) => { this.media = media })
       .catch(err => this.$serve.checkError(err));
