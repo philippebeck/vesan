@@ -1,10 +1,5 @@
-import { createApp } from "vue"
 import { createStore } from "vuex"
-import App from "../App.vue"
-import serve from "servidio"
-
-const app = createApp(App)
-app.config.globalProperties.$serve = serve
+import serve from "servidio/dist/serve"
 
 export default createStore({
   namespaced: true,
@@ -75,112 +70,112 @@ export default createStore({
   actions: {
     // OBJECT
     async readArticle(context, id) {
-      app.config.globalProperties.$serve.getData("/articles/" + id)
+      serve.getData("/articles/" + id)
         .then(res => { context.commit("SET_ARTICLE", res) })
-        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+        .catch(err => { serve.checkError(err) });
     },
 
     async readAvatar(context, id) {
-      app.config.globalProperties.$serve.getData("/auth/" + id)
+      serve.getData("/auth/" + id)
         .then(res => { context.commit("SET_USER", res) })
-        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+        .catch(err => { serve.checkError(err) });
     },
 
     async readGallery(context, id) {
-      app.config.globalProperties.$serve.getData("/galleries/" + id)
+      serve.getData("/galleries/" + id)
         .then(res => { context.commit("SET_GALLERY", res) })
-        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+        .catch(err => { serve.checkError(err) });
     },
 
     async readProduct(context, id) {
-      app.config.globalProperties.$serve.getData("/products/" + id)
+      serve.getData("/products/" + id)
         .then(res => { context.commit("SET_PRODUCT", res) })
-        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+        .catch(err => { serve.checkError(err) });
     },
 
     async readUser(context, id) {
-      app.config.globalProperties.$serve.getData("/users/" + id)
+      serve.getData("/users/" + id)
         .then(res => { context.commit("SET_USER", res) })
-        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+        .catch(err => { serve.checkError(err) });
     },
 
     // ARRAY
     async listArticleComments(context, id) {
-      app.config.globalProperties.$serve.getData("/comments/" + id)
+      serve.getData("/comments/" + id)
         .then(res => { context.commit("SET_COMMENTS", res) })
-        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+        .catch(err => { serve.checkError(err) });
     },
 
     async listArticles(context) {
-      app.config.globalProperties.$serve.getData("/articles")
+      serve.getData("/articles")
         .then(res => { context.commit("SET_ARTICLES", res) })
-        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+        .catch(err => { serve.checkError(err) });
     },
 
     async listComments(context) {
-      app.config.globalProperties.$serve.getData("/comments")
+      serve.getData("/comments")
         .then(res => { context.commit("SET_COMMENTS", res) })
-        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+        .catch(err => { serve.checkError(err) });
     },
 
     async listGalleries(context) {
-      app.config.globalProperties.$serve.getData("/galleries")
+      serve.getData("/galleries")
         .then(res => { context.commit("SET_GALLERIES", res) })
-        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+        .catch(err => { serve.checkError(err) });
     },
 
     async listGalleryImages(context, id) {
-      app.config.globalProperties.$serve.getData("/images/" + id)
+      serve.getData("/images/" + id)
         .then(res => { context.commit("SET_IMAGES", res) })
-        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+        .catch(err => { serve.checkError(err) });
     },
 
     async listImages(context) {
-      app.config.globalProperties.$serve.getData("/images")
+      serve.getData("/images")
         .then(res => { context.commit("SET_IMAGES", res) })
-        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+        .catch(err => { serve.checkError(err) });
     },
 
     async listLinks(context) {
-      app.config.globalProperties.$serve.getData("/links")
+      serve.getData("/links")
         .then(res => { context.commit("SET_LINKS", res) })
-        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+        .catch(err => { serve.checkError(err) });
     },
 
     async listUserOrders(context, id) {
-      app.config.globalProperties.$serve.getData("/orders/" + id)
+      serve.getData("/orders/" + id)
         .then(res => { context.commit("SET_USER_ORDERS", res) })
-        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+        .catch(err => { serve.checkError(err) });
     },
 
     async listOrders(context) {
-      app.config.globalProperties.$serve.getData("/orders")
+      serve.getData("/orders")
         .then(res => { context.commit("SET_ORDERS", res) })
-        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+        .catch(err => { serve.checkError(err) });
     },
 
     async listProductReviews(context, id) {
-      app.config.globalProperties.$serve.getData("/reviews/" + id)
+      serve.getData("/reviews/" + id)
         .then(res => { context.commit("SET_REVIEWS", res) })
-        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+        .catch(err => { serve.checkError(err) });
     },
 
     async listProducts(context) {
-      app.config.globalProperties.$serve.getData("/products")
+      serve.getData("/products")
         .then(res => { context.commit("SET_PRODUCTS", res) })
-        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+        .catch(err => { serve.checkError(err) });
     },
 
     async listReviews(context) {
-      app.config.globalProperties.$serve.getData("/reviews")
+      serve.getData("/reviews")
         .then(res => { context.commit("SET_REVIEWS", res) })
-        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+        .catch(err => { serve.checkError(err) });
     },
 
     async listUsers(context) {
-      app.config.globalProperties.$serve.getData("/users")
+      serve.getData("/users")
         .then(res => { context.commit("SET_USERS", res) })
-        .catch(err => { app.config.globalProperties.$serve.checkError(err) });
+        .catch(err => { serve.checkError(err) });
     }
   }
 })

@@ -1,10 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router"
 
-import AdminEditor from "@/views/private/AdminEditor"
-import ArticleEditor from "@/views/private/ArticleEditor"
-import ProductEditor from "@/views/private/ProductEditor"
-import ProfileEditor from "@/views/private/ProfileEditor"
-
 import ArticleView from "@/views/public/ArticleView"
 import BasketView from "@/views/public/BasketView"
 import BlogView from "@/views/public/BlogView"
@@ -18,6 +13,11 @@ import LinkView from "@/views/public/LinkView"
 import LoginView from "@/views/public/LoginView"
 import ProductView from "@/views/public/ProductView"
 import ShopView from "@/views/public/ShopView"
+
+const AdminEditor = () => import("@/views/private/AdminEditor")
+const ArticleEditor = () => import("@/views/private/ArticleEditor")
+const ProductEditor = () => import("@/views/private/ProductEditor")
+const ProfileEditor = () => import("@/views/private/ProfileEditor")
 
 const routes = [
   // Public
