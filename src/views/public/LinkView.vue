@@ -34,7 +34,7 @@
     </NavElt>
 
     <CardElt id="top"
-      isArticle="true"
+      :isArticle="true"
       class="container-90sm-80md-70lg-60xl">
       <template #header>
         <h2 class="ani-shrink-loop-altrev-into">
