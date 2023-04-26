@@ -142,7 +142,7 @@ export default {
      */
     checkUser(id, user) {
       if (this.$serve.checkString(user.name) && this.$serve.checkEmail(user.email)) {
-        this.$serve.putData(`/users/${id}`, this.getUser(id, user))
+        this.$serve.fetchPut(`/users/${id}`, this.getUser(id, user))
           .then(() => {
             alert(user.name + this.constants.ALERT_UPDATED);
           })
@@ -168,7 +168,7 @@ export default {
       let userName = this.$serve.getItemName(id, this.users);
 
       if (confirm(`${this.constants.TITLE_DELETE} ${userName} ?`) === true) {
-        this.$serve.deleteData(`/users/${id}`)
+        this.$serve.fetchDelete(`/users/${id}`)
           .then(() => {
             alert(userName + this.constants.ALERT_DELETED);
             this.$router.go();

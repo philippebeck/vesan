@@ -71,7 +71,7 @@ export default {
     onVerify(response) {
       if (this.$serve.checkEmail(this.email) && this.$serve.checkPass(this.pass)) {
 
-        this.$serve.postData('/auth/recaptcha', { response: response })
+        this.$serve.fetchPost('/auth/recaptcha', { response: response })
           .then(result => {
             if (result.success) {
               this.signIn();
@@ -96,7 +96,7 @@ export default {
       auth.append("email", this.email);
       auth.append("pass", this.pass);
 
-      this.$serve.postData("/auth", auth)
+      this.$serve.fetchPost("/auth", auth)
         .then((res) => {
 
           let token   = JSON.stringify(res.token);

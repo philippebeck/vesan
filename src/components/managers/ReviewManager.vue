@@ -134,7 +134,7 @@ export default {
           data.append("score", review.score);
           data.append("moderate", review.moderate);
 
-          this.$serve.putData(`/reviews/${id}`, data)
+          this.$serve.fetchPut(`/reviews/${id}`, data)
             .then(() => {
               alert(this.constants.ALERT_REVIEW + id + this.constants.ALERT_MODERATED);
             })
@@ -149,7 +149,7 @@ export default {
      */
     deleteReview(id) {
       if (confirm(`${this.constants.TITLE_DELETE_REVIEW}${id} ?`) === true) {
-        this.$serve.deleteData(`/reviews/${id}`)
+        this.$serve.fetchDelete(`/reviews/${id}`)
           .then(() => {
             alert(this.constants.ALERT_REVIEW + id + this.constants.ALERT_DELETED);
             this.$router.go();

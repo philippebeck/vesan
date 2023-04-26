@@ -174,7 +174,7 @@ export default {
         this.$serve.checkString(article.text, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
         this.$serve.checkString(article.alt)) {
 
-        this.$serve.putData(`/articles/${id}`, this.getArticle(id, article))
+        this.$serve.fetchPut(`/articles/${id}`, this.getArticle(id, article))
           .then(() => {
             alert(article.name + this.constants.ALERT_UPDATED);
           })
@@ -200,7 +200,7 @@ export default {
       let articleName = this.$serve.getItemName(id, this.articles);
 
       if (confirm(`${this.constants.TITLE_DELETE} ${articleName} ?`) === true) {
-        this.$serve.deleteData(`/articles/${id}`)
+        this.$serve.fetchDelete(`/articles/${id}`)
           .then(() => {
             alert(articleName + this.constants.ALERT_DELETED);
             this.$router.go();

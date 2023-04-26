@@ -164,7 +164,7 @@ export default {
   },
 
   created() {
-    this.$serve.getData("/products/" + this.$route.params.id)
+    this.$serve.fetchGet("/products/" + this.$route.params.id)
       .then((product => {
         this.product = product;
 

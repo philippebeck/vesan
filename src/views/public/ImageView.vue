@@ -89,7 +89,7 @@ export default {
   },
 
   created() {
-    this.$serve.getData("/galleries/" + this.$route.params.id)
+    this.$serve.fetchGet("/galleries/" + this.$route.params.id)
       .then((gallery) => {
         this.gallery = gallery;
 

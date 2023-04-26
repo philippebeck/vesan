@@ -136,7 +136,7 @@ export default {
           data.append("status", order.status);
           data.append("updated", Date.now());
 
-          this.$serve.putData(`/orders/${id}`, data)
+          this.$serve.fetchPut(`/orders/${id}`, data)
             .then(() => {
               alert(this.constants.ALERT_ORDER + id + this.constants.ALERT_UPDATED);
             })
@@ -151,7 +151,7 @@ export default {
      */
     deleteOrder(id) {
       if (confirm(`${this.constants.TITLE_DELETE_ORDER}${id} ?`) === true) {
-        this.$serve.deleteData(`/orders/${id}`)
+        this.$serve.fetchDelete(`/orders/${id}`)
           .then(() => {
             alert(this.constants.ALERT_ORDER + id + this.constants.ALERT_DELETED);
             this.$router.go();

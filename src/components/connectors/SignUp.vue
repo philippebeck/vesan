@@ -111,7 +111,7 @@ export default {
         this.$serve.checkEmail(this.email) && 
         this.$serve.checkPass(this.pass)) {
 
-        this.$serve.postData('/auth/recaptcha', { response: response })
+        this.$serve.fetchPost('/auth/recaptcha', { response: response })
           .then(result => {
             if (result.success) {
               this.createUser();
@@ -144,7 +144,7 @@ export default {
         user.append("created", Date.now());
         user.append("updated", Date.now());
 
-        this.$serve.postData("/users", user)
+        this.$serve.fetchPost("/users", user)
           .then(() => {
             alert(this.name + this.constants.ALERT_CREATED);
             this.$router.go();

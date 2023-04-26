@@ -129,7 +129,7 @@ export default {
         this.$serve.checkString(this.subject) && 
         this.$serve.checkString(this.text, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
 
-        this.$serve.postData('/auth/recaptcha', { response: response })
+        this.$serve.fetchPost('/auth/recaptcha', { response: response })
           .then(result => {
             if (result.success) {
               this.send();
@@ -159,7 +159,7 @@ export default {
       message.append("subject", this.subject);
       message.append("html", this.text);
 
-      this.$serve.postData("/users/message", message)
+      this.$serve.fetchPost("/users/message", message)
         .then(() => {
           alert(this.subject + this.constants.ALERT_SENDED);
           this.$router.push("/");

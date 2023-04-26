@@ -129,7 +129,7 @@ export default {
       if (link.url.startsWith("http")) { link.url = link.url.split('//')[1] }
 
       if (this.$serve.checkString(link.name) && this.$serve.checkUrl(`https://${link.url}`)) {
-        this.$serve.putData(`/links/${link._id}`, this.getLink(link))
+        this.$serve.fetchPut(`/links/${link._id}`, this.getLink(link))
           .then(() => {
             alert(link.name + this.constants.ALERT_UPDATED);
           })
@@ -155,7 +155,7 @@ export default {
       let linkName = this.$serve.getItemName(id, this.links);
 
       if (confirm(`${this.constants.TITLE_DELETE} ${linkName} ?`) === true) {
-        this.$serve.deleteData(`/links/${id}`)
+        this.$serve.fetchDelete(`/links/${id}`)
           .then(() => {
             alert(linkName + this.constants.ALERT_DELETED);
             this.$router.go();

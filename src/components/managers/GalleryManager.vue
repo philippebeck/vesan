@@ -101,7 +101,7 @@ export default {
           data.append("text", gallery.text);
           data.append("moderate", gallery.moderate);
 
-          this.$serve.putData(`/galleries/${id}`, data)
+          this.$serve.fetchPut(`/galleries/${id}`, data)
             .then(() => {
               alert(this.constants.ALERT_GALLERY + id + this.constants.ALERT_UPDATED);
             })
@@ -116,7 +116,7 @@ export default {
      */
     deleteGallery(id) {
       if (confirm(`${this.constants.TITLE_DELETE_GALLERY}${id} ?`) === true) {
-        this.$serve.deleteData(`/galleries/${id}`)
+        this.$serve.fetchDelete(`/galleries/${id}`)
           .then(() => {
             alert(this.constants.ALERT_GALLERY + id + this.constants.ALERT_DELETED);
             this.$router.go();

@@ -183,7 +183,7 @@ export default {
         this.$serve.checkNumber(product.price, this.constants.PRICE_MIN, this.constants.PRICE_MAX) && 
         this.$serve.checkString(product.options, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
 
-        this.$serve.putData(`/products/${id}`, this.getProduct(id, product))
+        this.$serve.fetchPut(`/products/${id}`, this.getProduct(id, product))
           .then(() => {
             alert(product.name + this.constants.ALERT_UPDATED);
           })
@@ -209,7 +209,7 @@ export default {
       let productName = this.$serve.getItemName(id, this.products);
 
       if (confirm(`${this.constants.TITLE_DELETE} ${productName} ?`) === true) {
-        this.$serve.deleteData(`/products/${id}`)
+        this.$serve.fetchDelete(`/products/${id}`)
           .then(() => {
             alert(productName + this.constants.ALERT_DELETED);
             this.$router.go();

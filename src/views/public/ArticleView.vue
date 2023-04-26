@@ -126,7 +126,7 @@ export default {
   },
 
   created () {
-    this.$serve.getData("/articles/" + this.$route.params.id)
+    this.$serve.fetchGet("/articles/" + this.$route.params.id)
       .then((article => {
         this.article = article;
 
@@ -205,7 +205,7 @@ export default {
       article.append("cat", this.article.cat);
       article.append("updated", this.article.updated);
 
-      this.$serve.putData(`/articles/${this.article._id}`, article)
+      this.$serve.fetchPut(`/articles/${this.article._id}`, article)
         .then(() => {
           if (hasLiked === true) {
             console.log(this.article.name + this.constants.ALERT_DISLIKED);

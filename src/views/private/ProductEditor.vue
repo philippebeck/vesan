@@ -180,7 +180,7 @@ export default {
 
   created() {
     if (this.constants.USER_ID) {
-      this.$serve.getData("/auth/" + this.constants.USER_ID)
+      this.$serve.fetchGet("/auth/" + this.constants.USER_ID)
         .then((res) => { 
           this.user = res;
 
@@ -245,7 +245,7 @@ export default {
         data.append("created", this.product.created);
         data.append("updated", Date.now());
 
-        this.$serve.putData(`/products/${this.product._id}`, data)
+        this.$serve.fetchPut(`/products/${this.product._id}`, data)
           .then(() => {
             alert(this.product.name + this.constants.ALERT_UPDATED);
             this.$router.push("/admin");

@@ -57,7 +57,7 @@ export default {
     onVerify(response) {
       if (this.$serve.checkEmail(this.email)) {
 
-        this.$serve.postData('/auth/recaptcha', { response: response })
+        this.$serve.fetchPost('/auth/recaptcha', { response: response })
           .then(result => {
             if (result.success) {
               this.forgotPass();
@@ -84,7 +84,7 @@ export default {
         message.append("subject", this.constants.FORGOT_SUBJECT);
         message.append("html", this.constants.FORGOT_TEXT);
 
-        this.$serve.postData("/auth/pass", message)
+        this.$serve.fetchPost("/auth/pass", message)
           .then(() => {
             alert(message.get("subject") + this.constants.ALERT_SENDED);
             this.$router.push("/login");

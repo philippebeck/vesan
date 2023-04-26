@@ -162,7 +162,7 @@ export default {
 
   created() {
     if (this.constants.USER_ID) {
-      this.$serve.getData("/auth/" + this.constants.USER_ID)
+      this.$serve.fetchGet("/auth/" + this.constants.USER_ID)
         .then((res) => { 
           this.user = res;
 

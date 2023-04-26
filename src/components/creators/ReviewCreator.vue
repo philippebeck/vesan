@@ -95,7 +95,7 @@ export default {
         review.append("created", Date.now());
         review.append("updated", Date.now());
 
-        this.$serve.postData("/reviews", review)
+        this.$serve.fetchPost("/reviews", review)
           .then(() => {
             alert(this.constants.ALERT_NEW_REVIEW);
             this.$router.go();

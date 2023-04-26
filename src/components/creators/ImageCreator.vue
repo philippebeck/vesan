@@ -97,7 +97,7 @@ export default {
           data.append("description", this.description);
           data.append("gallery", this.$route.params.id);
 
-          this.$serve.postData("/images", data)
+          this.$serve.fetchPost("/images", data)
             .then(() => {
               alert(image + this.constants.ALERT_CREATED);
               this.$router.go();

@@ -94,7 +94,7 @@ methods: {
       gallery.append("name", this.name);
       gallery.append("author", this.author);
 
-      this.$serve.postData("/galleries", gallery)
+      this.$serve.fetchPost("/galleries", gallery)
         .then(() => {
           alert(this.name + this.constants.ALERT_CREATED);
           this.$router.go();

@@ -161,7 +161,7 @@ export default {
           article.append("created", Date.now());
           article.append("updated", Date.now());
 
-          this.$serve.postData("/articles", article)
+          this.$serve.fetchPost("/articles", article)
             .then(() => {
               alert(this.name + this.constants.ALERT_CREATED);
               this.$router.go();

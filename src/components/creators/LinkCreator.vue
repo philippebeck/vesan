@@ -115,7 +115,7 @@ export default {
         link.append("url", this.url);
         link.append("cat", this.cat);
 
-        this.$serve.postData("/links", link)
+        this.$serve.fetchPost("/links", link)
           .then(() => {
             alert(this.name + this.constants.ALERT_CREATED);
             this.$router.go();
