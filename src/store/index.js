@@ -1,5 +1,5 @@
 import { createStore } from "vuex"
-import serve from "servidio/dist/serve"
+import serve from "servidio/dist/serve.min.js"
 
 export default createStore({
   namespaced: true,
@@ -70,110 +70,110 @@ export default createStore({
   actions: {
     // OBJECT
     async readArticle(context, id) {
-      serve.getData("/articles/" + id)
+      serve.fetchGet("/articles/" + id)
         .then(res => { context.commit("SET_ARTICLE", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async readAvatar(context, id) {
-      serve.getData("/auth/" + id)
+      serve.fetchGet("/auth/" + id)
         .then(res => { context.commit("SET_USER", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async readGallery(context, id) {
-      serve.getData("/galleries/" + id)
+      serve.fetchGet("/galleries/" + id)
         .then(res => { context.commit("SET_GALLERY", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async readProduct(context, id) {
-      serve.getData("/products/" + id)
+      serve.fetchGet("/products/" + id)
         .then(res => { context.commit("SET_PRODUCT", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async readUser(context, id) {
-      serve.getData("/users/" + id)
+      serve.fetchGet("/users/" + id)
         .then(res => { context.commit("SET_USER", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     // ARRAY
     async listArticleComments(context, id) {
-      serve.getData("/comments/" + id)
+      serve.fetchGet("/comments/" + id)
         .then(res => { context.commit("SET_COMMENTS", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async listArticles(context) {
-      serve.getData("/articles")
+      serve.fetchGet("/articles")
         .then(res => { context.commit("SET_ARTICLES", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async listComments(context) {
-      serve.getData("/comments")
+      serve.fetchGet("/comments")
         .then(res => { context.commit("SET_COMMENTS", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async listGalleries(context) {
-      serve.getData("/galleries")
+      serve.fetchGet("/galleries")
         .then(res => { context.commit("SET_GALLERIES", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async listGalleryImages(context, id) {
-      serve.getData("/images/" + id)
+      serve.fetchGet("/images/" + id)
         .then(res => { context.commit("SET_IMAGES", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async listImages(context) {
-      serve.getData("/images")
+      serve.fetchGet("/images")
         .then(res => { context.commit("SET_IMAGES", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async listLinks(context) {
-      serve.getData("/links")
+      serve.fetchGet("/links")
         .then(res => { context.commit("SET_LINKS", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async listUserOrders(context, id) {
-      serve.getData("/orders/" + id)
+      serve.fetchGet("/orders/" + id)
         .then(res => { context.commit("SET_USER_ORDERS", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async listOrders(context) {
-      serve.getData("/orders")
+      serve.fetchGet("/orders")
         .then(res => { context.commit("SET_ORDERS", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async listProductReviews(context, id) {
-      serve.getData("/reviews/" + id)
+      serve.fetchGet("/reviews/" + id)
         .then(res => { context.commit("SET_REVIEWS", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async listProducts(context) {
-      serve.getData("/products")
+      serve.fetchGet("/products")
         .then(res => { context.commit("SET_PRODUCTS", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async listReviews(context) {
-      serve.getData("/reviews")
+      serve.fetchGet("/reviews")
         .then(res => { context.commit("SET_REVIEWS", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async listUsers(context) {
-      serve.getData("/users")
+      serve.fetchGet("/users")
         .then(res => { context.commit("SET_USERS", res) })
         .catch(err => { serve.checkError(err) });
     }
