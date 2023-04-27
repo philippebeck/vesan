@@ -177,13 +177,27 @@ export default {
      * @param {object} product 
      */
     checkProduct(id, product) {
-      if (this.$serve.checkString(product.name) && 
-        this.$serve.checkString(product.description, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
-        this.$serve.checkString(product.alt) && 
-        this.$serve.checkNumber(product.price, this.constants.PRICE_MIN, this.constants.PRICE_MAX) && 
-        this.$serve.checkString(product.options, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
+      let message = this.constants.CHECK_STRING;
+      let textMin = this.constants.TEXT_MIN;
+      let textMax = this.constants.TEXT_MAX;
+      let priceMin = this.constants.PRICE_MIN;
+      let priceMax = this.constants.PRICE_MAX;
+      let url = this.constants.API_URL;
 
-        this.$serve.fetchPut(`/products/${id}`, this.getProduct(id, product))
+      if (this.$serve.checkRange(product.name, message) && 
+        this.$serve.checkRange(product.description, message, textMin, textMax) && 
+        this.$serve.checkRange(product.alt, message) && 
+        this.$serve.checkRange(product.price, message, priceMin, priceMax) && 
+        this.$serve.checkRange(product.options, message, textMin, textMax)) {
+
+        let options = {
+          method: "PUT",
+          mode: "cors",
+          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
+          body: this.getProduct(id, product)
+        };
+
+        this.$serve.fetchSet(`${url}/products/${id}`, options)
           .then(() => {
             alert(product.name + this.constants.ALERT_UPDATED);
           })
@@ -207,9 +221,16 @@ export default {
      */
     deleteProduct(id) {
       let productName = this.$serve.getItemName(id, this.products);
+      let url = this.constants.API_URL;
 
       if (confirm(`${this.constants.TITLE_DELETE} ${productName} ?`) === true) {
-        this.$serve.fetchDelete(`/products/${id}`)
+        let options = {
+          method: "DELETE",
+          mode: "cors",
+          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
+        };
+
+        this.$serve.fetchSet(`${url}/products/${id}`, options)
           .then(() => {
             alert(productName + this.constants.ALERT_DELETED);
             this.$router.go();

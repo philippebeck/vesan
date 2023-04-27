@@ -170,11 +170,23 @@ export default {
      * @param {object} article 
      */
     checkArticle(id, article) {
-      if (this.$serve.checkString(article.name) && 
-        this.$serve.checkString(article.text, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
-        this.$serve.checkString(article.alt)) {
+      let message = this.constants.CHECK_STRING;
+      let min = this.constants.TEXT_MIN;
+      let max = this.constants.TEXT_MAX;
 
-        this.$serve.fetchPut(`/articles/${id}`, this.getArticle(id, article))
+      if (this.$serve.checkRange(article.name, message) && 
+        this.$serve.checkRange(article.text, message, min, max) && 
+        this.$serve.checkRange(article.alt, message)) {
+
+        let url = this.constants.API_URL + "/articles/" + id;
+        let options = {
+          method: "PUT",
+          mode: "cors",
+          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
+          body: this.getArticle(id, article)
+        };
+
+        this.$serve.fetchSet(url, options)
           .then(() => {
             alert(article.name + this.constants.ALERT_UPDATED);
           })
@@ -200,7 +212,13 @@ export default {
       let articleName = this.$serve.getItemName(id, this.articles);
 
       if (confirm(`${this.constants.TITLE_DELETE} ${articleName} ?`) === true) {
-        this.$serve.fetchDelete(`/articles/${id}`)
+        let options = {
+          method: "DELETE",
+          mode: "cors",
+          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
+        };
+
+        this.$serve.fetchSet(`/articles/${id}`, options)
           .then(() => {
             alert(articleName + this.constants.ALERT_DELETED);
             this.$router.go();

@@ -128,8 +128,21 @@ export default {
     checkLink(link) {
       if (link.url.startsWith("http")) { link.url = link.url.split('//')[1] }
 
-      if (this.$serve.checkString(link.name) && this.$serve.checkUrl(`https://${link.url}`)) {
-        this.$serve.fetchPut(`/links/${link._id}`, this.getLink(link))
+      let regex = this.constants.REGEX_URL;
+      let nameMsg = this.constants.CHECK_STRING;
+      let urlMsg = this.constants.CHECK_URL;
+
+      if (this.$serve.checkRange(link.name, nameMsg) && 
+        this.$serve.checkRegex(`https://${link.url}`, urlMsg, regex)) {
+
+        let options = {
+          method: "PUT",
+          mode: "cors",
+          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
+          body: this.getLink(link)
+        };
+
+        this.$serve.fetchSet(this.constants.API_URL + `/links/${link._id}`, options)
           .then(() => {
             alert(link.name + this.constants.ALERT_UPDATED);
           })
@@ -155,7 +168,13 @@ export default {
       let linkName = this.$serve.getItemName(id, this.links);
 
       if (confirm(`${this.constants.TITLE_DELETE} ${linkName} ?`) === true) {
-        this.$serve.fetchDelete(`/links/${id}`)
+        let options = {
+          method: "DELETE",
+          mode: "cors",
+          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
+        };
+
+        this.$serve.fetchSet(this.constants.API_URL + `/links/${id}`, options)
           .then(() => {
             alert(linkName + this.constants.ALERT_DELETED);
             this.$router.go();

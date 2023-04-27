@@ -141,8 +141,21 @@ export default {
      * @param {object} user 
      */
     checkUser(id, user) {
-      if (this.$serve.checkString(user.name) && this.$serve.checkEmail(user.email)) {
-        this.$serve.fetchPut(`/users/${id}`, this.getUser(id, user))
+      let stringMsg = this.constants.CHECK_STRING;
+      let emailMsg = this.constants.CHECK_EMAIL;
+      let url = this.constants.API_URL;
+
+      if (this.$serve.checkRange(user.name, stringMsg) && 
+        this.$serve.checkRegex(user.email, emailMsg)) {
+
+        let options = {
+          method: "PUT",
+          mode: "cors",
+          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
+          body: this.getUser(id, user)
+        };
+
+        this.$serve.fetchSet(`${url}/users/${id}`, options)
           .then(() => {
             alert(user.name + this.constants.ALERT_UPDATED);
           })
