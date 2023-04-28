@@ -69,9 +69,22 @@ export default {
      * @param {object} response 
      */
     onVerify(response) {
-      if (this.$serve.checkEmail(this.email) && this.$serve.checkPass(this.pass)) {
+      let emailMsg    = this.constants.CHECK_EMAIL;
+      let emailRegex  = this.constants.REGEX_EMAIL;
+      let passMsg     = this.constants.CHECK_PASS;
+      let passRegex   = this.constants.REGEX_PASS;
 
-        this.$serve.postData('/auth/recaptcha', { response: response })
+      if (this.$serve.checkRegex(this.email, emailMsg, emailRegex) && 
+        this.$serve.checkRegex(this.pass, passMsg, passRegex)) {
+
+        let url = this.constants.API_URL + "/auth/recaptcha";
+        let options = {
+          method: "POST",
+          mode: "cors",
+          body: { response: response }
+        };
+
+        this.$serve.fetchSet(url, options)
           .then(result => {
             if (result.success) {
               this.signIn();
@@ -96,7 +109,14 @@ export default {
       auth.append("email", this.email);
       auth.append("pass", this.pass);
 
-      this.$serve.postData("/auth", auth)
+      let url = this.constants.API_URL + "/auth";
+      let options = {
+        method: "POST",
+        mode: "cors",
+        body: auth
+      };
+
+      this.$serve.fetchSet(url, options)
         .then((res) => {
 
           let token   = JSON.stringify(res.token);

@@ -141,9 +141,13 @@ export default {
      * CREATE ARTICLE
      */
     createArticle() {
-      if (this.$serve.checkString(this.name) && 
-        this.$serve.checkString(this.text, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
-        this.$serve.checkString(this.alt)) {
+      let message = this.constants.CHECK_STRING;
+      let min = this.constants.TEXT_MIN;
+      let max = this.constants.TEXT_MAX;
+
+      if (this.$serve.checkRange(this.name, message) && 
+        this.$serve.checkRange(this.text, message, min, max) && 
+        this.$serve.checkRange(this.alt, message)) {
 
         if (this.cat === "") { this.cat = this.constants.CAT_ARTICLE }
         let image = document.getElementById("image").files[0];
@@ -161,7 +165,14 @@ export default {
           article.append("created", Date.now());
           article.append("updated", Date.now());
 
-          this.$serve.postData("/articles", article)
+          let options = {
+            method: "POST",
+            mode: "cors",
+            headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
+            body: article
+          };
+
+          this.$serve.fetchSet(this.constants.API_URL + "/articles", options)
             .then(() => {
               alert(this.name + this.constants.ALERT_CREATED);
               this.$router.go();

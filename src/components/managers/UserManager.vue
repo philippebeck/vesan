@@ -141,8 +141,22 @@ export default {
      * @param {object} user 
      */
     checkUser(id, user) {
-      if (this.$serve.checkString(user.name) && this.$serve.checkEmail(user.email)) {
-        this.$serve.putData(`/users/${id}`, this.getUser(id, user))
+      let stringMsg = this.constants.CHECK_STRING;
+      let emailMsg  = this.constants.CHECK_EMAIL;
+      let regex     = this.constants.REGEX_EMAIL;
+
+      if (this.$serve.checkRange(user.name, stringMsg) && 
+        this.$serve.checkRegex(user.email, emailMsg, regex)) {
+
+        let url = this.constants.API_URL + "/users/" + id;
+        let options = {
+          method: "PUT",
+          mode: "cors",
+          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
+          body: this.getUser(id, user)
+        };
+
+        this.$serve.fetchSet(url, options)
           .then(() => {
             alert(user.name + this.constants.ALERT_UPDATED);
           })
@@ -168,7 +182,15 @@ export default {
       let userName = this.$serve.getItemName(id, this.users);
 
       if (confirm(`${this.constants.TITLE_DELETE} ${userName} ?`) === true) {
-        this.$serve.deleteData(`/users/${id}`)
+
+        let url = this.constants.API_URL + "/users/" + id;
+        let options = {
+          method: "DELETE",
+          mode: "cors",
+          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
+        };
+
+        this.$serve.fetchSet(url, options)
           .then(() => {
             alert(userName + this.constants.ALERT_DELETED);
             this.$router.go();

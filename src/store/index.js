@@ -1,5 +1,6 @@
 import { createStore } from "vuex"
-import serve from "servidio/dist/serve"
+import serve from "servidio/dist/serve.min.js"
+import constants from "/constants"
 
 export default createStore({
   namespaced: true,
@@ -68,112 +69,144 @@ export default createStore({
   },
 
   actions: {
-    // OBJECT
+    // PUBLIC OBJECT
     async readArticle(context, id) {
-      serve.getData("/articles/" + id)
+      serve.fetchGet(constants.API_URL + "/articles/" + id)
         .then(res => { context.commit("SET_ARTICLE", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async readAvatar(context, id) {
-      serve.getData("/auth/" + id)
+      serve.fetchGet(constants.API_URL + "/auth/" + id)
         .then(res => { context.commit("SET_USER", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async readGallery(context, id) {
-      serve.getData("/galleries/" + id)
+      serve.fetchGet(constants.API_URL + "/galleries/" + id)
         .then(res => { context.commit("SET_GALLERY", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async readProduct(context, id) {
-      serve.getData("/products/" + id)
+      serve.fetchGet(constants.API_URL + "/products/" + id)
         .then(res => { context.commit("SET_PRODUCT", res) })
         .catch(err => { serve.checkError(err) });
     },
 
+    // PRIVATE OBJECT
     async readUser(context, id) {
-      serve.getData("/users/" + id)
+      const options = {
+        method: "GET",
+        mode: "cors",
+        headers: { "Authorization": `Bearer ${constants.TOKEN}` }
+      };
+
+      serve.fetchSet(constants.API_URL + "/users/" + id, options)
         .then(res => { context.commit("SET_USER", res) })
         .catch(err => { serve.checkError(err) });
     },
 
-    // ARRAY
+    // PUBLIC ARRAY
     async listArticleComments(context, id) {
-      serve.getData("/comments/" + id)
+      serve.fetchGet(constants.API_URL + "/comments/" + id)
         .then(res => { context.commit("SET_COMMENTS", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async listArticles(context) {
-      serve.getData("/articles")
+      serve.fetchGet(constants.API_URL + "/articles")
         .then(res => { context.commit("SET_ARTICLES", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async listComments(context) {
-      serve.getData("/comments")
+      serve.fetchGet(constants.API_URL + "/comments")
         .then(res => { context.commit("SET_COMMENTS", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async listGalleries(context) {
-      serve.getData("/galleries")
+      serve.fetchGet(constants.API_URL + "/galleries")
         .then(res => { context.commit("SET_GALLERIES", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async listGalleryImages(context, id) {
-      serve.getData("/images/" + id)
-        .then(res => { context.commit("SET_IMAGES", res) })
-        .catch(err => { serve.checkError(err) });
-    },
-
-    async listImages(context) {
-      serve.getData("/images")
+      serve.fetchGet(constants.API_URL + "/images/" + id)
         .then(res => { context.commit("SET_IMAGES", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async listLinks(context) {
-      serve.getData("/links")
+      serve.fetchGet(constants.API_URL + "/links")
         .then(res => { context.commit("SET_LINKS", res) })
         .catch(err => { serve.checkError(err) });
     },
 
-    async listUserOrders(context, id) {
-      serve.getData("/orders/" + id)
-        .then(res => { context.commit("SET_USER_ORDERS", res) })
-        .catch(err => { serve.checkError(err) });
-    },
-
-    async listOrders(context) {
-      serve.getData("/orders")
-        .then(res => { context.commit("SET_ORDERS", res) })
-        .catch(err => { serve.checkError(err) });
-    },
-
     async listProductReviews(context, id) {
-      serve.getData("/reviews/" + id)
+      serve.fetchGet(constants.API_URL + "/reviews/" + id)
         .then(res => { context.commit("SET_REVIEWS", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async listProducts(context) {
-      serve.getData("/products")
+      serve.fetchGet(constants.API_URL + "/products")
         .then(res => { context.commit("SET_PRODUCTS", res) })
         .catch(err => { serve.checkError(err) });
     },
 
     async listReviews(context) {
-      serve.getData("/reviews")
+      serve.fetchGet(constants.API_URL + "/reviews")
         .then(res => { context.commit("SET_REVIEWS", res) })
         .catch(err => { serve.checkError(err) });
     },
 
+    // PRIVATE ARRAY
+    async listImages(context) {
+      const options = {
+        method: "GET",
+        mode: "cors",
+        headers: { "Authorization": `Bearer ${constants.TOKEN}` }
+      };
+
+      serve.fetchSet(constants.API_URL + "/images", options)
+        .then(res => { context.commit("SET_IMAGES", res) })
+        .catch(err => { serve.checkError(err) });
+    },
+
+    async listUserOrders(context, id) {
+      const options = {
+        method: "GET",
+        mode: "cors",
+        headers: { "Authorization": `Bearer ${constants.TOKEN}` }
+      };
+
+      serve.fetchSet(constants.API_URL + "/orders/" + id, options)
+        .then(res => { context.commit("SET_USER_ORDERS", res) })
+        .catch(err => { serve.checkError(err) });
+    },
+
+    async listOrders(context) {
+      const options = {
+        method: "GET",
+        mode: "cors",
+        headers: { "Authorization": `Bearer ${constants.TOKEN}` }
+      };
+
+      serve.fetchSet(constants.API_URL + "/orders", options)
+        .then(res => { context.commit("SET_ORDERS", res) })
+        .catch(err => { serve.checkError(err) });
+    },
+
     async listUsers(context) {
-      serve.getData("/users")
+      const options = {
+        method: "GET",
+        mode: "cors",
+        headers: { "Authorization": `Bearer ${constants.TOKEN}` }
+      };
+
+      serve.fetchSet(constants.API_URL + "/users", options)
         .then(res => { context.commit("SET_USERS", res) })
         .catch(err => { serve.checkError(err) });
     }

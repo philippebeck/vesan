@@ -123,14 +123,26 @@ export default {
       for (let comment of this.comments) {
         if (comment._id === id) {
 
-          if (this.$serve.checkString(comment.text, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
-            let data = new FormData();
+          let msg = this.constants.CHECK_STRING;
+          let min = this.constants.TEXT_MIN;
+          let max = this.constants.TEXT_MAX;
 
+          if (this.$serve.checkString(comment.text, msg, min, max)) {
+
+            let data = new FormData();
             data.append("text", comment.text);
             data.append("moderate", "false");
             data.append("updated", Date.now());
 
-            this.$serve.putData(`/comments/${id}`, data)
+            let url = this.constants.API_URL + "/comments/" + id;
+            let options = {
+              method: "PUT",
+              mode: "cors",
+              headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
+              body: data
+            };
+
+            this.$serve.fetchSet(url , options)
               .then(() => {
                 alert(this.constants.ALERT_COMMENT + id + this.constants.ALERT_UPDATED);
                 this.$router.go();
@@ -148,7 +160,14 @@ export default {
     deleteComment(id) {
       if (confirm(`${this.constants.TITLE_DELETE_COMMENT}${id} ?`) === true) {
 
-        this.$serve.deleteData(`/comments/${id}`)
+        let url = this.constants.API_URL + "/comments/" + id;
+        let options = {
+          method: "DELETE",
+          mode: "cors",
+          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
+        };
+
+        this.$serve.fetchSet(url, options)
           .then(() => {
             alert(this.constants.ALERT_COMMENT + id + this.constants.ALERT_DELETED);
             this.$router.go();

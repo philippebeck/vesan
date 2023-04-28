@@ -87,7 +87,9 @@ export default {
     );
 
     if (this.constants.HOME_MEDIA === "api") {
-      this.$serve.getData(this.constants.HOME_API_URL + this.constants.HOME_API_KEY)
+      let url = this.constants.HOME_API_URL + this.constants.HOME_API_KEY;
+
+      this.$serve.fetchGet(url)
       .then((media) => { this.media = media })
       .catch(err => this.$serve.checkError(err));
     }

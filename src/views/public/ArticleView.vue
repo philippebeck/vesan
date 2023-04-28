@@ -126,7 +126,9 @@ export default {
   },
 
   created () {
-    this.$serve.getData("/articles/" + this.$route.params.id)
+    let url = this.constants.API_URL + "/articles/" + this.$route.params.id;
+
+    this.$serve.fetchGet(url)
       .then((article => {
         this.article = article;
 
@@ -174,7 +176,7 @@ export default {
      */
     checkLikes() {
       if (this.article.likes) {
-        return this.$serve.checkLikes(this.article.likes);
+        return this.$serve.checkId(this.constants.USER_ID, this.article.likes);
       }
     },
 
@@ -196,7 +198,6 @@ export default {
       if (hasLiked === false) { likes.push(this.constants.USER_ID) }
 
       let article = new FormData();
-
       article.append("name", this.article.name);
       article.append("text", this.article.text);
       article.append("image", this.article.image);
@@ -205,7 +206,15 @@ export default {
       article.append("cat", this.article.cat);
       article.append("updated", this.article.updated);
 
-      this.$serve.putData(`/articles/${this.article._id}`, article)
+      let url = this.constants.API_URL + "/articles/" + this.article._id;
+      let options = {
+          method: "PUT",
+          mode: "cors",
+          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
+          body: article
+        };
+
+      this.$serve.fetchSet(url, options)
         .then(() => {
           if (hasLiked === true) {
             console.log(this.article.name + this.constants.ALERT_DISLIKED);

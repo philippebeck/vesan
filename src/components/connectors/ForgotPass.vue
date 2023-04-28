@@ -55,9 +55,19 @@ export default {
      * @param {object} response 
      */
     onVerify(response) {
-      if (this.$serve.checkEmail(this.email)) {
+      let emailMsg    = this.constants.CHECK_EMAIL;
+      let emailRegex  = this.constants.REGEX_EMAIL;
 
-        this.$serve.postData('/auth/recaptcha', { response: response })
+      if (this.$serve.checkRegex(this.email, emailMsg, emailRegex)) {
+
+        let url = this.constants.API_URL + "/auth/recaptcha";
+        let options = {
+          method: "POST",
+          mode: "cors",
+          body: { response: response }
+        };
+
+        this.$serve.fetchSet(url, options)
           .then(result => {
             if (result.success) {
               this.forgotPass();
@@ -84,7 +94,14 @@ export default {
         message.append("subject", this.constants.FORGOT_SUBJECT);
         message.append("html", this.constants.FORGOT_TEXT);
 
-        this.$serve.postData("/auth/pass", message)
+        let url = this.constants.API_URL + "/auth/pass";
+        let options = {
+          method: "POST",
+          mode: "cors",
+          body: message
+        };
+
+        this.$serve.fetchSet(url, options)
           .then(() => {
             alert(message.get("subject") + this.constants.ALERT_SENDED);
             this.$router.push("/login");

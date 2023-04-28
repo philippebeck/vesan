@@ -156,7 +156,9 @@ export default {
   },
 
   created() {
-    this.$serve.getData("/products")
+    let url = this.constants.API_URL + "/products";
+
+    this.$serve.fetchGet(url)
       .then(res => { 
         this.products = res;
         this.setBasket();
@@ -337,7 +339,15 @@ export default {
       order.append("created", Date.now());
       order.append("updated", Date.now());
 
-      this.$serve.postData("/orders", order)
+      let url = this.constants.API_URL + "/orders/";
+      let options = {
+          method: "POST",
+          mode: "cors",
+          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
+          body: order
+        };
+
+      this.$serve.fetchSet(url, options)
         .then(() => {
           alert(this.constants.ALERT_ORDER_CREATED);
           localStorage.removeItem("basket");

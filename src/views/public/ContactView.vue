@@ -125,11 +125,25 @@ export default {
      * @param {object} response 
      */
     onVerify(response) {
-      if (this.$serve.checkEmail(this.email) && 
-        this.$serve.checkString(this.subject) && 
-        this.$serve.checkString(this.text, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
+      let emailMsg  = this.constants.CHECK_EMAIL;
+      let regex     = this.constants.REGEX_EMAIL;
+      let stringMsg = this.constants.CHECK_STRING;
+      let min       = this.constants.TEXT_MIN;
+      let max       = this.constants.TEXT_MAX;
 
-        this.$serve.postData('/auth/recaptcha', { response: response })
+      if (this.$serve.checkRegex(this.email, emailMsg, regex) && 
+        this.$serve.checkRange(this.subject, stringMsg) && 
+        this.$serve.checkRange(this.text, stringMsg, min, max)) {
+
+        let url = this.constants.API_URL + "/auth/recaptcha";
+        let options = {
+          method: "POST",
+          mode: "cors",
+          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
+          body: { response: response }
+        };
+
+        this.$serve.fetchSet(url, options)
           .then(result => {
             if (result.success) {
               this.send();
@@ -159,7 +173,15 @@ export default {
       message.append("subject", this.subject);
       message.append("html", this.text);
 
-      this.$serve.postData("/users/message", message)
+      let url = this.constants.API_URL + "/users/message";
+      let options = {
+        method: "POST",
+        mode: "cors",
+        headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
+        body: message
+      };
+
+      this.$serve.fetchSet(url, options)
         .then(() => {
           alert(this.subject + this.constants.ALERT_SENDED);
           this.$router.push("/");

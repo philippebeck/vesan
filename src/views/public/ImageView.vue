@@ -89,7 +89,9 @@ export default {
   },
 
   created() {
-    this.$serve.getData("/galleries/" + this.$route.params.id)
+    let url = this.constants.API_URL + "/galleries/" + this.$route.params.id;
+
+    this.$serve.fetchGet(url)
       .then((gallery) => {
         this.gallery = gallery;
 

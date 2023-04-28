@@ -7,7 +7,7 @@
         {{ constants.PROFILE_EDITOR }}
       </h1>
 
-      <BtnElt v-if="checkRole('admin') || checkRole('editor')"
+      <BtnElt v-if="checkRole('editor')"
         href="/admin"
         class="btn-green"
         :content="constants.CONTENT_ADMIN"
@@ -207,6 +207,7 @@ export default {
 
   data() {
     return {
+      image: "",
       pass: ""
     }
   },
@@ -264,7 +265,12 @@ export default {
      * UPDATE USER
      */
     updateUser() {
-      if (this.$serve.checkString(this.user.name) && this.$serve.checkEmail(this.user.email)) {
+      let nameMsg     = this.constants.CHECK_STRING;
+      let emailMsg    = this.constants.CHECK_EMAIL;
+      let emailRegex  = this.constants.REGEX_EMAIL;
+
+      if (this.$serve.checkRange(this.user.name, nameMsg) && 
+        this.$serve.checkRegex(this.user.email, emailMsg, emailRegex)) {
 
         let user  = new FormData();
         let image = document.getElementById("image").files[0] ?? this.user.image;
@@ -275,13 +281,24 @@ export default {
         user.append("role", this.user.role);
         user.append("updated", Date.now());
 
+        let passMsg   = this.constants.CHECK_PASS;
+        let passRegex = this.constants.REGEX_PASS;
+
         if (this.pass !== "") {
-          if (this.$serve.checkPass(this.pass)) {
+          if (this.$serve.checkRegex(this.pass, passMsg, passRegex)) {
             user.append("pass", this.pass)
           }
         }
 
-        this.$serve.putData(`/users/${this.user._id}`, user)
+        let url = this.constants.API_URL + "/users/" + this.user._id;
+        let options = {
+          method: "PUT",
+          mode: "cors",
+          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
+          body: user
+        };
+
+        this.$serve.fetchSet(url, options)
           .then(() => {
             alert(this.user.name + this.constants.ALERT_UPDATED);
             this.$router.go();
@@ -297,7 +314,15 @@ export default {
       let userName = this.user.name;
 
       if (confirm(`${this.constants.TITLE_DELETE} ${userName} ?`) === true) {
-        this.$serve.deleteData(`/users/${this.user._id}`)
+
+        let url = this.constants.API_URL + "/users/" + this.user._id;
+        let options = {
+          method: "DELETE",
+          mode: "cors",
+          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
+        };
+
+        this.$serve.fetchSet(url, options)
           .then(() => {
             localStorage.removeItem("userId");
             localStorage.removeItem("userToken");

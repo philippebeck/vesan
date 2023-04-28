@@ -141,18 +141,31 @@ export default {
       for (let review of this.reviews) {
         if (review._id === id) {
 
-          console.log(typeof review.score, review.score);
+          let textMsg = this.constants.CHECK_STRING;
+          let textMin = this.constants.TEXT_MIN;
+          let textMax = this.constants.TEXT_MAX;
+          let scoreMsg = this.constants.CHECK_NUMBER;
+          let scoreMin = this.constants.SCORE_MIN;
+          let scoreMax = this.constants.SCORE_MAX;
 
-          if (this.$serve.checkString(review.text, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
-            this.$serve.checkNumber(review.score)) {
+          if (this.$serve.checkRange(review.text, textMsg, textMin, textMax) && 
+            this.$serve.checkRange(review.score, scoreMsg, scoreMin, scoreMax)) {
+
             let data = new FormData();
-
             data.append("text", review.text);
             data.append("score", review.score);
             data.append("moderate", "false");
             data.append("updated", Date.now());
 
-            this.$serve.putData(`/reviews/${id}`, data)
+            let url = this.constants.API_URL + "/reviews/" + id;
+            let options = {
+              method: "PUT",
+              mode: "cors",
+              headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
+              body: data
+            };
+
+            this.$serve.fetchSet(url, options)
               .then(() => {
                 alert(this.constants.ALERT_REVIEW + id + this.constants.ALERT_UPDATED);
                 this.$router.go();
@@ -170,7 +183,14 @@ export default {
     deleteReview(id) {
       if (confirm(`${this.constants.TITLE_DELETE_REVIEW}${id} ?`) === true) {
 
-        this.$serve.deleteData(`/reviews/${id}`)
+        let url = this.constants.API_URL + "/reviews/" + id;
+        let options = {
+          method: "DELETE",
+          mode: "cors",
+          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
+        };
+
+        this.$serve.fetchSet(url, options)
           .then(() => {
             alert(this.constants.ALERT_REVIEW + id + this.constants.ALERT_DELETED);
             this.$router.go();

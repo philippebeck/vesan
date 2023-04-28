@@ -10,8 +10,6 @@ export default {
   CAT_LINK : "HTML5",
   CAT_PRODUCT : "Home",
 
-  CONTENT_TYPE : "multipart/form-data", 
-
   CURRENCY_ISO : "EUR",
   CURRENCY_SYMBOL : "€",
 

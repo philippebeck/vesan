@@ -87,17 +87,29 @@ export default {
      * CREATE IMAGE
      */
     createImage() {
-      if (this.$serve.checkString(this.description, this.constants.STRING_MIN, this.constants.TEXT_MAX)) {
+      let msg = this.constants.CHECK_STRING;
+      let min = this.constants.STRING_MIN;
+      let max = this.constants.TEXT_MAX;
+
+      if (this.$serve.checkRange(this.description, msg, min, max)) {
         let image = document.getElementById("image").files[0];
 
         if (image !== undefined) {
-          let data = new FormData();
 
+          let data = new FormData();
           data.append("image", image);
           data.append("description", this.description);
           data.append("gallery", this.$route.params.id);
 
-          this.$serve.postData("/images", data)
+          let url = this.constants.API_URL + "/images";
+          let options = {
+            method: "POST",
+            mode: "cors",
+            headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
+            body: data
+          };
+
+          this.$serve.fetchSet(url, options)
             .then(() => {
               alert(image + this.constants.ALERT_CREATED);
               this.$router.go();

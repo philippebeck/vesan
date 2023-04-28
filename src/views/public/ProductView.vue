@@ -164,7 +164,9 @@ export default {
   },
 
   created() {
-    this.$serve.getData("/products/" + this.$route.params.id)
+    let url = this.constants.API_URL + "/products/" + this.$route.params.id;
+
+    this.$serve.fetchGet(url)
       .then((product => {
         this.product = product;
 

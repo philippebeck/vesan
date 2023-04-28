@@ -113,7 +113,10 @@ export default {
 
   created() {
     this.constants = constants;
-    this.$serve.setGlobalMeta();
+    this.$serve.setGlobalMeta(
+      this.constants.TW_ID, 
+      this.constants.ICON, 
+      this.constants.LANG);
 
     if (constants.USER_ID) {
       this.$store.dispatch("readAvatar", constants.USER_ID);
