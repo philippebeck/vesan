@@ -215,7 +215,7 @@ export default {
       for (let article of this.articles) {
         if (article._id === id) {
 
-          return this.$serve.checkLikes(article.likes);
+          return this.$serve.checkId(this.constants.USER_ID, article.likes);
         }
       }
     },
@@ -250,7 +250,15 @@ export default {
           article.append("cat", this.articles[i].cat);
           article.append("updated", this.articles[i].updated);
 
-          this.$serve.fetchPut(`/articles/${id}`, article)
+          let url = this.constants.API_URL + "/articles/" + id;
+          let options = {
+            method: "PUT",
+            mode: "cors",
+            headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
+            body: article
+          };
+
+          this.$serve.fetchSet(url, options)
             .then(() => {
               if (hasLiked === true) {
                 console.log(this.article.name + this.constants.ALERT_DISLIKED);
