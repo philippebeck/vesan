@@ -7,7 +7,7 @@
         {{ constants.PROFILE_EDITOR }}
       </h1>
 
-      <BtnElt v-if="checkRole('admin') || checkRole('editor')"
+      <BtnElt v-if="checkRole('editor')"
         href="/admin"
         class="btn-green"
         :content="constants.CONTENT_ADMIN"
@@ -207,6 +207,7 @@ export default {
 
   data() {
     return {
+      image: "",
       pass: ""
     }
   },
