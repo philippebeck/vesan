@@ -107,11 +107,24 @@ export default {
      * @param {object} response 
      */
     onVerify(response) {
-      if (this.$serve.checkString(this.name) && 
-        this.$serve.checkEmail(this.email) && 
-        this.$serve.checkPass(this.pass)) {
+      let nameMsg     = this.constants.CHECK_STRING;
+      let emailMsg    = this.constants.CHECK_EMAIL;
+      let emailRegex  = this.constants.REGEX_EMAIL;
+      let passMsg     = this.constants.CHECK_PASS;
+      let passRegex   = this.constants.REGEX_PASS;
 
-        this.$serve.fetchPost('/auth/recaptcha', { response: response })
+      if (this.$serve.checkRange(this.name, nameMsg) && 
+        this.$serve.checkRegex(this.email, emailMsg, emailRegex) && 
+        this.$serve.checkRegex(this.pass, passMsg, passRegex)) {
+
+        let url = this.constants.API_URL + "/auth/recaptcha";
+        let options = {
+          method: "POST",
+          mode: "cors",
+          body: { response: response }
+        };
+
+        this.$serve.fetchSet(url, options)
           .then(result => {
             if (result.success) {
               this.createUser();
@@ -144,7 +157,14 @@ export default {
         user.append("created", Date.now());
         user.append("updated", Date.now());
 
-        this.$serve.fetchPost("/users", user)
+        let url = this.constants.API_URL + "/users";
+        let options = {
+          method: "POST",
+          mode: "cors",
+          body: user
+        };
+
+        this.$serve.fetchSet(url, options)
           .then(() => {
             alert(this.name + this.constants.ALERT_CREATED);
             this.$router.go();
