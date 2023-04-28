@@ -101,6 +101,7 @@ export default {
           data.append("text", gallery.text);
           data.append("moderate", gallery.moderate);
 
+          let url = this.constants.API_URL + "/galleries/" + id;
           let options = {
             method: "PUT",
             mode: "cors",
@@ -108,7 +109,7 @@ export default {
             body: data
           };
 
-          this.$serve.fetchSet(this.constants.API_URL + `/galleries/${id}`, options)
+          this.$serve.fetchSet(url, options)
             .then(() => {
               alert(this.constants.ALERT_GALLERY + id + this.constants.ALERT_UPDATED);
             })
@@ -123,13 +124,15 @@ export default {
      */
     deleteGallery(id) {
       if (confirm(`${this.constants.TITLE_DELETE_GALLERY}${id} ?`) === true) {
+
+        let url = this.constants.API_URL + "/galleries/" + id;
         let options = {
           method: "DELETE",
           mode: "cors",
           headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
         };
 
-        this.$serve.fetchSet(this.constants.API_URL + `/galleries/${id}`, options)
+        this.$serve.fetchSet(url, options)
           .then(() => {
             alert(this.constants.ALERT_GALLERY + id + this.constants.ALERT_DELETED);
             this.$router.go();

@@ -170,13 +170,13 @@ export default {
      * @param {object} article 
      */
     checkArticle(id, article) {
-      let message = this.constants.CHECK_STRING;
+      let msg = this.constants.CHECK_STRING;
       let min = this.constants.TEXT_MIN;
       let max = this.constants.TEXT_MAX;
 
-      if (this.$serve.checkRange(article.name, message) && 
-        this.$serve.checkRange(article.text, message, min, max) && 
-        this.$serve.checkRange(article.alt, message)) {
+      if (this.$serve.checkRange(article.name, msg) && 
+        this.$serve.checkRange(article.text, msg, min, max) && 
+        this.$serve.checkRange(article.alt, msg)) {
 
         let url = this.constants.API_URL + "/articles/" + id;
         let options = {
@@ -212,13 +212,15 @@ export default {
       let articleName = this.$serve.getItemName(id, this.articles);
 
       if (confirm(`${this.constants.TITLE_DELETE} ${articleName} ?`) === true) {
+
+        let url = this.constants.API_URL + "/articles/" + id;
         let options = {
           method: "DELETE",
           mode: "cors",
           headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
         };
 
-        this.$serve.fetchSet(`/articles/${id}`, options)
+        this.$serve.fetchSet(url, options)
           .then(() => {
             alert(articleName + this.constants.ALERT_DELETED);
             this.$router.go();

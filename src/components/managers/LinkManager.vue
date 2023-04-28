@@ -135,6 +135,7 @@ export default {
       if (this.$serve.checkRange(link.name, nameMsg) && 
         this.$serve.checkRegex(`https://${link.url}`, urlMsg, regex)) {
 
+        let url = this.constants.API_URL + "links/" + link._id;
         let options = {
           method: "PUT",
           mode: "cors",
@@ -142,7 +143,7 @@ export default {
           body: this.getLink(link)
         };
 
-        this.$serve.fetchSet(this.constants.API_URL + `/links/${link._id}`, options)
+        this.$serve.fetchSet(url, options)
           .then(() => {
             alert(link.name + this.constants.ALERT_UPDATED);
           })
@@ -168,13 +169,15 @@ export default {
       let linkName = this.$serve.getItemName(id, this.links);
 
       if (confirm(`${this.constants.TITLE_DELETE} ${linkName} ?`) === true) {
+
+        let url = this.constants.API_URL + "links/" + id;
         let options = {
           method: "DELETE",
           mode: "cors",
           headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
         };
 
-        this.$serve.fetchSet(this.constants.API_URL + `/links/${id}`, options)
+        this.$serve.fetchSet(url, options)
           .then(() => {
             alert(linkName + this.constants.ALERT_DELETED);
             this.$router.go();

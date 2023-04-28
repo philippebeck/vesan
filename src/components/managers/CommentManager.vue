@@ -130,6 +130,7 @@ export default {
           data.append("text", comment.text);
           data.append("moderate", comment.moderate);
 
+          let url = this.constants.API_URL + "/comments/" + id;
           let options = {
             method: "PUT",
             mode: "cors",
@@ -137,7 +138,7 @@ export default {
             body: data
           };
 
-          this.$serve.fetchSet(this.constants.API_URL + `/comments/${id}`, options)
+          this.$serve.fetchSet(url, options)
             .then(() => {
               alert(this.constants.ALERT_COMMENT + id + this.constants.ALERT_MODERATED);
             })
@@ -152,13 +153,15 @@ export default {
      */
     deleteComment(id) {
       if (confirm(`${this.constants.TITLE_DELETE_COMMENT}${id} ?`) === true) {
+
+        let url = this.constants.API_URL + "/comments/" + id;
         let options = {
           method: "DELETE",
           mode: "cors",
           headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
         };
 
-        this.$serve.fetchSet(this.constants.API_URL + `/comments/${id}`, options)
+        this.$serve.fetchSet(url, options)
           .then(() => {
             alert(this.constants.ALERT_COMMENT + id + this.constants.ALERT_DELETED);
             this.$router.go();

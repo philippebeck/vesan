@@ -177,19 +177,20 @@ export default {
      * @param {object} product 
      */
     checkProduct(id, product) {
-      let message = this.constants.CHECK_STRING;
-      let textMin = this.constants.TEXT_MIN;
-      let textMax = this.constants.TEXT_MAX;
-      let priceMin = this.constants.PRICE_MIN;
-      let priceMax = this.constants.PRICE_MAX;
-      let url = this.constants.API_URL;
+      let stringMsg = this.constants.CHECK_STRING;
+      let textMin   = this.constants.TEXT_MIN;
+      let textMax   = this.constants.TEXT_MAX;
+      let priceMsg  = this.constants.CHECK_NUMBER;
+      let priceMin  = this.constants.PRICE_MIN;
+      let priceMax  = this.constants.PRICE_MAX;
 
-      if (this.$serve.checkRange(product.name, message) && 
-        this.$serve.checkRange(product.description, message, textMin, textMax) && 
-        this.$serve.checkRange(product.alt, message) && 
-        this.$serve.checkRange(product.price, message, priceMin, priceMax) && 
-        this.$serve.checkRange(product.options, message, textMin, textMax)) {
+      if (this.$serve.checkRange(product.name, stringMsg) && 
+        this.$serve.checkRange(product.description, stringMsg, textMin, textMax) && 
+        this.$serve.checkRange(product.alt, stringMsg) && 
+        this.$serve.checkRange(product.price, priceMsg, priceMin, priceMax) && 
+        this.$serve.checkRange(product.options, stringMsg, textMin, textMax)) {
 
+        let url = this.constants.API_URL + "/products/" + id;
         let options = {
           method: "PUT",
           mode: "cors",
@@ -197,7 +198,7 @@ export default {
           body: this.getProduct(id, product)
         };
 
-        this.$serve.fetchSet(`${url}/products/${id}`, options)
+        this.$serve.fetchSet(url, options)
           .then(() => {
             alert(product.name + this.constants.ALERT_UPDATED);
           })
@@ -221,16 +222,17 @@ export default {
      */
     deleteProduct(id) {
       let productName = this.$serve.getItemName(id, this.products);
-      let url = this.constants.API_URL;
 
       if (confirm(`${this.constants.TITLE_DELETE} ${productName} ?`) === true) {
+
+        let url = this.constants.API_URL + "/products/" + id;
         let options = {
           method: "DELETE",
           mode: "cors",
           headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
         };
 
-        this.$serve.fetchSet(`${url}/products/${id}`, options)
+        this.$serve.fetchSet(url, options)
           .then(() => {
             alert(productName + this.constants.ALERT_DELETED);
             this.$router.go();

@@ -136,6 +136,7 @@ export default {
           data.append("status", order.status);
           data.append("updated", Date.now());
 
+          let url = this.constants.API_URL + "/orders/" + id;
           let options = {
             method: "PUT",
             mode: "cors",
@@ -143,7 +144,7 @@ export default {
             body: data
           };
 
-          this.$serve.fetchSet(this.constants.API_URL + `/orders/${id}`, options)
+          this.$serve.fetchSet(url, options)
             .then(() => {
               alert(this.constants.ALERT_ORDER + id + this.constants.ALERT_UPDATED);
             })
@@ -158,13 +159,15 @@ export default {
      */
     deleteOrder(id) {
       if (confirm(`${this.constants.TITLE_DELETE_ORDER}${id} ?`) === true) {
+
+        let url = this.constants.API_URL + "/orders/" + id;
         let options = {
           method: "DELETE",
           mode: "cors",
           headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
         };
 
-        this.$serve.fetchSet(this.constants.API_URL + `/orders/${id}`, options)
+        this.$serve.fetchSet(url, options)
           .then(() => {
             alert(this.constants.ALERT_ORDER + id + this.constants.ALERT_DELETED);
             this.$router.go();

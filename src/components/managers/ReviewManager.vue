@@ -134,6 +134,7 @@ export default {
           data.append("score", review.score);
           data.append("moderate", review.moderate);
 
+          let url = this.constants.API_URL + "/reviews/" + id;
           let options = {
             method: "PUT",
             mode: "cors",
@@ -141,7 +142,7 @@ export default {
             body: data
           };
 
-          this.$serve.fetchSet(this.constants.API_URL + `/reviews/${id}`, options)
+          this.$serve.fetchSet(url, options)
             .then(() => {
               alert(this.constants.ALERT_REVIEW + id + this.constants.ALERT_MODERATED);
             })
@@ -156,13 +157,15 @@ export default {
      */
     deleteReview(id) {
       if (confirm(`${this.constants.TITLE_DELETE_REVIEW}${id} ?`) === true) {
+
+        let url = this.constants.API_URL + "/reviews/" + id;
         let options = {
           method: "DELETE",
           mode: "cors",
           headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
         };
 
-        this.$serve.fetchSet(this.constants.API_URL + `/reviews/${id}`, options)
+        this.$serve.fetchSet(url, options)
           .then(() => {
             alert(this.constants.ALERT_REVIEW + id + this.constants.ALERT_DELETED);
             this.$router.go();
