@@ -69,7 +69,7 @@ export default createStore({
   },
 
   actions: {
-    // OBJECT
+    // PUBLIC OBJECT
     async readArticle(context, id) {
       serve.fetchGet(constants.API_URL + "/articles/" + id)
         .then(res => { context.commit("SET_ARTICLE", res) })
@@ -94,13 +94,20 @@ export default createStore({
         .catch(err => { serve.checkError(err) });
     },
 
+    // PRIVATE OBJECT
     async readUser(context, id) {
-      serve.fetchGet(constants.API_URL + "/users/" + id)
+      const options = {
+        method: "GET",
+        mode: "cors",
+        headers: { "Authorization": `Bearer ${constants.TOKEN}` }
+      };
+
+      serve.fetchSet(constants.API_URL + "/users/" + id, options)
         .then(res => { context.commit("SET_USER", res) })
         .catch(err => { serve.checkError(err) });
     },
 
-    // ARRAY
+    // PUBLIC ARRAY
     async listArticleComments(context, id) {
       serve.fetchGet(constants.API_URL + "/comments/" + id)
         .then(res => { context.commit("SET_COMMENTS", res) })
@@ -131,27 +138,9 @@ export default createStore({
         .catch(err => { serve.checkError(err) });
     },
 
-    async listImages(context) {
-      serve.fetchGet(constants.API_URL + "/images")
-        .then(res => { context.commit("SET_IMAGES", res) })
-        .catch(err => { serve.checkError(err) });
-    },
-
     async listLinks(context) {
       serve.fetchGet(constants.API_URL + "/links")
         .then(res => { context.commit("SET_LINKS", res) })
-        .catch(err => { serve.checkError(err) });
-    },
-
-    async listUserOrders(context, id) {
-      serve.fetchGet(constants.API_URL + "/orders/" + id)
-        .then(res => { context.commit("SET_USER_ORDERS", res) })
-        .catch(err => { serve.checkError(err) });
-    },
-
-    async listOrders(context) {
-      serve.fetchGet(constants.API_URL + "/orders")
-        .then(res => { context.commit("SET_ORDERS", res) })
         .catch(err => { serve.checkError(err) });
     },
 
@@ -173,8 +162,51 @@ export default createStore({
         .catch(err => { serve.checkError(err) });
     },
 
+    // PRIVATE ARRAY
+    async listImages(context) {
+      const options = {
+        method: "GET",
+        mode: "cors",
+        headers: { "Authorization": `Bearer ${constants.TOKEN}` }
+      };
+
+      serve.fetchSet(constants.API_URL + "/images", options)
+        .then(res => { context.commit("SET_IMAGES", res) })
+        .catch(err => { serve.checkError(err) });
+    },
+
+    async listUserOrders(context, id) {
+      const options = {
+        method: "GET",
+        mode: "cors",
+        headers: { "Authorization": `Bearer ${constants.TOKEN}` }
+      };
+
+      serve.fetchSet(constants.API_URL + "/orders/" + id, options)
+        .then(res => { context.commit("SET_USER_ORDERS", res) })
+        .catch(err => { serve.checkError(err) });
+    },
+
+    async listOrders(context) {
+      const options = {
+        method: "GET",
+        mode: "cors",
+        headers: { "Authorization": `Bearer ${constants.TOKEN}` }
+      };
+
+      serve.fetchSet(constants.API_URL + "/orders", options)
+        .then(res => { context.commit("SET_ORDERS", res) })
+        .catch(err => { serve.checkError(err) });
+    },
+
     async listUsers(context) {
-      serve.fetchGet(constants.API_URL + "/users")
+      const options = {
+        method: "GET",
+        mode: "cors",
+        headers: { "Authorization": `Bearer ${constants.TOKEN}` }
+      };
+
+      serve.fetchSet(constants.API_URL + "/users", options)
         .then(res => { context.commit("SET_USERS", res) })
         .catch(err => { serve.checkError(err) });
     }
