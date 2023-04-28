@@ -83,8 +83,15 @@ export default {
      * CREATE REVIEW
      */
     createReview() {
-      if (this.$serve.checkString(this.text, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
-        this.$serve.checkNumber(this.score)) {
+      let textMsg = this.constants.CHECK_STRING;
+      let textMin = this.constants.TEXT_MIN;
+      let textMax = this.constants.TEXT_MAX;
+      let scoreMsg = this.constants.CHECK_NUMBER;
+      let scoreMin = this.constants.SCORE_MIN;
+      let scoreMax = this.constants.SCORE_MAX;
+
+      if (this.$serve.checkRange(this.text, textMsg, textMin, textMax) && 
+        this.$serve.checkRange(this.score, scoreMsg, scoreMin, scoreMax)) {
         let review  = new FormData();
 
         review.append("text", this.text);
@@ -95,7 +102,14 @@ export default {
         review.append("created", Date.now());
         review.append("updated", Date.now());
 
-        this.$serve.fetchPost("/reviews", review)
+        let options = {
+            method: "POST",
+            mode: "cors",
+            headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
+            body: review
+          };
+
+        this.$serve.fetchSet(this.constants.API_URL + "/reviews", options)
           .then(() => {
             alert(this.constants.ALERT_NEW_REVIEW);
             this.$router.go();

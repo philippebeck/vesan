@@ -105,17 +105,29 @@ export default {
      * CREATE LINK
      */
     createLink() {
+      let nameMsg = this.constants.CHECK_STRING;
+      let urlMsg  = this.constants.CHECK_URL;
+      let regex   = this.constants.REGEX_URL;
+
       if (this.url.startsWith("http")) { this.url = this.url.split('//')[1] }
       if (this.cat === "") { this.cat = this.constants.CAT_LINK }
 
-      if (this.$serve.checkString(this.name) && this.$serve.checkUrl(`https://${this.url}`)) {
-        let link = new FormData();
+      if (this.$serve.checkString(this.name, nameMsg) && 
+        this.$serve.checkUrl(`https://${this.url}`, urlMsg, regex)) {
 
+        let link = new FormData();
         link.append("name", this.name);
         link.append("url", this.url);
         link.append("cat", this.cat);
 
-        this.$serve.fetchPost("/links", link)
+        let options = {
+            method: "POST",
+            mode: "cors",
+            headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
+            body: link
+          };
+
+        this.$serve.fetchSet(this.constants.API_URL + "/links", options)
           .then(() => {
             alert(this.name + this.constants.ALERT_CREATED);
             this.$router.go();

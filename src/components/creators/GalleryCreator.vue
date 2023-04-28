@@ -88,13 +88,23 @@ methods: {
    * CREATE GALLERY
    */
   createGallery() {
-    if (this.$serve.checkString(this.name) && this.$serve.checkString(this.author)) {
-      let gallery = new FormData();
+    let msg = this.constants.CHECK_STRING;
 
+    if (this.$serve.checkRange(this.name, msg) &&
+      this.$serve.checkRange(this.author, msg)) {
+
+      let gallery = new FormData();
       gallery.append("name", this.name);
       gallery.append("author", this.author);
 
-      this.$serve.fetchPost("/galleries", gallery)
+      let options = {
+            method: "POST",
+            mode: "cors",
+            headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
+            body: gallery
+          };
+
+      this.$serve.fetchSet(this.constants.API_URL + "/galleries", options)
         .then(() => {
           alert(this.name + this.constants.ALERT_CREATED);
           this.$router.go();

@@ -175,9 +175,13 @@ export default {
      * CREATE PRODUCT
      */
     createProduct() {
-      if (this.$serve.checkString(this.name) && 
-        this.$serve.checkString(this.description, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
-        this.$serve.checkString(this.alt)) {
+      let msg = this.constants.CHECK_STRING;
+      let min = this.constants.TEXT_MIN;
+      let max = this.constants.TEXT_MAX;
+
+      if (this.$serve.checkRange(this.name, msg) && 
+        this.$serve.checkRange(this.description, msg, min, max) && 
+        this.$serve.checkRange(this.alt, msg)) {
 
         if (this.cat === "") { this.cat = this.constants.CAT_PRODUCT }
         let image = document.getElementById("image").files[0];
@@ -195,7 +199,14 @@ export default {
           product.append("created", Date.now());
           product.append("updated", Date.now());
 
-          this.$serve.fetchPost("/products", product)
+          let options = {
+            method: "POST",
+            mode: "cors",
+            headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
+            body: product
+          };
+
+          this.$serve.fetchSet(this.constants.API_URL + "/products", options)
             .then(() => {
               alert(this.name + this.constants.ALERT_CREATED);
               this.$router.go();
