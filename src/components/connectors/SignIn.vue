@@ -109,7 +109,7 @@ export default {
       auth.append("email", this.email);
       auth.append("pass", this.pass);
 
-      let url = this.constants.API_URL + "/users";
+      let url = this.constants.API_URL + "/auth";
       let options = {
         method: "POST",
         mode: "cors",
