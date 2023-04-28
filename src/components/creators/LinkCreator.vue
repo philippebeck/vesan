@@ -112,14 +112,15 @@ export default {
       if (this.url.startsWith("http")) { this.url = this.url.split('//')[1] }
       if (this.cat === "") { this.cat = this.constants.CAT_LINK }
 
-      if (this.$serve.checkString(this.name, nameMsg) && 
-        this.$serve.checkUrl(`https://${this.url}`, urlMsg, regex)) {
+      if (this.$serve.checkRange(this.name, nameMsg) && 
+          this.$serve.checkRegex(`https://${this.url}`, urlMsg, regex)) {
 
         let link = new FormData();
         link.append("name", this.name);
         link.append("url", this.url);
         link.append("cat", this.cat);
 
+        let url = this.constants.API_URL + "/links";
         let options = {
             method: "POST",
             mode: "cors",
@@ -127,7 +128,7 @@ export default {
             body: link
           };
 
-        this.$serve.fetchSet(this.constants.API_URL + "/links", options)
+        this.$serve.fetchSet(url, options)
           .then(() => {
             alert(this.name + this.constants.ALERT_CREATED);
             this.$router.go();

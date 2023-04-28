@@ -180,8 +180,8 @@ export default {
       let max = this.constants.TEXT_MAX;
 
       if (this.$serve.checkRange(this.name, msg) && 
-        this.$serve.checkRange(this.description, msg, min, max) && 
-        this.$serve.checkRange(this.alt, msg)) {
+          this.$serve.checkRange(this.description, msg, min, max) && 
+          this.$serve.checkRange(this.alt, msg)) {
 
         if (this.cat === "") { this.cat = this.constants.CAT_PRODUCT }
         let image = document.getElementById("image").files[0];
@@ -199,6 +199,7 @@ export default {
           product.append("created", Date.now());
           product.append("updated", Date.now());
 
+          let url = this.constants.API_URL + "/products";
           let options = {
             method: "POST",
             mode: "cors",
@@ -206,7 +207,7 @@ export default {
             body: product
           };
 
-          this.$serve.fetchSet(this.constants.API_URL + "/products", options)
+          this.$serve.fetchSet(url, options)
             .then(() => {
               alert(this.name + this.constants.ALERT_CREATED);
               this.$router.go();
