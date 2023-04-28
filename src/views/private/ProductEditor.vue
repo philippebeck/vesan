@@ -180,7 +180,9 @@ export default {
 
   created() {
     if (this.constants.USER_ID) {
-      this.$serve.fetchGet("/auth/" + this.constants.USER_ID)
+      let url = this.constants.API_URL + "/auth/" + this.constants.USER_ID;
+
+      this.$serve.fetchGet(url)
         .then((res) => { 
           this.user = res;
 
@@ -226,11 +228,18 @@ export default {
      * UPDATE PRODUCT
      */
     updateProduct() {
-      if (this.$serve.checkString(this.product.name) && 
-        this.$serve.checkString(this.product.description, this.constants.TEXT_MIN, this.constants.TEXT_MAX) && 
-        this.$serve.checkString(this.product.alt) && 
-        this.$serve.checkNumber(this.product.price, this.constants.PRICE_MIN, this.constants.PRICE_MAX) && 
-        this.$serve.checkString(this.product.options, this.constants.TEXT_MIN, this.constants.TEXT_MAX)) {
+      let stringMsg = this.constants.CHECK_STRING;
+      let textMin   = this.constants.TEXT_MIN;
+      let textMax   = this.constants.TEXT_MAX;
+      let priceMsg  = this.constants.CHECK_NUMBER;
+      let priceMin  = this.constants.PRICE_MIN;
+      let priceMax  = this.constants.PRICE_MAX;
+
+      if (this.$serve.checkRange(this.product.name, stringMsg) && 
+        this.$serve.checkRange(this.product.description, stringMsg, textMin, textMax) && 
+        this.$serve.checkRange(this.product.alt, stringMsg) && 
+        this.$serve.checkRange(this.product.price, priceMsg, priceMin, priceMax) && 
+        this.$serve.checkRange(this.product.options, stringMsg, textMin, textMax)) {
 
         let data  = new FormData();
         let image = document.getElementById("image").files[0] ?? this.product.image;
@@ -245,7 +254,15 @@ export default {
         data.append("created", this.product.created);
         data.append("updated", Date.now());
 
-        this.$serve.fetchPut(`/products/${this.product._id}`, data)
+        let url     = this.constants.API_URL + "/products/" + this.product._id;
+        let options = {
+          method: "PUT",
+          mode: "cors",
+          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
+          body: data
+        };
+
+        this.$serve.fetchSet(url, options)
           .then(() => {
             alert(this.product.name + this.constants.ALERT_UPDATED);
             this.$router.push("/admin");
