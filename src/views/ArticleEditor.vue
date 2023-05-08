@@ -9,19 +9,19 @@
       </h1>
     </header>
 
-    <CardElt id="create-product">
+    <CardElt id="create-article">
       <template #header>
-        <h2>{{ product.name }}</h2>
+        <h2>{{ article.name }}</h2>
       </template>
 
       <template #body>
         <form method="post"
           enctype="multipart/form-data">
-          <ListElt :items="constants.PRODUCT_FORM">
+          <ListElt :items="constants.ARTICLE_FORM">
 
             <template #item-1>
-              <FieldElt v-model:value="product.name"
-                @keyup.enter="updateProduct()"
+              <FieldElt v-model:value="article.name"
+                @keyup.enter="updateArticle()"
                 :info="constants.INFO_NAME"
                 :min="2">
 
@@ -35,13 +35,13 @@
             </template>
 
             <template #item-2>
-              <label for="description">
-                {{ constants.LEGEND_DESCRIPTION }}
+              <label for="text">
+                {{ constants.LEGEND_TEXT }}
               </label>
 
-              <Editor id="description"
+              <Editor id="text"
                 :api-key="constants.TINY_KEY"
-                v-model="product.description"
+                v-model="article.text"
                 :init="{
                   toolbar:
                     'undo redo outdent indent align lineheight | \
@@ -51,9 +51,9 @@
             </template>
 
             <template #item-3>
-              <MediaElt v-if="product.image"
-                :src="'/img/thumbnails/products/' + product.image"
-                :alt="product.alt" />
+              <MediaElt v-if="article.image"
+                :src="'/img/thumbnails/articles/' + article.image"
+                :alt="article.alt" />
 
               <FieldElt id="image"
                 type="file"
@@ -71,7 +71,8 @@
 
             <template #item-4>
               <FieldElt type="textarea"
-                v-model:value="product.alt"
+                v-model:value="article.alt"
+                @keyup.enter="updateArticle()"
                 :info="constants.INFO_ALT">
 
                 <template #legend>
@@ -84,43 +85,10 @@
             </template>
 
             <template #item-5>
-              <FieldElt type="number"
-                v-model:value="product.price"
-                @keyup.enter="updateProduct()"
-                :info="constants.INFO_PRICE"
-                :min="1"
-                :max="1000">
-
-                <template #legend>
-                  {{ constants.LEGEND_PRICE }}
-                </template>
-                <template #label>
-                  {{ constants.LABEL_PRICE }}
-                </template>
-              </FieldElt>
-            </template>
-
-            <template #item-6>
-              <FieldElt type="textarea"
-                v-model:value="product.options"
-                @keyup.enter="updateProduct()"
-                :info="constants.INFO_OPTIONS"
-                :max="100">
-
-                <template #legend>
-                  {{ constants.LEGEND_OPTIONS }}
-                </template>
-                <template #label>
-                  {{ constants.LABEL_OPTIONS }}
-                </template>
-              </FieldElt>
-            </template>
-
-            <template #item-7>
               <FieldElt type="select"
-                :list="constants.CATS_PRODUCT"
-                v-model:value="product.cat"
-                @keyup.enter="updateProduct()"
+                :list="constants.CATS_ARTICLE"
+                v-model:value="article.cat"
+                @keyup.enter="updateArticle()"
                 :info="constants.INFO_CATEGORY">
 
                 <template #legend>
@@ -132,12 +100,13 @@
               </FieldElt>
             </template>
           </ListElt>
+          <br>
 
           <BtnElt type="button"
-            @click="updateProduct()" 
+            @click="updateArticle()" 
             class="btn-sky"
             :content="constants.CONTENT_UPDATE"
-            :title="constants.TITLE_UPDATE + product.name">
+            :title="constants.TITLE_UPDATE + article.name">
 
             <template #btn>
               <i class="fa-solid fa-cloud-arrow-up fa-lg"></i>
@@ -152,16 +121,16 @@
 <script>
 import { mapState, mapActions } from "vuex"
 
-import BtnElt from "@/assets/BtnElt"
-import CardElt from "@/assets/CardElt"
-import FieldElt from "@/assets/FieldElt"
-import ListElt from "@/assets/ListElt"
-import MediaElt from "@/assets/MediaElt"
+import BtnElt from "../assets/BtnElt"
+import CardElt from "../assets/CardElt"
+import FieldElt from "../assets/FieldElt"
+import ListElt from "../assets/ListElt"
+import MediaElt from "../assets/MediaElt"
 
 import Editor from "@tinymce/tinymce-vue"
 
 export default {
-  name: "ProductEditor",
+  name: "ArticleEditor",
   components: {
     BtnElt,
     CardElt,
@@ -187,11 +156,11 @@ export default {
           this.user = res;
 
           if (this.checkRole("editor")) {
-            this.$store.dispatch("readProduct", this.$route.params.id);
+            this.$store.dispatch("readArticle", this.$route.params.id);
 
             this.$serve.setMeta(
-              this.constants.HEAD_PRODUCT, 
-              this.constants.META_PRODUCT,
+              this.constants.HEAD_ARTICLE, 
+              this.constants.META_ARTICLE,
               this.constants.UI_URL,
               this.constants.UI_URL + this.constants.LOGO_SRC
             );
@@ -209,11 +178,11 @@ export default {
   },
 
   computed: {
-    ...mapState(["product"])
+    ...mapState(["article"])
   },
 
   methods: {
-    ...mapActions(["readProduct"]),
+    ...mapActions(["readArticle"]),
 
     /**
      * CHECK ROLE
@@ -225,36 +194,29 @@ export default {
     },
 
     /**
-     * UPDATE PRODUCT
+     * UPDATE ARTICLE
      */
-    updateProduct() {
-      let stringMsg = this.constants.CHECK_STRING;
-      let textMin   = this.constants.TEXT_MIN;
-      let textMax   = this.constants.TEXT_MAX;
-      let priceMsg  = this.constants.CHECK_NUMBER;
-      let priceMin  = this.constants.PRICE_MIN;
-      let priceMax  = this.constants.PRICE_MAX;
+    updateArticle() {
+      let msg = this.constants.CHECK_STRING;
+      let min = this.constants.TEXT_MIN;
+      let max = this.constants.TEXT_MAX;
 
-      if (this.$serve.checkRange(this.product.name, stringMsg) && 
-        this.$serve.checkRange(this.product.description, stringMsg, textMin, textMax) && 
-        this.$serve.checkRange(this.product.alt, stringMsg) && 
-        this.$serve.checkRange(this.product.price, priceMsg, priceMin, priceMax) && 
-        this.$serve.checkRange(this.product.options, stringMsg, textMin, textMax)) {
+      if (this.$serve.checkRange(this.article.name, msg) && 
+        this.$serve.checkRange(this.article.text, msg, min, max) && 
+        this.$serve.checkRange(this.article.alt, msg)) {
 
         let data  = new FormData();
-        let image = document.getElementById("image").files[0] ?? this.product.image;
+        let image = document.getElementById("image").files[0] ?? this.article.image;
 
-        data.append("name", this.product.name);
-        data.append("description", this.product.description);
+        data.append("name", this.article.name);
+        data.append("text", this.article.text);
         data.append("image", image);
-        data.append("alt", this.product.alt);
-        data.append("price", this.product.price);
-        data.append("options", this.product.options);
-        data.append("cat", this.product.cat);
-        data.append("created", this.product.created);
+        data.append("alt", this.article.alt);
+        data.append("likes", this.article.likes);
+        data.append("cat", this.article.cat);
         data.append("updated", Date.now());
 
-        let url     = this.constants.API_URL + "/products/" + this.product._id;
+        let url = this.constants.API_URL + "/articles/" + this.article._id;
         let options = {
           method: "PUT",
           mode: "cors",
@@ -264,7 +226,7 @@ export default {
 
         this.$serve.fetchSet(url, options)
           .then(() => {
-            alert(this.product.name + this.constants.ALERT_UPDATED);
+            alert(this.article.name + this.constants.ALERT_UPDATED);
             this.$router.push("/admin");
           })
           .catch(err => { this.$serve.checkError(err) });

@@ -124,18 +124,18 @@
 <script>
 import { mapState, mapActions } from "vuex"
 
-import CardElt from "@/assets/CardElt"
-import NavElt from "@/assets/NavElt"
+import CardElt from "../assets/CardElt"
+import NavElt from "../assets/NavElt"
 
-import ProductManager from "@/components/managers/ProductManager"
-import ReviewManager from "@/components/managers/ReviewManager"
-import OrderManager from "@/components/managers/OrderManager"
-import ArticleManager from "@/components/managers/ArticleManager"
-import CommentManager from "@/components/managers/CommentManager"
-import GalleryManager from "@/components/managers/GalleryManager"
-import ImageManager from "@/components/managers/ImageManager"
-import LinkManager from "@/components/managers/LinkManager"
-import UserManager from "@/components/managers/UserManager"
+import ProductManager from "../components/ProductManager"
+import ReviewManager from "../components/ReviewManager"
+import OrderManager from "../components/OrderManager"
+import ArticleManager from "../components/ArticleManager"
+import CommentManager from "../components/CommentManager"
+import GalleryManager from "../components/GalleryManager"
+import ImageManager from "../components/ImageManager"
+import LinkManager from "../components/LinkManager"
+import UserManager from "../components/UserManager"
 
 export default {
   name: "AdminEditor",

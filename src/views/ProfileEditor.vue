@@ -185,12 +185,12 @@
 <script>
 import { mapState, mapActions } from "vuex"
 
-import BtnElt from "@/assets/BtnElt"
-import CardElt from "@/assets/CardElt"
-import FieldElt from "@/assets/FieldElt"
-import ListElt from "@/assets/ListElt"
-import MediaElt from "@/assets/MediaElt"
-import TableElt from "@/assets/TableElt"
+import BtnElt from "../assets/BtnElt"
+import CardElt from "../assets/CardElt"
+import FieldElt from "../assets/FieldElt"
+import ListElt from "../assets/ListElt"
+import MediaElt from "../assets/MediaElt"
+import TableElt from "../assets/TableElt"
 
 export default {
   name: "ProfileEditor",
