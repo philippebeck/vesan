@@ -76,9 +76,9 @@
 </template>
 
 <script>
-import BtnElt from "@/assets/BtnElt"
-import FieldElt from "@/assets/FieldElt"
-import ListElt from "@/assets/ListElt"
+import BtnElt from "../assets/BtnElt"
+import FieldElt from "../assets/FieldElt"
+import ListElt from "../assets/ListElt"
 
 import { VueRecaptcha } from "vue-recaptcha";
 

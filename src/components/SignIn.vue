@@ -42,8 +42,8 @@
 </template>
 
 <script>
-import BtnElt from "@/assets/BtnElt"
-import FieldElt from "@/assets/FieldElt"
+import BtnElt from "../assets/BtnElt"
+import FieldElt from "../assets/FieldElt"
 
 import { VueRecaptcha } from "vue-recaptcha";
 
