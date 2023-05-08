@@ -1,21 +1,22 @@
 <template>
   <CardElt>
     <template #header>
-      <h2 id="create-article">
-        <i class="fa-regular fa-pen-to-square fa-lg"
+      <h2 id="create-product">
+        <i class="fa-regular fa-lightbulb fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.ARTICLE_CREATOR }}
+        {{ constants.PRODUCT_CREATOR }}
       </h2>
     </template>
 
     <template #body>
-      <form enctype="multipart/form-data">
-        <ListElt :items="constants.ARTICLE_FORM">
+      <form method="post"
+        enctype="multipart/form-data">
+        <ListElt :items="constants.PRODUCT_FORM">
 
           <template #item-1>
             <FieldElt v-model:value="name"
-              @keyup.enter="createArticle()"
+              @keyup.enter="createProduct()"
               :info="constants.INFO_NAME">
 
               <template #legend>
@@ -28,14 +29,14 @@
           </template>
 
           <template #item-2>
-            <label for="text">
-              {{ constants.LEGEND_TEXT }}
+            <label for="description">
+              {{ constants.LEGEND_DESCRIPTION }}
             </label>
 
-            <Editor id="text"
+            <Editor id="description"
               :api-key="constants.TINY_KEY"
-              v-model="text"
-              @keyup.enter="createArticle()"
+              v-model="description"
+              @keyup.enter="createProduct()"
               :init="{
                 toolbar:
                   'undo redo outdent indent align lineheight | \
@@ -45,7 +46,7 @@
           </template>
 
           <template #item-3>
-            <FieldElt id="image" 
+            <FieldElt id="image"
               type="file"
               v-model:value="image"
               :info="constants.INFO_IMAGE">
@@ -62,7 +63,6 @@
           <template #item-4>
             <FieldElt type="textarea"
               v-model:value="alt"
-              @keyup.enter="createArticle()"
               :info="constants.INFO_ALT">
 
               <template #legend>
@@ -75,10 +75,43 @@
           </template>
 
           <template #item-5>
+            <FieldElt type="number"
+              v-model:value="price"
+              @keyup.enter="createProduct()"
+              :info="constants.INFO_PRICE"
+              :min="constants.PRICE_MIN"
+              :max="constants.PRICE_MAX">
+
+              <template #legend>
+                {{ constants.LEGEND_PRICE }}
+              </template>
+              <template #label>
+                {{ constants.LABEL_PRICE }}
+              </template>
+            </FieldElt>
+          </template>
+
+          <template #item-6>
+            <FieldElt type="textarea"
+              v-model:value="options"
+              @keyup.enter="createProduct()"
+              :info="constants.INFO_OPTIONS"
+              :max="100">
+
+              <template #legend>
+                {{ constants.LEGEND_OPTIONS }}
+              </template>
+              <template #label>
+                {{ constants.LABEL_OPTIONS }}
+              </template>
+            </FieldElt>
+          </template>
+
+          <template #item-7>
             <FieldElt type="select"
-              :list="constants.CATS_ARTICLE"
+              :list="constants.CATS_PRODUCT"
               v-model:value="cat"
-              @keyup.enter="createArticle()"
+              @keyup.enter="createProduct()"
               :info="constants.INFO_CATEGORY">
 
               <template #legend>
@@ -90,13 +123,12 @@
             </FieldElt>
           </template>
         </ListElt>
-        <br>
 
         <BtnElt type="button"
-          @click="createArticle()" 
+          @click="createProduct()" 
           class="btn-green"
           :content="constants.CONTENT_CREATE"
-          :title="constants.ARTICLE_CREATOR">
+          :title="constants.PRODUCT_CREATOR">
 
           <template #btn>
             <i class="fa-solid fa-square-plus fa-lg"></i>
@@ -108,15 +140,15 @@
 </template>
 
 <script>
-import BtnElt from "@/assets/BtnElt"
-import CardElt from "@/assets/CardElt"
-import FieldElt from "@/assets/FieldElt"
-import ListElt from "@/assets/ListElt"
+import BtnElt from "../assets/BtnElt"
+import CardElt from "../assets/CardElt"
+import FieldElt from "../assets/FieldElt"
+import ListElt from "../assets/ListElt"
 
 import Editor from "@tinymce/tinymce-vue"
 
 export default {
-  name: "ArticleCreator",
+  name: "ProductCreator",
   components: {
     BtnElt,
     CardElt,
@@ -129,50 +161,53 @@ export default {
   data() {
     return {
       name: "",
-      text:"",
+      description:"",
       image: "",
       alt: "",
+      price: null,
+      options: "",
       cat: ""
     }
   },
 
   methods: {
     /**
-     * CREATE ARTICLE
+     * CREATE PRODUCT
      */
-    createArticle() {
-      let message = this.constants.CHECK_STRING;
+    createProduct() {
+      let msg = this.constants.CHECK_STRING;
       let min = this.constants.TEXT_MIN;
       let max = this.constants.TEXT_MAX;
 
-      if (this.$serve.checkRange(this.name, message) && 
-        this.$serve.checkRange(this.text, message, min, max) && 
-        this.$serve.checkRange(this.alt, message)) {
+      if (this.$serve.checkRange(this.name, msg) && 
+          this.$serve.checkRange(this.description, msg, min, max) && 
+          this.$serve.checkRange(this.alt, msg)) {
 
-        if (this.cat === "") { this.cat = this.constants.CAT_ARTICLE }
+        if (this.cat === "") { this.cat = this.constants.CAT_PRODUCT }
         let image = document.getElementById("image").files[0];
 
         if (image !== undefined) {
-          let article = new FormData();
+          let product = new FormData();
 
-          article.append("name", this.name);
-          article.append("text", this.text);
-          article.append("image", image);
-          article.append("alt", this.alt);
-          article.append("user", this.constants.USER_ID);
-          article.append("likes", []);
-          article.append("cat", this.cat);
-          article.append("created", Date.now());
-          article.append("updated", Date.now());
+          product.append("name", this.name);
+          product.append("description", this.description);
+          product.append("image", image);
+          product.append("alt", this.alt);
+          product.append("price", this.price);
+          product.append("options", this.options);
+          product.append("cat", this.cat);
+          product.append("created", Date.now());
+          product.append("updated", Date.now());
 
+          let url = this.constants.API_URL + "/products";
           let options = {
             method: "POST",
             mode: "cors",
             headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
-            body: article
+            body: product
           };
 
-          this.$serve.fetchSet(this.constants.API_URL + "/articles", options)
+          this.$serve.fetchSet(url, options)
             .then(() => {
               alert(this.name + this.constants.ALERT_CREATED);
               this.$router.go();
