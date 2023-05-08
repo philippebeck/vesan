@@ -55,10 +55,10 @@
 </template>
 
 <script>
-import CardElt from "@/assets/CardElt"
-import ListElt from "@/assets/ListElt"
-import MediaElt from "@/assets/MediaElt"
-import SliderElt from "@/assets/SliderElt"
+import CardElt from "../assets/CardElt"
+import ListElt from "../assets/ListElt"
+import MediaElt from "../assets/MediaElt"
+import SliderElt from "../assets/SliderElt"
 
 export default {
   name: "HomeView",

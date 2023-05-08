@@ -72,12 +72,12 @@
 <script>
 import { mapState, mapActions } from "vuex"
 
-import BtnElt from "@/assets/BtnElt"
-import CardElt from "@/assets/CardElt"
-import ListElt from "@/assets/ListElt"
-import NavElt from "@/assets/NavElt"
+import BtnElt from "../assets/BtnElt"
+import CardElt from "../assets/CardElt"
+import ListElt from "../assets/ListElt"
+import NavElt from "../assets/NavElt"
 
-import LinkCreator from "@/components/creators/LinkCreator"
+import LinkCreator from "../components/LinkCreator"
 
 export default {
   name: "LinkView",

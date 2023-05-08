@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import CardElt from "@/assets/CardElt"
+import CardElt from "../assets/CardElt"
 
 export default {
   name: "LegalView",

@@ -64,12 +64,12 @@
 <script>
 import { mapState, mapActions } from "vuex"
 
-import CardElt from "@/assets/CardElt"
-import ListElt from "@/assets/ListElt"
-import MediaElt from "@/assets/MediaElt"
-import SliderElt from "@/assets/SliderElt"
+import CardElt from "../assets/CardElt"
+import ListElt from "../assets/ListElt"
+import MediaElt from "../assets/MediaElt"
+import SliderElt from "../assets/SliderElt"
 
-import ImageCreator from "@/components/creators/ImageCreator"
+import ImageCreator from "../components/ImageCreator"
 
 export default {
   name: "ImageView",

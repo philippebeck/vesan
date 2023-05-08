@@ -126,12 +126,12 @@
 </template>
 
 <script>
-import BtnElt from "@/assets/BtnElt"
-import CardElt from "@/assets/CardElt"
+import BtnElt from "../assets/BtnElt"
+import CardElt from "../assets/CardElt"
 
-import SignUp from "@/components/connectors/SignUp"
-import SignIn from "@/components/connectors/SignIn"
-import ForgotPass from "@/components/connectors/ForgotPass"
+import SignUp from "../components/SignUp"
+import SignIn from "../components/SignIn"
+import ForgotPass from "../components/ForgotPass"
 
 export default {
   name: "LoginView",
