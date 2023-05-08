@@ -1,17 +1,16 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import ReviewList from "@/components/lists/ReviewList"
+import CommentList from "../../../components/CommentList"
 
 let wrapper;
 
 beforeEach(() => {
-  wrapper = shallowMount(ReviewList, {
+  wrapper = shallowMount(CommentList, {
     props: {
       constants: {
         TEST: "test"
       },
-      reviews: [{
-        text: "Review text",
-        score: "Review score"
+      comments: [{
+        text: "Comment text"
       }]
     },
     global: {
@@ -23,25 +22,25 @@ beforeEach(() => {
 
 enableAutoUnmount(afterEach)
 
-describe("ReviewList", () => {
+describe("CommentList", () => {
   test("name", () => { 
-    expect(ReviewList.name).toBe("ReviewList") 
+    expect(CommentList.name).toBe("CommentList") 
   })
 
   test("components", () => { 
-    expect(typeof ReviewList.components).toBe("object") 
+    expect(typeof CommentList.components).toBe("object") 
   })
 
   test("props", () => {
-    expect(typeof ReviewList.props).toBe("object")
+    expect(typeof CommentList.props).toBe("object")
   })
 
   test("methods", () => {
-    expect(typeof ReviewList.methods).toBe("object")
+    expect(typeof CommentList.methods).toBe("object")
   })
 })
 
-describe("Mounted ReviewList", () => {
+describe("Mounted CommentList", () => {
   test("wrapper", () => {
     expect(wrapper.exists()).toBe(true)
   })
@@ -56,14 +55,13 @@ describe("Mounted ReviewList", () => {
 
   test("wrapper props", () => {
     expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
-    expect(wrapper.props("reviews")).toStrictEqual([{
-      text: "Review text",
-      score: "Review score"
+    expect(wrapper.props("comments")).toStrictEqual([{
+      text: "Comment text"
     }])
   })
 
   test("wrapper methods", () => { 
-    expect(typeof wrapper.vm.updateReview).toBe("function") 
-    expect(typeof wrapper.vm.deleteReview).toBe("function") 
+    expect(typeof wrapper.vm.updateComment).toBe("function") 
+    expect(typeof wrapper.vm.deleteComment).toBe("function") 
   })
 })

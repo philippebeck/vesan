@@ -1,10 +1,10 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import ImageManager from "@/components/managers/ImageManager"
+import GalleryManager from "../../../components/GalleryManager"
 
 let wrapper;
 
 beforeEach(() => {
-  wrapper = shallowMount(ImageManager, {
+  wrapper = shallowMount(GalleryManager, {
     props: {
       constants: {
         TEST: "test"
@@ -12,11 +12,6 @@ beforeEach(() => {
       galleries: [{
         name: "Gallery name",
         author: "Gallery author"
-      }],
-      images: [{
-        name: "Image name",
-        description: "Image description",
-        gallery: "Gallery name"
       }]
     },
     global: {
@@ -28,25 +23,25 @@ beforeEach(() => {
 
 enableAutoUnmount(afterEach)
 
-describe("ImageManager", () => {
+describe("GalleryManager", () => {
   test("name", () => { 
-    expect(ImageManager.name).toBe("ImageManager") 
+    expect(GalleryManager.name).toBe("GalleryManager") 
   })
 
   test("components", () => { 
-    expect(typeof ImageManager.components).toBe("object") 
+    expect(typeof GalleryManager.components).toBe("object") 
   })
 
   test("props", () => {
-    expect(typeof ImageManager.props).toBe("object")
+    expect(typeof GalleryManager.props).toBe("object")
   })
 
   test("methods", () => { 
-    expect(typeof ImageManager.methods).toBe("object")
+    expect(typeof GalleryManager.methods).toBe("object")
   })
 })
 
-describe("Mounted ImageManager", () => {
+describe("Mounted GalleryManager", () => {
   test("wrapper", () => {
     expect(wrapper.exists()).toBe(true)
   })
@@ -55,7 +50,6 @@ describe("Mounted ImageManager", () => {
     expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
-    expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "TableElt" })).toBe("object")
   })
 
@@ -65,17 +59,11 @@ describe("Mounted ImageManager", () => {
       name: "Gallery name",
       author: "Gallery author"
     }])
-    expect(wrapper.props("images")).toStrictEqual([{
-      name: "Image name",
-      description: "Image description",
-      gallery: "Gallery name"
-    }])
   })
 
   test("wrapper methods", () => {
-    expect(typeof wrapper.vm.getImages).toBe("function")
-    expect(typeof wrapper.vm.getItemsByGallery).toBe("function")
-    expect(typeof wrapper.vm.updateImage).toBe("function")
-    expect(typeof wrapper.vm.deleteImage).toBe("function")
+    expect(typeof wrapper.vm.getGalleries).toBe("function")
+    expect(typeof wrapper.vm.updateGallery).toBe("function")
+    expect(typeof wrapper.vm.deleteGallery).toBe("function")
   })
 })

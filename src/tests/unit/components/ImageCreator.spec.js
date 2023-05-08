@@ -1,17 +1,16 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import LinkCreator from "@/components/creators/LinkCreator"
+import ImageCreator from "../../../components/ImageCreator"
 
 let wrapper;
 
 beforeEach(() => {
-  wrapper = shallowMount(LinkCreator, {
+  wrapper = shallowMount(ImageCreator, {
     props: {
       constants: {
         TEST: "test"
       },
-      name: "Link name", 
-      url: "Link url", 
-      cat: "Link cat" 
+      description: "Image description", 
+      gallery: "Image gallery" 
     },
     global: {
       mocks: {},
@@ -22,29 +21,29 @@ beforeEach(() => {
 
 enableAutoUnmount(afterEach)
 
-describe("LinkCreator", () => {
+describe("ImageCreator", () => {
   test("name", () => { 
-    expect(LinkCreator.name).toBe("LinkCreator") 
+    expect(ImageCreator.name).toBe("ImageCreator") 
   })
 
   test("components", () => { 
-    expect(typeof LinkCreator.components).toBe("object") 
+    expect(typeof ImageCreator.components).toBe("object") 
   })
 
   test("props", () => { 
-    expect(typeof LinkCreator.props).toBe("object") 
+    expect(typeof ImageCreator.props).toBe("object") 
   })
 
   test("data", () => { 
-    expect(typeof LinkCreator.data).toBe("function") 
+    expect(typeof ImageCreator.data).toBe("function") 
   })
 
   test("methods", () => { 
-    expect(typeof LinkCreator.methods).toBe("object") 
+    expect(typeof ImageCreator.methods).toBe("object") 
   })
 })
 
-describe("Mounted LinkCreator", () => {
+describe("Mounted ImageCreator", () => {
   test("wrapper", () => { 
     expect(wrapper.exists()).toBe(true) 
   })
@@ -61,16 +60,14 @@ describe("Mounted LinkCreator", () => {
   })
 
   test("wrapper data", () => {
-    expect(wrapper.vm.name).toBe("")
-    expect(wrapper.vm.url).toBe("")
-    expect(wrapper.vm.cat).toBe("")
+    expect(wrapper.vm.description).toBe("")
+    expect(wrapper.vm.gallery).toBe("")
 
-    expect(wrapper.attributes("name")).toBe("Link name")
-    expect(wrapper.attributes("url")).toBe("Link url")
-    expect(wrapper.attributes("cat")).toBe("Link cat")
+    expect(wrapper.attributes("description")).toBe("Image description")
+    expect(wrapper.attributes("gallery")).toBe("Image gallery")
   })
 
-  test("wrapper methods", () => { 
-    expect(typeof wrapper.vm.createLink).toBe("function") 
+  test("wrapper methods", () => {
+    expect(typeof wrapper.vm.createImage).toBe("function")
   })
 });

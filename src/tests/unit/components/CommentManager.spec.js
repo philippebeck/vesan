@@ -1,10 +1,10 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import ArticleManager from "@/components/managers/ArticleManager"
+import CommentManager from "../../../components/CommentManager"
 
 let wrapper;
 
 beforeEach(() => {
-  wrapper = shallowMount(ArticleManager, {
+  wrapper = shallowMount(CommentManager, {
     props: {
       constants: {
         TEST: "test"
@@ -15,6 +15,9 @@ beforeEach(() => {
         image: "Article image",
         alt: "Article alt",
         cat: "Article cat"
+      }],
+      comments: [{
+        text: "Comment text"
       }],
       users: [{
         name: "User name",
@@ -33,25 +36,25 @@ beforeEach(() => {
 
 enableAutoUnmount(afterEach)
 
-describe("ArticleManager", () => {
+describe("CommentManager", () => {
   test("name", () => { 
-    expect(ArticleManager.name).toBe("ArticleManager") 
+    expect(CommentManager.name).toBe("CommentManager") 
   })
 
   test("components", () => { 
-    expect(typeof ArticleManager.components).toBe("object") 
+    expect(typeof CommentManager.components).toBe("object") 
   })
 
   test("props", () => {
-    expect(typeof ArticleManager.props).toBe("object")
+    expect(typeof CommentManager.props).toBe("object")
   })
 
   test("methods", () => { 
-    expect(typeof ArticleManager.methods).toBe("object")
+    expect(typeof CommentManager.methods).toBe("object")
   })
 })
 
-describe("Mounted ArticleManager", () => {
+describe("Mounted CommentManager", () => {
   test("wrapper", () => {
     expect(wrapper.exists()).toBe(true)
   })
@@ -60,8 +63,6 @@ describe("Mounted ArticleManager", () => {
     expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object") 
     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object") 
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object") 
-    expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object") 
-    expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object") 
     expect(typeof wrapper.findComponent({ name: "TableElt" })).toBe("object") 
   })
 
@@ -74,6 +75,9 @@ describe("Mounted ArticleManager", () => {
       alt: "Article alt",
       cat: "Article cat"
     }])
+    expect(wrapper.props("comments")).toStrictEqual([{
+      text: "Comment text"
+    }])
     expect(wrapper.props("users")).toStrictEqual([{
       name: "User name",
       email: "User email",
@@ -84,10 +88,9 @@ describe("Mounted ArticleManager", () => {
   })
 
   test("wrapper methods", () => {
-    expect(typeof wrapper.vm.getArticles).toBe("function")
-    expect(typeof wrapper.vm.getArticle).toBe("function")
-    expect(typeof wrapper.vm.checkArticle).toBe("function")
-    expect(typeof wrapper.vm.updateArticle).toBe("function")
-    expect(typeof wrapper.vm.deleteArticle).toBe("function")
+    expect(typeof wrapper.vm.getComments).toBe("function")
+    expect(typeof wrapper.vm.getArticleName).toBe("function")
+    expect(typeof wrapper.vm.moderateComment).toBe("function")
+    expect(typeof wrapper.vm.deleteComment).toBe("function")
   })
 })

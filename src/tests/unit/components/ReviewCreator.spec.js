@@ -1,15 +1,16 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import CommentCreator from "@/components/creators/CommentCreator"
+import ReviewCreator from "../../../components/ReviewCreator"
 
 let wrapper;
 
 beforeEach(() => {
-  wrapper = shallowMount(CommentCreator, {
+  wrapper = shallowMount(ReviewCreator, {
     props: {
       constants: {
         TEST: "test"
       },
-      text: "Comment text"
+      text: "Review text", 
+      score: 5 
     },
     global: {
       mocks: {},
@@ -20,36 +21,36 @@ beforeEach(() => {
 
 enableAutoUnmount(afterEach)
 
-describe("CommentCreator", () => {
+describe("ReviewCreator", () => {
   test("name", () => { 
-    expect(CommentCreator.name).toBe("CommentCreator") 
+    expect(ReviewCreator.name).toBe("ReviewCreator") 
   })
 
   test("components", () => { 
-    expect(typeof CommentCreator.components).toBe("object") 
+    expect(typeof ReviewCreator.components).toBe("object") 
   })
 
   test("props", () => { 
-    expect(typeof CommentCreator.props).toBe("object") 
+    expect(typeof ReviewCreator.props).toBe("object") 
   })
 
   test("data", () => { 
-    expect(typeof CommentCreator.data).toBe("function") 
+    expect(typeof ReviewCreator.data).toBe("function") 
   })
 
   test("methods", () => { 
-    expect(typeof CommentCreator.methods).toBe("object") 
+    expect(typeof ReviewCreator.methods).toBe("object") 
   })
 })
 
-describe("Mounted CommentCreator", () => {
+describe("Mounted ReviewCreator", () => {
   test("wrapper", () => { 
     expect(wrapper.exists()).toBe(true) 
   })
 
   test("wrapper components", () => { 
     expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
-    expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object") 
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
   })
 
@@ -59,10 +60,13 @@ describe("Mounted CommentCreator", () => {
 
   test("wrapper data", () => {
     expect(wrapper.vm.text).toBe("")
-    expect(wrapper.attributes("text")).toBe("Comment text")
+    expect(wrapper.vm.score).toBe(null)
+
+    expect(wrapper.attributes("text")).toBe("Review text")
+    expect(wrapper.attributes("score")).toBe("5")
   })
 
   test("wrapper methods", () => { 
-    expect(typeof wrapper.vm.createComment).toBe("function") 
+    expect(typeof wrapper.vm.createReview).toBe("function") 
   })
 });

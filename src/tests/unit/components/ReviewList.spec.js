@@ -1,16 +1,17 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import CommentList from "@/components/lists/CommentList"
+import ReviewList from "../../../components/ReviewList"
 
 let wrapper;
 
 beforeEach(() => {
-  wrapper = shallowMount(CommentList, {
+  wrapper = shallowMount(ReviewList, {
     props: {
       constants: {
         TEST: "test"
       },
-      comments: [{
-        text: "Comment text"
+      reviews: [{
+        text: "Review text",
+        score: "Review score"
       }]
     },
     global: {
@@ -22,25 +23,25 @@ beforeEach(() => {
 
 enableAutoUnmount(afterEach)
 
-describe("CommentList", () => {
+describe("ReviewList", () => {
   test("name", () => { 
-    expect(CommentList.name).toBe("CommentList") 
+    expect(ReviewList.name).toBe("ReviewList") 
   })
 
   test("components", () => { 
-    expect(typeof CommentList.components).toBe("object") 
+    expect(typeof ReviewList.components).toBe("object") 
   })
 
   test("props", () => {
-    expect(typeof CommentList.props).toBe("object")
+    expect(typeof ReviewList.props).toBe("object")
   })
 
   test("methods", () => {
-    expect(typeof CommentList.methods).toBe("object")
+    expect(typeof ReviewList.methods).toBe("object")
   })
 })
 
-describe("Mounted CommentList", () => {
+describe("Mounted ReviewList", () => {
   test("wrapper", () => {
     expect(wrapper.exists()).toBe(true)
   })
@@ -55,13 +56,14 @@ describe("Mounted CommentList", () => {
 
   test("wrapper props", () => {
     expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
-    expect(wrapper.props("comments")).toStrictEqual([{
-      text: "Comment text"
+    expect(wrapper.props("reviews")).toStrictEqual([{
+      text: "Review text",
+      score: "Review score"
     }])
   })
 
   test("wrapper methods", () => { 
-    expect(typeof wrapper.vm.updateComment).toBe("function") 
-    expect(typeof wrapper.vm.deleteComment).toBe("function") 
+    expect(typeof wrapper.vm.updateReview).toBe("function") 
+    expect(typeof wrapper.vm.deleteReview).toBe("function") 
   })
 })

@@ -1,4 +1,4 @@
-import ForgotPass from "@/components/connectors/ForgotPass"
+import ForgotPass from "../../../components/ForgotPass"
 
 describe("ForgotPass", () => {
   test("name", () => { 

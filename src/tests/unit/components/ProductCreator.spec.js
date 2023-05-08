@@ -1,5 +1,5 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import ProductCreator from "@/components/creators/ProductCreator"
+import ProductCreator from "../../../components/ProductCreator"
 
 let wrapper;
 

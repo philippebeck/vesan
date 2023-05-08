@@ -1,5 +1,5 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import LinkManager from "@/components/managers/LinkManager"
+import LinkManager from "../../../components/LinkManager"
 
 let wrapper;
 

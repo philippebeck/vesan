@@ -1,4 +1,4 @@
-import SignUp from "@/components/connectors/SignUp"
+import SignUp from "../../../components/SignUp"
 
 describe("SignUp", () => {
   test("name", () => { 

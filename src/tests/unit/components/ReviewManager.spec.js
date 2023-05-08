@@ -1,5 +1,5 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import ReviewManager from "@/components/managers/ReviewManager"
+import ReviewManager from "../../../components/ReviewManager"
 
 let wrapper;
 
