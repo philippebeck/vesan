@@ -1,4 +1,4 @@
-import HomeView from "@/views/public/HomeView"
+import HomeView from "../../../views/HomeView"
 
 describe("HomeView", () => {
   test("name", () => { 

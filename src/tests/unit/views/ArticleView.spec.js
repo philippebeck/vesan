@@ -1,4 +1,4 @@
-import ArticleView from "@/views/public/ArticleView"
+import ArticleView from "../../../views/ArticleView"
 
 describe("ArticleView", () => {
   test("name", () => { 

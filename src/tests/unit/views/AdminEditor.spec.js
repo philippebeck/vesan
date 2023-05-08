@@ -1,4 +1,4 @@
-import AdminEditor from "@/views/private/AdminEditor"
+import AdminEditor from "../../../views/AdminEditor"
 
 describe("AdminEditor", () => {
   test("name", () => { 

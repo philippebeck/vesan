@@ -1,4 +1,4 @@
-import LoginView from "@/views/public/LoginView"
+import LoginView from "../../../views/LoginView"
 
 describe("LoginView", () => {
   test("name", () => { 

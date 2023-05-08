@@ -1,4 +1,4 @@
-import ProductEditor from "@/views/private/ProductEditor"
+import ProductEditor from "../../../views/ProductEditor"
 
 describe("ProductEditor", () => {
   test("name", () => { 

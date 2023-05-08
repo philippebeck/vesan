@@ -1,4 +1,4 @@
-import ArticleEditor from "@/views/private/ArticleEditor"
+import ArticleEditor from "../../../views/ArticleEditor"
 
 describe("ArticleEditor", () => {
   test("name", () => { 

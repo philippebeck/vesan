@@ -1,4 +1,4 @@
-import ImageView from "@/views/public/ImageView"
+import ImageView from "../../../views/ImageView"
 
 describe("ImageView", () => {
   test("name", () => { 

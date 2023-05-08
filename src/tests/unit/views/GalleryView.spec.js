@@ -1,4 +1,4 @@
-import GalleryView from "@/views/public/GalleryView"
+import GalleryView from "../../../views/GalleryView"
 
 describe("GalleryView", () => {
   test("name", () => { 

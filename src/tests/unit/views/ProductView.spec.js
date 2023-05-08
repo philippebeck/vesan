@@ -1,4 +1,4 @@
-import ProductView from "@/views/public/ProductView"
+import ProductView from "../../../views/ProductView"
 
 describe("ProductView", () => {
   test("name", () => { 

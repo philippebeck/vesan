@@ -1,5 +1,5 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import ErrorView from "@/views/public/ErrorView"
+import ErrorView from "../../../views/ErrorView"
 
 let wrapper;
 

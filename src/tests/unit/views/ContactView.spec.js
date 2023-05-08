@@ -1,4 +1,4 @@
-import ContactView from "@/views/public/ContactView"
+import ContactView from "../../../views/ContactView"
 
 describe("ContactView", () => {
   test("name", () => { 

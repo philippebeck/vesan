@@ -1,4 +1,4 @@
-import BlogView from "@/views/public/BlogView"
+import BlogView from "../../../views/BlogView"
 
 describe("BlogView", () => {
   test("name", () => { 

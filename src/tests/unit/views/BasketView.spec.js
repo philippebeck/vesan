@@ -1,4 +1,4 @@
-import BasketView from "@/views/public/BasketView"
+import BasketView from "../../../views/BasketView"
 
 describe("BasketView", () => {
   test("name", () => { 

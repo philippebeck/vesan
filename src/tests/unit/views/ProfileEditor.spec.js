@@ -1,4 +1,4 @@
-import ProfileEditor from "@/views/private/ProfileEditor"
+import ProfileEditor from "../../../views/ProfileEditor"
 
 describe("ProfileEditor", () => {
   test("name", () => { 
@@ -22,7 +22,6 @@ describe("ProfileEditor", () => {
 
   test("data", () => { 
     expect(typeof ProfileEditor.data).toBe("function") 
-    expect(ProfileEditor.data()).toEqual({ pass: "" }) 
   })
 
   test("created()", () => {

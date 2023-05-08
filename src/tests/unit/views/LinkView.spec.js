@@ -1,4 +1,4 @@
-import LinkView from "@/views/public/LinkView"
+import LinkView from "../../../views/LinkView"
 
 describe("LinkView", () => {
   test("name", () => { 

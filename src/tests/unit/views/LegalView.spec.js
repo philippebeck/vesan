@@ -1,4 +1,4 @@
-import LegalView from "@/views/public/LegalView"
+import LegalView from "../../../views/LegalView"
 
 describe("LegalView", () => {
   test("name", () => { 
