@@ -93,9 +93,9 @@
 import { mapState, mapActions } from "vuex"
 import constants from "../constants"
 
-import FootElt from "@/assets/FootElt"
-import ListElt from "@/assets/ListElt"
-import NavElt from "@/assets/NavElt"
+import FootElt from "./assets/FootElt"
+import ListElt from "./assets/ListElt"
+import NavElt from "./assets/NavElt"
 
 export default {
   name: 'App',
