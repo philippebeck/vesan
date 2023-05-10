@@ -1,30 +1,59 @@
+import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
+import serve from "../../../assets/serve.js"
 import HomeView from "../../../views/HomeView"
 
+let wrapper;
+
+/**
+ * @jest-environment jsdom
+ */
+beforeEach(() => {
+  jest.spyOn(serve, "setMeta").mockImplementation(() => {});
+
+  wrapper = shallowMount(HomeView, {
+    props: {
+      constants: {
+        TEST: "test"
+      },
+      user: {
+        name: "test",
+        email: "email@test.com"
+      }
+    },
+    data() {
+      return {
+        media: { title: "Test Title", url: "https://test.com" }
+      }
+    }
+  });
+});
+
+enableAutoUnmount(afterEach)
+
 describe("HomeView", () => {
-  test("name", () => { 
-    expect(HomeView.name).toBe("HomeView") 
+  test("wrapper must be a vue instance", () => {
+    expect(wrapper.exists()).toBe(true)
   })
 
-  test("components", () => { 
-    expect(typeof HomeView.components).toBe("object") 
-    expect(typeof HomeView.components.CardElt).toBe("object") 
-    expect(typeof HomeView.components.ListElt).toBe("object") 
-    expect(typeof HomeView.components.MediaElt).toBe("object") 
-    expect(typeof HomeView.components.SliderElt).toBe("object") 
+  test("wrapper components", () => {
+    expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "SliderElt" })).toBe("object")
   })
 
-  test("props", () => { 
-    expect(typeof HomeView.props).toBe("object") 
-    expect(HomeView.props).toContain("constants") 
-    expect(HomeView.props).toContain("user") 
+  test("wrapper props", () => {
+    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
+    expect(wrapper.props("user")).toStrictEqual({ name: "test", email: "email@test.com" })
   })
 
-  test("data", () => { 
-    expect(typeof HomeView.data).toBe("function") 
-    expect(HomeView.data()).toEqual({ media: {} }) 
+  test("wrapper data", () => {
+    expect(wrapper.vm.$data).toStrictEqual({
+      media: { title: "Test Title", url: "https://test.com" }
+    })
   })
 
-  test("created()", () => {
-    expect(typeof HomeView.created).toBe("function")
+  test("wrapper created hook", () => {
+    expect(serve.setMeta).toHaveBeenCalled()
   })
 })
