@@ -9,7 +9,7 @@
 
       <template #body>
 
-        <BtnElt v-if="!checkRole('user')"
+        <BtnElt v-if="!checkSession('user')"
           id="likes"
           href="/login"
           class="btn-blue"
@@ -91,7 +91,7 @@
           :constants="constants"/>
       </template>
 
-      <template #aside  v-if="checkRole('user')">
+      <template #aside  v-if="checkSession('user')">
         <CommentCreator :constants="constants"/>
       </template>
     </CardElt>
@@ -100,11 +100,11 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
+import { checkError, checkId, checkRole, fetchGet, fetchSet, setMeta } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
 import MediaElt from "../assets/MediaElt"
-
 import CommentCreator from "../components/CommentCreator"
 import CommentList from "../components/CommentList"
 
@@ -128,11 +128,11 @@ export default {
   created () {
     let url = this.constants.API_URL + "/articles/" + this.$route.params.id;
 
-    this.$serve.fetchGet(url)
+    fetchGet(url)
       .then((article => {
         this.article = article;
 
-        this.$serve.setMeta(
+        setMeta(
           article.name + this.constants.HEAD, 
           article.text.slice(0, 160).replace( /(<([^>]+)>)/gi, ""),
           this.constants.UI_URL + "/article/" + article._id,
@@ -140,7 +140,7 @@ export default {
         );
       }))
       .catch(err => { 
-        this.$serve.checkError(err);
+        checkError(err);
         this.$router.push("/blog");
       });
 
@@ -166,8 +166,8 @@ export default {
      * @param {string} role
      * @returns
      */
-    checkRole(role) {
-      return this.$serve.checkRole(this.user.role, role);
+    checkSession(role) {
+      return checkRole(this.user.role, role);
     },
 
     /**
@@ -176,7 +176,7 @@ export default {
      */
     checkLikes() {
       if (this.article.likes) {
-        return this.$serve.checkId(this.constants.USER_ID, this.article.likes);
+        return checkId(this.constants.USER_ID, this.article.likes);
       }
     },
 
@@ -206,7 +206,7 @@ export default {
       article.append("cat", this.article.cat);
       article.append("updated", this.article.updated);
 
-      let url = this.constants.API_URL + "/articles/" + this.article._id;
+      let url     = this.constants.API_URL + "/articles/" + this.article._id;
       let options = {
           method: "PUT",
           mode: "cors",
@@ -214,7 +214,7 @@ export default {
           body: article
         };
 
-      this.$serve.fetchSet(url, options)
+      fetchSet(url, options)
         .then(() => {
           if (hasLiked === true) {
             console.log(this.article.name + this.constants.ALERT_DISLIKED);
@@ -222,7 +222,7 @@ export default {
             console.log(this.article.name + this.constants.ALERT_LIKED);
           }
         })
-        .catch(err => { this.$serve.checkError(err) });
+        .catch(err => { checkError(err) });
     }
   }
 }

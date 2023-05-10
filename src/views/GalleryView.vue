@@ -36,7 +36,7 @@
         </ListElt>
       </template>
 
-      <template #aside v-if="checkRole('admin')">
+      <template #aside v-if="checkSession('admin')">
         <GalleryCreator :constants="constants"/>
       </template>
     </CardElt>
@@ -45,7 +45,8 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
-import serve from "../assets/serve"
+import { checkRole, setMeta } from "../assets/serve"
+
 import CardElt from "../assets/CardElt"
 import ListElt from "../assets/ListElt"
 import MediaElt from "../assets/MediaElt"
@@ -64,7 +65,7 @@ export default {
   created() {
     this.$store.dispatch("listGalleries");
 
-    serve.setMeta(
+    setMeta(
       this.constants.HEAD_GALLERY, 
       this.constants.META_GALLERY,
       this.constants.UI_URL + "/galleries",
@@ -84,8 +85,8 @@ export default {
      * @param {string} role
      * @returns
      */
-    checkRole(role) {
-      return serve.checkRole(this.user.role, role);
+    checkSession(role) {
+      return checkRole(this.user.role, role);
     }
   }
 }

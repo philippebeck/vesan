@@ -1,6 +1,6 @@
 <template>
   <main>
-    <NavElt :items="getCats"
+    <NavElt :items="getCategories"
       class="sidebar">
       <template #hide>
         <i class="fa-solid fa-eye fa-fw" 
@@ -14,7 +14,7 @@
         </a>
       </template>
 
-      <template #last v-if="checkRole('editor')">
+      <template #last v-if="checkSession('editor')">
         <a href="#create-product"
           :title="constants.PRODUCT_CREATOR">
           <i class="fa-regular fa-lightbulb fa-fw"></i>
@@ -41,7 +41,7 @@
       </template>
 
       <template #body>
-        <ListElt :items="getItemsByCat(products)"
+        <ListElt :items="getItemsByCategory(products)"
           :dynamic="true">
 
           <template #items="slotProps">
@@ -63,7 +63,7 @@
               </template>
 
               <template #body>
-                <BtnElt v-if="getAverage(slotProps.value._id) !== undefined"
+                <BtnElt v-if="getScoresAverage(slotProps.value._id) !== undefined"
                   :href="`product/${slotProps.value._id}#reviews`"
                   itemprop="aggregateRating"
                   itemscope
@@ -73,12 +73,12 @@
 
                   <template #btn>
                     <b itemprop="ratingValue">
-                      {{ getAverage(slotProps.value._id) }}
+                      {{ getScoresAverage(slotProps.value._id) }}
                     </b> <i class="fa-solid fa-star"></i>
                   </template>
                 </BtnElt>
 
-                <BtnElt v-else-if="checkRole('user')" 
+                <BtnElt v-else-if="checkSession('user')" 
                   :href="`product/${slotProps.value._id}#review`"
                   class="btn-violet"
                   :content="constants.CONTENT_REVIEW_WRITE"
@@ -125,7 +125,7 @@
         </ListElt>
       </template>
 
-      <template #aside v-if="checkRole('editor')">
+      <template #aside v-if="checkSession('editor')">
         <ProductCreator :constants="constants"/>
       </template>
     </CardElt>
@@ -134,13 +134,13 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
+import { checkRole, getAverage, getCats, getItemsByCat, setMeta } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
 import ListElt from "../assets/ListElt"
 import MediaElt from "../assets/MediaElt"
 import NavElt from "../assets/NavElt"
-
 import ProductCreator from "../components/ProductCreator"
 
 export default {
@@ -166,7 +166,7 @@ export default {
     this.$store.dispatch("listProducts");
     this.$store.dispatch("listReviews");
 
-    this.$serve.setMeta(
+    setMeta(
       this.constants.HEAD_SHOP, 
       this.constants.META_SHOP,
       this.constants.UI_URL + "/shop",
@@ -191,8 +191,8 @@ export default {
      * SET CATEGORIES
      * @returns
      */
-    getCats() {
-      return this.$serve.getCats(this.products);
+    getCategories() {
+      return getCats(this.products);
     }
   },
 
@@ -204,24 +204,24 @@ export default {
      * @param {string} role
      * @returns
      */
-    checkRole(role) {
-      return this.$serve.checkRole(this.user.role, role);
+    checkSession(role) {
+      return checkRole(this.user.role, role);
     },
 
     /**
      * SORT ITEMS BY CATEGORY
      * @param {array} items 
      */
-    getItemsByCat(items) {
-      return this.$serve.getItemsByCat(items);
+    getItemsByCategory(items) {
+      return getItemsByCat(items);
     },
 
     /** 
      * GET SCORES AVERAGE
      * @returns
      */
-    getAverage(productId) {
-      return this.$serve.getAverage(productId, this.reviews);
+    getScoresAverage(productId) {
+      return getAverage(productId, this.reviews);
     }
   }
 }

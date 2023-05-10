@@ -92,7 +92,7 @@
               </b>
             </p>
 
-            <div v-if="checkRole('user')"
+            <div v-if="checkSession('user')"
               id="paypal"
               class="mar-lg">
             </div>
@@ -128,6 +128,7 @@
 
 <script>
 import { loadScript } from "@paypal/paypal-js";
+import { checkError, checkRole, fetchGet, fetchSet, setMeta } from "../assets/serve";
 
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
@@ -158,12 +159,12 @@ export default {
   created() {
     let url = this.constants.API_URL + "/products";
 
-    this.$serve.fetchGet(url)
+    fetchGet(url)
       .then(res => { 
         this.products = res;
         this.setBasket();
 
-        this.$serve.setMeta(
+        setMeta(
           this.constants.HEAD_BASKET, 
           this.constants.META_BASKET,
           this.constants.UI_URL + "/basket",
@@ -179,7 +180,7 @@ export default {
           }
         }
       })
-      .catch(err => { this.$serve.checkError(err) });
+      .catch(err => { checkError(err) });
   },
 
   methods: {
@@ -189,8 +190,8 @@ export default {
      * @param {string} role
      * @returns
      */
-    checkRole(role) {
-      return this.$serve.checkRole(this.user.role, role);
+    checkSession(role) {
+      return checkRole(this.user.role, role);
     },
 
     //! ****************************** GETTER ******************************
@@ -339,7 +340,7 @@ export default {
       order.append("created", Date.now());
       order.append("updated", Date.now());
 
-      let url = this.constants.API_URL + "/orders/";
+      const URL   = this.constants.API_URL + "/orders/";
       let options = {
           method: "POST",
           mode: "cors",
@@ -347,13 +348,13 @@ export default {
           body: order
         };
 
-      this.$serve.fetchSet(url, options)
+      fetchSet(URL, options)
         .then(() => {
           alert(this.constants.ALERT_ORDER_CREATED);
           localStorage.removeItem("basket");
           this.$router.push("/profile");
         })
-        .catch(err => { this.$serve.checkError(err) });
+        .catch(err => { checkError(err) });
     },
 
     /**

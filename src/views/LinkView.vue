@@ -9,7 +9,7 @@
       </h1>
     </header>
 
-    <NavElt :items="getCats"
+    <NavElt :items="getCategories"
       class="sidebar">
       <template #hide>
         <i class="fa-solid fa-eye fa-fw" 
@@ -20,7 +20,7 @@
         <i :class="`fa-brands fa-${slotProps.item.toLowerCase()} fa-fw`"></i>
       </template>
 
-      <template #last v-if="checkRole('admin')">
+      <template #last v-if="checkSession('admin')">
         <a href="#create-link"
           :title="constants.LINK_CREATOR">
           <i class="fa-solid fa-link fa-fw"></i>
@@ -44,7 +44,7 @@
       </template>
 
       <template #body>
-        <ListElt :items="getItemsByCat(links)"
+        <ListElt :items="getItemsByCategories(links)"
           :dynamic="true">
           <template #items="slotProps">
             <i :id="slotProps.index"
@@ -61,7 +61,7 @@
         </ListElt>
       </template>
 
-      <template #aside v-if="checkRole('admin')">
+      <template #aside v-if="checkSession('admin')">
         <LinkCreator :constants="constants"/>
       </template>
 
@@ -71,6 +71,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
+import { checkRole, getCats, getItemsByCat, setMeta } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
@@ -97,7 +98,7 @@ export default {
   created() {
     this.$store.dispatch("listLinks");
 
-    this.$serve.setMeta(
+    setMeta(
       this.constants.HEAD_LINK, 
       this.constants.META_LINK,
       this.constants.UI_URL + "/link",
@@ -112,8 +113,8 @@ export default {
      * GET CATEGORIES
      * @returns
      */
-    getCats() {
-      return this.$serve.getCats(this.links);
+    getCategories() {
+      return getCats(this.links);
     }
   },
 
@@ -125,16 +126,16 @@ export default {
      * @param {string} role
      * @returns
      */
-    checkRole(role) {
-      return this.$serve.checkRole(this.user.role, role);
+    checkSession(role) {
+      return checkRole(this.user.role, role);
     },
 
     /**
      * SORT ITEMS BY CATEGORY
      * @param {array} items 
      */
-    getItemsByCat(items) {
-      return this.$serve.getItemsByCat(items);
+    getItemsByCategories(items) {
+      return getItemsByCat(items);
     }
   }
 }

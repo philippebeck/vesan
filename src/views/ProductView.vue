@@ -9,7 +9,7 @@
 
       <template #body>
 
-        <BtnElt v-if="getAverage(product._id) !== undefined"
+        <BtnElt v-if="getScoresAverage(product._id) !== undefined"
           href="#reviews"
           itemprop="aggregateRating"
           itemscope
@@ -19,12 +19,12 @@
 
           <template #btn>
             <b itemprop="ratingValue">
-              {{ getAverage(product._id) }}
+              {{ getScoresAverage(product._id) }}
             </b> <i class="fa-solid fa-star fa-lg"></i>
           </template>
         </BtnElt>
 
-        <BtnElt v-else-if="checkRole('user')" 
+        <BtnElt v-else-if="checkSession('user')" 
           href="#review"
           class="btn-violet"
           :content="constants.CONTENT_REVIEW_WRITE"
@@ -120,7 +120,7 @@
           :reviews="reviews"/>
       </template>
 
-      <template #aside  v-if="checkRole('user')">
+      <template #aside  v-if="checkSession('user')">
         <ReviewCreator id="review"
           :constants="constants"/>
       </template>
@@ -130,7 +130,8 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
-import serve from "../assets/serve"
+import { checkError, checkRole, fetchGet, getAverage, setMeta } from "../assets/serve"
+
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
 import FieldElt from "../assets/FieldElt"
@@ -165,11 +166,11 @@ export default {
   created() {
     let url = this.constants.API_URL + "/products/" + this.$route.params.id;
 
-    serve.fetchGet(url)
+    fetchGet(url)
       .then((product => {
         this.product = product;
 
-        serve.setMeta(
+        setMeta(
           product.name + this.constants.HEAD, 
           product.description.slice(0, 160).replace(/(<([^>]+)>)/gi, ""),
           this.constants.UI_URL + "/product/" + product._id,
@@ -177,7 +178,7 @@ export default {
         );
       }))
       .catch(err => { 
-        serve.checkError(err);
+        checkError(err);
         this.$router.push("/shop");
       });
 
@@ -204,16 +205,16 @@ export default {
      * @param {string} role
      * @returns
      */
-    checkRole(role) {
-      return serve.checkRole(this.user.role, role);
+    checkSession(role) {
+      return checkRole(this.user.role, role);
     },
 
     /** 
      * GET SCORES AVERAGE
      * @returns
      */
-    getAverage(productId) {
-      return serve.getAverage(productId, this.reviews);
+    getScoresAverage(productId) {
+      return getAverage(productId, this.reviews);
     },
 
     /**

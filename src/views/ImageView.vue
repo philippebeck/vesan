@@ -54,7 +54,7 @@
         </ListElt>
       </template>
 
-      <template #aside v-if="checkRole('admin')">
+      <template #aside v-if="checkSession('admin')">
         <ImageCreator :constants="constants"/>
       </template>
     </CardElt>
@@ -63,12 +63,12 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
+import { checkError, checkRole, fetchGet, setMeta } from "../assets/serve"
 
 import CardElt from "../assets/CardElt"
 import ListElt from "../assets/ListElt"
 import MediaElt from "../assets/MediaElt"
 import SliderElt from "../assets/SliderElt"
-
 import ImageCreator from "../components/ImageCreator"
 
 export default {
@@ -91,11 +91,11 @@ export default {
   created() {
     let url = this.constants.API_URL + "/galleries/" + this.$route.params.id;
 
-    this.$serve.fetchGet(url)
+    fetchGet(url)
       .then((gallery) => {
         this.gallery = gallery;
 
-        this.$serve.setMeta(
+        setMeta(
           gallery.name + this.constants.HEAD, 
           this.constants.META_IMAGE + gallery.author,
           this.constants.UI_URL + "/gallery/" + gallery._id,
@@ -103,7 +103,7 @@ export default {
         );
       })
       .catch(err => { 
-        this.$serve.checkError(err);
+        checkError(err);
         this.$router.push("/galleries");
       });
 
@@ -122,8 +122,8 @@ export default {
      * @param {string} role
      * @returns
      */
-    checkRole(role) {
-      return this.$serve.checkRole(this.user.role, role);
+    checkSession(role) {
+      return checkRole(this.user.role, role);
     }
   }
 }

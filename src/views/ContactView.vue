@@ -84,12 +84,12 @@
 </template>
 
 <script>
-import serve from "../assets/serve"
+import { checkError, checkRange, checkRegex, fetchSet, setMeta } from "../assets/serve"
+
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
 import FieldElt from "../assets/FieldElt"
 import ListElt from "../assets/ListElt"
-
 import { VueRecaptcha } from "vue-recaptcha";
 
 export default {
@@ -112,7 +112,7 @@ export default {
   },
 
   created() {
-    serve.setMeta(
+    setMeta(
       this.constants.HEAD_CONTACT, 
       this.constants.META_CONTACT,
       this.constants.UI_URL + "/contact",
@@ -132,9 +132,9 @@ export default {
       let min       = this.constants.TEXT_MIN;
       let max       = this.constants.TEXT_MAX;
 
-      if (serve.checkRegex(this.email, emailMsg, regex) && 
-        serve.checkRange(this.subject, stringMsg) && 
-        serve.checkRange(this.text, stringMsg, min, max)) {
+      if (checkRegex(this.email, emailMsg, regex) && 
+          checkRange(this.subject, stringMsg) && 
+          checkRange(this.text, stringMsg, min, max)) {
 
         let url = this.constants.API_URL + "/auth/recaptcha";
         let options = {
@@ -144,7 +144,7 @@ export default {
           body: { response: response }
         };
 
-        serve.fetchSet(url, options)
+        fetchSet(url, options)
           .then(result => {
             if (result.success) {
               this.send();
@@ -154,7 +154,7 @@ export default {
             }
           })
           .catch(err => {
-            serve.checkError(err);
+            checkError(err);
             this.$router.go();
           });
       }
@@ -165,12 +165,11 @@ export default {
      */
     send() {
       let message = new FormData();
-
       message.append("email", this.email);
       message.append("subject", this.subject);
       message.append("html", this.text);
 
-      let url = this.constants.API_URL + "/users/message";
+      const URL   = this.constants.API_URL + "/users/message";
       let options = {
         method: "POST",
         mode: "cors",
@@ -178,12 +177,12 @@ export default {
         body: message
       };
 
-      serve.fetchSet(url, options)
+      fetchSet(URL, options)
         .then(() => {
           alert(this.subject + this.constants.ALERT_SENDED);
           this.$router.push("/");
         })
-        .catch(err => { serve.checkError(err) });
+        .catch(err => { checkError(err) });
     }
   }
 }

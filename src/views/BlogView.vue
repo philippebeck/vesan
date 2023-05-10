@@ -1,13 +1,13 @@
 <template>
   <main>
-    <NavElt :items="getCats"
+    <NavElt :items="getCategories"
       class="sidebar">
       <template #hide>
         <i class="fa-solid fa-eye fa-fw" 
           :title="constants.TITLE_TOGGLE"></i>
       </template>
 
-      <template #last  v-if="checkRole('editor')">
+      <template #last  v-if="checkSession('editor')">
         <a href="#create-article"
           :title="constants.ARTICLE_CREATOR">
           <i class="fa-regular fa-pen-to-square fa-fw"></i>
@@ -34,7 +34,7 @@
       </template>
 
       <template #body>
-        <ListElt :items="getItemsByCat(articles)"
+        <ListElt :items="getItemsByCategories(articles)"
           :dynamic="true">
 
           <template #items="slotProps">
@@ -56,7 +56,7 @@
               </template>
 
               <template #body>
-                <BtnElt v-if="!checkRole('user')"
+                <BtnElt v-if="!checkSession('user')"
                   :id="`like-${slotProps.value._id}`"
                   href="/login"
                   class="btn-sky-dark"
@@ -124,7 +124,7 @@
         </ListElt>
       </template>
 
-      <template #aside v-if="checkRole('editor')">
+      <template #aside v-if="checkSession('editor')">
         <ArticleCreator :constants="constants"/>
       </template>
     </CardElt>
@@ -133,6 +133,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
+import { checkError, checkId, checkRole, fetchSet, getCats, getItemsByCat, setMeta } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import ListElt from "../assets/ListElt"
@@ -157,7 +158,7 @@ export default {
   created() {
     this.$store.dispatch("listArticles");
 
-    this.$serve.setMeta(
+    setMeta(
       this.constants.HEAD_BLOG, 
       this.constants.META_BLOG,
       this.constants.UI_URL + "/blog",
@@ -177,11 +178,11 @@ export default {
     ...mapState(["articles"]),
 
     /**
-     * SET CATEGORIES
+     * GET CATEGORIES
      * @returns
      */
-    getCats() {
-      return this.$serve.getCats(this.articles);
+    getCategories() {
+      return getCats(this.articles);
     }
   },
 
@@ -193,8 +194,8 @@ export default {
      * @param {string} role
      * @returns
      */
-    checkRole(role) {
-      return this.$serve.checkRole(this.user.role, role);
+    checkSession(role) {
+      return checkRole(this.user.role, role);
     },
 
     /**
@@ -202,8 +203,8 @@ export default {
      * @param {array} items 
      * @returns
      */
-    getItemsByCat(items) {
-      return this.$serve.getItemsByCat(items);
+    getItemsByCategories(items) {
+      return getItemsByCat(items);
     },
 
     /**
@@ -215,7 +216,7 @@ export default {
       for (let article of this.articles) {
         if (article._id === id) {
 
-          return this.$serve.checkId(this.constants.USER_ID, article.likes);
+          return checkId(this.constants.USER_ID, article.likes);
         }
       }
     },
@@ -250,7 +251,7 @@ export default {
           article.append("cat", this.articles[i].cat);
           article.append("updated", this.articles[i].updated);
 
-          let url = this.constants.API_URL + "/articles/" + id;
+          let url     = this.constants.API_URL + "/articles/" + id;
           let options = {
             method: "PUT",
             mode: "cors",
@@ -258,7 +259,7 @@ export default {
             body: article
           };
 
-          this.$serve.fetchSet(url, options)
+          fetchSet(url, options)
             .then(() => {
               if (hasLiked === true) {
                 console.log(this.article.name + this.constants.ALERT_DISLIKED);
@@ -266,7 +267,7 @@ export default {
                 console.log(this.article.name + this.constants.ALERT_LIKED);
               }
             })
-            .catch(err => { this.$serve.checkError(err) });
+            .catch(err => { checkError(err) });
         }
       }
     }
