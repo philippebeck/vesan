@@ -15,6 +15,8 @@ CMS with Vue-Elt, Servidio, Animadio & NemJS
 
 ## Overview
 
+Warning : a bug is present inside the API & will be fixed as soon as possible...
+
 Vesan is a Content Manager System, where you can find 4 "homemade" packages complementary :
 -  Vue-Elt, for the SFC components, as the main structure  
 -  Servidio, for Axios calls & front securities, as the frontend services  

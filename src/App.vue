@@ -7,7 +7,7 @@
     </template>
 
     <template #admin>
-      <a v-if="checkRole('user')"
+      <a v-if="checkSession('user')"
         href="/profile"
         :title="constants.PROFILE_OF + user.name">
         <img :src="`/img/thumbnails/users/${user.image}`"
@@ -91,11 +91,12 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
+import { checkRole, setGlobalMeta } from "./assets/serve"
 import constants from "../constants"
 
-import FootElt from "@/assets/FootElt"
-import ListElt from "@/assets/ListElt"
-import NavElt from "@/assets/NavElt"
+import FootElt from "./assets/FootElt"
+import ListElt from "./assets/ListElt"
+import NavElt from "./assets/NavElt"
 
 export default {
   name: 'App',
@@ -113,7 +114,8 @@ export default {
 
   created() {
     this.constants = constants;
-    this.$serve.setGlobalMeta(
+
+    setGlobalMeta(
       this.constants.TW_ID, 
       this.constants.ICON, 
       this.constants.LANG);
@@ -135,8 +137,8 @@ export default {
      * @param {string} role
      * @returns
      */
-    checkRole(role) {
-      return this.$serve.checkRole(this.user.role, role);
+    checkSession(role) {
+      return checkRole(this.user.role, role);
     }
   }
 };
