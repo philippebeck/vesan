@@ -1,6 +1,6 @@
 {
   "name": "vesan",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "CMS with Vue-Elt, Servidio, Animadio & NemJS",
   "author": {
     "name": "Philippe Beck",
@@ -44,7 +44,7 @@
     "@tinymce/tinymce-vue": "^5.0.0",
     "animadio": "^6.2.5",
     "core-js": "^3.8.3",
-    "servidio": "^2.0.3",
+    "servidio": "^2.1.0",
     "vue": "^3.2.45",
     "vue-elt": "^1.4.9",
     "vue-recaptcha": "^2.0.3",
