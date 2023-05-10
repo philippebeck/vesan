@@ -18,6 +18,6 @@ describe("App", () => {
   })
 
   test("methods", () => { 
-    expect(typeof App.methods.checkRole).toBe("function") 
+    expect(typeof App.methods.checkSession).toBe("function") 
   })
 })
