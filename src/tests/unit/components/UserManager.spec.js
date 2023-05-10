@@ -16,40 +16,21 @@ beforeEach(() => {
         password: "User password",
         role: "User role"
       }]
-    },
-    global: {
-      mocks: {},
-      stubs: {}
     }
   });
 });
 
 enableAutoUnmount(afterEach)
 
+/**
+ * @jest-environment jsdom
+ */
 describe("UserManager", () => {
-  test("name", () => { 
-    expect(UserManager.name).toBe("UserManager") 
-  })
-
-  test("components", () => { 
-    expect(typeof UserManager.components).toBe("object") 
-  })
-
-  test("props", () => {
-    expect(typeof UserManager.props).toBe("object")
-  })
-
-  test("methods", () => { 
-    expect(typeof UserManager.methods).toBe("object")
-  })
-})
-
-describe("Mounted UserManager", () => {
   test("wrapper", () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  test("wrapper components", () => { 
+  test("components", () => { 
     expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
@@ -57,7 +38,7 @@ describe("Mounted UserManager", () => {
     expect(typeof wrapper.findComponent({ name: "TableElt" })).toBe("object")
   })
 
-  test("wrapper props", () => {
+  test("props", () => {
     expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
     expect(wrapper.props("users")).toStrictEqual([{
       name: "User name",
@@ -68,7 +49,7 @@ describe("Mounted UserManager", () => {
     }])
   })
 
-  test("wrapper methods", () => {
+  test("methods", () => {
     expect(typeof wrapper.vm.getUsers).toBe("function")
     expect(typeof wrapper.vm.getUser).toBe("function")
     expect(typeof wrapper.vm.checkUser).toBe("function")

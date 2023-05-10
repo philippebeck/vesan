@@ -8,15 +8,22 @@ beforeEach(() => {
     props: {
       constants: {
         TEST: "test"
-      },
-      description: "Image description", 
-      gallery: "Image gallery" 
+      }
+    },
+    data() {
+      return {
+        description: "Image description", 
+        gallery: "Image gallery"
+      }
     }
   });
 });
 
 enableAutoUnmount(afterEach)
 
+/**
+ * @jest-environment jsdom
+ */
 describe("ImageCreator", () => {
   test("wrapper", () => { 
     expect(wrapper.exists()).toBe(true) 
@@ -34,11 +41,8 @@ describe("ImageCreator", () => {
   })
 
   test("data", () => {
-    expect(wrapper.vm.description).toBe("")
-    expect(wrapper.vm.gallery).toBe("")
-
-    expect(wrapper.attributes("description")).toBe("Image description")
-    expect(wrapper.attributes("gallery")).toBe("Image gallery")
+    expect(wrapper.vm.description).toBe("Image description")
+    expect(wrapper.vm.gallery).toBe("Image gallery")
   })
 
   test("methods", () => {

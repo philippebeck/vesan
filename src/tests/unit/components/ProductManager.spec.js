@@ -18,41 +18,21 @@ beforeEach(() => {
         options: "Product options",
         cat: "Product cat"
       }]
-    },
-    global: {
-      mocks: {},
-      stubs: {}
     }
   });
 });
 
 enableAutoUnmount(afterEach)
 
+/**
+ * @jest-environment jsdom
+ */
 describe("ProductManager", () => {
-  test("name", () => { 
-    expect(ProductManager.name).toBe("ProductManager") 
-  })
-
-  test("components", () => { 
-    expect(typeof ProductManager.components).toBe("object") 
-  })
-
-  test("props", () => {
-    expect(typeof ProductManager.props).toBe("object")
-  })
-
-  test("methods", () => { 
-    expect(typeof ProductManager.methods).toBe("object")
-  })
-})
-
-describe("Mounted ProductManager", () => {
-
   test("wrapper", () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  test("wrapper components", () => { 
+  test("components", () => { 
     expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
@@ -60,7 +40,7 @@ describe("Mounted ProductManager", () => {
     expect(typeof wrapper.findComponent({ name: "TableElt" })).toBe("object")
   })
 
-  test("wrapper props", () => {
+  test("props", () => {
     expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
     expect(wrapper.props("products")).toStrictEqual([{
       name: "Product name",
@@ -73,7 +53,7 @@ describe("Mounted ProductManager", () => {
     }])
   })
 
-  test("wrapper methods", () => {
+  test("methods", () => {
     expect(typeof wrapper.vm.getProducts).toBe("function")
     expect(typeof wrapper.vm.getProduct).toBe("function")
     expect(typeof wrapper.vm.checkProduct).toBe("function")

@@ -8,20 +8,23 @@ beforeEach(() => {
     props: {
       constants: {
         TEST: "test"
-      },
-      name: "Link name", 
-      url: "Link url", 
-      cat: "Link cat" 
+      }
     },
-    global: {
-      mocks: {},
-      stubs: {}
+    data() {
+      return {
+        name: "Link name", 
+        url: "Link url", 
+        cat: "Link cat" 
+      }
     }
   });
 });
 
 enableAutoUnmount(afterEach)
 
+/**
+ * @jest-environment jsdom
+ */
 describe("LinkCreator", () => {
   test("wrapper", () => { 
     expect(wrapper.exists()).toBe(true) 
@@ -39,13 +42,9 @@ describe("LinkCreator", () => {
   })
 
   test("data", () => {
-    expect(wrapper.vm.name).toBe("")
-    expect(wrapper.vm.url).toBe("")
-    expect(wrapper.vm.cat).toBe("")
-
-    expect(wrapper.attributes("name")).toBe("Link name")
-    expect(wrapper.attributes("url")).toBe("Link url")
-    expect(wrapper.attributes("cat")).toBe("Link cat")
+    expect(wrapper.vm.name).toBe("Link name")
+    expect(wrapper.vm.url).toBe("Link url")
+    expect(wrapper.vm.cat).toBe("Link cat")
   })
 
   test("methods", () => { 

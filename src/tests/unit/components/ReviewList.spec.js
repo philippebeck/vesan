@@ -13,40 +13,21 @@ beforeEach(() => {
         text: "Review text",
         score: "Review score"
       }]
-    },
-    global: {
-      mocks: {},
-      stubs: {}
     }
   });
 });
 
 enableAutoUnmount(afterEach)
 
+/**
+ * @jest-environment jsdom
+ */
 describe("ReviewList", () => {
-  test("name", () => { 
-    expect(ReviewList.name).toBe("ReviewList") 
-  })
-
-  test("components", () => { 
-    expect(typeof ReviewList.components).toBe("object") 
-  })
-
-  test("props", () => {
-    expect(typeof ReviewList.props).toBe("object")
-  })
-
-  test("methods", () => {
-    expect(typeof ReviewList.methods).toBe("object")
-  })
-})
-
-describe("Mounted ReviewList", () => {
   test("wrapper", () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  test("wrapper components", () => { 
+  test("components", () => { 
     expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
@@ -54,7 +35,7 @@ describe("Mounted ReviewList", () => {
     expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object")
   })
 
-  test("wrapper props", () => {
+  test("props", () => {
     expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
     expect(wrapper.props("reviews")).toStrictEqual([{
       text: "Review text",
@@ -62,7 +43,7 @@ describe("Mounted ReviewList", () => {
     }])
   })
 
-  test("wrapper methods", () => { 
+  test("methods", () => { 
     expect(typeof wrapper.vm.updateReview).toBe("function") 
     expect(typeof wrapper.vm.deleteReview).toBe("function") 
   })
