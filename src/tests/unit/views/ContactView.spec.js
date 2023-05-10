@@ -47,12 +47,17 @@ describe("ContactView", () => {
 
   test("wrapper props", () => {
     expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
-    expect(wrapper.props("user")).toStrictEqual({ name: "test", email: "email@test.com" })
+    expect(wrapper.props("user")).toStrictEqual({ 
+      name: "test", 
+      email: "email@test.com" 
+    })
   })
 
   test("wrapper data", () => {
     expect(wrapper.vm.$data).toStrictEqual({
-      email: "email@test.com", subject: "Test Subject", text: "Test Text"
+      email: "email@test.com", 
+      subject: "Test Subject", 
+      text: "Test Text"
     })
   })
 

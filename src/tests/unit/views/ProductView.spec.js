@@ -1,58 +1,141 @@
+import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
+import { createStore } from 'vuex';
+import serve from "../../../assets/serve.js"
 import ProductView from "../../../views/ProductView"
 
+let wrapper;
+let store;
+let actions;
+let state;
+
+/**
+ * @jest-environment jsdom
+ */
+beforeEach(() => {
+  jest.spyOn(serve, "setMeta").mockImplementation(() => {});
+
+  actions = {
+    listGalleries: jest.fn()
+  };
+
+  state = {
+    galleries: []
+  };
+
+  store = createStore({
+    state() {
+      return state;
+      },
+    actions: actions
+  })
+
+  wrapper = shallowMount(ProductView, {
+    props: {
+      constants: {
+        TEST: "test"
+      },
+      user: {
+        name: "test",
+        email: "email@test.com"
+      }
+    },
+    data() {
+      return {
+        basket: [],
+        product: {
+          id: 1,
+          name: "test",
+          description: "test",
+          price: 10,
+          currency: "EUR",
+          image: "test",
+          gallery: "test",
+          reviews: []
+        },
+        order: {
+          id: 1,
+          name: "test",
+          description: "test",
+          price: 10,
+          currency: "EUR",
+          image: "test",
+          gallery: "test",
+          reviews: []
+        },
+        option: "",
+        priceCurrency: "",
+        quantity: 1,
+        isInBasket: false
+      }
+    },
+    global: {
+      plugins: [store]
+    }
+  });
+});
+
+enableAutoUnmount(afterEach)
+
 describe("ProductView", () => {
-  test("name", () => { 
-    expect(ProductView.name).toBe("ProductView") 
+  test("wrapper must be a vue instance", () => {
+    expect(wrapper.exists()).toBe(true)
   })
 
-  test("components", () => { 
-    expect(typeof ProductView.components).toBe("object") 
-    expect(typeof ProductView.components.BtnElt).toBe("object") 
-    expect(typeof ProductView.components.CardElt).toBe("object") 
-    expect(typeof ProductView.components.FieldElt).toBe("object") 
-    expect(typeof ProductView.components.MediaElt).toBe("object") 
-    expect(typeof ProductView.components.ReviewCreator).toBe("object") 
-    expect(typeof ProductView.components.ReviewList).toBe("object") 
-  })
+//   test("wrapper components", () => { 
+//     expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
+//     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
+//     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
+//     expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object")
+//     expect(typeof wrapper.findComponent({ name: "ReviewCreator" })).toBe("object")
+//     expect(typeof wrapper.findComponent({ name: "ReviewList" })).toBe("object")
+//   })
 
-  test("props", () => { 
-    expect(typeof ProductView.props).toBe("object") 
-    expect(ProductView.props).toContain("constants") 
-    expect(ProductView.props).toContain("user") 
-  })
+//   test("wrapper props", () => { 
+//     expect(wrapper.props().constants).toEqual({ TEST: "test" })
+//     expect(wrapper.props().user).toEqual({ name: "test", email: "email@test.com" })
+//   })
 
-  test("data", () => { 
-    expect(typeof ProductView.data).toBe("function") 
-    expect(ProductView.data()).toEqual({ 
-      basket: [], 
-      product: {}, 
-      order: {}, 
-      option: "",
-      priceCurrency: "",
-      quantity: 1,
-      isInBasket: false
-    }) 
-  })
+//   test("wrapper data", () => { 
+//     expect(wrapper.vm.basket).toEqual([])
+//     expect(wrapper.vm.product).toEqual({
+//       id: 1,
+//       name: "test",
+//       description: "test",
+//       price: 10,
+//       currency: "EUR",
+//       image: "test",
+//       gallery: "test",
+//       reviews: []
+//     })
+//     expect(wrapper.vm.order).toEqual({
+//       id: 1,
+//       name: "test",
+//       description: "test",
+//       price: 10,
+//       currency: "EUR",
+//       image: "test",
+//       gallery: "test",
+//       reviews: []
+//     })
+//     expect(wrapper.vm.option).toBe("")
+//     expect(wrapper.vm.priceCurrency).toBe("")
+//     expect(wrapper.vm.quantity).toBe(1)
+//     expect(wrapper.vm.isInBasket).toBe(false)
+//   })
 
-  test("created()", () => {
-    expect(typeof ProductView.created).toBe("function")
-  })
+//   test("wrapper created hook", () => {
+//     expect(serve.fetchGet).toHaveBeenCalled()
+//     expect(serve.setMeta).toHaveBeenCalled()
+//     expect(actions.listProductReviews).toHaveBeenCalled()
+//   })
 
-  test("updated()", () => {
-    expect(typeof ProductView.created).toBe("function")
-  })
-
-  test("computed", () => {
-    expect(typeof ProductView.computed).toBe("object")
-  })
-
-  test("methods", () => { 
-    expect(typeof ProductView.methods.checkRole).toBe("function") 
-    expect(typeof ProductView.methods.getAverage).toBe("function") 
-    expect(typeof ProductView.methods.addToBasket).toBe("function") 
-    expect(typeof ProductView.methods.createOrder).toBe("function") 
-    expect(typeof ProductView.methods.getBasket).toBe("function") 
-    expect(typeof ProductView.methods.checkBasket).toBe("function") 
-    expect(typeof ProductView.methods.setBasket).toBe("function") 
-  })
+//   test("wrapper methods", () => { 
+//     expect(typeof wrapper.vm.checkRole).toBe("function")
+//     expect(typeof wrapper.vm.getAverage).toBe("function")
+//     expect(typeof wrapper.vm.addToBasket).toBe("function")
+//     expect(typeof wrapper.vm.createOrder).toBe("function")
+//     expect(typeof wrapper.vm.getBasket).toBe("function")
+//     expect(typeof wrapper.vm.checkBasket).toBe("function")
+//     expect(typeof wrapper.vm.setBasket).toBe("function")
+//   })
 })

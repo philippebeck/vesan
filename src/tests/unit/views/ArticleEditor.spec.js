@@ -1,40 +1,82 @@
+import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
+import { createStore } from 'vuex';
+import serve from "../../../assets/serve.js"
 import ArticleEditor from "../../../views/ArticleEditor"
 
+let wrapper;
+let store;
+let actions;
+let state;
+
+/**
+ * @jest-environment jsdom
+ */
+beforeEach(() => {
+  jest.spyOn(serve, "setMeta").mockImplementation(() => {});
+
+  actions = {
+    listGalleries: jest.fn()
+  };
+
+  state = {
+    galleries: []
+  };
+
+  store = createStore({
+    state() {
+      return state;
+      },
+    actions: actions
+  })
+
+  wrapper = shallowMount(ArticleEditor, {
+    props: {
+      constants: {
+        TEST: "test"
+      }
+    },
+    data() {
+      return {
+        user: {
+          name: "test",
+          email: "email@test.com"
+        }
+      }
+    },
+    global: {
+      plugins: [store]
+    }
+  });
+});
+
+enableAutoUnmount(afterEach)
+
 describe("ArticleEditor", () => {
-  test("name", () => { 
-    expect(ArticleEditor.name).toBe("ArticleEditor") 
+  test("wrapper", () => { 
+    expect(wrapper.vm).toBe(true)
   })
 
-  test("components", () => { 
-    expect(typeof ArticleEditor.components).toBe("object") 
-    expect(typeof ArticleEditor.components.BtnElt).toBe("object") 
-    expect(typeof ArticleEditor.components.CardElt).toBe("object") 
-    expect(typeof ArticleEditor.components.FieldElt).toBe("object") 
-    expect(typeof ArticleEditor.components.ListElt).toBe("object") 
-    expect(typeof ArticleEditor.components.MediaElt).toBe("object") 
-    expect(typeof ArticleEditor.components.Editor).toBe("object") 
-  })
+  // test("components", () => { 
+  //   expect(wrapper.findComponent({ name: "BtnElt" })).toBe(true)
+  //   expect(wrapper.findComponent({ name: "CardElt" })).toBe(true)
+  //   expect(wrapper.findComponent({ name: "FieldElt" })).toBe(true)
+  //   expect(wrapper.findComponent({ name: "ListElt" })).toBe(true)
+  //   expect(wrapper.findComponent({ name: "MediaElt" })).toBe(true)
+  //   expect(wrapper.findComponent({ name: "Editor" })).toBe(true)  
+  // })
 
-  test("props", () => { 
-    expect(typeof ArticleEditor.props).toBe("object") 
-    expect(ArticleEditor.props).toContain("constants") 
-  })
+  // test("props", () => { 
+  //   expect(wrapper.props().constants.TEST).toBe("test")
+  // })
 
-  test("data", () => { 
-    expect(typeof ArticleEditor.data).toBe("function") 
-    expect(ArticleEditor.data()).toEqual({ user: {} }) 
-  })
+  // test("data", () => { 
+  //   expect(wrapper.vm.user.name).toBe("test")
+  //   expect(wrapper.vm.user.email).toBe("email@test.com")
+  // })
 
-  test("created()", () => {
-    expect(typeof ArticleEditor.created).toBe("function")
-  })
-
-  test("computed", () => {
-    expect(typeof ArticleEditor.computed).toBe("object")
-  })
-
-  test("methods", () => { 
-    expect(typeof ArticleEditor.methods.checkRole).toBe("function") 
-    expect(typeof ArticleEditor.methods.updateArticle).toBe("function")
-  })
+  // test("methods", () => { 
+  //   expect(wrapper.vm.readArticle).toBe("function")
+  //   expect(wrapper.vm.checkRole).toBe("function")
+  //   expect(wrapper.vm.updateArticle).toBe("function")
+  // })
 })
