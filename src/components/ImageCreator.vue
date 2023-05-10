@@ -60,6 +60,8 @@
 </template>
 
 <script>
+import { checkError, checkRange, fetchSet } from "../assets/serve"
+
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
 import FieldElt from "../assets/FieldElt"
@@ -87,11 +89,11 @@ export default {
      * CREATE IMAGE
      */
     createImage() {
-      let msg = this.constants.CHECK_STRING;
-      let min = this.constants.STRING_MIN;
-      let max = this.constants.TEXT_MAX;
+      const MAX = this.constants.TEXT_MAX;
+      const MIN = this.constants.STRING_MIN;
+      const MSG = this.constants.CHECK_STRING;
 
-      if (this.$serve.checkRange(this.description, msg, min, max)) {
+      if (checkRange(this.description, MSG, MIN, MAX)) {
         let image = document.getElementById("image").files[0];
 
         if (image !== undefined) {
@@ -101,7 +103,7 @@ export default {
           data.append("description", this.description);
           data.append("gallery", this.$route.params.id);
 
-          let url = this.constants.API_URL + "/images";
+          const URL   = this.constants.API_URL + "/images";
           let options = {
             method: "POST",
             mode: "cors",
@@ -109,12 +111,12 @@ export default {
             body: data
           };
 
-          this.$serve.fetchSet(url, options)
+          fetchSet(URL, options)
             .then(() => {
               alert(image + this.constants.ALERT_CREATED);
               this.$router.go();
             })
-            .catch(err => { this.$serve.checkError(err) });
+            .catch(err => { checkError(err) });
 
         } else {
           alert(this.constants.ALERT_IMG);

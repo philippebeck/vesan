@@ -81,6 +81,8 @@
 </template>
 
 <script>
+import { checkError, fetchSet } from "../assets/serve"
+
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
 import FieldElt from "../assets/FieldElt"
@@ -167,7 +169,7 @@ export default {
           data.append("description", image.description);
           data.append("gallery", image.gallery.split('-')[0]);
 
-          let url = this.constants.API_URL + "/images/" + id;
+          let url     = this.constants.API_URL + "/images/" + id;
           let options = {
             method: "PUT",
             mode: "cors",
@@ -175,11 +177,11 @@ export default {
             body: data
           };
 
-          this.$serve.fetchSet(url, options)
+          fetchSet(url, options)
             .then(() => {
               alert(this.constants.ALERT_IMAGE + id + this.constants.ALERT_UPDATED);
             })
-            .catch(err => { this.$serve.checkError(err) });
+            .catch(err => { checkError(err) });
         }
       }
     },
@@ -191,19 +193,19 @@ export default {
     deleteImage(id) {
       if (confirm(`${this.constants.TITLE_DELETE_IMAGE}${id} ?`) === true) {
 
-        let url = this.constants.API_URL + "/images/" + id;
+        let url     = this.constants.API_URL + "/images/" + id;
         let options = {
           method: "DELETE",
           mode: "cors",
           headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
         };
 
-        this.$serve.fetchSet(url, options)
+        fetchSet(url, options)
           .then(() => {
             alert(this.constants.ALERT_IMAGE + id + this.constants.ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => { this.$serve.checkError(err) });
+          .catch(err => { checkError(err) });
       }
     }
   }

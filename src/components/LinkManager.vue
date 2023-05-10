@@ -13,7 +13,7 @@
       <form>
         <TableElt :title="table[0].cat"
           :items="table"
-          v-for="table in getItemsByCat(links)"
+          v-for="table in getItemsByCategory(links)"
           :key="table"
           :id="table[0].cat">
 
@@ -76,6 +76,8 @@
 </template>
 
 <script>
+import { checkError, checkRange, checkRegex, fetchSet, getItemName, getItemsByCat } from "../assets/serve"
+
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
 import FieldElt from "../assets/FieldElt"
@@ -107,8 +109,8 @@ export default {
      * SORT ITEMS BY CATEGORY
      * @param {array} items 
      */
-    getItemsByCat(items) {
-      return this.$serve.getItemsByCat(items);
+    getItemsByCategory(items) {
+      return getItemsByCat(items);
     },
 
     /**
@@ -128,14 +130,14 @@ export default {
     checkLink(link) {
       if (link.url.startsWith("http")) { link.url = link.url.split('//')[1] }
 
-      let regex = this.constants.REGEX_URL;
-      let nameMsg = this.constants.CHECK_STRING;
-      let urlMsg = this.constants.CHECK_URL;
+      const NAME_MSG  = this.constants.CHECK_STRING;
+      const REGEX     = this.constants.REGEX_URL;
+      const URL_MSG   = this.constants.CHECK_URL;
 
-      if (this.$serve.checkRange(link.name, nameMsg) && 
-        this.$serve.checkRegex(`https://${link.url}`, urlMsg, regex)) {
+      if (checkRange(link.name, NAME_MSG) && 
+          checkRegex(`https://${link.url}`, URL_MSG, REGEX)) {
 
-        let url = this.constants.API_URL + "links/" + link._id;
+        let url     = this.constants.API_URL + "links/" + link._id;
         let options = {
           method: "PUT",
           mode: "cors",
@@ -143,11 +145,11 @@ export default {
           body: this.getLink(link)
         };
 
-        this.$serve.fetchSet(url, options)
+        fetchSet(url, options)
           .then(() => {
             alert(link.name + this.constants.ALERT_UPDATED);
           })
-          .catch(err => { this.$serve.checkError(err) });
+          .catch(err => { checkError(err) });
       }
     },
 
@@ -166,23 +168,23 @@ export default {
      * @param {string} id 
      */
     deleteLink(id) {
-      let linkName = this.$serve.getItemName(id, this.links);
+      let name = getItemName(id, this.links);
 
-      if (confirm(`${this.constants.TITLE_DELETE} ${linkName} ?`) === true) {
+      if (confirm(`${this.constants.TITLE_DELETE} ${name} ?`) === true) {
 
-        let url = this.constants.API_URL + "links/" + id;
+        let url     = this.constants.API_URL + "links/" + id;
         let options = {
           method: "DELETE",
           mode: "cors",
           headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
         };
 
-        this.$serve.fetchSet(url, options)
+        fetchSet(url, options)
           .then(() => {
-            alert(linkName + this.constants.ALERT_DELETED);
+            alert(name + this.constants.ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => { this.$serve.checkError(err) });
+          .catch(err => { checkError(err) });
       }
     }
   }

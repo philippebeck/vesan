@@ -140,11 +140,12 @@
 </template>
 
 <script>
+import { checkError, checkRange, fetchSet } from "../assets/serve"
+
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
 import FieldElt from "../assets/FieldElt"
 import ListElt from "../assets/ListElt"
-
 import Editor from "@tinymce/tinymce-vue"
 
 export default {
@@ -179,9 +180,9 @@ export default {
       let min = this.constants.TEXT_MIN;
       let max = this.constants.TEXT_MAX;
 
-      if (this.$serve.checkRange(this.name, msg) && 
-          this.$serve.checkRange(this.description, msg, min, max) && 
-          this.$serve.checkRange(this.alt, msg)) {
+      if (checkRange(this.name, msg) && 
+          checkRange(this.description, msg, min, max) && 
+          checkRange(this.alt, msg)) {
 
         if (this.cat === "") { this.cat = this.constants.CAT_PRODUCT }
         let image = document.getElementById("image").files[0];
@@ -199,7 +200,7 @@ export default {
           product.append("created", Date.now());
           product.append("updated", Date.now());
 
-          let url = this.constants.API_URL + "/products";
+          const URL   = this.constants.API_URL + "/products";
           let options = {
             method: "POST",
             mode: "cors",
@@ -207,12 +208,12 @@ export default {
             body: product
           };
 
-          this.$serve.fetchSet(url, options)
+          fetchSet(URL, options)
             .then(() => {
               alert(this.name + this.constants.ALERT_CREATED);
               this.$router.go();
             })
-            .catch(err => { this.$serve.checkError(err) });
+            .catch(err => { checkError(err) });
 
         } else {
           alert(this.constants.ALERT_IMG);

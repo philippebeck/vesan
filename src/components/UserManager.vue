@@ -87,6 +87,8 @@
 </template>
 
 <script>
+import { checkError, checkRange, checkRegex, fetchSet, getItemName } from "../assets/serve"
+
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
 import FieldElt from "../assets/FieldElt"
@@ -145,10 +147,10 @@ export default {
       let emailMsg  = this.constants.CHECK_EMAIL;
       let regex     = this.constants.REGEX_EMAIL;
 
-      if (this.$serve.checkRange(user.name, stringMsg) && 
-        this.$serve.checkRegex(user.email, emailMsg, regex)) {
+      if (checkRange(user.name, stringMsg) && 
+          checkRegex(user.email, emailMsg, regex)) {
 
-        let url = this.constants.API_URL + "/users/" + id;
+        let url     = this.constants.API_URL + "/users/" + id;
         let options = {
           method: "PUT",
           mode: "cors",
@@ -156,11 +158,11 @@ export default {
           body: this.getUser(id, user)
         };
 
-        this.$serve.fetchSet(url, options)
+        fetchSet(url, options)
           .then(() => {
             alert(user.name + this.constants.ALERT_UPDATED);
           })
-          .catch(err => { this.$serve.checkError(err) });
+          .catch(err => { checkError(err) });
         }
     },
 
@@ -179,23 +181,23 @@ export default {
      * @param {string} id 
      */
     deleteUser(id) {
-      let userName = this.$serve.getItemName(id, this.users);
+      let name = getItemName(id, this.users);
 
-      if (confirm(`${this.constants.TITLE_DELETE} ${userName} ?`) === true) {
+      if (confirm(`${this.constants.TITLE_DELETE} ${name} ?`) === true) {
 
-        let url = this.constants.API_URL + "/users/" + id;
+        let url     = this.constants.API_URL + "/users/" + id;
         let options = {
           method: "DELETE",
           mode: "cors",
           headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
         };
 
-        this.$serve.fetchSet(url, options)
+        fetchSet(url, options)
           .then(() => {
-            alert(userName + this.constants.ALERT_DELETED);
+            alert(name + this.constants.ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => { this.$serve.checkError(err) });
+          .catch(err => { checkError(err) });
       }
     }
   }

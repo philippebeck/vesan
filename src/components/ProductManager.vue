@@ -119,6 +119,8 @@
 </template>
 
 <script>
+import { checkError, checkRange, fetchSet, getItemName } from "../assets/serve"
+
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
 import FieldElt from "../assets/FieldElt"
@@ -177,20 +179,20 @@ export default {
      * @param {object} product 
      */
     checkProduct(id, product) {
-      let stringMsg = this.constants.CHECK_STRING;
-      let textMin   = this.constants.TEXT_MIN;
-      let textMax   = this.constants.TEXT_MAX;
-      let priceMsg  = this.constants.CHECK_NUMBER;
-      let priceMin  = this.constants.PRICE_MIN;
-      let priceMax  = this.constants.PRICE_MAX;
+      const PRICE_MAX   = this.constants.PRICE_MAX;
+      const PRICE_MIN   = this.constants.PRICE_MIN;
+      const PRICE_MSG   = this.constants.CHECK_NUMBER;
+      const STRING_MSG  = this.constants.CHECK_STRING;
+      const TEXT_MAX    = this.constants.TEXT_MAX;
+      const TEXT_MIN    = this.constants.TEXT_MIN;
 
-      if (this.$serve.checkRange(product.name, stringMsg) && 
-        this.$serve.checkRange(product.description, stringMsg, textMin, textMax) && 
-        this.$serve.checkRange(product.alt, stringMsg) && 
-        this.$serve.checkRange(product.price, priceMsg, priceMin, priceMax) && 
-        this.$serve.checkRange(product.options, stringMsg, textMin, textMax)) {
+      if (checkRange(product.name, STRING_MSG) && 
+          checkRange(product.description, STRING_MSG, TEXT_MIN, TEXT_MAX) && 
+          checkRange(product.alt, STRING_MSG) && 
+          checkRange(product.price, PRICE_MSG, PRICE_MIN, PRICE_MAX) && 
+          checkRange(product.options, STRING_MSG, TEXT_MIN, TEXT_MAX)) {
 
-        let url = this.constants.API_URL + "/products/" + id;
+        let url     = this.constants.API_URL + "/products/" + id;
         let options = {
           method: "PUT",
           mode: "cors",
@@ -198,11 +200,11 @@ export default {
           body: this.getProduct(id, product)
         };
 
-        this.$serve.fetchSet(url, options)
+        fetchSet(url, options)
           .then(() => {
             alert(product.name + this.constants.ALERT_UPDATED);
           })
-          .catch(err => { this.$serve.checkError(err) });
+          .catch(err => { checkError(err) });
       }
     },
 
@@ -221,23 +223,23 @@ export default {
      * @param {string} id 
      */
     deleteProduct(id) {
-      let productName = this.$serve.getItemName(id, this.products);
+      let name = getItemName(id, this.products);
 
-      if (confirm(`${this.constants.TITLE_DELETE} ${productName} ?`) === true) {
+      if (confirm(`${this.constants.TITLE_DELETE} ${name} ?`) === true) {
 
-        let url = this.constants.API_URL + "/products/" + id;
+        let url     = this.constants.API_URL + "/products/" + id;
         let options = {
           method: "DELETE",
           mode: "cors",
           headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
         };
 
-        this.$serve.fetchSet(url, options)
+        fetchSet(url, options)
           .then(() => {
-            alert(productName + this.constants.ALERT_DELETED);
+            alert(name + this.constants.ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => { this.$serve.checkError(err) });
+          .catch(err => { checkError(err) });
       }
     }
   }

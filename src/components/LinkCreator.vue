@@ -77,6 +77,8 @@
 </template>
 
 <script>
+import { checkError, checkRange, checkRegex, fetchSet } from "../assets/serve"
+
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
 import FieldElt from "../assets/FieldElt"
@@ -105,22 +107,22 @@ export default {
      * CREATE LINK
      */
     createLink() {
-      let nameMsg = this.constants.CHECK_STRING;
-      let urlMsg  = this.constants.CHECK_URL;
-      let regex   = this.constants.REGEX_URL;
+      const NAME_MSG = this.constants.CHECK_STRING;
+      const URL_MSG  = this.constants.CHECK_URL;
+      const REGEX    = this.constants.REGEX_URL;
 
       if (this.url.startsWith("http")) { this.url = this.url.split('//')[1] }
       if (this.cat === "") { this.cat = this.constants.CAT_LINK }
 
-      if (this.$serve.checkRange(this.name, nameMsg) && 
-          this.$serve.checkRegex(`https://${this.url}`, urlMsg, regex)) {
+      if (checkRange(this.name, NAME_MSG) && 
+          checkRegex(`https://${this.url}`, URL_MSG, REGEX)) {
 
         let link = new FormData();
         link.append("name", this.name);
         link.append("url", this.url);
         link.append("cat", this.cat);
 
-        let url = this.constants.API_URL + "/links";
+        const URL   = this.constants.API_URL + "/links";
         let options = {
             method: "POST",
             mode: "cors",
@@ -128,12 +130,12 @@ export default {
             body: link
           };
 
-        this.$serve.fetchSet(url, options)
+        fetchSet(URL, options)
           .then(() => {
             alert(this.name + this.constants.ALERT_CREATED);
             this.$router.go();
           })
-          .catch(err => { this.$serve.checkError(err) });
+          .catch(err => { checkError(err) });
       }
     }
   }

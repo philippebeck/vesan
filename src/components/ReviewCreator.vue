@@ -58,6 +58,8 @@
 </template>
 
 <script>
+import { checkError, checkRange, fetchSet } from "../assets/serve"
+
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
 import FieldElt from "../assets/FieldElt"
@@ -83,15 +85,15 @@ export default {
      * CREATE REVIEW
      */
     createReview() {
-      let textMsg   = this.constants.CHECK_STRING;
-      let textMin   = this.constants.TEXT_MIN;
-      let textMax   = this.constants.TEXT_MAX;
-      let scoreMsg  = this.constants.CHECK_NUMBER;
-      let scoreMin  = this.constants.SCORE_MIN;
-      let scoreMax  = this.constants.SCORE_MAX;
+      const SCORE_MAX  = this.constants.SCORE_MAX;
+      const SCORE_MIN  = this.constants.SCORE_MIN;
+      const SCORE_MSG  = this.constants.CHECK_NUMBER;
+      const TEXT_MAX   = this.constants.TEXT_MAX;
+      const TEXT_MIN   = this.constants.TEXT_MIN;
+      const TEXT_MSG   = this.constants.CHECK_STRING;
 
-      if (this.$serve.checkRange(this.text, textMsg, textMin, textMax) && 
-          this.$serve.checkRange(this.score, scoreMsg, scoreMin, scoreMax)) {
+      if (checkRange(this.text, TEXT_MSG, TEXT_MIN, TEXT_MAX) && 
+          checkRange(this.score, SCORE_MSG, SCORE_MIN, SCORE_MAX)) {
 
         let review = new FormData();
         review.append("text", this.text);
@@ -102,7 +104,7 @@ export default {
         review.append("created", Date.now());
         review.append("updated", Date.now());
 
-        let url = this.constants.API_URL + "/reviews";
+        const URL   = this.constants.API_URL + "/reviews";
         let options = {
             method: "POST",
             mode: "cors",
@@ -110,12 +112,12 @@ export default {
             body: review
           };
 
-        this.$serve.fetchSet(url, options)
+        fetchSet(URL, options)
           .then(() => {
             alert(this.constants.ALERT_NEW_REVIEW);
             this.$router.go();
           })
-          .catch(err => { this.$serve.checkError(err) });
+          .catch(err => { checkError(err) });
       }
     }
   }
