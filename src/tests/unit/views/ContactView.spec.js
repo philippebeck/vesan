@@ -1,40 +1,67 @@
+import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
+import serve from "../../../assets/serve.js"
 import ContactView from "../../../views/ContactView"
 
+let wrapper;
+
+/**
+ * @jest-environment jsdom
+ */
+beforeEach(() => {
+  jest.spyOn(serve, "setMeta").mockImplementation(() => {});
+
+  wrapper = shallowMount(ContactView, {
+    props: {
+      constants: {
+        TEST: "test"
+      },
+      user: {
+        name: "test",
+        email: "email@test.com"
+      }
+    },
+    data() {
+      return {
+        email: "email@test.com",
+        subject: "Test Subject",
+        text: "Test Text"
+      }
+    }
+  });
+});
+
+enableAutoUnmount(afterEach)
+
 describe("ContactView", () => {
-  test("name", () => { 
-    expect(ContactView.name).toBe("ContactView") 
+  test("wrapper must be a vue instance", () => {
+    expect(wrapper.exists()).toBe(true)
   })
 
-  test("components", () => { 
-    expect(typeof ContactView.components).toBe("object") 
-    expect(typeof ContactView.components.BtnElt).toBe("object") 
-    expect(typeof ContactView.components.CardElt).toBe("object") 
-    expect(typeof ContactView.components.FieldElt).toBe("object") 
-    expect(typeof ContactView.components.ListElt).toBe("object") 
-    expect(typeof ContactView.components.VueRecaptcha).toBe("object") 
+  test("wrapper components", () => {
+    expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "VueRecaptcha" })).toBe("object")
   })
 
-  test("props", () => { 
-    expect(typeof ContactView.props).toBe("object") 
-    expect(ContactView.props).toContain("constants") 
-    expect(ContactView.props).toContain("user") 
+  test("wrapper props", () => {
+    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
+    expect(wrapper.props("user")).toStrictEqual({ name: "test", email: "email@test.com" })
   })
 
-  test("data", () => { 
-    expect(typeof ContactView.data).toBe("function") 
-    expect(ContactView.data()).toEqual({ 
-      email: "", 
-      subject: "", 
-      text: "" 
-    }) 
+  test("wrapper data", () => {
+    expect(wrapper.vm.$data).toStrictEqual({
+      email: "email@test.com", subject: "Test Subject", text: "Test Text"
+    })
   })
 
-  test("created()", () => {
-    expect(typeof ContactView.created).toBe("function")
+  test("wrapper created hook", () => {
+    expect(serve.setMeta).toHaveBeenCalled()
   })
 
-  test("methods", () => { 
-    expect(typeof ContactView.methods.onVerify).toBe("function") 
-    expect(typeof ContactView.methods.send).toBe("function") 
+  test("wrapper methods", () => {
+    expect(typeof wrapper.vm.onVerify).toBe("function")
+    expect(typeof wrapper.vm.send).toBe("function")
   })
 })
