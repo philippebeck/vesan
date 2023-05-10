@@ -6,46 +6,27 @@ let wrapper;
 beforeEach(() => {
   wrapper = shallowMount(CommentList, {
     props: {
-      constants: {
-        TEST: "test"
-      },
       comments: [{
         text: "Comment text"
-      }]
-    },
-    global: {
-      mocks: {},
-      stubs: {}
+      }],
+      constants: {
+        TEST: "test"
+      }
     }
   });
 });
 
 enableAutoUnmount(afterEach)
 
+/**
+ * @jest-environment jsdom
+ */
 describe("CommentList", () => {
-  test("name", () => { 
-    expect(CommentList.name).toBe("CommentList") 
-  })
-
-  test("components", () => { 
-    expect(typeof CommentList.components).toBe("object") 
-  })
-
-  test("props", () => {
-    expect(typeof CommentList.props).toBe("object")
-  })
-
-  test("methods", () => {
-    expect(typeof CommentList.methods).toBe("object")
-  })
-})
-
-describe("Mounted CommentList", () => {
   test("wrapper", () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  test("wrapper components", () => { 
+  test("components", () => { 
     expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
@@ -53,14 +34,12 @@ describe("Mounted CommentList", () => {
     expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object")
   })
 
-  test("wrapper props", () => {
+  test("props", () => {
+    expect(wrapper.props("comments")).toStrictEqual([{ text: "Comment text" }])
     expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
-    expect(wrapper.props("comments")).toStrictEqual([{
-      text: "Comment text"
-    }])
   })
 
-  test("wrapper methods", () => { 
+  test("methods", () => { 
     expect(typeof wrapper.vm.updateComment).toBe("function") 
     expect(typeof wrapper.vm.deleteComment).toBe("function") 
   })

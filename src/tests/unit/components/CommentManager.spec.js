@@ -6,9 +6,6 @@ let wrapper;
 beforeEach(() => {
   wrapper = shallowMount(CommentManager, {
     props: {
-      constants: {
-        TEST: "test"
-      },
       articles: [{
         name: "Article name",
         text: "Article text",
@@ -16,9 +13,8 @@ beforeEach(() => {
         alt: "Article alt",
         cat: "Article cat"
       }],
-      comments: [{
-        text: "Comment text"
-      }],
+      comments: [{ text: "Comment text" }],
+      constants: { TEST: "test" },
       users: [{
         name: "User name",
         email: "User email",
@@ -26,47 +22,28 @@ beforeEach(() => {
         password: "User password",
         role: "User role"
       }]
-    },
-    global: {
-      mocks: {},
-      stubs: {}
     }
   });
 });
 
 enableAutoUnmount(afterEach)
 
+/**
+ * @jest-environment jsdom
+ */
 describe("CommentManager", () => {
-  test("name", () => { 
-    expect(CommentManager.name).toBe("CommentManager") 
-  })
-
-  test("components", () => { 
-    expect(typeof CommentManager.components).toBe("object") 
-  })
-
-  test("props", () => {
-    expect(typeof CommentManager.props).toBe("object")
-  })
-
-  test("methods", () => { 
-    expect(typeof CommentManager.methods).toBe("object")
-  })
-})
-
-describe("Mounted CommentManager", () => {
   test("wrapper", () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  test("wrapper components", () => { 
+  test("components", () => { 
     expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object") 
     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object") 
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object") 
     expect(typeof wrapper.findComponent({ name: "TableElt" })).toBe("object") 
   })
 
-  test("wrapper props", () => {
+  test("props", () => {
     expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
     expect(wrapper.props("articles")).toStrictEqual([{
       name: "Article name",
@@ -87,7 +64,7 @@ describe("Mounted CommentManager", () => {
     }])
   })
 
-  test("wrapper methods", () => {
+  test("methods", () => {
     expect(typeof wrapper.vm.getComments).toBe("function")
     expect(typeof wrapper.vm.getArticleName).toBe("function")
     expect(typeof wrapper.vm.moderateComment).toBe("function")

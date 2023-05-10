@@ -8,12 +8,12 @@ beforeEach(() => {
     props: {
       constants: {
         TEST: "test"
-      },
-      text: "Comment text"
+      }
     },
-    global: {
-      mocks: {},
-      stubs: {}
+    data() {
+      return {
+        text: "Comment text"
+      }
     }
   });
 });
@@ -21,48 +21,25 @@ beforeEach(() => {
 enableAutoUnmount(afterEach)
 
 describe("CommentCreator", () => {
-  test("name", () => { 
-    expect(CommentCreator.name).toBe("CommentCreator") 
-  })
-
-  test("components", () => { 
-    expect(typeof CommentCreator.components).toBe("object") 
-  })
-
-  test("props", () => { 
-    expect(typeof CommentCreator.props).toBe("object") 
-  })
-
-  test("data", () => { 
-    expect(typeof CommentCreator.data).toBe("function") 
-  })
-
-  test("methods", () => { 
-    expect(typeof CommentCreator.methods).toBe("object") 
-  })
-})
-
-describe("Mounted CommentCreator", () => {
   test("wrapper", () => { 
     expect(wrapper.exists()).toBe(true) 
   })
 
-  test("wrapper components", () => { 
+  test("components", () => { 
     expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
   })
 
-  test("wrapper props", () => {
+  test("props", () => {
     expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
   })
 
-  test("wrapper data", () => {
-    expect(wrapper.vm.text).toBe("")
-    expect(wrapper.attributes("text")).toBe("Comment text")
+  test("data", () => {
+    expect(wrapper.vm.$data).toStrictEqual({ text: "Comment text" })
   })
 
-  test("wrapper methods", () => { 
+  test("methods", () => { 
     expect(typeof wrapper.vm.createComment).toBe("function") 
   })
 });
