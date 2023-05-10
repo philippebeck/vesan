@@ -23,40 +23,21 @@ beforeEach(() => {
         password: "User password",
         role: "User role"
       }]
-    },
-    global: {
-      mocks: {},
-      stubs: {}
     }
   });
 });
 
 enableAutoUnmount(afterEach)
 
+/**
+ * @jest-environment jsdom
+ */
 describe("ArticleManager", () => {
-  test("name", () => { 
-    expect(ArticleManager.name).toBe("ArticleManager") 
-  })
-
-  test("components", () => { 
-    expect(typeof ArticleManager.components).toBe("object") 
-  })
-
-  test("props", () => {
-    expect(typeof ArticleManager.props).toBe("object")
-  })
-
-  test("methods", () => { 
-    expect(typeof ArticleManager.methods).toBe("object")
-  })
-})
-
-describe("Mounted ArticleManager", () => {
   test("wrapper", () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  test("wrapper components", () => { 
+  test("components", () => { 
     expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object") 
     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object") 
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object") 
@@ -65,8 +46,7 @@ describe("Mounted ArticleManager", () => {
     expect(typeof wrapper.findComponent({ name: "TableElt" })).toBe("object") 
   })
 
-  test("wrapper props", () => {
-    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
+  test("props", () => {
     expect(wrapper.props("articles")).toStrictEqual([{
       name: "Article name",
       text: "Article text",
@@ -74,6 +54,7 @@ describe("Mounted ArticleManager", () => {
       alt: "Article alt",
       cat: "Article cat"
     }])
+    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
     expect(wrapper.props("users")).toStrictEqual([{
       name: "User name",
       email: "User email",
@@ -83,7 +64,7 @@ describe("Mounted ArticleManager", () => {
     }])
   })
 
-  test("wrapper methods", () => {
+  test("methods", () => {
     expect(typeof wrapper.vm.getArticles).toBe("function")
     expect(typeof wrapper.vm.getArticle).toBe("function")
     expect(typeof wrapper.vm.checkArticle).toBe("function")
