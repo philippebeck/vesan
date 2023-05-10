@@ -34,7 +34,7 @@
       </template>
 
       <template #body>
-        <ListElt :items="getItemsByCategories(articles)"
+        <ListElt :items="getItemsByCategory(articles)"
           :dynamic="true">
 
           <template #items="slotProps">
@@ -203,7 +203,7 @@ export default {
      * @param {array} items 
      * @returns
      */
-    getItemsByCategories(items) {
+    getItemsByCategory(items) {
       return getItemsByCat(items);
     },
 

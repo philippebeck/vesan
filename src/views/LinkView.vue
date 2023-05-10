@@ -44,7 +44,7 @@
       </template>
 
       <template #body>
-        <ListElt :items="getItemsByCategories(links)"
+        <ListElt :items="getItemsByCategory(links)"
           :dynamic="true">
           <template #items="slotProps">
             <i :id="slotProps.index"
@@ -134,7 +134,7 @@ export default {
      * SORT ITEMS BY CATEGORY
      * @param {array} items 
      */
-    getItemsByCategories(items) {
+    getItemsByCategory(items) {
       return getItemsByCat(items);
     }
   }
