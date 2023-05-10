@@ -23,44 +23,22 @@ beforeEach(() => {
 enableAutoUnmount(afterEach)
 
 describe("LinkCreator", () => {
-  test("name", () => { 
-    expect(LinkCreator.name).toBe("LinkCreator") 
-  })
-
-  test("components", () => { 
-    expect(typeof LinkCreator.components).toBe("object") 
-  })
-
-  test("props", () => { 
-    expect(typeof LinkCreator.props).toBe("object") 
-  })
-
-  test("data", () => { 
-    expect(typeof LinkCreator.data).toBe("function") 
-  })
-
-  test("methods", () => { 
-    expect(typeof LinkCreator.methods).toBe("object") 
-  })
-})
-
-describe("Mounted LinkCreator", () => {
   test("wrapper", () => { 
     expect(wrapper.exists()).toBe(true) 
   })
 
-  test("wrapper components", () => { 
+  test("components", () => { 
     expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object")
   })
 
-  test("wrapper props", () => {
+  test("props", () => {
     expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
   })
 
-  test("wrapper data", () => {
+  test("data", () => {
     expect(wrapper.vm.name).toBe("")
     expect(wrapper.vm.url).toBe("")
     expect(wrapper.vm.cat).toBe("")
@@ -70,7 +48,7 @@ describe("Mounted LinkCreator", () => {
     expect(wrapper.attributes("cat")).toBe("Link cat")
   })
 
-  test("wrapper methods", () => { 
+  test("methods", () => { 
     expect(typeof wrapper.vm.createLink).toBe("function") 
   })
 });

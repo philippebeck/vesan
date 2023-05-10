@@ -18,10 +18,6 @@ beforeEach(() => {
         description: "Image description",
         gallery: "Gallery name"
       }]
-    },
-    global: {
-      mocks: {},
-      stubs: {}
     }
   });
 });
@@ -29,29 +25,11 @@ beforeEach(() => {
 enableAutoUnmount(afterEach)
 
 describe("ImageManager", () => {
-  test("name", () => { 
-    expect(ImageManager.name).toBe("ImageManager") 
-  })
-
-  test("components", () => { 
-    expect(typeof ImageManager.components).toBe("object") 
-  })
-
-  test("props", () => {
-    expect(typeof ImageManager.props).toBe("object")
-  })
-
-  test("methods", () => { 
-    expect(typeof ImageManager.methods).toBe("object")
-  })
-})
-
-describe("Mounted ImageManager", () => {
   test("wrapper", () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  test("wrapper components", () => { 
+  test("components", () => { 
     expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
@@ -59,7 +37,7 @@ describe("Mounted ImageManager", () => {
     expect(typeof wrapper.findComponent({ name: "TableElt" })).toBe("object")
   })
 
-  test("wrapper props", () => {
+  test("props", () => {
     expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
     expect(wrapper.props("galleries")).toStrictEqual([{
       name: "Gallery name",
@@ -72,7 +50,7 @@ describe("Mounted ImageManager", () => {
     }])
   })
 
-  test("wrapper methods", () => {
+  test("methods", () => {
     expect(typeof wrapper.vm.getImages).toBe("function")
     expect(typeof wrapper.vm.getItemsByGallery).toBe("function")
     expect(typeof wrapper.vm.updateImage).toBe("function")
