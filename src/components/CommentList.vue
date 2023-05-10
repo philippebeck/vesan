@@ -93,6 +93,8 @@
 </template>
 
 <script>
+import { checkError, checkRange, fetchSet } from "../assets/serve"
+
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
 import FieldElt from "../assets/FieldElt"
@@ -123,18 +125,18 @@ export default {
       for (let comment of this.comments) {
         if (comment._id === id) {
 
-          let msg = this.constants.CHECK_STRING;
-          let min = this.constants.TEXT_MIN;
-          let max = this.constants.TEXT_MAX;
+          const MAX = this.constants.TEXT_MAX;
+          const MIN = this.constants.TEXT_MIN;
+          const MSG = this.constants.CHECK_STRING;
 
-          if (this.$serve.checkString(comment.text, msg, min, max)) {
+          if (checkRange(comment.text, MSG, MIN, MAX)) {
 
             let data = new FormData();
             data.append("text", comment.text);
             data.append("moderate", "false");
             data.append("updated", Date.now());
 
-            let url = this.constants.API_URL + "/comments/" + id;
+            let url     = this.constants.API_URL + "/comments/" + id;
             let options = {
               method: "PUT",
               mode: "cors",
@@ -142,12 +144,12 @@ export default {
               body: data
             };
 
-            this.$serve.fetchSet(url , options)
+            fetchSet(url , options)
               .then(() => {
                 alert(this.constants.ALERT_COMMENT + id + this.constants.ALERT_UPDATED);
                 this.$router.go();
               })
-              .catch(err => { this.$serve.checkError(err) });
+              .catch(err => { checkError(err) });
           }
         }
       }
@@ -160,19 +162,19 @@ export default {
     deleteComment(id) {
       if (confirm(`${this.constants.TITLE_DELETE_COMMENT}${id} ?`) === true) {
 
-        let url = this.constants.API_URL + "/comments/" + id;
+        let url     = this.constants.API_URL + "/comments/" + id;
         let options = {
           method: "DELETE",
           mode: "cors",
           headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
         };
 
-        this.$serve.fetchSet(url, options)
+        fetchSet(url, options)
           .then(() => {
             alert(this.constants.ALERT_COMMENT + id + this.constants.ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => { this.$serve.checkError(err) });
+          .catch(err => { checkError(err) });
       }
     }
   }

@@ -111,6 +111,8 @@
 </template>
 
 <script>
+import { checkError, checkRange, getItemName, fetchSet } from "../assets/serve"
+
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
 import FieldElt from "../assets/FieldElt"
@@ -131,8 +133,8 @@ export default {
 
   props: [
     "articles", 
-    "users", 
-    "constants"
+    "constants",
+    "users"
   ],
 
   methods: {
@@ -170,15 +172,15 @@ export default {
      * @param {object} article 
      */
     checkArticle(id, article) {
-      let msg = this.constants.CHECK_STRING;
-      let min = this.constants.TEXT_MIN;
-      let max = this.constants.TEXT_MAX;
+      const MSG = this.constants.CHECK_STRING;
+      const MIN = this.constants.TEXT_MIN;
+      const MAX = this.constants.TEXT_MAX;
 
-      if (this.$serve.checkRange(article.name, msg) && 
-        this.$serve.checkRange(article.text, msg, min, max) && 
-        this.$serve.checkRange(article.alt, msg)) {
+      if (checkRange(article.name, MSG) && 
+          checkRange(article.text, MSG, MIN, MAX) && 
+          checkRange(article.alt, MSG)) {
 
-        let url = this.constants.API_URL + "/articles/" + id;
+        let url     = this.constants.API_URL + "/articles/" + id;
         let options = {
           method: "PUT",
           mode: "cors",
@@ -186,11 +188,11 @@ export default {
           body: this.getArticle(id, article)
         };
 
-        this.$serve.fetchSet(url, options)
+        fetchSet(url, options)
           .then(() => {
             alert(article.name + this.constants.ALERT_UPDATED);
           })
-          .catch(err => { this.$serve.checkError(err) });
+          .catch(err => { checkError(err) });
       }
     },
 
@@ -209,23 +211,23 @@ export default {
      * @param {string} id 
      */
     deleteArticle(id) {
-      let articleName = this.$serve.getItemName(id, this.articles);
+      let name = getItemName(id, this.articles);
 
-      if (confirm(`${this.constants.TITLE_DELETE} ${articleName} ?`) === true) {
+      if (confirm(`${this.constants.TITLE_DELETE} ${name} ?`) === true) {
 
-        let url = this.constants.API_URL + "/articles/" + id;
+        let url     = this.constants.API_URL + "/articles/" + id;
         let options = {
           method: "DELETE",
           mode: "cors",
           headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
         };
 
-        this.$serve.fetchSet(url, options)
+        fetchSet(url, options)
           .then(() => {
-            alert(articleName + this.constants.ALERT_DELETED);
+            alert(name + this.constants.ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => { this.$serve.checkError(err) });
+          .catch(err => { checkError(err) });
       }
     }
   }

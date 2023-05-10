@@ -108,11 +108,12 @@
 </template>
 
 <script>
+import { checkError, checkRange, fetchSet } from "../assets/serve"
+
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
 import FieldElt from "../assets/FieldElt"
 import ListElt from "../assets/ListElt"
-
 import Editor from "@tinymce/tinymce-vue"
 
 export default {
@@ -141,13 +142,13 @@ export default {
      * CREATE ARTICLE
      */
     createArticle() {
-      let message = this.constants.CHECK_STRING;
-      let min = this.constants.TEXT_MIN;
-      let max = this.constants.TEXT_MAX;
+      const MSG = this.constants.CHECK_STRING;
+      const MIN = this.constants.TEXT_MIN;
+      const MAX = this.constants.TEXT_MAX;
 
-      if (this.$serve.checkRange(this.name, message) && 
-        this.$serve.checkRange(this.text, message, min, max) && 
-        this.$serve.checkRange(this.alt, message)) {
+      if (checkRange(this.name, MSG) && 
+          checkRange(this.text, MSG, MIN, MAX) && 
+          checkRange(this.alt, MSG)) {
 
         if (this.cat === "") { this.cat = this.constants.CAT_ARTICLE }
         let image = document.getElementById("image").files[0];
@@ -165,6 +166,7 @@ export default {
           article.append("created", Date.now());
           article.append("updated", Date.now());
 
+          const URL   = this.constants.API_URL + "/articles";
           let options = {
             method: "POST",
             mode: "cors",
@@ -172,12 +174,12 @@ export default {
             body: article
           };
 
-          this.$serve.fetchSet(this.constants.API_URL + "/articles", options)
+          fetchSet(URL, options)
             .then(() => {
               alert(this.name + this.constants.ALERT_CREATED);
               this.$router.go();
             })
-            .catch(err => { this.$serve.checkError(err) });
+            .catch(err => { checkError(err) });
 
         } else {
           alert(this.constants.ALERT_IMG);

@@ -61,6 +61,8 @@
 </template>
 
 <script>
+import { checkError, checkRange, fetchSet } from "../assets/serve"
+
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
 import FieldElt from "../assets/FieldElt"
@@ -88,10 +90,10 @@ methods: {
    * CREATE GALLERY
    */
   createGallery() {
-    let msg = this.constants.CHECK_STRING;
+    const MSG = this.constants.CHECK_STRING;
 
-    if (this.$serve.checkRange(this.name, msg) &&
-        this.$serve.checkRange(this.author, msg)) {
+    if (checkRange(this.name, MSG) &&
+        checkRange(this.author, MSG)) {
 
       let gallery = new FormData();
       gallery.append("name", this.name);
@@ -105,12 +107,12 @@ methods: {
         body: gallery
       };
 
-      this.$serve.fetchSet(url, options)
+      fetchSet(url, options)
         .then(() => {
           alert(this.name + this.constants.ALERT_CREATED);
           this.$router.go();
         })
-        .catch(err => { this.$serve.checkError(err) });
+        .catch(err => { checkError(err) });
     }
   }
 }

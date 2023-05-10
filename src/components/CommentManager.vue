@@ -79,6 +79,8 @@
 </template>
 
 <script>
+import { checkError, fetchSet, getItemName } from "../assets/serve"
+
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
 import FieldElt from "../assets/FieldElt"
@@ -115,7 +117,7 @@ export default {
      * @returns
      */
     getArticleName(id) {
-      return this.$serve.getItemName(id, this.articles);
+      return getItemName(id, this.articles);
     },
 
     /**
@@ -130,7 +132,7 @@ export default {
           data.append("text", comment.text);
           data.append("moderate", comment.moderate);
 
-          let url = this.constants.API_URL + "/comments/" + id;
+          let url     = this.constants.API_URL + "/comments/" + id;
           let options = {
             method: "PUT",
             mode: "cors",
@@ -138,11 +140,11 @@ export default {
             body: data
           };
 
-          this.$serve.fetchSet(url, options)
+          fetchSet(url, options)
             .then(() => {
               alert(this.constants.ALERT_COMMENT + id + this.constants.ALERT_MODERATED);
             })
-            .catch(err => { this.$serve.checkError(err) });
+            .catch(err => { checkError(err) });
         }
       }
     },
@@ -154,19 +156,19 @@ export default {
     deleteComment(id) {
       if (confirm(`${this.constants.TITLE_DELETE_COMMENT}${id} ?`) === true) {
 
-        let url = this.constants.API_URL + "/comments/" + id;
+        let url     = this.constants.API_URL + "/comments/" + id;
         let options = {
           method: "DELETE",
           mode: "cors",
           headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
         };
 
-        this.$serve.fetchSet(url, options)
+        fetchSet(url, options)
           .then(() => {
             alert(this.constants.ALERT_COMMENT + id + this.constants.ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => { this.$serve.checkError(err) });
+          .catch(err => { checkError(err) });
       }
     }
   }

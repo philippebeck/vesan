@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import { checkError, checkRange, fetchSet } from "../assets/serve"
+
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
 import FieldElt from "../assets/FieldElt"
@@ -67,11 +69,11 @@ export default {
      * CREATE COMMENT
      */
     createComment() {
-      let msg = this.constants.CHECK_STRING;
-      let min = this.constants.TEXT_MIN;
-      let max = this.constants.TEXT_MAX;
+      const MAX = this.constants.TEXT_MAX;
+      const MIN = this.constants.TEXT_MIN;
+      const MSG = this.constants.CHECK_STRING;
 
-      if (this.$serve.checkRange(this.text, msg, min, max)) {
+      if (checkRange(this.text, MSG, MIN, MAX)) {
         let comment = new FormData();
 
         comment.append("text", this.text);
@@ -81,7 +83,7 @@ export default {
         comment.append("created", Date.now());
         comment.append("updated", Date.now());
 
-        let url = this.constants.API_URL + "/comments";
+        const URL   = this.constants.API_URL + "/comments";
         let options = {
           method: "POST",
           mode: "cors",
@@ -89,12 +91,12 @@ export default {
           body: comment
         };
 
-        this.$serve.fetchSet(url, options)
+        fetchSet(URL, options)
           .then(() => {
             alert(this.constants.ALERT_NEW_COMMENT);
             this.$router.go();
           })
-          .catch(err => { this.$serve.checkError(err) });
+          .catch(err => { checkError(err) });
       }
     }
   }
