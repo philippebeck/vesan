@@ -151,13 +151,13 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
+import { checkError, checkRange, checkRole, fetchGet, fetchSet, setMeta } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
 import FieldElt from "../assets/FieldElt"
 import ListElt from "../assets/ListElt"
 import MediaElt from "../assets/MediaElt"
-
 import Editor from "@tinymce/tinymce-vue"
 
 export default {
@@ -182,14 +182,14 @@ export default {
     if (this.constants.USER_ID) {
       let url = this.constants.API_URL + "/auth/" + this.constants.USER_ID;
 
-      this.$serve.fetchGet(url)
+      fetchGet(url)
         .then((res) => { 
           this.user = res;
 
-          if (this.checkRole("editor")) {
+          if (checkRole(this.user.role, "editor")) {
             this.$store.dispatch("readProduct", this.$route.params.id);
 
-            this.$serve.setMeta(
+            setMeta(
               this.constants.HEAD_PRODUCT, 
               this.constants.META_PRODUCT,
               this.constants.UI_URL,
@@ -198,7 +198,7 @@ export default {
           }
         })
         .catch(err => { 
-          this.$serve.checkError(err);
+          checkError(err);
           this.$router.push("/admin");
         });
 
@@ -216,30 +216,21 @@ export default {
     ...mapActions(["readProduct"]),
 
     /**
-     * CHECK ROLE
-     * @param {string} role
-     * @returns
-     */
-    checkRole(role) {
-      return this.$serve.checkRole(this.user.role, role);
-    },
-
-    /**
      * UPDATE PRODUCT
      */
     updateProduct() {
-      let stringMsg = this.constants.CHECK_STRING;
-      let textMin   = this.constants.TEXT_MIN;
-      let textMax   = this.constants.TEXT_MAX;
-      let priceMsg  = this.constants.CHECK_NUMBER;
-      let priceMin  = this.constants.PRICE_MIN;
-      let priceMax  = this.constants.PRICE_MAX;
+      const PRICE_MAX  = this.constants.PRICE_MAX;
+      const PRICE_MIN  = this.constants.PRICE_MIN;
+      const PRICE_MSG  = this.constants.CHECK_NUMBER;
+      const STRING_MSG = this.constants.CHECK_STRING;
+      const TEXT_MAX   = this.constants.TEXT_MAX;
+      const TEXT_MIN   = this.constants.TEXT_MIN;
 
-      if (this.$serve.checkRange(this.product.name, stringMsg) && 
-        this.$serve.checkRange(this.product.description, stringMsg, textMin, textMax) && 
-        this.$serve.checkRange(this.product.alt, stringMsg) && 
-        this.$serve.checkRange(this.product.price, priceMsg, priceMin, priceMax) && 
-        this.$serve.checkRange(this.product.options, stringMsg, textMin, textMax)) {
+      if (checkRange(this.product.name, STRING_MSG) && 
+          checkRange(this.product.description, STRING_MSG, TEXT_MIN, TEXT_MAX) && 
+          checkRange(this.product.alt, STRING_MSG) && 
+          checkRange(this.product.price, PRICE_MSG, PRICE_MIN, PRICE_MAX) && 
+          checkRange(this.product.options, STRING_MSG, TEXT_MIN, TEXT_MAX)) {
 
         let data  = new FormData();
         let image = document.getElementById("image").files[0] ?? this.product.image;
@@ -262,12 +253,12 @@ export default {
           body: data
         };
 
-        this.$serve.fetchSet(url, options)
+        fetchSet(url, options)
           .then(() => {
             alert(this.product.name + this.constants.ALERT_UPDATED);
             this.$router.push("/admin");
           })
-          .catch(err => { this.$serve.checkError(err) });
+          .catch(err => { checkError(err) });
       }
     }
   }

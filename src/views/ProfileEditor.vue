@@ -7,7 +7,7 @@
         {{ constants.PROFILE_EDITOR }}
       </h1>
 
-      <BtnElt v-if="checkRole('editor')"
+      <BtnElt v-if="checkSession('editor')"
         href="/admin"
         class="btn-green"
         :content="constants.CONTENT_ADMIN"
@@ -184,6 +184,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
+import { checkError, checkRange, checkRegex, checkRole, fetchSet, setMeta } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
@@ -217,7 +218,7 @@ export default {
       this.$store.dispatch("readUser", this.constants.USER_ID);
       this.$store.dispatch("listUserOrders", this.constants.USER_ID);
 
-      this.$serve.setMeta(
+      setMeta(
       this.constants.HEAD_PROFILE, 
       this.constants.META_PROFILE,
       this.constants.UI_URL,
@@ -248,8 +249,8 @@ export default {
      * @param {string} role
      * @returns
      */
-    checkRole(role) {
-      return this.$serve.checkRole(this.user.role, role);
+    checkSession(role) {
+      return checkRole(this.user.role, role);
     },
 
     /**
@@ -265,12 +266,12 @@ export default {
      * UPDATE USER
      */
     updateUser() {
-      let nameMsg     = this.constants.CHECK_STRING;
-      let emailMsg    = this.constants.CHECK_EMAIL;
-      let emailRegex  = this.constants.REGEX_EMAIL;
+      const NAME_MSG    = this.constants.CHECK_STRING;
+      const EMAIL_MSG   = this.constants.CHECK_EMAIL;
+      const EMAIL_REGEX = this.constants.REGEX_EMAIL;
 
-      if (this.$serve.checkRange(this.user.name, nameMsg) && 
-        this.$serve.checkRegex(this.user.email, emailMsg, emailRegex)) {
+      if (checkRange(this.user.name, NAME_MSG) && 
+          checkRegex(this.user.email, EMAIL_MSG, EMAIL_REGEX)) {
 
         let user  = new FormData();
         let image = document.getElementById("image").files[0] ?? this.user.image;
@@ -281,16 +282,16 @@ export default {
         user.append("role", this.user.role);
         user.append("updated", Date.now());
 
-        let passMsg   = this.constants.CHECK_PASS;
-        let passRegex = this.constants.REGEX_PASS;
+        const PASS_MSG   = this.constants.CHECK_PASS;
+        const PASS_REGEX = this.constants.REGEX_PASS;
 
         if (this.pass !== "") {
-          if (this.$serve.checkRegex(this.pass, passMsg, passRegex)) {
+          if (checkRegex(this.pass, PASS_MSG, PASS_REGEX)) {
             user.append("pass", this.pass)
           }
         }
 
-        let url = this.constants.API_URL + "/users/" + this.user._id;
+        let url     = this.constants.API_URL + "/users/" + this.user._id;
         let options = {
           method: "PUT",
           mode: "cors",
@@ -298,12 +299,12 @@ export default {
           body: user
         };
 
-        this.$serve.fetchSet(url, options)
+        fetchSet(url, options)
           .then(() => {
             alert(this.user.name + this.constants.ALERT_UPDATED);
             this.$router.go();
           })
-          .catch(err => { this.$serve.checkError(err) });
+          .catch(err => { checkError(err) });
       }
     },
 
@@ -311,26 +312,26 @@ export default {
      * DELETE USER
      */
     deleteUser() {
-      let userName = this.user.name;
+      let name = this.user.name;
 
-      if (confirm(`${this.constants.TITLE_DELETE} ${userName} ?`) === true) {
+      if (confirm(`${this.constants.TITLE_DELETE} ${name} ?`) === true) {
 
-        let url = this.constants.API_URL + "/users/" + this.user._id;
+        let url     = this.constants.API_URL + "/users/" + this.user._id;
         let options = {
           method: "DELETE",
           mode: "cors",
           headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
         };
 
-        this.$serve.fetchSet(url, options)
+        fetchSet(url, options)
           .then(() => {
             localStorage.removeItem("userId");
             localStorage.removeItem("userToken");
 
-            alert(userName + this.constants.ALERT_DELETED);
+            alert(name + this.constants.ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => { this.$serve.checkError(err) });
+          .catch(err => { checkError(err) });
       }
     }
   }

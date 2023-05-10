@@ -43,22 +43,22 @@
               <i class="fa-regular fa-comments fa-fw"></i>
             </a>
 
-            <a v-if="checkRole('admin') && galleries.length > 0"
+            <a v-if="checkSession('admin') && galleries.length > 0"
               href="#gallery"
               :title="constants.INTRO_GALLERIES">
               <i class="fa-regular fa-images fa-fw"></i>
             </a>
-            <a v-if="checkRole('admin') && images.length > 0"
+            <a v-if="checkSession('admin') && images.length > 0"
               href="#image"
               :title="constants.INTRO_IMAGES">
               <i class="fa-regular fa-image fa-fw"></i>
             </a>
-            <a v-if="checkRole('admin') && links.length > 0"
+            <a v-if="checkSession('admin') && links.length > 0"
               href="#link"
               :title="constants.INTRO_LINKS">
               <i class="fa-solid fa-link fa-fw"></i>
             </a>
-            <a v-if="checkRole('admin')"
+            <a v-if="checkSession('admin')"
               href="#user"
               :title="constants.INTRO_USERS">
               <i class="fa-solid fa-users-gear fa-fw"></i>
@@ -123,6 +123,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
+import { checkError, checkRole, fetchGet, setMeta } from "../assets/serve"
 
 import CardElt from "../assets/CardElt"
 import NavElt from "../assets/NavElt"
@@ -164,11 +165,11 @@ export default {
     if (this.constants.USER_ID) {
       let url = this.constants.API_URL + "/auth/" + this.constants.USER_ID;
 
-      this.$serve.fetchGet(url)
+      fetchGet(url)
         .then((res) => { 
           this.user = res;
 
-          if (this.checkRole("editor")) {
+          if (this.checkSession("editor")) {
             this.$store.dispatch("listArticles");
             this.$store.dispatch("listComments");
             this.$store.dispatch("listOrders");
@@ -176,21 +177,21 @@ export default {
             this.$store.dispatch("listReviews");
           } 
 
-          if (this.checkRole("admin")) {
+          if (this.checkSession("admin")) {
             this.$store.dispatch("listGalleries");
             this.$store.dispatch("listImages");
             this.$store.dispatch("listLinks");
             this.$store.dispatch("listUsers");
           }
         })
-        .catch(err => { this.$serve.checkError(err) });
+        .catch(err => { checkError(err) });
 
     } else {
       alert(this.constants.ALERT_HOME);
       this.$router.push("/");
     }
 
-    this.$serve.setMeta(
+    setMeta(
       this.constants.HEAD_ADMIN, 
       this.constants.META_ADMIN,
       this.constants.UI_URL,
@@ -230,8 +231,8 @@ export default {
      * @param {string} role
      * @returns
      */
-    checkRole(role) {
-      return this.$serve.checkRole(this.user.role, role);
+    checkSession(role) {
+      return checkRole(this.user.role, role);
     }
   }
 }
