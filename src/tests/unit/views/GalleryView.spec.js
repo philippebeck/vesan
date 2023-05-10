@@ -71,6 +71,6 @@ describe("GalleryView", () => {
 
   test("wrapper methods", () => {
     expect(typeof wrapper.vm.listGalleries).toBe("function")
-    expect(typeof wrapper.vm.checkRole).toBe("function")
+    expect(typeof wrapper.vm.checkSession).toBe("function")
   })
 })

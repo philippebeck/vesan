@@ -37,7 +37,7 @@ describe("ArticleView", () => {
   })
 
   test("methods", () => { 
-    expect(typeof ArticleView.methods.checkRole).toBe("function") 
+    expect(typeof ArticleView.methods.checkSession).toBe("function") 
     expect(typeof ArticleView.methods.checkLikes).toBe("function") 
     expect(typeof ArticleView.methods.addLike).toBe("function") 
   })

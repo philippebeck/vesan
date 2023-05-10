@@ -34,6 +34,6 @@ describe("ImageView", () => {
   })
 
   test("methods", () => { 
-    expect(typeof ImageView.methods.checkRole).toBe("function") 
+    expect(typeof ImageView.methods.checkSession).toBe("function") 
   })
 })

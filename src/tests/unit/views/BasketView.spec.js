@@ -35,7 +35,7 @@ describe("BasketView", () => {
   })
 
   test("methods", () => { 
-    expect(typeof BasketView.methods.checkRole).toBe("function") 
+    expect(typeof BasketView.methods.checkSession).toBe("function") 
     expect(typeof BasketView.methods.getTotal).toBe("function") 
     expect(typeof BasketView.methods.setBasket).toBe("function") 
     expect(typeof BasketView.methods.setOrder).toBe("function") 

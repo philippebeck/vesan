@@ -76,7 +76,7 @@ describe("ArticleEditor", () => {
 
   // test("methods", () => { 
   //   expect(wrapper.vm.readArticle).toBe("function")
-  //   expect(wrapper.vm.checkRole).toBe("function")
+  //   expect(wrapper.vm.checkSession).toBe("function")
   //   expect(wrapper.vm.updateArticle).toBe("function")
   // })
 })

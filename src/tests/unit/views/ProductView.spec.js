@@ -130,8 +130,8 @@ describe("ProductView", () => {
 //   })
 
 //   test("wrapper methods", () => { 
-//     expect(typeof wrapper.vm.checkRole).toBe("function")
-//     expect(typeof wrapper.vm.getAverage).toBe("function")
+//     expect(typeof wrapper.vm.checkSession).toBe("function")
+//     expect(typeof wrapper.vm.getScoresAverage).toBe("function")
 //     expect(typeof wrapper.vm.addToBasket).toBe("function")
 //     expect(typeof wrapper.vm.createOrder).toBe("function")
 //     expect(typeof wrapper.vm.getBasket).toBe("function")

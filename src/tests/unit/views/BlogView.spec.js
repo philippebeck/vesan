@@ -34,8 +34,8 @@ describe("BlogView", () => {
   })
 
   test("methods", () => { 
-    expect(typeof BlogView.methods.checkRole).toBe("function") 
-    expect(typeof BlogView.methods.getItemsByCat).toBe("function") 
+    expect(typeof BlogView.methods.checkSession).toBe("function") 
+    expect(typeof BlogView.methods.getItemsByCategory).toBe("function") 
     expect(typeof BlogView.methods.checkLikes).toBe("function") 
     expect(typeof BlogView.methods.addLike).toBe("function") 
   })

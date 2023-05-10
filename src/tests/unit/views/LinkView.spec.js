@@ -26,11 +26,11 @@ describe("LinkView", () => {
 
   test("computed", () => {
     expect(typeof LinkView.computed).toBe("object")
-    expect(typeof LinkView.computed.getCats).toBe("function")
+    expect(typeof LinkView.computed.getCategories).toBe("function")
   })
 
   test("methods", () => { 
-    expect(typeof LinkView.methods.checkRole).toBe("function") 
-    expect(typeof LinkView.methods.getItemsByCat).toBe("function") 
+    expect(typeof LinkView.methods.checkSession).toBe("function") 
+    expect(typeof LinkView.methods.getItemsByCategory).toBe("function") 
   })
 })

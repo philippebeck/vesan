@@ -39,6 +39,6 @@ describe("AdminEditor", () => {
   })
 
   test("methods", () => { 
-    expect(typeof AdminEditor.methods.checkRole).toBe("function") 
+    expect(typeof AdminEditor.methods.checkSession).toBe("function") 
   })
 })

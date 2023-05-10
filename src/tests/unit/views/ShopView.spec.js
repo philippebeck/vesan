@@ -39,12 +39,12 @@ describe("ShopView", () => {
 
   test("computed", () => {
     expect(typeof ShopView.computed).toBe("object")
-    expect(typeof ShopView.computed.getCats).toBe("function")
+    expect(typeof ShopView.computed.getCategories).toBe("function")
   })
 
   test("methods", () => { 
-    expect(typeof ShopView.methods.checkRole).toBe("function") 
-    expect(typeof ShopView.methods.getItemsByCat).toBe("function") 
-    expect(typeof ShopView.methods.getAverage).toBe("function") 
+    expect(typeof ShopView.methods.checkSession).toBe("function") 
+    expect(typeof ShopView.methods.getItemsByCategory).toBe("function") 
+    expect(typeof ShopView.methods.getScoresAverage).toBe("function") 
   })
 })

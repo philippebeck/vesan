@@ -34,7 +34,6 @@ describe("ProductEditor", () => {
   })
 
   test("methods", () => { 
-    expect(typeof ProductEditor.methods.checkRole).toBe("function") 
     expect(typeof ProductEditor.methods.updateProduct).toBe("function") 
   })
 })

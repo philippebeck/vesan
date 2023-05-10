@@ -33,7 +33,7 @@ describe("ProfileEditor", () => {
   })
 
   test("methods", () => { 
-    expect(typeof ProfileEditor.methods.checkRole).toBe("function") 
+    expect(typeof ProfileEditor.methods.checkSession).toBe("function") 
     expect(typeof ProfileEditor.methods.logout).toBe("function") 
     expect(typeof ProfileEditor.methods.updateUser).toBe("function") 
     expect(typeof ProfileEditor.methods.deleteUser).toBe("function") 
