@@ -1,32 +1,76 @@
+import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
+import { createStore } from 'vuex';
+import serve from "../../../assets/serve.js"
 import GalleryView from "../../../views/GalleryView"
 
+let wrapper;
+let store;
+let actions;
+let state;
+
+/**
+ * @jest-environment jsdom
+ */
+beforeEach(() => {
+  jest.spyOn(serve, "setMeta").mockImplementation(() => {});
+
+  actions = {
+    listGalleries: jest.fn()
+  };
+
+  state = {
+    galleries: []
+  };
+
+  store = createStore({
+    state() {
+      return state;
+      },
+    actions: actions
+  })
+
+  wrapper = shallowMount(GalleryView, {
+    props: {
+      constants: {
+        TEST: "test"
+      },
+      user: {
+        name: "test",
+        email: "email@test.com"
+      }
+    },
+    global: {
+      plugins: [store]
+    }
+  });
+});
+
+enableAutoUnmount(afterEach)
+
 describe("GalleryView", () => {
-  test("name", () => { 
-    expect(GalleryView.name).toBe("GalleryView") 
+  test("wrapper must be a vue instance", () => {
+    expect(wrapper.exists()).toBe(true)
   })
 
-  test("components", () => { 
-    expect(typeof GalleryView.components).toBe("object") 
-    expect(typeof GalleryView.components.CardElt).toBe("object") 
-    expect(typeof GalleryView.components.ListElt).toBe("object") 
-    expect(typeof GalleryView.components.MediaElt).toBe("object") 
+  test("wrapper components", () => {
+    expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "GalleryCreator" })).toBe("object")
   })
 
-  test("props", () => { 
-    expect(typeof GalleryView.props).toBe("object") 
-    expect(GalleryView.props).toContain("constants") 
-    expect(GalleryView.props).toContain("user") 
+  test("wrapper props", () => {
+    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
+    expect(wrapper.props("user")).toStrictEqual({ name: "test", email: "email@test.com" })
   })
 
-  test("created()", () => {
-    expect(typeof GalleryView.created).toBe("function")
+  test("wrapper created hook", () => {
+    expect(serve.setMeta).toHaveBeenCalled()
+    expect(actions.listGalleries).toHaveBeenCalled()
   })
 
-  test("computed", () => {
-    expect(typeof GalleryView.computed).toBe("object")
-  })
-
-  test("methods", () => { 
-    expect(typeof GalleryView.methods.checkRole).toBe("function") 
+  test("wrapper methods", () => {
+    expect(typeof wrapper.vm.listGalleries).toBe("function")
+    expect(typeof wrapper.vm.checkRole).toBe("function")
   })
 })
