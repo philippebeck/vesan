@@ -1,5 +1,5 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import serve from "../../../assets/serve.js"
+import * as serve from "../../../assets/serve.js"
 import HomeView from "../../../views/HomeView"
 
 let wrapper;

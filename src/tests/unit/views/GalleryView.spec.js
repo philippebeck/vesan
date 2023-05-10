@@ -1,6 +1,6 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import { createStore } from 'vuex';
-import serve from "../../../assets/serve.js"
+import * as serve from "../../../assets/serve"
 import GalleryView from "../../../views/GalleryView"
 
 let wrapper;
