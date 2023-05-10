@@ -20,6 +20,9 @@ beforeEach(() => {
 
 enableAutoUnmount(afterEach)
 
+/**
+ * @jest-environment jsdom
+ */
 describe("CommentCreator", () => {
   test("wrapper", () => { 
     expect(wrapper.exists()).toBe(true) 

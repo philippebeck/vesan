@@ -21,6 +21,9 @@ beforeEach(() => {
 
 enableAutoUnmount(afterEach)
 
+/**
+ * @jest-environment jsdom
+ */
 describe("GalleryCreator", () => {
   test("wrapper", () => { 
     expect(wrapper.exists()).toBe(true) 

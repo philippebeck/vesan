@@ -3,11 +3,7 @@ import ForgotPass from "../../../components/ForgotPass"
 
 let wrapper;
 
-/**
- * @jest-environment jsdom
- */
 beforeEach(() => {
-
   wrapper = shallowMount(ForgotPass, {
     props: {
       constants: {
@@ -24,6 +20,9 @@ beforeEach(() => {
 
 enableAutoUnmount(afterEach)
 
+/**
+ * @jest-environment jsdom
+ */
 describe("ForgotPass", () => {
   test("wrapper", () => { 
     expect(wrapper.exists()).toBe(true)

@@ -24,6 +24,9 @@ beforeEach(() => {
 
 enableAutoUnmount(afterEach)
 
+/**
+ * @jest-environment jsdom
+ */
 describe("ImageManager", () => {
   test("wrapper", () => {
     expect(wrapper.exists()).toBe(true)
