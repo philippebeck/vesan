@@ -42,9 +42,10 @@
 </template>
 
 <script>
+import { checkError, checkRegex, fetchSet } from "../assets/serve"
+
 import BtnElt from "../assets/BtnElt"
 import FieldElt from "../assets/FieldElt"
-
 import { VueRecaptcha } from "vue-recaptcha";
 
 export default {
@@ -69,22 +70,22 @@ export default {
      * @param {object} response 
      */
     onVerify(response) {
-      let emailMsg    = this.constants.CHECK_EMAIL;
-      let emailRegex  = this.constants.REGEX_EMAIL;
-      let passMsg     = this.constants.CHECK_PASS;
-      let passRegex   = this.constants.REGEX_PASS;
+      const EMAIL_MSG   = this.constants.CHECK_EMAIL;
+      const EMAIL_REGEX = this.constants.REGEX_EMAIL;
+      const PASS_MSG    = this.constants.CHECK_PASS;
+      const PASS_REGEX  = this.constants.REGEX_PASS;
 
-      if (this.$serve.checkRegex(this.email, emailMsg, emailRegex) && 
-        this.$serve.checkRegex(this.pass, passMsg, passRegex)) {
+      if (checkRegex(this.email, EMAIL_MSG, EMAIL_REGEX) && 
+          checkRegex(this.pass, PASS_MSG, PASS_REGEX)) {
 
-        let url = this.constants.API_URL + "/auth/recaptcha";
+        const URL   = this.constants.API_URL + "/auth/recaptcha";
         let options = {
           method: "POST",
           mode: "cors",
           body: { response: response }
         };
 
-        this.$serve.fetchSet(url, options)
+        fetchSet(URL, options)
           .then(result => {
             if (result.success) {
               this.signIn();
@@ -94,7 +95,7 @@ export default {
             }
           })
           .catch(err => { 
-            this.$serve.checkError(err);
+            checkError(err);
             this.$router.go();
           });
       }
@@ -105,18 +106,17 @@ export default {
      */
     signIn() {
       let auth = new FormData();
-
       auth.append("email", this.email);
       auth.append("pass", this.pass);
 
-      let url = this.constants.API_URL + "/auth";
+      const URL   = this.constants.API_URL + "/auth";
       let options = {
         method: "POST",
         mode: "cors",
         body: auth
       };
 
-      this.$serve.fetchSet(url, options)
+      fetchSet(URL, options)
         .then((res) => {
 
           let token   = JSON.stringify(res.token);
@@ -127,7 +127,7 @@ export default {
 
           this.$router.go();
         })
-        .catch(err => { this.$serve.checkError(err) });
+        .catch(err => { checkError(err) });
     }
   }
 }

@@ -76,10 +76,11 @@
 </template>
 
 <script>
+import { checkError, checkRange, checkRegex, fetchSet } from "../assets/serve"
+
 import BtnElt from "../assets/BtnElt"
 import FieldElt from "../assets/FieldElt"
 import ListElt from "../assets/ListElt"
-
 import { VueRecaptcha } from "vue-recaptcha";
 
 export default {
@@ -107,24 +108,24 @@ export default {
      * @param {object} response 
      */
     onVerify(response) {
-      let nameMsg     = this.constants.CHECK_STRING;
-      let emailMsg    = this.constants.CHECK_EMAIL;
-      let emailRegex  = this.constants.REGEX_EMAIL;
-      let passMsg     = this.constants.CHECK_PASS;
-      let passRegex   = this.constants.REGEX_PASS;
+      const EMAIL_MSG    = this.constants.CHECK_EMAIL;
+      const EMAIL_REGEX  = this.constants.REGEX_EMAIL;
+      const NAME_MSG     = this.constants.CHECK_STRING;
+      const PASS_MSG     = this.constants.CHECK_PASS;
+      const PASS_REGEX   = this.constants.REGEX_PASS;
 
-      if (this.$serve.checkRange(this.name, nameMsg) && 
-        this.$serve.checkRegex(this.email, emailMsg, emailRegex) && 
-        this.$serve.checkRegex(this.pass, passMsg, passRegex)) {
+      if (checkRange(this.name, NAME_MSG) && 
+          checkRegex(this.email, EMAIL_MSG, EMAIL_REGEX) && 
+          checkRegex(this.pass, PASS_MSG, PASS_REGEX)) {
 
-        let url = this.constants.API_URL + "/auth/recaptcha";
+        const URL   = this.constants.API_URL + "/auth/recaptcha";
         let options = {
           method: "POST",
           mode: "cors",
           body: { response: response }
         };
 
-        this.$serve.fetchSet(url, options)
+        fetchSet(URL, options)
           .then(result => {
             if (result.success) {
               this.createUser();
@@ -134,7 +135,7 @@ export default {
             }
           })
           .catch(err => { 
-            this.$serve.checkError(err);
+            checkError(err);
             this.$router.go();
           });
       }
@@ -157,19 +158,19 @@ export default {
         user.append("created", Date.now());
         user.append("updated", Date.now());
 
-        let url = this.constants.API_URL + "/users";
+        const URL   = this.constants.API_URL + "/users";
         let options = {
           method: "POST",
           mode: "cors",
           body: user
         };
 
-        this.$serve.fetchSet(url, options)
+        fetchSet(URL, options)
           .then(() => {
             alert(this.name + this.constants.ALERT_CREATED);
             this.$router.go();
           })
-          .catch(err => { this.$serve.checkError(err) });
+          .catch(err => { checkError(err) });
 
       } else {
         alert(this.constants.ALERT_IMG);

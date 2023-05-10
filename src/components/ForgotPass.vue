@@ -29,10 +29,11 @@
 </template>
 
 <script>
+import { checkError, checkRegex, fetchSet } from "../assets/serve"
+
 import BtnElt from "../assets/BtnElt"
 import FieldElt from "../assets/FieldElt"
-
-import { VueRecaptcha } from "vue-recaptcha";
+import { VueRecaptcha } from "vue-recaptcha"
 
 export default {
   name: "ForgotPass",
@@ -55,19 +56,19 @@ export default {
      * @param {object} response 
      */
     onVerify(response) {
-      let emailMsg    = this.constants.CHECK_EMAIL;
-      let emailRegex  = this.constants.REGEX_EMAIL;
+      const MSG    = this.constants.CHECK_EMAIL;
+      const REGEX  = this.constants.REGEX_EMAIL;
 
-      if (this.$serve.checkRegex(this.email, emailMsg, emailRegex)) {
+      if (checkRegex(this.email, MSG, REGEX)) {
 
-        let url = this.constants.API_URL + "/auth/recaptcha";
+        const URL   = this.constants.API_URL + "/auth/recaptcha";
         let options = {
           method: "POST",
           mode: "cors",
           body: { response: response }
         };
 
-        this.$serve.fetchSet(url, options)
+        fetchSet(URL, options)
           .then(result => {
             if (result.success) {
               this.forgotPass();
@@ -77,7 +78,7 @@ export default {
             }
           })
           .catch(err => { 
-            this.$serve.checkError(err);
+            checkError(err);
             this.$router.go();
           });
       }
@@ -94,19 +95,19 @@ export default {
         message.append("subject", this.constants.FORGOT_SUBJECT);
         message.append("html", this.constants.FORGOT_TEXT);
 
-        let url = this.constants.API_URL + "/auth/pass";
+        const URL   = this.constants.API_URL + "/auth/pass";
         let options = {
           method: "POST",
           mode: "cors",
           body: message
         };
 
-        this.$serve.fetchSet(url, options)
+        fetchSet(URL, options)
           .then(() => {
             alert(message.get("subject") + this.constants.ALERT_SENDED);
             this.$router.push("/login");
           })
-          .catch(err => { this.$serve.checkError(err) });
+          .catch(err => { checkError(err) });
       }
     }
   }

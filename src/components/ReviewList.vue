@@ -111,6 +111,8 @@
 </template>
 
 <script>
+import { checkError, checkRange, fetchSet } from "../assets/serve"
+
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
 import FieldElt from "../assets/FieldElt"
@@ -148,8 +150,8 @@ export default {
           let scoreMin = this.constants.SCORE_MIN;
           let scoreMax = this.constants.SCORE_MAX;
 
-          if (this.$serve.checkRange(review.text, textMsg, textMin, textMax) && 
-            this.$serve.checkRange(review.score, scoreMsg, scoreMin, scoreMax)) {
+          if (checkRange(review.text, textMsg, textMin, textMax) && 
+              checkRange(review.score, scoreMsg, scoreMin, scoreMax)) {
 
             let data = new FormData();
             data.append("text", review.text);
@@ -157,7 +159,7 @@ export default {
             data.append("moderate", "false");
             data.append("updated", Date.now());
 
-            let url = this.constants.API_URL + "/reviews/" + id;
+            let url     = this.constants.API_URL + "/reviews/" + id;
             let options = {
               method: "PUT",
               mode: "cors",
@@ -165,12 +167,12 @@ export default {
               body: data
             };
 
-            this.$serve.fetchSet(url, options)
+            fetchSet(url, options)
               .then(() => {
                 alert(this.constants.ALERT_REVIEW + id + this.constants.ALERT_UPDATED);
                 this.$router.go();
               })
-              .catch(err => { this.$serve.checkError(err) });
+              .catch(err => { checkError(err) });
           }
         }
       }
@@ -190,12 +192,12 @@ export default {
           headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
         };
 
-        this.$serve.fetchSet(url, options)
+        fetchSet(url, options)
           .then(() => {
             alert(this.constants.ALERT_REVIEW + id + this.constants.ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => { this.$serve.checkError(err) });
+          .catch(err => { checkError(err) });
       }
     }
   }
