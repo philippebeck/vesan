@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import serve from "../assets/serve"
 import CardElt from "../assets/CardElt"
 import ListElt from "../assets/ListElt"
 import MediaElt from "../assets/MediaElt"
@@ -79,7 +80,7 @@ export default {
   },
 
   created() {
-    this.$serve.setMeta(
+    serve.setMeta(
       this.constants.HEAD_HOME, 
       this.constants.META_HOME,
       this.constants.UI_URL,
@@ -89,9 +90,9 @@ export default {
     if (this.constants.HOME_MEDIA === "api") {
       let url = this.constants.HOME_API_URL + this.constants.HOME_API_KEY;
 
-      this.$serve.fetchGet(url)
+      serve.fetchGet(url)
       .then((media) => { this.media = media })
-      .catch(err => this.$serve.checkError(err));
+      .catch(err => serve.checkError(err));
     }
   }
 }

@@ -84,6 +84,7 @@
 </template>
 
 <script>
+import serve from "../assets/serve"
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
 import FieldElt from "../assets/FieldElt"
@@ -111,7 +112,7 @@ export default {
   },
 
   created() {
-    this.$serve.setMeta(
+    serve.setMeta(
       this.constants.HEAD_CONTACT, 
       this.constants.META_CONTACT,
       this.constants.UI_URL + "/contact",
@@ -131,9 +132,9 @@ export default {
       let min       = this.constants.TEXT_MIN;
       let max       = this.constants.TEXT_MAX;
 
-      if (this.$serve.checkRegex(this.email, emailMsg, regex) && 
-        this.$serve.checkRange(this.subject, stringMsg) && 
-        this.$serve.checkRange(this.text, stringMsg, min, max)) {
+      if (serve.checkRegex(this.email, emailMsg, regex) && 
+        serve.checkRange(this.subject, stringMsg) && 
+        serve.checkRange(this.text, stringMsg, min, max)) {
 
         let url = this.constants.API_URL + "/auth/recaptcha";
         let options = {
@@ -143,7 +144,7 @@ export default {
           body: { response: response }
         };
 
-        this.$serve.fetchSet(url, options)
+        serve.fetchSet(url, options)
           .then(result => {
             if (result.success) {
               this.send();
@@ -153,11 +154,7 @@ export default {
             }
           })
           .catch(err => {
-            if (err.response) {
-              alert(err.response.data.message) 
-            } else {
-              console.log(err);
-            }
+            serve.checkError(err);
             this.$router.go();
           });
       }
@@ -181,12 +178,12 @@ export default {
         body: message
       };
 
-      this.$serve.fetchSet(url, options)
+      serve.fetchSet(url, options)
         .then(() => {
           alert(this.subject + this.constants.ALERT_SENDED);
           this.$router.push("/");
         })
-        .catch(err => { this.$serve.checkError(err) });
+        .catch(err => { serve.checkError(err) });
     }
   }
 }

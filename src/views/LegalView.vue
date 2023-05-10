@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import serve from "../assets/serve"
 import CardElt from "../assets/CardElt"
 
 export default {
@@ -35,7 +36,7 @@ export default {
   ],
 
   created() {
-    this.$serve.setMeta(
+    serve.setMeta(
       this.constants.HEAD_LEGAL, 
       this.constants.META_LEGAL,
       this.constants.UI_URL + "/legal",

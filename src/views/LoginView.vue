@@ -126,9 +126,9 @@
 </template>
 
 <script>
+import serve from "../assets/serve"
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
-
 import SignUp from "../components/SignUp"
 import SignIn from "../components/SignIn"
 import ForgotPass from "../components/ForgotPass"
@@ -151,7 +151,7 @@ export default {
   },
 
   created() {
-    this.$serve.setMeta(
+    serve.setMeta(
       this.constants.HEAD_LOGIN, 
       this.constants.META_LOGIN,
       this.constants.UI_URL + "/login",

@@ -45,19 +45,18 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
-
+import serve from "../assets/serve"
 import CardElt from "../assets/CardElt"
 import ListElt from "../assets/ListElt"
 import MediaElt from "../assets/MediaElt"
-
 import GalleryCreator from "../components/GalleryCreator"
 
 export default {
   name: "GalleryView",
   components: {
+    CardElt,
     ListElt,
     MediaElt,
-    CardElt,
     GalleryCreator
   },
   props: ["constants", "user"],
@@ -65,7 +64,7 @@ export default {
   created() {
     this.$store.dispatch("listGalleries");
 
-    this.$serve.setMeta(
+    serve.setMeta(
       this.constants.HEAD_GALLERY, 
       this.constants.META_GALLERY,
       this.constants.UI_URL + "/galleries",
@@ -86,7 +85,7 @@ export default {
      * @returns
      */
     checkRole(role) {
-      return this.$serve.checkRole(this.user.role, role);
+      return serve.checkRole(this.user.role, role);
     }
   }
 }
