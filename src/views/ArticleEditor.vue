@@ -120,13 +120,12 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
-
+import serve from "../assets/serve"
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
 import FieldElt from "../assets/FieldElt"
 import ListElt from "../assets/ListElt"
 import MediaElt from "../assets/MediaElt"
-
 import Editor from "@tinymce/tinymce-vue"
 
 export default {
@@ -151,14 +150,14 @@ export default {
     if (this.constants.USER_ID) {
       let url = this.constants.API_URL + "/auth/" + this.constants.USER_ID;
 
-      this.$serve.fetchGet(url)
+      serve.fetchGet(url)
         .then((res) => { 
           this.user = res;
 
           if (this.checkRole("editor")) {
             this.$store.dispatch("readArticle", this.$route.params.id);
 
-            this.$serve.setMeta(
+            serve.setMeta(
               this.constants.HEAD_ARTICLE, 
               this.constants.META_ARTICLE,
               this.constants.UI_URL,
@@ -167,7 +166,7 @@ export default {
           }
         })
         .catch(err => { 
-          this.$serve.checkError(err);
+          serve.checkError(err);
           this.$router.push("/admin");
         });
 
@@ -190,7 +189,7 @@ export default {
      * @returns
      */
     checkRole(role) {
-      return this.$serve.checkRole(this.user.role, role);
+      return serve.checkRole(this.user.role, role);
     },
 
     /**
@@ -201,9 +200,9 @@ export default {
       let min = this.constants.TEXT_MIN;
       let max = this.constants.TEXT_MAX;
 
-      if (this.$serve.checkRange(this.article.name, msg) && 
-        this.$serve.checkRange(this.article.text, msg, min, max) && 
-        this.$serve.checkRange(this.article.alt, msg)) {
+      if (serve.checkRange(this.article.name, msg) && 
+        serve.checkRange(this.article.text, msg, min, max) && 
+        serve.checkRange(this.article.alt, msg)) {
 
         let data  = new FormData();
         let image = document.getElementById("image").files[0] ?? this.article.image;
@@ -224,12 +223,12 @@ export default {
           body: data
         };
 
-        this.$serve.fetchSet(url, options)
+        serve.fetchSet(url, options)
           .then(() => {
             alert(this.article.name + this.constants.ALERT_UPDATED);
             this.$router.push("/admin");
           })
-          .catch(err => { this.$serve.checkError(err) });
+          .catch(err => { serve.checkError(err) });
       }
     }
   }

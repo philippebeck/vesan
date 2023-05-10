@@ -130,12 +130,11 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
-
+import serve from "../assets/serve"
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
 import FieldElt from "../assets/FieldElt"
 import MediaElt from "../assets/MediaElt"
-
 import ReviewCreator from "../components/ReviewCreator"
 import ReviewList from "../components/ReviewList"
 
@@ -166,11 +165,11 @@ export default {
   created() {
     let url = this.constants.API_URL + "/products/" + this.$route.params.id;
 
-    this.$serve.fetchGet(url)
+    serve.fetchGet(url)
       .then((product => {
         this.product = product;
 
-        this.$serve.setMeta(
+        serve.setMeta(
           product.name + this.constants.HEAD, 
           product.description.slice(0, 160).replace(/(<([^>]+)>)/gi, ""),
           this.constants.UI_URL + "/product/" + product._id,
@@ -178,7 +177,7 @@ export default {
         );
       }))
       .catch(err => { 
-        this.$serve.checkError(err);
+        serve.checkError(err);
         this.$router.push("/shop");
       });
 
@@ -206,7 +205,7 @@ export default {
      * @returns
      */
     checkRole(role) {
-      return this.$serve.checkRole(this.user.role, role);
+      return serve.checkRole(this.user.role, role);
     },
 
     /** 
@@ -214,7 +213,7 @@ export default {
      * @returns
      */
     getAverage(productId) {
-      return this.$serve.getAverage(productId, this.reviews);
+      return serve.getAverage(productId, this.reviews);
     },
 
     /**
