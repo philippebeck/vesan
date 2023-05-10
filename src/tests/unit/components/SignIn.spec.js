@@ -1,32 +1,53 @@
+import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import SignIn from "../../../components/SignIn"
 
+let wrapper;
+
+beforeEach(() => {
+  wrapper = shallowMount(SignIn, {
+    props: {
+      constants: {
+        TEST: "test"
+      }
+    },
+    data() {
+      return {
+        email: "email@test.com",
+        pass: "password"
+      }
+    }
+  });
+});
+
+enableAutoUnmount(afterEach)
+
+/**
+ * @jest-environment jsdom
+ */
 describe("SignIn", () => {
-  test("name", () => { 
-    expect(SignIn.name).toBe("SignIn") 
+  test("wrapper", () => { 
+    expect(wrapper.exists()).toBe(true)
   })
 
   test("components", () => { 
-    expect(typeof SignIn.components).toBe("object") 
-    expect(typeof SignIn.components.BtnElt).toBe("object") 
-    expect(typeof SignIn.components.FieldElt).toBe("object") 
-    expect(typeof SignIn.components.VueRecaptcha).toBe("object") 
+    expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "VueRecaptcha" })).toBe("object")
   })
 
   test("props", () => { 
-    expect(typeof SignIn.props).toBe("object") 
-    expect(SignIn.props).toContain("constants") 
+    expect(wrapper.props().constants.TEST).toBe("test")
   })
 
   test("data", () => { 
-    expect(typeof SignIn.data).toBe("function") 
-    expect(SignIn.data()).toEqual({ 
-      email: "", 
-      pass: ""
-    }) 
+    expect(wrapper.vm.$data).toStrictEqual({
+      email: "email@test.com",
+      pass: "password"
+    })
   })
 
   test("methods", () => { 
-    expect(typeof SignIn.methods.onVerify).toBe("function") 
-    expect(typeof SignIn.methods.signIn).toBe("function") 
+    expect(typeof wrapper.vm.onVerify).toBe("function")
+    expect(typeof wrapper.vm.signIn).toBe("function")
   })
 })
