@@ -1,44 +1,79 @@
+import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
+import * as serve from "../../../assets/serve"
 import AdminEditor from "../../../views/AdminEditor"
 
+let wrapper;
+
+beforeEach(() => {
+  jest.spyOn(serve, "setMeta").mockImplementation(() => {});
+
+  const push = jest.fn();
+  const $router = {
+    push: push
+  };
+
+  wrapper = shallowMount(AdminEditor, {
+    props: {
+      constants: {
+        TEST: "test"
+      }
+    },
+    data() {
+      return {
+        user: {
+          name: "Test Name",
+          email: "email@test.com",
+          role: "Test Role"
+        }
+      }
+    },
+    global: {
+      mocks: {
+        $router
+      }
+    }
+  });
+});
+
+enableAutoUnmount(afterEach)
+
+/**
+ * @jest-environment jsdom
+ */
 describe("AdminEditor", () => {
-  test("name", () => { 
-    expect(AdminEditor.name).toBe("AdminEditor") 
+  test("wrapper", () => { 
+    expect(wrapper.exists()).toBe(true)
   })
 
   test("components", () => { 
-    expect(typeof AdminEditor.components).toBe("object") 
-    expect(typeof AdminEditor.components.CardElt).toBe("object") 
-    expect(typeof AdminEditor.components.NavElt).toBe("object") 
-    expect(typeof AdminEditor.components.ProductManager).toBe("object") 
-    expect(typeof AdminEditor.components.ReviewManager).toBe("object") 
-    expect(typeof AdminEditor.components.OrderManager).toBe("object") 
-    expect(typeof AdminEditor.components.ArticleManager).toBe("object") 
-    expect(typeof AdminEditor.components.CommentManager).toBe("object") 
-    expect(typeof AdminEditor.components.GalleryManager).toBe("object") 
-    expect(typeof AdminEditor.components.ImageManager).toBe("object") 
-    expect(typeof AdminEditor.components.LinkManager).toBe("object") 
-    expect(typeof AdminEditor.components.UserManager).toBe("object") 
+    expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "NavElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "ProductManager" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "ReviewManager" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "OrderManager" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "ArticleManager" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "CommentManager" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "GalleryManager" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "ImageManager" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "LinkManager" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "UserManager" })).toBe("object")
   })
 
   test("props", () => { 
-    expect(typeof AdminEditor.props).toBe("object") 
-    expect(AdminEditor.props).toContain("constants") 
+    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
   })
 
   test("data", () => { 
-    expect(typeof AdminEditor.data).toBe("function") 
-    expect(AdminEditor.data()).toEqual({ user: {} }) 
+    expect(wrapper.vm.$data).toStrictEqual({
+      user: {
+        name: "Test Name",
+        email: "email@test.com",
+        role: "Test Role"
+      }
+    })
   })
 
-  test("created()", () => {
-    expect(typeof AdminEditor.created).toBe("function")
-  })
-
-  test("computed", () => {
-    expect(typeof AdminEditor.computed).toBe("object")
-  })
-
-  test("methods", () => { 
-    expect(typeof AdminEditor.methods.checkSession).toBe("function") 
+  test("methods", () => {
+    expect(typeof wrapper.vm.checkSession).toBe("function")
   })
 })
