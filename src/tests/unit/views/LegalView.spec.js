@@ -4,9 +4,6 @@ import LegalView from "../../../views/LegalView"
 
 let wrapper;
 
-/**
- * @jest-environment jsdom
- */
 beforeEach(() => {
   jest.spyOn(serve, "setMeta").mockImplementation(() => {});
 
@@ -25,6 +22,9 @@ beforeEach(() => {
 
 enableAutoUnmount(afterEach)
 
+/**
+ * @jest-environment jsdom
+ */
 describe("LegalView", () => {
   test("wrapper must be a vue instance", () => {
     expect(wrapper.exists()).toBe(true)
