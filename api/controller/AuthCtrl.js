@@ -120,9 +120,9 @@ exports.checkRecaptcha = (req, res, next) => {
     if (err) { next(err); return }
 
     const response = fields.response;
-    const remoteip = req.connection.remoteAddress;
+    const remoteIp = req.connection.remoteAddress;
 
-    recaptcha.verify({ response, remoteip }, (err, data) => {
+    recaptcha.verify({ response, remoteIp }, (err, data) => {
 
       if (err) {
         res.status(500).send(err);
