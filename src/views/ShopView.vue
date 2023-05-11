@@ -185,7 +185,10 @@ export default {
   },
 
   computed: {
-    ...mapState(["products", "reviews"]),
+    ...mapState([
+      "products", 
+      "reviews"
+    ]),
 
     /**
      * SET CATEGORIES
@@ -197,7 +200,10 @@ export default {
   },
 
   methods: {
-    ...mapActions(["listProducts", "listReviews"]),
+    ...mapActions([
+      "listProducts", 
+      "listReviews"
+    ]),
 
     /**
      * CHECK ROLE
