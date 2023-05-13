@@ -29,7 +29,8 @@
 </template>
 
 <script>
-import { checkError, checkRegex, fetchSet } from "../assets/serve"
+import { postData } from "../assets/axios"
+import { checkError, checkRegex } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import FieldElt from "../assets/FieldElt"
@@ -61,14 +62,7 @@ export default {
 
       if (checkRegex(this.email, MSG, REGEX)) {
 
-        const URL   = this.constants.API_URL + "/auth/recaptcha";
-        let options = {
-          method: "POST",
-          mode: "cors",
-          body: { response: response }
-        };
-
-        fetchSet(URL, options)
+        postData("/auth/recaptcha", { response: response })
           .then(result => {
             if (result.success) {
               this.forgotPass();
@@ -95,14 +89,7 @@ export default {
         message.append("subject", this.constants.FORGOT_SUBJECT);
         message.append("html", this.constants.FORGOT_TEXT);
 
-        const URL   = this.constants.API_URL + "/auth/pass";
-        let options = {
-          method: "POST",
-          mode: "cors",
-          body: message
-        };
-
-        fetchSet(URL, options)
+        postData("/auth/pass", message)
           .then(() => {
             alert(message.get("subject") + this.constants.ALERT_SENDED);
             this.$router.push("/login");
