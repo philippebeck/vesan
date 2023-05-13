@@ -1,5 +1,6 @@
 import { createStore } from "vuex"
-import { checkError, fetchGet, fetchSet } from "../assets/serve"
+import { getData } from "../assets/axios"
+import { checkError, fetchGet } from "../assets/serve"
 import constants from "/constants"
 
 export default createStore({
@@ -96,13 +97,7 @@ export default createStore({
 
     // PRIVATE OBJECT
     async readUser(context, id) {
-      const options = {
-        method: "GET",
-        mode: "cors",
-        headers: { "Authorization": `Bearer ${constants.TOKEN}` }
-      };
-
-      fetchSet(constants.API_URL + "/users/" + id, options)
+      getData("/users/" + id)
         .then(res => { context.commit("SET_USER", res) })
         .catch(err => { checkError(err) });
     },
@@ -164,49 +159,25 @@ export default createStore({
 
     // PRIVATE ARRAY
     async listImages(context) {
-      const options = {
-        method: "GET",
-        mode: "cors",
-        headers: { "Authorization": `Bearer ${constants.TOKEN}` }
-      };
-
-      fetchSet(constants.API_URL + "/images", options)
+      getData("/images")
         .then(res => { context.commit("SET_IMAGES", res) })
         .catch(err => { checkError(err) });
     },
 
     async listUserOrders(context, id) {
-      const options = {
-        method: "GET",
-        mode: "cors",
-        headers: { "Authorization": `Bearer ${constants.TOKEN}` }
-      };
-
-      fetchSet(constants.API_URL + "/orders/" + id, options)
+      getData("/orders/" + id)
         .then(res => { context.commit("SET_USER_ORDERS", res) })
         .catch(err => { checkError(err) });
     },
 
     async listOrders(context) {
-      const options = {
-        method: "GET",
-        mode: "cors",
-        headers: { "Authorization": `Bearer ${constants.TOKEN}` }
-      };
-
-      fetchSet(constants.API_URL + "/orders", options)
+      getData("/orders")
         .then(res => { context.commit("SET_ORDERS", res) })
         .catch(err => { checkError(err) });
     },
 
     async listUsers(context) {
-      const options = {
-        method: "GET",
-        mode: "cors",
-        headers: { "Authorization": `Bearer ${constants.TOKEN}` }
-      };
-
-      fetchSet(constants.API_URL + "/users", options)
+      getData("/users")
         .then(res => { context.commit("SET_USERS", res) })
         .catch(err => { checkError(err) });
     }
