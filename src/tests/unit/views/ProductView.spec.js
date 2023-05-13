@@ -14,6 +14,11 @@ let state;
 beforeEach(() => {
   jest.spyOn(serve, "setMeta").mockImplementation(() => {});
 
+  const params = jest.fn();
+  const $router = {
+    params: params
+  };
+
   actions = {
     listGalleries: jest.fn()
   };
@@ -69,7 +74,10 @@ beforeEach(() => {
       }
     },
     global: {
-      plugins: [store]
+      plugins: [store],
+      mocks: {
+        $router
+      }
     }
   });
 });

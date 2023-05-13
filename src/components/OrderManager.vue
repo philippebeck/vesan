@@ -96,7 +96,8 @@
 </template>
 
 <script>
-import { checkError, fetchSet } from "../assets/serve"
+import { deleteData, putData } from "../assets/axios"
+import { checkError } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
@@ -138,15 +139,7 @@ export default {
           data.append("status", order.status);
           data.append("updated", Date.now());
 
-          let url     = this.constants.API_URL + "/orders/" + id;
-          let options = {
-            method: "PUT",
-            mode: "cors",
-            headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
-            body: data
-          };
-
-          fetchSet(url, options)
+          putData("/orders/" + id, data)
             .then(() => {
               alert(this.constants.ALERT_ORDER + id + this.constants.ALERT_UPDATED);
             })
@@ -162,14 +155,7 @@ export default {
     deleteOrder(id) {
       if (confirm(`${this.constants.TITLE_DELETE_ORDER}${id} ?`) === true) {
 
-        let url     = this.constants.API_URL + "/orders/" + id;
-        let options = {
-          method: "DELETE",
-          mode: "cors",
-          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
-        };
-
-        fetchSet(url, options)
+        deleteData("/orders/" + id)
           .then(() => {
             alert(this.constants.ALERT_ORDER + id + this.constants.ALERT_DELETED);
             this.$router.go();

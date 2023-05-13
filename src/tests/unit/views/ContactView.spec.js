@@ -32,6 +32,9 @@ beforeEach(() => {
 
 enableAutoUnmount(afterEach)
 
+/**
+ * @jest-environment jsdom
+ */
 describe("ContactView", () => {
   test("wrapper must be a vue instance", () => {
     expect(wrapper.exists()).toBe(true)

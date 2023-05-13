@@ -42,7 +42,8 @@
 </template>
 
 <script>
-import { checkError, checkRegex, fetchSet } from "../assets/serve"
+import { postData } from "../assets/axios"
+import { checkError, checkRegex } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import FieldElt from "../assets/FieldElt"
@@ -78,14 +79,7 @@ export default {
       if (checkRegex(this.email, EMAIL_MSG, EMAIL_REGEX) && 
           checkRegex(this.pass, PASS_MSG, PASS_REGEX)) {
 
-        const URL   = this.constants.API_URL + "/auth/recaptcha";
-        let options = {
-          method: "POST",
-          mode: "cors",
-          body: { response: response }
-        };
-
-        fetchSet(URL, options)
+        postData("/auth/recaptcha", { response: response })
           .then(result => {
             if (result.success) {
               this.signIn();
@@ -109,14 +103,7 @@ export default {
       auth.append("email", this.email);
       auth.append("pass", this.pass);
 
-      const URL   = this.constants.API_URL + "/auth";
-      let options = {
-        method: "POST",
-        mode: "cors",
-        body: auth
-      };
-
-      fetchSet(URL, options)
+      postData("/auth", auth)
         .then((res) => {
 
           let token   = JSON.stringify(res.token);

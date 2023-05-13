@@ -108,7 +108,8 @@
 </template>
 
 <script>
-import { checkError, checkRange, fetchSet } from "../assets/serve"
+import { postData } from "../assets/axios"
+import { checkError, checkRange } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
@@ -166,15 +167,7 @@ export default {
           article.append("created", Date.now());
           article.append("updated", Date.now());
 
-          const URL   = this.constants.API_URL + "/articles";
-          let options = {
-            method: "POST",
-            mode: "cors",
-            headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
-            body: article
-          };
-
-          fetchSet(URL, options)
+          postData("/articles", article)
             .then(() => {
               alert(this.name + this.constants.ALERT_CREATED);
               this.$router.go();

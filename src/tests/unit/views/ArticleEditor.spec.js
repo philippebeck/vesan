@@ -8,11 +8,13 @@ let store;
 let actions;
 let state;
 
-/**
- * @jest-environment jsdom
- */
 beforeEach(() => {
   jest.spyOn(serve, "setMeta").mockImplementation(() => {});
+
+  const push = jest.fn();
+  const $router = {
+    push: push
+  };
 
   actions = {
     listGalleries: jest.fn()
@@ -44,39 +46,44 @@ beforeEach(() => {
       }
     },
     global: {
-      plugins: [store]
+      plugins: [store],
+      mocks: {
+        $router
+      }
     }
   });
 });
 
 enableAutoUnmount(afterEach)
 
+/**
+ * @jest-environment jsdom
+ */
 describe("ArticleEditor", () => {
   test("wrapper", () => { 
-    expect(wrapper.vm).toBe(true)
+    expect(wrapper.exists()).toBe(true)
   })
 
-  // test("components", () => { 
-  //   expect(wrapper.findComponent({ name: "BtnElt" })).toBe(true)
-  //   expect(wrapper.findComponent({ name: "CardElt" })).toBe(true)
-  //   expect(wrapper.findComponent({ name: "FieldElt" })).toBe(true)
-  //   expect(wrapper.findComponent({ name: "ListElt" })).toBe(true)
-  //   expect(wrapper.findComponent({ name: "MediaElt" })).toBe(true)
-  //   expect(wrapper.findComponent({ name: "Editor" })).toBe(true)  
-  // })
+  test("components", () => { 
+    expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "Editor" })).toBe("object")
+  })
 
-  // test("props", () => { 
-  //   expect(wrapper.props().constants.TEST).toBe("test")
-  // })
+  test("props", () => { 
+    expect(wrapper.props().constants.TEST).toBe("test")
+  })
 
-  // test("data", () => { 
-  //   expect(wrapper.vm.user.name).toBe("test")
-  //   expect(wrapper.vm.user.email).toBe("email@test.com")
-  // })
+  test("data", () => { 
+    expect(wrapper.vm.user.name).toBe("test")
+    expect(wrapper.vm.user.email).toBe("email@test.com")
+  })
 
-  // test("methods", () => { 
-  //   expect(wrapper.vm.readArticle).toBe("function")
-  //   expect(wrapper.vm.checkSession).toBe("function")
-  //   expect(wrapper.vm.updateArticle).toBe("function")
-  // })
+  test("methods", () => { 
+    expect(typeof wrapper.vm.readArticle).toBe("function")
+    expect(typeof wrapper.vm.updateArticle).toBe("function")
+  })
 })

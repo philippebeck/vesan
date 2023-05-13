@@ -119,7 +119,8 @@
 </template>
 
 <script>
-import { checkError, checkRange, fetchSet, getItemName } from "../assets/serve"
+import { deleteData, putData } from "../assets/axios"
+import { checkError, checkRange, getItemName } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
@@ -192,15 +193,7 @@ export default {
           checkRange(product.price, PRICE_MSG, PRICE_MIN, PRICE_MAX) && 
           checkRange(product.options, STRING_MSG, TEXT_MIN, TEXT_MAX)) {
 
-        let url     = this.constants.API_URL + "/products/" + id;
-        let options = {
-          method: "PUT",
-          mode: "cors",
-          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
-          body: this.getProduct(id, product)
-        };
-
-        fetchSet(url, options)
+        putData("/products/" + id, this.getProduct(id, product))
           .then(() => {
             alert(product.name + this.constants.ALERT_UPDATED);
           })
@@ -226,15 +219,7 @@ export default {
       let name = getItemName(id, this.products);
 
       if (confirm(`${this.constants.TITLE_DELETE} ${name} ?`) === true) {
-
-        let url     = this.constants.API_URL + "/products/" + id;
-        let options = {
-          method: "DELETE",
-          mode: "cors",
-          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
-        };
-
-        fetchSet(url, options)
+        deleteData("/products/" + id)
           .then(() => {
             alert(name + this.constants.ALERT_DELETED);
             this.$router.go();

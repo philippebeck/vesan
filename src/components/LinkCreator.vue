@@ -77,7 +77,8 @@
 </template>
 
 <script>
-import { checkError, checkRange, checkRegex, fetchSet } from "../assets/serve"
+import { checkError, checkRange, checkRegex } from "../assets/serve"
+import { postData } from "../assets/axios"
 
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
@@ -122,15 +123,7 @@ export default {
         link.append("url", this.url);
         link.append("cat", this.cat);
 
-        const URL   = this.constants.API_URL + "/links";
-        let options = {
-            method: "POST",
-            mode: "cors",
-            headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
-            body: link
-          };
-
-        fetchSet(URL, options)
+        postData("/links", link)
           .then(() => {
             alert(this.name + this.constants.ALERT_CREATED);
             this.$router.go();

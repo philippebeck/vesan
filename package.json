@@ -1,6 +1,6 @@
 {
   "name": "vesan",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "CMS with Vue-Elt, Servidio, Animadio & NemJS",
   "author": {
     "name": "Philippe Beck",
@@ -25,14 +25,17 @@
     "coverageDirectory": "coverage",
     "testEnvironment": "jest-environment-jsdom",
     "testEnvironmentOptions": {
-      "customExportConditions": ["node", "node-addons"]
-  },
-  "testPathIgnorePatterns" : [
-    "<rootDir>/src/assets/" 
-  ],
-  "coveragePathIgnorePatterns": [
-    "<rootDir>/src/assets/"
-  ],
+      "customExportConditions": [
+        "node",
+        "node-addons"
+      ]
+    },
+    "testPathIgnorePatterns": [
+      "<rootDir>/src/assets/"
+    ],
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/src/assets/"
+    ],
     "transform": {
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
       ".*\\.(vue)$": "<rootDir>/node_modules/@vue/vue3-jest"
@@ -43,8 +46,9 @@
     "@paypal/paypal-js": "^5.1.4",
     "@tinymce/tinymce-vue": "^5.0.0",
     "animadio": "^6.2.5",
+    "axios": "^1.4.0",
     "core-js": "^3.8.3",
-    "servidio": "^2.1.0",
+    "servidio": "^2.1.1",
     "vue": "^3.2.45",
     "vue-elt": "^1.4.9",
     "vue-recaptcha": "^2.0.3",

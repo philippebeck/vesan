@@ -76,7 +76,8 @@
 </template>
 
 <script>
-import { checkError, checkRange, checkRegex, fetchSet } from "../assets/serve"
+import { postData } from "../assets/axios"
+import { checkError, checkRange, checkRegex } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import FieldElt from "../assets/FieldElt"
@@ -118,14 +119,7 @@ export default {
           checkRegex(this.email, EMAIL_MSG, EMAIL_REGEX) && 
           checkRegex(this.pass, PASS_MSG, PASS_REGEX)) {
 
-        const URL   = this.constants.API_URL + "/auth/recaptcha";
-        let options = {
-          method: "POST",
-          mode: "cors",
-          body: { response: response }
-        };
-
-        fetchSet(URL, options)
+        postData("/auth/recaptcha", { response: response })
           .then(result => {
             if (result.success) {
               this.createUser();
@@ -158,14 +152,7 @@ export default {
         user.append("created", Date.now());
         user.append("updated", Date.now());
 
-        const URL   = this.constants.API_URL + "/users";
-        let options = {
-          method: "POST",
-          mode: "cors",
-          body: user
-        };
-
-        fetchSet(URL, options)
+        postData("/users", user)
           .then(() => {
             alert(this.name + this.constants.ALERT_CREATED);
             this.$router.go();

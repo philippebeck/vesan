@@ -58,7 +58,8 @@
 </template>
 
 <script>
-import { checkError, checkRange, fetchSet } from "../assets/serve"
+import { postData } from "../assets/axios"
+import { checkError, checkRange } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
@@ -104,15 +105,7 @@ export default {
         review.append("created", Date.now());
         review.append("updated", Date.now());
 
-        const URL   = this.constants.API_URL + "/reviews";
-        let options = {
-            method: "POST",
-            mode: "cors",
-            headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
-            body: review
-          };
-
-        fetchSet(URL, options)
+        postData("/reviews", review)
           .then(() => {
             alert(this.constants.ALERT_NEW_REVIEW);
             this.$router.go();

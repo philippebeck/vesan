@@ -2,8 +2,8 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON("package.json"),
     concat: {
+      axios: { src: ["public/js/axios.js"], dest: "src/assets/axios.js" },
       serve: { src: ["node_modules/servidio/dist/serve.js"], dest: "src/assets/serve.js" },
-      //serve: { src: ["node_modules/servidio/dist/serve.min.js"], dest: "src/assets/serve.js" },
       media: { src: ["node_modules/vue-elt/src/lib-components/MediaElt.vue"], dest: "src/assets/MediaElt.vue" },
       field: { src: ["node_modules/vue-elt/src/lib-components/FieldElt.vue"], dest: "src/assets/FieldElt.vue" },
       btn: { src: ["node_modules/vue-elt/src/lib-components/BtnElt.vue"], dest: "src/assets/BtnElt.vue" },

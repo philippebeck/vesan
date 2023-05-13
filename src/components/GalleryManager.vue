@@ -61,7 +61,8 @@
 </template>
 
 <script>
-import { checkError, fetchSet } from "../assets/serve"
+import { deleteData, putData } from "../assets/axios"
+import { checkError } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
@@ -103,15 +104,7 @@ export default {
           data.append("text", gallery.text);
           data.append("moderate", gallery.moderate);
 
-          let url     = this.constants.API_URL + "/galleries/" + id;
-          let options = {
-            method: "PUT",
-            mode: "cors",
-            headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
-            body: data
-          };
-
-          fetchSet(url, options)
+          putData("/galleries/" + id, data)
             .then(() => {
               alert(this.constants.ALERT_GALLERY + id + this.constants.ALERT_UPDATED);
             })
@@ -127,14 +120,7 @@ export default {
     deleteGallery(id) {
       if (confirm(`${this.constants.TITLE_DELETE_GALLERY}${id} ?`) === true) {
 
-        let url     = this.constants.API_URL + "/galleries/" + id;
-        let options = {
-          method: "DELETE",
-          mode: "cors",
-          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
-        };
-
-        fetchSet(url, options)
+        deleteData("/galleries/" + id)
           .then(() => {
             alert(this.constants.ALERT_GALLERY + id + this.constants.ALERT_DELETED);
             this.$router.go();

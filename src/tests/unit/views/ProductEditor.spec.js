@@ -1,39 +1,91 @@
+import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
+import { createStore } from 'vuex';
+import * as serve from "../../../assets/serve.js"
 import ProductEditor from "../../../views/ProductEditor"
 
+let wrapper;
+let store;
+let actions;
+let state;
+
+beforeEach(() => {
+  jest.spyOn(serve, "setMeta").mockImplementation(() => {});
+
+  const push = jest.fn();
+  const $router = {
+    push: push
+  };
+
+  actions = {
+    readProduct: jest.fn()
+  };
+
+  state = {
+    product: {}
+  };
+
+  store = createStore({
+    state() {
+      return state;
+      },
+    actions: actions
+  })
+
+  wrapper = shallowMount(ProductEditor, {
+    props: {
+      constants: {
+        TEST: "test"
+      }
+    },
+    data() {
+      return {
+        user: {
+          name: "test",
+          email: "email@test.com"
+        }
+      }
+    },
+    global: {
+      plugins: [store],
+      mocks: {
+        $router
+      }
+    }
+  });
+});
+
+enableAutoUnmount(afterEach)
+
+/**
+ * @jest-environment jsdom
+ */
 describe("ProductEditor", () => {
-  test("name", () => { 
-    expect(ProductEditor.name).toBe("ProductEditor") 
+  test("wrapper", () => { 
+    expect(wrapper.exists()).toBe(true)
   })
 
   test("components", () => { 
-    expect(typeof ProductEditor.components).toBe("object") 
-    expect(typeof ProductEditor.components.BtnElt).toBe("object") 
-    expect(typeof ProductEditor.components.CardElt).toBe("object") 
-    expect(typeof ProductEditor.components.FieldElt).toBe("object") 
-    expect(typeof ProductEditor.components.ListElt).toBe("object") 
-    expect(typeof ProductEditor.components.MediaElt).toBe("object") 
-    expect(typeof ProductEditor.components.Editor).toBe("object") 
+    expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "Editor" })).toBe("object")
   })
 
   test("props", () => { 
-    expect(typeof ProductEditor.props).toBe("object") 
-    expect(ProductEditor.props).toContain("constants") 
+    expect(wrapper.props().constants).toStrictEqual({ TEST: "test" })
   })
 
   test("data", () => { 
-    expect(typeof ProductEditor.data).toBe("function") 
-    expect(ProductEditor.data()).toEqual({ user: {} }) 
-  })
-
-  test("created()", () => {
-    expect(typeof ProductEditor.created).toBe("function")
-  })
-
-  test("computed", () => {
-    expect(typeof ProductEditor.computed).toBe("object")
+    expect(wrapper.vm.user).toStrictEqual({ 
+      name: "test", 
+      email: "email@test.com"
+    })
   })
 
   test("methods", () => { 
-    expect(typeof ProductEditor.methods.updateProduct).toBe("function") 
+    expect(typeof wrapper.vm.readProduct).toBe("function")
+    expect(typeof wrapper.vm.updateProduct).toBe("function")
   })
 })

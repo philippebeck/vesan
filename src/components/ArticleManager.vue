@@ -111,7 +111,8 @@
 </template>
 
 <script>
-import { checkError, checkRange, getItemName, fetchSet } from "../assets/serve"
+import { deleteData, putData } from "../assets/axios"
+import { checkError, checkRange, getItemName } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
@@ -180,15 +181,7 @@ export default {
           checkRange(article.text, MSG, MIN, MAX) && 
           checkRange(article.alt, MSG)) {
 
-        let url     = this.constants.API_URL + "/articles/" + id;
-        let options = {
-          method: "PUT",
-          mode: "cors",
-          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
-          body: this.getArticle(id, article)
-        };
-
-        fetchSet(url, options)
+        putData("/articles/" + id, this.getArticle(id, article))
           .then(() => {
             alert(article.name + this.constants.ALERT_UPDATED);
           })
@@ -214,15 +207,7 @@ export default {
       let name = getItemName(id, this.articles);
 
       if (confirm(`${this.constants.TITLE_DELETE} ${name} ?`) === true) {
-
-        let url     = this.constants.API_URL + "/articles/" + id;
-        let options = {
-          method: "DELETE",
-          mode: "cors",
-          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
-        };
-
-        fetchSet(url, options)
+        deleteData("/articles/" + id)
           .then(() => {
             alert(name + this.constants.ALERT_DELETED);
             this.$router.go();

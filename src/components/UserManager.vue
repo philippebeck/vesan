@@ -87,7 +87,8 @@
 </template>
 
 <script>
-import { checkError, checkRange, checkRegex, fetchSet, getItemName } from "../assets/serve"
+import { deleteData, putData } from "../assets/axios"
+import { checkError, checkRange, checkRegex, getItemName } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
@@ -150,15 +151,7 @@ export default {
       if (checkRange(user.name, stringMsg) && 
           checkRegex(user.email, emailMsg, regex)) {
 
-        let url     = this.constants.API_URL + "/users/" + id;
-        let options = {
-          method: "PUT",
-          mode: "cors",
-          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
-          body: this.getUser(id, user)
-        };
-
-        fetchSet(url, options)
+        putData("/users/" + id, this.getUser(id, user))
           .then(() => {
             alert(user.name + this.constants.ALERT_UPDATED);
           })
@@ -184,15 +177,7 @@ export default {
       let name = getItemName(id, this.users);
 
       if (confirm(`${this.constants.TITLE_DELETE} ${name} ?`) === true) {
-
-        let url     = this.constants.API_URL + "/users/" + id;
-        let options = {
-          method: "DELETE",
-          mode: "cors",
-          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
-        };
-
-        fetchSet(url, options)
+        deleteData("/users/" + id)
           .then(() => {
             alert(name + this.constants.ALERT_DELETED);
             this.$router.go();

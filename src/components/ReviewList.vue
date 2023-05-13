@@ -111,7 +111,8 @@
 </template>
 
 <script>
-import { checkError, checkRange, fetchSet } from "../assets/serve"
+import { deleteData, putData } from "../assets/axios"
+import { checkError, checkRange } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
@@ -159,15 +160,7 @@ export default {
             data.append("moderate", "false");
             data.append("updated", Date.now());
 
-            let url     = this.constants.API_URL + "/reviews/" + id;
-            let options = {
-              method: "PUT",
-              mode: "cors",
-              headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
-              body: data
-            };
-
-            fetchSet(url, options)
+            putData("/reviews/" + id, data)
               .then(() => {
                 alert(this.constants.ALERT_REVIEW + id + this.constants.ALERT_UPDATED);
                 this.$router.go();
@@ -185,14 +178,7 @@ export default {
     deleteReview(id) {
       if (confirm(`${this.constants.TITLE_DELETE_REVIEW}${id} ?`) === true) {
 
-        let url = this.constants.API_URL + "/reviews/" + id;
-        let options = {
-          method: "DELETE",
-          mode: "cors",
-          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
-        };
-
-        fetchSet(url, options)
+        deleteData("/reviews/" + id)
           .then(() => {
             alert(this.constants.ALERT_REVIEW + id + this.constants.ALERT_DELETED);
             this.$router.go();

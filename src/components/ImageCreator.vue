@@ -60,7 +60,8 @@
 </template>
 
 <script>
-import { checkError, checkRange, fetchSet } from "../assets/serve"
+import { postData } from "../assets/axios"
+import { checkError, checkRange } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
@@ -103,15 +104,7 @@ export default {
           data.append("description", this.description);
           data.append("gallery", this.$route.params.id);
 
-          const URL   = this.constants.API_URL + "/images";
-          let options = {
-            method: "POST",
-            mode: "cors",
-            headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
-            body: data
-          };
-
-          fetchSet(URL, options)
+          postData("/images", data)
             .then(() => {
               alert(image + this.constants.ALERT_CREATED);
               this.$router.go();

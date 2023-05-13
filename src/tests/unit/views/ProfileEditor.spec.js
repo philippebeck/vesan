@@ -1,41 +1,93 @@
+import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
+import { createStore } from 'vuex';
+import * as serve from "../../../assets/serve.js"
 import ProfileEditor from "../../../views/ProfileEditor"
 
+let wrapper;
+let store;
+let actions;
+let state;
+
+beforeEach(() => {
+  jest.spyOn(serve, "setMeta").mockImplementation(() => {});
+
+  const push = jest.fn();
+  const $router = {
+    push: push
+  };
+
+  actions = {
+    readUser: jest.fn(),
+    listUserOrders: jest.fn()
+  };
+
+  state = {
+    user: {},
+    orders: []
+  };
+
+  store = createStore({
+    state() {
+      return state;
+      },
+    actions: actions
+  })
+
+  wrapper = shallowMount(ProfileEditor, {
+    props: {
+      constants: {
+        TEST: "test"
+      }
+    },
+    data() {
+      return {
+        image: "test image",
+        pass: "test pass"
+      }
+    },
+    global: {
+      plugins: [store],
+      mocks: {
+        $router
+      }
+    }
+  });
+});
+
+enableAutoUnmount(afterEach)
+
+/**
+ * @jest-environment jsdom
+ */
 describe("ProfileEditor", () => {
-  test("name", () => { 
-    expect(ProfileEditor.name).toBe("ProfileEditor") 
+  test("wrapper", () => { 
+    expect(wrapper.exists()).toBe(true)
   })
 
   test("components", () => { 
-    expect(typeof ProfileEditor.components).toBe("object") 
-    expect(typeof ProfileEditor.components.BtnElt).toBe("object") 
-    expect(typeof ProfileEditor.components.CardElt).toBe("object") 
-    expect(typeof ProfileEditor.components.FieldElt).toBe("object") 
-    expect(typeof ProfileEditor.components.ListElt).toBe("object") 
-    expect(typeof ProfileEditor.components.MediaElt).toBe("object") 
-    expect(typeof ProfileEditor.components.TableElt).toBe("object") 
+    expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "TableElt" })).toBe("object")
   })
 
   test("props", () => { 
-    expect(typeof ProfileEditor.props).toBe("object") 
-    expect(ProfileEditor.props).toContain("constants") 
+    expect(wrapper.props().constants).toStrictEqual({ TEST: "test" })
   })
 
   test("data", () => { 
-    expect(typeof ProfileEditor.data).toBe("function") 
-  })
-
-  test("created()", () => {
-    expect(typeof ProfileEditor.created).toBe("function")
-  })
-
-  test("computed", () => {
-    expect(typeof ProfileEditor.computed).toBe("object")
+    expect(wrapper.vm.image).toBe("test image")
+    expect(wrapper.vm.pass).toBe("test pass")
   })
 
   test("methods", () => { 
-    expect(typeof ProfileEditor.methods.checkSession).toBe("function") 
-    expect(typeof ProfileEditor.methods.logout).toBe("function") 
-    expect(typeof ProfileEditor.methods.updateUser).toBe("function") 
-    expect(typeof ProfileEditor.methods.deleteUser).toBe("function") 
+    expect(typeof wrapper.vm.readUser).toBe("function")
+    expect(typeof wrapper.vm.listUserOrders).toBe("function")
+    expect(typeof wrapper.vm.checkSession).toBe("function")
+    expect(typeof wrapper.vm.logout).toBe("function")
+    expect(typeof wrapper.vm.updateUser).toBe("function")
+    expect(typeof wrapper.vm.deleteUser).toBe("function")
   })
 })
