@@ -79,7 +79,8 @@
 </template>
 
 <script>
-import { checkError, fetchSet, getItemName } from "../assets/serve"
+import { deleteData, putData } from "../assets/axios"
+import { checkError, getItemName } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
@@ -132,15 +133,7 @@ export default {
           data.append("text", comment.text);
           data.append("moderate", comment.moderate);
 
-          let url     = this.constants.API_URL + "/comments/" + id;
-          let options = {
-            method: "PUT",
-            mode: "cors",
-            headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
-            body: data
-          };
-
-          fetchSet(url, options)
+          putData("/comments/" + id, data)
             .then(() => {
               alert(this.constants.ALERT_COMMENT + id + this.constants.ALERT_MODERATED);
             })
@@ -156,14 +149,7 @@ export default {
     deleteComment(id) {
       if (confirm(`${this.constants.TITLE_DELETE_COMMENT}${id} ?`) === true) {
 
-        let url     = this.constants.API_URL + "/comments/" + id;
-        let options = {
-          method: "DELETE",
-          mode: "cors",
-          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` }
-        };
-
-        fetchSet(url, options)
+        deleteData("/comments/" + id)
           .then(() => {
             alert(this.constants.ALERT_COMMENT + id + this.constants.ALERT_DELETED);
             this.$router.go();
