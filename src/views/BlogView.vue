@@ -133,7 +133,8 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
-import { checkError, checkId, checkRole, fetchSet, getCats, getItemsByCat, setMeta } from "../assets/serve"
+import { putData } from "../assets/axios"
+import { checkError, checkId, checkRole, getCats, getItemsByCat, setMeta } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
@@ -250,15 +251,7 @@ export default {
           article.append("cat", this.articles[i].cat);
           article.append("updated", this.articles[i].updated);
 
-          let url     = this.constants.API_URL + "/articles/" + id;
-          let options = {
-            method: "PUT",
-            mode: "cors",
-            headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
-            body: article
-          };
-
-          fetchSet(url, options)
+          putData("/articles/" + id, article)
             .then(() => {
               if (hasLiked === true) {
                 console.log(this.article.name + this.constants.ALERT_DISLIKED);

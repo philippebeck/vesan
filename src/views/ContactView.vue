@@ -84,7 +84,8 @@
 </template>
 
 <script>
-import { checkError, checkRange, checkRegex, fetchSet, setMeta } from "../assets/serve"
+import { postData } from "../assets/axios"
+import { checkError, checkRange, checkRegex, setMeta } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
@@ -136,15 +137,7 @@ export default {
           checkRange(this.subject, stringMsg) && 
           checkRange(this.text, stringMsg, min, max)) {
 
-        let url = this.constants.API_URL + "/auth/recaptcha";
-        let options = {
-          method: "POST",
-          mode: "cors",
-          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
-          body: { response: response }
-        };
-
-        fetchSet(url, options)
+        postData("/auth/recaptcha", { response: response })
           .then(result => {
             if (result.success) {
               this.send();
@@ -169,15 +162,7 @@ export default {
       message.append("subject", this.subject);
       message.append("html", this.text);
 
-      const URL   = this.constants.API_URL + "/users/message";
-      let options = {
-        method: "POST",
-        mode: "cors",
-        headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
-        body: message
-      };
-
-      fetchSet(URL, options)
+      postData("/users/message", message)
         .then(() => {
           alert(this.subject + this.constants.ALERT_SENDED);
           this.$router.push("/");

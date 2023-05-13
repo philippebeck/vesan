@@ -151,7 +151,8 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
-import { checkError, checkRange, checkRole, fetchGet, fetchSet, setMeta } from "../assets/serve"
+import { putData } from "../assets/axios"
+import { checkError, checkRange, checkRole, fetchGet, setMeta } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
@@ -245,15 +246,7 @@ export default {
         data.append("created", this.product.created);
         data.append("updated", Date.now());
 
-        let url     = this.constants.API_URL + "/products/" + this.product._id;
-        let options = {
-          method: "PUT",
-          mode: "cors",
-          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
-          body: data
-        };
-
-        fetchSet(url, options)
+        putData("/products/" + this.product._id, data)
           .then(() => {
             alert(this.product.name + this.constants.ALERT_UPDATED);
             this.$router.push("/admin");

@@ -127,8 +127,9 @@
 </template>
 
 <script>
-import { loadScript } from "@paypal/paypal-js";
-import { checkError, checkRole, fetchGet, fetchSet, setMeta } from "../assets/serve";
+import { postData } from "../assets/axios"
+import { checkError, checkRole, fetchGet, setMeta } from "../assets/serve"
+import { loadScript } from "@paypal/paypal-js"
 
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
@@ -340,15 +341,7 @@ export default {
       order.append("created", Date.now());
       order.append("updated", Date.now());
 
-      const URL   = this.constants.API_URL + "/orders/";
-      let options = {
-          method: "POST",
-          mode: "cors",
-          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
-          body: order
-        };
-
-      fetchSet(URL, options)
+      postData("/orders/", order)
         .then(() => {
           alert(this.constants.ALERT_ORDER_CREATED);
           localStorage.removeItem("basket");
