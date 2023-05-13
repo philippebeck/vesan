@@ -43,7 +43,8 @@
 </template>
 
 <script>
-import { checkError, checkRange, fetchSet } from "../assets/serve"
+import { postData } from "../assets/axios"
+import { checkError, checkRange } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
@@ -83,15 +84,7 @@ export default {
         comment.append("created", Date.now());
         comment.append("updated", Date.now());
 
-        const URL   = this.constants.API_URL + "/comments";
-        let options = {
-          method: "POST",
-          mode: "cors",
-          headers: { "Authorization": `Bearer ${this.constants.TOKEN}` },
-          body: comment
-        };
-
-        fetchSet(URL, options)
+        postData("/comments", comment)
           .then(() => {
             alert(this.constants.ALERT_NEW_COMMENT);
             this.$router.go();
