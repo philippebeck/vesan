@@ -262,7 +262,7 @@ exports.updateArticle = (req, res, next) => {
         this.checkArticlesForUnique(req.params.id, articles, fields, res);
 
         let image = fields.image;
-        if (files.image.newFilename) { this.setImage(image, files.image.newFilename) }
+        if (files.image) { this.setImage(image, files.image.newFilename) }
 
         let likes   = nem.getArrayFromString(fields.likes);
         let article = this.getArticleUpdated(fields.name, fields.text, image, fields.alt, likes, fields.cat, fields.updated);
@@ -270,7 +270,7 @@ exports.updateArticle = (req, res, next) => {
         ArticleModel
           .findByIdAndUpdate(req.params.id, { ...article, _id: req.params.id })
           .then(() => {
-            if (files.image.newFilename) { fs.unlink(ARTICLES_IMG + files.image.newFilename, () => {}) }
+            if (files.image) { fs.unlink(ARTICLES_IMG + files.image.newFilename, () => {}) }
             res.status(200).json({ message: process.env.ARTICLE_UPDATED });
           })
           .catch(() => res.status(400).json({ message: process.env.ARTICLE_NOT_UPDATED }));

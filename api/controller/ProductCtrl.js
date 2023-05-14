@@ -221,7 +221,7 @@ exports.updateProduct = (req, res, next) => {
         this.checkProductsForUnique(req.params.id, products, fields, res);
 
         let image = fields.image;
-        if (files.image.newFilename) { this.setImage(image, files.image.newFilename) }
+        if (files.image) { this.setImage(image, files.image.newFilename) }
 
         let options = nem.getArrayFromString(fields.options);
         let product = this.getProduct(fields.name, fields.description, image, fields.alt, fields.price, options, fields.cat, fields.created, fields.updated);
@@ -229,7 +229,7 @@ exports.updateProduct = (req, res, next) => {
         ProductModel
           .findByIdAndUpdate(req.params.id, { ...product, _id: req.params.id })
           .then(() => {
-            if (files.image.newFilename) { fs.unlink(PRODUCTS_IMG + files.image.newFilename, () => {}) }
+            if (files.image) { fs.unlink(PRODUCTS_IMG + files.image.newFilename, () => {}) }
             res.status(200).json({ message: process.env.PRODUCT_UPDATED });
           })
           .catch(() => res.status(400).json({ message: process.env.PRODUCT_NOT_UPDATED }));

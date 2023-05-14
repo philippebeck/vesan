@@ -144,10 +144,9 @@ exports.updateImage = (req, res, next) => {
     if (err) { next(err); return }
 
     this.checkImageData(fields.description, res);
-
     let name = fields.name;
 
-    if (files.image.newFilename) {
+    if (files.image) {
       this.setImage(name, files.image.newFilename);
     }
 
@@ -160,7 +159,7 @@ exports.updateImage = (req, res, next) => {
     ImageModel
       .findByIdAndUpdate(req.params.id, { ...image, _id: req.params.id })
       .then(() => {
-        if (files.image.newFilename) { fs.unlink(GALLERIES_IMG + files.image.newFilename, () => {}) }
+        if (files.image) { fs.unlink(GALLERIES_IMG + files.image.newFilename, () => {}) }
         res.status(200).json({ message: process.env.IMAGE_UPDATED });
       })
       .catch(() => res.status(400).json({ message: process.env.IMAGE_NOT_UPDATED }));

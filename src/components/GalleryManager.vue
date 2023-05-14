@@ -62,7 +62,7 @@
 
 <script>
 import { deleteData, putData } from "../assets/axios"
-import { checkError } from "../assets/serve"
+import { checkError, getItemName } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import CardElt from "../assets/CardElt"
@@ -101,12 +101,12 @@ export default {
         if (gallery._id === id) {
 
           let data = new FormData();
-          data.append("text", gallery.text);
-          data.append("moderate", gallery.moderate);
+          data.append("name", gallery.name);
+          data.append("author", gallery.author);
 
           putData("/galleries/" + id, data)
             .then(() => {
-              alert(this.constants.ALERT_GALLERY + id + this.constants.ALERT_UPDATED);
+              alert(gallery.name + this.constants.ALERT_UPDATED);
             })
             .catch(err => { checkError(err) });
         }
@@ -118,11 +118,12 @@ export default {
      * @param {string} id 
      */
     deleteGallery(id) {
-      if (confirm(`${this.constants.TITLE_DELETE_GALLERY}${id} ?`) === true) {
+      let name = getItemName(id, this.galleries);
 
+      if (confirm(`${this.constants.TITLE_DELETE} ${name} ?`) === true) {
         deleteData("/galleries/" + id)
           .then(() => {
-            alert(this.constants.ALERT_GALLERY + id + this.constants.ALERT_DELETED);
+            alert(name + this.constants.ALERT_DELETED);
             this.$router.go();
           })
           .catch(err => { checkError(err) });
