@@ -325,10 +325,9 @@ exports.updateUser = (req, res, next) => {
       .find()
       .then((users) => {
         this.checkUsersForUnique(req.params.id, users, fields, res);
-
         let image = fields.image;
 
-        if (files.image.newFilename) { 
+        if (files.image) { 
           nem.setThumbnail("users/" + files.image.newFilename, process.env.THUMB_URL + "users/" + image);
         }
 
@@ -337,7 +336,7 @@ exports.updateUser = (req, res, next) => {
         UserModel
           .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
           .then(() => {
-            if (files.image.newFilename) { fs.unlink(USERS_THUMB + files.image.newFilename, () => {}) }
+            if (files.image) { fs.unlink(USERS_THUMB + files.image.newFilename, () => {}) }
             res.status(200).json({ message: process.env.USER_UPDATED });
           })
           .catch(() => res.status(400).json({ message: process.env.USER_NOT_UPDATED }));
