@@ -33,7 +33,7 @@
               :alt="table[slotProps.index].description"
               :title="table[slotProps.index].name"/>
 
-            <FieldElt :id="images[slotProps.index]._id"
+            <FieldElt :id="table[slotProps.index]._id"
               type="file"
               :info="constants.INFO_UP_IMAGE"/>
           </template>
