@@ -11,8 +11,9 @@ const ReviewModel   = require("../model/ReviewModel");
 
 require("dotenv").config();
 
+const USERS_IMG = process.env.IMG_URL + "users/";
 const USERS_THUMB = process.env.THUMB_URL + "users/";
-const form = formidable({ uploadDir: USERS_THUMB, keepExtensions: true });
+const form = formidable({ uploadDir: USERS_IMG, keepExtensions: true });
 
 //! ****************************** CHECKERS ******************************
 
@@ -228,7 +229,7 @@ exports.createUser = (req, res, next) => {
         }
 
         let image = nem.getUniqueName(fields.name) + "." + process.env.IMG_EXT;
-        nem.setThumbnail("users/" + files.image.newFilename, process.env.THUMB_URL + "users/" + image);
+        nem.setThumbnail("users/" + files.image.newFilename, USERS_THUMB + image);
 
         bcrypt
           .hash(fields.pass, 10)
@@ -238,7 +239,7 @@ exports.createUser = (req, res, next) => {
             user
               .save()
               .then(() => {
-                fs.unlink(USERS_THUMB + files.image.newFilename, () => {
+                fs.unlink(USERS_IMG + files.image.newFilename, () => {
                   res.status(201).json({ message: process.env.USER_CREATED })
                 })
               })
@@ -328,7 +329,7 @@ exports.updateUser = (req, res, next) => {
         let image = fields.image;
 
         if (files.image) { 
-          nem.setThumbnail("users/" + files.image.newFilename, process.env.THUMB_URL + "users/" + image);
+          nem.setThumbnail("users/" + files.image.newFilename, USERS_THUMB + image);
         }
 
         let user = this.getUserUpdated(fields, image, res);
@@ -336,7 +337,7 @@ exports.updateUser = (req, res, next) => {
         UserModel
           .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
           .then(() => {
-            if (files.image) { fs.unlink(USERS_THUMB + files.image.newFilename, () => {}) }
+            if (files.image) { fs.unlink(USERS_IMG + files.image.newFilename, () => {}) }
             res.status(200).json({ message: process.env.USER_UPDATED });
           })
           .catch(() => res.status(400).json({ message: process.env.USER_NOT_UPDATED }));
