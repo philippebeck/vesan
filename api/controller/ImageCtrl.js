@@ -41,6 +41,24 @@ exports.setImage = (image, newFilename) => {
   nem.setThumbnail(input, process.env.THUMB_URL + output);
 }
 
+//! ****************************** GETTER ******************************
+
+/**
+ * GET IMAGE
+ * @param {string} name 
+ * @param {string} description 
+ * @param {string} gallery 
+ * @returns 
+ */
+exports.getImage = (name, description, gallery) => {
+
+  return {
+    name: name,
+    description: description,
+    gallery: gallery
+  }
+}
+
 //! ****************************** PUBLIC ******************************
 
 /**
@@ -72,7 +90,7 @@ exports.listImages = (req, res) => {
         .then((galleries) => {
           for (let image of images) {
             for (let gallery of galleries) {
-        
+
               if (image.gallery === gallery._id.toString()) {
                 image.gallery = image.gallery + "-" + gallery.name;
               }
@@ -104,19 +122,12 @@ exports.createImage = (req, res, next) => {
         ImageModel
         .find({ gallery: fields.gallery })
         .then((images) => { 
-
           let index = images.length + 1;
-
           if (index < 10) { index = "0" + index }
 
           let name = nem.getName(gallery.name) + "-" + index + "." + process.env.IMG_EXT;
           this.setImage(name, files.image.newFilename);
-
-          let image = new ImageModel({
-            name: name,
-            description: fields.description,
-            gallery: fields.gallery
-          });
+          let image = new ImageModel(this.getImage(name, fields.description, fields.gallery));
 
           image
             .save()
@@ -146,15 +157,8 @@ exports.updateImage = (req, res, next) => {
     this.checkImageData(fields.description, res);
     let name = fields.name;
 
-    if (files.image) {
-      this.setImage(name, files.image.newFilename);
-    }
-
-    let image = {
-      name: name,
-      description: fields.description,
-      gallery: fields.gallery
-    };
+    if (files.image) { this.setImage(name, files.image.newFilename) }
+    let image = this.getImage(name, fields.description, fields.gallery);
 
     ImageModel
       .findByIdAndUpdate(req.params.id, { ...image, _id: req.params.id })
