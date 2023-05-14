@@ -1,6 +1,6 @@
 {
   "name": "vesan",
-  "version": "1.7.2",
+  "version": "1.7.3",
   "description": "CMS with Vue-Elt, Servidio, Animadio & NemJS",
   "author": {
     "name": "Philippe Beck",
