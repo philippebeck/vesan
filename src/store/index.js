@@ -54,7 +54,12 @@ export default createStore({
 
     SET_ARTICLE(state, article) { state.article = article },
     SET_GALLERY(state, gallery) { state.gallery = gallery },
-    SET_PRODUCT(state, product) { state.product = product },
+
+    SET_PRODUCT(state, product) { 
+      product.options = product.options.join(",")
+      state.product = product 
+    },
+
     SET_USER(state, user) { state.user = user },
 
     //! ******************** ARRAY MUTATIONS ********************
@@ -71,7 +76,12 @@ export default createStore({
     },
 
     SET_ORDERS(state, orders) { state.orders = orders },
-    SET_PRODUCTS(state, products) { state.products = products },
+
+    SET_PRODUCTS(state, products) { 
+      for (let product of products) { product.options = product.options.join(",") }
+      state.products = products 
+    },
+  
     SET_REVIEWS(state, reviews) { state.reviews = reviews },
     SET_USERS(state, users) { state.users = users }
   },
