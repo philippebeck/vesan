@@ -10,6 +10,8 @@ export default {
   CAT_LINK : "HTML5",
   CAT_PRODUCT : "Maison",
 
+  CONTENT_TYPE : "multipart/form-data",
+
   CURRENCY_ISO : "EUR",
   CURRENCY_SYMBOL : "€",
 
@@ -55,6 +57,13 @@ export default {
   PRICE_MIN : 1,
 
   RECAPTCHA_KEY : "{votre-recaptcha-key}",
+
+  REGEX_EMAIL : /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/,
+  REGEX_PASS : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,50}$/,
+  REGEX_URL : /((https?|ftp|ssh|mailto):\/\/)?[a-z0-9\/:%_+.,#?!@&=-]+$/,
+
+  SCORE_MIN : 0,
+  SCORE_MAX : 5,
 
   SLIDER_DELAY : 5000,
   SLIDER_FA : "brands",
