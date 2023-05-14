@@ -219,9 +219,7 @@ exports.createArticle = (req, res, next) => {
     ArticleModel
       .find()
       .then((articles) => {
-        for (let article of articles) { 
-          this.checkArticleUnique(fields.name, fields.text, article, res);
-        }
+        for (let article of articles) { this.checkArticleUnique(fields.name, fields.text, article, res) }
 
         let likes = nem.getArrayFromString(fields.likes);
         let image = nem.getUniqueName(fields.name) + "." + process.env.IMG_EXT;

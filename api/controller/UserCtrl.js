@@ -224,9 +224,7 @@ exports.createUser = (req, res, next) => {
     UserModel
       .find()
       .then((users) => {
-        for (let user of users) { 
-          this.checkUserUnique(fields.name, fields.email, user, res);
-        }
+        for (let user of users) { this.checkUserUnique(fields.name, fields.email, user, res) }
 
         let image = nem.getUniqueName(fields.name) + "." + process.env.IMG_EXT;
         nem.setThumbnail("users/" + files.image.newFilename, USERS_THUMB + image);
@@ -239,9 +237,7 @@ exports.createUser = (req, res, next) => {
             user
               .save()
               .then(() => {
-                fs.unlink(USERS_IMG + files.image.newFilename, () => {
-                  res.status(201).json({ message: process.env.USER_CREATED })
-                })
+                fs.unlink(USERS_IMG + files.image.newFilename, () => { res.status(201).json({ message: process.env.USER_CREATED }) })
               })
               .catch(() => res.status(400).json({ message: process.env.USER_NOT_CREATED }));
 
