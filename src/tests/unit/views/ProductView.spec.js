@@ -14,17 +14,14 @@ let state;
 beforeEach(() => {
   jest.spyOn(serve, "setMeta").mockImplementation(() => {});
 
-  const params = jest.fn();
-  const $router = {
-    params: params
-  };
-
   actions = {
-    listGalleries: jest.fn()
+    listProductReviews: jest.fn(),
+    readProduct: jest.fn()
   };
 
   state = {
-    galleries: []
+    product: {},
+    reviews: []
   };
 
   store = createStore({
@@ -74,10 +71,7 @@ beforeEach(() => {
       }
     },
     global: {
-      plugins: [store],
-      mocks: {
-        $router
-      }
+      plugins: [store]
     }
   });
 });
