@@ -8,6 +8,9 @@ let store;
 let actions;
 let state;
 
+/**
+ * @jest-environment jsdom
+ */
 beforeEach(() => {
   jest.spyOn(serve, "setGlobalMeta").mockImplementation(() => {});
 
