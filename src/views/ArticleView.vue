@@ -119,7 +119,7 @@ export default {
     CommentList
   },
 
-  props: ["constants"],
+  props: ["constants", "user"],
   data() {
     return {
       article: {}
