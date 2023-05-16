@@ -3,11 +3,26 @@ import { createStore } from 'vuex';
 import * as serve from "../../../assets/serve"
 import ArticleView from "../../../views/ArticleView"
 
+const mockRoute = {
+  params: {
+    id: 1,
+  },
+};
+
+const mockRouter = {
+  push: jest.fn()
+}
+
 let wrapper;
 let store;
 let actions;
 let state;
 
+mockRouter.push(mockRoute);
+
+/**
+ * @jest-environment jsdom
+ */
 beforeEach(() => {
   jest.spyOn(serve, "setMeta").mockImplementation(() => {});
 
@@ -44,7 +59,11 @@ beforeEach(() => {
       }
     },
     global: {
-      plugins: [store]
+      plugins: [store],
+      mocks: {
+        $router: mockRouter,
+        $route: mockRoute
+      }
     }
   });
 });
