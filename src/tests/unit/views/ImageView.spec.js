@@ -3,6 +3,16 @@ import { createStore } from 'vuex';
 import * as serve from "../../../assets/serve.js"
 import ImageView from "../../../views/ImageView"
 
+const mockRoute = {
+  params: {
+    id: 1,
+  },
+};
+
+const mockRouter = {
+  push: jest.fn()
+}
+
 let wrapper;
 let store;
 let actions;
@@ -25,6 +35,8 @@ beforeEach(() => {
       },
     actions: actions
   })
+
+  mockRouter.push(mockRoute);
 
   wrapper = shallowMount(ImageView, {
     props: {
@@ -51,7 +63,11 @@ beforeEach(() => {
       }
     },
     global: {
-      plugins: [store]
+      plugins: [store],
+      mocks: {
+        $router: mockRouter,
+        $route: mockRoute
+      }
     }
   });
 });
@@ -66,30 +82,30 @@ describe("ImageView", () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  // test("components", () => { 
-  //   expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object") 
-  //   expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object") 
-  //   expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object") 
-  //   expect(typeof wrapper.findComponent({ name: "SliderElt" })).toBe("object") 
-  //   expect(typeof wrapper.findComponent({ name: "ImageCreator" })).toBe("object") 
-  // })
+  test("components", () => { 
+    expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object") 
+    expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object") 
+    expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object") 
+    expect(typeof wrapper.findComponent({ name: "SliderElt" })).toBe("object") 
+    expect(typeof wrapper.findComponent({ name: "ImageCreator" })).toBe("object") 
+  })
 
-  // test("props", () => { 
-  //   expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
-  //   expect(wrapper.props("user")).toStrictEqual({ name: "test", email: "email@test.com"})
-  // })
+  test("props", () => { 
+    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
+    expect(wrapper.props("user")).toStrictEqual({ name: "test", email: "email@test.com"})
+  })
 
-  // test("data", () => { 
-  //   expect(wrapper.vm.gallery.images).toStrictEqual([{ 
-  //     id: 1, 
-  //     title: "test", 
-  //     description: "test", 
-  //     url: "test" 
-  //   }])
-  // })
+  test("data", () => { 
+    expect(wrapper.vm.gallery.images).toStrictEqual([{ 
+      id: 1, 
+      title: "test", 
+      description: "test", 
+      url: "test" 
+    }])
+  })
 
-  // test("methods", () => { 
-  //   expect(typeof wrapper.vm.listGalleryImages).toBe("function")
-  //   expect(typeof wrapper.vm.checkSession).toBe("function")
-  // })
+  test("methods", () => { 
+    expect(typeof wrapper.vm.listGalleryImages).toBe("function")
+    expect(typeof wrapper.vm.checkSession).toBe("function")
+  })
 })

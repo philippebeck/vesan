@@ -178,9 +178,7 @@ exports.createProduct = (req, res, next) => {
     ProductModel
       .find()
       .then((products) => {
-        for (let product of products) { 
-          this.checkProductUnique(fields.name, fields.description, product, res);
-        }
+        for (let product of products) { this.checkProductUnique(fields.name, fields.description, product, res) }
 
         let options = nem.getArrayFromString(fields.options);
         let image   = nem.getUniqueName(fields.name) + "." + process.env.IMG_EXT;

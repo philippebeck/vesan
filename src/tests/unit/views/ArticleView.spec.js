@@ -1,11 +1,47 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
+import { createStore } from 'vuex';
 import * as serve from "../../../assets/serve"
 import ArticleView from "../../../views/ArticleView"
 
-let wrapper;
+const mockRoute = {
+  params: {
+    id: 1,
+  },
+};
 
+const mockRouter = {
+  push: jest.fn()
+}
+
+let wrapper;
+let store;
+let actions;
+let state;
+
+/**
+ * @jest-environment jsdom
+ */
 beforeEach(() => {
   jest.spyOn(serve, "setMeta").mockImplementation(() => {});
+
+  actions = {
+    listArticleComments: jest.fn(),
+    readArticle: jest.fn()
+  };
+
+  state = {
+    article: {},
+    comments: []
+  };
+
+  store = createStore({
+    state() {
+      return state;
+      },
+    actions: actions
+  })
+
+  mockRouter.push(mockRoute);
 
   wrapper = shallowMount(ArticleView, {
     props: {
@@ -20,6 +56,13 @@ beforeEach(() => {
           image: "Test image",
           text: "Test text"
         }
+      }
+    },
+    global: {
+      plugins: [store],
+      mocks: {
+        $router: mockRouter,
+        $route: mockRoute
       }
     }
   });
