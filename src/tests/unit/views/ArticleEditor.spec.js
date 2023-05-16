@@ -17,11 +17,11 @@ beforeEach(() => {
   };
 
   actions = {
-    listGalleries: jest.fn()
+    readArticle: jest.fn()
   };
 
   state = {
-    galleries: []
+    article: {}
   };
 
   store = createStore({
