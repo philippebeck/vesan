@@ -18,8 +18,6 @@ let store;
 let actions;
 let state;
 
-mockRouter.push(mockRoute);
-
 /**
  * @jest-environment jsdom
  */
@@ -42,6 +40,8 @@ beforeEach(() => {
       },
     actions: actions
   })
+
+  mockRouter.push(mockRoute);
 
   wrapper = shallowMount(ProductView, {
     props: {

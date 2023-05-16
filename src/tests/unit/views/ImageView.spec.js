@@ -18,8 +18,6 @@ let store;
 let actions;
 let state;
 
-mockRouter.push(mockRoute);
-
 beforeEach(() => {
   jest.spyOn(serve, "setMeta").mockImplementation(() => {});
 
@@ -37,6 +35,8 @@ beforeEach(() => {
       },
     actions: actions
   })
+
+  mockRouter.push(mockRoute);
 
   wrapper = shallowMount(ImageView, {
     props: {
