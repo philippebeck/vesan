@@ -1,11 +1,32 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
+import { createStore } from 'vuex';
 import * as serve from "../../../assets/serve"
 import ArticleView from "../../../views/ArticleView"
 
 let wrapper;
+let store;
+let actions;
+let state;
 
 beforeEach(() => {
   jest.spyOn(serve, "setMeta").mockImplementation(() => {});
+
+  actions = {
+    listArticleComments: jest.fn(),
+    readArticle: jest.fn()
+  };
+
+  state = {
+    article: {},
+    comments: []
+  };
+
+  store = createStore({
+    state() {
+      return state;
+      },
+    actions: actions
+  })
 
   wrapper = shallowMount(ArticleView, {
     props: {
@@ -21,6 +42,9 @@ beforeEach(() => {
           text: "Test text"
         }
       }
+    },
+    global: {
+      plugins: [store]
     }
   });
 });
