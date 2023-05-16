@@ -3,10 +3,22 @@ import { createStore } from 'vuex';
 import * as serve from "../../../assets/serve.js"
 import ProductView from "../../../views/ProductView"
 
+const mockRoute = {
+  params: {
+    id: 1,
+  },
+};
+
+const mockRouter = {
+  push: jest.fn()
+}
+
 let wrapper;
 let store;
 let actions;
 let state;
+
+mockRouter.push(mockRoute);
 
 /**
  * @jest-environment jsdom
@@ -71,7 +83,11 @@ beforeEach(() => {
       }
     },
     global: {
-      plugins: [store]
+      plugins: [store],
+      mocks: {
+        $router: mockRouter,
+        $route: mockRoute
+      }
     }
   });
 });
@@ -83,61 +99,54 @@ describe("ProductView", () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-//   test("wrapper components", () => { 
-//     expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
-//     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
-//     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
-//     expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object")
-//     expect(typeof wrapper.findComponent({ name: "ReviewCreator" })).toBe("object")
-//     expect(typeof wrapper.findComponent({ name: "ReviewList" })).toBe("object")
-//   })
+  test("wrapper components", () => { 
+    expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "ReviewCreator" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "ReviewList" })).toBe("object")
+  })
 
-//   test("wrapper props", () => { 
-//     expect(wrapper.props().constants).toEqual({ TEST: "test" })
-//     expect(wrapper.props().user).toEqual({ name: "test", email: "email@test.com" })
-//   })
+  test("wrapper props", () => { 
+    expect(wrapper.props().constants).toEqual({ TEST: "test" })
+    expect(wrapper.props().user).toEqual({ name: "test", email: "email@test.com" })
+  })
 
-//   test("wrapper data", () => { 
-//     expect(wrapper.vm.basket).toEqual([])
-//     expect(wrapper.vm.product).toEqual({
-//       id: 1,
-//       name: "test",
-//       description: "test",
-//       price: 10,
-//       currency: "EUR",
-//       image: "test",
-//       gallery: "test",
-//       reviews: []
-//     })
-//     expect(wrapper.vm.order).toEqual({
-//       id: 1,
-//       name: "test",
-//       description: "test",
-//       price: 10,
-//       currency: "EUR",
-//       image: "test",
-//       gallery: "test",
-//       reviews: []
-//     })
-//     expect(wrapper.vm.option).toBe("")
-//     expect(wrapper.vm.priceCurrency).toBe("")
-//     expect(wrapper.vm.quantity).toBe(1)
-//     expect(wrapper.vm.isInBasket).toBe(false)
-//   })
+  test("wrapper data", () => { 
+    expect(wrapper.vm.basket).toEqual([])
+    expect(wrapper.vm.product).toEqual({
+      id: 1,
+      name: "test",
+      description: "test",
+      price: 10,
+      currency: "EUR",
+      image: "test",
+      gallery: "test",
+      reviews: []
+    })
+    expect(wrapper.vm.order).toEqual({
+      id: 1,
+      name: "test",
+      description: "test",
+      price: 10,
+      currency: "EUR",
+      image: "test",
+      gallery: "test",
+      reviews: []
+    })
+    expect(wrapper.vm.option).toBe("")
+    expect(wrapper.vm.quantity).toBe(1)
+    expect(wrapper.vm.isInBasket).toBe(false)
+  })
 
-//   test("wrapper created hook", () => {
-//     expect(serve.fetchGet).toHaveBeenCalled()
-//     expect(serve.setMeta).toHaveBeenCalled()
-//     expect(actions.listProductReviews).toHaveBeenCalled()
-//   })
-
-//   test("wrapper methods", () => { 
-//     expect(typeof wrapper.vm.checkSession).toBe("function")
-//     expect(typeof wrapper.vm.getScoresAverage).toBe("function")
-//     expect(typeof wrapper.vm.addToBasket).toBe("function")
-//     expect(typeof wrapper.vm.createOrder).toBe("function")
-//     expect(typeof wrapper.vm.getBasket).toBe("function")
-//     expect(typeof wrapper.vm.checkBasket).toBe("function")
-//     expect(typeof wrapper.vm.setBasket).toBe("function")
-//   })
+  test("wrapper methods", () => { 
+    expect(typeof wrapper.vm.checkSession).toBe("function")
+    expect(typeof wrapper.vm.getScoresAverage).toBe("function")
+    expect(typeof wrapper.vm.addToBasket).toBe("function")
+    expect(typeof wrapper.vm.createOrder).toBe("function")
+    expect(typeof wrapper.vm.getBasket).toBe("function")
+    expect(typeof wrapper.vm.checkBasket).toBe("function")
+    expect(typeof wrapper.vm.setBasket).toBe("function")
+  })
 })
