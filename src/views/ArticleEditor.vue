@@ -149,6 +149,13 @@ export default {
   },
 
   created() {
+    setMeta(
+      this.constants.HEAD_ARTICLE, 
+      this.constants.META_ARTICLE,
+      this.constants.UI_URL,
+      this.constants.UI_URL + this.constants.LOGO_SRC
+    );
+
     if (this.constants.USER_ID) {
       let url = this.constants.API_URL + "/auth/" + this.constants.USER_ID;
 
@@ -158,13 +165,6 @@ export default {
 
           if (checkRole(this.user.role, "editor")) {
             this.$store.dispatch("readArticle", this.$route.params.id);
-
-            setMeta(
-              this.constants.HEAD_ARTICLE, 
-              this.constants.META_ARTICLE,
-              this.constants.UI_URL,
-              this.constants.UI_URL + this.constants.LOGO_SRC
-            );
           }
         })
         .catch(err => { 

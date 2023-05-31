@@ -180,6 +180,13 @@ export default {
   },
 
   created() {
+    setMeta(
+      this.constants.HEAD_PRODUCT, 
+      this.constants.META_PRODUCT,
+      this.constants.UI_URL,
+      this.constants.UI_URL + this.constants.LOGO_SRC
+    );
+  
     if (this.constants.USER_ID) {
       let url = this.constants.API_URL + "/auth/" + this.constants.USER_ID;
 
@@ -189,13 +196,6 @@ export default {
 
           if (checkRole(this.user.role, "editor")) {
             this.$store.dispatch("readProduct", this.$route.params.id);
-
-            setMeta(
-              this.constants.HEAD_PRODUCT, 
-              this.constants.META_PRODUCT,
-              this.constants.UI_URL,
-              this.constants.UI_URL + this.constants.LOGO_SRC
-            );
           }
         })
         .catch(err => { 
