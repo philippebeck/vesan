@@ -128,6 +128,10 @@ export default {
       return data;
     },
 
+    /**
+     * CHECK LINK
+     * @param {object} link 
+     */
     checkLink(link) {
       if (link.url.startsWith("http")) { link.url = link.url.split('//')[1] }
 
