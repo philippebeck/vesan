@@ -911,6 +911,7 @@ aside {
   footer {
     --ve-foot-ul-flex-flow: row;
     --ve-foot-ul-place-content: space-around;
+    --ve-foot-ul-place-items: baseline;
   }
 }
 
