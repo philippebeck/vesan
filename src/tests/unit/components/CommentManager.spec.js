@@ -7,13 +7,19 @@ beforeEach(() => {
   wrapper = shallowMount(CommentManager, {
     props: {
       articles: [{
+        id: "Article id",
         name: "Article name",
         text: "Article text",
         image: "Article image",
         alt: "Article alt",
         cat: "Article cat"
       }],
-      comments: [{ text: "Comment text" }],
+      comments: [
+        { 
+          id: "Comment id",
+          text: "Comment text" 
+        }
+    ],
       constants: { TEST: "test" },
       users: [{
         name: "User name",
@@ -46,6 +52,7 @@ describe("CommentManager", () => {
   test("props", () => {
     expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
     expect(wrapper.props("articles")).toStrictEqual([{
+      id: "Article id",
       name: "Article name",
       text: "Article text",
       image: "Article image",
@@ -53,6 +60,7 @@ describe("CommentManager", () => {
       cat: "Article cat"
     }])
     expect(wrapper.props("comments")).toStrictEqual([{
+      id: "Comment id",
       text: "Comment text"
     }])
     expect(wrapper.props("users")).toStrictEqual([{
@@ -69,5 +77,12 @@ describe("CommentManager", () => {
     expect(typeof wrapper.vm.getArticleName).toBe("function")
     expect(typeof wrapper.vm.moderateComment).toBe("function")
     expect(typeof wrapper.vm.deleteComment).toBe("function")
+  })
+
+  test("getComments() must return all comments", () => {
+    expect(wrapper.vm.getComments()).toStrictEqual([{
+      id: "Comment id",
+      text: "Comment text"
+    }])
   })
 })

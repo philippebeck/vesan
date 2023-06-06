@@ -73,6 +73,10 @@ describe("AdminEditor", () => {
     })
   })
 
+  test("wrapper created hook", () => {
+    expect(serve.setMeta).toHaveBeenCalled()
+  })
+
   test("methods", () => {
     expect(typeof wrapper.vm.checkSession).toBe("function")
   })

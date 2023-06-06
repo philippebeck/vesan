@@ -3,22 +3,48 @@ import * as serve from "../../../assets/serve.js"
 import LoginView from "../../../views/LoginView"
 
 let wrapper;
+let setMetaSpy;
 
 /**
  * @jest-environment jsdom
  */
 beforeEach(() => {
-  jest.spyOn(serve, "setMeta").mockImplementation(() => {});
+  setMetaSpy = jest.spyOn(serve, "setMeta").mockImplementation(() => {});
+
+  Object.defineProperty(window, 'localStorage', {
+    value: {
+      userId: '123456',
+    },
+  });
+
+  const push = jest.fn();
+  const $router = {
+    push: push
+  };
 
   wrapper = shallowMount(LoginView, {
     props: {
       constants: {
-        TEST: "test"
+        HEAD_LOGIN: "test head login",
+        META_LOGIN: "test meta login",
+        UI_URL: "test-ui-url",
+        LOGO_SRC: "/test-logo-src",
+        SIGN_IN: "Sign In",
+        SIGN_UP: "Sign Up",
+        FORGOT_PASS: "Forgot Password",
+        INTRO_SIGNIN: "Sign in to your account",
+        INTRO_SIGNUP: "Sign up to your account",
+        INTRO_FORGOTPASS: "Enter your email address and we'll send you a link to reset your password."
       }
     },
     data() {
       return {
         type: "SignUp"
+      }
+    },
+    global: {
+      mocks: {
+        $router
       }
     }
   });
@@ -40,7 +66,18 @@ describe("LoginView", () => {
   })
 
   test("wrapper props", () => { 
-    expect(wrapper.props().constants).toStrictEqual({ TEST: "test" })
+    expect(wrapper.props().constants).toStrictEqual({ 
+      HEAD_LOGIN: "test head login",
+      META_LOGIN: "test meta login",
+      UI_URL: "test-ui-url",
+      LOGO_SRC: "/test-logo-src",
+      SIGN_IN: "Sign In",
+      SIGN_UP: "Sign Up",
+      FORGOT_PASS: "Forgot Password",
+      INTRO_SIGNIN: "Sign in to your account",
+      INTRO_SIGNUP: "Sign up to your account",
+      INTRO_FORGOTPASS: "Enter your email address and we'll send you a link to reset your password."
+    })
   })
 
   test("wrapper data", () => { 
@@ -51,7 +88,36 @@ describe("LoginView", () => {
     expect(serve.setMeta).toHaveBeenCalled()
   })
 
+  test('calls setMeta with the correct arguments', () => {
+    expect(setMetaSpy).toHaveBeenCalledWith(
+      wrapper.vm.constants.HEAD_LOGIN,
+      wrapper.vm.constants.META_LOGIN,
+      `${wrapper.vm.constants.UI_URL}/login`,
+      `${wrapper.vm.constants.UI_URL}${wrapper.vm.constants.LOGO_SRC}`
+    );
+  });
+
+  test('redirects to "/" if localStorage.userId exists', () => {
+    const routerPushSpy = jest.spyOn(wrapper.vm.$router, 'push');
+    expect(routerPushSpy).toHaveBeenCalledWith('/');
+  });
+
   test("wrapper methods", () => { 
     expect(typeof wrapper.vm.setType).toBe("function")
+  })
+
+  test("setType('SignIn')", () => {
+    wrapper.vm.setType("SignIn")
+    expect(wrapper.vm.type).toBe("SignIn")
+  })
+
+  test("setType('SignUp')", () => {
+    wrapper.vm.setType("SignUp")
+    expect(wrapper.vm.type).toBe("SignUp")
+  })
+
+  test("setType('ForgotPass')", () => {
+    wrapper.vm.setType("ForgotPass")
+    expect(wrapper.vm.type).toBe("ForgotPass")
   })
 })
