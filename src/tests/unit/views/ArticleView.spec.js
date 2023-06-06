@@ -13,6 +13,12 @@ const mockRouter = {
   push: jest.fn()
 }
 
+const role = "user";
+const user = {
+  name: "John Doe",
+  role: role
+}
+
 let wrapper;
 let store;
 let actions;
@@ -47,11 +53,13 @@ beforeEach(() => {
     props: {
       constants: {
         TEST: "test"
-      }
+      },
+      user: user
     },
     data() {
       return {
         article: {
+          id: 1,
           name: "Test name",
           image: "Test image",
           text: "Test text"
@@ -74,35 +82,36 @@ enableAutoUnmount(afterEach)
  * @jest-environment jsdom
  */
 describe("ArticleView", () => {
-  test("wrapper", () => { 
+  test("wrapper must be a vue instance", () => { 
     expect(wrapper.exists()).toBe(true)
   })
 
-  // test("components", () => { 
-  //   expect(typeof wrapper.findComponent({ name: "BtnElt" }).vm).toBe("object")
-  //   expect(typeof wrapper.findComponent({ name: "CardElt" }).vm).toBe("object")
-  //   expect(typeof wrapper.findComponent({ name: "MediaElt" }).vm).toBe("object")
-  //   expect(typeof wrapper.findComponent({ name: "CommentCreator" }).vm).toBe("object")
-  //   expect(typeof wrapper.findComponent({ name: "CommentList" }).vm).toBe("object")
-  // })
+  test("components", () => { 
+    expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "CommentCreator" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "CommentList" })).toBe("object")
+  })
 
-  // test("props", () => { 
-  //   expect(wrapper.props().constants).toEqual({ TEST: "test" })
-  // })
+  test("props", () => { 
+    expect(wrapper.props().constants).toEqual({ TEST: "test" })
+  })
 
-  // test("data", () => { 
-  //   expect(wrapper.vm.article).toEqual({
-  //     name: "Test name",
-  //     image: "Test image",
-  //     text: "Test text"
-  //   })
-  // })
+  test("data", () => { 
+    expect(wrapper.vm.article).toEqual({
+      id: 1,
+      name: "Test name",
+      image: "Test image",
+      text: "Test text"
+    })
+  })
 
-  // test("methods", () => { 
-  //   expect(typeof wrapper.vm.readArticle).toBe("function")
-  //   expect(typeof wrapper.vm.listArticleComments).toBe("function")
-  //   expect(typeof wrapper.vm.checkSession).toBe("function")
-  //   expect(typeof wrapper.vm.checkLikes).toBe("function")
-  //   expect(typeof wrapper.vm.addLike).toBe("function")
-  // })
+  test("methods", () => { 
+    expect(typeof wrapper.vm.readArticle).toBe("function")
+    expect(typeof wrapper.vm.listArticleComments).toBe("function")
+    expect(typeof wrapper.vm.checkSession).toBe("function")
+    expect(typeof wrapper.vm.checkLikes).toBe("function")
+    expect(typeof wrapper.vm.addLike).toBe("function")
+  })
 })
