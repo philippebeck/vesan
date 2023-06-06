@@ -201,7 +201,7 @@ export default {
     ...mapActions(["readProduct", "listProductReviews"]),
 
     /**
-     * CHECK ROLE
+     * CHECK SESSION
      * @param {string} role
      * @returns
      */
@@ -211,6 +211,7 @@ export default {
 
     /** 
      * GET SCORES AVERAGE
+     * @param {string} productId
      * @returns
      */
     getScoresAverage(productId) {
