@@ -1,7 +1,18 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import { createStore } from 'vuex';
+import { createRouter, createWebHistory } from 'vue-router'
 import * as serve from "../../assets/serve.js"
 import App from "../../App"
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [
+    {
+      path: "/",
+      component: App
+    }
+  ]
+})
 
 let wrapper;
 let store;
@@ -38,7 +49,7 @@ beforeEach(() => {
       }
     },
     global: {
-      plugins: [store]
+      plugins: [store, router]
     }
   });
 });
@@ -53,18 +64,19 @@ describe("App", () => {
     expect(wrapper.exists()).toBe(true) 
   })
 
-  // test("components", () => { 
-  //   expect(typeof wrapper.findComponent({ name: "FootElt" }).vm).toBe("object")
-  //   expect(typeof wrapper.findComponent({ name: "ListElt" }).vm).toBe("object")
-  //   expect(typeof wrapper.findComponent({ name: "NavElt" }).vm).toBe("object")
-  // })
+//   test("components", () => { 
+//     expect(typeof wrapper.findComponent({ name: "FootElt" })).toBe("object")
+//     expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object")
+//     expect(typeof wrapper.findComponent({ name: "NavElt" })).toBe("object")
+//   })
 
-  // test("data", () => { 
-  //   expect(wrapper.vm.constants).toStrictEqual({ TEST: "test" })
-  // })
+//   test("data", () => { 
+//     expect(wrapper.vm.constants).toStrictEqual({ TEST: "test" })
+//   })
 
-  // test("methods", () => { 
-  //   expect(typeof wrapper.vm.readAvatar).toBe("function")
-  //   expect(typeof wrapper.vm.checkSession).toBe("function")
-  // })
-})
+//   test("methods", () => { 
+//     expect(typeof wrapper.vm.readAvatar).toBe("function")
+//     expect(typeof wrapper.vm.checkSession).toBe("function")
+//   })
+// })
+});
