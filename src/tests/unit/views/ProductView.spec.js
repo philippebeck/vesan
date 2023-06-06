@@ -1,6 +1,6 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import { createStore } from 'vuex';
-import * as serve from "../../../assets/serve.js"
+import * as serve from "../../../assets/serve"
 import ProductView from "../../../views/ProductView"
 
 const mockRoute = {
@@ -57,7 +57,7 @@ beforeEach(() => {
       return {
         basket: [],
         product: {
-          id: 1,
+          _id: 1,
           name: "test",
           description: "test",
           price: 10,
@@ -94,6 +94,9 @@ beforeEach(() => {
 
 enableAutoUnmount(afterEach)
 
+/**
+ * @jest-environment jsdom
+ */
 describe("ProductView", () => {
   test("wrapper must be a vue instance", () => {
     expect(wrapper.exists()).toBe(true)
@@ -116,7 +119,7 @@ describe("ProductView", () => {
   test("wrapper data", () => { 
     expect(wrapper.vm.basket).toEqual([])
     expect(wrapper.vm.product).toEqual({
-      id: 1,
+      _id: 1,
       name: "test",
       description: "test",
       price: 10,
