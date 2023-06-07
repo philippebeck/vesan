@@ -11,6 +11,7 @@ let state;
 beforeEach(() => {
   jest.spyOn(serve, "setMeta").mockImplementation(() => {});
 
+  global.alert = jest.fn();
   const push = jest.fn();
   const $router = {
     push: push
