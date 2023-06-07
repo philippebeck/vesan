@@ -35,7 +35,6 @@ describe("SignUp", () => {
   test("components", () => { 
     expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
-    expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "VueRecaptcha" })).toBe("object")
   })
 

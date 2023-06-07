@@ -71,7 +71,6 @@ import { checkError, checkRange, checkRegex } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import FieldElt from "../assets/FieldElt"
-import ListElt from "../assets/ListElt"
 import { VueRecaptcha } from "vue-recaptcha";
 
 export default {
@@ -79,7 +78,6 @@ export default {
   components: {  
     BtnElt,
     FieldElt,
-    ListElt,
     VueRecaptcha 
   },
 
