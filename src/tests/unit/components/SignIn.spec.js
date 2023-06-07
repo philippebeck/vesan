@@ -7,7 +7,8 @@ beforeEach(() => {
   wrapper = shallowMount(SignIn, {
     props: {
       constants: {
-        TEST: "test"
+        TEST: "test",
+        RECAPTCHA_KEY: "test"
       }
     },
     data() {
@@ -37,6 +38,7 @@ describe("SignIn", () => {
 
   test("props", () => { 
     expect(wrapper.props().constants.TEST).toBe("test")
+    expect(wrapper.props().constants.RECAPTCHA_KEY).toBe("test")
   })
 
   test("data", () => { 
