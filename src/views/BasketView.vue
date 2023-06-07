@@ -82,42 +82,42 @@
                 </template>
               </BtnElt>
             </template>
-            </TableElt>
+          </TableElt>
 
-            <p class="bord bord-violet container-60sm-50md">
-              {{ constants.BASKET_TOTAL }}
-              <b class="black">
-                {{ total }}
-                {{ constants.CURRENCY_SYMBOL }}
-              </b>
-            </p>
+          <p class="bord bord-violet container-60sm-50md">
+            {{ constants.BASKET_TOTAL }}
+            <b class="black">
+              {{ total }}
+              {{ constants.CURRENCY_SYMBOL }}
+            </b>
+          </p>
 
-            <div v-if="checkSession('user')"
-              id="paypal"
-              class="mar-lg">
-            </div>
+          <div v-if="checkSession('user')"
+            id="paypal"
+            class="mar-lg">
+          </div>
 
-            <BtnElt v-else
-              href="/login"
-              class="btn-green width-sm"
-              :content="constants.CONTENT_ORDER"
-              :title="constants.TITLE_ORDER">
+          <BtnElt v-else
+            href="/login"
+            class="btn-green width-sm"
+            :content="constants.CONTENT_ORDER"
+            :title="constants.TITLE_ORDER">
 
-              <template #btn>
-                <i class="fa-solid fa-cash-register fa-lg"></i>
-              </template>
-            </BtnElt>
+            <template #btn>
+              <i class="fa-solid fa-cash-register fa-lg"></i>
+            </template>
+          </BtnElt>
 
-            <BtnElt type="button"
-              @click="deleteBasket()"
-              class="btn-red width-sm"
-              :content="constants.CONTENT_CLEAR"
-              :title="constants.TITLE_CLEAR">
+          <BtnElt type="button"
+            @click="deleteBasket()"
+            class="btn-red width-sm"
+            :content="constants.CONTENT_CLEAR"
+            :title="constants.TITLE_CLEAR">
 
-              <template #btn>
-                <i class="fa-solid fa-trash-can fa-lg"></i>
-              </template>
-            </BtnElt>
+            <template #btn>
+              <i class="fa-solid fa-trash-can fa-lg"></i>
+            </template>
+          </BtnElt>
         </form>
       </template>
     </CardElt>
