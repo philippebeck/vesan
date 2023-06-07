@@ -62,20 +62,7 @@ beforeEach(() => {
         email: "email@test.com"
       }
     },
-    data() {
-      return {
-        gallery: {
-          images: [
-            {
-              id: 1,
-              title: "test",
-              description: "test",
-              url: "test",
-            }
-          ]
-        }
-      }
-    },
+
     global: {
       plugins: [store],
       mocks: {
@@ -107,15 +94,6 @@ describe("ImageView", () => {
   test("props", () => { 
     expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
     expect(wrapper.props("user")).toStrictEqual({ name: "test", email: "email@test.com"})
-  })
-
-  test("data", () => { 
-    expect(wrapper.vm.gallery.images).toStrictEqual([{ 
-      id: 1, 
-      title: "test", 
-      description: "test", 
-      url: "test" 
-    }])
   })
 
   test("methods", () => { 

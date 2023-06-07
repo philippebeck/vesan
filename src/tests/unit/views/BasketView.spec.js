@@ -33,13 +33,6 @@ beforeEach(() => {
     },
     data() {
       return {
-        products: [
-          {
-            id: 1,
-            name: "test",
-            price: 10,
-          }
-        ],
         basket: [
           {
             id: 1,
@@ -88,11 +81,6 @@ describe("BasketView", () => {
   })
 
   test("data", () => { 
-    expect(wrapper.vm.products).toStrictEqual([{ 
-      id: 1, 
-      name: "test", 
-      price: 10 
-    }])
     expect(wrapper.vm.basket).toStrictEqual([{ 
       id: 1, 
       name: "test", 

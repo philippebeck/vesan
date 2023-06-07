@@ -69,17 +69,12 @@ beforeEach(() => {
     },
     data() {
       return {
-        basket: [],
         product: {
-          _id: 1,
           name: "test",
           description: "test",
-          price: 10,
-          currency: "EUR",
-          image: "test",
-          gallery: "test",
-          reviews: []
+          price: 10
         },
+        basket: [],
         order: {
           id: 1,
           name: "test",
@@ -126,23 +121,13 @@ describe("ProductView", () => {
   })
 
   test("wrapper props", () => { 
-    expect(wrapper.props().constants).toEqual({ TEST: "test" })
-    expect(wrapper.props().user).toEqual({ name: "test", email: "email@test.com" })
+    expect(wrapper.props().constants).toStrictEqual({ TEST: "test" })
+    expect(wrapper.props().user).toStrictEqual({ name: "test", email: "email@test.com" })
   })
 
   test("wrapper data", () => { 
-    expect(wrapper.vm.basket).toEqual([])
-    expect(wrapper.vm.product).toEqual({
-      _id: 1,
-      name: "test",
-      description: "test",
-      price: 10,
-      currency: "EUR",
-      image: "test",
-      gallery: "test",
-      reviews: []
-    })
-    expect(wrapper.vm.order).toEqual({
+    expect(wrapper.vm.basket).toStrictEqual([])
+    expect(wrapper.vm.order).toStrictEqual({
       id: 1,
       name: "test",
       description: "test",

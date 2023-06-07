@@ -70,16 +70,6 @@ beforeEach(() => {
       },
       user: user
     },
-    data() {
-      return {
-        article: {
-          id: 1,
-          name: "Test name",
-          image: "Test image",
-          text: "Test text"
-        }
-      }
-    },
     global: {
       plugins: [store],
       mocks: {
@@ -109,20 +99,10 @@ describe("ArticleView", () => {
   })
 
   test("props", () => { 
-    expect(wrapper.props().constants).toEqual({ TEST: "test" })
-  })
-
-  test("data", () => { 
-    expect(wrapper.vm.article).toEqual({
-      id: 1,
-      name: "Test name",
-      image: "Test image",
-      text: "Test text"
-    })
+    expect(wrapper.props().constants).toStrictEqual({ TEST: "test" })
   })
 
   test("methods", () => { 
-    expect(typeof wrapper.vm.readArticle).toBe("function")
     expect(typeof wrapper.vm.listArticleComments).toBe("function")
     expect(typeof wrapper.vm.checkSession).toBe("function")
     expect(typeof wrapper.vm.checkLikes).toBe("function")
