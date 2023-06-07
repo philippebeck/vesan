@@ -194,11 +194,11 @@ export default {
   },
 
   computed: {
-    ...mapState(["product", "reviews"]),
+    ...mapState(["reviews"]),
   },
 
   methods: {
-    ...mapActions(["readProduct", "listProductReviews"]),
+    ...mapActions(["listProductReviews"]),
 
     /**
      * CHECK SESSION

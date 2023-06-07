@@ -156,11 +156,11 @@ export default {
   },
 
   computed: {
-    ...mapState(["article", "comments"])
+    ...mapState(["comments"])
   },
 
   methods: {
-    ...mapActions(["readArticle", "listArticleComments"]),
+    ...mapActions(["listArticleComments"]),
 
     /**
      * CHECK SESSION
