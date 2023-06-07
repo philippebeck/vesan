@@ -1,64 +1,54 @@
 <template>
   <form enctype="multipart/form-data">
-    <ListElt :items="constants.USER_FORM">
 
-      <template #item-1>
-        <FieldElt v-model:value="name"
-          :info="constants.INFO_NAME"
-          :min="2">
+    <FieldElt v-model:value="name"
+      :info="constants.INFO_NAME"
+      :min="2">
 
-          <template #legend>
-            {{ constants.LEGEND_NAME }}
-          </template>
-          <template #label>
-            {{ constants.LABEL_NAME }}
-          </template>
-        </FieldElt>
+      <template #legend>
+        {{ constants.LEGEND_NAME }}
       </template>
-
-      <template #item-2>
-        <FieldElt type="email"
-          v-model:value="email"
-          :info="constants.INFO_EMAIL">
-
-          <template #legend>
-            {{ constants.LEGEND_EMAIL }}
-          </template>
-          <template #label>
-            {{ constants.LABEL_EMAIL }}
-          </template>
-        </FieldElt>
+      <template #label>
+        {{ constants.LABEL_NAME }}
       </template>
-      
-      <template #item-3>
-        <FieldElt id="image"
-          type="file"
-          v-model:value="image"
-          :info="constants.INFO_IMAGE">
+    </FieldElt>
 
-          <template #legend>
-            {{ constants.LEGEND_IMAGE }}
-          </template>
-          <template #label>
-            {{ constants.LABEL_IMAGE }}
-          </template>
-        </FieldElt>
+    <FieldElt type="email"
+      v-model:value="email"
+      :info="constants.INFO_EMAIL">
+
+      <template #legend>
+        {{ constants.LEGEND_EMAIL }}
       </template>
-
-      <template #item-4>
-        <FieldElt type="password"
-          v-model:value="pass"
-          :info="constants.INFO_PASSWORD">
-
-          <template #legend>
-            {{ constants.LEGEND_PASSWORD }}
-          </template>
-          <template #label>
-            {{ constants.LABEL_PASSWORD }}
-          </template>
-        </FieldElt>
+      <template #label>
+        {{ constants.LABEL_EMAIL }}
       </template>
-    </ListElt>
+    </FieldElt>
+
+    <FieldElt id="image"
+      type="file"
+      v-model:value="image"
+      :info="constants.INFO_IMAGE">
+
+      <template #legend>
+        {{ constants.LEGEND_IMAGE }}
+      </template>
+      <template #label>
+        {{ constants.LABEL_IMAGE }}
+      </template>
+    </FieldElt>
+
+    <FieldElt type="password"
+      v-model:value="pass"
+      :info="constants.INFO_PASSWORD">
+
+      <template #legend>
+        {{ constants.LEGEND_PASSWORD }}
+      </template>
+      <template #label>
+        {{ constants.LABEL_PASSWORD }}
+      </template>
+    </FieldElt>
 
     <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY"
       @verify="onVerify">
@@ -81,7 +71,6 @@ import { checkError, checkRange, checkRegex } from "../assets/serve"
 
 import BtnElt from "../assets/BtnElt"
 import FieldElt from "../assets/FieldElt"
-import ListElt from "../assets/ListElt"
 import { VueRecaptcha } from "vue-recaptcha";
 
 export default {
@@ -89,7 +78,6 @@ export default {
   components: {  
     BtnElt,
     FieldElt,
-    ListElt,
     VueRecaptcha 
   },
 

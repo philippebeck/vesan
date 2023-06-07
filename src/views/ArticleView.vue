@@ -135,7 +135,7 @@ export default {
 
         setMeta(
           article.name + this.constants.HEAD, 
-          article.text.slice(0, 160).replace( /(<([^>]+)>)/gi, ""),
+          (article.text || "").slice(0, 160).replace( /(<([^>]+)>)/gi, ""),
           this.constants.UI_URL + "/article/" + article._id,
           this.constants.UI_URL + "/img/thumbnails/articles/" + article.image
         );
@@ -156,11 +156,11 @@ export default {
   },
 
   computed: {
-    ...mapState(["article", "comments"])
+    ...mapState(["comments"])
   },
 
   methods: {
-    ...mapActions(["readArticle", "listArticleComments"]),
+    ...mapActions(["listArticleComments"]),
 
     /**
      * CHECK SESSION

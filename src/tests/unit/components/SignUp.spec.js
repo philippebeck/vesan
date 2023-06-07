@@ -7,7 +7,8 @@ beforeEach(() => {
   wrapper = shallowMount(SignUp, {
     props: {
       constants: {
-        TEST: "test"
+        TEST: "test",
+        RECAPTCHA_KEY: "test"
       }
     },
     data() {
@@ -34,12 +35,12 @@ describe("SignUp", () => {
   test("components", () => { 
     expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
-    expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "VueRecaptcha" })).toBe("object")
   })
 
   test("props", () => { 
     expect(wrapper.props().constants.TEST).toBe("test")
+    expect(wrapper.props().constants.RECAPTCHA_KEY).toBe("test")
   })
 
   test("data", () => { 

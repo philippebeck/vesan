@@ -172,7 +172,7 @@ export default {
 
         setMeta(
           product.name + this.constants.HEAD, 
-          product.description.slice(0, 160).replace(/(<([^>]+)>)/gi, ""),
+          (product.description || "").slice(0, 160).replace(/(<([^>]+)>)/gi, ""),
           this.constants.UI_URL + "/product/" + product._id,
           this.constants.UI_URL + "/img/thumbnails/products/" + product.image
         );
@@ -194,11 +194,11 @@ export default {
   },
 
   computed: {
-    ...mapState(["product", "reviews"]),
+    ...mapState(["reviews"]),
   },
 
   methods: {
-    ...mapActions(["readProduct", "listProductReviews"]),
+    ...mapActions(["listProductReviews"]),
 
     /**
      * CHECK SESSION
