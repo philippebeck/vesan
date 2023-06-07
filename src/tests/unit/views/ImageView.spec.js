@@ -1,7 +1,21 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import { createStore } from 'vuex';
+import { createStore } from "vuex"
 import * as serve from "../../../assets/serve.js"
 import ImageView from "../../../views/ImageView"
+
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    formData: () => Promise.resolve({}),
+    ok: true,
+    headers: {
+      get: (header) => {
+        if (header === "Content-Type") {
+          return "multipart/form-data";
+        }
+      }
+    }
+  })
+);
 
 const mockRoute = {
   params: {

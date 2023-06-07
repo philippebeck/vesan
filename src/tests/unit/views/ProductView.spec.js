@@ -3,6 +3,20 @@ import { createStore } from 'vuex';
 import * as serve from "../../../assets/serve"
 import ProductView from "../../../views/ProductView"
 
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    formData: () => Promise.resolve({}),
+    ok: true,
+    headers: {
+      get: (header) => {
+        if (header === "Content-Type") {
+          return "multipart/form-data";
+        }
+      }
+    }
+  })
+);
+
 const mockRoute = {
   params: {
     id: 1,

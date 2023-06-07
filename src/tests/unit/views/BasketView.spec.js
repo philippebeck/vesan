@@ -2,6 +2,20 @@ import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import * as serve from "../../../assets/serve.js"
 import BasketView from "../../../views/BasketView"
 
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    formData: () => Promise.resolve({}),
+    ok: true,
+    headers: {
+      get: (header) => {
+        if (header === "Content-Type") {
+          return "multipart/form-data";
+        }
+      }
+    }
+  })
+);
+
 let wrapper;
 
 beforeEach(() => {
