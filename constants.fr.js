@@ -6,9 +6,9 @@ export default {
 
   API_URL : "http://localhost:3000",
 
-  CAT_ARTICLE : "Informations",
-  CAT_LINK : "HTML5",
-  CAT_PRODUCT : "Maison",
+  CAT_ARTICLE : "Technologie",
+  CAT_LINK : "Technologie",
+  CAT_PRODUCT : "Technologie",
 
   CONTENT_TYPE : "multipart/form-data",
 
@@ -16,14 +16,6 @@ export default {
   CURRENCY_SYMBOL : "€",
 
   ERROR_ALT : "Erreur 404",
-
-  HOME_ALT : "Home image",
-  HOME_API_KEY : "",
-  HOME_API_URL : "",
-  HOME_LOOP : true,
-  HOME_MEDIA : "slider",
-  HOME_SRC : "/video/home.mp4",
-  HOME_WIDTH : 500,
 
   ICON : "/img/favicon.png",
 
@@ -48,7 +40,7 @@ export default {
   PASS_MIN : 8,
 
   PAYPAL_COLOR : "blue",
-  PAYPAL_ID : "{votre-paypal-id}",
+  PAYPAL_ID : "{votre-id-paypal}",
   PAYPAL_LABEL : "paypal",
   PAYPAL_NAMESPACE : "paypal_sdk",
   PAYPAL_SHAPE : "pill",
@@ -56,7 +48,7 @@ export default {
   PRICE_MAX : 5000,
   PRICE_MIN : 1,
 
-  RECAPTCHA_KEY : "{votre-recaptcha-key}",
+  RECAPTCHA_KEY : "{votre-cle-recaptcha}",
 
   REGEX_EMAIL : /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/,
   REGEX_PASS : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,50}$/,
@@ -64,9 +56,6 @@ export default {
 
   SCORE_MIN : 0,
   SCORE_MAX : 5,
-
-  SLIDER_DELAY : 5000,
-  SLIDER_FA : "brands",
 
   STRING_MAX : 50,
   STRING_MIN : 2,
@@ -77,11 +66,11 @@ export default {
   THUMB_WIDTH : 200,
   THUMB_HEIGHT : 200,
 
-  TINY_KEY : "{votre-tiny-key}",
+  TINY_KEY : "{votre-cle-tinymce}",
 
   TOKEN : JSON.parse(localStorage.getItem("userToken")),
 
-  TW_ID : "",
+  TW_ID : "{votre-id-twitter}",
 
   UI_URL : "http://localhost:8080",
 
@@ -94,25 +83,19 @@ export default {
 
   NAV_MAIN : [
     {
-      "href": "/shop",
-      "name": "Boutique",
-      "type": "solid",
-      "icon": "store"
-    },
-    {
       "href": "/blog",
       "name": "Blog",
       "type": "solid",
       "icon": "blog"
     },
     {
-      "href": "/galleries",
-      "name": "Galeries",
-      "type": "regular",
-      "icon": "images"
+      "href": "/shop",
+      "name": "Services",
+      "type": "solid",
+      "icon": "store"
     },
     {
-      "href": "/links",
+      "href": "/link",
       "name": "Liens",
       "type": "solid",
       "icon": "link"
@@ -123,45 +106,46 @@ export default {
 
   FOOT : [
     {
-      "href": "https://github.com/philippebeck",
-      "title": "Philippe Beck @GitHub",
+      "href": "https://github.com/{votre-pseudo-github}",
+      "title": "{votre-nom} @GitHub",
       "fa": "github",
       "color": "black"
     }, 
     {
-      "href": "https://www.linkedin.com/in/philippebeck",
-      "title": "Philippe Beck @LinkedIn",
+      "href": "https://www.linkedin.com/in/{votre-pseudo-linkedin}",
+      "title": "{votre-nom} @LinkedIn",
       "fa": "linkedin-in",
       "color": "sky-dark"
     }, 
     {
-      "href": "https://medium.com/@philippebeck",
-      "title": "Philippe Beck @Medium",
+      "href": "https://medium.com/@{votre-pseudo-medium}",
+      "title": "{votre-nom} @Medium",
       "fa": "medium",
       "color": "green-dark"
     }, 
     {
-      "href": "https://www.npmjs.com/~philippebeck",
-      "title": "Philippe Beck @NPM",
+      "href": "https://www.npmjs.com/~{votre-pseudo-npm}",
+      "title": "{votre-nom} @NPM",
       "fa": "npm",
       "color": "red-dark"
     }, 
     {
-      "href": "https://twitter.com/ph_beck",
-      "title": "Philippe Beck @Twitter",
+      "href": "https://twitter.com/{votre-pseudo-twitter}",
+      "title": "{votre-nom} @Twitter",
       "fa": "twitter",
       "color": "sky"
     }, 
     {
-      "href": "https://codepen.io/philippebeck",
-      "title": "Philippe Beck @CodePen",
+      "href": "https://codepen.io/{votre-pseudo-codepen}",
+      "title": "{votre-nom} @CodePen",
       "fa": "codepen",
       "color": "black"
     }
   ],
 
   FOOT_TITLE1 : "Infos",
-  FOOT_TITLE2 : "Support",
+  FOOT_TITLE2 : "Bonus",
+  FOOT_TITLE3 : "Support",
 
   FOOT1 : [
     {
@@ -178,13 +162,21 @@ export default {
 
   FOOT2 : [
     {
-      "href": "https://paypal.me/philippebeck",
-      "title": "Donation @Philippe Beck",
+      "href": "/galleries",
+      "title": "Galeries d'images",
+      "content": "Galeries"
+    }
+  ],
+
+  FOOT3 : [
+    {
+      "href": "https://paypal.me/{votre-pseudo-paypal}",
+      "title": "Donation @{votre-nom}",
       "content": "Donation"
     }, 
     {
-      "href": "https://github.com/sponsors/philippebeck",
-      "title": "Sponsor @Philippe Beck",
+      "href": "/https://github.com/sponsors/{votre-pseudo-github}",
+      "title": "Sponsor @{votre-nom}",
       "content": "Sponsor"
     }
   ],
@@ -192,28 +184,23 @@ export default {
   /******************** CATEGORIES ********************/
 
   CATS_ARTICLE : [
-    "Transport",
-    "Entreprise", 
     "Culture",
     "Mode",
-    "Alimentation",
     "Santé",
-    "Informations",
-    "Politique",
     "Science",
-    "Sports",
+    "Sport",
     "Technologie", 
     "Voyage"
   ],
 
   CATS_LINK : [
-    "HTML5",
-    "CSS3",
-    "JS",
-    "PHP",
-    "Python",
-    "Git",
-    "Dev"
+    "Culture",
+    "Mode",
+    "Santé",
+    "Science",
+    "Sport",
+    "Technologie", 
+    "Voyage"
   ],
 
   CATS_ORDER : [
@@ -224,18 +211,10 @@ export default {
   ],
 
   CATS_PRODUCT : [
-    "Beauté",
-    "Electronic",
     "Mode",
-    "Almentation",
-    "Meubles",
-    "Jeux",
     "Santé",
-    "Maison",
-    "Industriel",
-    "Media",
-    "Animaux",
-    "Sports",
+    "Sport",
+    "Technologie"
   ],
 
   /******************** FORMS ********************/
@@ -280,7 +259,7 @@ export default {
   /******************** LIST ********************/
 
   HOME_CONTENT : [
-    "Vue-Elt pour les Composants",
+    "Vue-Elt pour les Composants VueJS",
     "Servidio pour les Services Frontend",
     "Animadio pour le Design",
     "NemJS pour les Middlewares Backend"
@@ -295,15 +274,6 @@ export default {
     "admin",
     "editor",
     "user"
-  ],
-
-  SLIDES : [
-    "vuejs", 
-    "sass", 
-    "node-js", 
-    "html5", 
-    "js", 
-    "css3"
   ],
 
   /******************** HEAD TITLES ********************/
@@ -401,12 +371,12 @@ export default {
   INTRO_ERROR : "Page non trouvée !",
   INTRO_FORGOT : "Besoin d'un nouveau mot de passe ?",
   INTRO_GALLERY : "Regarder les galeries !",
-  INTRO_HOME : "100% online !",
+  INTRO_HOME : "CMS avec Vue-Elt, Servidio, Animadio & NemJS",
   INTRO_LEGAL : "Version 2.0, Janvier 2004",
   INTRO_LINK : "Soyez curieux !",
   INTRO_LINKS : "Gérer les liens",
   INTRO_ORDERS : "Gérer les commandes",
-  INTRO_PRODUCT : "siren 837 516 855",
+  INTRO_PRODUCT : "Produits en vente !",
   INTRO_PRODUCTS : "Gérer les produits",
   INTRO_PROFILE : "Gérer vos informations personnelles",
   INTRO_REVIEWS : "Gérer les avis",

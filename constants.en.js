@@ -6,9 +6,9 @@ export default {
 
   API_URL : "http://localhost:3000",
 
-  CAT_ARTICLE : "News",
-  CAT_LINK : "HTML5",
-  CAT_PRODUCT : "Home",
+  CAT_ARTICLE : "Technology",
+  CAT_LINK : "Technology",
+  CAT_PRODUCT : "Technology",
 
   CONTENT_TYPE : "multipart/form-data",
 
@@ -16,14 +16,6 @@ export default {
   CURRENCY_SYMBOL : "€",
 
   ERROR_ALT : "404 Error",
-
-  HOME_ALT : "Home image",
-  HOME_API_KEY : "",
-  HOME_API_URL : "",
-  HOME_LOOP : true,
-  HOME_MEDIA : "slider",
-  HOME_SRC : "/video/home.mp4",
-  HOME_WIDTH : 500,
 
   ICON : "/img/favicon.png",
   
@@ -65,9 +57,6 @@ export default {
   SCORE_MIN : 0,
   SCORE_MAX : 5,
 
-  SLIDER_DELAY : 5000,
-  SLIDER_FA : "brands",
-
   STRING_MAX : 50,
   STRING_MIN : 2,
 
@@ -77,11 +66,11 @@ export default {
   THUMB_WIDTH : 200,
   THUMB_HEIGHT : 200,
 
-  TINY_KEY : "{your-tiny-key}",
+  TINY_KEY : "{your-tinymce-key}",
 
   TOKEN : JSON.parse(localStorage.getItem("userToken")),
 
-  TW_ID : "",
+  TW_ID : "{your-twitter-id}",
 
   UI_URL : "http://localhost:8080",
 
@@ -94,25 +83,19 @@ export default {
 
   NAV_MAIN : [
     {
-      "href": "/shop",
-      "name": "Shop",
-      "type": "solid",
-      "icon": "store"
-    },
-    {
       "href": "/blog",
       "name": "Blog",
       "type": "solid",
       "icon": "blog"
     },
     {
-      "href": "/galleries",
-      "name": "Galleries",
-      "type": "regular",
-      "icon": "images"
+      "href": "/shop",
+      "name": "Services",
+      "type": "solid",
+      "icon": "store"
     },
     {
-      "href": "/links",
+      "href": "/link",
       "name": "Links",
       "type": "solid",
       "icon": "link"
@@ -123,45 +106,46 @@ export default {
 
   FOOT : [
     {
-      "href": "https://github.com/philippebeck",
-      "title": "Philippe Beck @GitHub",
+      "href": "https://github.com/{your-github-pseudo}",
+      "title": "{your-name} @GitHub",
       "fa": "github",
       "color": "black"
     }, 
     {
-      "href": "https://www.linkedin.com/in/philippebeck",
-      "title": "Philippe Beck @LinkedIn",
+      "href": "https://www.linkedin.com/in/{your-linkedin-pseudo}",
+      "title": "{your-name} @LinkedIn",
       "fa": "linkedin-in",
       "color": "sky-dark"
     }, 
     {
-      "href": "https://medium.com/@philippebeck",
-      "title": "Philippe Beck @Medium",
+      "href": "https://medium.com/@{your-medium-pseudo}",
+      "title": "{your-name} @Medium",
       "fa": "medium",
       "color": "green-dark"
     }, 
     {
-      "href": "https://www.npmjs.com/~philippebeck",
-      "title": "Philippe Beck @NPM",
+      "href": "https://www.npmjs.com/~{your-npm-pseudo}",
+      "title": "{your-name} @NPM",
       "fa": "npm",
       "color": "red-dark"
     }, 
     {
-      "href": "https://twitter.com/ph_beck",
-      "title": "Philippe Beck @Twitter",
+      "href": "https://twitter.com/{your-twitter-pseudo}",
+      "title": "{your-name} @Twitter",
       "fa": "twitter",
       "color": "sky"
     }, 
     {
-      "href": "https://codepen.io/philippebeck",
-      "title": "Philippe Beck @CodePen",
+      "href": "https://codepen.io/{your-codepen-pseudo}",
+      "title": "{your-name} @CodePen",
       "fa": "codepen",
       "color": "black"
     }
   ],
 
   FOOT_TITLE1 : "Infos",
-  FOOT_TITLE2 : "Support",
+  FOOT_TITLE2 : "Bonus",
+  FOOT_TITLE3 : "Support",
 
   FOOT1 : [
     {
@@ -178,57 +162,45 @@ export default {
 
   FOOT2 : [
     {
-      "href": "https://www.npmjs.com/package/vue-elt",
-      "title": "Vuejs SFC Library",
-      "content": "Vue-Elt"
+      "href": "/galleries",
+      "title": "Images Galleries",
+      "content": "Galleries"
+    }
+  ],
+
+  FOOT3 : [
+    {
+      "href": "https://paypal.me/{your-payal-pseudo}",
+      "title": "Donation @{your-name}",
+      "content": "Donation"
     }, 
     {
-      "href": "https://www.npmjs.com/package/servidio",
-      "title": "JavaScript Frontend Services",
-      "content": "Servidio"
-    }, 
-    {
-      "href": "https://www.npmjs.com/package/animadio",
-      "title": "Animadio CSS Library",
-      "content": "Animadio"
-    }, 
-    {
-      "href": "https://www.npmjs.com/package/nemjs",
-      "title": "JavaScript Backend Services",
-      "content": "Nemjs"
-    }, 
-    {
-      "href": "https://www.npmjs.com/package/vesan",
-      "title": "CMS with Vue-Elt, Servidio, Animadio & NemJS",
-      "content": "Vesan"
+      "href": "/https://github.com/sponsors/{your-github-pseudo}",
+      "title": "Sponsor @{your-name}",
+      "content": "Sponsor"
     }
   ],
 
   /******************** CATEGORIES ********************/
 
   CATS_ARTICLE : [
-    "Transportation",
-    "Business", 
     "Culture",
     "Fashion",
-    "Food",
     "Health",
-    "News",
-    "Politics",
     "Science",
-    "Sports",
+    "Sport",
     "Technology", 
     "Travel"
   ],
 
   CATS_LINK : [
-    "HTML5",
-    "CSS3",
-    "JS",
-    "PHP",
-    "Python",
-    "Git",
-    "Dev"
+    "Culture",
+    "Fashion",
+    "Health",
+    "Science",
+    "Sport",
+    "Technology", 
+    "Travel"
   ],
 
   CATS_ORDER : [
@@ -239,18 +211,10 @@ export default {
   ],
 
   CATS_PRODUCT : [
-    "Beauty",
-    "Electronics",
     "Fashion",
-    "Food",
-    "Furniture",
-    "Games",
     "Health",
-    "Home",
-    "Industrial",
-    "Media",
-    "Pet",
-    "Sports",
+    "Sport",
+    "Technology"
   ],
 
   /******************** FORMS ********************/
@@ -310,15 +274,6 @@ export default {
     "admin",
     "editor",
     "user"
-  ],
-
-  SLIDES : [
-    "vuejs", 
-    "sass", 
-    "node-js", 
-    "html5", 
-    "js", 
-    "css3"
   ],
 
   /******************** HEAD TITLES ********************/
@@ -421,7 +376,7 @@ export default {
   INTRO_LINK : "Links for dev !",
   INTRO_LINKS : "Manage links",
   INTRO_ORDERS : "Manage orders",
-  INTRO_PRODUCT : "Products to buy !",
+  INTRO_PRODUCT : "Selling Products !",
   INTRO_PRODUCTS : "Manage products",
   INTRO_PROFILE : "Manage your profile & your orders",
   INTRO_REVIEWS : "Manage reviews",
