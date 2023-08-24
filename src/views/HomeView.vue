@@ -1,38 +1,6 @@
 <template>
   <main>
     <header>
-      <SliderElt v-if="constants.HOME_MEDIA === 'slider'"
-        :slides="constants.SLIDES"
-        :delay="constants.SLIDER_DELAY">
-
-        <template #slide="slotProps">
-          <i :class="`fa-${constants.SLIDER_FA} fa-${slotProps.slide.toLowerCase()} fa-9x sky`"></i>
-        </template>
-
-        <template #gallery="slotProps">
-          <i :class="`fa-${constants.SLIDER_FA} fa-${slotProps.slide.toLowerCase()}`"></i>
-        </template>
-      </SliderElt>
-
-      <MediaElt v-else-if="constants.HOME_MEDIA === 'api'"
-        :type="media.media_type"
-        :src="media.url"
-        :alt="media.title"
-        :width="constants.HOME_WIDTH"
-        :loop="constants.HOME_LOOP"
-        :title="
-          media.title + ' : ' + 
-          media.explanation + 
-          (media.copyright ? ' Credits : ' + media.copyright : '')"/>
-
-      <MediaElt v-else
-        :type="media.media_type"
-        :src="constants.HOME_SRC"
-        :alt="constants.HOME_ALT"
-        :width="constants.HOME_WIDTH"
-        :loop="constants.HOME_LOOP"
-        :title="constants.HOME_ALT"/>
-
       <h1 class="sky-dark">
         {{ constants.HOME_VIEW }}
       </h1>
@@ -55,30 +23,21 @@
 </template>
 
 <script>
-import { checkError, fetchGet, setMeta } from "../assets/serve"
+import { setMeta } from "../assets/serve"
 
 import CardElt from "../assets/CardElt"
 import ListElt from "../assets/ListElt"
-import MediaElt from "../assets/MediaElt"
-import SliderElt from "../assets/SliderElt"
 
 export default {
   name: "HomeView",
   components: {
     CardElt,
-    ListElt,
-    MediaElt,
-    SliderElt
+    ListElt
   },
   props: [
     "constants",
     "user"
   ],
-  data() {
-    return {
-      media: {}
-    }
-  },
 
   created() {
     setMeta(
@@ -87,14 +46,6 @@ export default {
       this.constants.UI_URL,
       this.constants.UI_URL + this.constants.LOGO_SRC
     );
-
-    if (this.constants.HOME_MEDIA === "api") {
-      let url = this.constants.HOME_API_URL + this.constants.HOME_API_KEY;
-
-      fetchGet(url)
-      .then((media) => { this.media = media })
-      .catch(err => checkError(err));
-    }
   }
 }
 </script>
