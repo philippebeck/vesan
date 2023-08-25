@@ -18,11 +18,11 @@ const form = formidable();
  * @param {object} res 
  */
 exports.checkReviewData = (text, score, res) => {
-  if (!nem.checkString(text, process.env.TEXT_MIN, process.env.TEXT_MAX)) {
+  if (!nem.checkRange(text, process.env.TEXT_MIN, process.env.TEXT_MAX)) {
     return res.status(403).json({ message: process.env.CHECK_TEXT });
   }
 
-  if (!nem.checkNumber(score)) {
+  if (!nem.checkRange(score, process.env.SCORE_MIN, process.env.SCORE_MAX)) {
     return res.status(403).json({ message: process.env.CHECK_SCORE });
   }
 }

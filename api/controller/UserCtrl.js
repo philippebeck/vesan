@@ -26,23 +26,16 @@ const form = formidable({ uploadDir: USERS_IMG, keepExtensions: true });
  * @returns
  */
 exports.checkUserData = (name, email, role, res) => {
+  const MAX = process.env.STRING_MAX;
+  const MIN = process.env.STRING_MIN;
+
   let alert = "";
+  
+  if (!nem.checkRange(role, MIN, MAX)) alert = process.env.CHECK_ROLE;
+  if (!nem.checkEmail(email)) alert = process.env.CHECK_EMAIL;
+  if (!nem.checkRange(name, MIN, MAX)) alert = process.env.CHECK_NAME;
 
-  if (!nem.checkString(role)) { 
-    alert = process.env.CHECK_ROLE 
-  }
-
-  if (!nem.checkEmail(email)) { 
-    alert = process.env.CHECK_EMAIL 
-  }
-
-  if (!nem.checkString(name)) {
-    alert = process.env.CHECK_NAME 
-  }
-
-  if (alert !== "") {
-    return res.status(403).json({ message: alert });
-  }
+  if (alert !== "") return res.status(403).json({ message: alert });
 }
 
 /**
@@ -329,6 +322,8 @@ exports.updateUser = (req, res, next) => {
         }
 
         let user = this.getUserUpdated(fields, image, res);
+
+        console.log("user", user);
 
         UserModel
           .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
