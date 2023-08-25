@@ -54,8 +54,8 @@ export default {
   REGEX_PASS : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,50}$/,
   REGEX_URL : /((https?|ftp|ssh|mailto):\/\/)?[a-z0-9\/:%_+.,#?!@&=-]+$/,
 
-  SCORE_MIN : 0,
   SCORE_MAX : 5,
+  SCORE_MIN : 0,
 
   STRING_MAX : 50,
   STRING_MIN : 2,
