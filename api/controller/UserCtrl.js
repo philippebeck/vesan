@@ -166,35 +166,6 @@ exports.getUserNoPass = (name, email, image, role, updated) => {
   }
 }
 
-/**
- * ? GET USER UPDATED
- * * Retrieves the updated user information based on the given fields.
- *
- * @param {object} fields - The fields containing the user information.
- * @param {string} image - The user image.
- * @param {object} res - The response object.
- * @return {object} The updated user information.
- */
-exports.getUserUpdated = (fields, image, res) => {
-  let user;
-
-  if (fields.pass) {
-    this.checkUserPass(fields.pass, res);
-
-    bcrypt
-    .hash(fields.pass, 10)
-    .then((hash) => { 
-      user = this.getUserWithPass(fields.name, fields.email, image, hash, fields.role, fields.updated) 
-    })
-    .catch(() => res.status(400).json({ message: process.env.USER_NOT_PASS }));
-
-  } else { 
-    user = this.getUserNoPass(fields.name, fields.email, image, fields.role, fields.updated) 
-  }
-
-  return user;
-}
-
 //! ****************************** SETTERS ******************************
 
 /**
@@ -361,19 +332,43 @@ exports.updateUser = (req, res, next) => {
             nem.setThumbnail("users/" + files.image.newFilename, USERS_THUMB + image);
           }
 
-          let user = this.getUserUpdated(fields, image, res);
+          if (fields.pass) {
+            this.checkUserPass(fields.pass, res);
+        
+            bcrypt
+            .hash(fields.pass, 10)
+            .then((hash) => { 
+              let user = this.getUserWithPass(fields.name, fields.email, image, hash, fields.role, fields.updated);
 
-          UserModel
-            .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
-            .then(() => {
-              if (files.image) { 
-                fs.unlink(USERS_IMG + files.image.newFilename, () => {
-                  fs.unlink(USERS_THUMB + oldUser.image, () => {})
-                }) 
-              }
-              res.status(200).json({ message: process.env.USER_UPDATED });
+              UserModel
+                .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
+                .then(() => {
+                  if (files.image) { 
+                    fs.unlink(USERS_IMG + files.image.newFilename, () => {
+                      fs.unlink(USERS_THUMB + oldUser.image, () => {})
+                    }) 
+                  }
+                  res.status(200).json({ message: process.env.USER_UPDATED });
+                })
+                .catch(() => res.status(400).json({ message: process.env.USER_NOT_UPDATED }));
             })
-            .catch(() => res.status(400).json({ message: process.env.USER_NOT_UPDATED }));
+            .catch(() => res.status(400).json({ message: process.env.USER_NOT_PASS }));
+        
+          } else { 
+            let user = this.getUserNoPass(fields.name, fields.email, image, fields.role, fields.updated);
+
+            UserModel
+              .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
+              .then(() => {
+                if (files.image) { 
+                  fs.unlink(USERS_IMG + files.image.newFilename, () => {
+                    fs.unlink(USERS_THUMB + oldUser.image, () => {})
+                  }) 
+                }
+                res.status(200).json({ message: process.env.USER_UPDATED });
+              })
+              .catch(() => res.status(400).json({ message: process.env.USER_NOT_UPDATED }));
+          }
         })
         .catch(() => res.status(404).json({ message: process.env.USER_NOT_FOUND }));
       })
