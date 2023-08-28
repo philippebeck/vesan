@@ -350,22 +350,32 @@ exports.updateUser = (req, res, next) => {
       .find()
       .then((users) => {
         this.checkUsersForUnique(req.params.id, users, fields, res);
-        let image = fields.image;
-
-        if (files.image) {
-          image = nem.getUniqueName(fields.name) + "." + process.env.IMG_EXT;
-          nem.setThumbnail("users/" + files.image.newFilename, USERS_THUMB + image);
-        }
-
-        let user = this.getUserUpdated(fields, image, res);
 
         UserModel
-          .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
-          .then(() => {
-            if (files.image) { fs.unlink(USERS_IMG + files.image.newFilename, () => {}) }
-            res.status(200).json({ message: process.env.USER_UPDATED });
-          })
-          .catch(() => res.status(400).json({ message: process.env.USER_NOT_UPDATED }));
+        .findById(req.params.id)
+        .then(oldUser => {
+          let image = oldUser.image;
+
+          if (files.image) {
+            image = nem.getUniqueName(fields.name) + "." + process.env.IMG_EXT;
+            nem.setThumbnail("users/" + files.image.newFilename, USERS_THUMB + image);
+          }
+
+          let user = this.getUserUpdated(fields, image, res);
+
+          UserModel
+            .findByIdAndUpdate(req.params.id, { ...user, _id: req.params.id })
+            .then(() => {
+              if (files.image) { 
+                fs.unlink(USERS_IMG + files.image.newFilename, () => {
+                  fs.unlink(USERS_THUMB + oldUser.image, () => {})
+                }) 
+              }
+              res.status(200).json({ message: process.env.USER_UPDATED });
+            })
+            .catch(() => res.status(400).json({ message: process.env.USER_NOT_UPDATED }));
+        })
+        .catch(() => res.status(404).json({ message: process.env.USER_NOT_FOUND }));
       })
       .catch(() => res.status(404).json({ message: process.env.USERS_NOT_FOUND }));
   })
