@@ -17,23 +17,16 @@ const form = formidable();
  * @param {object} res 
  */
 exports.checkLinkData = (name, url, cat, res) => {
+  const MAX = process.env.STRING_MAX;
+  const MIN = process.env.STRING_MIN;
+
   let alert = "";
 
-  if (!nem.checkString(cat)) { 
-    alert = process.env.CHECK_CAT 
-  }
+  if (!nem.checkRange(cat, MIN, MAX)) alert = process.env.CHECK_CAT;
+  if (!nem.checkUrl("https://" + url)) alert = process.env.CHECK_URL;
+  if (!nem.checkRange(name, MIN, MAX)) alert = process.env.CHECK_NAME;
 
-  if (!nem.checkUrl("https://" + url)) { 
-    alert = process.env.CHECK_URL 
-  }
-
-  if (!nem.checkString(name)) { 
-    alert = process.env.CHECK_NAME 
-  }
-
-  if (alert !== "") {
-    return res.status(403).json({ message: alert });
-  }
+  if (alert !== "") return res.status(403).json({ message: alert });
 }
 
 /**

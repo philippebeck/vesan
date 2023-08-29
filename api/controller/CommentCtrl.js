@@ -17,7 +17,7 @@ const form = formidable();
  * @param {object} res 
  */
 exports.checkCommentData = (text, res) => {
-  if (!nem.checkString(text, process.env.TEXT_MIN, process.env.TEXT_MAX)) {
+  if (!nem.checkRange(text, process.env.TEXT_MIN, process.env.TEXT_MAX)) {
     return res.status(403).json({ message: process.env.CHECK_TEXT });
   }
 }

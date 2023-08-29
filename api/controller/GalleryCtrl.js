@@ -22,11 +22,14 @@ const form = formidable();
  * @param {object} res 
  */
 exports.checkGalleryData = (name, author, res) => {
-  if (!nem.checkString(author)) { 
+  const MAX = process.env.STRING_MAX;
+  const MIN = process.env.STRING_MIN;
+
+  if (!nem.checkRange(author, MIN, MAX)) {
     return res.status(403).json({ message: process.env.CHECK_NAME });
   }
 
-  if (!nem.checkString(name)) { 
+  if (!nem.checkRange(name, MIN, MAX)) { 
     return res.status(403).json({ message: process.env.CHECK_NAME });
   }
 }

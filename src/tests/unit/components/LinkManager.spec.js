@@ -9,11 +9,11 @@ beforeEach(() => {
   jest.spyOn(axios, "deleteData").mockImplementation(() => {});
   jest.spyOn(axios, "putData").mockImplementation(() => {});
 
-  jest.spyOn(serve, "checkError").mockImplementation(() => {});
   jest.spyOn(serve, "checkRange").mockImplementation(() => {});
   jest.spyOn(serve, "checkRegex").mockImplementation(() => {});
   jest.spyOn(serve, "getItemName").mockImplementation(() => {});
   jest.spyOn(serve, "getItemsByCat").mockImplementation(() => {});
+  jest.spyOn(serve, "setError").mockImplementation(() => {});
 
   wrapper = shallowMount(LinkManager, {
     props: {
