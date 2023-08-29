@@ -260,7 +260,7 @@ exports.updateArticle = (req, res, next) => {
         ArticleModel
           .findByIdAndUpdate(req.params.id, { ...article, _id: req.params.id })
           .then(() => {
-            if (files.image) { fs.unlink(ARTICLES_IMG + files.image.newFilename, () => {}) }
+            if (files.image) fs.unlink(ARTICLES_IMG + files.image.newFilename, () => {});
             res.status(200).json({ message: process.env.ARTICLE_UPDATED });
           })
           .catch(() => res.status(400).json({ message: process.env.ARTICLE_NOT_UPDATED }));

@@ -218,7 +218,7 @@ exports.updateProduct = (req, res, next) => {
         ProductModel
           .findByIdAndUpdate(req.params.id, { ...product, _id: req.params.id })
           .then(() => {
-            if (files.image) { fs.unlink(PRODUCTS_IMG + files.image.newFilename, () => {}) }
+            if (files.image) fs.unlink(PRODUCTS_IMG + files.image.newFilename, () => {});
             res.status(200).json({ message: process.env.PRODUCT_UPDATED });
           })
           .catch(() => res.status(400).json({ message: process.env.PRODUCT_NOT_UPDATED }));
