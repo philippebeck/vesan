@@ -213,7 +213,7 @@ exports.createUser = (req, res, next) => {
       .then((users) => {
         for (let user of users) { this.checkUserUnique(fields.name, fields.email, user, res) }
 
-        let image = nem.getUniqueName(fields.name) + "." + process.env.IMG_EXT;
+        let image = nem.getName(fields.name) + "." + process.env.IMG_EXT;
         nem.setThumbnail("users/" + files.image.newFilename, USERS_THUMB + image);
 
         bcrypt
