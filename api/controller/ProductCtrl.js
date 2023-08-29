@@ -172,7 +172,7 @@ exports.createProduct = (req, res, next) => {
         for (let product of products) { this.checkProductUnique(fields.name, fields.description, product, res) }
 
         let options = nem.getArrayFromString(fields.options);
-        let image   = nem.getUniqueName(fields.name) + "." + process.env.IMG_EXT;
+        let image   = nem.getName(fields.name) + "." + process.env.IMG_EXT;
         this.setImage(image, files.image.newFilename);
 
         let product = new ProductModel(this.getProduct(
@@ -209,8 +209,8 @@ exports.updateProduct = (req, res, next) => {
       .then((products) => {
         this.checkProductsForUnique(req.params.id, products, fields, res);
 
-        let image = fields.image;
-        if (files.image) { this.setImage(image, files.image.newFilename) }
+        let image = nem.getName(fields.name) + "." + process.env.IMG_EXT;
+        if (files.image) this.setImage(image, files.image.newFilename);
 
         let options = nem.getArrayFromString(fields.options);
         let product = this.getProduct(fields.name, fields.description, image, fields.alt, fields.price, options, fields.cat, fields.created, fields.updated);

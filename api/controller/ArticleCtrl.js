@@ -214,7 +214,7 @@ exports.createArticle = (req, res, next) => {
         for (let article of articles) { this.checkArticleUnique(fields.name, fields.text, article, res) }
 
         let likes = nem.getArrayFromString(fields.likes);
-        let image = nem.getUniqueName(fields.name) + "." + process.env.IMG_EXT;
+        let image = nem.getName(fields.name) + "." + process.env.IMG_EXT;
         this.setImage(image, files.image.newFilename);
 
         let article = new ArticleModel(this.getArticleCreated(
@@ -251,8 +251,8 @@ exports.updateArticle = (req, res, next) => {
       .then((articles) => {
         this.checkArticlesForUnique(req.params.id, articles, fields, res);
 
-        let image = fields.image;
-        if (files.image) { this.setImage(image, files.image.newFilename) }
+        let image = nem.getName(fields.name) + "." + process.env.IMG_EXT;
+        if (files.image) this.setImage(image, files.image.newFilename);
 
         let likes   = nem.getArrayFromString(fields.likes);
         let article = this.getArticleUpdated(fields.name, fields.text, image, fields.alt, likes, fields.cat, fields.updated);
