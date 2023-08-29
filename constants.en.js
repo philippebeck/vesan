@@ -233,6 +233,16 @@ export default {
     "text"
   ],
 
+  GALLERY_FORM : [
+    "name",
+    "author"
+  ],
+
+  IMAGE_FORM : [
+    "image",
+    "description"
+  ],
+
   LINK_FORM : [
     "name", 
     "url", 
