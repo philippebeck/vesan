@@ -128,11 +128,12 @@
 <script>
 import { setMeta } from "../assets/serve"
 
-import BtnElt from "../assets/BtnElt"
-import CardElt from "../assets/CardElt"
-import SignUp from "../components/SignUp"
-import SignIn from "../components/SignIn"
-import ForgotPass from "../components/ForgotPass"
+import BtnElt from "../assets/elements/BtnElt"
+import CardElt from "../assets/elements/CardElt"
+
+import SignUp from "../assets/auth/SignUp"
+import SignIn from "../assets/auth/SignIn"
+import ForgotPass from "../assets/auth/ForgotPass"
 
 export default {
   name: "LoginView",

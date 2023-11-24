@@ -25,8 +25,8 @@
 <script>
 import { setMeta } from "../assets/serve"
 
-import CardElt from "../assets/CardElt"
-import ListElt from "../assets/ListElt"
+import CardElt from "../assets/elements/CardElt"
+import ListElt from "../assets/elements/ListElt"
 
 export default {
   name: "HomeView",

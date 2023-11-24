@@ -184,15 +184,14 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
-import { deleteData, putData } from "../assets/axios"
-import { checkError, checkRange, checkRegex, checkRole, setMeta } from "../assets/serve"
+import { checkRange, checkRegex, checkRole, deleteData, putData, setError, setMeta } from "../assets/serve"
 
-import BtnElt from "../assets/BtnElt"
-import CardElt from "../assets/CardElt"
-import FieldElt from "../assets/FieldElt"
-import ListElt from "../assets/ListElt"
-import MediaElt from "../assets/MediaElt"
-import TableElt from "../assets/TableElt"
+import BtnElt from "../assets/elements/BtnElt"
+import CardElt from "../assets/elements/CardElt"
+import FieldElt from "../assets/elements/FieldElt"
+import ListElt from "../assets/elements/ListElt"
+import MediaElt from "../assets/elements/MediaElt"
+import TableElt from "../assets/elements/TableElt"
 
 export default {
   name: "ProfileEditor",
@@ -292,12 +291,12 @@ export default {
           }
         }
 
-        putData("/users/" + this.user._id, user)
+        putData(this.constants.API_URL + "/users/" + this.user._id, user)
           .then(() => {
             alert(this.user.name + this.constants.ALERT_UPDATED);
             this.$router.go();
           })
-          .catch(err => { checkError(err) });
+          .catch(err => { setError(err) });
       }
     },
 
@@ -308,7 +307,7 @@ export default {
       let name = this.user.name;
 
       if (confirm(`${this.constants.TITLE_DELETE} ${name} ?`) === true) {
-        deleteData("/users/" + this.user._id)
+        deleteData(this.constants.API_URL + "/users/" + this.user._id)
           .then(() => {
             localStorage.removeItem("userId");
             localStorage.removeItem("userToken");
@@ -316,7 +315,7 @@ export default {
             alert(name + this.constants.ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => { checkError(err) });
+          .catch(err => { setError(err) });
       }
     }
   }

@@ -127,15 +127,14 @@
 </template>
 
 <script>
-import { postData } from "../assets/axios"
-import { checkError, checkRole, fetchGet, setMeta } from "../assets/serve"
+import { checkRole, getData, postData, setError, setMeta } from "../assets/serve"
 import { loadScript } from "@paypal/paypal-js"
 
-import BtnElt from "../assets/BtnElt"
-import CardElt from "../assets/CardElt"
-import FieldElt from "../assets/FieldElt"
-import MediaElt from "../assets/MediaElt"
-import TableElt from "../assets/TableElt"
+import BtnElt from "../assets/elements/BtnElt"
+import CardElt from "../assets/elements/CardElt"
+import FieldElt from "../assets/elements/FieldElt"
+import MediaElt from "../assets/elements/MediaElt"
+import TableElt from "../assets/elements/TableElt"
 
 export default {
   name: "BasketView",
@@ -158,9 +157,7 @@ export default {
   },
 
   created() {
-    let url = this.constants.API_URL + "/products";
-
-    fetchGet(url)
+    getData(this.constants.API_URL + "/products")
       .then(res => { 
         this.products = res;
         this.setBasket();
@@ -181,7 +178,7 @@ export default {
           }
         }
       })
-      .catch(err => { checkError(err) });
+      .catch(err => { setError(err) });
   },
 
   methods: {
@@ -341,13 +338,13 @@ export default {
       order.append("created", Date.now());
       order.append("updated", Date.now());
 
-      postData("/orders/", order)
+      postData(this.constants.API_URL + "/orders/", order)
         .then(() => {
           alert(this.constants.ALERT_ORDER_CREATED);
           localStorage.removeItem("basket");
           this.$router.push("/profile");
         })
-        .catch(err => { checkError(err) });
+        .catch(err => { setError(err) });
     },
 
     /**

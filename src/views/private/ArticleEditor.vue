@@ -120,14 +120,14 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
-import { putData } from "../assets/axios"
-import { checkError, checkRange, checkRole, fetchGet, setMeta } from "../assets/serve"
+import { checkRange, checkRole, getData, putData, setError, setMeta } from "../assets/serve"
 
-import BtnElt from "../assets/BtnElt"
-import CardElt from "../assets/CardElt"
-import FieldElt from "../assets/FieldElt"
-import ListElt from "../assets/ListElt"
-import MediaElt from "../assets/MediaElt"
+import BtnElt from "../assets/elements/BtnElt"
+import CardElt from "../assets/elements/CardElt"
+import FieldElt from "../assets/elements/FieldElt"
+import ListElt from "../assets/elements/ListElt"
+import MediaElt from "../assets/elements/MediaElt"
+
 import Editor from "@tinymce/tinymce-vue"
 
 export default {
@@ -157,9 +157,7 @@ export default {
     );
 
     if (this.constants.USER_ID) {
-      let url = this.constants.API_URL + "/auth/" + this.constants.USER_ID;
-
-      fetchGet(url)
+      getData(this.constants.API_URL + "/auth/" + this.constants.USER_ID)
         .then((res) => { 
           this.user = res;
 
@@ -168,7 +166,7 @@ export default {
           }
         })
         .catch(err => { 
-          checkError(err);
+          setError(err);
           this.$router.push("/admin");
         });
 
@@ -208,12 +206,12 @@ export default {
         data.append("cat", this.article.cat);
         data.append("updated", Date.now());
 
-        putData("/articles/" + this.article._id, data)
+        putData(this.constants.API_URL + "/articles/" + this.article._id, data)
           .then(() => {
             alert(this.article.name + this.constants.ALERT_UPDATED);
             this.$router.push("/admin");
           })
-          .catch(err => { checkError(err) });
+          .catch(err => { setError(err) });
       }
     }
   }

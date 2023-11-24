@@ -24,7 +24,8 @@
 
 <script>
 import { setMeta } from "../assets/serve"
-import CardElt from "../assets/CardElt"
+
+import CardElt from "../assets/elements/CardElt"
 
 export default {
   name: "LegalView",

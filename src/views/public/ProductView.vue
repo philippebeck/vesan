@@ -113,16 +113,6 @@
             </template>
           </BtnElt>
         </form>
-
-        <ReviewList v-if="reviews.length > 0"
-          id="reviews"
-          :constants="constants"
-          :reviews="reviews"/>
-      </template>
-
-      <template #aside  v-if="checkSession('user')">
-        <ReviewCreator id="review"
-          :constants="constants"/>
       </template>
     </CardElt>
   </main>
@@ -130,14 +120,12 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
-import { checkError, checkRole, fetchGet, getAverage, setMeta } from "../assets/serve"
+import { checkRole, getAverage, getData, setError, setMeta } from "../assets/serve"
 
-import BtnElt from "../assets/BtnElt"
-import CardElt from "../assets/CardElt"
-import FieldElt from "../assets/FieldElt"
-import MediaElt from "../assets/MediaElt"
-import ReviewCreator from "../components/ReviewCreator"
-import ReviewList from "../components/ReviewList"
+import BtnElt from "../assets/elements/BtnElt"
+import CardElt from "../assets/elements/CardElt"
+import FieldElt from "../assets/elements/FieldElt"
+import MediaElt from "../assets/elements/MediaElt"
 
 export default {
   name: "ProductView",
@@ -145,9 +133,7 @@ export default {
     BtnElt,
     CardElt,
     FieldElt,
-    MediaElt,
-    ReviewCreator,
-    ReviewList
+    MediaElt
   },
   props: ["constants", "user"],
 
@@ -164,9 +150,7 @@ export default {
   },
 
   created() {
-    let url = this.constants.API_URL + "/products/" + this.$route.params.id;
-
-    fetchGet(url)
+    getData(this.constants.API_URL + "/products/" + this.$route.params.id)
       .then((product => {
         this.product = product;
 
@@ -178,7 +162,7 @@ export default {
         );
       }))
       .catch(err => { 
-        checkError(err);
+        setError(err);
         this.$router.push("/shop");
       });
 

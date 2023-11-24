@@ -85,14 +85,6 @@
             </p>
           </template>
         </MediaElt>
-
-        <CommentList v-if="comments.length > 0"
-          :comments="comments"
-          :constants="constants"/>
-      </template>
-
-      <template #aside  v-if="checkSession('user')">
-        <CommentCreator :constants="constants"/>
       </template>
     </CardElt>
   </main>
@@ -100,23 +92,18 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
-import { putData } from "../assets/axios"
-import { checkError, checkId, checkRole, fetchGet, setMeta } from "../assets/serve"
+import { checkId, checkRole, getData, putData, setError, setMeta } from "../assets/serve"
 
-import BtnElt from "../assets/BtnElt"
-import CardElt from "../assets/CardElt"
-import MediaElt from "../assets/MediaElt"
-import CommentCreator from "../components/CommentCreator"
-import CommentList from "../components/CommentList"
+import BtnElt from "../assets/elements/BtnElt"
+import CardElt from "../assets/elements/CardElt"
+import MediaElt from "../assets/elements/MediaElt"
 
 export default {
   name: "ArticleView",
   components: {
     BtnElt,
     CardElt,
-    MediaElt,
-    CommentCreator,
-    CommentList
+    MediaElt
   },
 
   props: ["constants", "user"],
@@ -127,9 +114,7 @@ export default {
   },
 
   created () {
-    let url = this.constants.API_URL + "/articles/" + this.$route.params.id;
-
-    fetchGet(url)
+    getData(this.constants.API_URL + "/articles/" + this.$route.params.id)
       .then((article => {
         this.article = article;
 
@@ -141,7 +126,7 @@ export default {
         );
       }))
       .catch(err => { 
-        checkError(err);
+        setError(err);
         this.$router.push("/blog");
       });
 
@@ -207,7 +192,7 @@ export default {
       article.append("cat", this.article.cat);
       article.append("updated", this.article.updated);
 
-      putData("/articles/" + this.article._id, article)
+      putData(this.constants.API_URL + "/articles/" + this.article._id, article)
         .then(() => {
           if (hasLiked === true) {
             console.log(this.article.name + this.constants.ALERT_DISLIKED);
@@ -215,7 +200,7 @@ export default {
             console.log(this.article.name + this.constants.ALERT_LIKED);
           }
         })
-        .catch(err => { checkError(err) });
+        .catch(err => { setError(err) });
     }
   }
 }

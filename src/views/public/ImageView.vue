@@ -63,13 +63,14 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
-import { checkError, checkRole, fetchGet, setMeta } from "../assets/serve"
+import { checkRole, getData, setError, setMeta } from "../assets/serve"
 
-import CardElt from "../assets/CardElt"
-import ListElt from "../assets/ListElt"
-import MediaElt from "../assets/MediaElt"
-import SliderElt from "../assets/SliderElt"
-import ImageCreator from "../components/ImageCreator"
+import CardElt from "../assets/elements/CardElt"
+import ListElt from "../assets/elements/ListElt"
+import MediaElt from "../assets/elements/MediaElt"
+import SliderElt from "../assets/elements/SliderElt"
+
+import ImageCreator from "../assets/creators/ImageCreator"
 
 export default {
   name: "ImageView",
@@ -89,9 +90,7 @@ export default {
   },
 
   created() {
-    let url = this.constants.API_URL + "/galleries/" + this.$route.params.id;
-
-    fetchGet(url)
+    getData(this.constants.API_URL + "/galleries/" + this.$route.params.id)
       .then((gallery) => {
         this.gallery = gallery;
 
@@ -103,7 +102,7 @@ export default {
         );
       })
       .catch(err => { 
-        checkError(err);
+        setError(err);
         this.$router.push("/galleries");
       });
 

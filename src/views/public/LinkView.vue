@@ -73,12 +73,12 @@
 import { mapState, mapActions } from "vuex"
 import { checkRole, getCats, getItemsByCat, setMeta } from "../assets/serve"
 
-import BtnElt from "../assets/BtnElt"
-import CardElt from "../assets/CardElt"
-import ListElt from "../assets/ListElt"
-import NavElt from "../assets/NavElt"
+import BtnElt from "../assets/elements/BtnElt"
+import CardElt from "../assets/elements/CardElt"
+import ListElt from "../assets/elements/ListElt"
+import NavElt from "../assets/elements/NavElt"
 
-import LinkCreator from "../components/LinkCreator"
+import LinkCreator from "../assets/creators/LinkCreator"
 
 export default {
   name: "LinkView",

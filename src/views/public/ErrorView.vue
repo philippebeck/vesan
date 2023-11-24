@@ -25,9 +25,9 @@
 </template>
 
 <script>
-import BtnElt from "../assets/BtnElt"
-import CardElt from "../assets/CardElt"
-import MediaElt from "../assets/MediaElt"
+import BtnElt from "../assets/elements/BtnElt"
+import CardElt from "../assets/elements/CardElt"
+import MediaElt from "../assets/elements/MediaElt"
 
 export default {
   name: 'ErrorView',

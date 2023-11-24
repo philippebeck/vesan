@@ -123,34 +123,30 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
-import { checkError, checkRole, fetchGet, setMeta } from "../assets/serve"
+import { checkRole, getData, setError, setMeta } from "../assets/serve"
 
-import CardElt from "../assets/CardElt"
-import NavElt from "../assets/NavElt"
+import CardElt from "../assets/elements/CardElt"
+import NavElt from "../assets/elements/NavElt"
 
-import ProductManager from "../components/ProductManager"
-import ReviewManager from "../components/ReviewManager"
-import OrderManager from "../components/OrderManager"
-import ArticleManager from "../components/ArticleManager"
-import CommentManager from "../components/CommentManager"
-import GalleryManager from "../components/GalleryManager"
-import ImageManager from "../components/ImageManager"
-import LinkManager from "../components/LinkManager"
-import UserManager from "../components/UserManager"
+import ArticleManager from "../assets/managers/ArticleManager"
+import GalleryManager from "../assets/managers/GalleryManager"
+import ImageManager from "../assets/managers/ImageManager"
+import LinkManager from "../assets/managers/LinkManager"
+import OrderManager from "../assets/managers/OrderManager"
+import ProductManager from "../assets/managers/ProductManager"
+import UserManager from "../assets/managers/UserManager"
 
 export default {
   name: "AdminEditor",
   components: {
     CardElt,
     NavElt,
-    ProductManager,
-    ReviewManager,
-    OrderManager,
     ArticleManager,
-    CommentManager,
     GalleryManager,
     ImageManager,
     LinkManager,
+    OrderManager,
+    ProductManager,
     UserManager
   },
 
@@ -163,9 +159,7 @@ export default {
 
   created() {
     if (this.constants.USER_ID) {
-      let url = this.constants.API_URL + "/auth/" + this.constants.USER_ID;
-
-      fetchGet(url)
+      getData(this.constants.API_URL + "/auth/" + this.constants.USER_ID)
         .then((res) => { 
           this.user = res;
 
@@ -184,7 +178,7 @@ export default {
             this.$store.dispatch("listUsers");
           }
         })
-        .catch(err => { checkError(err) });
+        .catch(err => { setError(err) });
 
     } else {
       alert(this.constants.ALERT_HOME);

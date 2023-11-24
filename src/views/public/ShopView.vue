@@ -136,12 +136,13 @@
 import { mapState, mapActions } from "vuex"
 import { checkRole, getAverage, getCats, getItemsByCat, setMeta } from "../assets/serve"
 
-import BtnElt from "../assets/BtnElt"
-import CardElt from "../assets/CardElt"
-import ListElt from "../assets/ListElt"
-import MediaElt from "../assets/MediaElt"
-import NavElt from "../assets/NavElt"
-import ProductCreator from "../components/ProductCreator"
+import BtnElt from "../assets/elements/BtnElt"
+import CardElt from "../assets/elements/CardElt"
+import ListElt from "../assets/elements/ListElt"
+import MediaElt from "../assets/elements/MediaElt"
+import NavElt from "../assets/elements/NavElt"
+
+import ProductCreator from "../assets/creators/ProductCreator"
 
 export default {
   name: "ShopView",

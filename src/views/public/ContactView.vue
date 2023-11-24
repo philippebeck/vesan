@@ -84,13 +84,13 @@
 </template>
 
 <script>
-import { postData } from "../assets/axios"
-import { checkError, checkRange, checkRegex, setMeta } from "../assets/serve"
+import { checkRange, checkRegex, postData, setError, setMeta } from "../assets/serve"
 
-import BtnElt from "../assets/BtnElt"
-import CardElt from "../assets/CardElt"
-import FieldElt from "../assets/FieldElt"
-import ListElt from "../assets/ListElt"
+import BtnElt from "../assets/elements/BtnElt"
+import CardElt from "../assets/elements/CardElt"
+import FieldElt from "../assets/elements/FieldElt"
+import ListElt from "../assets/elements/ListElt"
+
 import { VueRecaptcha } from "vue-recaptcha";
 
 export default {
@@ -137,7 +137,7 @@ export default {
           checkRange(this.subject, stringMsg) && 
           checkRange(this.text, stringMsg, min, max)) {
 
-        postData("/auth/recaptcha", { response: response })
+        postData(this.constants.API_URL + "/auth/recaptcha", { response: response })
           .then(result => {
             if (result.success) {
               this.send();
@@ -147,7 +147,7 @@ export default {
             }
           })
           .catch(err => {
-            checkError(err);
+            setError(err);
             this.$router.go();
           });
       }
@@ -162,12 +162,12 @@ export default {
       message.append("subject", this.subject);
       message.append("html", this.text);
 
-      postData("/users/message", message)
+      postData(this.constants.API_URL + "/users/message", message)
         .then(() => {
           alert(this.subject + this.constants.ALERT_SENDED);
           this.$router.push("/");
         })
-        .catch(err => { checkError(err) });
+        .catch(err => { setError(err) });
     }
   }
 }

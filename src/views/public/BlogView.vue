@@ -133,15 +133,15 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
-import { putData } from "../assets/axios"
-import { checkError, checkId, checkRole, getCats, getItemsByCat, setMeta } from "../assets/serve"
+import { checkId, checkRole, getCats, getItemsByCat, putData, setError, setMeta } from "../assets/serve"
 
-import BtnElt from "../assets/BtnElt"
-import CardElt from "../assets/CardElt"
-import ListElt from "../assets/ListElt"
-import MediaElt from "../assets/MediaElt"
-import NavElt from "../assets/NavElt"
-import ArticleCreator from "../components/ArticleCreator"
+import BtnElt from "../assets/elements/BtnElt"
+import CardElt from "../assets/elements/CardElt"
+import ListElt from "../assets/elements/ListElt"
+import MediaElt from "../assets/elements/MediaElt"
+import NavElt from "../assets/elements/NavElt"
+
+import ArticleCreator from "../assets/creators/ArticleCreator"
 
 export default {
   name: "BlogView",
@@ -251,7 +251,7 @@ export default {
           article.append("cat", this.articles[i].cat);
           article.append("updated", this.articles[i].updated);
 
-          putData("/articles/" + id, article)
+          putData(this.constants.API_URL + "/articles/" + id, article)
             .then(() => {
               if (hasLiked === true) {
                 console.log(this.article.name + this.constants.ALERT_DISLIKED);
@@ -259,7 +259,7 @@ export default {
                 console.log(this.article.name + this.constants.ALERT_LIKED);
               }
             })
-            .catch(err => { checkError(err) });
+            .catch(err => { setError(err) });
         }
       }
     }
