@@ -91,12 +91,13 @@
 
 <script>
 import { mapState, mapActions } from "vuex"
-import { checkRole, setGlobalMeta } from "./assets/serve"
-import constants from "../constants"
+import { checkRole, setGlobalMeta } from "./assets/servidio"
 
-import FootElt from "./assets/FootElt"
-import ListElt from "./assets/ListElt"
-import NavElt from "./assets/NavElt"
+import constants from "./config/constants"
+
+import FootElt from "./assets/elements/FootElt"
+import ListElt from "./assets/elements/ListElt"
+import NavElt from "./assets/elements/NavElt"
 
 export default {
   name: 'App',
@@ -116,9 +117,9 @@ export default {
     this.constants = constants;
 
     setGlobalMeta(
-      this.constants.TW_ID, 
-      this.constants.ICON, 
-      this.constants.LANG);
+      this.constants.LANG,
+      this.constants.ICON 
+    );
 
     if (constants.USER_ID) {
       this.$store.dispatch("readAvatar", constants.USER_ID);
