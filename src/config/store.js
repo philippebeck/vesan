@@ -1,6 +1,6 @@
 import { createStore } from "vuex"
 import { getData, setError } from "../assets/serve"
-import constants from "/constants"
+import constants from "./constants"
 
 export default createStore({
   namespaced: true,
