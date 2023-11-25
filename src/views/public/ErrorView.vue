@@ -25,9 +25,7 @@
 </template>
 
 <script>
-import BtnElt from "../assets/elements/BtnElt"
-import CardElt from "../assets/elements/CardElt"
-import MediaElt from "../assets/elements/MediaElt"
+import { BtnElt, CardElt, MediaElt } from "vue-elt"
 
 export default {
   name: 'ErrorView',

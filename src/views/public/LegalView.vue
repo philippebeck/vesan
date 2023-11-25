@@ -23,9 +23,8 @@
 </template>
 
 <script>
-import { setMeta } from "../assets/serve"
-
-import CardElt from "../assets/elements/CardElt"
+import { setMeta } from "servidio"
+import { CardElt } from "vue-elt"
 
 export default {
   name: "LegalView",

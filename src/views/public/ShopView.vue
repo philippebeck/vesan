@@ -133,16 +133,9 @@
 </template>
 
 <script>
+import { checkRole, getAverage, getCats, getItemsByCat, setMeta } from "servidio"
+import { BtnElt, CardElt, ListElt, MediaElt, NavElt, ProductCreator } from "vue-elt"
 import { mapState, mapActions } from "vuex"
-import { checkRole, getAverage, getCats, getItemsByCat, setMeta } from "../assets/serve"
-
-import BtnElt from "../assets/elements/BtnElt"
-import CardElt from "../assets/elements/CardElt"
-import ListElt from "../assets/elements/ListElt"
-import MediaElt from "../assets/elements/MediaElt"
-import NavElt from "../assets/elements/NavElt"
-
-import ProductCreator from "../assets/creators/ProductCreator"
 
 export default {
   name: "ShopView",

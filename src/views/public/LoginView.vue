@@ -126,14 +126,8 @@
 </template>
 
 <script>
-import { setMeta } from "../assets/serve"
-
-import BtnElt from "../assets/elements/BtnElt"
-import CardElt from "../assets/elements/CardElt"
-
-import SignUp from "../assets/auth/SignUp"
-import SignIn from "../assets/auth/SignIn"
-import ForgotPass from "../assets/auth/ForgotPass"
+import { setMeta } from "servidio"
+import { BtnElt, CardElt, ForgotPass, SignIn, SignUp } from "vue-elt"
 
 export default {
   name: "LoginView",

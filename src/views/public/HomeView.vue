@@ -23,10 +23,8 @@
 </template>
 
 <script>
-import { setMeta } from "../assets/serve"
-
-import CardElt from "../assets/elements/CardElt"
-import ListElt from "../assets/elements/ListElt"
+import { setMeta } from "servidio"
+import { CardElt, ListElt } from "vue-elt"
 
 export default {
   name: "HomeView",

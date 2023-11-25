@@ -44,14 +44,9 @@
 </template>
 
 <script>
+import { checkRole, setMeta } from "servidio"
+import { CardElt, GalleryCreator, ListElt, MediaElt } from "vue-elt"
 import { mapState, mapActions } from "vuex"
-import { checkRole, setMeta } from "../assets/serve"
-
-import CardElt from "../assets/elements/CardElt"
-import ListElt from "../assets/elements/ListElt"
-import MediaElt from "../assets/elements/MediaElt"
-
-import GalleryCreator from "../assets/creators/GalleryCreator"
 
 export default {
   name: "GalleryView",
