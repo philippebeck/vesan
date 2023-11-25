@@ -90,14 +90,10 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex"
-import { checkRole, setGlobalMeta } from "./assets/servidio"
-
 import constants from "./config/constants"
-
-import FootElt from "./assets/elements/FootElt"
-import ListElt from "./assets/elements/ListElt"
-import NavElt from "./assets/elements/NavElt"
+import { checkRole, setGlobalMeta } from "servidio"
+import { FootElt, ListElt, NavElt } from "vue-elt"
+import { mapState, mapActions } from "vuex"
 
 export default {
   name: 'App',
