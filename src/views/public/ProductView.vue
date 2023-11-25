@@ -8,34 +8,6 @@
       </template>
 
       <template #body>
-
-        <BtnElt v-if="getScoresAverage(product._id) !== undefined"
-          href="#reviews"
-          itemprop="aggregateRating"
-          itemscope
-          itemtype="https://schema.org/AggregateRating" 
-          class="btn-violet"
-          :title="constants.TITLE_REVIEW_READ + product.name">
-
-          <template #btn>
-            <b itemprop="ratingValue">
-              {{ getScoresAverage(product._id) }}
-            </b> <i class="fa-solid fa-star fa-lg"></i>
-          </template>
-        </BtnElt>
-
-        <BtnElt v-else-if="checkSession('user')" 
-          href="#review"
-          class="btn-violet"
-          :content="constants.CONTENT_REVIEW_WRITE"
-          :title="constants.TITLE_REVIEW_FIRST + product.name" />
-
-        <BtnElt v-else 
-            href="/login"
-            class="btn-violet"
-            :content="constants.CONTENT_REVIEW_LOGIN"
-            :title="constants.TITLE_REVIEW_FIRST + product.name" />
-
         <MediaElt v-if="product.image"
           :src="`/img/products/${product.image}`"
           :alt="product.alt"
@@ -56,7 +28,6 @@
                 {{ this.priceCurrency }}
               </b>
             </p>
-            
 
             <p class="gray">
               {{ constants.RELEASE_ON }}
@@ -119,7 +90,7 @@
 </template>
 
 <script>
-import { checkRole, getAverage, getData, setError, setMeta } from "servidio"
+import { checkRole, getData, setError, setMeta } from "servidio"
 import { BtnElt, CardElt, FieldElt, MediaElt } from "vue-elt"
 import { mapState, mapActions } from "vuex"
 
@@ -187,15 +158,6 @@ export default {
      */
     checkSession(role) {
       return checkRole(this.user.role, role);
-    },
-
-    /** 
-     * GET SCORES AVERAGE
-     * @param {string} productId
-     * @returns
-     */
-    getScoresAverage(productId) {
-      return getAverage(productId, this.reviews);
     },
 
     /**

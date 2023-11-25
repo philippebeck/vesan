@@ -63,33 +63,6 @@
               </template>
 
               <template #body>
-                <BtnElt v-if="getScoresAverage(slotProps.value._id) !== undefined"
-                  :href="`product/${slotProps.value._id}#reviews`"
-                  itemprop="aggregateRating"
-                  itemscope
-                  itemtype="https://schema.org/AggregateRating"
-                  class="btn-violet"
-                  :title="constants.TITLE_REVIEW_READ + slotProps.value.name">
-
-                  <template #btn>
-                    <b itemprop="ratingValue">
-                      {{ getScoresAverage(slotProps.value._id) }}
-                    </b> <i class="fa-solid fa-star"></i>
-                  </template>
-                </BtnElt>
-
-                <BtnElt v-else-if="checkSession('user')" 
-                  :href="`product/${slotProps.value._id}#review`"
-                  class="btn-violet"
-                  :content="constants.CONTENT_REVIEW_WRITE"
-                  :title="constants.TITLE_REVIEW_FIRST + slotProps.value.name" />
-
-                <BtnElt v-else 
-                  href="/login"
-                  class="btn-violet"
-                  :content="constants.CONTENT_REVIEW_LOGIN"
-                  :title="constants.TITLE_REVIEW_FIRST + slotProps.value.name" />
-
                 <a :href="`product/${slotProps.value._id}`"
                   itemprop="url"
                   :title="constants.TITLE_WATCH + slotProps.value.name">
@@ -133,14 +106,13 @@
 </template>
 
 <script>
-import { checkRole, getAverage, getCats, getItemsByCat, setMeta } from "servidio"
-import { BtnElt, CardElt, ListElt, MediaElt, NavElt, ProductCreator } from "vue-elt"
+import { checkRole, getCats, getItemsByCat, setMeta } from "servidio"
+import { CardElt, ListElt, MediaElt, NavElt, ProductCreator } from "vue-elt"
 import { mapState, mapActions } from "vuex"
 
 export default {
   name: "ShopView",
   components: {
-    BtnElt,
     CardElt,
     ListElt,
     MediaElt,
@@ -214,14 +186,6 @@ export default {
      */
     getItemsByCategory(items) {
       return getItemsByCat(items);
-    },
-
-    /** 
-     * GET SCORES AVERAGE
-     * @returns
-     */
-    getScoresAverage(productId) {
-      return getAverage(productId, this.reviews);
     }
   }
 }
