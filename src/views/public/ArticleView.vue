@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import { checkId, checkRole, getData, putData, setError, setMeta } from "servidio"
+import { checkRole, getData, putData, setError, setMeta } from "servidio"
 import { BtnElt, CardElt, MediaElt } from "vue-elt"
 import { mapState, mapActions } from "vuex"
 
@@ -159,9 +159,23 @@ export default {
      */
     checkLikes() {
       if (this.article.likes) {
-        return checkId(this.constants.USER_ID, this.article.likes);
+        return this.article.likes.includes(this.constants.USER_ID);
       }
     },
+
+    /**
+ * CHECK ID
+ * @param {string} id
+ * @param {array} array
+ * @returns
+ */
+checkId(id, array) {
+  for (let item of array) {
+    if (item === id) return true;
+  }
+
+  return false;
+},
 
     /**
      * ADD LIKE

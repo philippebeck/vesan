@@ -132,7 +132,7 @@
 </template>
 
 <script>
-import { checkId, checkRole, getCats, getItemsByCat, putData, setError, setMeta } from "servidio"
+import { checkRole, getCats, getItemsByCat, putData, setError, setMeta } from "servidio"
 import { ArticleCreator, BtnElt, CardElt, ListElt, MediaElt, NavElt } from "vue-elt"
 import { mapState, mapActions } from "vuex"
 
@@ -209,7 +209,7 @@ export default {
       for (let article of this.articles) {
         if (article._id === id) {
 
-          return checkId(this.constants.USER_ID, article.likes);
+          return article.likes.includes(this.constants.USER_ID);
         }
       }
     },
