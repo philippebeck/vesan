@@ -183,15 +183,9 @@
 </template>
 
 <script>
+import { checkRange, checkRegex, checkRole, deleteData, putData, setError, setMeta } from "servidio"
+import { BtnElt, CardElt, FieldElt, ListElt, MediaElt, TableElt } from "vue-elt"
 import { mapState, mapActions } from "vuex"
-import { checkRange, checkRegex, checkRole, deleteData, putData, setError, setMeta } from "../assets/serve"
-
-import BtnElt from "../assets/elements/BtnElt"
-import CardElt from "../assets/elements/CardElt"
-import FieldElt from "../assets/elements/FieldElt"
-import ListElt from "../assets/elements/ListElt"
-import MediaElt from "../assets/elements/MediaElt"
-import TableElt from "../assets/elements/TableElt"
 
 export default {
   name: "ProfileEditor",
