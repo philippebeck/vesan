@@ -1,23 +1,23 @@
 import { createRouter, createWebHistory } from "vue-router"
 
-import ArticleView from "@/views/ArticleView"
-import BasketView from "@/views/BasketView"
-import BlogView from "@/views/BlogView"
-import ContactView from "@/views/ContactView"
-import ErrorView from "@/views/ErrorView"
-import GalleryView from "@/views/GalleryView"
-import HomeView from "@/views/HomeView"
-import ImageView from "@/views/ImageView"
-import LegalView from "@/views/LegalView"
-import LinkView from "@/views/LinkView"
-import LoginView from "@/views/LoginView"
-import ProductView from "@/views/ProductView"
-import ShopView from "@/views/ShopView"
+import ArticleView from "@/views/public/ArticleView"
+import BasketView from "@/views/public/BasketView"
+import BlogView from "@/views/public/BlogView"
+import ContactView from "@/views/public/ContactView"
+import ErrorView from "@/views/public/ErrorView"
+import GalleryView from "@/views/public/GalleryView"
+import HomeView from "@/views/public/HomeView"
+import ImageView from "@/views/public/ImageView"
+import LegalView from "@/views/public/LegalView"
+import LinkView from "@/views/public/LinkView"
+import LoginView from "@/views/public/LoginView"
+import ProductView from "@/views/public/ProductView"
+import ShopView from "@/views/public/ShopView"
 
-const AdminEditor = () => import("@/views/AdminEditor")
-const ArticleEditor = () => import("@/views/ArticleEditor")
-const ProductEditor = () => import("@/views/ProductEditor")
-const ProfileEditor = () => import("@/views/ProfileEditor")
+const AdminEditor = () => import("@/views/private/AdminEditor")
+const ArticleEditor = () => import("@/views/private/ArticleEditor")
+const ProductEditor = () => import("@/views/private/ProductEditor")
+const ProfileEditor = () => import("@/views/private/ProfileEditor")
 
 const routes = [
   // Public
