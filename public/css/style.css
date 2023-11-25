@@ -1,0 +1,66 @@
+@font-face {
+  font-family: "Geo";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    local("Geo-Regular"),
+    url("../fonts/Geo-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Trocchi";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    local("Trocchi-Regular"),
+    url("../fonts/Trocchi-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Syne Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    local("SyneMono-Regular"),
+    url("../fonts/SyneMono-Regular.ttf") format("truetype");
+}
+
+/********** OVERLOADING **********/
+:root {
+  --ani-sans-serif: Geo, Helvetica, sans-serif;
+  --ani-serif: Trocchi, Times, serif;
+  --ani-monospace: "Syne Mono", Courier, monospace;
+}
+
+/* SHOP */
+.figcaption {
+  height: 100px;
+}
+
+[itemprop="offers"] {
+  font-size: 2.5rem;
+}
+
+/* TINYMCE EDITOR */
+[id="text"] ~ *,
+[id="description"] ~ * {
+  margin: auto;
+  max-width: 1000px;
+  height: 500px;
+}
+
+/* ADMIN IMG */
+[id="admin"] img {
+  max-width: 100px;
+}
+
+/* ADMIN TABLES */
+[id*="products-"] > *,
+[id*="likes-"] {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
