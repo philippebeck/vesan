@@ -90,9 +90,12 @@
 </template>
 
 <script>
+import FootElt from "@/assets/elements/FootElt"
+import ListElt from "@/assets/elements/FootElt"
+import NavElt from "@/assets/elements/FootElt"
+
 import constants from "./config/constants"
 import { checkRole, setGlobalMeta } from "servidio"
-import { FootElt, ListElt, NavElt } from "vue-elt"
 import { mapState, mapActions } from "vuex"
 
 export default {

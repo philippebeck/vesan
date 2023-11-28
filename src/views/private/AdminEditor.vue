@@ -122,8 +122,18 @@
 </template>
 
 <script>
+import ArticleManager from "@/assets/managers/ArticleManager"
+import GalleryManager from "@/assets/managers/GalleryManager"
+import ImageManager from "@/assets/managers/ImageManager"
+import LinkManager from "@/assets/managers/LinkManager"
+import OrderManager from "@/assets/managers/OrderManager"
+import ProductManager from "@/assets/managers/ProductManager"
+import UserManager from "@/assets/managers/UserManager"
+
+import CardElt from "@/assets/elements/CardElt"
+import NavElt from "@/assets/elements/NavElt"
+
 import { checkRole, getData, setError, setMeta } from "servidio"
-import { ArticleManager, CardElt, GalleryManager, ImageManager, LinkManager, NavElt, OrderManager, ProductManager, UserManager } from "vue-elt"
 import { mapState, mapActions } from "vuex"
 
 export default {

@@ -62,8 +62,13 @@
 </template>
 
 <script>
+import ImageCreator from "@/assets/creators/ImageCreator"
+import CardElt from "@/assets/elements/CardElt"
+import ListElt from "@/assets/elements/ListElt"
+import MediaElt from "@/assets/elements/MediaElt"
+import SliderElt from "@/assets/elements/SliderElt"
+
 import { checkRole, getData, setError, setMeta } from "servidio"
-import { CardElt, ImageCreator, ListElt, MediaElt, SliderElt } from "vue-elt"
 import { mapState, mapActions } from "vuex"
 
 export default {

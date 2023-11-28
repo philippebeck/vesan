@@ -150,9 +150,14 @@
 </template>
 
 <script>
+import BtnElt from "@/assets/elements/BtnElt"
+import CardElt from "@/assets/elements/CardElt"
+import FieldElt from "@/assets/elements/FieldElt"
+import ListElt from "@/assets/elements/ListElt"
+import MediaElt from "@/assets/elements/MediaElt"
+
 import Editor from "@tinymce/tinymce-vue"
 import { checkRange, checkRole, getData, putData, setError, setMeta } from "servidio"
-import { BtnElt, CardElt, FieldElt, ListElt, MediaElt } from "vue-elt"
 import { mapState, mapActions } from "vuex"
 
 export default {

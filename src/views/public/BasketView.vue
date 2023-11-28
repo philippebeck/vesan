@@ -127,9 +127,14 @@
 </template>
 
 <script>
+import BtnElt from "@/assets/elements/BtnElt"
+import CardElt from "@/assets/elements/CardElt"
+import FieldElt from "@/assets/elements/FieldElt"
+import MediaElt from "@/assets/elements/MediaElt"
+import TableElt from "@/assets/elements/TableElt"
+
 import { loadScript } from "@paypal/paypal-js"
 import { checkRole, getData, postData, setError, setMeta } from "servidio"
-import { BtnElt, CardElt, FieldElt, MediaElt, TableElt } from "vue-elt"
 
 export default {
   name: "BasketView",
