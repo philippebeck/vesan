@@ -96,7 +96,6 @@ import FieldElt from "@/assets/elements/FieldElt"
 import MediaElt from "@/assets/elements/MediaElt"
 
 import { checkRole, getData, setError, setMeta } from "servidio"
-import { mapState, mapActions } from "vuex"
 
 export default {
   name: "ProductView",
@@ -137,7 +136,6 @@ export default {
         this.$router.push("/shop");
       });
 
-    this.$store.dispatch("listProductReviews", this.$route.params.id);
     this.priceCurrency = this.constants.CURRENCY_ISO;
   },
 
@@ -148,13 +146,7 @@ export default {
     }
   },
 
-  computed: {
-    ...mapState(["reviews"]),
-  },
-
   methods: {
-    ...mapActions(["listProductReviews"]),
-
     /**
      * CHECK SESSION
      * @param {string} role

@@ -135,7 +135,6 @@ export default {
 
   created() {
     this.$store.dispatch("listProducts");
-    this.$store.dispatch("listReviews");
 
     setMeta(
       this.constants.HEAD_SHOP, 
@@ -156,10 +155,7 @@ export default {
   },
 
   computed: {
-    ...mapState([
-      "products", 
-      "reviews"
-    ]),
+    ...mapState(["products"]),
 
     /**
      * SET CATEGORIES
@@ -171,10 +167,7 @@ export default {
   },
 
   methods: {
-    ...mapActions([
-      "listProducts", 
-      "listReviews"
-    ]),
+    ...mapActions(["listProducts"]),
 
     /**
      * CHECK ROLE

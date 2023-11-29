@@ -22,11 +22,6 @@
               :title="constants.INTRO_PRODUCTS">
               <i class="fa-regular fa-rectangle-list fa-fw"></i>
             </a>
-            <a v-if="reviews.length > 0" 
-              href="#review"
-              :title="constants.INTRO_REVIEWS">
-              <i class="fa-solid fa-ranking-star fa-fw"></i>
-            </a>
             <a v-if="orders.length > 0" 
               href="#order"
               :title="constants.INTRO_ORDERS">
@@ -77,12 +72,6 @@
         <ProductManager v-if="products.length > 0"
           :constants="constants"
           :products="products"/>
-
-        <ReviewManager v-if="reviews.length > 0"
-          :constants="constants"
-          :products="products"
-          :reviews="reviews"
-          :users="users"/>
 
         <OrderManager v-if="orders.length > 0"
           :constants="constants"
@@ -168,7 +157,6 @@ export default {
             this.$store.dispatch("listComments");
             this.$store.dispatch("listOrders");
             this.$store.dispatch("listProducts");
-            this.$store.dispatch("listReviews");
           } 
 
           if (this.checkSession("admin")) {
@@ -202,7 +190,6 @@ export default {
       "links", 
       "orders",
       "products", 
-      "reviews", 
       "users"
     ])
   },
@@ -216,7 +203,6 @@ export default {
       "listLinks", 
       "listOrders", 
       "listProducts", 
-      "listReviews",
       "listUsers"
     ]),
 
