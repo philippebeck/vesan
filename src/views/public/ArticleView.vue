@@ -160,20 +160,6 @@ export default {
     },
 
     /**
- * CHECK ID
- * @param {string} id
- * @param {array} array
- * @returns
- */
-checkId(id, array) {
-  for (let item of array) {
-    if (item === id) return true;
-  }
-
-  return false;
-},
-
-    /**
      * ADD LIKE
      */
     addLike() {
