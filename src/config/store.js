@@ -134,7 +134,7 @@ export default createStore({
      * @param {string} id 
      */
     async readUser(context, id) {
-      getData(constants.API_URL + "/users/" + id)
+      getData(constants.API_URL + "/users/" + id, constants.TOKEN)
         .then(res => { context.commit("SET_USER", res) })
         .catch(err => { setError(err) });
     },
@@ -199,7 +199,7 @@ export default createStore({
      * @param {object} context 
      */
     async listImages(context) {
-      getData(constants.API_URL + "/images")
+      getData(constants.API_URL + "/images", constants.TOKEN)
         .then(res => { context.commit("SET_IMAGES", res) })
         .catch(err => { setError(err) });
     },
@@ -210,7 +210,7 @@ export default createStore({
      * @param {string} id 
      */
     async listUserOrders(context, id) {
-      getData(constants.API_URL + "/orders/" + id)
+      getData(constants.API_URL + "/orders/" + id, constants.TOKEN)
         .then(res => { context.commit("SET_USER_ORDERS", res) })
         .catch(err => { setError(err) });
     },
@@ -220,7 +220,7 @@ export default createStore({
      * @param {object} context 
      */
     async listOrders(context) {
-      getData(constants.API_URL + "/orders")
+      getData(constants.API_URL + "/orders", constants.TOKEN)
         .then(res => { context.commit("SET_ORDERS", res) })
         .catch(err => { setError(err) });
     },
@@ -230,7 +230,7 @@ export default createStore({
      * @param {object} context 
      */
     async listUsers(context) {
-      getData(constants.API_URL + "/users")
+      getData(constants.API_URL + "/users", constants.TOKEN)
         .then(res => { context.commit("SET_USERS", res) })
         .catch(err => { setError(err) });
     }
