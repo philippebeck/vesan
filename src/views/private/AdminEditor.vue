@@ -32,12 +32,6 @@
               :title="constants.INTRO_ARTICLES">
               <i class="fa-regular fa-newspaper fa-fw"></i>
             </a>
-            <a v-if="comments.length > 0" 
-              href="#comment"
-              :title="constants.INTRO_COMMENTS">
-              <i class="fa-regular fa-comments fa-fw"></i>
-            </a>
-
             <a v-if="checkSession('admin') && galleries.length > 0"
               href="#gallery"
               :title="constants.INTRO_GALLERIES">
@@ -80,12 +74,6 @@
 
         <ArticleManager v-if="articles.length > 0"
           :articles="articles"
-          :constants="constants"
-          :users="users"/>
-
-        <CommentManager v-if="comments.length > 0"
-          :articles="articles"
-          :comments="comments"
           :constants="constants"
           :users="users"/>
 
@@ -154,7 +142,6 @@ export default {
 
           if (this.checkSession("editor")) {
             this.$store.dispatch("listArticles");
-            this.$store.dispatch("listComments");
             this.$store.dispatch("listOrders");
             this.$store.dispatch("listProducts");
           } 
@@ -184,7 +171,6 @@ export default {
   computed: {
     ...mapState([
       "articles", 
-      "comments", 
       "galleries", 
       "images", 
       "links", 
@@ -197,7 +183,6 @@ export default {
   methods: {
     ...mapActions([
       "listArticles", 
-      "listComments", 
       "listGalleries", 
       "listImages", 
       "listLinks", 

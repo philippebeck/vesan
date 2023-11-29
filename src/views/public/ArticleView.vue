@@ -96,7 +96,6 @@ import CardElt from "@/assets/elements/CardElt"
 import MediaElt from "@/assets/elements/MediaElt"
 
 import { checkRole, getData, putData, setError, setMeta } from "servidio"
-import { mapState, mapActions } from "vuex"
 
 export default {
   name: "ArticleView",
@@ -140,13 +139,7 @@ export default {
     }
   },
 
-  computed: {
-    ...mapState(["comments"])
-  },
-
   methods: {
-    ...mapActions(["listArticleComments"]),
-
     /**
      * CHECK SESSION
      * @param {string} role
