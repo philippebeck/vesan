@@ -91,8 +91,8 @@
 
 <script>
 import FootElt from "@/assets/elements/FootElt"
-import ListElt from "@/assets/elements/FootElt"
-import NavElt from "@/assets/elements/FootElt"
+import ListElt from "@/assets/elements/ListElt"
+import NavElt from "@/assets/elements/NavElt"
 
 import constants from "./config/constants"
 import { checkRole, setGlobalMeta } from "servidio"
