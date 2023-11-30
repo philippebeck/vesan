@@ -49,8 +49,8 @@
     "axios": "^1.4.0",
     "core-js": "^3.8.3",
     "servidio": "^3.0.0",
-    "vue": "^3.2.45",
-    "vue-elt": "^1.4.11",
+    "vue": "^3.3.9",
+    "vue-elt": "^2.0.0-alpha",
     "vue-recaptcha": "^2.0.3",
     "vue-router": "^4.1.6",
     "vuex": "^4.0.2"
