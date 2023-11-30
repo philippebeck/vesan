@@ -1,7 +1,7 @@
 {
   "name": "vesan",
-  "version": "1.7.7",
-  "description": "CMS with Vue-Elt, Servidio, Animadio & NemJS",
+  "version": "2.0.0",
+  "description": "UI with Vue-Elt, Servidio & Animadio",
   "author": {
     "name": "Philippe Beck",
     "email": "philippe@philippebeck.net",
@@ -48,9 +48,9 @@
     "animadio": "^6.2.5",
     "axios": "^1.4.0",
     "core-js": "^3.8.3",
-    "servidio": "^2.1.1",
-    "vue": "^3.2.45",
-    "vue-elt": "^1.4.11",
+    "servidio": "^3.0.0",
+    "vue": "^3.3.9",
+    "vue-elt": "^2.0.0-alpha",
     "vue-recaptcha": "^2.0.3",
     "vue-router": "^4.1.6",
     "vuex": "^4.0.2"
@@ -80,7 +80,7 @@
   "bugs": "https://github.com/philippebeck/vesan/issues",
   "homepage": "https://github.com/philippebeck/vesan",
   "keywords": [
-    "cms",
+    "ui",
     "vue",
     "vue-elt",
     "vuex",
@@ -89,9 +89,6 @@
     "axios",
     "sass",
     "scss",
-    "node",
-    "express",
-    "mongo",
     "blog",
     "tinymce",
     "shop",

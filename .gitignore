@@ -1,12 +1,7 @@
-.env
-api/.env
-api/node_modules/
-constants.js
 coverage/
 dist/
 node_modules/
 public/fonts/
 public/img/
-public/css/style.css
-public/video/
 src/assets/
+src/config/constants.js
