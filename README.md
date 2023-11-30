@@ -1,6 +1,6 @@
 # Vesan 
 
-CMS with Vue-Elt, Servidio, Animadio & NemJS
+UI with Vue-Elt, Servidio & Animadio
 
 [![NPM Version](https://badgen.net/npm/v/vesan)](https://www.npmjs.com/package/vesan)
 [![NPM Downloads](https://badgen.net/npm/dt/vesan)](https://www.npmjs.com/package/vesan)
@@ -15,13 +15,10 @@ CMS with Vue-Elt, Servidio, Animadio & NemJS
 
 ## Overview
 
-Vesan is a Content Manager System, where you can find 4 "homemade" packages complementary :
--  Vue-Elt, for the SFC components, as the main structure  
--  Servidio, for Axios calls & front securities, as the frontend services  
--  Animadio, a CSS library built with Sass, as the design  
--  Nemjs, for JWT, Nodemailer, Sharp & back securities, as the backend services  
-
-Vesan uses many other well-known packages, like ExpressJS, Mongoose, etc...
+Vesan is a complete User Interface made from Vue & built with 3 complementary "homemade" packages :
+-  Vue-Elt, for the SFC components, as main structure  
+-  Servidio, for Axios calls & front securities, as frontend services  
+-  Animadio, a CSS library built with Sass, as design  
 
 ## Summary
 
@@ -62,76 +59,35 @@ Yarn : `yarn add vesan`
 
 ## Installation
 
-From the root of your App with Vesan :  
-
-1. Install the frontend dependencies & create assets components :  
+Install the frontend dependencies & create assets components :  
 `$ npm install`  
 `$ grunt`  
-
-1. Install the backend dependencies :  
-`$ cd api`  
-`$ npm install`  
 
 ---
 
 ## Configuration
 
-From the root of your App with Vesan :  
-
-1. To configure the backend, replace values :  
-`api/.env.en  || api/.env.fr` *(then rename it .env)*  
-
-2. To configure the frontend, replace values :  
+To configure the frontend, replace values :  
 `constants.en.js || constants.fr.js` *(then rename it constants.js)*  
-
-3. To configure the design, replaces values :  
-`src/style/style.ui.css` *(then rename it style.css)*  
 
 ---
 
 ## Usage
 
-From the root of your App with Vesan :  
-
-1. To run the backend server :  
-`$ cd api`  
-`$ npm run start`  
-
-1. To run the frontend :  
+To run the frontend :  
 `$ npm run serve`  
 
 ---
 
 ## Production
 
-From the root of your App with Vesan :  
-
-1. To compile all style (import.css + packages + overload.css) :  
-`$ grunt`  
-
-2. So you can copy the content of style.ui.css to style.css  
-
-3. Then compile the frontend :  
+1. Compile the frontend :  
 `$ npm run build`  
 
-4. Finally, use the files of the dist folder for your prod UI
-
-5. Nothing special for the API, except maybe your own server configuration (for myself, Passenger app in server.js)
+2. Then use the files of the dist folder for your prod UI
 
 ---
 ## Content
-
-Available API Files :
--   **ProductModel, ProductCtrl, ProductRoute** *(Products)*  
--   **ReviewModel, ReviewCtrl, ReviewRoute** *(Product Reviews)*  
--   **OrderModel, OrderCtrl, OrderRoute** *(Product Orders)*  
--   **ArticleModel, ArticleCtrl, ArticleRoute** *(Articles)*  
--   **CommentModel, CommentCtrl, CommentRoute** *(Article Comments)*  
--   **GalleryModel, GalleryCtrl, GalleryRoute** *(Galleries)*  
--   **ImageModel, ImageCtrl, ImageRoute** *(Gallery Images)*  
--   **AuthCtrl, AuthRoute** *(Auth)*  
--   **UserModel, UserCtrl, UserRoute** *(Users)*  
--   **LinkModel, LinkCtrl, LinkRoute** *(Links)*  
 
 Public Views :  
 -   **HomeView** *(Home)*  
@@ -148,59 +104,20 @@ Public Views :
 -   **LegalView** *(Legal notice)*  
 -   **ErrorView** *(Error)*  
 
-Connector Components *(public)* :  
--   **ForgotPass** *(Forgot password)*  
--   **SignIn** *(Connection)*  
--   **SignUp** *(Create user)*  
-
-List Components *(public)* :  
--   **CommentList** *(Comment list for article)*  
--   **ReviewList** *(Review list for product)*  
-
 Private Views :  
 -   **ProfileEditor** *(User profile & user orders)*  
 -   **AdminEditor** *(Admin with manager components & editor views)*  
 -   **ArticleEditor** *(Editor for article)*  
 -   **ProductEditor** *(Editor for product)*  
 
-Creator Components *(private)* :  
--   **ArticleCreator** *(Create article)*  
--   **CommentCreator** *(Create comment)*  
--   **ProductCreator** *(Create product)*  
--   **ReviewCreator** *(Create review)*  
--   **GalleryCreator** *(Create gallery)*  
--   **ImageCreator** *(Create image)*  
--   **LinkCreator** *(Create link)*  
-
-Manager Components *(private)* :  
--   **ArticleManager** *(Manage articles)*  
--   **CommentManager** *(Manage comments)*  
--   **ProductManager** *(Manage products)*  
--   **ReviewManager** *(Manage reviews)*  
--   **OrderManager** *(Manage orders)*  
--   **GalleryManager** *(Manage galleries)*  
--   **ImageManager** *(Manage images)*  
--   **LinkManager** *(Manage links)*  
--   **UserManager** *(Manage users)*  
-
 ---
 
 ## Documentation
 
-Available Demos :
--   **Vue-Elt** *(Local Dev only)*  
+Available Demo :
 -   [**Animadio**](https://philippebeck.github.io/animadio)  
 
 Available Readme :  
 -   [**Vue-Elt**](https://github.com/philippebeck/vue-elt)  
 -   [**Servidio**](https://github.com/philippebeck/servidio)  
 -   [**Animadio**](https://github.com/philippebeck/animadio)  
--   [**NemJS**](https://github.com/philippebeck/nemjs)  
-
----
-
-## Tests
-
-Tests are "on the road" (incomplete for the moment), but you can launch them :  
--  for the frontend, from the root of the app (/) : `npm test src`  
--  for the backend, from the "api" folder of the app (/api/) : `npm test`  
