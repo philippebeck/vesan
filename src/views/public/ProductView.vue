@@ -28,17 +28,6 @@
                 {{ this.priceCurrency }}
               </b>
             </p>
-
-            <p class="gray">
-              {{ constants.RELEASE_ON }}
-              <i itemprop="releaseDate">
-                {{ new Date(product.created).toLocaleDateString() }}
-              </i>
-              / {{ constants.UPDATE_ON }}
-              <i>
-                {{ new Date(product.updated).toLocaleDateString() }}
-              </i>
-            </p>
           </template>
         </MediaElt>
 

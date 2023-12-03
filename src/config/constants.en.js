@@ -570,7 +570,6 @@ export default {
   HEAD_UP : "up/del",
   ON : " on ",
   PROFILE_OF : "Profile of ",
-  RELEASE_ON : "Release on ",
   TOTAL : "Total",
   UPDATE_ON : "Updated on ",
 
