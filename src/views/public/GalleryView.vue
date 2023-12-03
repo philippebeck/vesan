@@ -17,7 +17,7 @@
           class="grid-2md-3lg-4wd content-center">
 
           <template #items="slotProps">
-            <a :href="`gallery/${slotProps.item._id}`"
+            <a :href="`gallery/${slotProps.item.id}`"
               :title="constants.TITLE_WATCH + slotProps.item.name">
 
               <MediaElt :id="`${slotProps.item.name.toLowerCase()}`"
