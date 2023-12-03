@@ -44,10 +44,11 @@
 </template>
 
 <script>
-import GalleryCreator from "@/assets/creators/GalleryCreator"
 import CardElt from "@/assets/elements/CardElt"
 import ListElt from "@/assets/elements/ListElt"
 import MediaElt from "@/assets/elements/MediaElt"
+
+import GalleryCreator from "@/assets/creators/GalleryCreator"
 
 import { checkRole, setMeta } from "servidio"
 import { mapState, mapActions } from "vuex"

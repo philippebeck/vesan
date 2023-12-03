@@ -62,11 +62,12 @@
 </template>
 
 <script>
-import ImageCreator from "@/assets/creators/ImageCreator"
 import CardElt from "@/assets/elements/CardElt"
 import ListElt from "@/assets/elements/ListElt"
 import MediaElt from "@/assets/elements/MediaElt"
 import SliderElt from "@/assets/elements/SliderElt"
+
+import ImageCreator from "@/assets/creators/ImageCreator"
 
 import { checkRole, getData, setError, setMeta } from "servidio"
 import { mapState, mapActions } from "vuex"

@@ -132,12 +132,13 @@
 </template>
 
 <script>
-import ArticleCreator from "@/assets/creators/ArticleCreator"
 import BtnElt from "@/assets/elements/BtnElt"
 import CardElt from "@/assets/elements/CardElt"
 import ListElt from "@/assets/elements/ListElt"
 import MediaElt from "@/assets/elements/MediaElt"
 import NavElt from "@/assets/elements/NavElt"
+
+import ArticleCreator from "@/assets/creators/ArticleCreator"
 
 import { checkRole, getCats, getItemsByCat, putData, setError, setMeta } from "servidio"
 import { mapState, mapActions } from "vuex"

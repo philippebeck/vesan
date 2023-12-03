@@ -70,11 +70,12 @@
 </template>
 
 <script>
-import LinkCreator from "@/assets/creators/LinkCreator"
 import BtnElt from "@/assets/elements/BtnElt"
 import CardElt from "@/assets/elements/CardElt"
 import ListElt from "@/assets/elements/ListElt"
 import NavElt from "@/assets/elements/NavElt"
+
+import LinkCreator from "@/assets/creators/LinkCreator"
 
 import { checkRole, getCats, getItemsByCat, setMeta } from "servidio"
 import { mapState, mapActions } from "vuex"
