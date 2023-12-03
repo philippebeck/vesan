@@ -63,7 +63,7 @@
               </template>
 
               <template #body>
-                <a :href="`product/${slotProps.value._id}`"
+                <a :href="`product/${slotProps.value.id}`"
                   itemprop="url"
                   :title="constants.TITLE_WATCH + slotProps.value.name">
 

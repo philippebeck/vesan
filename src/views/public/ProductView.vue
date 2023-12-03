@@ -127,7 +127,7 @@ export default {
         setMeta(
           product.name + this.constants.HEAD, 
           (product.description || "").slice(0, 160).replace(/(<([^>]+)>)/gi, ""),
-          this.constants.UI_URL + "/product/" + product._id,
+          this.constants.UI_URL + "/product/" + product.id,
           this.constants.UI_URL + "/img/thumbnails/products/" + product.image
         );
       }))
@@ -177,7 +177,7 @@ export default {
      */
     createOrder() {
       this.order = {
-        id: this.product._id,
+        id: this.product.id,
         option: this.option,
         quantity: this.quantity
       };
