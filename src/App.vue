@@ -114,11 +114,7 @@ export default {
 
   created() {
     this.constants = constants;
-
-    setGlobalMeta(
-      this.constants.LANG,
-      this.constants.ICON 
-    );
+    setGlobalMeta(constants.LANG, constants.ICON);
 
     if (constants.USER_ID) {
       this.$store.dispatch("readAvatar", constants.USER_ID);

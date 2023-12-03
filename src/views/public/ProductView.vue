@@ -28,17 +28,6 @@
                 {{ this.priceCurrency }}
               </b>
             </p>
-
-            <p class="gray">
-              {{ constants.RELEASE_ON }}
-              <i itemprop="releaseDate">
-                {{ new Date(product.created).toLocaleDateString() }}
-              </i>
-              / {{ constants.UPDATE_ON }}
-              <i>
-                {{ new Date(product.updated).toLocaleDateString() }}
-              </i>
-            </p>
           </template>
         </MediaElt>
 
@@ -127,7 +116,7 @@ export default {
         setMeta(
           product.name + this.constants.HEAD, 
           (product.description || "").slice(0, 160).replace(/(<([^>]+)>)/gi, ""),
-          this.constants.UI_URL + "/product/" + product._id,
+          this.constants.UI_URL + "/product/" + product.id,
           this.constants.UI_URL + "/img/thumbnails/products/" + product.image
         );
       }))
@@ -177,7 +166,7 @@ export default {
      */
     createOrder() {
       this.order = {
-        id: this.product._id,
+        id: this.product.id,
         option: this.option,
         quantity: this.quantity
       };

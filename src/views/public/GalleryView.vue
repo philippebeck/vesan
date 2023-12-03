@@ -17,7 +17,7 @@
           class="grid-2md-3lg-4wd content-center">
 
           <template #items="slotProps">
-            <a :href="`gallery/${slotProps.item._id}`"
+            <a :href="`gallery/${slotProps.item.id}`"
               :title="constants.TITLE_WATCH + slotProps.item.name">
 
               <MediaElt :id="`${slotProps.item.name.toLowerCase()}`"
@@ -44,10 +44,11 @@
 </template>
 
 <script>
-import GalleryCreator from "@/assets/creators/GalleryCreator"
 import CardElt from "@/assets/elements/CardElt"
 import ListElt from "@/assets/elements/ListElt"
 import MediaElt from "@/assets/elements/MediaElt"
+
+import GalleryCreator from "@/assets/creators/GalleryCreator"
 
 import { checkRole, setMeta } from "servidio"
 import { mapState, mapActions } from "vuex"

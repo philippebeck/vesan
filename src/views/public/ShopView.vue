@@ -63,7 +63,7 @@
               </template>
 
               <template #body>
-                <a :href="`product/${slotProps.value._id}`"
+                <a :href="`product/${slotProps.value.id}`"
                   itemprop="url"
                   :title="constants.TITLE_WATCH + slotProps.value.name">
 
@@ -106,11 +106,12 @@
 </template>
 
 <script>
-import ProductCreator from "@/assets/creators/ProductCreator"
 import CardElt from "@/assets/elements/CardElt"
 import ListElt from "@/assets/elements/ListElt"
 import MediaElt from "@/assets/elements/MediaElt"
 import NavElt from "@/assets/elements/NavElt"
+
+import ProductCreator from "@/assets/creators/ProductCreator"
 
 import { checkRole, getCats, getItemsByCat, setMeta } from "servidio"
 import { mapState, mapActions } from "vuex"

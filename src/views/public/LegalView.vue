@@ -24,6 +24,7 @@
 
 <script>
 import CardElt from "@/assets/elements/CardElt"
+
 import { setMeta } from "servidio"
 
 export default {
