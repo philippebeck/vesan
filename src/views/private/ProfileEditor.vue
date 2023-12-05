@@ -138,9 +138,9 @@
       <template #body>
         <TableElt :items="orders">
 
-          <template #cell-_id="slotProps">
+          <template #cell-id="slotProps">
             <b>#{{ slotProps.index + 1 }}</b>
-            ({{ orders[slotProps.index]._id }})
+            ({{ orders[slotProps.index].id }})
           </template>
 
           <template #cell-products="slotProps">
@@ -291,7 +291,9 @@ export default {
           }
         }
 
-        putData(this.constants.API_URL + "/users/" + this.user._id, user)
+        console.log(user);
+
+        putData(this.constants.API_URL + "/users/" + this.user.id, user)
           .then(() => {
             alert(this.user.name + this.constants.ALERT_UPDATED);
             this.$router.go();
@@ -307,7 +309,7 @@ export default {
       let name = this.user.name;
 
       if (confirm(`${this.constants.TITLE_DELETE} ${name} ?`) === true) {
-        deleteData(this.constants.API_URL + "/users/" + this.user._id)
+        deleteData(this.constants.API_URL + "/users/" + this.user.id)
           .then(() => {
             localStorage.removeItem("userId");
             localStorage.removeItem("userToken");
