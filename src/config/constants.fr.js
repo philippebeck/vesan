@@ -563,12 +563,11 @@ export default {
 
   BASKET_EMPTY : "Votre panier est vide !",
   BASKET_TOTAL : "Le total de votre panier est de ",
-  CREATE_BY : "Créé par ",
+  CREATE_ON : "Créé le ",
   EDIT : "Éditer",
   ERROR_LINK : "Retourner à l'accueil ?",
   HEAD_MOD : "mod/del",
   HEAD_UP : "up/del",
-  ON : "le",
   PROFILE_OF : "Profil de ",
   TOTAL : "Total",
   UPDATE_ON : "Mis à jour le ",
