@@ -1,6 +1,6 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import * as serve from "../../../assets/serve"
-import AdminEditor from "../../../views/AdminEditor"
+import * as serve from "servidio"
+import AdminEditor from "../../views/admin/AdminView"
 
 let wrapper;
 

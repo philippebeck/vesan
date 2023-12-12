@@ -1,6 +1,6 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import * as serve from "../../../assets/serve.js"
-import LegalView from "../../../views/LegalView"
+import * as serve from "servidio"
+import LegalView from "../../views/base/LegalView"
 
 let wrapper;
 
