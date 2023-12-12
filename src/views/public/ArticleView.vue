@@ -120,7 +120,7 @@ export default {
         setMeta(
           article.name + this.constants.HEAD, 
           (article.text || "").slice(0, 160).replace( /(<([^>]+)>)/gi, ""),
-          this.constants.UI_URL + "/article/" + article._id,
+          this.constants.UI_URL + "/article/" + article.id,
           this.constants.UI_URL + "/img/thumbnails/articles/" + article.image
         );
       }))
@@ -185,7 +185,7 @@ export default {
       article.append("cat", this.article.cat);
       article.append("updated", this.article.updated);
 
-      putData(this.constants.API_URL + "/articles/" + this.article._id, article)
+      putData(this.constants.API_URL + "/articles/" + this.article.id, article)
         .then(() => {
           if (hasLiked === true) {
             console.log(this.article.name + this.constants.ALERT_DISLIKED);

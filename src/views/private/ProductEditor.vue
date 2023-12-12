@@ -243,7 +243,7 @@ export default {
         data.append("created", this.product.created);
         data.append("updated", Date.now());
 
-        putData(this.constants.API_URL + "/products/" + this.product._id, data)
+        putData(this.constants.API_URL + "/products/" + this.product.id, data)
           .then(() => {
             alert(this.product.name + this.constants.ALERT_UPDATED);
             this.$router.push("/admin");

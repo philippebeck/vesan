@@ -205,7 +205,7 @@ export default {
         data.append("cat", this.article.cat);
         data.append("updated", Date.now());
 
-        putData(this.constants.API_URL + "/articles/" + this.article._id, data)
+        putData(this.constants.API_URL + "/articles/" + this.article.id, data)
           .then(() => {
             alert(this.article.name + this.constants.ALERT_UPDATED);
             this.$router.push("/admin");
