@@ -70,17 +70,14 @@
             </blockquote>
             
             <p class="gray">
-              {{ constants.CREATE_BY }}
-              <b itemprop="author">
-                {{ article.user }}
-              </b>
-              {{ constants.ON }} 
+              {{ constants.CREATE_ON }}
               <i itemprop="dateCreated">
-                {{ new Date(article.created).toLocaleDateString() }}
+                {{ new Date(article.createdAt).toLocaleDateString() }}
               </i>
-              / {{ constants.UPDATE_ON }}
+              <br>
+              {{ constants.UPDATE_ON }}
               <i itemprop="dateModified">
-                {{ new Date(article.updated).toLocaleDateString() }}
+                {{ new Date(article.updatedAt).toLocaleDateString() }}
               </i>
             </p>
           </template>
@@ -115,6 +112,7 @@ export default {
   created () {
     getData(this.constants.API_URL + "/articles/" + this.$route.params.id)
       .then((article => {
+        article.likes = JSON.parse(article.likes);
         this.article = article;
 
         setMeta(
@@ -128,8 +126,6 @@ export default {
         setError(err);
         this.$router.push("/blog");
       });
-
-      this.$store.dispatch("listArticleComments", this.$route.params.id);
   },
 
   updated() {
@@ -168,24 +164,24 @@ export default {
 
       for (let i = 0; i < likes.length; i++) {
         if (this.constants.USER_ID === likes[i]) {
-
-          hasLiked = true;
           likes.splice(i, 1);
+          hasLiked = true;
         }
       }
 
-      if (hasLiked === false) { likes.push(this.constants.USER_ID) }
+      if (hasLiked === false) likes.push(this.constants.USER_ID);
 
-      let article = new FormData();
-      article.append("name", this.article.name);
-      article.append("text", this.article.text);
-      article.append("image", this.article.image);
-      article.append("alt", this.article.alt);
-      article.append("likes", likes);
-      article.append("cat", this.article.cat);
-      article.append("updated", this.article.updated);
+      const URL   = this.constants.API_URL + "/articles/" + this.article.id;
+      const data  = new FormData();
 
-      putData(this.constants.API_URL + "/articles/" + this.article.id, article)
+      data.append("name", this.article.name);
+      data.append("text", this.article.text);
+      data.append("image", this.article.image);
+      data.append("alt", this.article.alt);
+      data.append("likes", JSON.stringify(likes));
+      data.append("cat", this.article.cat);
+
+      putData(URL, data, this.constants.TOKEN)
         .then(() => {
           if (hasLiked === true) {
             console.log(this.article.name + this.constants.ALERT_DISLIKED);

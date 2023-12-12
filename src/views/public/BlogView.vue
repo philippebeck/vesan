@@ -234,29 +234,29 @@ export default {
 
           for (let j = 0; j < likes.length; j++) {
             if (this.constants.USER_ID === likes[j]) {
-              hasLiked = true;
               likes.splice(j, 1);
+              hasLiked = true;
             }
           }
 
-          if (hasLiked === false) { likes.push(this.constants.USER_ID) }
+          if (hasLiked === false) likes.push(this.constants.USER_ID);
 
-          let article = new FormData();
+          const URL   = this.constants.API_URL + "/articles/" + id;
+          const data  = new FormData();
 
-          article.append("name", this.articles[i].name);
-          article.append("text", this.articles[i].text);
-          article.append("image", this.articles[i].image);
-          article.append("alt", this.articles[i].alt);
-          article.append("likes", likes);
-          article.append("cat", this.articles[i].cat);
-          article.append("updated", this.articles[i].updated);
+          data.append("name", this.articles[i].name);
+          data.append("text", this.articles[i].text);
+          data.append("image", this.articles[i].image);
+          data.append("alt", this.articles[i].alt);
+          data.append("likes", JSON.stringify(likes));
+          data.append("cat", this.articles[i].cat);
 
-          putData(this.constants.API_URL + "/articles/" + id, article)
+          putData(URL, data, this.constants.TOKEN)
             .then(() => {
               if (hasLiked === true) {
-                console.log(this.article.name + this.constants.ALERT_DISLIKED);
+                console.log(data.get("name") + this.constants.ALERT_DISLIKED);
               } else {
-                console.log(this.article.name + this.constants.ALERT_LIKED);
+                console.log(data.get("name") + this.constants.ALERT_LIKED);
               }
             })
             .catch(err => { setError(err) });
