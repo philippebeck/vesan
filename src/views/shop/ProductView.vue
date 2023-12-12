@@ -1,17 +1,85 @@
 <template>
   <main>
-    <header>
-      <h1>
-        <i class="fa-regular fa-pen-to-square fa-lg"
-          aria-hidden="true">
-        </i>
-        {{ constants.EDITOR }}
-      </h1>
-    </header>
-
-    <CardElt id="create-product">
+    <CardElt itemscope
+      itemtype="https://schema.org/Product">
       <template #header>
-        <h2>{{ product.name }}</h2>
+        <h1 itemprop="name">{{ product.name }}</h1>
+        <strong itemprop="category">{{ product.cat }}</strong>
+      </template>
+
+      <template #body>
+        <MediaElt v-if="product.image"
+          :src="`/img/products/${product.image}`"
+          :alt="product.alt"
+          :width="constants.IMG_WIDTH"
+          :height="constants.IMG_HEIGHT"
+          itemprop="image">
+
+          <template #figcaption>
+            <p id="figcaption"
+              v-html="product.description">
+            </p>
+            <p itemprop="offers"
+              itemscope
+              itemtype="https://schema.org/Offer">
+              <b itemprop="price">
+                {{ product.price }}
+              </b> <b itemprop="priceCurrency">
+                {{ this.priceCurrency }}
+              </b>
+            </p>
+          </template>
+        </MediaElt>
+
+        <form>
+          <FieldElt id="basket-option"
+            type="select"
+            :list="product.options"
+            v-model:value="option"
+            @keyup.enter="addToBasket()"
+            :info="constants.INFO_OPTION">
+
+            <template #legend>
+              {{ constants.LEGEND_OPTION }}
+            </template>
+            <template #label>
+              {{ constants.LABEL_OPTION }}
+            </template>
+          </FieldElt>
+
+          <FieldElt id="basket-quantity"
+            type="number"
+            v-model:value="quantity"
+            @keyup.enter="addToBasket()"
+            :info="constants.INFO_QUANTITY"
+            :min="1">
+
+            <template #legend>
+              {{ constants.LEGEND_QUANTITY }}
+            </template>
+            <template #label>
+              {{ constants.LABEL_QUANTITY }}
+            </template>
+          </FieldElt>
+
+          <BtnElt type="button"
+            @click="addToBasket()"
+            class="btn-green width-sm"
+            :content="constants.CONTENT_ADD"
+            :title="constants.CONTENT_ADD + product.name">
+
+            <template #btn>
+              <i class="fa-solid fa-basket-shopping fa-lg"></i>
+            </template>
+          </BtnElt>
+        </form>
+      </template>
+    </CardElt>
+
+    <CardElt v-if="checkSession('editor')"
+      id="create-product">
+      <template #header>
+        <h2>{{ constants.EDIT }} {{ product.name }}</h2>
       </template>
 
       <template #body>
@@ -157,11 +225,11 @@ import ListElt from "@/assets/elements/ListElt"
 import MediaElt from "@/assets/elements/MediaElt"
 
 import Editor from "@tinymce/tinymce-vue"
+
 import { checkRange, checkRole, getData, putData, setError, setMeta } from "servidio"
-import { mapState, mapActions } from "vuex"
 
 export default {
-  name: "ProductEditor",
+  name: "ProductView",
   components: {
     BtnElt,
     CardElt,
@@ -170,48 +238,125 @@ export default {
     MediaElt,
     Editor
   },
+  props: ["constants", "user"],
 
-  props: ["constants"],
   data() {
     return {
-      user: {}
+      basket: [],
+      product: {},
+      order: {},
+      option: "",
+      priceCurrency: "",
+      quantity: 1,
+      isInBasket: false
     }
   },
 
   created() {
-    setMeta(
-      this.constants.HEAD_PRODUCT, 
-      this.constants.META_PRODUCT,
-      this.constants.UI_URL,
-      this.constants.UI_URL + this.constants.LOGO_SRC
-    );
-  
-    if (this.constants.USER_ID) {
-      getData(this.constants.API_URL + "/auth/" + this.constants.USER_ID)
-        .then((res) => { 
-          this.user = res;
+    getData(this.constants.API_URL + "/products/" + this.$route.params.id)
+      .then((product => {
+        this.product = product;
 
-          if (checkRole(this.user.role, "editor")) {
-            this.$store.dispatch("readProduct", this.$route.params.id);
-          }
-        })
-        .catch(err => { 
-          setError(err);
-          this.$router.push("/admin");
-        });
+        setMeta(
+          product.name + this.constants.HEAD, 
+          (product.description || "").slice(0, 160).replace(/(<([^>]+)>)/gi, ""),
+          this.constants.UI_URL + "/product/" + product.id,
+          this.constants.UI_URL + "/img/thumbnails/products/" + product.image
+        );
+      }))
+      .catch(err => { 
+        setError(err);
+        this.$router.push("/shop");
+      });
 
-    } else {
-      alert(this.constants.ALERT_HOME);
-      this.$router.push("/");
+    this.priceCurrency = this.constants.CURRENCY_ISO;
+  },
+
+  updated() {
+    if (document.getElementById("figcaption")) {
+      const descriptionElt = document.getElementById("figcaption");
+      descriptionElt.firstChild.setAttribute("itemprop", "description");
     }
   },
 
-  computed: {
-    ...mapState(["product"])
-  },
-
   methods: {
-    ...mapActions(["readProduct"]),
+    /**
+     * CHECK SESSION
+     * @param {string} role
+     * @returns
+     */
+    checkSession(role) {
+      return checkRole(this.user.role, role);
+    },
+
+    /**
+     * ADD TO BASKET
+     */
+    addToBasket() {
+      if (this.option !== "") {
+
+        this.createOrder();
+        this.getBasket();
+        this.checkBasket();
+        this.setBasket();
+
+      } else {
+        alert(this.constants.ALERT_OPTION);
+      }
+    },
+
+    /**
+     * CREATE ORDER
+     */
+    createOrder() {
+      this.order = {
+        id: this.product.id,
+        option: this.option,
+        quantity: this.quantity
+      };
+    },
+
+    /**
+     * GET BASKET
+     */
+    getBasket() {
+      if (localStorage.getItem("basket") === null) {
+        localStorage.setItem("basket", []);
+        this.basket = localStorage.getItem("basket").split();
+
+      } else {
+        this.basket = JSON.parse(localStorage.getItem("basket"));
+      }
+    },
+
+    /**
+     * CHECK BASKET
+     */
+    checkBasket() {
+      this.isInBasket = false;
+
+      this.basket = this.basket.map(item => {
+        if (item.id === this.order.id && item.option === this.option) {
+
+          item.quantity = Number(item.quantity) + Number(this.quantity);
+          this.isInBasket = true;
+        }
+        return item;
+      })
+    },
+
+    /**
+     * SET BASKET
+     */
+    setBasket() {
+      if (!this.isInBasket) { this.basket.push(this.order) }
+      if (this.basket[0] === "") { this.basket.shift() }
+
+      localStorage.setItem("basket", JSON.stringify(this.basket));
+      alert(`${this.order.quantity} "${this.product.name}" (${this.order.option}) ${this.constants.ALERT_BASKET_ADDED}`);
+
+      this.$router.push("/shop");
+    },
 
     /**
      * UPDATE PRODUCT
@@ -241,9 +386,8 @@ export default {
         data.append("options", this.product.options);
         data.append("cat", this.product.cat);
         data.append("created", this.product.created);
-        data.append("updated", Date.now());
 
-        putData(this.constants.API_URL + "/products/" + this.product._id, data)
+        putData(this.constants.API_URL + "/products/" + this.product.id, data)
           .then(() => {
             alert(this.product.name + this.constants.ALERT_UPDATED);
             this.$router.push("/admin");

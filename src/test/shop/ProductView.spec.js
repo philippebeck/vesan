@@ -1,7 +1,7 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import { createStore } from 'vuex';
-import * as serve from "../../../assets/serve"
-import ProductView from "../../../views/ProductView"
+import * as serve from "servidio"
+import ProductView from "../../views/shop/ProductView"
 
 global.fetch = jest.fn(() =>
   Promise.resolve({

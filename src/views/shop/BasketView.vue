@@ -223,7 +223,7 @@ export default {
         for (let j = 0; j < this.basket.length; j++) {
           let item = this.basket[j];
 
-          if (product._id === item.id) {
+          if (product.id === item.id) {
             let order = {};
 
             order.id        = item.id;

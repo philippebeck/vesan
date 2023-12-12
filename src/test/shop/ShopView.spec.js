@@ -1,7 +1,7 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import { createStore } from 'vuex';
-import * as serve from "../../../assets/serve.js"
-import LinkView from "../../../views/LinkView"
+import * as serve from "servidio"
+import ShopView from "../../views/shop/ShopView"
 
 let wrapper;
 let store;
@@ -12,11 +12,13 @@ beforeEach(() => {
   jest.spyOn(serve, "setMeta").mockImplementation(() => {});
 
   actions = {
-    listLinks: jest.fn()
+    listProducts: jest.fn(),
+    listReviews: jest.fn()
   };
 
   state = {
-    links: []
+    products: [],
+    reviews: []
   };
 
   store = createStore({
@@ -26,14 +28,20 @@ beforeEach(() => {
     actions: actions
   })
 
-  wrapper = shallowMount(LinkView, {
+  wrapper = shallowMount(ShopView, {
     props: {
       constants: {
         TEST: "test"
       },
       user: {
-        name: "test",
+        name: "test name",
         email: "email@test.com"
+      }
+    },
+    data() {
+      return {
+        priceCurrency: "EUR",
+        scores: [5, 4]
       }
     },
     global: {
@@ -47,27 +55,40 @@ enableAutoUnmount(afterEach)
 /**
  * @jest-environment jsdom
  */
-describe("LinkView", () => {
+describe("ShopView", () => {
   test("wrapper", () => { 
-    expect(wrapper.exists()).toBe(true)
+    expect(wrapper.exists()).toBe(true) 
   })
 
   test("components", () => { 
     expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "NavElt" })).toBe("object")
-    expect(typeof wrapper.findComponent({ name: "LinkCreator" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "ProductCreator" })).toBe("object")
   })
 
   test("props", () => { 
     expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
-    expect(wrapper.props("user")).toStrictEqual({ name: "test", email: "email@test.com"})
+    expect(wrapper.props("user")).toStrictEqual({ 
+      name: "test name", 
+      email: "email@test.com"
+    })
   })
 
+  // test("data", () => { 
+  //   expect(wrapper.vm.$data).toStrictEqual({
+  //     priceCurrency: "EUR",
+  //     scores: [5, 4]
+  //   })
+  // })
+
   test("methods", () => { 
-    expect(typeof wrapper.vm.listLinks).toBe("function")
+    expect(typeof wrapper.vm.listProducts).toBe("function")
+    expect(typeof wrapper.vm.listReviews).toBe("function")
     expect(typeof wrapper.vm.checkSession).toBe("function")
     expect(typeof wrapper.vm.getItemsByCategory).toBe("function")
+    expect(typeof wrapper.vm.getScoresAverage).toBe("function")
   })
 })

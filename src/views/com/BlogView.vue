@@ -57,7 +57,7 @@
 
               <template #body>
                 <BtnElt v-if="!checkSession('user')"
-                  :id="`like-${slotProps.value._id}`"
+                  :id="`like-${slotProps.value.id}`"
                   href="/login"
                   class="btn-sky-dark"
                   :title="constants.TITLE_LIKE_LOGIN + slotProps.value.name">
@@ -70,10 +70,10 @@
                   </template>
                 </BtnElt>
 
-                <BtnElt v-else-if="checkLikes(slotProps.value._id) === false"
-                  :id="`like-${slotProps.value._id}`"
+                <BtnElt v-else-if="checkLikes(slotProps.value.id) === false"
+                  :id="`like-${slotProps.value.id}`"
                   type="button"
-                  @click="addLike(slotProps.value._id)"
+                  @click="addLike(slotProps.value.id)"
                   class="btn-sky"
                   :title="constants.TITLE_LIKE + slotProps.value.name">
 
@@ -85,10 +85,10 @@
                   </template>
                 </BtnElt>
 
-                <BtnElt v-else-if="checkLikes(slotProps.value._id) === true"
-                  :id="`like-${slotProps.value._id}`"
+                <BtnElt v-else-if="checkLikes(slotProps.value.id) === true"
+                  :id="`like-${slotProps.value.id}`"
                   type="button"
-                  @click="addLike(slotProps.value._id)"
+                  @click="addLike(slotProps.value.id)"
                   class="btn-sky"
                   :title="constants.TITLE_DISLIKE + slotProps.value.name">
 
@@ -100,7 +100,7 @@
                   </template>
                 </BtnElt>
 
-                <a :href="`article/${slotProps.value._id}`"
+                <a :href="`article/${slotProps.value.id}`"
                   :title="constants.TITLE_READ + slotProps.value.name">
 
                   <MediaElt :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
@@ -214,7 +214,7 @@ export default {
      */
     checkLikes(id) {
       for (let article of this.articles) {
-        if (article._id === id) {
+        if (article.id === id) {
 
           return article.likes.includes(this.constants.USER_ID);
         }
@@ -229,34 +229,34 @@ export default {
       let hasLiked = false;
 
       for (let i = 0; i < this.articles.length; i++) {
-        if (id === this.articles[i]._id) {
+        if (id === this.articles[i].id) {
           let likes = this.articles[i].likes;
 
           for (let j = 0; j < likes.length; j++) {
             if (this.constants.USER_ID === likes[j]) {
-              hasLiked = true;
               likes.splice(j, 1);
+              hasLiked = true;
             }
           }
 
-          if (hasLiked === false) { likes.push(this.constants.USER_ID) }
+          if (hasLiked === false) likes.push(this.constants.USER_ID);
 
-          let article = new FormData();
+          const URL   = this.constants.API_URL + "/articles/" + id;
+          const data  = new FormData();
 
-          article.append("name", this.articles[i].name);
-          article.append("text", this.articles[i].text);
-          article.append("image", this.articles[i].image);
-          article.append("alt", this.articles[i].alt);
-          article.append("likes", likes);
-          article.append("cat", this.articles[i].cat);
-          article.append("updated", this.articles[i].updated);
+          data.append("name", this.articles[i].name);
+          data.append("text", this.articles[i].text);
+          data.append("image", this.articles[i].image);
+          data.append("alt", this.articles[i].alt);
+          data.append("likes", JSON.stringify(likes));
+          data.append("cat", this.articles[i].cat);
 
-          putData(this.constants.API_URL + "/articles/" + id, article)
+          putData(URL, data, this.constants.TOKEN)
             .then(() => {
               if (hasLiked === true) {
-                console.log(this.article.name + this.constants.ALERT_DISLIKED);
+                console.log(data.get("name") + this.constants.ALERT_DISLIKED);
               } else {
-                console.log(this.article.name + this.constants.ALERT_LIKED);
+                console.log(data.get("name") + this.constants.ALERT_LIKED);
               }
             })
             .catch(err => { setError(err) });

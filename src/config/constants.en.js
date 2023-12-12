@@ -563,12 +563,11 @@ export default {
 
   BASKET_EMPTY : "Your basket is empty !",
   BASKET_TOTAL : "The total of your basket is ",
-  CREATE_BY : "Created by ",
+  CREATE_ON : "Created on ",
   EDIT : "Edit",
   ERROR_LINK : "Go back home ?",
   HEAD_MOD : "mod/del",
   HEAD_UP : "up/del",
-  ON : " on ",
   PROFILE_OF : "Profile of ",
   TOTAL : "Total",
   UPDATE_ON : "Updated on ",

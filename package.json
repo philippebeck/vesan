@@ -1,6 +1,6 @@
 {
   "name": "vesan",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "UI with Vue-Elt, Servidio & Animadio",
   "author": {
     "name": "Philippe Beck",
@@ -8,7 +8,7 @@
     "url": "https://philippebeck.net"
   },
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "start": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
@@ -44,13 +44,13 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.2.1",
     "@paypal/paypal-js": "^5.1.4",
-    "@tinymce/tinymce-vue": "^5.0.0",
+    "@tinymce/tinymce-vue": "^5.1.1",
     "animadio": "^6.2.5",
     "axios": "^1.4.0",
     "core-js": "^3.8.3",
     "servidio": "^3.0.1",
     "vue": "^3.3.9",
-    "vue-elt": "^2.0.3-alpha",
+    "vue-elt": "^2.0.6-alpha",
     "vue-recaptcha": "^2.0.3",
     "vue-router": "^4.1.6",
     "vuex": "^4.0.2"

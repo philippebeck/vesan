@@ -1,128 +1,100 @@
 import { createRouter, createWebHistory } from "vue-router"
 
-import ArticleView from "@/views/public/ArticleView"
-import BasketView from "@/views/public/BasketView"
-import BlogView from "@/views/public/BlogView"
-import ContactView from "@/views/public/ContactView"
-import ErrorView from "@/views/public/ErrorView"
-import GalleryView from "@/views/public/GalleryView"
-import HomeView from "@/views/public/HomeView"
-import ImageView from "@/views/public/ImageView"
-import LegalView from "@/views/public/LegalView"
-import LinkView from "@/views/public/LinkView"
-import LoginView from "@/views/public/LoginView"
-import ProductView from "@/views/public/ProductView"
-import ShopView from "@/views/public/ShopView"
-
-const AdminEditor = () => import("@/views/private/AdminEditor")
-const ArticleEditor = () => import("@/views/private/ArticleEditor")
-const ProductEditor = () => import("@/views/private/ProductEditor")
-const ProfileEditor = () => import("@/views/private/ProfileEditor")
-
 const routes = [
-  // Public
+  // Base
   {
     path: "/",
     name: "home",
-    component: HomeView,
+    component: () => import("@/views/base/HomeView"),
     alias: ["/home"]
   },
   {
-    path: "/shop",
-    name: "shop",
-    component: ShopView,
-    alias: ["/products"]
+    path: "/legal",
+    name: "legal",
+    component: () => import("@/views/base/LegalView"),
+    alias: ["/notice"]
   },
-  {
-    path: "/product/:id",
-    name: "product",
-    component: ProductView,
-    alias: ["/shop/:id"]
-  },
+  // Com
   {
     path: "/blog",
     name: "blog",
-    component: BlogView,
+    component: () => import("@/views/com/BlogView"),
     alias: ["/articles"]
   },
   {
     path: "/article/:id",
     name: "article",
-    component: ArticleView,
+    component: () => import("@/views/com/ArticleView"),
     alias: ["/blog/:id"]
   },
   {
     path: "/contact",
     name: "contact",
-    component: ContactView,
+    component: () => import("@/views/com/ContactView"),
     alias: ["/message"]
   },
-  {
-    path: "/basket",
-    name: "basket",
-    component: BasketView,
-    alias: ["/cart"]
-  },
+  // Data
   {
     path: "/galleries",
     name: "gallery",
-    component: GalleryView,
+    component: () => import("@/views/data/GalleryView"),
     alias: ["/images"]
   },
   {
     path: "/gallery/:id",
     name: "image",
-    component: ImageView,
+    component: () => import("@/views/data/ImageView"),
     alias: ["/images/:id"]
   },
   {
     path: "/links",
     name: "link",
-    component: LinkView,
+    component: () => import("@/views/data/LinkView"),
     alias: ["/link"]
   },
+  // Shop
   {
-    path: "/legal",
-    name: "legal",
-    component: LegalView,
-    alias: ["/notice"]
+    path: "/shop",
+    name: "shop",
+    component: () => import("@/views/shop/ShopView"),
+    alias: ["/products"]
+  },
+  {
+    path: "/product/:id",
+    name: "product",
+    component: () => import("@/views/shop/ProductView"),
+    alias: ["/shop/:id"]
+  },
+  {
+    path: "/basket",
+    name: "basket",
+    component: () => import("@/views/shop/BasketView"),
+    alias: ["/cart"]
+  },
+  // Admin
+  {
+    path: "/admin",
+    name: "admin",
+    component: () => import("@/views/admin/AdminView"),
+    meta: { requiresAuth: true }
   },
   {
     path: "/login",
     name: "login",
-    component: LoginView,
+    component: () => import("@/views/admin/LoginView"),
     alias: ["/connection"]
   },
-  // Private
   {
     path: "/profile",
     name: "profile",
-    component: ProfileEditor,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/admin",
-    name: "admin",
-    component: AdminEditor,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/article/edit/:id",
-    name: "articleEditor",
-    component: ArticleEditor,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/product/edit/:id",
-    name: "productEditor",
-    component: ProductEditor,
+    component: () => import("@/views/admin/ProfileView"),
     meta: { requiresAuth: true }
   },
   // Error
   {
     path: "/:pathMatch(.*)*",
     name: "error",
-    component: ErrorView
+    component: () => import("@/views/base/ErrorView")
   }
 ]
 

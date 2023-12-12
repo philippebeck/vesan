@@ -97,7 +97,7 @@ export default {
         setMeta(
           gallery.name + this.constants.HEAD, 
           this.constants.META_IMAGE + gallery.author,
-          this.constants.UI_URL + "/gallery/" + gallery._id,
+          this.constants.UI_URL + "/gallery/" + gallery.id,
           this.constants.UI_URL + "/img/thumbnails/galleries/" + gallery.cover
         );
       })

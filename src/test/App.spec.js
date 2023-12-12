@@ -1,7 +1,7 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import { createStore } from 'vuex';
 import { createRouter, createWebHistory } from 'vue-router'
-import * as serve from "../../assets/serve.js"
+import * as serve from "servidio"
 import constants from "../../constants.js"
 import App from "../../App"
 

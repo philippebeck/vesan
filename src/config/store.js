@@ -55,6 +55,7 @@ export default createStore({
      * @param {any} article - The new value for the 'article' property.
      */
     SET_ARTICLE(state, article) {
+      article.likes = JSON.parse(article.likes);
       state.article = article;
     },
 
@@ -102,6 +103,9 @@ export default createStore({
      * @param {Array} articles - The new value for the articles property.
      */
     SET_ARTICLES(state, articles) {
+      for (let article of articles) {
+        article.likes = JSON.parse(article.likes);
+      }
       state.articles = articles;
     },
 

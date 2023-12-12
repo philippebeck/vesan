@@ -1,6 +1,6 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import * as serve from "../../../assets/serve.js"
-import LoginView from "../../../views/LoginView"
+import * as serve from "servidio"
+import LoginView from "../../views/admin/LoginView"
 
 let wrapper;
 let setMetaSpy;

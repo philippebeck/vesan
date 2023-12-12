@@ -1,25 +1,22 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import { createStore } from 'vuex';
-import * as serve from "../../../assets/serve"
-import GalleryView from "../../../views/GalleryView"
+import * as serve from "servidio"
+import LinkView from "../../views/data/LinkView"
 
 let wrapper;
 let store;
 let actions;
 let state;
 
-/**
- * @jest-environment jsdom
- */
 beforeEach(() => {
   jest.spyOn(serve, "setMeta").mockImplementation(() => {});
 
   actions = {
-    listGalleries: jest.fn()
+    listLinks: jest.fn()
   };
 
   state = {
-    galleries: []
+    links: []
   };
 
   store = createStore({
@@ -29,7 +26,7 @@ beforeEach(() => {
     actions: actions
   })
 
-  wrapper = shallowMount(GalleryView, {
+  wrapper = shallowMount(LinkView, {
     props: {
       constants: {
         TEST: "test"
@@ -47,30 +44,30 @@ beforeEach(() => {
 
 enableAutoUnmount(afterEach)
 
-describe("GalleryView", () => {
-  test("wrapper must be a vue instance", () => {
+/**
+ * @jest-environment jsdom
+ */
+describe("LinkView", () => {
+  test("wrapper", () => { 
     expect(wrapper.exists()).toBe(true)
   })
 
-  test("wrapper components", () => {
+  test("components", () => { 
+    expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object")
-    expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object")
-    expect(typeof wrapper.findComponent({ name: "GalleryCreator" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "NavElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "LinkCreator" })).toBe("object")
   })
 
-  test("wrapper props", () => {
+  test("props", () => { 
     expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
-    expect(wrapper.props("user")).toStrictEqual({ name: "test", email: "email@test.com" })
+    expect(wrapper.props("user")).toStrictEqual({ name: "test", email: "email@test.com"})
   })
 
-  test("wrapper created hook", () => {
-    expect(serve.setMeta).toHaveBeenCalled()
-    expect(actions.listGalleries).toHaveBeenCalled()
-  })
-
-  test("wrapper methods", () => {
-    expect(typeof wrapper.vm.listGalleries).toBe("function")
+  test("methods", () => { 
+    expect(typeof wrapper.vm.listLinks).toBe("function")
     expect(typeof wrapper.vm.checkSession).toBe("function")
+    expect(typeof wrapper.vm.getItemsByCategory).toBe("function")
   })
 })
