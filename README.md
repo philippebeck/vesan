@@ -68,7 +68,7 @@ Install the frontend dependencies & create assets components :
 ## Configuration
 
 To configure the frontend, replace values :  
-`constants.en.js || constants.fr.js` *(then rename it constants.js)*  
+`values.en.js || values.fr.js` *(then rename it values.js)*  
 
 ---
 
