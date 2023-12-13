@@ -397,7 +397,9 @@ export default {
   /******************** INFO ********************/
 
   INFO_ALT : "Alternative text",
+  INFO_AUTHOR : "Write the author's name",
   INFO_CATEGORY : "Choose a category",
+  INFO_DESCRIPTION: "Write a description",
   INFO_EMAIL : "john@doe.com",
   INFO_IMAGE : "Image file only",
   INFO_NAME : "My new name",

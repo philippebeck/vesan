@@ -397,10 +397,12 @@ export default {
   /******************** INFO ********************/
 
   INFO_ALT : "Texte alternatif",
+  INFO_AUTHOR: "Écrivez le nom de l'auteur",
   INFO_CATEGORY : "Choisissez une catégorie",
+  INFO_DESCRIPTION: "Écrivez une description",
   INFO_EMAIL : "john@doe.com",
   INFO_IMAGE : "Fichier image uniquement",
-  INFO_NAME : "Mon nouveau nom",
+  INFO_NAME : "Écrivez un nom",
   INFO_OPTION : "Choisissez une option",
   INFO_OPTIONS : "option-1,option-2,option-3,etc",
   INFO_PASSWORD : "********",
@@ -460,7 +462,7 @@ export default {
   LABEL_EMAIL : "Ecrivez votre email",
   LABEL_IMAGE : "Fournissez une image",
   LABEL_GALLERY : "Choisissez une galerie",
-  LABEL_NAME : "Ecrivez un nom",
+  LABEL_NAME : "Indiquer un nom",
   LABEL_OPTION : "Indiquez l'option du produit",
   LABEL_OPTIONS : "Ecrivez les options",
   LABEL_PASSWORD : "8 à 50 caractères avec majuscule & minuscule, 1 nombre mini & pas d'espace",
