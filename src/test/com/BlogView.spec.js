@@ -28,7 +28,7 @@ beforeEach(() => {
 
   wrapper = shallowMount(BlogView, {
     props: {
-      constants: {
+      val: {
         TEST: "test"
       },
       user: {
@@ -62,7 +62,7 @@ describe("BlogView", () => {
   })
 
   test("props", () => { 
-    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
+    expect(wrapper.props("val")).toStrictEqual({ TEST: "test" })
     expect(wrapper.props("user")).toStrictEqual({ name: "test", email: "email@test.com" })
   })
 

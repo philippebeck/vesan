@@ -65,7 +65,7 @@ beforeEach(() => {
 
   wrapper = shallowMount(ArticleView, {
     props: {
-      constants: {
+      val: {
         TEST: "test"
       },
       user: user
@@ -99,7 +99,7 @@ describe("ArticleView", () => {
   })
 
   test("props", () => { 
-    expect(wrapper.props().constants).toStrictEqual({ TEST: "test" })
+    expect(wrapper.props().val).toStrictEqual({ TEST: "test" })
   })
 
   test("methods", () => { 

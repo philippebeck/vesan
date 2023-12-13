@@ -6,7 +6,7 @@ let wrapper;
 beforeEach(() => {
   wrapper = shallowMount(ErrorView, {
     props: {
-      constants: {
+      val: {
         TEST: "test"
       }
     },
@@ -45,6 +45,6 @@ describe("Mounted ErrorView", () => {
   })
 
   test("wrapper props", () => { 
-    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
+    expect(wrapper.props("val")).toStrictEqual({ TEST: "test" })
   })
 })

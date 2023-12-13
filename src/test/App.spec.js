@@ -2,7 +2,7 @@ import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import { createStore } from 'vuex';
 import { createRouter, createWebHistory } from 'vue-router'
 import * as serve from "servidio"
-import constants from "../../constants.js"
+import val from "../../val.js"
 import App from "../../App"
 
 const router = createRouter({
@@ -44,7 +44,7 @@ beforeEach(() => {
   wrapper = shallowMount(App, {
     data() {
       return {
-        constants: constants
+        val: val
       }
     },
     global: {
@@ -70,7 +70,7 @@ describe("App", () => {
   })
 
   test("data", () => { 
-    expect(wrapper.vm.constants).toStrictEqual(constants)
+    expect(wrapper.vm.val).toStrictEqual(val)
   })
 
   test("methods", () => { 

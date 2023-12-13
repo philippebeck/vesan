@@ -24,7 +24,7 @@ beforeEach(() => {
 
   wrapper = shallowMount(LoginView, {
     props: {
-      constants: {
+      val: {
         HEAD_LOGIN: "test head login",
         META_LOGIN: "test meta login",
         UI_URL: "test-ui-url",
@@ -66,7 +66,7 @@ describe("LoginView", () => {
   })
 
   test("wrapper props", () => { 
-    expect(wrapper.props().constants).toStrictEqual({ 
+    expect(wrapper.props().val).toStrictEqual({ 
       HEAD_LOGIN: "test head login",
       META_LOGIN: "test meta login",
       UI_URL: "test-ui-url",
@@ -90,10 +90,10 @@ describe("LoginView", () => {
 
   test('calls setMeta with the correct arguments', () => {
     expect(setMetaSpy).toHaveBeenCalledWith(
-      wrapper.vm.constants.HEAD_LOGIN,
-      wrapper.vm.constants.META_LOGIN,
-      `${wrapper.vm.constants.UI_URL}/login`,
-      `${wrapper.vm.constants.UI_URL}${wrapper.vm.constants.LOGO_SRC}`
+      wrapper.vm.val.HEAD_LOGIN,
+      wrapper.vm.val.META_LOGIN,
+      `${wrapper.vm.val.UI_URL}/login`,
+      `${wrapper.vm.val.UI_URL}${wrapper.vm.val.LOGO_SRC}`
     );
   });
 

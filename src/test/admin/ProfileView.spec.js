@@ -36,7 +36,7 @@ beforeEach(() => {
 
   wrapper = shallowMount(ProfileEditor, {
     props: {
-      constants: {
+      val: {
         TEST: "test"
       }
     },
@@ -75,7 +75,7 @@ describe("ProfileEditor", () => {
   })
 
   test("props", () => { 
-    expect(wrapper.props().constants).toStrictEqual({ TEST: "test" })
+    expect(wrapper.props().val).toStrictEqual({ TEST: "test" })
   })
 
   test("data", () => { 
