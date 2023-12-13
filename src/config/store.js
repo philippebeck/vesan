@@ -1,4 +1,4 @@
-import constants from "./constants"
+import val from "./values"
 import { getData, setError } from "servidio"
 import { createStore } from "vuex"
 
@@ -203,7 +203,7 @@ export default createStore({
      * when the article is read & committed to the context.
      */
     async readArticle(context, id) {
-      getData(constants.API_URL + "/articles/" + id)
+      getData(`${val.API_URL}/articles/${id}`)
         .then(res => { context.commit("SET_ARTICLE", res) })
         .catch(err => { setError(err) });
     },
@@ -219,7 +219,7 @@ export default createStore({
      * to the result of reading the avatar.
      */
     async readAvatar(context, id) {
-      getData(constants.API_URL + "/auth/" + id)
+      getData(`${val.API_URL}/auth/${id}`)
         .then(res => { context.commit("SET_USER", res) })
         .catch(err => { setError(err) });
     },
@@ -235,7 +235,7 @@ export default createStore({
      * successfully read & committed, or rejects with an error.
      */
     async readGallery(context, id) {
-      getData(constants.API_URL + "/galleries/" + id)
+      getData(`${val.API_URL}/galleries/${id}`)
         .then(res => { context.commit("SET_GALLERY", res) })
         .catch(err => { setError(err) });
     },
@@ -249,7 +249,7 @@ export default createStore({
      * @return {Promise} A promise that resolves with the product data.
      */
     async readProduct(context, id) {
-      getData(constants.API_URL + "/products/" + id)
+      getData(`${val.API_URL}/products/${id}`)
         .then(res => { context.commit("SET_PRODUCT", res) })
         .catch(err => { setError(err) });
     },
@@ -267,7 +267,7 @@ export default createStore({
      * when the user is successfully retrieved & the state is updated.
      */
     async readUser(context, id) {
-      getData(constants.API_URL + "/users/" + id, constants.TOKEN)
+      getData(`${val.API_URL}/users/${id}`, val.TOKEN)
         .then(res => { context.commit("SET_USER", res) })
         .catch(err => { setError(err) });
     },
@@ -283,7 +283,7 @@ export default createStore({
      * with the result of the API call.
      */
     async listArticles(context) {
-      getData(constants.API_URL + "/articles")
+      getData(`${val.API_URL}/articles`)
         .then(res => { context.commit("SET_ARTICLES", res) })
         .catch(err => { setError(err) });
     },
@@ -298,7 +298,7 @@ export default createStore({
  * when the galleries are set in the context state.
  */
     async listGalleries(context) {
-      getData(constants.API_URL + "/galleries")
+      getData(`${val.API_URL}/galleries`)
         .then(res => { context.commit("SET_GALLERIES", res) })
         .catch(err => { setError(err) });
     },
@@ -314,7 +314,7 @@ export default createStore({
      * have been retrieved and the state has been updated.
      */
     async listGalleryImages(context, id) {
-      getData(constants.API_URL + "/images/" + id)
+      getData(`${val.API_URL}/images/${id}`)
         .then(res => { context.commit("SET_IMAGES", res) })
         .catch(err => { setError(err) });
     },
@@ -327,7 +327,7 @@ export default createStore({
      * @return {Promise} A promise that resolves
      */
     async listLinks(context) {
-      getData(constants.API_URL + "/links")
+      getData(`${val.API_URL}/links`)
         .then(res => { context.commit("SET_LINKS", res) })
         .catch(err => { setError(err) });
     },
@@ -340,7 +340,7 @@ export default createStore({
      * @return {Promise} A promise that resolves
      */
     async listProducts(context) {
-      getData(constants.API_URL + "/products")
+      getData(`${val.API_URL}/products`)
         .then(res => { context.commit("SET_PRODUCTS", res) })
         .catch(err => { setError(err) });
     },
@@ -357,7 +357,7 @@ export default createStore({
      * with the result of the API call.
      */
     async listImages(context) {
-      getData(constants.API_URL + "/images", constants.TOKEN)
+      getData(`${val.API_URL}/images`, val.TOKEN)
         .then(res => { context.commit("SET_IMAGES", res) })
         .catch(err => { setError(err) });
     },
@@ -372,7 +372,7 @@ export default createStore({
      * with the user orders or rejects with an error.
      */
     async listUserOrders(context, id) {
-      getData(constants.API_URL + "/orders/" + id, constants.TOKEN)
+      getData(`${val.API_URL}/orders/${id}`, val.TOKEN)
         .then(res => { context.commit("SET_USER_ORDERS", res) })
         .catch(err => { setError(err) });
     },
@@ -386,7 +386,7 @@ export default createStore({
      * with the list of orders.
      */
     async listOrders(context) {
-      getData(constants.API_URL + "/orders", constants.TOKEN)
+      getData(`${val.API_URL}/orders`, val.TOKEN)
         .then(res => { context.commit("SET_ORDERS", res) })
         .catch(err => { setError(err) });
     },
@@ -400,7 +400,7 @@ export default createStore({
      * with the list of users.
      */
     async listUsers(context) {
-      getData(constants.API_URL + "/users", constants.TOKEN)
+      getData(`${val.API_URL}/users`, val.TOKEN)
         .then(res => { context.commit("SET_USERS", res) })
         .catch(err => { setError(err) });
     }
