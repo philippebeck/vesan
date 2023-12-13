@@ -176,8 +176,10 @@ export default {
     ...mapState(["articles"]),
 
     /**
-     * GET CATEGORIES
-     * @returns
+     * ? GET CATEGORIES
+     * Retrieves the categories of articles.
+     *
+     * @return {Array} An array of article categories.
      */
     getCategories() {
       return getCats(this.articles);
@@ -188,76 +190,71 @@ export default {
     ...mapActions(["listArticles"]),
 
     /**
-     * CHECK ROLE
-     * @param {string} role
-     * @returns
+     * ? CHECK SESSION
+     * Checks the session for the specified role.
+     *
+     * @param {type} role - the role to check
+     * @return {type} the result of the role check
      */
     checkSession(role) {
       return checkRole(this.user.role, role);
     },
 
     /**
-     * SORT ITEMS BY CATEGORY
-     * @param {array} items 
-     * @returns
+     * ? GET ITEMS BY CATEGORY
+     * Retrieves items based on category.
+     *
+     * @param {Array} items - The list of items to filter.
+     * @return {Array} The filtered list of items.
      */
     getItemsByCategory(items) {
       return getItemsByCat(items);
     },
 
     /**
-     * CHECK LIKES
-     * @param {string} id
-     * @returns
+     * ? CHECK LIKES
+     * Check if the given ID is present in the likes array of any article
+     * associated with the current user.
+     *
+     * @param {type} id - The ID to check for in the likes array.
+     * @return {type} - Returns a boolean indicating whether the ID is present in the likes array.
      */
     checkLikes(id) {
-      for (let article of this.articles) {
-        if (article.id === id) {
-          return article.likes.includes(this.val.USER_ID);
-        }
-      }
+      return this.articles.some(a => a.id === id && a.likes.includes(this.val.USER_ID));
     },
 
     /**
-     * ADD LIKE
-     * @param {string} id 
+     * ? ADD LIKE
+     * Add a like to the article with the specified ID.
+     *
+     * @param {number} id - The ID of the article.
      */
     addLike(id) {
-      let hasLiked = false;
+      const { USER_ID, API_URL, TOKEN } = this.val;
 
-      for (let i = 0; i < this.articles.length; i++) {
-        if (id === this.articles[i].id) {
-          let likes = this.articles[i].likes;
+      const article = this.articles.find(a => a.id === id);
+      if (!article) return;
 
-          for (let j = 0; j < likes.length; j++) {
-            if (this.val.USER_ID === likes[j]) {
-              likes.splice(j, 1);
-              hasLiked = true;
-            }
-          }
+      const { name, text, image, alt, likes, cat } = article;
+      const index = likes.indexOf(USER_ID);
 
-          if (hasLiked === false) likes.push(this.val.USER_ID);
-          const URL   = this.val.API_URL + "/articles/" + id;
-          const data  = new FormData();
-
-          data.append("name", this.articles[i].name);
-          data.append("text", this.articles[i].text);
-          data.append("image", this.articles[i].image);
-          data.append("alt", this.articles[i].alt);
-          data.append("likes", JSON.stringify(likes));
-          data.append("cat", this.articles[i].cat);
-
-          putData(URL, data, this.val.TOKEN)
-            .then(() => {
-              if (hasLiked === true) {
-                console.log(data.get("name") + this.val.ALERT_DISLIKED);
-              } else {
-                console.log(data.get("name") + this.val.ALERT_LIKED);
-              }
-            })
-            .catch(err => { setError(err) });
-        }
+      if (index > -1) {
+        likes.splice(index, 1);
+      } else {
+        likes.push(USER_ID);
       }
+
+      const URL = `${API_URL}/articles/${id}`;
+      const data = new FormData();
+
+      data.append("name", name);
+      data.append("text", text);
+      data.append("image", image);
+      data.append("alt", alt);
+      data.append("likes", JSON.stringify(likes));
+      data.append("cat", cat);
+
+      putData(URL, data, TOKEN).catch(setError);
     }
   }
 }

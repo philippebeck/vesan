@@ -253,88 +253,78 @@ export default {
 
   methods: {
     /**
-     * CHECK SESSION
-     * @param {string} role
-     * @returns
+     * ? CHECK SESSION
+     * Checks if the current user session has a specific role.
+     *
+     * @param {string} role - The role to check.
+     * @return {boolean} Returns true if the user has the specified role, otherwise false.
      */
     checkSession(role) {
       return checkRole(this.user.role, role);
     },
 
     /**
-     * CHECK LIKES
-     * @returns
+     * ? CHECK LIKES
+     * Check if the current user has liked the article.
+     *
+     * @return {boolean} True if the user has liked the article, false otherwise.
      */
     checkLikes() {
-      if (this.article.likes) {
-        return this.article.likes.includes(this.val.USER_ID);
-      }
+      return this.article.likes && this.article.likes.includes(this.val.USER_ID);
     },
 
     /**
-     * ADD LIKE
+     * ? ADD LIKE
+     * Adds a like to the article.
      */
     addLike() {
-      let hasLiked  = false;
-      let likes     = this.article.likes;
+      const { USER_ID, API_URL, TOKEN } = this.val;
+      const { id, name, text, image, alt, likes, cat } = this.article;
 
-      for (let i = 0; i < likes.length; i++) {
-        if (this.val.USER_ID === likes[i]) {
-          likes.splice(i, 1);
-          hasLiked = true;
-        }
-      }
+      likes.includes(USER_ID) ? likes.splice(likes.indexOf(USER_ID), 1) : likes.push(USER_ID);
 
-      if (hasLiked === false) likes.push(this.val.USER_ID);
+      const URL = `${API_URL}/articles/${id}`;
+      const data = new FormData();
 
-      const URL   = this.val.API_URL + "/articles/" + this.article.id;
-      const data  = new FormData();
-
-      data.append("name", this.article.name);
-      data.append("text", this.article.text);
-      data.append("image", this.article.image);
-      data.append("alt", this.article.alt);
+      data.append("name", name);
+      data.append("text", text);
+      data.append("image", image);
+      data.append("alt", alt);
       data.append("likes", JSON.stringify(likes));
-      data.append("cat", this.article.cat);
+      data.append("cat", cat);
 
-      putData(URL, data, this.val.TOKEN)
-        .then(() => {
-          if (hasLiked === true) {
-            console.log(this.article.name + this.val.ALERT_DISLIKED);
-          } else {
-            console.log(this.article.name + this.val.ALERT_LIKED);
-          }
-        })
-        .catch(err => { setError(err) });
+      putData(URL, data, TOKEN).catch(setError);
     },
 
     /**
-     * UPDATE ARTICLE
+     * ? UPDATE ARTICLE
+     * Updates the article with the provided data.
      */
     updateArticle() {
-      const MSG = this.val.CHECK_STRING;
+      const { CHECK_STRING, TEXT_MIN, TEXT_MAX, API_URL, TOKEN, ALERT_UPDATED } = this.val;
+      const { id, name, text, image, alt, likes, cat } = this.article;
 
-      if (checkRange(this.article.name, MSG) &&
-          checkRange(this.article.text, MSG, this.val.TEXT_MIN, this.val.TEXT_MAX) &&
-          checkRange(this.article.alt, MSG)) {
+      if (checkRange(name, CHECK_STRING) &&
+          checkRange(text, CHECK_STRING, TEXT_MIN, TEXT_MAX) &&
+          checkRange(alt, CHECK_STRING)) {
 
-        const URL   = this.val.API_URL + "/articles/" + this.article.id;
+        const URL   = `${API_URL}/articles/${id}`;
         const data  = new FormData();
-        const image = document.getElementById("image").files[0] ?? this.article.image;
+        const img   = document.getElementById("image")?.files[0] ?? image;
 
-        data.append("name", this.article.name);
-        data.append("text", this.article.text);
-        data.append("image", image);
-        data.append("alt", this.article.alt);
-        data.append("likes", JSON.stringify(this.article.likes));
-        data.append("cat", this.article.cat);
+        data.append("name", name);
+        data.append("text", text);
+        data.append("image", img);
+        data.append("alt", alt);
+        data.append("likes", JSON.stringify(likes));
+        data.append("cat", cat);
 
-        putData(URL, data)
+        putData(URL, data, TOKEN)
           .then(() => {
-            alert(this.article.name + this.val.ALERT_UPDATED);
-            this.$router.push("/admin");
+            alert(name + ALERT_UPDATED);
+            this.$router.go();
           })
-          .catch(err => { setError(err) });
+          .catch(setError);
       }
     }
   }

@@ -122,37 +122,33 @@ export default {
 
   methods: {
     /**
-     * ON VERIFY
-     * @param {object} response 
+     * ? ON VERIFY
+     * Handles the verification process.
+     *
+     * @param {any} response - The response from the verification process.
      */
     onVerify(response) {
-      const MSG = this.val.CHECK_STRING;
+      const {CHECK_EMAIL, CHECK_STRING, REGEX_EMAIL, TEXT_MIN, TEXT_MAX, API_URL } = this.val;
 
-      if (checkRegex(this.email, this.val.CHECK_EMAIL, this.val.REGEX_EMAIL) &&
-          checkRange(this.subject, MSG) &&
-          checkRange(this.text, MSG, this.val.TEXT_MIN, this.val.TEXT_MAX)) {
+      if (checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL) &&
+          checkRange(this.subject, CHECK_STRING) &&
+          checkRange(this.text, CHECK_STRING, TEXT_MIN, TEXT_MAX)) {
 
-        postData(this.val.API_URL + "/auth/recaptcha", { response: response })
-          .then(result => {
-            if (result.success) {
-              this.send();
+        const URL = `${API_URL}/auth/recaptcha`;
 
-            } else {
-              alert("Failed captcha verification");
-            }
-          })
-          .catch(err => {
-            setError(err);
-            this.$router.go();
-          });
+        postData(URL, { response })
+          .then(({ success }) => success ? this.send() : alert("Failed captcha verification") )
+          .catch(setError)
+          .finally(() => this.$router.go());
       }
     },
 
     /**
-     * SEND A CONTACT MESSAGE
+     * ? SEND
+     * Sends a message to the API.
      */
     send() {
-      const URL   = this.val.API_URL + "/users/message";
+      const URL   = `${this.val.API_URL}/users/message`;
       const data  = new FormData();
 
       data.append("email", this.email);
@@ -164,7 +160,7 @@ export default {
           alert(this.subject + this.val.ALERT_SENDED);
           this.$router.push("/");
         })
-        .catch(err => { setError(err) });
+        .catch(setError);
     }
   }
 }
