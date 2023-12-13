@@ -11,8 +11,8 @@
         <MediaElt v-if="product.image"
           :src="`/img/products/${product.image}`"
           :alt="product.alt"
-          :width="constants.IMG_WIDTH"
-          :height="constants.IMG_HEIGHT"
+          :width="val.IMG_WIDTH"
+          :height="val.IMG_HEIGHT"
           itemprop="image">
 
           <template #figcaption>
@@ -37,13 +37,13 @@
             :list="product.options"
             v-model:value="option"
             @keyup.enter="addToBasket()"
-            :info="constants.INFO_OPTION">
+            :info="val.INFO_OPTION">
 
             <template #legend>
-              {{ constants.LEGEND_OPTION }}
+              {{ val.LEGEND_OPTION }}
             </template>
             <template #label>
-              {{ constants.LABEL_OPTION }}
+              {{ val.LABEL_OPTION }}
             </template>
           </FieldElt>
 
@@ -51,22 +51,22 @@
             type="number"
             v-model:value="quantity"
             @keyup.enter="addToBasket()"
-            :info="constants.INFO_QUANTITY"
+            :info="val.INFO_QUANTITY"
             :min="1">
 
             <template #legend>
-              {{ constants.LEGEND_QUANTITY }}
+              {{ val.LEGEND_QUANTITY }}
             </template>
             <template #label>
-              {{ constants.LABEL_QUANTITY }}
+              {{ val.LABEL_QUANTITY }}
             </template>
           </FieldElt>
 
           <BtnElt type="button"
             @click="addToBasket()"
             class="btn-green width-sm"
-            :content="constants.CONTENT_ADD"
-            :title="constants.CONTENT_ADD + product.name">
+            :content="val.CONTENT_ADD"
+            :title="val.CONTENT_ADD + product.name">
 
             <template #btn>
               <i class="fa-solid fa-basket-shopping fa-lg"></i>
@@ -79,36 +79,36 @@
     <CardElt v-if="checkSession('editor')"
       id="create-product">
       <template #header>
-        <h2>{{ constants.EDIT }} {{ product.name }}</h2>
+        <h2>{{ val.EDIT }} {{ product.name }}</h2>
       </template>
 
       <template #body>
         <form method="post"
           enctype="multipart/form-data">
-          <ListElt :items="constants.PRODUCT_FORM">
+          <ListElt :items="val.PRODUCT_FORM">
 
             <template #item-1>
               <FieldElt v-model:value="product.name"
                 @keyup.enter="updateProduct()"
-                :info="constants.INFO_NAME"
+                :info="val.INFO_NAME"
                 :min="2">
 
                 <template #legend>
-                  {{ constants.LEGEND_NAME }}
+                  {{ val.LEGEND_NAME }}
                 </template>
                 <template #label>
-                  {{ constants.LABEL_NAME }}
+                  {{ val.LABEL_NAME }}
                 </template>
               </FieldElt>
             </template>
 
             <template #item-2>
               <label for="description">
-                {{ constants.LEGEND_DESCRIPTION }}
+                {{ val.LEGEND_DESCRIPTION }}
               </label>
 
               <Editor id="description"
-                :api-key="constants.TINY_KEY"
+                :api-key="val.TINY_KEY"
                 v-model="product.description"
                 :init="{
                   toolbar:
@@ -126,13 +126,13 @@
               <FieldElt id="image"
                 type="file"
                 v-model:value="image"
-                :info="constants.INFO_IMAGE">
+                :info="val.INFO_IMAGE">
 
                 <template #legend>
-                  {{ constants.LEGEND_IMAGE }}
+                  {{ val.LEGEND_IMAGE }}
                 </template>
                 <template #label>
-                  {{ constants.LABEL_IMAGE }}
+                  {{ val.LABEL_IMAGE }}
                 </template>
               </FieldElt>
             </template>
@@ -140,13 +140,13 @@
             <template #item-4>
               <FieldElt type="textarea"
                 v-model:value="product.alt"
-                :info="constants.INFO_ALT">
+                :info="val.INFO_ALT">
 
                 <template #legend>
-                  {{ constants.LEGEND_ALT }}
+                  {{ val.LEGEND_ALT }}
                 </template>
                 <template #label>
-                  {{ constants.LABEL_ALT }}
+                  {{ val.LABEL_ALT }}
                 </template>
               </FieldElt>
             </template>
@@ -155,15 +155,15 @@
               <FieldElt type="number"
                 v-model:value="product.price"
                 @keyup.enter="updateProduct()"
-                :info="constants.INFO_PRICE"
+                :info="val.INFO_PRICE"
                 :min="1"
                 :max="1000">
 
                 <template #legend>
-                  {{ constants.LEGEND_PRICE }}
+                  {{ val.LEGEND_PRICE }}
                 </template>
                 <template #label>
-                  {{ constants.LABEL_PRICE }}
+                  {{ val.LABEL_PRICE }}
                 </template>
               </FieldElt>
             </template>
@@ -172,30 +172,30 @@
               <FieldElt type="textarea"
                 v-model:value="product.options"
                 @keyup.enter="updateProduct()"
-                :info="constants.INFO_OPTIONS"
+                :info="val.INFO_OPTIONS"
                 :max="100">
 
                 <template #legend>
-                  {{ constants.LEGEND_OPTIONS }}
+                  {{ val.LEGEND_OPTIONS }}
                 </template>
                 <template #label>
-                  {{ constants.LABEL_OPTIONS }}
+                  {{ val.LABEL_OPTIONS }}
                 </template>
               </FieldElt>
             </template>
 
             <template #item-7>
               <FieldElt type="select"
-                :list="constants.CATS_PRODUCT"
+                :list="val.CATS_PRODUCT"
                 v-model:value="product.cat"
                 @keyup.enter="updateProduct()"
-                :info="constants.INFO_CATEGORY">
+                :info="val.INFO_CATEGORY">
 
                 <template #legend>
-                  {{ constants.LEGEND_CATEGORY }}
+                  {{ val.LEGEND_CATEGORY }}
                 </template>
                 <template #label>
-                  {{ constants.LABEL_CATEGORY }}
+                  {{ val.LABEL_CATEGORY }}
                 </template>
               </FieldElt>
             </template>
@@ -204,8 +204,8 @@
           <BtnElt type="button"
             @click="updateProduct()" 
             class="btn-sky"
-            :content="constants.CONTENT_UPDATE"
-            :title="constants.TITLE_UPDATE + product.name">
+            :content="val.CONTENT_UPDATE"
+            :title="val.TITLE_UPDATE + product.name">
 
             <template #btn>
               <i class="fa-solid fa-cloud-arrow-up fa-lg"></i>
@@ -238,7 +238,7 @@ export default {
     MediaElt,
     Editor
   },
-  props: ["constants", "user"],
+  props: ["val", "user"],
 
   data() {
     return {
@@ -253,15 +253,15 @@ export default {
   },
 
   created() {
-    getData(this.constants.API_URL + "/products/" + this.$route.params.id)
+    getData(this.val.API_URL + "/products/" + this.$route.params.id)
       .then((product => {
         this.product = product;
 
         setMeta(
-          product.name + this.constants.HEAD, 
+          product.name + this.val.HEAD, 
           (product.description || "").slice(0, 160).replace(/(<([^>]+)>)/gi, ""),
-          this.constants.UI_URL + "/product/" + product.id,
-          this.constants.UI_URL + "/img/thumbnails/products/" + product.image
+          this.val.UI_URL + "/product/" + product.id,
+          this.val.UI_URL + "/img/thumbnails/products/" + product.image
         );
       }))
       .catch(err => { 
@@ -269,7 +269,7 @@ export default {
         this.$router.push("/shop");
       });
 
-    this.priceCurrency = this.constants.CURRENCY_ISO;
+    this.priceCurrency = this.val.CURRENCY_ISO;
   },
 
   updated() {
@@ -301,7 +301,7 @@ export default {
         this.setBasket();
 
       } else {
-        alert(this.constants.ALERT_OPTION);
+        alert(this.val.ALERT_OPTION);
       }
     },
 
@@ -353,7 +353,7 @@ export default {
       if (this.basket[0] === "") { this.basket.shift() }
 
       localStorage.setItem("basket", JSON.stringify(this.basket));
-      alert(`${this.order.quantity} "${this.product.name}" (${this.order.option}) ${this.constants.ALERT_BASKET_ADDED}`);
+      alert(`${this.order.quantity} "${this.product.name}" (${this.order.option}) ${this.val.ALERT_BASKET_ADDED}`);
 
       this.$router.push("/shop");
     },
@@ -362,12 +362,12 @@ export default {
      * UPDATE PRODUCT
      */
     updateProduct() {
-      const PRICE_MAX  = this.constants.PRICE_MAX;
-      const PRICE_MIN  = this.constants.PRICE_MIN;
-      const PRICE_MSG  = this.constants.CHECK_NUMBER;
-      const STRING_MSG = this.constants.CHECK_STRING;
-      const TEXT_MAX   = this.constants.TEXT_MAX;
-      const TEXT_MIN   = this.constants.TEXT_MIN;
+      const PRICE_MAX  = this.val.PRICE_MAX;
+      const PRICE_MIN  = this.val.PRICE_MIN;
+      const PRICE_MSG  = this.val.CHECK_NUMBER;
+      const STRING_MSG = this.val.CHECK_STRING;
+      const TEXT_MAX   = this.val.TEXT_MAX;
+      const TEXT_MIN   = this.val.TEXT_MIN;
 
       if (checkRange(this.product.name, STRING_MSG) && 
           checkRange(this.product.description, STRING_MSG, TEXT_MIN, TEXT_MAX) && 
@@ -387,9 +387,9 @@ export default {
         data.append("cat", this.product.cat);
         data.append("created", this.product.created);
 
-        putData(this.constants.API_URL + "/products/" + this.product.id, data)
+        putData(this.val.API_URL + "/products/" + this.product.id, data)
           .then(() => {
-            alert(this.product.name + this.constants.ALERT_UPDATED);
+            alert(this.product.name + this.val.ALERT_UPDATED);
             this.$router.push("/admin");
           })
           .catch(err => { setError(err) });

@@ -5,45 +5,45 @@
         <i class="fa-solid fa-envelope-open-text fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.CONTACT_VIEW }}
+        {{ val.CONTACT_VIEW }}
       </h1>
     </header>
 
     <CardElt>
       <template #header>
         <h2 class="ani-flipX-loop-altrev-into">
-          {{ constants.CONTACT_SUB }}
+          {{ val.CONTACT_SUB }}
         </h2>
-        <b>{{ constants.INTRO_CONTACT }}</b>
+        <b>{{ val.INTRO_CONTACT }}</b>
       </template>
 
       <template #body>
         <form>
-          <ListElt :items="constants.CONTACT_FORM">
+          <ListElt :items="val.CONTACT_FORM">
 
             <template #item-1>
               <FieldElt type="email"
                 v-model:value="email"
-                :info="constants.INFO_EMAIL">
+                :info="val.INFO_EMAIL">
 
                 <template #legend>
-                  {{ constants.LEGEND_EMAIL }}
+                  {{ val.LEGEND_EMAIL }}
                 </template>
                 <template #label>
-                  {{ constants.LABEL_EMAIL }}
+                  {{ val.LABEL_EMAIL }}
                 </template>
               </FieldElt>
             </template>
 
             <template #item-2>
               <FieldElt v-model:value="subject"
-                :info="constants.INFO_SUBJECT">
+                :info="val.INFO_SUBJECT">
 
                 <template #legend>
-                  {{ constants.LEGEND_SUBJECT }}
+                  {{ val.LEGEND_SUBJECT }}
                 </template>
                 <template #label>
-                  {{ constants.LABEL_SUBJECT }}
+                  {{ val.LABEL_SUBJECT }}
                 </template>
               </FieldElt>
             </template>
@@ -51,26 +51,26 @@
             <template #item-3>
               <FieldElt type="textarea"
                 v-model:value="text"
-                :info="constants.INFO_TEXT"
-                :mix="constants.TEXT_MIN"
-                :max="constants.TEXT_MAX">
+                :info="val.INFO_TEXT"
+                :mix="val.TEXT_MIN"
+                :max="val.TEXT_MAX">
 
                 <template #legend>
-                  {{ constants.LEGEND_TEXT }}
+                  {{ val.LEGEND_TEXT }}
                 </template>
                 <template #label>
-                  {{ constants.LABEL_TEXT }}
+                  {{ val.LABEL_TEXT }}
                 </template>
               </FieldElt>
             </template>
           </ListElt>
 
-          <vue-recaptcha :sitekey="constants.RECAPTCHA_KEY"
+          <vue-recaptcha :sitekey="val.RECAPTCHA_KEY"
             @verify="onVerify">
             <BtnElt type="button"
               class="btn-green"
-              :content="constants.CONTENT_SEND"
-              :title="constants.TITLE_MESSAGE">
+              :content="val.CONTENT_SEND"
+              :title="val.TITLE_MESSAGE">
 
               <template #btn>
                 <i class="fa-regular fa-paper-plane fa-lg"></i>
@@ -101,8 +101,8 @@ export default {
     ListElt,
     VueRecaptcha 
   },
+  props: ["val", "user"],
 
-  props: ["constants", "user"],
   data() {
     return {
       email: "",
@@ -113,10 +113,10 @@ export default {
 
   created() {
     setMeta(
-      this.constants.HEAD_CONTACT, 
-      this.constants.META_CONTACT,
-      this.constants.UI_URL + "/contact",
-      this.constants.UI_URL + this.constants.LOGO_SRC
+      this.val.HEAD_CONTACT, 
+      this.val.META_CONTACT,
+      this.val.UI_URL + "/contact",
+      this.val.UI_URL + this.val.LOGO_SRC
     );
   },
 
@@ -126,17 +126,13 @@ export default {
      * @param {object} response 
      */
     onVerify(response) {
-      let emailMsg  = this.constants.CHECK_EMAIL;
-      let regex     = this.constants.REGEX_EMAIL;
-      let stringMsg = this.constants.CHECK_STRING;
-      let min       = this.constants.TEXT_MIN;
-      let max       = this.constants.TEXT_MAX;
+      const MSG = this.val.CHECK_STRING;
 
-      if (checkRegex(this.email, emailMsg, regex) && 
-          checkRange(this.subject, stringMsg) && 
-          checkRange(this.text, stringMsg, min, max)) {
+      if (checkRegex(this.email, this.val.CHECK_EMAIL, this.val.REGEX_EMAIL) &&
+          checkRange(this.subject, MSG) &&
+          checkRange(this.text, MSG, this.val.TEXT_MIN, this.val.TEXT_MAX)) {
 
-        postData(this.constants.API_URL + "/auth/recaptcha", { response: response })
+        postData(this.val.API_URL + "/auth/recaptcha", { response: response })
           .then(result => {
             if (result.success) {
               this.send();
@@ -156,14 +152,16 @@ export default {
      * SEND A CONTACT MESSAGE
      */
     send() {
-      let message = new FormData();
-      message.append("email", this.email);
-      message.append("subject", this.subject);
-      message.append("html", this.text);
+      const URL   = this.val.API_URL + "/users/message";
+      const data  = new FormData();
 
-      postData(this.constants.API_URL + "/users/message", message)
+      data.append("email", this.email);
+      data.append("subject", this.subject);
+      data.append("html", this.text);
+
+      postData(URL, data)
         .then(() => {
-          alert(this.subject + this.constants.ALERT_SENDED);
+          alert(this.subject + this.val.ALERT_SENDED);
           this.$router.push("/");
         })
         .catch(err => { setError(err) });

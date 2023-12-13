@@ -4,19 +4,19 @@
       class="sidebar">
       <template #hide>
         <i class="fa-solid fa-eye fa-fw" 
-          :title="constants.TITLE_TOGGLE"></i>
+          :title="val.TITLE_TOGGLE"></i>
       </template>
 
       <template #last  v-if="checkSession('editor')">
         <a href="#create-article"
-          :title="constants.ARTICLE_CREATOR">
+          :title="val.ARTICLE_CREATOR">
           <i class="fa-regular fa-pen-to-square fa-fw"></i>
         </a>
       </template>
 
       <template #top>
         <i class="fa-solid fa-chevron-circle-up fa-fw" 
-          :title="constants.TITLE_TOP"></i>
+          :title="val.TITLE_TOP"></i>
       </template>
     </NavElt>
 
@@ -28,9 +28,9 @@
           <i class="fa-solid fa-blog fa-lg"
             aria-hidden="true">
           </i>
-          {{ constants.BLOG_VIEW }}
+          {{ val.BLOG_VIEW }}
         </h1>
-        <p>{{ constants.INTRO_ARTICLE }}</p>
+        <p>{{ val.INTRO_ARTICLE }}</p>
       </template>
 
       <template #body>
@@ -60,7 +60,7 @@
                   :id="`like-${slotProps.value.id}`"
                   href="/login"
                   class="btn-sky-dark"
-                  :title="constants.TITLE_LIKE_LOGIN + slotProps.value.name">
+                  :title="val.TITLE_LIKE_LOGIN + slotProps.value.name">
 
                   <template #btn>
                     <i class="fa-regular fa-thumbs-up fa-lg">
@@ -75,7 +75,7 @@
                   type="button"
                   @click="addLike(slotProps.value.id)"
                   class="btn-sky"
-                  :title="constants.TITLE_LIKE + slotProps.value.name">
+                  :title="val.TITLE_LIKE + slotProps.value.name">
 
                   <template #btn>
                     <i class="fa-regular fa-thumbs-up fa-lg">
@@ -90,7 +90,7 @@
                   type="button"
                   @click="addLike(slotProps.value.id)"
                   class="btn-sky"
-                  :title="constants.TITLE_DISLIKE + slotProps.value.name">
+                  :title="val.TITLE_DISLIKE + slotProps.value.name">
 
                   <template #btn>
                     <i class="fa-regular fa-thumbs-up fa-lg">
@@ -101,13 +101,13 @@
                 </BtnElt>
 
                 <a :href="`article/${slotProps.value.id}`"
-                  :title="constants.TITLE_READ + slotProps.value.name">
+                  :title="val.TITLE_READ + slotProps.value.name">
 
                   <MediaElt :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
                     :src="`img/thumbnails/articles/${slotProps.value.image}`" 
                     :alt="`${slotProps.value.alt}`" 
-                    :width="constants.THUMB_WIDTH"
-                    :height="constants.THUMB_HEIGHT"
+                    :width="val.THUMB_WIDTH"
+                    :height="val.THUMB_HEIGHT"
                     itemprop="image">
 
                     <template #figcaption>
@@ -125,7 +125,7 @@
       </template>
 
       <template #aside v-if="checkSession('editor')">
-        <ArticleCreator :constants="constants"/>
+        <ArticleCreator :val="val"/>
       </template>
     </CardElt>
   </main>
@@ -153,22 +153,20 @@ export default {
     NavElt,
     ArticleCreator 
   },
-  props: ["constants", "user"],
+  props: ["val", "user"],
 
   created() {
     this.$store.dispatch("listArticles");
-
     setMeta(
-      this.constants.HEAD_BLOG, 
-      this.constants.META_BLOG,
-      this.constants.UI_URL + "/blog",
-      this.constants.UI_URL + this.constants.LOGO_SRC
+      this.val.HEAD_BLOG, 
+      this.val.META_BLOG,
+      this.val.UI_URL + "/blog",
+      this.val.UI_URL + this.val.LOGO_SRC
     );
   },
 
   updated() {
     const textArray = document.getElementsByClassName("figcaption");
-
     for (let textElt of textArray) {
       textElt.firstChild.setAttribute("itemprop", "text");
     }
@@ -215,8 +213,7 @@ export default {
     checkLikes(id) {
       for (let article of this.articles) {
         if (article.id === id) {
-
-          return article.likes.includes(this.constants.USER_ID);
+          return article.likes.includes(this.val.USER_ID);
         }
       }
     },
@@ -233,15 +230,14 @@ export default {
           let likes = this.articles[i].likes;
 
           for (let j = 0; j < likes.length; j++) {
-            if (this.constants.USER_ID === likes[j]) {
+            if (this.val.USER_ID === likes[j]) {
               likes.splice(j, 1);
               hasLiked = true;
             }
           }
 
-          if (hasLiked === false) likes.push(this.constants.USER_ID);
-
-          const URL   = this.constants.API_URL + "/articles/" + id;
+          if (hasLiked === false) likes.push(this.val.USER_ID);
+          const URL   = this.val.API_URL + "/articles/" + id;
           const data  = new FormData();
 
           data.append("name", this.articles[i].name);
@@ -251,12 +247,12 @@ export default {
           data.append("likes", JSON.stringify(likes));
           data.append("cat", this.articles[i].cat);
 
-          putData(URL, data, this.constants.TOKEN)
+          putData(URL, data, this.val.TOKEN)
             .then(() => {
               if (hasLiked === true) {
-                console.log(data.get("name") + this.constants.ALERT_DISLIKED);
+                console.log(data.get("name") + this.val.ALERT_DISLIKED);
               } else {
-                console.log(data.get("name") + this.constants.ALERT_LIKED);
+                console.log(data.get("name") + this.val.ALERT_LIKED);
               }
             })
             .catch(err => { setError(err) });

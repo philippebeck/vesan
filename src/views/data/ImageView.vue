@@ -15,10 +15,10 @@
         <SliderElt :slides="images">
           <template #slide="slotProps">
             <a :href="`/img/galleries/${slotProps.slide.name}`"
-              :title="constants.TITLE_WATCH + slotProps.slide.name">
+              :title="val.TITLE_WATCH + slotProps.slide.name">
               <MediaElt :src="`/img/galleries/${slotProps.slide.name}`"
                 :alt="slotProps.slide.description"
-                :width="constants.MEDIA_WIDTH">
+                :width="val.MEDIA_WIDTH">
 
                 <template #figcaption>
                   {{ slotProps.slide.description }}
@@ -34,13 +34,13 @@
 
           <template #items="slotProps">
             <a :href="`/img/galleries/${slotProps.item.name}`"
-              :title="constants.TITLE_WATCH + slotProps.item.name">
+              :title="val.TITLE_WATCH + slotProps.item.name">
 
               <MediaElt :id="`${slotProps.item.name.toLowerCase()}`"
                 :src="`/img/thumbnails/galleries/${slotProps.item.name}`" 
                 :alt="`${slotProps.item.description}`" 
-                :width="constants.THUMB_WIDTH"
-                :height="constants.THUMB_HEIGHT">
+                :width="val.THUMB_WIDTH"
+                :height="val.THUMB_HEIGHT">
 
                 <template #figcaption>
                   <p class="monospace figcaption">
@@ -55,7 +55,7 @@
       </template>
 
       <template #aside v-if="checkSession('admin')">
-        <ImageCreator :constants="constants"/>
+        <ImageCreator :val="val"/>
       </template>
     </CardElt>
   </main>
@@ -82,7 +82,7 @@ export default {
     ImageCreator
   },
 
-  props: ["constants", "user"],
+  props: ["val", "user"],
   data() {
     return {
       gallery: {}
@@ -90,15 +90,15 @@ export default {
   },
 
   created() {
-    getData(this.constants.API_URL + "/galleries/" + this.$route.params.id)
+    getData(this.val.API_URL + "/galleries/" + this.$route.params.id)
       .then((gallery) => {
         this.gallery = gallery;
 
         setMeta(
-          gallery.name + this.constants.HEAD, 
-          this.constants.META_IMAGE + gallery.author,
-          this.constants.UI_URL + "/gallery/" + gallery.id,
-          this.constants.UI_URL + "/img/thumbnails/galleries/" + gallery.cover
+          gallery.name + this.val.HEAD, 
+          this.val.META_IMAGE + gallery.author,
+          this.val.UI_URL + "/gallery/" + gallery.id,
+          this.val.UI_URL + "/img/thumbnails/galleries/" + gallery.cover
         );
       })
       .catch(err => { 
@@ -117,9 +117,11 @@ export default {
     ...mapActions(["listGalleryImages"]),
 
     /**
-     * CHECK ROLE
-     * @param {string} role
-     * @returns
+     * ? CHECK SESSION
+     * Checks the session for the specified role.
+     *
+     * @param {string} role - The role to check the session against.
+     * @return {boolean} Returns true if the session has the specified role, otherwise false.
      */
     checkSession(role) {
       return checkRole(this.user.role, role);

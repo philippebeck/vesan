@@ -5,7 +5,7 @@
         <i class="fa-solid fa-right-to-bracket fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.LOGIN_VIEW }}
+        {{ val.LOGIN_VIEW }}
       </h1>
     </header>
 
@@ -15,19 +15,19 @@
           <i class="fa-solid fa-user-plus fa-lg"
             aria-hidden="true">
           </i>
-          {{ constants.SIGN_UP }}
+          {{ val.SIGN_UP }}
         </h2>
-        <p>{{ constants.INTRO_SIGNUP }}</p>
+        <p>{{ val.INTRO_SIGNUP }}</p>
       </template>
 
       <template #body>
-        <SignUp :constants="constants"/>
+        <SignUp :val="val"/>
 
         <BtnElt type="button"
           @click="setType('SignIn')"
           class="btn-green"
-          :content="constants.CONTENT_ENTER"
-          :title="constants.TITLE_GO + constants.SIGN_IN">
+          :content="val.CONTENT_ENTER"
+          :title="val.TITLE_GO + val.SIGN_IN">
 
           <template #btn>
             <i class="fa-solid fa-door-open fa-lg"></i>
@@ -37,8 +37,8 @@
         <BtnElt type="button"
           @click="setType('ForgotPass')"
           class="btn-orange"
-          :content="constants.CONTENT_SEND"
-          :title="constants.TITLE_GO + constants.FORGOT_PASS">
+          :content="val.CONTENT_SEND"
+          :title="val.TITLE_GO + val.FORGOT_PASS">
 
           <template #btn>
             <i class="fa-regular fa-paper-plane fa-lg"></i>
@@ -53,19 +53,19 @@
           <i class="fa-solid fa-door-open fa-lg"
             aria-hidden="true">
           </i>
-          {{ constants.SIGN_IN }}
+          {{ val.SIGN_IN }}
         </h2>
-        <p>{{ constants.INTRO_SIGNIN }}</p>
+        <p>{{ val.INTRO_SIGNIN }}</p>
       </template>
 
       <template #body>
-        <SignIn :constants="constants"/>
+        <SignIn :val="val"/>
 
         <BtnElt type="button"
           @click="setType('SignUp')"
           class="btn-sky-dark"
-          :content="constants.CONTENT_SIGNUP"
-          :title="constants.TITLE_GO + constants.SIGN_UP">
+          :content="val.CONTENT_SIGNUP"
+          :title="val.TITLE_GO + val.SIGN_UP">
 
           <template #btn>
             <i class="fa-solid fa-user-plus fa-lg"></i>
@@ -75,8 +75,8 @@
         <BtnElt type="button"
           @click="setType('ForgotPass')"
           class="btn-orange"
-          :content="constants.CONTENT_SEND"
-          :title="constants.TITLE_GO + constants.FORGOT_PASS">
+          :content="val.CONTENT_SEND"
+          :title="val.TITLE_GO + val.FORGOT_PASS">
 
           <template #btn>
             <i class="fa-regular fa-paper-plane fa-lg"></i>
@@ -91,19 +91,19 @@
           <i class="fa-solid fa-key fa-lg"
             aria-hidden="true">
           </i>
-          {{ constants.FORGOT_PASS }}
+          {{ val.FORGOT_PASS }}
         </h2>
-        <p>{{ constants.INTRO_FORGOT }}</p>
+        <p>{{ val.INTRO_FORGOT }}</p>
       </template>
 
       <template #body>
-        <ForgotPass :constants="constants"/>
+        <ForgotPass :val="val"/>
 
         <BtnElt type="button"
           @click="setType('SignUp')"
           class="btn-sky-dark"
-          :content="constants.CONTENT_SIGNUP"
-          :title="constants.TITLE_GO + constants.SIGN_UP">
+          :content="val.CONTENT_SIGNUP"
+          :title="val.TITLE_GO + val.SIGN_UP">
 
           <template #btn>
             <i class="fa-solid fa-user-plus fa-lg"></i>
@@ -113,8 +113,8 @@
         <BtnElt type="button"
           @click="setType('SignIn')"
           class="btn-green"
-          :content="constants.CONTENT_ENTER"
-          :title="constants.TITLE_GO + constants.SIGN_IN">
+          :content="val.CONTENT_ENTER"
+          :title="val.TITLE_GO + val.SIGN_IN">
 
           <template #btn>
             <i class="fa-solid fa-door-open fa-lg"></i>
@@ -145,7 +145,7 @@ export default {
     ForgotPass
   },
 
-  props: ["constants"],
+  props: ["val"],
   data() {
     return {
       type: "SignIn"
@@ -154,10 +154,10 @@ export default {
 
   created() {
     setMeta(
-      this.constants.HEAD_LOGIN, 
-      this.constants.META_LOGIN,
-      this.constants.UI_URL + "/login",
-      this.constants.UI_URL + this.constants.LOGO_SRC
+      this.val.HEAD_LOGIN, 
+      this.val.META_LOGIN,
+      this.val.UI_URL + "/login",
+      this.val.UI_URL + this.val.LOGO_SRC
     );
 
     if (localStorage.userId) {

@@ -5,21 +5,21 @@
         <i class="fa-solid fa-basket-shopping fa-lg"
           aria-hidden="true">
         </i>
-        {{ constants.BASKET_VIEW }}
+        {{ val.BASKET_VIEW }}
       </h1>
     </header>
 
     <CardElt v-if="basket[0] !== undefined">
       <template #header>
-        <h2>{{ constants.BASKET_SUB }}</h2>
-        <b>{{ constants.INTRO_BASKET }}</b>
+        <h2>{{ val.BASKET_SUB }}</h2>
+        <b>{{ val.INTRO_BASKET }}</b>
       </template>
 
       <template #body>
         <form>
           <TableElt :items="order">
             <template #head>
-              {{ constants.TOTAL }}
+              {{ val.TOTAL }}
             </template>
 
             <template #cell-id="slotProps">
@@ -55,7 +55,7 @@
                 type="number"
                 v-model:value="slotProps.item.quantity"
                 @change="updateProductQuantity(`${slotProps.item.id}`, `${slotProps.item.option}`)"
-                :info="constants.INFO_UP_QUANTITY"
+                :info="val.INFO_UP_QUANTITY"
                 :min="1"
                 :max="100">
               </FieldElt>
@@ -74,8 +74,8 @@
               <BtnElt type="button"
                 @click="deleteProduct(`${slotProps.item.id}`, `${slotProps.item.option}`)"
                 class="btn-orange"
-                :content="constants.TITLE_DELETE"
-                :title="constants.TITLE_DELETE + slotProps.item.name">
+                :content="val.TITLE_DELETE"
+                :title="val.TITLE_DELETE + slotProps.item.name">
 
                 <template #btn>
                   <i class="fa-solid fa-trash fa-lg"></i>
@@ -85,10 +85,10 @@
           </TableElt>
 
           <p class="bord bord-violet container-60sm-50md">
-            {{ constants.BASKET_TOTAL }}
+            {{ val.BASKET_TOTAL }}
             <b class="black">
               {{ total }}
-              {{ constants.CURRENCY_SYMBOL }}
+              {{ val.CURRENCY_SYMBOL }}
             </b>
           </p>
 
@@ -100,8 +100,8 @@
           <BtnElt v-else
             href="/login"
             class="btn-green width-sm"
-            :content="constants.CONTENT_ORDER"
-            :title="constants.TITLE_ORDER">
+            :content="val.CONTENT_ORDER"
+            :title="val.TITLE_ORDER">
 
             <template #btn>
               <i class="fa-solid fa-cash-register fa-lg"></i>
@@ -111,8 +111,8 @@
           <BtnElt type="button"
             @click="deleteBasket()"
             class="btn-red width-sm"
-            :content="constants.CONTENT_CLEAR"
-            :title="constants.TITLE_CLEAR">
+            :content="val.CONTENT_CLEAR"
+            :title="val.TITLE_CLEAR">
 
             <template #btn>
               <i class="fa-solid fa-trash-can fa-lg"></i>
@@ -122,7 +122,7 @@
       </template>
     </CardElt>
 
-    <b v-else>{{ constants.BASKET_EMPTY }}</b>
+    <b v-else>{{ val.BASKET_EMPTY }}</b>
   </main>
 </template>
 
@@ -146,7 +146,7 @@ export default {
     TableElt
   },
 
-  props: ["constants", "user"],
+  props: ["val", "user"],
   data() {
     return {
       products: [],
@@ -157,24 +157,24 @@ export default {
   },
 
   created() {
-    getData(this.constants.API_URL + "/products")
+    getData(this.val.API_URL + "/products")
       .then(res => { 
         this.products = res;
         this.setBasket();
 
         setMeta(
-          this.constants.HEAD_BASKET, 
-          this.constants.META_BASKET,
-          this.constants.UI_URL + "/basket",
-          this.constants.UI_URL + this.constants.LOGO_SRC
+          this.val.HEAD_BASKET, 
+          this.val.META_BASKET,
+          this.val.UI_URL + "/basket",
+          this.val.UI_URL + this.val.LOGO_SRC
         );
 
         if (this.basket[0] !== undefined) {
           this.setOrder();
           this.setTotal();
 
-          if (this.constants.USER_ID) {
-            this.setPaypal(this.constants, this.getTotal, this.createOrder);
+          if (this.val.USER_ID) {
+            this.setPaypal(this.val, this.getTotal, this.createOrder);
           }
         }
       })
@@ -241,31 +241,31 @@ export default {
 
     /**
      * SET PAYPAL
-     * @param {object} constants
+     * @param {object} val
      * @param {function} getTotal
      * @param {function} createOrder
      */
-    setPaypal(constants, getTotal, createOrder) {
+    setPaypal(val, getTotal, createOrder) {
       loadScript({ 
-        "client-id": constants.PAYPAL_ID, 
-        "data-namespace": constants.PAYPAL_NAMESPACE,
-        currency: constants.CURRENCY_ISO 
+        "client-id": val.PAYPAL_ID, 
+        "data-namespace": val.PAYPAL_NAMESPACE,
+        currency: val.CURRENCY_ISO 
       })
 
         .then((paypal) => {
           paypal
             .Buttons({
               style: {
-                color: constants.PAYPAL_COLOR,
-                shape: constants.PAYPAL_SHAPE,
-                label: constants.PAYPAL_LABEL
+                color: val.PAYPAL_COLOR,
+                shape: val.PAYPAL_SHAPE,
+                label: val.PAYPAL_LABEL
               },
 
               createOrder: function(data, actions) {
                 return actions.order.create({
                   purchase_units: [{ 
                     "amount": {
-                      "currency_code": constants.CURRENCY_ISO,
+                      "currency_code": val.CURRENCY_ISO,
                       "value": getTotal()
                     }
                   }]
@@ -275,18 +275,18 @@ export default {
               onApprove: function(data, actions) {
                 return actions.order.capture()
                   .then((orderData) => {
-                      alert(constants.PAYPAL_STATUS + orderData.id + " : " + orderData.status);
+                      alert(val.PAYPAL_STATUS + orderData.id + " : " + orderData.status);
                       createOrder(orderData.id);
                     }
                   );
               },
 
               onCancel : function () {
-                alert(constants.PAYPAL_CANCEL);
+                alert(val.PAYPAL_CANCEL);
               },
 
               onError: function(err) {
-                alert(constants.PAYPAL_ERROR);
+                alert(val.PAYPAL_ERROR);
                 throw new Error(err);
               }
             })
@@ -294,12 +294,12 @@ export default {
             .render("#paypal")
 
             .catch((error) => {
-              console.error(constants.PAYPAL_BTN, error);
+              console.error(val.PAYPAL_BTN, error);
             });
         })
 
         .catch((error) => {
-          console.error(constants.PAYPAL_SDK, error);
+          console.error(val.PAYPAL_SDK, error);
         });
     },
 
@@ -333,14 +333,14 @@ export default {
       order.append("products", JSON.stringify(products));
       order.append("total", this.total);
       order.append("payment", orderId);
-      order.append("status", this.constants.ORDER_STATUS);
-      order.append("user", this.constants.USER_ID);
+      order.append("status", this.val.ORDER_STATUS);
+      order.append("user", this.val.USER_ID);
       order.append("created", Date.now());
       order.append("updated", Date.now());
 
-      postData(this.constants.API_URL + "/orders/", order)
+      postData(this.val.API_URL + "/orders/", order)
         .then(() => {
-          alert(this.constants.ALERT_ORDER_CREATED);
+          alert(this.val.ALERT_ORDER_CREATED);
           localStorage.removeItem("basket");
           this.$router.push("/profile");
         })
@@ -400,7 +400,7 @@ export default {
      * DELETE BASKET
      */
     deleteBasket() {
-      if (confirm(this.constants.CONFIRM_BASKET) === true) {
+      if (confirm(this.val.CONFIRM_BASKET) === true) {
         localStorage.removeItem("basket");
         this.$router.go();
       }

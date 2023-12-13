@@ -4,14 +4,14 @@
       <h1 class="sky-dark">
         <i class="fa-solid fa-user-gear fa-lg"
           aria-hidden="true"></i>
-        {{ constants.PROFILE_EDITOR }}
+        {{ val.PROFILE_EDITOR }}
       </h1>
 
       <BtnElt v-if="checkSession('editor')"
         href="/admin"
         class="btn-green"
-        :content="constants.CONTENT_ADMIN"
-        :title="constants.TITLE_ADMIN">
+        :content="val.CONTENT_ADMIN"
+        :title="val.TITLE_ADMIN">
 
         <template #btn>
           <i class="fa-solid fa-gears fa-lg"></i>
@@ -21,8 +21,8 @@
       <BtnElt type="button"
         @click="logout()" 
         class="btn-orange"
-        :content="constants.CONTENT_LOGOUT"
-        :title="constants.TITLE_LOGOUT">
+        :content="val.CONTENT_LOGOUT"
+        :title="val.TITLE_LOGOUT">
 
         <template #btn>
           <i class="fa-solid fa-right-from-bracket fa-lg"></i>
@@ -32,25 +32,25 @@
 
     <CardElt>
       <template #header>
-        <h2>{{ constants.PROFILE_SUB }}</h2>
-        <b>{{ constants.INTRO_PROFILE }}</b>
+        <h2>{{ val.PROFILE_SUB }}</h2>
+        <b>{{ val.INTRO_PROFILE }}</b>
       </template>
 
       <template #body>
         <form enctype="multipart/form-data">
-          <ListElt :items="constants.USER_FORM">
+          <ListElt :items="val.USER_FORM">
 
             <template #item-1>
               <FieldElt v-model:value="user.name"
                 @keyup.enter="updateUser()"
-                :info="constants.INFO_NAME"
+                :info="val.INFO_NAME"
                 :min="2">
 
                 <template #legend>
-                  {{ constants.LEGEND_NAME }}
+                  {{ val.LEGEND_NAME }}
                 </template>
                 <template #label>
-                  {{ constants.LABEL_NAME }}
+                  {{ val.LABEL_NAME }}
                 </template>
               </FieldElt>
             </template>
@@ -59,13 +59,13 @@
               <FieldElt type="email"
                 v-model:value="user.email"
                 @keyup.enter="updateUser()"
-                :info="constants.INFO_EMAIL">
+                :info="val.INFO_EMAIL">
 
                 <template #legend>
-                  {{ constants.LEGEND_EMAIL }}
+                  {{ val.LEGEND_EMAIL }}
                 </template>
                 <template #label>
-                  {{ constants.LABEL_EMAIL }}
+                  {{ val.LABEL_EMAIL }}
                 </template>
               </FieldElt>
             </template>
@@ -78,13 +78,13 @@
               <FieldElt id="image"
                 type="file"
                 v-model:value="image"
-                :info="constants.INFO_IMAGE">
+                :info="val.INFO_IMAGE">
 
                 <template #legend>
-                  {{ constants.LEGEND_IMAGE }}
+                  {{ val.LEGEND_IMAGE }}
                 </template>
                 <template #label>
-                  {{ constants.LABEL_IMAGE }}
+                  {{ val.LABEL_IMAGE }}
                 </template>
               </FieldElt>
             </template>
@@ -93,13 +93,13 @@
               <FieldElt type="password"
                 v-model:value="pass"
                 @keyup.enter="updateUser()"
-                :info="constants.INFO_PASSWORD">
+                :info="val.INFO_PASSWORD">
 
                 <template #legend>
-                  {{ constants.LEGEND_PASSWORD }}
+                  {{ val.LEGEND_PASSWORD }}
                 </template>
                 <template #label>
-                  {{ constants.LABEL_PASSWORD }}
+                  {{ val.LABEL_PASSWORD }}
                 </template>
               </FieldElt>
             </template>
@@ -108,8 +108,8 @@
           <BtnElt type="button"
             @click="updateUser()" 
             class="btn-sky"
-            :content="constants.TITLE_UPDATE"
-            :title="constants.INFO_UP_PROFILE">
+            :content="val.TITLE_UPDATE"
+            :title="val.INFO_UP_PROFILE">
 
             <template #btn>
               <i class="fa-solid fa-user-pen fa-lg"></i>
@@ -119,8 +119,8 @@
           <BtnElt type="button"
             @click="deleteUser()" 
             class="btn-red"
-            :content="constants.TITLE_DELETE"
-            :title="constants.TITLE_DELETE_ACCOUNT">
+            :content="val.TITLE_DELETE"
+            :title="val.TITLE_DELETE_ACCOUNT">
 
             <template #btn>
               <i class="fa-solid fa-user-slash fa-lg"></i>
@@ -132,7 +132,7 @@
     
     <CardElt v-if="orders.length !== 0">
       <template #header>
-        <h2>{{ constants.ORDERS_SUB }}</h2>
+        <h2>{{ val.ORDERS_SUB }}</h2>
       </template>
 
       <template #body>
@@ -149,7 +149,7 @@
                 :key="index">
                 <a :href="`/product/${item.id}`">
 
-                  <ul :title="constants.TITLE_GO + item.name">
+                  <ul :title="val.TITLE_GO + item.name">
                     <li>
                       <b>{{ item.name }}</b>
                     </li>
@@ -204,7 +204,7 @@ export default {
     TableElt
   },
 
-  props: ["constants"],
+  props: ["val"],
 
   data() {
     return {
@@ -214,15 +214,15 @@ export default {
   },
 
   created() {
-    if (this.constants.USER_ID) {
-      this.$store.dispatch("readUser", this.constants.USER_ID);
-      this.$store.dispatch("listUserOrders", this.constants.USER_ID);
+    if (this.val.USER_ID) {
+      this.$store.dispatch("readUser", this.val.USER_ID);
+      this.$store.dispatch("listUserOrders", this.val.USER_ID);
 
       setMeta(
-      this.constants.HEAD_PROFILE, 
-      this.constants.META_PROFILE,
-      this.constants.UI_URL,
-      this.constants.UI_URL + this.constants.LOGO_SRC
+      this.val.HEAD_PROFILE, 
+      this.val.META_PROFILE,
+      this.val.UI_URL,
+      this.val.UI_URL + this.val.LOGO_SRC
     );
 
     } else {
@@ -266,9 +266,9 @@ export default {
      * UPDATE USER
      */
     updateUser() {
-      const NAME_MSG    = this.constants.CHECK_STRING;
-      const EMAIL_MSG   = this.constants.CHECK_EMAIL;
-      const EMAIL_REGEX = this.constants.REGEX_EMAIL;
+      const NAME_MSG    = this.val.CHECK_STRING;
+      const EMAIL_MSG   = this.val.CHECK_EMAIL;
+      const EMAIL_REGEX = this.val.REGEX_EMAIL;
 
       if (checkRange(this.user.name, NAME_MSG) && 
           checkRegex(this.user.email, EMAIL_MSG, EMAIL_REGEX)) {
@@ -282,8 +282,8 @@ export default {
         user.append("role", this.user.role);
         user.append("updated", Date.now());
 
-        const PASS_MSG   = this.constants.CHECK_PASS;
-        const PASS_REGEX = this.constants.REGEX_PASS;
+        const PASS_MSG   = this.val.CHECK_PASS;
+        const PASS_REGEX = this.val.REGEX_PASS;
 
         if (this.pass !== "") {
           if (checkRegex(this.pass, PASS_MSG, PASS_REGEX)) {
@@ -293,9 +293,9 @@ export default {
 
         console.log(user);
 
-        putData(this.constants.API_URL + "/users/" + this.user.id, user)
+        putData(this.val.API_URL + "/users/" + this.user.id, user)
           .then(() => {
-            alert(this.user.name + this.constants.ALERT_UPDATED);
+            alert(this.user.name + this.val.ALERT_UPDATED);
             this.$router.go();
           })
           .catch(err => { setError(err) });
@@ -308,13 +308,13 @@ export default {
     deleteUser() {
       let name = this.user.name;
 
-      if (confirm(`${this.constants.TITLE_DELETE} ${name} ?`) === true) {
-        deleteData(this.constants.API_URL + "/users/" + this.user.id)
+      if (confirm(`${this.val.TITLE_DELETE} ${name} ?`) === true) {
+        deleteData(this.val.API_URL + "/users/" + this.user.id)
           .then(() => {
             localStorage.removeItem("userId");
             localStorage.removeItem("userToken");
 
-            alert(name + this.constants.ALERT_DELETED);
+            alert(name + this.val.ALERT_DELETED);
             this.$router.go();
           })
           .catch(err => { setError(err) });

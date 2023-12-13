@@ -2,20 +2,20 @@
   <main>
     <CardElt>
       <template #header>
-        <h1>{{ constants.ERROR_VIEW }}</h1>
-        <b>{{ constants.INTRO_ERROR }}</b>
+        <h1>{{ val.ERROR_VIEW }}</h1>
+        <b>{{ val.INTRO_ERROR }}</b>
       </template>
 
       <template #body>
 
         <MediaElt src="/img/errors/error-404.webp" 
-          :alt="constants.ERROR_ALT">
+          :alt="val.ERROR_ALT">
         </MediaElt>
 
         <BtnElt href="/">
           <template #btn>
             <i class="fa-regular fa-hand-point-right"></i>
-            {{ constants.ERROR_LINK }}
+            {{ val.ERROR_LINK }}
             <i class="fa-regular fa-hand-point-left"></i>
           </template>
         </BtnElt>
@@ -36,7 +36,6 @@ export default {
     CardElt,
     MediaElt
   },
-
-  props: ["constants"]
+  props: ["val"]
 }
 </script>

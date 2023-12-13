@@ -13,7 +13,7 @@
           id="likes"
           href="/login"
           class="btn-blue"
-          :title="constants.TITLE_LIKE_LOGIN + article.name">
+          :title="val.TITLE_LIKE_LOGIN + article.name">
 
           <template #btn>
             <i class="fa-regular fa-thumbs-up fa-lg">
@@ -29,7 +29,7 @@
           type="button"
           @click="addLike()"
           class="btn-blue"
-          :title="constants.TITLE_LIKE + article.name">
+          :title="val.TITLE_LIKE + article.name">
 
           <template #btn>
             <i class="fa-regular fa-thumbs-up fa-lg">
@@ -45,7 +45,7 @@
           type="button"
           @click="addLike()"
           class="btn-sky"
-          :title="constants.TITLE_DISLIKE + article.name">
+          :title="val.TITLE_DISLIKE + article.name">
 
           <template #btn>
             <i class="fa-regular fa-thumbs-up fa-lg">
@@ -59,8 +59,8 @@
         <MediaElt v-if="article.image"
           :src="`/img/articles/${article.image}`"
           :alt="article.alt"
-          :width="constants.IMG_WIDTH"
-          :height="constants.IMG_HEIGHT"
+          :width="val.IMG_WIDTH"
+          :height="val.IMG_HEIGHT"
           itemprop="image">
 
           <template #figcaption>
@@ -70,12 +70,12 @@
             </blockquote>
             
             <p class="gray">
-              {{ constants.CREATE_ON }}
+              {{ val.CREATE_ON }}
               <i itemprop="dateCreated">
                 {{ new Date(article.createdAt).toLocaleDateString() }}
               </i>
               <br>
-              {{ constants.UPDATE_ON }}
+              {{ val.UPDATE_ON }}
               <i itemprop="dateModified">
                 {{ new Date(article.updatedAt).toLocaleDateString() }}
               </i>
@@ -88,36 +88,36 @@
     <CardElt v-if="checkSession('admin') || checkSession('editor')"
       id="create-article">
       <template #header>
-        <h2>{{ constants.EDIT }} {{ article.name }}</h2>
+        <h2>{{ val.EDIT }} {{ article.name }}</h2>
       </template>
 
       <template #body>
         <form method="post"
           enctype="multipart/form-data">
-          <ListElt :items="constants.ARTICLE_FORM">
+          <ListElt :items="val.ARTICLE_FORM">
 
             <template #item-1>
               <FieldElt v-model:value="article.name"
                 @keyup.enter="updateArticle()"
-                :info="constants.INFO_NAME"
+                :info="val.INFO_NAME"
                 :min="2">
 
                 <template #legend>
-                  {{ constants.LEGEND_NAME }}
+                  {{ val.LEGEND_NAME }}
                 </template>
                 <template #label>
-                  {{ constants.LABEL_NAME }}
+                  {{ val.LABEL_NAME }}
                 </template>
               </FieldElt>
             </template>
 
             <template #item-2>
               <label for="text">
-                {{ constants.LEGEND_TEXT }}
+                {{ val.LEGEND_TEXT }}
               </label>
 
               <Editor id="text"
-                :api-key="constants.TINY_KEY"
+                :api-key="val.TINY_KEY"
                 v-model="article.text"
                 :init="{
                   toolbar:
@@ -135,13 +135,13 @@
               <FieldElt id="image"
                 type="file"
                 v-model:value="image"
-                :info="constants.INFO_IMAGE">
+                :info="val.INFO_IMAGE">
 
                 <template #legend>
-                  {{ constants.LEGEND_IMAGE }}
+                  {{ val.LEGEND_IMAGE }}
                 </template>
                 <template #label>
-                  {{ constants.LABEL_IMAGE }}
+                  {{ val.LABEL_IMAGE }}
                 </template>
               </FieldElt>
             </template>
@@ -150,29 +150,29 @@
               <FieldElt type="textarea"
                 v-model:value="article.alt"
                 @keyup.enter="updateArticle()"
-                :info="constants.INFO_ALT">
+                :info="val.INFO_ALT">
 
                 <template #legend>
-                  {{ constants.LEGEND_ALT }}
+                  {{ val.LEGEND_ALT }}
                 </template>
                 <template #label>
-                  {{ constants.LABEL_ALT }}
+                  {{ val.LABEL_ALT }}
                 </template>
               </FieldElt>
             </template>
 
             <template #item-5>
               <FieldElt type="select"
-                :list="constants.CATS_ARTICLE"
+                :list="val.CATS_ARTICLE"
                 v-model:value="article.cat"
                 @keyup.enter="updateArticle()"
-                :info="constants.INFO_CATEGORY">
+                :info="val.INFO_CATEGORY">
 
                 <template #legend>
-                  {{ constants.LEGEND_CATEGORY }}
+                  {{ val.LEGEND_CATEGORY }}
                 </template>
                 <template #label>
-                  {{ constants.LABEL_CATEGORY }}
+                  {{ val.LABEL_CATEGORY }}
                 </template>
               </FieldElt>
             </template>
@@ -182,8 +182,8 @@
           <BtnElt type="button"
             @click="updateArticle()" 
             class="btn-sky"
-            :content="constants.CONTENT_UPDATE"
-            :title="constants.TITLE_UPDATE + article.name">
+            :content="val.CONTENT_UPDATE"
+            :title="val.TITLE_UPDATE + article.name">
 
             <template #btn>
               <i class="fa-solid fa-cloud-arrow-up fa-lg"></i>
@@ -217,7 +217,7 @@ export default {
     Editor
   },
 
-  props: ["constants", "user"],
+  props: ["val", "user"],
   data() {
     return {
       article: {}
@@ -225,16 +225,16 @@ export default {
   },
 
   created () {
-    getData(this.constants.API_URL + "/articles/" + this.$route.params.id)
+    getData(this.val.API_URL + "/articles/" + this.$route.params.id)
       .then((article => {
         article.likes = JSON.parse(article.likes);
         this.article = article;
 
         setMeta(
-          article.name + this.constants.HEAD, 
+          article.name + this.val.HEAD, 
           (article.text || "").slice(0, 160).replace( /(<([^>]+)>)/gi, ""),
-          this.constants.UI_URL + "/article/" + article.id,
-          this.constants.UI_URL + "/img/thumbnails/articles/" + article.image
+          this.val.UI_URL + "/article/" + article.id,
+          this.val.UI_URL + "/img/thumbnails/articles/" + article.image
         );
 
       }))
@@ -267,7 +267,7 @@ export default {
      */
     checkLikes() {
       if (this.article.likes) {
-        return this.article.likes.includes(this.constants.USER_ID);
+        return this.article.likes.includes(this.val.USER_ID);
       }
     },
 
@@ -279,15 +279,15 @@ export default {
       let likes     = this.article.likes;
 
       for (let i = 0; i < likes.length; i++) {
-        if (this.constants.USER_ID === likes[i]) {
+        if (this.val.USER_ID === likes[i]) {
           likes.splice(i, 1);
           hasLiked = true;
         }
       }
 
-      if (hasLiked === false) likes.push(this.constants.USER_ID);
+      if (hasLiked === false) likes.push(this.val.USER_ID);
 
-      const URL   = this.constants.API_URL + "/articles/" + this.article.id;
+      const URL   = this.val.API_URL + "/articles/" + this.article.id;
       const data  = new FormData();
 
       data.append("name", this.article.name);
@@ -297,12 +297,12 @@ export default {
       data.append("likes", JSON.stringify(likes));
       data.append("cat", this.article.cat);
 
-      putData(URL, data, this.constants.TOKEN)
+      putData(URL, data, this.val.TOKEN)
         .then(() => {
           if (hasLiked === true) {
-            console.log(this.article.name + this.constants.ALERT_DISLIKED);
+            console.log(this.article.name + this.val.ALERT_DISLIKED);
           } else {
-            console.log(this.article.name + this.constants.ALERT_LIKED);
+            console.log(this.article.name + this.val.ALERT_LIKED);
           }
         })
         .catch(err => { setError(err) });
@@ -312,17 +312,15 @@ export default {
      * UPDATE ARTICLE
      */
     updateArticle() {
-      const MAX = this.constants.TEXT_MAX;
-      const MIN = this.constants.TEXT_MIN;
-      const MSG = this.constants.CHECK_STRING;
+      const MSG = this.val.CHECK_STRING;
 
-      if (checkRange(this.article.name, MSG) && 
-          checkRange(this.article.text, MSG, MIN, MAX) && 
+      if (checkRange(this.article.name, MSG) &&
+          checkRange(this.article.text, MSG, this.val.TEXT_MIN, this.val.TEXT_MAX) &&
           checkRange(this.article.alt, MSG)) {
 
-        const URL   = this.constants.API_URL + "/articles/" + this.article.id;
+        const URL   = this.val.API_URL + "/articles/" + this.article.id;
         const data  = new FormData();
-        let image   = document.getElementById("image").files[0] ?? this.article.image;
+        const image = document.getElementById("image").files[0] ?? this.article.image;
 
         data.append("name", this.article.name);
         data.append("text", this.article.text);
@@ -331,12 +329,9 @@ export default {
         data.append("likes", JSON.stringify(this.article.likes));
         data.append("cat", this.article.cat);
 
-        console.log(typeof data, data);
-        console.log(typeof image, image);
-
         putData(URL, data)
           .then(() => {
-            alert(this.article.name + this.constants.ALERT_UPDATED);
+            alert(this.article.name + this.val.ALERT_UPDATED);
             this.$router.push("/admin");
           })
           .catch(err => { setError(err) });

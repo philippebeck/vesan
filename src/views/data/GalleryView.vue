@@ -6,9 +6,9 @@
           <i class="fa-regular fa-images fa-lg"
             aria-hidden="true">
           </i>
-          {{ constants.GALLERY_VIEW }}
+          {{ val.GALLERY_VIEW }}
         </h1>
-        <b>{{ constants.INTRO_GALLERY }}</b>
+        <b>{{ val.INTRO_GALLERY }}</b>
       </template>
 
       <template #body>
@@ -18,13 +18,13 @@
 
           <template #items="slotProps">
             <a :href="`gallery/${slotProps.item.id}`"
-              :title="constants.TITLE_WATCH + slotProps.item.name">
+              :title="val.TITLE_WATCH + slotProps.item.name">
 
               <MediaElt :id="`${slotProps.item.name.toLowerCase()}`"
                 :src="`/img/thumbnails/galleries/${slotProps.item.cover}`" 
                 :alt="`${slotProps.item.name}`" 
-                :width="constants.THUMB_WIDTH"
-                :height="constants.THUMB_HEIGHT">
+                :width="val.THUMB_WIDTH"
+                :height="val.THUMB_HEIGHT">
 
                 <template #figcaption>
                   {{ slotProps.item.name }}
@@ -37,7 +37,7 @@
       </template>
 
       <template #aside v-if="checkSession('admin')">
-        <GalleryCreator :constants="constants"/>
+        <GalleryCreator :val="val"/>
       </template>
     </CardElt>
   </main>
@@ -61,16 +61,16 @@ export default {
     MediaElt,
     GalleryCreator
   },
-  props: ["constants", "user"],
+  props: ["val", "user"],
 
   created() {
     this.$store.dispatch("listGalleries");
 
     setMeta(
-      this.constants.HEAD_GALLERY, 
-      this.constants.META_GALLERY,
-      this.constants.UI_URL + "/galleries",
-      this.constants.UI_URL + this.constants.LOGO_SRC
+      this.val.HEAD_GALLERY, 
+      this.val.META_GALLERY,
+      this.val.UI_URL + "/galleries",
+      this.val.UI_URL + this.val.LOGO_SRC
     );
   },
 
