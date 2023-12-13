@@ -1,24 +1,20 @@
 <template>
   <main>
-    <CardElt itemscope
-      itemtype="https://schema.org/Article">
+    <CardElt itemscope itemtype="https://schema.org/Article">
       <template #header>
         <h1 itemprop="name">{{ article.name }}</h1>
         <strong>{{ article.cat }}</strong>
       </template>
 
       <template #body>
-
         <BtnElt v-if="!checkSession('user')"
           id="likes"
           href="/login"
           class="btn-blue"
           :title="val.TITLE_LIKE_LOGIN + article.name">
-
           <template #btn>
-            <i class="fa-regular fa-thumbs-up fa-lg">
-            </i> <b v-if="article.likes"
-              itemprop="contentRating">
+            <i class="fa-regular fa-thumbs-up fa-lg"></i>
+            <b v-if="article.likes" itemprop="contentRating">
               {{ article.likes.length }}
             </b>
           </template>
@@ -30,11 +26,9 @@
           @click="addLike()"
           class="btn-blue"
           :title="val.TITLE_LIKE + article.name">
-
           <template #btn>
-            <i class="fa-regular fa-thumbs-up fa-lg">
-            </i> <b v-if="article.likes"
-              itemprop="contentRating">
+            <i class="fa-regular fa-thumbs-up fa-lg"></i>
+            <b v-if="article.likes" itemprop="contentRating">
               {{ article.likes.length }}
             </b>
           </template>
@@ -46,11 +40,9 @@
           @click="addLike()"
           class="btn-sky"
           :title="val.TITLE_DISLIKE + article.name">
-
           <template #btn>
-            <i class="fa-regular fa-thumbs-up fa-lg">
-            </i> <b v-if="article.likes"
-              itemprop="contentRating">
+            <i class="fa-regular fa-thumbs-up fa-lg"></i>
+            <b v-if="article.likes" itemprop="contentRating">
               {{ article.likes.length }}
             </b>
           </template>
@@ -62,38 +54,30 @@
           :width="val.IMG_WIDTH"
           :height="val.IMG_HEIGHT"
           itemprop="image">
-
           <template #figcaption>
             <blockquote v-html="article.text"
               id="figcaption"
               class="container width-sm bord bord-sky blue">
             </blockquote>
-            
             <p class="gray">
               {{ val.CREATE_ON }}
-              <i itemprop="dateCreated">
-                {{ new Date(article.createdAt).toLocaleDateString() }}
-              </i>
+              <i itemprop="dateCreated">{{ new Date(article.createdAt).toLocaleDateString() }}</i>
               <br>
               {{ val.UPDATE_ON }}
-              <i itemprop="dateModified">
-                {{ new Date(article.updatedAt).toLocaleDateString() }}
-              </i>
+              <i itemprop="dateModified">{{ new Date(article.updatedAt).toLocaleDateString() }}</i>
             </p>
           </template>
         </MediaElt>
       </template>
     </CardElt>
 
-    <CardElt v-if="checkSession('admin') || checkSession('editor')"
-      id="create-article">
+    <CardElt v-if="checkSession('admin') || checkSession('editor')">
       <template #header>
         <h2>{{ val.EDIT }} {{ article.name }}</h2>
       </template>
 
       <template #body>
-        <form method="post"
-          enctype="multipart/form-data">
+        <form enctype="multipart/form-data">
           <ListElt :items="val.ARTICLE_FORM">
 
             <template #item-1>
@@ -101,29 +85,20 @@
                 @keyup.enter="updateArticle()"
                 :info="val.INFO_NAME"
                 :min="2">
-
-                <template #legend>
-                  {{ val.LEGEND_NAME }}
-                </template>
-                <template #label>
-                  {{ val.LABEL_NAME }}
-                </template>
+                <template #legend>{{ val.LEGEND_NAME }}</template>
+                <template #label>{{ val.LABEL_NAME }}</template>
               </FieldElt>
             </template>
 
             <template #item-2>
-              <label for="text">
-                {{ val.LEGEND_TEXT }}
-              </label>
-
+              <label for="text">{{ val.LEGEND_TEXT }}</label>
               <Editor id="text"
                 :api-key="val.TINY_KEY"
                 v-model="article.text"
-                :init="{
-                  toolbar:
-                    'undo redo outdent indent align lineheight | \
-                    bold italic underline strikethrough backcolor | \
-                    blocks fontfamily fontsize'
+                :init="{ toolbar:
+                  'undo redo outdent indent align lineheight | \
+                  bold italic underline strikethrough backcolor | \
+                  blocks fontfamily fontsize'
                 }"/>
             </template>
 
@@ -131,18 +106,12 @@
               <MediaElt v-if="article.image"
                 :src="'/img/thumbnails/articles/' + article.image"
                 :alt="article.alt" />
-
               <FieldElt id="image"
                 type="file"
                 v-model:value="image"
                 :info="val.INFO_IMAGE">
-
-                <template #legend>
-                  {{ val.LEGEND_IMAGE }}
-                </template>
-                <template #label>
-                  {{ val.LABEL_IMAGE }}
-                </template>
+                <template #legend>{{ val.LEGEND_IMAGE }}</template>
+                <template #label>{{ val.LABEL_IMAGE }}</template>
               </FieldElt>
             </template>
 
@@ -151,13 +120,8 @@
                 v-model:value="article.alt"
                 @keyup.enter="updateArticle()"
                 :info="val.INFO_ALT">
-
-                <template #legend>
-                  {{ val.LEGEND_ALT }}
-                </template>
-                <template #label>
-                  {{ val.LABEL_ALT }}
-                </template>
+                <template #legend>{{ val.LEGEND_ALT }}</template>
+                <template #label>{{ val.LABEL_ALT }}</template>
               </FieldElt>
             </template>
 
@@ -167,13 +131,8 @@
                 v-model:value="article.cat"
                 @keyup.enter="updateArticle()"
                 :info="val.INFO_CATEGORY">
-
-                <template #legend>
-                  {{ val.LEGEND_CATEGORY }}
-                </template>
-                <template #label>
-                  {{ val.LABEL_CATEGORY }}
-                </template>
+                <template #legend>{{ val.LEGEND_CATEGORY }}</template>
+                <template #label>{{ val.LABEL_CATEGORY }}</template>
               </FieldElt>
             </template>
           </ListElt>
@@ -184,7 +143,6 @@
             class="btn-sky"
             :content="val.CONTENT_UPDATE"
             :title="val.TITLE_UPDATE + article.name">
-
             <template #btn>
               <i class="fa-solid fa-cloud-arrow-up fa-lg"></i>
             </template>

@@ -1,22 +1,17 @@
 <template>
   <main>
     <header>
-      <h1 class="sky-dark">
-        {{ val.HOME_VIEW }}
-      </h1>
+      <h1 class="sky-dark">{{ val.HOME_VIEW }}</h1>
     </header>
 
     <CardElt>
       <template #header>
-        <h2 class="ani-flipperX-loop-altrev-into">
-          {{ val.HOME_SUB }}
-        </h2>
+        <h2 class="ani-flipperX-loop-altrev-into">{{ val.HOME_SUB }}</h2>
         <b>{{ val.INTRO_HOME }}</b>
       </template>
 
       <template #body>
-        <ListElt :dynamic="true"
-          :items="val.HOME_CONTENT"/>
+        <ListElt :dynamic="true" :items="val.HOME_CONTENT" />
       </template>
     </CardElt>
   </main>

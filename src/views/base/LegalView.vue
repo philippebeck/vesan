@@ -3,11 +3,7 @@
     <header>
       <h1>{{ val.LEGAL_VIEW }}</h1>
       <p>{{ val.INTRO_LEGAL }}</p>
-
-      <a v-if="val.LEGAL_LINK" 
-        :href="val.LEGAL_LINK">
-        {{ val.LEGAL_LINK }}
-      </a>
+      <a v-if="val.LEGAL_LINK" :href="val.LEGAL_LINK">{{ val.LEGAL_LINK }}</a>
     </header>
 
     <CardElt class="container-90sm-80lg-70xl">

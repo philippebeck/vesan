@@ -1,22 +1,18 @@
 <template>
   <main>
-    <NavElt :items="getCategories"
-      class="sidebar">
+    <NavElt :items="getCategories" class="sidebar">
       <template #hide>
-        <i class="fa-solid fa-eye fa-fw" 
-          :title="val.TITLE_TOGGLE"></i>
+        <i class="fa-solid fa-eye fa-fw" :title="val.TITLE_TOGGLE"></i>
       </template>
 
       <template #last  v-if="checkSession('editor')">
-        <a href="#create-article"
-          :title="val.ARTICLE_CREATOR">
+        <a href="#create-article" :title="val.ARTICLE_CREATOR">
           <i class="fa-regular fa-pen-to-square fa-fw"></i>
         </a>
       </template>
 
       <template #top>
-        <i class="fa-solid fa-chevron-circle-up fa-fw" 
-          :title="val.TITLE_TOP"></i>
+        <i class="fa-solid fa-chevron-circle-up fa-fw" :title="val.TITLE_TOP"></i>
       </template>
     </NavElt>
 
@@ -25,34 +21,24 @@
       class="container-90md-80lg-70wd">
       <template #header>
         <h1 class="sky-dark">
-          <i class="fa-solid fa-blog fa-lg"
-            aria-hidden="true">
-          </i>
+          <i class="fa-solid fa-blog fa-lg"></i>
           {{ val.BLOG_VIEW }}
         </h1>
         <p>{{ val.INTRO_ARTICLE }}</p>
       </template>
 
       <template #body>
-        <ListElt :items="getItemsByCategory(articles)"
-          :dynamic="true">
-
+        <ListElt :items="getItemsByCategory(articles)" :dynamic="true">
           <template #items="slotProps">
-            <h2 :id="slotProps.item[0].cat"
-              class="sky-dark ani-turn3D-loop-altrev-into">
+            <h2 :id="slotProps.item[0].cat" class="sky-dark ani-turn3D-loop-altrev-into">
               {{ slotProps.item[0].cat }}
             </h2>
           </template>
 
           <template #nested="slotProps">
-
-            <CardElt itemscope
-              itemtype="https://schema.org/Article">
+            <CardElt itemscope itemtype="https://schema.org/Article">
               <template #header>
-                <h3 itemprop="name"
-                  class="sky-dark">
-                  {{ slotProps.value.name }}
-                </h3>
+                <h3 itemprop="name" class="sky-dark">{{ slotProps.value.name }}</h3>
               </template>
 
               <template #body>
@@ -61,12 +47,9 @@
                   href="/login"
                   class="btn-sky-dark"
                   :title="val.TITLE_LIKE_LOGIN + slotProps.value.name">
-
                   <template #btn>
-                    <i class="fa-regular fa-thumbs-up fa-lg">
-                    </i> <b itemprop="contentRating">
-                      {{ slotProps.value.likes.length }}
-                    </b>
+                    <i class="fa-regular fa-thumbs-up fa-lg"></i>
+                    <b itemprop="contentRating">{{ slotProps.value.likes.length }}</b>
                   </template>
                 </BtnElt>
 
@@ -76,12 +59,9 @@
                   @click="addLike(slotProps.value.id)"
                   class="btn-sky"
                   :title="val.TITLE_LIKE + slotProps.value.name">
-
                   <template #btn>
-                    <i class="fa-regular fa-thumbs-up fa-lg">
-                    </i> <b itemprop="contentRating">
-                      {{ slotProps.value.likes.length }}
-                    </b>
+                    <i class="fa-regular fa-thumbs-up fa-lg"></i>
+                    <b itemprop="contentRating">{{ slotProps.value.likes.length }}</b>
                   </template>
                 </BtnElt>
 
@@ -91,25 +71,22 @@
                   @click="addLike(slotProps.value.id)"
                   class="btn-sky"
                   :title="val.TITLE_DISLIKE + slotProps.value.name">
-
                   <template #btn>
-                    <i class="fa-regular fa-thumbs-up fa-lg">
-                    </i> <b itemprop="contentRating">
-                      {{ slotProps.value.likes.length }}
-                    </b>
+                    <i class="fa-regular fa-thumbs-up fa-lg"></i>
+                    <b itemprop="contentRating">{{ slotProps.value.likes.length }}</b>
                   </template>
                 </BtnElt>
 
                 <a :href="`article/${slotProps.value.id}`"
                   :title="val.TITLE_READ + slotProps.value.name">
 
-                  <MediaElt :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
+                  <MediaElt 
+                    :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
                     :src="`img/thumbnails/articles/${slotProps.value.image}`" 
                     :alt="`${slotProps.value.alt}`" 
                     :width="val.THUMB_WIDTH"
                     :height="val.THUMB_HEIGHT"
                     itemprop="image">
-
                     <template #figcaption>
                       <blockquote v-html="slotProps.value.text.split(':')[0]" 
                         class="monospace figcaption">
@@ -117,7 +94,6 @@
                     </template>
                   </MediaElt>
                 </a>
-
               </template>
             </CardElt>
           </template>

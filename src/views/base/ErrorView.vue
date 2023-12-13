@@ -7,10 +7,7 @@
       </template>
 
       <template #body>
-
-        <MediaElt src="/img/errors/error-404.webp" 
-          :alt="val.ERROR_ALT">
-        </MediaElt>
+        <MediaElt src="/img/errors/error-404.webp" :alt="val.ERROR_ALT" />
 
         <BtnElt href="/">
           <template #btn>

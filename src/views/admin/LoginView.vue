@@ -2,9 +2,7 @@
   <main>
     <header>
       <h1 class="sky-dark">
-        <i class="fa-solid fa-right-to-bracket fa-lg"
-          aria-hidden="true">
-        </i>
+        <i class="fa-solid fa-right-to-bracket fa-lg"></i>
         {{ val.LOGIN_VIEW }}
       </h1>
     </header>
@@ -12,9 +10,7 @@
     <CardElt v-if="type === 'SignUp'">
       <template #header>
         <h2 class="sky-dark">
-          <i class="fa-solid fa-user-plus fa-lg"
-            aria-hidden="true">
-          </i>
+          <i class="fa-solid fa-user-plus fa-lg"></i>
           {{ val.SIGN_UP }}
         </h2>
         <p>{{ val.INTRO_SIGNUP }}</p>
@@ -28,7 +24,6 @@
           class="btn-green"
           :content="val.CONTENT_ENTER"
           :title="val.TITLE_GO + val.SIGN_IN">
-
           <template #btn>
             <i class="fa-solid fa-door-open fa-lg"></i>
           </template>
@@ -39,7 +34,6 @@
           class="btn-orange"
           :content="val.CONTENT_SEND"
           :title="val.TITLE_GO + val.FORGOT_PASS">
-
           <template #btn>
             <i class="fa-regular fa-paper-plane fa-lg"></i>
           </template>
@@ -50,9 +44,7 @@
     <CardElt v-if="type === 'SignIn'">
       <template #header>
         <h2 class="sky-dark">
-          <i class="fa-solid fa-door-open fa-lg"
-            aria-hidden="true">
-          </i>
+          <i class="fa-solid fa-door-open fa-lg"></i>
           {{ val.SIGN_IN }}
         </h2>
         <p>{{ val.INTRO_SIGNIN }}</p>
@@ -66,7 +58,6 @@
           class="btn-sky-dark"
           :content="val.CONTENT_SIGNUP"
           :title="val.TITLE_GO + val.SIGN_UP">
-
           <template #btn>
             <i class="fa-solid fa-user-plus fa-lg"></i>
           </template>
@@ -77,7 +68,6 @@
           class="btn-orange"
           :content="val.CONTENT_SEND"
           :title="val.TITLE_GO + val.FORGOT_PASS">
-
           <template #btn>
             <i class="fa-regular fa-paper-plane fa-lg"></i>
           </template>
@@ -88,9 +78,7 @@
     <CardElt v-if="type === 'ForgotPass'">
       <template #header>
         <h2 class="sky-dark">
-          <i class="fa-solid fa-key fa-lg"
-            aria-hidden="true">
-          </i>
+          <i class="fa-solid fa-key fa-lg"></i>
           {{ val.FORGOT_PASS }}
         </h2>
         <p>{{ val.INTRO_FORGOT }}</p>
@@ -104,7 +92,6 @@
           class="btn-sky-dark"
           :content="val.CONTENT_SIGNUP"
           :title="val.TITLE_GO + val.SIGN_UP">
-
           <template #btn>
             <i class="fa-solid fa-user-plus fa-lg"></i>
           </template>
@@ -115,7 +102,6 @@
           class="btn-green"
           :content="val.CONTENT_ENTER"
           :title="val.TITLE_GO + val.SIGN_IN">
-
           <template #btn>
             <i class="fa-solid fa-door-open fa-lg"></i>
           </template>

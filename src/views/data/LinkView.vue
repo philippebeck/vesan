@@ -2,18 +2,14 @@
   <main>
     <header>
       <h1 class="sky-dark">
-        <i class="fa-solid fa-link fa-lg"
-          aria-hidden="true">
-        </i>
+        <i class="fa-solid fa-link fa-lg"></i>
         {{ val.LINK_VIEW }}
       </h1>
     </header>
 
-    <NavElt :items="getCategories"
-      class="sidebar">
+    <NavElt :items="getCategories" class="sidebar">
       <template #hide>
-        <i class="fa-solid fa-eye fa-fw" 
-          :title="val.TITLE_TOGGLE"></i>
+        <i class="fa-solid fa-eye fa-fw" :title="val.TITLE_TOGGLE"></i>
       </template>
 
       <template #items="slotProps">
@@ -21,15 +17,13 @@
       </template>
 
       <template #last v-if="checkSession('admin')">
-        <a href="#create-link"
-          :title="val.LINK_CREATOR">
+        <a href="#create-link" :title="val.LINK_CREATOR">
           <i class="fa-solid fa-link fa-fw"></i>
         </a>
       </template>
 
       <template #top>
-        <i class="fa-solid fa-chevron-circle-up fa-fw" 
-          :title="val.TITLE_TOP"></i>
+        <i class="fa-solid fa-chevron-circle-up fa-fw" :title="val.TITLE_TOP"></i>
       </template>
     </NavElt>
 
@@ -37,9 +31,7 @@
       :isArticle="true"
       class="container-90sm-80md-70lg-60xl">
       <template #header>
-        <h2 class="ani-shrink-loop-altrev-into">
-          {{ val.LINK_SUB }}
-        </h2>
+        <h2 class="ani-shrink-loop-altrev-into">{{ val.LINK_SUB }}</h2>
         <b>{{ val.INTRO_LINK }}</b>
       </template>
 
@@ -63,8 +55,10 @@
 
       <template #aside v-if="checkSession('admin')">
         <LinkCreator :val="val"/>
+        <LinkManager v-if="links.length > 0"
+          :val="val"
+          :links="links"/>
       </template>
-
     </CardElt>
   </main>
 </template>
@@ -76,6 +70,7 @@ import ListElt from "@/assets/elements/ListElt"
 import NavElt from "@/assets/elements/NavElt"
 
 import LinkCreator from "@/assets/creators/LinkCreator"
+import LinkManager from "@/assets/managers/LinkManager"
 
 import { checkRole, getCats, getItemsByCat, setMeta } from "servidio"
 import { mapState, mapActions } from "vuex"
@@ -87,7 +82,8 @@ export default {
     CardElt,
     ListElt,
     NavElt,
-    LinkCreator
+    LinkCreator,
+    LinkManager
   },
   props: ["val", "user"],
 

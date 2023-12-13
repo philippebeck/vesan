@@ -3,9 +3,7 @@
     <CardElt>
       <template #header>
         <h1 class="sky-dark">
-          <i class="fa-regular fa-image fa-lg"
-            aria-hidden="true">
-          </i>
+          <i class="fa-regular fa-image fa-lg"></i>
           {{ gallery.name }}
         </h1>
         <b>{{ gallery.author }}</b>
@@ -16,13 +14,11 @@
           <template #slide="slotProps">
             <a :href="`/img/galleries/${slotProps.slide.name}`"
               :title="val.TITLE_WATCH + slotProps.slide.name">
+
               <MediaElt :src="`/img/galleries/${slotProps.slide.name}`"
                 :alt="slotProps.slide.description"
                 :width="val.MEDIA_WIDTH">
-
-                <template #figcaption>
-                  {{ slotProps.slide.description }}
-                </template>
+                <template #figcaption>{{ slotProps.slide.description }}</template>
               </MediaElt>
             </a>
           </template>
@@ -31,7 +27,6 @@
         <ListElt :items="images"
           :dynamic="true"
           class="grid-2md-3lg-4wd content-center">
-
           <template #items="slotProps">
             <a :href="`/img/galleries/${slotProps.item.name}`"
               :title="val.TITLE_WATCH + slotProps.item.name">
@@ -41,13 +36,9 @@
                 :alt="`${slotProps.item.description}`" 
                 :width="val.THUMB_WIDTH"
                 :height="val.THUMB_HEIGHT">
-
                 <template #figcaption>
-                  <p class="monospace figcaption">
-                    {{ slotProps.item.description }}
-                  </p>
+                  <p class="monospace figcaption">{{ slotProps.item.description }}</p>
                 </template>
-
               </MediaElt>
             </a>
           </template>

@@ -2,8 +2,7 @@
   <main>
     <header>
       <h1 class="sky-dark">
-        <i class="fa-solid fa-user-gear fa-lg"
-          aria-hidden="true"></i>
+        <i class="fa-solid fa-user-gear fa-lg"></i>
         {{ val.PROFILE_EDITOR }}
       </h1>
 
@@ -12,7 +11,6 @@
         class="btn-green"
         :content="val.CONTENT_ADMIN"
         :title="val.TITLE_ADMIN">
-
         <template #btn>
           <i class="fa-solid fa-gears fa-lg"></i>
         </template>
@@ -23,7 +21,6 @@
         class="btn-orange"
         :content="val.CONTENT_LOGOUT"
         :title="val.TITLE_LOGOUT">
-
         <template #btn>
           <i class="fa-solid fa-right-from-bracket fa-lg"></i>
         </template>
@@ -45,13 +42,8 @@
                 @keyup.enter="updateUser()"
                 :info="val.INFO_NAME"
                 :min="2">
-
-                <template #legend>
-                  {{ val.LEGEND_NAME }}
-                </template>
-                <template #label>
-                  {{ val.LABEL_NAME }}
-                </template>
+                <template #legend>{{ val.LEGEND_NAME }}</template>
+                <template #label>{{ val.LABEL_NAME }}</template>
               </FieldElt>
             </template>
 
@@ -60,13 +52,8 @@
                 v-model:value="user.email"
                 @keyup.enter="updateUser()"
                 :info="val.INFO_EMAIL">
-
-                <template #legend>
-                  {{ val.LEGEND_EMAIL }}
-                </template>
-                <template #label>
-                  {{ val.LABEL_EMAIL }}
-                </template>
+                <template #legend>{{ val.LEGEND_EMAIL }}</template>
+                <template #label>{{ val.LABEL_EMAIL }}</template>
               </FieldElt>
             </template>
             
@@ -74,18 +61,12 @@
               <MediaElt v-if="user.image"
                 :src="'/img/thumbnails/users/' + user.image"
                 :alt="user.name" />
-
               <FieldElt id="image"
                 type="file"
                 v-model:value="image"
                 :info="val.INFO_IMAGE">
-
-                <template #legend>
-                  {{ val.LEGEND_IMAGE }}
-                </template>
-                <template #label>
-                  {{ val.LABEL_IMAGE }}
-                </template>
+                <template #legend>{{ val.LEGEND_IMAGE }}</template>
+                <template #label>{{ val.LABEL_IMAGE }}</template>
               </FieldElt>
             </template>
 
@@ -94,13 +75,8 @@
                 v-model:value="pass"
                 @keyup.enter="updateUser()"
                 :info="val.INFO_PASSWORD">
-
-                <template #legend>
-                  {{ val.LEGEND_PASSWORD }}
-                </template>
-                <template #label>
-                  {{ val.LABEL_PASSWORD }}
-                </template>
+                <template #legend>{{ val.LEGEND_PASSWORD }}</template>
+                <template #label>{{ val.LABEL_PASSWORD }}</template>
               </FieldElt>
             </template>
           </ListElt>
@@ -110,7 +86,6 @@
             class="btn-sky"
             :content="val.TITLE_UPDATE"
             :title="val.INFO_UP_PROFILE">
-
             <template #btn>
               <i class="fa-solid fa-user-pen fa-lg"></i>
             </template>
@@ -121,7 +96,6 @@
             class="btn-red"
             :content="val.TITLE_DELETE"
             :title="val.TITLE_DELETE_ACCOUNT">
-
             <template #btn>
               <i class="fa-solid fa-user-slash fa-lg"></i>
             </template>

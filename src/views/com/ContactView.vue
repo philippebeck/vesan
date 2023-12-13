@@ -2,18 +2,14 @@
   <main>
     <header>
       <h1 class="sky-dark">
-        <i class="fa-solid fa-envelope-open-text fa-lg"
-          aria-hidden="true">
-        </i>
+        <i class="fa-solid fa-envelope-open-text fa-lg"></i>
         {{ val.CONTACT_VIEW }}
       </h1>
     </header>
 
     <CardElt>
       <template #header>
-        <h2 class="ani-flipX-loop-altrev-into">
-          {{ val.CONTACT_SUB }}
-        </h2>
+        <h2 class="ani-flipX-loop-altrev-into">{{ val.CONTACT_SUB }}</h2>
         <b>{{ val.INTRO_CONTACT }}</b>
       </template>
 
@@ -25,26 +21,16 @@
               <FieldElt type="email"
                 v-model:value="email"
                 :info="val.INFO_EMAIL">
-
-                <template #legend>
-                  {{ val.LEGEND_EMAIL }}
-                </template>
-                <template #label>
-                  {{ val.LABEL_EMAIL }}
-                </template>
+                <template #legend>{{ val.LEGEND_EMAIL }}</template>
+                <template #label>{{ val.LABEL_EMAIL }}</template>
               </FieldElt>
             </template>
 
             <template #item-2>
               <FieldElt v-model:value="subject"
                 :info="val.INFO_SUBJECT">
-
-                <template #legend>
-                  {{ val.LEGEND_SUBJECT }}
-                </template>
-                <template #label>
-                  {{ val.LABEL_SUBJECT }}
-                </template>
+                <template #legend>{{ val.LEGEND_SUBJECT }}</template>
+                <template #label>{{ val.LABEL_SUBJECT }}</template>
               </FieldElt>
             </template>
 
@@ -54,24 +40,17 @@
                 :info="val.INFO_TEXT"
                 :mix="val.TEXT_MIN"
                 :max="val.TEXT_MAX">
-
-                <template #legend>
-                  {{ val.LEGEND_TEXT }}
-                </template>
-                <template #label>
-                  {{ val.LABEL_TEXT }}
-                </template>
+                <template #legend>{{ val.LEGEND_TEXT }}</template>
+                <template #label>{{ val.LABEL_TEXT }}</template>
               </FieldElt>
             </template>
           </ListElt>
 
-          <vue-recaptcha :sitekey="val.RECAPTCHA_KEY"
-            @verify="onVerify">
+          <vue-recaptcha :sitekey="val.RECAPTCHA_KEY" @verify="onVerify">
             <BtnElt type="button"
               class="btn-green"
               :content="val.CONTENT_SEND"
               :title="val.TITLE_MESSAGE">
-
               <template #btn>
                 <i class="fa-regular fa-paper-plane fa-lg"></i>
               </template>

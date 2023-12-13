@@ -2,9 +2,7 @@
   <main>
     <header>
       <h1 class="sky-dark">
-        <i class="fa-solid fa-basket-shopping fa-lg"
-          aria-hidden="true">
-        </i>
+        <i class="fa-solid fa-basket-shopping fa-lg"></i>
         {{ val.BASKET_VIEW }}
       </h1>
     </header>
@@ -18,9 +16,7 @@
       <template #body>
         <form>
           <TableElt :items="order">
-            <template #head>
-              {{ val.TOTAL }}
-            </template>
+            <template #head>{{ val.TOTAL }}</template>
 
             <template #cell-id="slotProps">
               <a :href="`/product/${order[slotProps.index].id}`">
@@ -66,9 +62,7 @@
             </template>
 
             <template #body="slotProps">
-              <b>
-                {{ slotProps.item.price * slotProps.item.quantity }} €
-              </b>
+              <b>{{ slotProps.item.price * slotProps.item.quantity }} €</b>
               <br>
 
               <BtnElt type="button"
@@ -76,7 +70,6 @@
                 class="btn-orange"
                 :content="val.TITLE_DELETE"
                 :title="val.TITLE_DELETE + slotProps.item.name">
-
                 <template #btn>
                   <i class="fa-solid fa-trash fa-lg"></i>
                 </template>
@@ -86,23 +79,16 @@
 
           <p class="bord bord-violet container-60sm-50md">
             {{ val.BASKET_TOTAL }}
-            <b class="black">
-              {{ total }}
-              {{ val.CURRENCY_SYMBOL }}
-            </b>
+            <b class="black">{{ total }} {{ val.CURRENCY_SYMBOL }}</b>
           </p>
 
-          <div v-if="checkSession('user')"
-            id="paypal"
-            class="mar-lg">
-          </div>
+          <div v-if="checkSession('user')" id="paypal" class="mar-lg"></div>
 
           <BtnElt v-else
             href="/login"
             class="btn-green width-sm"
             :content="val.CONTENT_ORDER"
             :title="val.TITLE_ORDER">
-
             <template #btn>
               <i class="fa-solid fa-cash-register fa-lg"></i>
             </template>
@@ -113,7 +99,6 @@
             class="btn-red width-sm"
             :content="val.CONTENT_CLEAR"
             :title="val.TITLE_CLEAR">
-
             <template #btn>
               <i class="fa-solid fa-trash-can fa-lg"></i>
             </template>

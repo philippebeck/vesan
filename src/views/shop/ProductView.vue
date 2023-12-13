@@ -1,7 +1,6 @@
 <template>
   <main>
-    <CardElt itemscope
-      itemtype="https://schema.org/Product">
+    <CardElt itemscope itemtype="https://schema.org/Product">
       <template #header>
         <h1 itemprop="name">{{ product.name }}</h1>
         <strong itemprop="category">{{ product.cat }}</strong>
@@ -16,17 +15,10 @@
           itemprop="image">
 
           <template #figcaption>
-            <p id="figcaption"
-              v-html="product.description">
-            </p>
-            <p itemprop="offers"
-              itemscope
-              itemtype="https://schema.org/Offer">
-              <b itemprop="price">
-                {{ product.price }}
-              </b> <b itemprop="priceCurrency">
-                {{ this.priceCurrency }}
-              </b>
+            <p id="figcaption" v-html="product.description"></p>
+            <p itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+              <b itemprop="price">{{ product.price }}</b>
+              <b itemprop="priceCurrency">{{ this.priceCurrency }}</b>
             </p>
           </template>
         </MediaElt>
@@ -38,13 +30,8 @@
             v-model:value="option"
             @keyup.enter="addToBasket()"
             :info="val.INFO_OPTION">
-
-            <template #legend>
-              {{ val.LEGEND_OPTION }}
-            </template>
-            <template #label>
-              {{ val.LABEL_OPTION }}
-            </template>
+            <template #legend>{{ val.LEGEND_OPTION }}</template>
+            <template #label>{{ val.LABEL_OPTION }}</template>
           </FieldElt>
 
           <FieldElt id="basket-quantity"
@@ -53,13 +40,8 @@
             @keyup.enter="addToBasket()"
             :info="val.INFO_QUANTITY"
             :min="1">
-
-            <template #legend>
-              {{ val.LEGEND_QUANTITY }}
-            </template>
-            <template #label>
-              {{ val.LABEL_QUANTITY }}
-            </template>
+            <template #legend>{{ val.LEGEND_QUANTITY }}</template>
+            <template #label>{{ val.LABEL_QUANTITY }}</template>
           </FieldElt>
 
           <BtnElt type="button"
@@ -67,7 +49,6 @@
             class="btn-green width-sm"
             :content="val.CONTENT_ADD"
             :title="val.CONTENT_ADD + product.name">
-
             <template #btn>
               <i class="fa-solid fa-basket-shopping fa-lg"></i>
             </template>
@@ -76,15 +57,13 @@
       </template>
     </CardElt>
 
-    <CardElt v-if="checkSession('editor')"
-      id="create-product">
+    <CardElt v-if="checkSession('editor')">
       <template #header>
         <h2>{{ val.EDIT }} {{ product.name }}</h2>
       </template>
 
       <template #body>
-        <form method="post"
-          enctype="multipart/form-data">
+        <form enctype="multipart/form-data">
           <ListElt :items="val.PRODUCT_FORM">
 
             <template #item-1>
@@ -92,29 +71,20 @@
                 @keyup.enter="updateProduct()"
                 :info="val.INFO_NAME"
                 :min="2">
-
-                <template #legend>
-                  {{ val.LEGEND_NAME }}
-                </template>
-                <template #label>
-                  {{ val.LABEL_NAME }}
-                </template>
+                <template #legend>{{ val.LEGEND_NAME }}</template>
+                <template #label>{{ val.LABEL_NAME }}</template>
               </FieldElt>
             </template>
 
             <template #item-2>
-              <label for="description">
-                {{ val.LEGEND_DESCRIPTION }}
-              </label>
-
+              <label for="description">{{ val.LEGEND_DESCRIPTION }}</label>
               <Editor id="description"
                 :api-key="val.TINY_KEY"
                 v-model="product.description"
-                :init="{
-                  toolbar:
-                    'undo redo outdent indent align lineheight | \
-                    bold italic underline strikethrough backcolor | \
-                    blocks fontfamily fontsize'
+                :init="{ toolbar:
+                  'undo redo outdent indent align lineheight | \
+                  bold italic underline strikethrough backcolor | \
+                  blocks fontfamily fontsize'
                 }"/>
             </template>
 
@@ -127,13 +97,8 @@
                 type="file"
                 v-model:value="image"
                 :info="val.INFO_IMAGE">
-
-                <template #legend>
-                  {{ val.LEGEND_IMAGE }}
-                </template>
-                <template #label>
-                  {{ val.LABEL_IMAGE }}
-                </template>
+                <template #legend>{{ val.LEGEND_IMAGE }}</template>
+                <template #label>{{ val.LABEL_IMAGE }}</template>
               </FieldElt>
             </template>
 
@@ -141,13 +106,8 @@
               <FieldElt type="textarea"
                 v-model:value="product.alt"
                 :info="val.INFO_ALT">
-
-                <template #legend>
-                  {{ val.LEGEND_ALT }}
-                </template>
-                <template #label>
-                  {{ val.LABEL_ALT }}
-                </template>
+                <template #legend>{{ val.LEGEND_ALT }}</template>
+                <template #label>{{ val.LABEL_ALT }}</template>
               </FieldElt>
             </template>
 
@@ -158,13 +118,8 @@
                 :info="val.INFO_PRICE"
                 :min="1"
                 :max="1000">
-
-                <template #legend>
-                  {{ val.LEGEND_PRICE }}
-                </template>
-                <template #label>
-                  {{ val.LABEL_PRICE }}
-                </template>
+                <template #legend>{{ val.LEGEND_PRICE }}</template>
+                <template #label>{{ val.LABEL_PRICE }}</template>
               </FieldElt>
             </template>
 
@@ -174,13 +129,8 @@
                 @keyup.enter="updateProduct()"
                 :info="val.INFO_OPTIONS"
                 :max="100">
-
-                <template #legend>
-                  {{ val.LEGEND_OPTIONS }}
-                </template>
-                <template #label>
-                  {{ val.LABEL_OPTIONS }}
-                </template>
+                <template #legend>{{ val.LEGEND_OPTIONS }}</template>
+                <template #label>{{ val.LABEL_OPTIONS }}</template>
               </FieldElt>
             </template>
 
@@ -190,13 +140,8 @@
                 v-model:value="product.cat"
                 @keyup.enter="updateProduct()"
                 :info="val.INFO_CATEGORY">
-
-                <template #legend>
-                  {{ val.LEGEND_CATEGORY }}
-                </template>
-                <template #label>
-                  {{ val.LABEL_CATEGORY }}
-                </template>
+                <template #legend>{{ val.LEGEND_CATEGORY }}</template>
+                <template #label>{{ val.LABEL_CATEGORY }}</template>
               </FieldElt>
             </template>
           </ListElt>
@@ -206,7 +151,6 @@
             class="btn-sky"
             :content="val.CONTENT_UPDATE"
             :title="val.TITLE_UPDATE + product.name">
-
             <template #btn>
               <i class="fa-solid fa-cloud-arrow-up fa-lg"></i>
             </template>
