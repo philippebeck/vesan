@@ -4,4 +4,4 @@ node_modules/
 public/fonts/
 public/img/
 src/assets/
-src/config/constants.js
+src/config/values.js

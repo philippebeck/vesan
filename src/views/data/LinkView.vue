@@ -2,18 +2,14 @@
   <main>
     <header>
       <h1 class="sky-dark">
-        <i class="fa-solid fa-link fa-lg"
-          aria-hidden="true">
-        </i>
-        {{ constants.LINK_VIEW }}
+        <i class="fa-solid fa-link fa-lg"></i>
+        {{ val.LINK_VIEW }}
       </h1>
     </header>
 
-    <NavElt :items="getCategories"
-      class="sidebar">
+    <NavElt :items="getCategories" class="sidebar">
       <template #hide>
-        <i class="fa-solid fa-eye fa-fw" 
-          :title="constants.TITLE_TOGGLE"></i>
+        <i class="fa-solid fa-eye fa-fw" :title="val.TITLE_TOGGLE"></i>
       </template>
 
       <template #items="slotProps">
@@ -21,15 +17,13 @@
       </template>
 
       <template #last v-if="checkSession('admin')">
-        <a href="#create-link"
-          :title="constants.LINK_CREATOR">
+        <a href="#create-link" :title="val.LINK_CREATOR">
           <i class="fa-solid fa-link fa-fw"></i>
         </a>
       </template>
 
       <template #top>
-        <i class="fa-solid fa-chevron-circle-up fa-fw" 
-          :title="constants.TITLE_TOP"></i>
+        <i class="fa-solid fa-chevron-circle-up fa-fw" :title="val.TITLE_TOP"></i>
       </template>
     </NavElt>
 
@@ -37,10 +31,8 @@
       :isArticle="true"
       class="container-90sm-80md-70lg-60xl">
       <template #header>
-        <h2 class="ani-shrink-loop-altrev-into">
-          {{ constants.LINK_SUB }}
-        </h2>
-        <b>{{ constants.INTRO_LINK }}</b>
+        <h2 class="ani-shrink-loop-altrev-into">{{ val.LINK_SUB }}</h2>
+        <b>{{ val.INTRO_LINK }}</b>
       </template>
 
       <template #body>
@@ -62,9 +54,11 @@
       </template>
 
       <template #aside v-if="checkSession('admin')">
-        <LinkCreator :constants="constants"/>
+        <LinkCreator :val="val"/>
+        <LinkManager v-if="links.length > 0"
+          :val="val"
+          :links="links"/>
       </template>
-
     </CardElt>
   </main>
 </template>
@@ -76,6 +70,7 @@ import ListElt from "@/assets/elements/ListElt"
 import NavElt from "@/assets/elements/NavElt"
 
 import LinkCreator from "@/assets/creators/LinkCreator"
+import LinkManager from "@/assets/managers/LinkManager"
 
 import { checkRole, getCats, getItemsByCat, setMeta } from "servidio"
 import { mapState, mapActions } from "vuex"
@@ -87,22 +82,18 @@ export default {
     CardElt,
     ListElt,
     NavElt,
-    LinkCreator
+    LinkCreator,
+    LinkManager
   },
-
-  props: [
-    "constants", 
-    "user"
-  ],
+  props: ["val", "user"],
 
   created() {
     this.$store.dispatch("listLinks");
-
     setMeta(
-      this.constants.HEAD_LINK, 
-      this.constants.META_LINK,
-      this.constants.UI_URL + "/link",
-      this.constants.UI_URL + this.constants.LOGO_SRC
+      this.val.HEAD_LINK, 
+      this.val.META_LINK,
+      this.val.UI_URL + "/link",
+      this.val.UI_URL + this.val.LOGO_SRC
     );
   },
 
@@ -110,8 +101,10 @@ export default {
     ...mapState(["links"]),
 
     /**
-     * GET CATEGORIES
-     * @returns
+     * ? GET CATEGORIES
+     * Retrieves the categories using the provided links.
+     *
+     * @return {Array} An array of categories.
      */
     getCategories() {
       return getCats(this.links);
@@ -122,17 +115,22 @@ export default {
     ...mapActions(["listLinks"]),
 
     /**
-     * CHECK ROLE
-     * @param {string} role
-     * @returns
+     * ? CHECK SESSION
+     * Check the session for a given role.
+     *
+     * @param {string} role - the role to check
+     * @return {boolean} the result of the session check
      */
     checkSession(role) {
       return checkRole(this.user.role, role);
     },
 
     /**
-     * SORT ITEMS BY CATEGORY
-     * @param {array} items 
+     * ? GET ITEMS BY CATEGORY
+     * Retrieves items by category.
+     *
+     * @param {Array} items - The array of items.
+     * @return {Array} The array of items filtered by category.
      */
     getItemsByCategory(items) {
       return getItemsByCat(items);

@@ -1,15 +1,15 @@
 <template>
-  <NavElt :items="constants.NAV_MAIN">
+  <NavElt :items="val.NAV_MAIN">
     <template #brand>
-      <img :src="constants.LOGO_SRC"
-        :alt="constants.LOGO_ALT"
-        :width="constants.LOGO_WIDTH">
+      <img :src="val.LOGO_SRC"
+        :alt="val.LOGO_ALT"
+        :width="val.LOGO_WIDTH">
     </template>
 
     <template #admin>
       <a v-if="checkSession('user')"
         href="/profile"
-        :title="constants.PROFILE_OF + user.name">
+        :title="val.PROFILE_OF + user.name">
         <img :src="`/img/thumbnails/users/${user.image}`"
           :alt="user.name"
           :height="40"
@@ -19,14 +19,14 @@
 
       <a v-else
         href="/login"
-        :title="constants.TITLE_LOGIN">
+        :title="val.TITLE_LOGIN">
         <i class="fa-solid fa-right-to-bracket fa-fw"></i>
       </a>
     </template>
   </NavElt>
 
   <router-view v-slot="{ Component }"
-    :constants="constants"
+    :val="val"
     :user="user">
     <transition name="slide">
       <component :is="Component" 
@@ -35,13 +35,13 @@
   </router-view>
 
   <FootElt
-    :title1="constants.FOOT_TITLE1"
-    :title2="constants.FOOT_TITLE2"
-    :title3="constants.FOOT_TITLE3">
+    :title1="val.FOOT_TITLE1"
+    :title2="val.FOOT_TITLE2"
+    :title3="val.FOOT_TITLE3">
 
     <template #foot1>
       <ListElt :dynamic="true"
-        :items="constants.FOOT1">
+        :items="val.FOOT1">
         <template #items="slotProps">
           <a :href="slotProps.item.href"
             :title="slotProps.item.title">
@@ -53,7 +53,7 @@
 
     <template #foot2>
       <ListElt :dynamic="true"
-        :items="constants.FOOT2">
+        :items="val.FOOT2">
         <template #items="slotProps">
           <a :href="slotProps.item.href"
             :title="slotProps.item.title">
@@ -65,7 +65,7 @@
 
     <template #foot3>
       <ListElt :dynamic="true"
-        :items="constants.FOOT3">
+        :items="val.FOOT3">
         <template #items="slotProps">
           <a :href="slotProps.item.href"
             :title="slotProps.item.title">
@@ -77,7 +77,7 @@
 
     <template #foot>
       <ListElt :dynamic="true"
-        :items="constants.FOOT">
+        :items="val.FOOT">
         <template #items="slotProps">
           <a :href="slotProps.item.href"
             :title="slotProps.item.title">
@@ -94,7 +94,8 @@ import FootElt from "@/assets/elements/FootElt"
 import ListElt from "@/assets/elements/ListElt"
 import NavElt from "@/assets/elements/NavElt"
 
-import constants from "./config/constants"
+import val from "./config/values"
+
 import { checkRole, setGlobalMeta } from "servidio"
 import { mapState, mapActions } from "vuex"
 
@@ -108,16 +109,16 @@ export default {
 
   data() {
     return {
-      constants: {}
+      val: {}
     }
   },
 
   created() {
-    this.constants = constants;
-    setGlobalMeta(constants.LANG, constants.ICON);
+    this.val = val;
+    setGlobalMeta(val.LANG, val.ICON);
 
-    if (constants.USER_ID) {
-      this.$store.dispatch("readAvatar", constants.USER_ID);
+    if (val.USER_ID) {
+      this.$store.dispatch("readAvatar", val.USER_ID);
     }
   },
 

@@ -1,22 +1,17 @@
 <template>
   <main>
     <header>
-      <h1 class="sky-dark">
-        {{ constants.HOME_VIEW }}
-      </h1>
+      <h1 class="sky-dark">{{ val.HOME_VIEW }}</h1>
     </header>
 
     <CardElt>
       <template #header>
-        <h2 class="ani-flipperX-loop-altrev-into">
-          {{ constants.HOME_SUB }}
-        </h2>
-        <b>{{ constants.INTRO_HOME }}</b>
+        <h2 class="ani-flipperX-loop-altrev-into">{{ val.HOME_SUB }}</h2>
+        <b>{{ val.INTRO_HOME }}</b>
       </template>
 
       <template #body>
-        <ListElt :dynamic="true"
-          :items="constants.HOME_CONTENT"/>
+        <ListElt :dynamic="true" :items="val.HOME_CONTENT" />
       </template>
     </CardElt>
   </main>
@@ -30,21 +25,15 @@ import { setMeta } from "servidio"
 
 export default {
   name: "HomeView",
-  components: {
-    CardElt,
-    ListElt
-  },
-  props: [
-    "constants",
-    "user"
-  ],
+  components: { CardElt, ListElt },
+  props: ["val", "user"],
 
   created() {
     setMeta(
-      this.constants.HEAD_HOME, 
-      this.constants.META_HOME,
-      this.constants.UI_URL,
-      this.constants.UI_URL + this.constants.LOGO_SRC
+      this.val.HEAD_HOME, 
+      this.val.META_HOME,
+      this.val.UI_URL,
+      this.val.UI_URL + this.val.LOGO_SRC
     );
   }
 }

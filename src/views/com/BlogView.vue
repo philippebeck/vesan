@@ -1,22 +1,18 @@
 <template>
   <main>
-    <NavElt :items="getCategories"
-      class="sidebar">
+    <NavElt :items="getCategories" class="sidebar">
       <template #hide>
-        <i class="fa-solid fa-eye fa-fw" 
-          :title="constants.TITLE_TOGGLE"></i>
+        <i class="fa-solid fa-eye fa-fw" :title="val.TITLE_TOGGLE"></i>
       </template>
 
       <template #last  v-if="checkSession('editor')">
-        <a href="#create-article"
-          :title="constants.ARTICLE_CREATOR">
+        <a href="#create-article" :title="val.ARTICLE_CREATOR">
           <i class="fa-regular fa-pen-to-square fa-fw"></i>
         </a>
       </template>
 
       <template #top>
-        <i class="fa-solid fa-chevron-circle-up fa-fw" 
-          :title="constants.TITLE_TOP"></i>
+        <i class="fa-solid fa-chevron-circle-up fa-fw" :title="val.TITLE_TOP"></i>
       </template>
     </NavElt>
 
@@ -25,34 +21,24 @@
       class="container-90md-80lg-70wd">
       <template #header>
         <h1 class="sky-dark">
-          <i class="fa-solid fa-blog fa-lg"
-            aria-hidden="true">
-          </i>
-          {{ constants.BLOG_VIEW }}
+          <i class="fa-solid fa-blog fa-lg"></i>
+          {{ val.BLOG_VIEW }}
         </h1>
-        <p>{{ constants.INTRO_ARTICLE }}</p>
+        <p>{{ val.INTRO_ARTICLE }}</p>
       </template>
 
       <template #body>
-        <ListElt :items="getItemsByCategory(articles)"
-          :dynamic="true">
-
+        <ListElt :items="getItemsByCategory(articles)" :dynamic="true">
           <template #items="slotProps">
-            <h2 :id="slotProps.item[0].cat"
-              class="sky-dark ani-turn3D-loop-altrev-into">
+            <h2 :id="slotProps.item[0].cat" class="sky-dark ani-turn3D-loop-altrev-into">
               {{ slotProps.item[0].cat }}
             </h2>
           </template>
 
           <template #nested="slotProps">
-
-            <CardElt itemscope
-              itemtype="https://schema.org/Article">
+            <CardElt itemscope itemtype="https://schema.org/Article">
               <template #header>
-                <h3 itemprop="name"
-                  class="sky-dark">
-                  {{ slotProps.value.name }}
-                </h3>
+                <h3 itemprop="name" class="sky-dark">{{ slotProps.value.name }}</h3>
               </template>
 
               <template #body>
@@ -60,13 +46,10 @@
                   :id="`like-${slotProps.value.id}`"
                   href="/login"
                   class="btn-sky-dark"
-                  :title="constants.TITLE_LIKE_LOGIN + slotProps.value.name">
-
+                  :title="val.TITLE_LIKE_LOGIN + slotProps.value.name">
                   <template #btn>
-                    <i class="fa-regular fa-thumbs-up fa-lg">
-                    </i> <b itemprop="contentRating">
-                      {{ slotProps.value.likes.length }}
-                    </b>
+                    <i class="fa-regular fa-thumbs-up fa-lg"></i>
+                    <b itemprop="contentRating">{{ slotProps.value.likes.length }}</b>
                   </template>
                 </BtnElt>
 
@@ -75,13 +58,10 @@
                   type="button"
                   @click="addLike(slotProps.value.id)"
                   class="btn-sky"
-                  :title="constants.TITLE_LIKE + slotProps.value.name">
-
+                  :title="val.TITLE_LIKE + slotProps.value.name">
                   <template #btn>
-                    <i class="fa-regular fa-thumbs-up fa-lg">
-                    </i> <b itemprop="contentRating">
-                      {{ slotProps.value.likes.length }}
-                    </b>
+                    <i class="fa-regular fa-thumbs-up fa-lg"></i>
+                    <b itemprop="contentRating">{{ slotProps.value.likes.length }}</b>
                   </template>
                 </BtnElt>
 
@@ -90,26 +70,23 @@
                   type="button"
                   @click="addLike(slotProps.value.id)"
                   class="btn-sky"
-                  :title="constants.TITLE_DISLIKE + slotProps.value.name">
-
+                  :title="val.TITLE_DISLIKE + slotProps.value.name">
                   <template #btn>
-                    <i class="fa-regular fa-thumbs-up fa-lg">
-                    </i> <b itemprop="contentRating">
-                      {{ slotProps.value.likes.length }}
-                    </b>
+                    <i class="fa-regular fa-thumbs-up fa-lg"></i>
+                    <b itemprop="contentRating">{{ slotProps.value.likes.length }}</b>
                   </template>
                 </BtnElt>
 
                 <a :href="`article/${slotProps.value.id}`"
-                  :title="constants.TITLE_READ + slotProps.value.name">
+                  :title="val.TITLE_READ + slotProps.value.name">
 
-                  <MediaElt :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
+                  <MediaElt 
+                    :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
                     :src="`img/thumbnails/articles/${slotProps.value.image}`" 
                     :alt="`${slotProps.value.alt}`" 
-                    :width="constants.THUMB_WIDTH"
-                    :height="constants.THUMB_HEIGHT"
+                    :width="val.THUMB_WIDTH"
+                    :height="val.THUMB_HEIGHT"
                     itemprop="image">
-
                     <template #figcaption>
                       <blockquote v-html="slotProps.value.text.split(':')[0]" 
                         class="monospace figcaption">
@@ -117,7 +94,6 @@
                     </template>
                   </MediaElt>
                 </a>
-
               </template>
             </CardElt>
           </template>
@@ -125,7 +101,7 @@
       </template>
 
       <template #aside v-if="checkSession('editor')">
-        <ArticleCreator :constants="constants"/>
+        <ArticleCreator :val="val"/>
       </template>
     </CardElt>
   </main>
@@ -153,22 +129,20 @@ export default {
     NavElt,
     ArticleCreator 
   },
-  props: ["constants", "user"],
+  props: ["val", "user"],
 
   created() {
     this.$store.dispatch("listArticles");
-
     setMeta(
-      this.constants.HEAD_BLOG, 
-      this.constants.META_BLOG,
-      this.constants.UI_URL + "/blog",
-      this.constants.UI_URL + this.constants.LOGO_SRC
+      this.val.HEAD_BLOG, 
+      this.val.META_BLOG,
+      this.val.UI_URL + "/blog",
+      this.val.UI_URL + this.val.LOGO_SRC
     );
   },
 
   updated() {
     const textArray = document.getElementsByClassName("figcaption");
-
     for (let textElt of textArray) {
       textElt.firstChild.setAttribute("itemprop", "text");
     }
@@ -178,8 +152,10 @@ export default {
     ...mapState(["articles"]),
 
     /**
-     * GET CATEGORIES
-     * @returns
+     * ? GET CATEGORIES
+     * Retrieves the categories of articles.
+     *
+     * @return {Array} An array of article categories.
      */
     getCategories() {
       return getCats(this.articles);
@@ -190,78 +166,71 @@ export default {
     ...mapActions(["listArticles"]),
 
     /**
-     * CHECK ROLE
-     * @param {string} role
-     * @returns
+     * ? CHECK SESSION
+     * Checks the session for the specified role.
+     *
+     * @param {type} role - the role to check
+     * @return {type} the result of the role check
      */
     checkSession(role) {
       return checkRole(this.user.role, role);
     },
 
     /**
-     * SORT ITEMS BY CATEGORY
-     * @param {array} items 
-     * @returns
+     * ? GET ITEMS BY CATEGORY
+     * Retrieves items based on category.
+     *
+     * @param {Array} items - The list of items to filter.
+     * @return {Array} The filtered list of items.
      */
     getItemsByCategory(items) {
       return getItemsByCat(items);
     },
 
     /**
-     * CHECK LIKES
-     * @param {string} id
-     * @returns
+     * ? CHECK LIKES
+     * Check if the given ID is present in the likes array of any article
+     * associated with the current user.
+     *
+     * @param {type} id - The ID to check for in the likes array.
+     * @return {type} - Returns a boolean indicating whether the ID is present in the likes array.
      */
     checkLikes(id) {
-      for (let article of this.articles) {
-        if (article.id === id) {
-
-          return article.likes.includes(this.constants.USER_ID);
-        }
-      }
+      return this.articles.some(a => a.id === id && a.likes.includes(this.val.USER_ID));
     },
 
     /**
-     * ADD LIKE
-     * @param {string} id 
+     * ? ADD LIKE
+     * Add a like to the article with the specified ID.
+     *
+     * @param {number} id - The ID of the article.
      */
     addLike(id) {
-      let hasLiked = false;
+      const { USER_ID, API_URL, TOKEN } = this.val;
 
-      for (let i = 0; i < this.articles.length; i++) {
-        if (id === this.articles[i].id) {
-          let likes = this.articles[i].likes;
+      const article = this.articles.find(a => a.id === id);
+      if (!article) return;
 
-          for (let j = 0; j < likes.length; j++) {
-            if (this.constants.USER_ID === likes[j]) {
-              likes.splice(j, 1);
-              hasLiked = true;
-            }
-          }
+      const { name, text, image, alt, likes, cat } = article;
+      const index = likes.indexOf(USER_ID);
 
-          if (hasLiked === false) likes.push(this.constants.USER_ID);
-
-          const URL   = this.constants.API_URL + "/articles/" + id;
-          const data  = new FormData();
-
-          data.append("name", this.articles[i].name);
-          data.append("text", this.articles[i].text);
-          data.append("image", this.articles[i].image);
-          data.append("alt", this.articles[i].alt);
-          data.append("likes", JSON.stringify(likes));
-          data.append("cat", this.articles[i].cat);
-
-          putData(URL, data, this.constants.TOKEN)
-            .then(() => {
-              if (hasLiked === true) {
-                console.log(data.get("name") + this.constants.ALERT_DISLIKED);
-              } else {
-                console.log(data.get("name") + this.constants.ALERT_LIKED);
-              }
-            })
-            .catch(err => { setError(err) });
-        }
+      if (index > -1) {
+        likes.splice(index, 1);
+      } else {
+        likes.push(USER_ID);
       }
+
+      const URL = `${API_URL}/articles/${id}`;
+      const data = new FormData();
+
+      data.append("name", name);
+      data.append("text", text);
+      data.append("image", image);
+      data.append("alt", alt);
+      data.append("likes", JSON.stringify(likes));
+      data.append("cat", cat);
+
+      putData(URL, data, TOKEN).catch(setError);
     }
   }
 }

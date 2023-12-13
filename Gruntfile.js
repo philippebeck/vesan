@@ -29,8 +29,6 @@ module.exports = function(grunt) {
       forgotPass: { src: ["node_modules/vue-elt/components/auth/ForgotPass.vue"], dest: "src/assets/auth/ForgotPass.vue" },
       signIn: { src: ["node_modules/vue-elt/components/auth/SignIn.vue"], dest: "src/assets/auth/SignIn.vue" },
       signUp: { src: ["node_modules/vue-elt/components/auth/SignUp.vue"], dest: "src/assets/auth/SignUp.vue" },
-
-      css: { src: ["node_modules/vue-elt/dist/style.css"], dest: "public/css/var.css" },
     }
   });
 

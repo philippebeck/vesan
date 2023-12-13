@@ -30,7 +30,7 @@ beforeEach(() => {
 
   wrapper = shallowMount(ShopView, {
     props: {
-      constants: {
+      val: {
         TEST: "test"
       },
       user: {
@@ -70,7 +70,7 @@ describe("ShopView", () => {
   })
 
   test("props", () => { 
-    expect(wrapper.props("constants")).toStrictEqual({ TEST: "test" })
+    expect(wrapper.props("val")).toStrictEqual({ TEST: "test" })
     expect(wrapper.props("user")).toStrictEqual({ 
       name: "test name", 
       email: "email@test.com"
