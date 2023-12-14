@@ -46,7 +46,7 @@
       </template>
 
       <template #aside v-if="checkSession('admin')">
-        <ImageCreator :val="val"/>
+        <ImageSet :val="val" :images="images" :galleries="galleries"/>
       </template>
     </CardElt>
   </main>
@@ -58,7 +58,7 @@ import ListElt from "@/assets/elements/ListElt"
 import MediaElt from "@/assets/elements/MediaElt"
 import SliderElt from "@/assets/elements/SliderElt"
 
-import ImageCreator from "@/assets/creators/ImageCreator"
+import ImageSet from "@/assets/setters/ImageSet"
 
 import { checkRole, getData, setError, setMeta } from "servidio"
 import { mapState, mapActions } from "vuex"
@@ -70,7 +70,7 @@ export default {
     ListElt,
     MediaElt,
     SliderElt,
-    ImageCreator
+    ImageSet
   },
 
   props: ["val", "user"],
@@ -97,15 +97,16 @@ export default {
         this.$router.push("/galleries");
       });
 
-    this.$store.dispatch("listGalleryImages", this.$route.params.id);
+    this.$store.dispatch("listImages", this.$route.params.id);
+    this.$store.dispatch("listGalleries");
   },
 
   computed: {
-    ...mapState(["images"])
+    ...mapState(["images", "galleries"])
   },
 
   methods: {
-    ...mapActions(["listGalleryImages"]),
+    ...mapActions(["listImages", "listGalleries"]),
 
     /**
      * ? CHECK SESSION
