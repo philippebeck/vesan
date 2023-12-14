@@ -9,7 +9,6 @@ export default createStore({
     //! ******************** OBJECT STATE ********************
 
     article:  {},
-    gallery:  {},
     product:  {},
     user:     {},
 
@@ -29,7 +28,6 @@ export default createStore({
     //! ******************** OBJECT GETTERS ********************
 
     getArticle: state => state.article,
-    getGallery: state => state.gallery,
     getProduct: state => state.product,
     getUser:    state => state.user,
 
@@ -57,17 +55,6 @@ export default createStore({
     SET_ARTICLE(state, article) {
       article.likes = JSON.parse(article.likes);
       state.article = article;
-    },
-
-    /**
-     * ? SET GALLERY
-     * Sets the gallery state to the provided value.
-     *
-     * @param {any} state - The current state object.
-     * @param {any} gallery - The new gallery value to set.
-     */
-    SET_GALLERY(state, gallery) {
-      state.gallery = gallery;
     },
 
     /**
@@ -208,7 +195,6 @@ export default createStore({
         .catch(err => { setError(err) });
     },
 
-
     /**
      * ? READ AVATAR
      * Reads the avatar from the specified context & id.
@@ -221,22 +207,6 @@ export default createStore({
     async readAvatar(context, id) {
       getData(`${val.API_URL}/auth/${id}`)
         .then(res => { context.commit("SET_USER", res) })
-        .catch(err => { setError(err) });
-    },
-
-    /**
-     * ? READ GALLERY
-     * Reads a gallery from the server 
-     * And commits it to the context.
-     *
-     * @param {Object} context - The Vuex store context.
-     * @param {string} id - The ID of the gallery to read.
-     * @return {Promise} A promise that resolves when the gallery is
-     * successfully read & committed, or rejects with an error.
-     */
-    async readGallery(context, id) {
-      getData(`${val.API_URL}/galleries/${id}`)
-        .then(res => { context.commit("SET_GALLERY", res) })
         .catch(err => { setError(err) });
     },
 
@@ -288,15 +258,15 @@ export default createStore({
         .catch(err => { setError(err) });
     },
 
-/**
- * ? LIST GALLERIES
- * Fetches a list of galleries from the API 
- * And sets them in the context state.
- *
- * @param {Object} context - The Vuex context object.
- * @return {Promise} A promise that resolves 
- * when the galleries are set in the context state.
- */
+    /**
+     * ? LIST GALLERIES
+     * Fetches a list of galleries from the API 
+     * And sets them in the context state.
+     *
+     * @param {Object} context - The Vuex context object.
+     * @return {Promise} A promise that resolves 
+     * when the galleries are set in the context state.
+     */
     async listGalleries(context) {
       getData(`${val.API_URL}/galleries`)
         .then(res => { context.commit("SET_GALLERIES", res) })
@@ -313,7 +283,7 @@ export default createStore({
      * @return {Promise} A promise that resolves when the images 
      * have been retrieved and the state has been updated.
      */
-    async listGalleryImages(context, id) {
+    async listImages(context, id) {
       getData(`${val.API_URL}/images/${id}`)
         .then(res => { context.commit("SET_IMAGES", res) })
         .catch(err => { setError(err) });
@@ -346,22 +316,6 @@ export default createStore({
     },
 
     //! ******************** PRIVATE ARRAY ********************
-
-    /**
-     * ? LIST IMAGES
-     * Retrieves a list of images from the API 
-     * And updates the state with the result.
-     *
-     * @param {Object} context - The Vuex context object.
-     * @return {Promise} A Promise that resolves 
-     * with the result of the API call.
-     */
-    async listImages(context) {
-      getData(`${val.API_URL}/images`, val.TOKEN)
-        .then(res => { context.commit("SET_IMAGES", res) })
-        .catch(err => { setError(err) });
-    },
-
     /**
      * ? LIST USER ORDERS
      * Retrieves a list of user orders.
