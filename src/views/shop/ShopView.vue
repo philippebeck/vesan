@@ -75,7 +75,7 @@
       </template>
 
       <template #aside v-if="checkSession('editor')">
-        <ProductCreator :val="val"/>
+        <ProductSet :val="val"/>
       </template>
     </CardElt>
   </main>
@@ -87,7 +87,7 @@ import ListElt from "@/assets/elements/ListElt"
 import MediaElt from "@/assets/elements/MediaElt"
 import NavElt from "@/assets/elements/NavElt"
 
-import ProductCreator from "@/assets/creators/ProductCreator"
+import ProductSet from "@/assets/setters/ProductSet"
 
 import { checkRole, getCats, getItemsByCat, setMeta } from "servidio"
 import { mapState, mapActions } from "vuex"
@@ -99,7 +99,7 @@ export default {
     ListElt,
     MediaElt,
     NavElt,
-    ProductCreator
+    ProductSet
   },
   props: ["val", "user"],
 

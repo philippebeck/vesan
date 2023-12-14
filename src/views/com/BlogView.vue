@@ -101,7 +101,7 @@
       </template>
 
       <template #aside v-if="checkSession('editor')">
-        <ArticleCreator :val="val"/>
+        <ArticleSet :val="val"/>
       </template>
     </CardElt>
   </main>
@@ -114,7 +114,7 @@ import ListElt from "@/assets/elements/ListElt"
 import MediaElt from "@/assets/elements/MediaElt"
 import NavElt from "@/assets/elements/NavElt"
 
-import ArticleCreator from "@/assets/creators/ArticleCreator"
+import ArticleSet from "@/assets/setters/ArticleSet"
 
 import { checkRole, getCats, getItemsByCat, putData, setError, setMeta } from "servidio"
 import { mapState, mapActions } from "vuex"
@@ -127,7 +127,7 @@ export default {
     ListElt,
     MediaElt,
     NavElt,
-    ArticleCreator 
+    ArticleSet
   },
   props: ["val", "user"],
 

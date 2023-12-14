@@ -33,10 +33,7 @@
       </template>
 
       <template #aside v-if="checkSession('admin')">
-        <GalleryCreator :val="val"/>
-        <GalleryManager v-if="galleries.length > 0"
-          :val="val"
-          :galleries="galleries"/>
+        <GallerySet :val="val" :galleries="galleries"/>
       </template>
     </CardElt>
   </main>
@@ -47,8 +44,7 @@ import CardElt from "@/assets/elements/CardElt"
 import ListElt from "@/assets/elements/ListElt"
 import MediaElt from "@/assets/elements/MediaElt"
 
-import GalleryCreator from "@/assets/creators/GalleryCreator"
-import GalleryManager from "@/assets/managers/GalleryManager"
+import GallerySet from "@/assets/setters/GallerySet"
 
 import { checkRole, setMeta } from "servidio"
 import { mapState, mapActions } from "vuex"
@@ -59,8 +55,7 @@ export default {
     CardElt,
     ListElt,
     MediaElt,
-    GalleryCreator,
-    GalleryManager
+    GallerySet
   },
   props: ["val", "user"],
 

@@ -108,6 +108,56 @@
     </CardElt>
 
     <b v-else>{{ val.BASKET_EMPTY }}</b>
+
+    <CardElt v-if="orders.length !== 0">
+      <template #header>
+        <h2>{{ val.ORDERS_SUB }}</h2>
+      </template>
+
+      <template #body>
+        <TableElt :items="orders">
+
+          <template #cell-id="slotProps">
+            <b>#{{ slotProps.index + 1 }}</b>
+            ({{ orders[slotProps.index].id }})
+          </template>
+
+          <template #cell-products="slotProps">
+            <ul>
+              <li v-for="(item, index) in orders[slotProps.index].products"
+                :key="index">
+                <a :href="`/product/${item.id}`">
+
+                  <ul :title="val.TITLE_GO + item.name">
+                    <li>
+                      <b>{{ item.name }}</b>
+                    </li>
+                    <li>
+                      <i>({{ item.option }})</i>
+                    </li>
+                    <li class="black">
+                      {{ item.quantity }}x {{ item.price }}€
+                    </li>
+                  </ul>
+                </a>
+              </li>
+            </ul>
+          </template>
+
+          <template #cell-total="slotProps">
+            <b>{{ orders[slotProps.index].total }} €</b>
+          </template>
+
+          <template #cell-created="slotProps">
+            {{ new Date(orders[slotProps.index].created).toLocaleString() }}
+          </template>
+
+          <template #cell-updated="slotProps">
+            {{ new Date(orders[slotProps.index].updated).toLocaleString() }}
+          </template>
+        </TableElt>
+      </template>
+    </CardElt>
   </main>
 </template>
 
@@ -120,6 +170,7 @@ import TableElt from "@/assets/elements/TableElt"
 
 import { loadScript } from "@paypal/paypal-js"
 import { checkRole, getData, postData, setError, setMeta } from "servidio"
+import { mapState, mapActions } from "vuex"
 
 export default {
   name: "BasketView",
@@ -164,10 +215,26 @@ export default {
         }
       })
       .catch(err => { setError(err) });
+
+      if (this.val.USER_ID) {
+        this.$store.dispatch("readUser", this.val.USER_ID);
+        this.$store.dispatch("listUserOrders", this.val.USER_ID);
+      }
+  },
+
+  computed: {
+    ...mapState([
+      "user", 
+      "orders"
+    ])
   },
 
   methods: {
-    //! ****************************** CHECKER ******************************
+    ...mapActions([
+      "readUser", 
+      "listUserOrders"
+    ]),
+
     /**
      * CHECK ROLE
      * @param {string} role
@@ -177,8 +244,6 @@ export default {
       return checkRole(this.user.role, role);
     },
 
-    //! ****************************** GETTER ******************************
-
     /**
      * GET TOTAL
      * @returns
@@ -186,8 +251,6 @@ export default {
     getTotal() {
       return this.total;
     },
-
-    //! ****************************** SETTERS ******************************
 
     /**
      * SET BASKET
@@ -299,8 +362,6 @@ export default {
         this.total += Number(productTotal);
       }
     },
-
-    //! ****************************** CRUD ******************************
 
     /**
      * CREATE ORDER

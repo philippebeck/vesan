@@ -14,6 +14,18 @@ const routes = [
     component: () => import("@/views/base/LegalView"),
     alias: ["/notice"]
   },
+  {
+    path: "/login",
+    name: "login",
+    component: () => import("@/views/base/LoginView"),
+    alias: ["/connection"]
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    component: () => import("@/views/base/ProfileView"),
+    meta: { requiresAuth: true }
+  },
   // Com
   {
     path: "/blog",
@@ -70,25 +82,6 @@ const routes = [
     name: "basket",
     component: () => import("@/views/shop/BasketView"),
     alias: ["/cart"]
-  },
-  // Admin
-  {
-    path: "/admin",
-    name: "admin",
-    component: () => import("@/views/admin/AdminView"),
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/login",
-    name: "login",
-    component: () => import("@/views/admin/LoginView"),
-    alias: ["/connection"]
-  },
-  {
-    path: "/profile",
-    name: "profile",
-    component: () => import("@/views/admin/ProfileView"),
-    meta: { requiresAuth: true }
   },
   // Error
   {
