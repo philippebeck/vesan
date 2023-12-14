@@ -5,26 +5,6 @@
         <i class="fa-solid fa-user-gear fa-lg"></i>
         {{ val.PROFILE_EDITOR }}
       </h1>
-
-      <BtnElt v-if="checkSession('editor')"
-        href="/admin"
-        class="btn-green"
-        :content="val.CONTENT_ADMIN"
-        :title="val.TITLE_ADMIN">
-        <template #btn>
-          <i class="fa-solid fa-gears fa-lg"></i>
-        </template>
-      </BtnElt>
-
-      <BtnElt type="button"
-        @click="logout()" 
-        class="btn-orange"
-        :content="val.CONTENT_LOGOUT"
-        :title="val.TITLE_LOGOUT">
-        <template #btn>
-          <i class="fa-solid fa-right-from-bracket fa-lg"></i>
-        </template>
-      </BtnElt>
     </header>
 
     <CardElt>
@@ -88,6 +68,16 @@
             :title="val.INFO_UP_PROFILE">
             <template #btn>
               <i class="fa-solid fa-user-pen fa-lg"></i>
+            </template>
+          </BtnElt>
+
+          <BtnElt type="button"
+            @click="logout()" 
+            class="btn-orange"
+            :content="val.CONTENT_LOGOUT"
+            :title="val.TITLE_LOGOUT">
+            <template #btn>
+              <i class="fa-solid fa-right-from-bracket fa-lg"></i>
             </template>
           </BtnElt>
 
