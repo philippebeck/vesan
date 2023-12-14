@@ -92,55 +92,9 @@
           </BtnElt>
         </form>
       </template>
-    </CardElt>
-    
-    <CardElt v-if="orders.length !== 0">
-      <template #header>
-        <h2>{{ val.ORDERS_SUB }}</h2>
-      </template>
 
-      <template #body>
-        <TableElt :items="orders">
-
-          <template #cell-id="slotProps">
-            <b>#{{ slotProps.index + 1 }}</b>
-            ({{ orders[slotProps.index].id }})
-          </template>
-
-          <template #cell-products="slotProps">
-            <ul>
-              <li v-for="(item, index) in orders[slotProps.index].products"
-                :key="index">
-                <a :href="`/product/${item.id}`">
-
-                  <ul :title="val.TITLE_GO + item.name">
-                    <li>
-                      <b>{{ item.name }}</b>
-                    </li>
-                    <li>
-                      <i>({{ item.option }})</i>
-                    </li>
-                    <li class="black">
-                      {{ item.quantity }}x {{ item.price }}€
-                    </li>
-                  </ul>
-                </a>
-              </li>
-            </ul>
-          </template>
-
-          <template #cell-total="slotProps">
-            <b>{{ orders[slotProps.index].total }} €</b>
-          </template>
-
-          <template #cell-created="slotProps">
-            {{ new Date(orders[slotProps.index].created).toLocaleString() }}
-          </template>
-
-          <template #cell-updated="slotProps">
-            {{ new Date(orders[slotProps.index].updated).toLocaleString() }}
-          </template>
-        </TableElt>
+      <template #aside v-if="checkSession('admin')">
+        <UserSet :val="val" :users="users" type="profile"/>
       </template>
     </CardElt>
   </main>
@@ -152,7 +106,8 @@ import CardElt from "@/assets/elements/CardElt"
 import FieldElt from "@/assets/elements/FieldElt"
 import ListElt from "@/assets/elements/ListElt"
 import MediaElt from "@/assets/elements/MediaElt"
-import TableElt from "@/assets/elements/TableElt"
+
+import UserSet from "@/assets/setters/UserSet"
 
 import { checkRange, checkRegex, checkRole, deleteData, putData, setError, setMeta } from "servidio"
 import { mapState, mapActions } from "vuex"
@@ -165,7 +120,7 @@ export default {
     FieldElt,
     ListElt,
     MediaElt,
-    TableElt
+    UserSet
   },
 
   props: ["val"],
@@ -180,7 +135,7 @@ export default {
   created() {
     if (this.val.USER_ID) {
       this.$store.dispatch("readUser", this.val.USER_ID);
-      this.$store.dispatch("listUserOrders", this.val.USER_ID);
+      this.$store.dispatch("listUsers");
 
       setMeta(
       this.val.HEAD_PROFILE, 
@@ -196,17 +151,11 @@ export default {
   },
 
   computed: {
-    ...mapState([
-      "user", 
-      "orders"
-    ])
+    ...mapState(["user", "users"])
   },
 
   methods: {
-    ...mapActions([
-      "readUser", 
-      "listUserOrders"
-    ]),
+    ...mapActions(["readUser", "listUsers"]),
 
     /**
      * CHECK SESSION

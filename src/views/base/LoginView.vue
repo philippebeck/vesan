@@ -17,7 +17,7 @@
       </template>
 
       <template #body>
-        <SignUp :val="val"/>
+        <UserSet :val="val"/>
 
         <BtnElt type="button"
           @click="setType('SignIn')"
@@ -51,7 +51,7 @@
       </template>
 
       <template #body>
-        <SignIn :val="val"/>
+        <AuthSet type="signin" :val="val"/>
 
         <BtnElt type="button"
           @click="setType('SignUp')"
@@ -85,7 +85,7 @@
       </template>
 
       <template #body>
-        <ForgotPass :val="val"/>
+        <AuthSet type="forgot" :val="val"/>
 
         <BtnElt type="button"
           @click="setType('SignUp')"
@@ -115,9 +115,8 @@
 import BtnElt from "@/assets/elements/BtnElt"
 import CardElt from "@/assets/elements/CardElt"
 
-import ForgotPass from "@/assets/auth/ForgotPass"
-import SignIn from "@/assets/auth/SignIn"
-import SignUp from "@/assets/auth/SignUp"
+import AuthSet from "@/assets/setters/AuthSet"
+import UserSet from "@/assets/setters/UserSet"
 
 import { setMeta } from "servidio"
 
@@ -126,9 +125,8 @@ export default {
   components: {
     BtnElt,
     CardElt,
-    SignUp,
-    SignIn,
-    ForgotPass
+    AuthSet,
+    UserSet
   },
 
   props: ["val"],
