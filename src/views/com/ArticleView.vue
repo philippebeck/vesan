@@ -1,6 +1,97 @@
 <template>
   <main>
-    <CardElt itemscope itemtype="https://schema.org/Article">
+    <CardElt v-if="checkSession('editor')">
+      <template #header>
+        <h2>{{ val.EDIT }} {{ article.name }}</h2>
+      </template>
+
+      <template #body>
+        <form enctype="multipart/form-data">
+          <ListElt :items="val.ARTICLE_FORM">
+
+            <template #item-1>
+              <FieldElt v-model:value="article.name"
+                @keyup.enter="updateArticle()"
+                :info="val.INFO_NAME"
+                :min="2">
+                <template #legend>{{ val.LEGEND_NAME }}</template>
+                <template #label>{{ val.LABEL_NAME }}</template>
+              </FieldElt>
+            </template>
+
+            <template #item-2>
+              <label for="text">{{ val.LEGEND_TEXT }}</label>
+              <Editor id="text"
+                :api-key="val.TINY_KEY"
+                v-model="article.text"
+                :init="{ toolbar:
+                  'undo redo outdent indent align lineheight | \
+                  bold italic underline strikethrough backcolor | \
+                  blocks fontfamily fontsize'
+                }"/>
+            </template>
+
+            <template #item-3>
+              <MediaElt v-if="article.image"
+                :src="'/img/thumbnails/articles/' + article.image"
+                :alt="article.alt" />
+              <FieldElt id="image"
+                type="file"
+                v-model:value="image"
+                :info="val.INFO_IMAGE">
+                <template #legend>{{ val.LEGEND_IMAGE }}</template>
+                <template #label>{{ val.LABEL_IMAGE }}</template>
+              </FieldElt>
+            </template>
+
+            <template #item-4>
+              <FieldElt type="textarea"
+                v-model:value="article.alt"
+                @keyup.enter="updateArticle()"
+                :info="val.INFO_ALT">
+                <template #legend>{{ val.LEGEND_ALT }}</template>
+                <template #label>{{ val.LABEL_ALT }}</template>
+              </FieldElt>
+            </template>
+
+            <template #item-5>
+              <FieldElt type="select"
+                :list="val.CATS_ARTICLE"
+                v-model:value="article.cat"
+                @keyup.enter="updateArticle()"
+                :info="val.INFO_CATEGORY">
+                <template #legend>{{ val.LEGEND_CATEGORY }}</template>
+                <template #label>{{ val.LABEL_CATEGORY }}</template>
+              </FieldElt>
+            </template>
+          </ListElt>
+
+          <BtnElt type="button"
+            @click="updateArticle()" 
+            class="btn-sky"
+            :content="val.CONTENT_UPDATE"
+            :title="val.TITLE_UPDATE + article.name">
+            <template #btn>
+              <i class="fa-solid fa-cloud-arrow-up fa-lg"></i>
+            </template>
+          </BtnElt>
+
+          <BtnElt type="button"
+            @click="deleteArticle()" 
+            class="btn-red"
+            :content="val.TITLE_DELETE"
+            :title="val.TITLE_DELETE + article.name">
+            <template #btn>
+              <i class="fa-solid fa-trash fa-lg"></i>
+            </template>
+          </BtnElt>
+        </form>
+      </template>
+    </CardElt>
+
+    <CardElt v-else
+      itemscope 
+      itemtype="https://schema.org/Article">
       <template #header>
         <h1 itemprop="name">{{ article.name }}</h1>
         <strong>{{ article.cat }}</strong>
@@ -70,86 +161,6 @@
         </MediaElt>
       </template>
     </CardElt>
-
-    <CardElt v-if="checkSession('admin') || checkSession('editor')">
-      <template #header>
-        <h2>{{ val.EDIT }} {{ article.name }}</h2>
-      </template>
-
-      <template #body>
-        <form enctype="multipart/form-data">
-          <ListElt :items="val.ARTICLE_FORM">
-
-            <template #item-1>
-              <FieldElt v-model:value="article.name"
-                @keyup.enter="updateArticle()"
-                :info="val.INFO_NAME"
-                :min="2">
-                <template #legend>{{ val.LEGEND_NAME }}</template>
-                <template #label>{{ val.LABEL_NAME }}</template>
-              </FieldElt>
-            </template>
-
-            <template #item-2>
-              <label for="text">{{ val.LEGEND_TEXT }}</label>
-              <Editor id="text"
-                :api-key="val.TINY_KEY"
-                v-model="article.text"
-                :init="{ toolbar:
-                  'undo redo outdent indent align lineheight | \
-                  bold italic underline strikethrough backcolor | \
-                  blocks fontfamily fontsize'
-                }"/>
-            </template>
-
-            <template #item-3>
-              <MediaElt v-if="article.image"
-                :src="'/img/thumbnails/articles/' + article.image"
-                :alt="article.alt" />
-              <FieldElt id="image"
-                type="file"
-                v-model:value="image"
-                :info="val.INFO_IMAGE">
-                <template #legend>{{ val.LEGEND_IMAGE }}</template>
-                <template #label>{{ val.LABEL_IMAGE }}</template>
-              </FieldElt>
-            </template>
-
-            <template #item-4>
-              <FieldElt type="textarea"
-                v-model:value="article.alt"
-                @keyup.enter="updateArticle()"
-                :info="val.INFO_ALT">
-                <template #legend>{{ val.LEGEND_ALT }}</template>
-                <template #label>{{ val.LABEL_ALT }}</template>
-              </FieldElt>
-            </template>
-
-            <template #item-5>
-              <FieldElt type="select"
-                :list="val.CATS_ARTICLE"
-                v-model:value="article.cat"
-                @keyup.enter="updateArticle()"
-                :info="val.INFO_CATEGORY">
-                <template #legend>{{ val.LEGEND_CATEGORY }}</template>
-                <template #label>{{ val.LABEL_CATEGORY }}</template>
-              </FieldElt>
-            </template>
-          </ListElt>
-          <br>
-
-          <BtnElt type="button"
-            @click="updateArticle()" 
-            class="btn-sky"
-            :content="val.CONTENT_UPDATE"
-            :title="val.TITLE_UPDATE + article.name">
-            <template #btn>
-              <i class="fa-solid fa-cloud-arrow-up fa-lg"></i>
-            </template>
-          </BtnElt>
-        </form>
-      </template>
-    </CardElt>
   </main>
 </template>
 
@@ -159,10 +170,9 @@ import CardElt from "@/assets/elements/CardElt"
 import FieldElt from "@/assets/elements/FieldElt"
 import ListElt from "@/assets/elements/ListElt"
 import MediaElt from "@/assets/elements/MediaElt"
-
 import Editor from "@tinymce/tinymce-vue"
 
-import { checkRange, checkRole, getData, putData, setError, setMeta } from "servidio"
+import { checkRange, checkRole, deleteData, getData, putData, setError, setMeta } from "servidio"
 
 export default {
   name: "ArticleView",
@@ -175,7 +185,7 @@ export default {
     Editor
   },
 
-  props: ["val", "user"],
+  props: ["user", "val"],
   data() {
     return {
       article: {}
@@ -212,10 +222,10 @@ export default {
   methods: {
     /**
      * ? CHECK SESSION
-     * Checks if the current user session has a specific role.
+     * Checks the session for the specified role.
      *
      * @param {string} role - The role to check.
-     * @return {boolean} Returns true if the user has the specified role, otherwise false.
+     * @return {boolean} The result of the session check.
      */
     checkSession(role) {
       return checkRole(this.user.role, role);
@@ -280,6 +290,26 @@ export default {
         putData(URL, data, TOKEN)
           .then(() => {
             alert(name + ALERT_UPDATED);
+            this.$router.go();
+          })
+          .catch(setError);
+      }
+    },
+
+    /**
+     * ? DELETE ARTICLE
+     * Deletes an article with the given ID.
+     */
+    deleteArticle() {
+      const { TITLE_DELETE, API_URL, TOKEN, ALERT_DELETED } = this.val;
+      let { id, name } = this.article;
+
+      if (confirm(`${TITLE_DELETE} ${name} ?`) === true) {
+        const URL = `${API_URL}/articles/${id}`
+
+        deleteData(URL, TOKEN)
+          .then(() => {
+            alert(name + ALERT_DELETED);
             this.$router.go();
           })
           .catch(setError);
