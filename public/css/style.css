@@ -45,8 +45,8 @@
 }
 
 /* TINYMCE EDITOR */
-[id="text"] ~ *,
-[id="description"] ~ * {
+[id="text"] + *,
+[id="description"] + * {
   margin: auto;
   max-width: 1000px;
   height: 500px;
