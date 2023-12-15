@@ -12,7 +12,7 @@
       </template>
 
       <template #last v-if="checkSession('editor')">
-        <a href="#create-product" :title="val.PRODUCT_CREATOR">
+        <a href="#product-set" :title="val.PRODUCT_CREATOR">
           <i class="fa-regular fa-lightbulb fa-fw"></i>
         </a>
       </template>
@@ -86,7 +86,6 @@ import CardElt from "@/assets/elements/CardElt"
 import ListElt from "@/assets/elements/ListElt"
 import MediaElt from "@/assets/elements/MediaElt"
 import NavElt from "@/assets/elements/NavElt"
-
 import ProductSet from "@/assets/setters/ProductSet"
 
 import { checkRole, getCats, getItemsByCat, setMeta } from "servidio"
@@ -135,8 +134,10 @@ export default {
     ...mapState(["products"]),
 
     /**
-     * SET CATEGORIES
-     * @returns
+     * ? GET CATEGORIES
+     * Retrieves the categories of the products.
+     *
+     * @return {type} The categories of the products.
      */
     getCategories() {
       return getCats(this.products);
@@ -147,17 +148,22 @@ export default {
     ...mapActions(["listProducts"]),
 
     /**
-     * CHECK ROLE
-     * @param {string} role
-     * @returns
+     * ? CHECK SESSION
+     * Check the session for the given role.
+     *
+     * @param {string} role - The role to check.
+     * @return {boolean} The result of the session check.
      */
     checkSession(role) {
       return checkRole(this.user.role, role);
     },
 
     /**
-     * SORT ITEMS BY CATEGORY
-     * @param {array} items 
+     * ? GET ITEMS BY CATEGORY
+     * Retrieves items by category.
+     *
+     * @param {Array} items - The array of items.
+     * @return {Array} The items filtered by category.
      */
     getItemsByCategory(items) {
       return getItemsByCat(items);
