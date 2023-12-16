@@ -33,7 +33,6 @@ Vesan is a complete User Interface made from Vue & built with 3 complementary "h
   - [Production](#production)
   - [Content](#content)
   - [Documentation](#documentation)
-  - [Tests](#tests)
 
 ---
 
@@ -75,7 +74,7 @@ To configure the frontend, replace values :
 ## Usage
 
 To run the frontend :  
-`$ npm run serve`  
+`$ npm start`  
 
 ---
 
@@ -89,8 +88,15 @@ To run the frontend :
 ---
 ## Content
 
-Public Views :  
+Main Views :  
 -   **HomeView** *(Home)*  
+-   **ContactView** *(Contact)*  
+-   **LegalView** *(Legal notice)*  
+-   **LoginView** *(Sign in, Sign up, Forgot password)*  
+-   **ProfileView** *(User profile)*  
+-   **ErrorView** *(Error)*  
+
+Data Views :  
 -   **BlogView** *(Blog with articles list)*  
 -   **ArticleView** *(Article of the blog)*  
 -   **ShopView** *(Shop with products list)*  
@@ -99,16 +105,6 @@ Public Views :
 -   **GalleryView** *(Galleries list)*  
 -   **ImageView** *(Images of a gallery)*  
 -   **LinkView** *(Links list)*  
--   **LoginView** *(Login with connector components)*  
--   **ContactView** *(Contact)*  
--   **LegalView** *(Legal notice)*  
--   **ErrorView** *(Error)*  
-
-Private Views :  
--   **ProfileEditor** *(User profile & user orders)*  
--   **AdminEditor** *(Admin with manager components & editor views)*  
--   **ArticleEditor** *(Editor for article)*  
--   **ProductEditor** *(Editor for product)*  
 
 ---
 
