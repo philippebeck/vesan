@@ -1,62 +1,5 @@
 <template>
   <main>
-    <CardElt itemscope itemtype="https://schema.org/Product">
-      <template #header>
-        <h1 itemprop="name">{{ product.name }}</h1>
-        <strong itemprop="category">{{ product.cat }}</strong>
-      </template>
-
-      <template #body>
-        <MediaElt v-if="product.image"
-          :src="`/img/products/${product.image}`"
-          :alt="product.alt"
-          :width="val.IMG_WIDTH"
-          :height="val.IMG_HEIGHT"
-          itemprop="image">
-
-          <template #figcaption>
-            <p id="figcaption" v-html="product.description"></p>
-            <p itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-              <b itemprop="price">{{ product.price }}</b>
-              <b itemprop="priceCurrency">{{ this.priceCurrency }}</b>
-            </p>
-          </template>
-        </MediaElt>
-
-        <form>
-          <FieldElt id="basket-option"
-            type="select"
-            :list="product.options"
-            v-model:value="option"
-            @keyup.enter="addToBasket()"
-            :info="val.INFO_OPTION">
-            <template #legend>{{ val.LEGEND_OPTION }}</template>
-            <template #label>{{ val.LABEL_OPTION }}</template>
-          </FieldElt>
-
-          <FieldElt id="basket-quantity"
-            type="number"
-            v-model:value="quantity"
-            @keyup.enter="addToBasket()"
-            :info="val.INFO_QUANTITY"
-            :min="1">
-            <template #legend>{{ val.LEGEND_QUANTITY }}</template>
-            <template #label>{{ val.LABEL_QUANTITY }}</template>
-          </FieldElt>
-
-          <BtnElt type="button"
-            @click="addToBasket()"
-            class="btn-green width-sm"
-            :content="val.CONTENT_ADD"
-            :title="val.CONTENT_ADD + product.name">
-            <template #btn>
-              <i class="fa-solid fa-basket-shopping fa-lg"></i>
-            </template>
-          </BtnElt>
-        </form>
-      </template>
-    </CardElt>
-
     <CardElt v-if="checkSession('editor')">
       <template #header>
         <h2>{{ val.EDIT }} {{ product.name }}</h2>
@@ -155,6 +98,75 @@
               <i class="fa-solid fa-cloud-arrow-up fa-lg"></i>
             </template>
           </BtnElt>
+
+          <BtnElt type="button"
+            @click="deleteProduct()" 
+            class="btn-red"
+            :content="val.TITLE_DELETE"
+            :title="val.TITLE_DELETE + product.name">
+            <template #btn>
+              <i class="fa-solid fa-cloud-arrow-up fa-lg"></i>
+            </template>
+          </BtnElt>
+        </form>
+      </template>
+    </CardElt>
+
+    <CardElt v-else
+      itemscope 
+      itemtype="https://schema.org/Product">
+      <template #header>
+        <h1 itemprop="name">{{ product.name }}</h1>
+        <strong itemprop="category">{{ product.cat }}</strong>
+      </template>
+
+      <template #body>
+        <MediaElt v-if="product.image"
+          :src="`/img/products/${product.image}`"
+          :alt="product.alt"
+          :width="val.IMG_WIDTH"
+          :height="val.IMG_HEIGHT"
+          itemprop="image">
+
+          <template #figcaption>
+            <p id="figcaption" v-html="product.description"></p>
+            <p itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+              <b itemprop="price">{{ product.price }}</b>
+              <b itemprop="priceCurrency">{{ this.priceCurrency }}</b>
+            </p>
+          </template>
+        </MediaElt>
+
+        <form>
+          <FieldElt id="basket-option"
+            type="select"
+            :list="product.options"
+            v-model:value="option"
+            @keyup.enter="addToBasket()"
+            :info="val.INFO_OPTION">
+            <template #legend>{{ val.LEGEND_OPTION }}</template>
+            <template #label>{{ val.LABEL_OPTION }}</template>
+          </FieldElt>
+
+          <FieldElt id="basket-quantity"
+            type="number"
+            v-model:value="quantity"
+            @keyup.enter="addToBasket()"
+            :info="val.INFO_QUANTITY"
+            :min="1">
+            <template #legend>{{ val.LEGEND_QUANTITY }}</template>
+            <template #label>{{ val.LABEL_QUANTITY }}</template>
+          </FieldElt>
+
+          <BtnElt type="button"
+            @click="addToBasket()"
+            class="btn-green width-sm"
+            :content="val.CONTENT_ADD"
+            :title="val.CONTENT_ADD + product.name">
+            <template #btn>
+              <i class="fa-solid fa-basket-shopping fa-lg"></i>
+            </template>
+          </BtnElt>
         </form>
       </template>
     </CardElt>
@@ -167,10 +179,9 @@ import CardElt from "@/assets/elements/CardElt"
 import FieldElt from "@/assets/elements/FieldElt"
 import ListElt from "@/assets/elements/ListElt"
 import MediaElt from "@/assets/elements/MediaElt"
-
 import Editor from "@tinymce/tinymce-vue"
 
-import { checkRange, checkRole, getData, putData, setError, setMeta } from "servidio"
+import { checkRange, checkRole, deleteData, getData, putData, setError, setMeta } from "servidio"
 
 export default {
   name: "ProductView",
@@ -182,7 +193,7 @@ export default {
     MediaElt,
     Editor
   },
-  props: ["val", "user"],
+  props: ["user", "val"],
 
   data() {
     return {
@@ -199,6 +210,7 @@ export default {
   created() {
     getData(this.val.API_URL + "/products/" + this.$route.params.id)
       .then((product => {
+        product.options = JSON.parse(product.options);
         this.product = product;
 
         setMeta(
@@ -225,20 +237,22 @@ export default {
 
   methods: {
     /**
-     * CHECK SESSION
-     * @param {string} role
-     * @returns
+     * ? CHECK SESSION
+     * Checks the session for the specified role.
+     *
+     * @param {string} role - The role to check.
+     * @return {boolean} The result of the session check.
      */
     checkSession(role) {
       return checkRole(this.user.role, role);
     },
 
     /**
-     * ADD TO BASKET
+     * ? ADD TO BASKET
+     * Adds the selected item to the basket.
      */
     addToBasket() {
       if (this.option !== "") {
-
         this.createOrder();
         this.getBasket();
         this.checkBasket();
@@ -250,7 +264,8 @@ export default {
     },
 
     /**
-     * CREATE ORDER
+     * ? CREATE ORDER
+     * Create an order based on the selected product, option & quantity.
      */
     createOrder() {
       this.order = {
@@ -261,7 +276,8 @@ export default {
     },
 
     /**
-     * GET BASKET
+     * ? GET BASKET
+     * Retrieves the basket from the local storage.
      */
     getBasket() {
       if (localStorage.getItem("basket") === null) {
@@ -274,14 +290,17 @@ export default {
     },
 
     /**
-     * CHECK BASKET
+     * ? CHECK BASKET
+     * Updates the basket by checking if the order is already in it. 
+     * If so, the quantity of the order is updated.
+     * 
+     * @return {Object} The updated item.
      */
     checkBasket() {
       this.isInBasket = false;
 
       this.basket = this.basket.map(item => {
         if (item.id === this.order.id && item.option === this.option) {
-
           item.quantity = Number(item.quantity) + Number(this.quantity);
           this.isInBasket = true;
         }
@@ -290,11 +309,14 @@ export default {
     },
 
     /**
-     * SET BASKET
+     * ? SET BASKET
+     * Sets the basket by adding the order to the basket array 
+     * And storing it in local storage.
+     * Also displays an alert message & navigates to the "/shop" route.
      */
     setBasket() {
-      if (!this.isInBasket) { this.basket.push(this.order) }
-      if (this.basket[0] === "") { this.basket.shift() }
+      if (!this.isInBasket) this.basket.push(this.order);
+      if (this.basket[0] === "") this.basket.shift();
 
       localStorage.setItem("basket", JSON.stringify(this.basket));
       alert(`${this.order.quantity} "${this.product.name}" (${this.order.option}) ${this.val.ALERT_BASKET_ADDED}`);
@@ -303,40 +325,57 @@ export default {
     },
 
     /**
-     * UPDATE PRODUCT
+     * ? UPDATE PRODUCT
+     * Updates the product by sending a PUT request to the API.
      */
     updateProduct() {
-      const PRICE_MAX  = this.val.PRICE_MAX;
-      const PRICE_MIN  = this.val.PRICE_MIN;
-      const PRICE_MSG  = this.val.CHECK_NUMBER;
-      const STRING_MSG = this.val.CHECK_STRING;
-      const TEXT_MAX   = this.val.TEXT_MAX;
-      const TEXT_MIN   = this.val.TEXT_MIN;
+      const { CHECK_STRING, TEXT_MIN, TEXT_MAX, CHECK_NUMBER, PRICE_MIN, PRICE_MAX, API_URL, TOKEN, ALERT_UPDATED } = this.val;
+      let { id, name, description, image, alt, price, options, cat } = this.product;
 
-      if (checkRange(this.product.name, STRING_MSG) && 
-          checkRange(this.product.description, STRING_MSG, TEXT_MIN, TEXT_MAX) && 
-          checkRange(this.product.alt, STRING_MSG) && 
-          checkRange(this.product.price, PRICE_MSG, PRICE_MIN, PRICE_MAX) && 
-          checkRange(this.product.options, STRING_MSG, TEXT_MIN, TEXT_MAX)) {
+      if (checkRange(name, CHECK_STRING) && 
+          checkRange(description, CHECK_STRING, TEXT_MIN, TEXT_MAX) && 
+          checkRange(alt, CHECK_STRING) && 
+          checkRange(price, CHECK_NUMBER, PRICE_MIN, PRICE_MAX) && 
+          checkRange(options, CHECK_STRING, TEXT_MIN, TEXT_MAX)) {
 
-        let data  = new FormData();
-        let image = document.getElementById("image").files[0] ?? this.product.image;
+        const URL   = `${API_URL}/products/${id}`;
+        const data  = new FormData();
+        const img   = document.getElementById("image")?.files[0] ?? image;
 
-        data.append("name", this.product.name);
-        data.append("description", this.product.description);
-        data.append("image", image);
-        data.append("alt", this.product.alt);
-        data.append("price", this.product.price);
-        data.append("options", this.product.options);
-        data.append("cat", this.product.cat);
-        data.append("created", this.product.created);
+        data.append("name", name);
+        data.append("description", description);
+        data.append("image", img);
+        data.append("alt", alt);
+        data.append("price", price);
+        data.append("options", JSON.stringify(options));
+        data.append("cat", cat);
 
-        putData(this.val.API_URL + "/products/" + this.product.id, data)
+        putData(URL, data, TOKEN)
           .then(() => {
-            alert(this.product.name + this.val.ALERT_UPDATED);
+            alert(name + ALERT_UPDATED);
             this.$router.push("/admin");
           })
           .catch(err => { setError(err) });
+      }
+    },
+
+    /**
+     * ? DELETE PRODUCT
+     * Deletes a product from the system.
+     */
+    deleteProduct() {
+      const { TITLE_DELETE, API_URL, TOKEN, ALERT_DELETED } = this.val;
+      let { id, name } = this.product;
+
+      if (confirm(`${TITLE_DELETE} ${name} ?`) === true) {
+        const URL = `${API_URL}/products/${id}`;
+
+        deleteData(URL, TOKEN)
+          .then(() => {
+            alert(name + ALERT_DELETED);
+            this.$router.go();
+          })
+          .catch(setError);
       }
     }
   }

@@ -6,7 +6,7 @@
       </template>
 
       <template #last  v-if="checkSession('editor')">
-        <a href="#create-article" :title="val.ARTICLE_CREATOR">
+        <a href="#article-set" :title="val.ARTICLE_CREATOR">
           <i class="fa-regular fa-pen-to-square fa-fw"></i>
         </a>
       </template>
@@ -113,7 +113,6 @@ import CardElt from "@/assets/elements/CardElt"
 import ListElt from "@/assets/elements/ListElt"
 import MediaElt from "@/assets/elements/MediaElt"
 import NavElt from "@/assets/elements/NavElt"
-
 import ArticleSet from "@/assets/setters/ArticleSet"
 
 import { checkRole, getCats, getItemsByCat, putData, setError, setMeta } from "servidio"

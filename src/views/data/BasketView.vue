@@ -378,11 +378,9 @@ export default {
 
       order.append("products", JSON.stringify(products));
       order.append("total", this.total);
-      order.append("payment", orderId);
+      order.append("paymentId", orderId);
       order.append("status", this.val.ORDER_STATUS);
-      order.append("user", this.val.USER_ID);
-      order.append("created", Date.now());
-      order.append("updated", Date.now());
+      order.append("userId", this.val.USER_ID);
 
       postData(this.val.API_URL + "/orders/", order)
         .then(() => {
