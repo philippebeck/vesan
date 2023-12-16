@@ -1,51 +1,57 @@
 import { createRouter, createWebHistory } from "vue-router"
 
 const routes = [
-  // Base
+  // ! MAIN
   {
     path: "/",
     name: "home",
-    component: () => import("@/views/base/HomeView"),
+    component: () => import("@/views/main/HomeView"),
     alias: ["/home"]
+  },
+  {
+    path: "/contact",
+    name: "contact",
+    component: () => import("@/views/main/ContactView"),
+    alias: ["/message"]
   },
   {
     path: "/legal",
     name: "legal",
-    component: () => import("@/views/base/LegalView"),
+    component: () => import("@/views/main/LegalView"),
     alias: ["/notice"]
   },
   {
     path: "/login",
     name: "login",
-    component: () => import("@/views/base/LoginView"),
+    component: () => import("@/views/main/LoginView"),
     alias: ["/connection"]
   },
   {
     path: "/profile",
     name: "profile",
-    component: () => import("@/views/base/ProfileView"),
+    component: () => import("@/views/main/ProfileView"),
+    alias: ["/account"],
     meta: { requiresAuth: true }
   },
-  // Com
-  {
-    path: "/blog",
-    name: "blog",
-    component: () => import("@/views/com/BlogView"),
-    alias: ["/articles"]
-  },
+  // ! DATA
   {
     path: "/article/:id",
     name: "article",
-    component: () => import("@/views/com/ArticleView"),
+    component: () => import("@/views/data/ArticleView"),
     alias: ["/blog/:id"]
   },
   {
-    path: "/contact",
-    name: "contact",
-    component: () => import("@/views/com/ContactView"),
-    alias: ["/message"]
+    path: "/basket",
+    name: "basket",
+    component: () => import("@/views/data/BasketView"),
+    alias: ["/cart"]
   },
-  // Data
+  {
+    path: "/blog",
+    name: "blog",
+    component: () => import("@/views/data/BlogView"),
+    alias: ["/articles"]
+  },
   {
     path: "/galleries",
     name: "gallery",
@@ -64,30 +70,23 @@ const routes = [
     component: () => import("@/views/data/LinkView"),
     alias: ["/link"]
   },
-  // Shop
-  {
-    path: "/shop",
-    name: "shop",
-    component: () => import("@/views/shop/ShopView"),
-    alias: ["/products"]
-  },
   {
     path: "/product/:id",
     name: "product",
-    component: () => import("@/views/shop/ProductView"),
+    component: () => import("@/views/data/ProductView"),
     alias: ["/shop/:id"]
   },
   {
-    path: "/basket",
-    name: "basket",
-    component: () => import("@/views/shop/BasketView"),
-    alias: ["/cart"]
+    path: "/shop",
+    name: "shop",
+    component: () => import("@/views/data/ShopView"),
+    alias: ["/products"]
   },
   // Error
   {
     path: "/:pathMatch(.*)*",
     name: "error",
-    component: () => import("@/views/base/ErrorView")
+    component: () => import("@/views/main/ErrorView")
   }
 ]
 
