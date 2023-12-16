@@ -247,7 +247,7 @@ export default {
      */
     addLike() {
       const { USER_ID, API_URL, TOKEN } = this.val;
-      const { id, name, text, image, alt, likes, cat } = this.article;
+      let { id, name, text, image, alt, likes, cat } = this.article;
 
       likes.includes(USER_ID) ? likes.splice(likes.indexOf(USER_ID), 1) : likes.push(USER_ID);
 
@@ -270,7 +270,7 @@ export default {
      */
     updateArticle() {
       const { CHECK_STRING, TEXT_MIN, TEXT_MAX, API_URL, TOKEN, ALERT_UPDATED } = this.val;
-      const { id, name, text, image, alt, likes, cat } = this.article;
+      let { id, name, text, image, alt, likes, cat } = this.article;
 
       if (checkRange(name, CHECK_STRING) &&
           checkRange(text, CHECK_STRING, TEXT_MIN, TEXT_MAX) &&
