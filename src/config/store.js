@@ -195,7 +195,7 @@ export default createStore({
     async readArticle(context, id) {
       getData(`${val.API_URL}/articles/${id}`)
         .then(res => { context.commit("SET_ARTICLE", res) })
-        .catch(err => { setError(err) });
+        .catch(setError);
     },
 
     /**
@@ -210,7 +210,7 @@ export default createStore({
     async readAvatar(context, id) {
       getData(`${val.API_URL}/auth/${id}`)
         .then(res => { context.commit("SET_USER", res) })
-        .catch(err => { setError(err) });
+        .catch(setError);
     },
 
     /**
@@ -224,7 +224,7 @@ export default createStore({
     async readProduct(context, id) {
       getData(`${val.API_URL}/products/${id}`)
         .then(res => { context.commit("SET_PRODUCT", res) })
-        .catch(err => { setError(err) });
+        .catch(setError);
     },
 
     //! ******************** PRIVATE OBJECT ********************
@@ -242,7 +242,7 @@ export default createStore({
     async readUser(context, id) {
       getData(`${val.API_URL}/users/${id}`, val.TOKEN)
         .then(res => { context.commit("SET_USER", res) })
-        .catch(err => { setError(err) });
+        .catch(setError);
     },
 
     //! ******************** PUBLIC ARRAY ********************
@@ -258,7 +258,7 @@ export default createStore({
     async listArticles(context) {
       getData(`${val.API_URL}/articles`)
         .then(res => { context.commit("SET_ARTICLES", res) })
-        .catch(err => { setError(err) });
+        .catch(setError);
     },
 
     /**
@@ -273,7 +273,7 @@ export default createStore({
     async listGalleries(context) {
       getData(`${val.API_URL}/galleries`)
         .then(res => { context.commit("SET_GALLERIES", res) })
-        .catch(err => { setError(err) });
+        .catch(setError);
     },
 
     /**
@@ -289,7 +289,7 @@ export default createStore({
     async listImages(context, id) {
       getData(`${val.API_URL}/images/${id}`)
         .then(res => { context.commit("SET_IMAGES", res) })
-        .catch(err => { setError(err) });
+        .catch(setError);
     },
 
     /**
@@ -302,7 +302,7 @@ export default createStore({
     async listLinks(context) {
       getData(`${val.API_URL}/links`)
         .then(res => { context.commit("SET_LINKS", res) })
-        .catch(err => { setError(err) });
+        .catch(setError);
     },
 
     /**
@@ -315,7 +315,7 @@ export default createStore({
     async listProducts(context) {
       getData(`${val.API_URL}/products`)
         .then(res => { context.commit("SET_PRODUCTS", res) })
-        .catch(err => { setError(err) });
+        .catch(setError);
     },
 
     //! ******************** PRIVATE ARRAY ********************
@@ -331,7 +331,7 @@ export default createStore({
     async listUserOrders(context, id) {
       getData(`${val.API_URL}/orders/${id}`, val.TOKEN)
         .then(res => { context.commit("SET_USER_ORDERS", res) })
-        .catch(err => { setError(err) });
+        .catch(setError);
     },
 
     /**
@@ -345,7 +345,7 @@ export default createStore({
     async listOrders(context) {
       getData(`${val.API_URL}/orders`, val.TOKEN)
         .then(res => { context.commit("SET_ORDERS", res) })
-        .catch(err => { setError(err) });
+        .catch(setError);
     },
 
     /**
@@ -359,7 +359,7 @@ export default createStore({
     async listUsers(context) {
       getData(`${val.API_URL}/users`, val.TOKEN)
         .then(res => { context.commit("SET_USERS", res) })
-        .catch(err => { setError(err) });
+        .catch(setError);
     }
   }
 })
