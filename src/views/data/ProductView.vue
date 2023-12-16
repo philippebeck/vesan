@@ -210,6 +210,7 @@ export default {
   created() {
     getData(this.val.API_URL + "/products/" + this.$route.params.id)
       .then((product => {
+        product.options = JSON.parse(product.options);
         this.product = product;
 
         setMeta(
@@ -346,7 +347,7 @@ export default {
         data.append("image", img);
         data.append("alt", alt);
         data.append("price", price);
-        data.append("options", options);
+        data.append("options", JSON.stringify(options));
         data.append("cat", cat);
 
         putData(URL, data, TOKEN)
