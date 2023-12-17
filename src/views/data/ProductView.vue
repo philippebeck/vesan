@@ -210,7 +210,7 @@ export default {
   created() {
     getData(this.val.API_URL + "/products/" + this.$route.params.id)
       .then((product => {
-        product.options = JSON.parse(product.options);
+        product.options = product.options.split(",");
         this.product = product;
 
         setMeta(
@@ -335,8 +335,7 @@ export default {
       if (checkRange(name, CHECK_STRING) && 
           checkRange(description, CHECK_STRING, TEXT_MIN, TEXT_MAX) && 
           checkRange(alt, CHECK_STRING) && 
-          checkRange(price, CHECK_NUMBER, PRICE_MIN, PRICE_MAX) && 
-          checkRange(options, CHECK_STRING, TEXT_MIN, TEXT_MAX)) {
+          checkRange(price, CHECK_NUMBER, PRICE_MIN, PRICE_MAX)) {
 
         const URL   = `${API_URL}/products/${id}`;
         const data  = new FormData();
@@ -347,15 +346,15 @@ export default {
         data.append("image", img);
         data.append("alt", alt);
         data.append("price", price);
-        data.append("options", JSON.stringify(options));
+        data.append("options", options);
         data.append("cat", cat);
 
         putData(URL, data, TOKEN)
           .then(() => {
             alert(name + ALERT_UPDATED);
-            this.$router.push("/admin");
+            this.$router.push("/shop");
           })
-          .catch(err => { setError(err) });
+          .catch(setError);
       }
     },
 
@@ -373,7 +372,7 @@ export default {
         deleteData(URL, TOKEN)
           .then(() => {
             alert(name + ALERT_DELETED);
-            this.$router.go();
+            this.$router.push("/shop");
           })
           .catch(setError);
       }
