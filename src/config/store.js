@@ -65,7 +65,7 @@ export default createStore({
      * @param {Object} product - The product object to be set in the state.
      */
     SET_PRODUCT(state, product) {
-      product.options = JSON.parse(product.options);
+      product.options = product.options.split(",");
       state.product = product;
     },
 
@@ -162,7 +162,7 @@ export default createStore({
      */
     SET_PRODUCTS(state, products) {
       for (let product of products) {
-        product.options = JSON.parse(product.options);
+        product.options = product.options.split(",");
       }
       state.products = products;
     },
