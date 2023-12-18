@@ -94,7 +94,7 @@
       </template>
 
       <template #aside v-if="checkSession('admin')">
-        <UserSet :val="val" :users="users" type="profile"/>
+        <UserSet :val="val" :users="users"/>
       </template>
     </CardElt>
   </main>
@@ -203,8 +203,6 @@ export default {
             user.append("pass", this.pass)
           }
         }
-
-        console.log(user);
 
         putData(this.val.API_URL + "/users/" + this.user.id, user)
           .then(() => {
