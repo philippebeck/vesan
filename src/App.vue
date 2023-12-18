@@ -6,7 +6,7 @@
         :width="val.LOGO_WIDTH">
     </template>
 
-    <template #admin>
+    <template #profile>
       <a v-if="checkSession('user')"
         href="/profile"
         :title="val.PROFILE_OF + user.name">

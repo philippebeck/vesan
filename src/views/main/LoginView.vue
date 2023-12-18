@@ -7,7 +7,7 @@
       </h1>
     </header>
 
-    <CardElt v-if="type === 'SignUp'">
+    <CardElt v-if="type === 'signUp'">
       <template #header>
         <h2 class="sky-dark">
           <i class="fa-solid fa-user-plus fa-lg"></i>
@@ -17,31 +17,73 @@
       </template>
 
       <template #body>
-        <UserSet :val="val"/>
+        <form enctype="multipart/form-data">
+
+          <FieldElt v-model:value="name"
+            :info="val.INFO_NAME"
+            :min="2">
+            <template #legend>{{ val.LEGEND_NAME }}</template>
+            <template #label>{{ val.LABEL_NAME }}</template>
+          </FieldElt>
+
+          <FieldElt type="email"
+            v-model:value="email"
+            :info="val.INFO_EMAIL">
+            <template #legend>{{ val.LEGEND_EMAIL }}</template>
+            <template #label>{{ val.LABEL_EMAIL }}</template>
+          </FieldElt>
+
+          <FieldElt id="image"
+            type="file"
+            v-model:value="image"
+            :info="val.INFO_IMAGE">
+            <template #legend>{{ val.LEGEND_IMAGE }}</template>
+            <template #label>{{ val.LABEL_IMAGE }}</template>
+          </FieldElt>
+
+          <FieldElt type="password"
+            v-model:value="pass"
+            :info="val.INFO_PASSWORD">
+            <template #legend>{{ val.LEGEND_PASSWORD }}</template>
+            <template #label>{{ val.LABEL_PASSWORD }}</template>
+          </FieldElt>
+
+          <vue-recaptcha :sitekey="val.RECAPTCHA_KEY"
+            @verify="onVerify">
+            <BtnElt type="button"
+              class="btn-blue"
+              :content="val.CONTENT_SIGNUP"
+              :title="val.TITLE_SIGNUP">
+              <template #btn>
+                <i class="fa-solid fa-user-plus fa-lg"></i>
+              </template>
+            </BtnElt>
+          </vue-recaptcha>
+        </form>
 
         <BtnElt type="button"
-          @click="setType('SignIn')"
-          class="btn-green"
-          :content="val.CONTENT_ENTER"
-          :title="val.TITLE_GO + val.SIGN_IN">
-          <template #btn>
-            <i class="fa-solid fa-door-open fa-lg"></i>
-          </template>
-        </BtnElt>
+            @click="setType('signIn')"
+            class="btn-green"
+            :content="val.CONTENT_ENTER"
+            :title="val.TITLE_GO + val.SIGN_IN">
+            <template #btn>
+              <i class="fa-solid fa-door-open fa-lg"></i>
+            </template>
+          </BtnElt>
 
-        <BtnElt type="button"
-          @click="setType('ForgotPass')"
-          class="btn-orange"
-          :content="val.CONTENT_SEND"
-          :title="val.TITLE_GO + val.FORGOT_PASS">
-          <template #btn>
-            <i class="fa-regular fa-paper-plane fa-lg"></i>
-          </template>
-        </BtnElt>
+          <BtnElt type="button"
+            @click="setType('forgotPass')"
+            class="btn-orange"
+            :content="val.CONTENT_SEND"
+            :title="val.TITLE_GO + val.FORGOT_PASS">
+            <template #btn>
+              <i class="fa-regular fa-paper-plane fa-lg"></i>
+            </template>
+          </BtnElt>
       </template>
     </CardElt>
 
-    <CardElt v-if="type === 'SignIn'">
+    <CardElt v-if="type === 'signIn'">
       <template #header>
         <h2 class="sky-dark">
           <i class="fa-solid fa-door-open fa-lg"></i>
@@ -80,7 +122,7 @@
         </form>
 
         <BtnElt type="button"
-          @click="setType('SignUp')"
+          @click="setType('signUp')"
           class="btn-sky-dark"
           :content="val.CONTENT_SIGNUP"
           :title="val.TITLE_GO + val.SIGN_UP">
@@ -90,7 +132,7 @@
         </BtnElt>
 
         <BtnElt type="button"
-          @click="setType('ForgotPass')"
+          @click="setType('forgotPass')"
           class="btn-orange"
           :content="val.CONTENT_SEND"
           :title="val.TITLE_GO + val.FORGOT_PASS">
@@ -101,7 +143,7 @@
       </template>
     </CardElt>
 
-    <CardElt v-if="type === 'ForgotPass'">
+    <CardElt v-if="type === 'forgotPass'">
       <template #header>
         <h2 class="sky-dark">
           <i class="fa-solid fa-key fa-lg"></i>
@@ -134,7 +176,7 @@
         </form>
 
         <BtnElt type="button"
-          @click="setType('SignUp')"
+          @click="setType('signUp')"
           class="btn-sky-dark"
           :content="val.CONTENT_SIGNUP"
           :title="val.TITLE_GO + val.SIGN_UP">
@@ -144,7 +186,7 @@
         </BtnElt>
 
         <BtnElt type="button"
-          @click="setType('SignIn')"
+          @click="setType('signIn')"
           class="btn-green"
           :content="val.CONTENT_ENTER"
           :title="val.TITLE_GO + val.SIGN_IN">
@@ -158,16 +200,12 @@
 </template>
 
 <script>
-import { checkRegex, postData, setError } from "servidio"
+import { checkRange, checkRegex, postData, setError, setMeta } from "servidio"
 
 import BtnElt from "@/assets/elements/BtnElt"
 import CardElt from "@/assets/elements/CardElt"
 import FieldElt from "@/assets/elements/FieldElt"
-
-import UserSet from "@/assets/setters/UserSet"
-
 import { VueRecaptcha } from "vue-recaptcha";
-import { setMeta } from "servidio"
 
 export default {
   name: "LoginView",
@@ -175,7 +213,6 @@ export default {
     BtnElt,
     CardElt,
     FieldElt,
-    UserSet,
     VueRecaptcha
   },
 
@@ -184,7 +221,7 @@ export default {
     return {
       email: "",
       pass: "",
-      type: "SignIn"
+      type: "signIn"
     }
   },
 
@@ -209,38 +246,63 @@ export default {
       this.type = type;
     },
 
-    /**
-     * ? ON VERIFY
-     * Checks the validity of the given response 
-     * and performs signin if successful
-     *
-     * @param {any} response - The response to verify.
-     */
     onVerify(response) {
-      const { CHECK_EMAIL, REGEX_EMAIL, CHECK_PASS, REGEX_PASS, API_URL } = this.val;
+      const { CHECK_EMAIL, CHECK_STRING, REGEX_EMAIL, CHECK_PASS, REGEX_PASS, API_URL } = this.val;
 
-      if (this.type === "signin" &&
-          checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL) && 
-          checkRegex(this.pass, CHECK_PASS, REGEX_PASS)
-          ||
-          this.type === "forgot" &&
-          checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL)) {
-
+      if (
+        this.type === "signUp" && checkRange(this.name, CHECK_STRING) && 
+        checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL) && checkRegex(this.pass, CHECK_PASS, REGEX_PASS)
+        ||
+        this.type === "signIn" && checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL) && 
+        checkRegex(this.pass, CHECK_PASS, REGEX_PASS)
+        ||
+        this.type === "forgot" && checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL)
+      ) {
         const URL = `${API_URL}/auth/recaptcha`;
 
         postData(URL, { response })
           .then(result => {
-            if (result.success) {
-              this.signIn();
+            const { success } = result;
 
-            } else {
-              alert("Failed captcha verification");
-            }
+            if      (success && this.type === "signUp") this.createUser();
+            else if (success && this.type === "signIn") this.signIn();
+            else if (success && this.type === "forgot") this.forgotPass();
+            else alert("Failed captcha verification");
           })
           .catch(err => { 
             setError(err);
             this.$router.go();
           });
+      }
+    },
+
+    /**
+     * ? CREATE USER
+     * Creates a new user.
+     */
+    createUser() {
+      const { API_URL, ALERT_CREATED, ALERT_IMG } = this.val;
+      const img = document.getElementById("image")?.files[0];
+
+      if (img !== undefined) {
+        const URL   = `${API_URL}/users`;
+        const data  = new FormData();
+
+        data.append("name", this.name);
+        data.append("email", this.email);
+        data.append("image", img);
+        data.append("pass", this.pass);
+        data.append("role", "user");
+
+        postData(URL, data)
+          .then(() => {
+            alert(this.name + ALERT_CREATED);
+            this.$router.go();
+          })
+          .catch(err => { setError(err) });
+
+      } else {
+        alert(ALERT_IMG);
       }
     },
 
