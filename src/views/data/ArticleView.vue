@@ -151,11 +151,8 @@
               class="container width-sm bord bord-sky blue">
             </blockquote>
             <p class="gray">
-              {{ val.CREATE_ON }}
+              {{ val.PUBLISHED_ON }}
               <i itemprop="dateCreated">{{ new Date(article.createdAt).toLocaleDateString() }}</i>
-              <br>
-              {{ val.UPDATE_ON }}
-              <i itemprop="dateModified">{{ new Date(article.updatedAt).toLocaleDateString() }}</i>
             </p>
           </template>
         </MediaElt>
