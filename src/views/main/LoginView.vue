@@ -19,14 +19,16 @@
       <template #body>
         <form enctype="multipart/form-data">
 
-          <FieldElt v-model:value="name"
+          <FieldElt id="name"
+            v-model:value="name"
             :info="val.INFO_NAME"
             :min="2">
             <template #legend>{{ val.LEGEND_NAME }}</template>
             <template #label>{{ val.LABEL_NAME }}</template>
           </FieldElt>
 
-          <FieldElt type="email"
+          <FieldElt id="email"
+            type="email"
             v-model:value="email"
             :info="val.INFO_EMAIL">
             <template #legend>{{ val.LEGEND_EMAIL }}</template>
@@ -41,7 +43,8 @@
             <template #label>{{ val.LABEL_IMAGE }}</template>
           </FieldElt>
 
-          <FieldElt type="password"
+          <FieldElt id="pass"
+            type="password"
             v-model:value="pass"
             :info="val.INFO_PASSWORD">
             <template #legend>{{ val.LEGEND_PASSWORD }}</template>
@@ -94,14 +97,16 @@
 
       <template #body>
         <form>
-          <FieldElt type="email"
+          <FieldElt id="email"
+            type="email"
             v-model:value="email"
             :info="val.INFO_EMAIL">
             <template #legend>{{ val.LEGEND_EMAIL }}</template>
             <template #label>{{ val.LABEL_EMAIL }}</template>
           </FieldElt>
 
-          <FieldElt type="password"
+          <FieldElt id="pass"
+            type="password"
             v-model:value="pass"
             :info="val.INFO_PASSWORD">
             <template #legend>{{ val.LEGEND_PASSWORD }}</template>
@@ -154,7 +159,8 @@
 
       <template #body>
         <form>
-          <FieldElt type="email"
+          <FieldElt id="email"
+            type="email"
             v-model:value="email"
             :info="val.INFO_EMAIL"
             required>
@@ -209,13 +215,7 @@ import { VueRecaptcha } from "vue-recaptcha";
 
 export default {
   name: "LoginView",
-  components: {
-    BtnElt,
-    CardElt,
-    FieldElt,
-    VueRecaptcha
-  },
-
+  components: { BtnElt, CardElt, FieldElt, VueRecaptcha },
   props: ["val"],
   data() {
     return {
@@ -233,19 +233,24 @@ export default {
       this.val.UI_URL + this.val.LOGO_SRC
     );
 
-    if (localStorage.userId) {
-      this.$router.push("/");
-    }
+    if (localStorage.userId) this.$router.push("/");
   },
 
   methods: {
     /**
-     * TOGGLE FORM TYPE
+     * ? SET TYPE
+     * * Set the type of the object.
+     * @param {type} type - the new type of the object
      */
     setType(type) {
       this.type = type;
     },
 
+    /**
+     * ? ON VERIFY
+     * * Handles the verification response.
+     * @param {type} response - the verification response
+     */
     onVerify(response) {
       const { CHECK_EMAIL, CHECK_STRING, REGEX_EMAIL, CHECK_PASS, REGEX_PASS, API_URL } = this.val;
 
@@ -278,16 +283,16 @@ export default {
 
     /**
      * ? CREATE USER
-     * Creates a new user.
+     * * Creates a new user.
      */
     createUser() {
       const { API_URL, ALERT_CREATED, ALERT_IMG } = this.val;
-      const img = document.getElementById("image")?.files[0];
+
+      const URL   = `${API_URL}/users`;
+      const data  = new FormData();
+      const img   = document.getElementById("image")?.files[0];
 
       if (img !== undefined) {
-        const URL   = `${API_URL}/users`;
-        const data  = new FormData();
-
         data.append("name", this.name);
         data.append("email", this.email);
         data.append("image", img);
@@ -308,7 +313,7 @@ export default {
 
     /**
      * ? SIGN IN
-     * Signs in the user.
+     * * Signs in the user.
      */
     signIn() {
       const URL   = `${this.val.API_URL}/auth`;
@@ -324,12 +329,12 @@ export default {
 
           this.$router.go();
         })
-        .catch(err => { setError(err) });
+        .catch(setError);
     },
 
     /**
      * ? FORGOT PASS
-     * Executes the forgot password functionality.
+     * * Executes the forgot password functionality.
      */
     forgotPass() {
       const { CONFIRM_FORGOT, API_URL, FORGOT_SUBJECT, FORGOT_TEXT, ALERT_SENDED } = this.val;
@@ -347,7 +352,7 @@ export default {
             alert(FORGOT_SUBJECT + ALERT_SENDED);
             this.$router.push("/login");
           })
-          .catch(err => { setError(err) });
+          .catch(setError);
       }
     }
   }

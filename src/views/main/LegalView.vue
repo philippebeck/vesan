@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import CardElt from "@/assets/elements/CardElt"
 import { setMeta } from "servidio"
+import CardElt from "@/assets/elements/CardElt"
 
 export default {
   name: "LegalView",

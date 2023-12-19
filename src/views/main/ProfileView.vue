@@ -101,30 +101,20 @@
 </template>
 
 <script>
+import { checkRange, checkRegex, checkRole, deleteData, putData, setError, setMeta } from "servidio"
+import { mapState, mapActions } from "vuex"
+
 import BtnElt from "@/assets/elements/BtnElt"
 import CardElt from "@/assets/elements/CardElt"
 import FieldElt from "@/assets/elements/FieldElt"
 import ListElt from "@/assets/elements/ListElt"
 import MediaElt from "@/assets/elements/MediaElt"
-
 import UserSet from "@/assets/setters/UserSet"
-
-import { checkRange, checkRegex, checkRole, deleteData, putData, setError, setMeta } from "servidio"
-import { mapState, mapActions } from "vuex"
 
 export default {
   name: "ProfileEditor",
-  components: {
-    BtnElt,
-    CardElt,
-    FieldElt,
-    ListElt,
-    MediaElt,
-    UserSet
-  },
-
+  components: { BtnElt, CardElt, FieldElt, ListElt, MediaElt, UserSet },
   props: ["val"],
-
   data() {
     return {
       image: "",
@@ -158,16 +148,18 @@ export default {
     ...mapActions(["readUser", "listUsers"]),
 
     /**
-     * CHECK SESSION
-     * @param {string} role
-     * @returns
+     * ? CHECK SESSION
+     * * Checks the session based on the specified role.
+     * @param {type} role - the role to check the session against
+     * @return {type} the result of the session check
      */
     checkSession(role) {
       return checkRole(this.user.role, role);
     },
 
     /**
-     * LOGOUT
+     * ? LOGOUT
+     * * Logout the user by removing the userId & userToken from localStorage
      */
     logout() {
       localStorage.removeItem("userId");
@@ -176,35 +168,29 @@ export default {
     },
 
     /**
-     * UPDATE USER
+     * ? UPDATE USER
+     * * Updates the user information on the server.
      */
     updateUser() {
-      const NAME_MSG    = this.val.CHECK_STRING;
-      const EMAIL_MSG   = this.val.CHECK_EMAIL;
-      const EMAIL_REGEX = this.val.REGEX_EMAIL;
+      const { API_URL, CHECK_EMAIL, CHECK_PASS, CHECK_STRING, REGEX_EMAIL, REGEX_PASS, TOKEN } = this.val;
 
-      if (checkRange(this.user.name, NAME_MSG) && 
-          checkRegex(this.user.email, EMAIL_MSG, EMAIL_REGEX)) {
+      if (checkRange(this.user.name, CHECK_STRING) && 
+        checkRegex(this.user.email, CHECK_EMAIL, REGEX_EMAIL)) {
 
-        let user  = new FormData();
-        let image = document.getElementById("image").files[0] ?? this.user.image;
+        const URL = `${API_URL}/users/${this.user.id}`
+        const data  = new FormData();
+        const img = document.getElementById("image")?.files[0] ?? this.user.image;
 
-        user.append("name", this.user.name);
-        user.append("email", this.user.email);
-        user.append("image", image);
-        user.append("role", this.user.role);
-        user.append("updated", Date.now());
+        data.append("name", this.user.name);
+        data.append("email", this.user.email);
+        data.append("image", img);
+        data.append("role", this.user.role);
 
-        const PASS_MSG   = this.val.CHECK_PASS;
-        const PASS_REGEX = this.val.REGEX_PASS;
-
-        if (this.pass !== "") {
-          if (checkRegex(this.pass, PASS_MSG, PASS_REGEX)) {
-            user.append("pass", this.pass)
-          }
+        if (this.pass !== "" && checkRegex(this.pass, CHECK_PASS, REGEX_PASS)) {
+          data.append("pass", this.pass);
         }
 
-        putData(this.val.API_URL + "/users/" + this.user.id, user)
+        putData(URL, data, TOKEN)
           .then(() => {
             alert(this.user.name + this.val.ALERT_UPDATED);
             this.$router.go();
@@ -214,21 +200,25 @@ export default {
     },
 
     /**
-     * DELETE USER
+     * ? DELETE USER
+     * * Deletes a user from the system.
      */
     deleteUser() {
-      let name = this.user.name;
+      const { ALERT_DELETED, API_URL, TITLE_DELETE, TOKEN } = this.val;
+      const NAME = this.user.name;
 
-      if (confirm(`${this.val.TITLE_DELETE} ${name} ?`) === true) {
-        deleteData(this.val.API_URL + "/users/" + this.user.id)
+      if (confirm(`${TITLE_DELETE} ${NAME} ?`) === true) {
+        const URL = `${API_URL}/users/${this.user.id}`;
+
+        deleteData(URL, TOKEN)
           .then(() => {
             localStorage.removeItem("userId");
             localStorage.removeItem("userToken");
 
-            alert(name + this.val.ALERT_DELETED);
+            alert(NAME + ALERT_DELETED);
             this.$router.go();
           })
-          .catch(err => { setError(err) });
+          .catch(setError);
       }
     }
   }
