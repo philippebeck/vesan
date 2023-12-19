@@ -3,8 +3,7 @@
     <CardElt>
       <template #header>
         <h1 class="sky-dark">
-          <i class="fa-regular fa-image fa-lg"></i>
-          {{ gallery.name }}
+          <i class="fa-regular fa-image fa-lg"></i> {{ gallery.name }}
         </h1>
         <b>{{ gallery.author }}</b>
       </template>
@@ -16,7 +15,7 @@
               :title="val.TITLE_WATCH + slotProps.slide.name">
 
               <MediaElt :src="`/img/galleries/${slotProps.slide.name}`"
-                :alt="slotProps.slide.description"
+                :alt="val.MAP_OF + slotProps.slide.description"
                 :width="val.MEDIA_WIDTH">
                 <template #figcaption>{{ slotProps.slide.description }}</template>
               </MediaElt>
@@ -24,16 +23,14 @@
           </template>
         </SliderElt>
 
-        <ListElt :items="images"
-          :dynamic="true"
-          class="grid-2md-3lg-4wd content-center">
+        <ListElt :items="images" :dynamic="true" class="grid-2md-3lg-4wd content-center">
           <template #items="slotProps">
             <a :href="`/img/galleries/${slotProps.item.name}`"
               :title="val.TITLE_WATCH + slotProps.item.name">
 
               <MediaElt :id="`${slotProps.item.name.toLowerCase()}`"
                 :src="`/img/thumbnails/galleries/${slotProps.item.name}`" 
-                :alt="`${slotProps.item.description}`" 
+                :alt="val.IMAGE_OF + slotProps.item.description" 
                 :width="val.THUMB_WIDTH"
                 :height="val.THUMB_HEIGHT">
                 <template #figcaption>
@@ -53,26 +50,18 @@
 </template>
 
 <script>
+import { checkRole, getData, setError, setMeta } from "servidio"
+import { mapState, mapActions } from "vuex"
+
 import CardElt from "@/assets/elements/CardElt"
 import ListElt from "@/assets/elements/ListElt"
 import MediaElt from "@/assets/elements/MediaElt"
 import SliderElt from "@/assets/elements/SliderElt"
-
 import ImageSet from "@/assets/setters/ImageSet"
-
-import { checkRole, getData, setError, setMeta } from "servidio"
-import { mapState, mapActions } from "vuex"
 
 export default {
   name: "ImageView",
-  components: {
-    CardElt,
-    ListElt,
-    MediaElt,
-    SliderElt,
-    ImageSet
-  },
-
+  components: { CardElt, ListElt, MediaElt, SliderElt, ImageSet },
   props: ["val", "user"],
   data() {
     return {
@@ -110,8 +99,7 @@ export default {
 
     /**
      * ? CHECK SESSION
-     * Checks the session for the specified role.
-     *
+     * * Checks the session for the specified role.
      * @param {string} role - The role to check the session against.
      * @return {boolean} Returns true if the session has the specified role, otherwise false.
      */

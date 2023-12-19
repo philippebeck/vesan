@@ -26,15 +26,15 @@
       </template>
     </NavElt>
 
-    <CardElt id="top" :isArticle="true" class="container-90sm-80md-70lg-60xl">
+    <CardElt id="top" :isArticle="true" class="container-90md-80xl">
       <template #header>
         <h2 class="ani-shrink-loop-altrev-into">{{ val.LINK_SUB }}</h2>
         <b>{{ val.INTRO_LINK }}</b>
       </template>
 
       <template #body>
-        <ListElt :items="getItemsByCategory(links)"
-          :dynamic="true">
+        <ListElt :items="getItemsByCategory(links)" :dynamic="true">
+
           <template #items="slotProps">
             <i :id="slotProps.index"
               :class="`fa-brands fa-${slotProps.index.toLowerCase()} fa-5x blue-light mar-lg`">
@@ -48,8 +48,8 @@
               :title="slotProps.value.url"/>
           </template>
         </ListElt>
-      </template>
 
+      </template>
       <template #aside v-if="checkSession('admin')">
         <LinkSet :val="val" :links="links"/>
       </template>
@@ -58,25 +58,18 @@
 </template>
 
 <script>
+import { checkRole, getCats, getItemsByCat, setMeta } from "servidio"
+import { mapState, mapActions } from "vuex"
+
 import BtnElt from "@/assets/elements/BtnElt"
 import CardElt from "@/assets/elements/CardElt"
 import ListElt from "@/assets/elements/ListElt"
 import NavElt from "@/assets/elements/NavElt"
-
 import LinkSet from "@/assets/setters/LinkSet"
-
-import { checkRole, getCats, getItemsByCat, setMeta } from "servidio"
-import { mapState, mapActions } from "vuex"
 
 export default {
   name: "LinkView",
-  components: {
-    BtnElt,
-    CardElt,
-    ListElt,
-    NavElt,
-    LinkSet
-  },
+  components: { BtnElt, CardElt, ListElt, NavElt, LinkSet },
   props: ["val", "user"],
 
   created() {
@@ -94,8 +87,7 @@ export default {
 
     /**
      * ? GET CATEGORIES
-     * Retrieves the categories using the provided links.
-     *
+     * * Retrieves the categories using the provided links.
      * @return {Array} An array of categories.
      */
     getCategories() {
@@ -108,8 +100,7 @@ export default {
 
     /**
      * ? CHECK SESSION
-     * Check the session for a given role.
-     *
+     * * Check the session for a given role.
      * @param {string} role - the role to check
      * @return {boolean} the result of the session check
      */
@@ -119,8 +110,7 @@ export default {
 
     /**
      * ? GET ITEMS BY CATEGORY
-     * Retrieves items by category.
-     *
+     * * Retrieves items by category.
      * @param {Array} items - The array of items.
      * @return {Array} The array of items filtered by category.
      */
