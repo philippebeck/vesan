@@ -37,7 +37,7 @@
 
 /* SHOP */
 .figcaption {
-  height: 100px;
+  height: 50px;
 }
 
 [itemprop="offers"] {
@@ -45,8 +45,7 @@
 }
 
 /* TINYMCE EDITOR */
-[id="text"] + *,
-[id="description"] + * {
+.tox {
   margin: auto;
   max-width: 1000px;
   height: 500px;
