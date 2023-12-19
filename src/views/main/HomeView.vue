@@ -11,17 +11,17 @@
       </template>
 
       <template #body>
-        <ListElt :dynamic="true" :items="val.HOME_CONTENT" />
+        <ListElt :dynamic="true" :items="val.HOME_CONTENT" class="ani-grow-it"/>
       </template>
     </CardElt>
   </main>
 </template>
 
 <script>
+import { setMeta } from "servidio"
+
 import CardElt from "@/assets/elements/CardElt"
 import ListElt from "@/assets/elements/ListElt"
-
-import { setMeta } from "servidio"
 
 export default {
   name: "HomeView",

@@ -2,15 +2,17 @@
   <main>
     <CardElt v-if="checkSession('editor')">
       <template #header>
-        <h2>{{ val.EDIT }} {{ product.name }}</h2>
+        <h1>{{ val.EDIT }} {{ product.name }}</h1>
+        <h2>{{ product.cat }}</h2>
       </template>
 
       <template #body>
         <form enctype="multipart/form-data">
           <ListElt :items="val.PRODUCT_FORM">
 
-            <template #item-1>
-              <FieldElt v-model:value="product.name"
+            <template #item-1="slotProps">
+              <FieldElt :id="`name-${slotProps.index.id}`"
+                v-model:value="product.name"
                 @keyup.enter="updateProduct()"
                 :info="val.INFO_NAME"
                 :min="2">
@@ -19,9 +21,12 @@
               </FieldElt>
             </template>
 
-            <template #item-2>
-              <label for="description">{{ val.LEGEND_DESCRIPTION }}</label>
-              <Editor id="description"
+            <template #item-2="slotProps">
+              <label :for="`description-${slotProps.index.id}`">
+                {{ val.LEGEND_DESCRIPTION }}
+              </label>
+
+              <Editor :id="`description-${slotProps.index.id}`"
                 :api-key="val.TINY_KEY"
                 v-model="product.description"
                 :init="{ toolbar:
@@ -45,8 +50,9 @@
               </FieldElt>
             </template>
 
-            <template #item-4>
-              <FieldElt type="textarea"
+            <template #item-4="slotProps">
+              <FieldElt :id="`alt-${slotProps.index.id}`"
+                type="textarea"
                 v-model:value="product.alt"
                 :info="val.INFO_ALT">
                 <template #legend>{{ val.LEGEND_ALT }}</template>
@@ -54,8 +60,9 @@
               </FieldElt>
             </template>
 
-            <template #item-5>
-              <FieldElt type="number"
+            <template #item-5="slotProps">
+              <FieldElt :id="`price-${slotProps.index.id}`"
+                type="number"
                 v-model:value="product.price"
                 @keyup.enter="updateProduct()"
                 :info="val.INFO_PRICE"
@@ -66,8 +73,9 @@
               </FieldElt>
             </template>
 
-            <template #item-6>
-              <FieldElt type="textarea"
+            <template #item-6="slotProps">
+              <FieldElt :id="`options-${slotProps.index.id}`"
+                type="textarea"
                 v-model:value="product.options"
                 @keyup.enter="updateProduct()"
                 :info="val.INFO_OPTIONS"
@@ -77,14 +85,15 @@
               </FieldElt>
             </template>
 
-            <template #item-7>
-              <FieldElt type="select"
+            <template #item-7="slotProps">
+              <FieldElt :id="`cat-${slotProps.index.id}`"
+                type="select"
                 :list="val.CATS_PRODUCT"
                 v-model:value="product.cat"
                 @keyup.enter="updateProduct()"
-                :info="val.INFO_CATEGORY">
-                <template #legend>{{ val.LEGEND_CATEGORY }}</template>
-                <template #label>{{ val.LABEL_CATEGORY }}</template>
+                :info="val.INFO_CAT">
+                <template #legend>{{ val.LEGEND_CAT }}</template>
+                <template #label>{{ val.LABEL_CAT }}</template>
               </FieldElt>
             </template>
           </ListElt>
@@ -112,12 +121,10 @@
       </template>
     </CardElt>
 
-    <CardElt v-else
-      itemscope 
-      itemtype="https://schema.org/Product">
+    <CardElt v-else itemscope itemtype="https://schema.org/Product">
       <template #header>
         <h1 itemprop="name">{{ product.name }}</h1>
-        <strong itemprop="category">{{ product.cat }}</strong>
+        <h2 itemprop="category">{{ product.cat }}</h2>
       </template>
 
       <template #body>
@@ -174,6 +181,8 @@
 </template>
 
 <script>
+import { checkRange, checkRole, deleteData, getData, putData, setError, setMeta } from "servidio"
+
 import BtnElt from "@/assets/elements/BtnElt"
 import CardElt from "@/assets/elements/CardElt"
 import FieldElt from "@/assets/elements/FieldElt"
@@ -181,20 +190,10 @@ import ListElt from "@/assets/elements/ListElt"
 import MediaElt from "@/assets/elements/MediaElt"
 import Editor from "@tinymce/tinymce-vue"
 
-import { checkRange, checkRole, deleteData, getData, putData, setError, setMeta } from "servidio"
-
 export default {
   name: "ProductView",
-  components: {
-    BtnElt,
-    CardElt,
-    FieldElt,
-    ListElt,
-    MediaElt,
-    Editor
-  },
+  components: { BtnElt, CardElt, FieldElt, ListElt, MediaElt, Editor },
   props: ["user", "val"],
-
   data() {
     return {
       basket: [],
@@ -238,8 +237,7 @@ export default {
   methods: {
     /**
      * ? CHECK SESSION
-     * Checks the session for the specified role.
-     *
+     * * Checks the session for the specified role.
      * @param {string} role - The role to check.
      * @return {boolean} The result of the session check.
      */
@@ -249,7 +247,7 @@ export default {
 
     /**
      * ? ADD TO BASKET
-     * Adds the selected item to the basket.
+     * * Adds the selected item to the basket.
      */
     addToBasket() {
       if (this.option !== "") {
@@ -265,7 +263,7 @@ export default {
 
     /**
      * ? CREATE ORDER
-     * Create an order based on the selected product, option & quantity.
+     * * Create an order based on the selected product, option & quantity.
      */
     createOrder() {
       this.order = {
@@ -277,7 +275,7 @@ export default {
 
     /**
      * ? GET BASKET
-     * Retrieves the basket from the local storage.
+     * * Retrieves the basket from the local storage.
      */
     getBasket() {
       if (localStorage.getItem("basket") === null) {
@@ -291,9 +289,7 @@ export default {
 
     /**
      * ? CHECK BASKET
-     * Updates the basket by checking if the order is already in it. 
-     * If so, the quantity of the order is updated.
-     * 
+     * * Updates the basket quantity by checking if the order is already in it. 
      * @return {Object} The updated item.
      */
     checkBasket() {
@@ -310,9 +306,7 @@ export default {
 
     /**
      * ? SET BASKET
-     * Sets the basket by adding the order to the basket array 
-     * And storing it in local storage.
-     * Also displays an alert message & navigates to the "/shop" route.
+     * * Sets the basket by adding the order to the basket array & storing it in local storage.
      */
     setBasket() {
       if (!this.isInBasket) this.basket.push(this.order);
@@ -326,7 +320,7 @@ export default {
 
     /**
      * ? UPDATE PRODUCT
-     * Updates the product by sending a PUT request to the API.
+     * * Updates the product by sending a PUT request to the API.
      */
     updateProduct() {
       const { CHECK_STRING, TEXT_MIN, TEXT_MAX, CHECK_NUMBER, PRICE_MIN, PRICE_MAX, API_URL, TOKEN, ALERT_UPDATED } = this.val;
@@ -360,7 +354,7 @@ export default {
 
     /**
      * ? DELETE PRODUCT
-     * Deletes a product from the system.
+     * * Deletes a product from the system.
      */
     deleteProduct() {
       const { TITLE_DELETE, API_URL, TOKEN, ALERT_DELETED } = this.val;

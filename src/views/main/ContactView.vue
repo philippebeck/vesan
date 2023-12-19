@@ -18,7 +18,8 @@
           <ListElt :items="val.CONTACT_FORM">
 
             <template #item-1>
-              <FieldElt type="email"
+              <FieldElt id="email"
+                type="email"
                 v-model:value="email"
                 :info="val.INFO_EMAIL">
                 <template #legend>{{ val.LEGEND_EMAIL }}</template>
@@ -27,7 +28,8 @@
             </template>
 
             <template #item-2>
-              <FieldElt v-model:value="subject"
+              <FieldElt id="subject"
+                v-model:value="subject"
                 :info="val.INFO_SUBJECT">
                 <template #legend>{{ val.LEGEND_SUBJECT }}</template>
                 <template #label>{{ val.LABEL_SUBJECT }}</template>
@@ -35,7 +37,8 @@
             </template>
 
             <template #item-3>
-              <FieldElt type="textarea"
+              <FieldElt id="text"
+                type="textarea"
                 v-model:value="text"
                 :info="val.INFO_TEXT"
                 :mix="val.TEXT_MIN"
@@ -63,13 +66,13 @@
 </template>
 
 <script>
+import { checkRange, checkRegex, postData, setError, setMeta } from "servidio"
+import { VueRecaptcha } from "vue-recaptcha"
+
 import BtnElt from "@/assets/elements/BtnElt"
 import CardElt from "@/assets/elements/CardElt"
 import FieldElt from "@/assets/elements/FieldElt"
 import ListElt from "@/assets/elements/ListElt"
-
-import { checkRange, checkRegex, postData, setError, setMeta } from "servidio"
-import { VueRecaptcha } from "vue-recaptcha"
 
 export default {
   name: "ContactView",
@@ -81,7 +84,6 @@ export default {
     VueRecaptcha 
   },
   props: ["val", "user"],
-
   data() {
     return {
       email: "",
@@ -102,8 +104,7 @@ export default {
   methods: {
     /**
      * ? ON VERIFY
-     * Handles the verification process.
-     *
+     * * Handles the verification process.
      * @param {any} response - The response from the verification process.
      */
     onVerify(response) {
@@ -124,7 +125,7 @@ export default {
 
     /**
      * ? SEND
-     * Sends a message to the API.
+     * * Sends a message to the API.
      */
     send() {
       const URL   = `${this.val.API_URL}/users/message`;

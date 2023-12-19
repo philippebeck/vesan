@@ -35,8 +35,7 @@
               <a :href="`/product/${order[slotProps.index].id}`">
                 <MediaElt :src="'img/thumbnails/products/' + slotProps.item.image"
                   :alt="slotProps.item.name"
-                  :title="slotProps.item.name">
-                </MediaElt>
+                  :title="slotProps.item.name"/>
               </a>
             </template>
 
@@ -124,8 +123,7 @@
 
           <template #cell-products="slotProps">
             <ul>
-              <li v-for="(item, index) in orders[slotProps.index].products"
-                :key="index">
+              <li v-for="(item, index) in orders[slotProps.index].products" :key="index">
                 <a :href="`/product/${item.id}`">
 
                   <ul :title="val.TITLE_GO + item.name">
@@ -162,26 +160,19 @@
 </template>
 
 <script>
+import { loadScript } from "@paypal/paypal-js"
+import { checkRole, getData, postData, setError, setMeta } from "servidio"
+import { mapState, mapActions } from "vuex"
+
 import BtnElt from "@/assets/elements/BtnElt"
 import CardElt from "@/assets/elements/CardElt"
 import FieldElt from "@/assets/elements/FieldElt"
 import MediaElt from "@/assets/elements/MediaElt"
 import TableElt from "@/assets/elements/TableElt"
 
-import { loadScript } from "@paypal/paypal-js"
-import { checkRole, getData, postData, setError, setMeta } from "servidio"
-import { mapState, mapActions } from "vuex"
-
 export default {
   name: "BasketView",
-  components: {
-    BtnElt,
-    CardElt,
-    FieldElt,
-    MediaElt,
-    TableElt
-  },
-
+  components: { BtnElt, CardElt, FieldElt, MediaElt, TableElt },
   props: ["val", "user"],
   data() {
     return {
@@ -209,9 +200,7 @@ export default {
           this.setOrder();
           this.setTotal();
 
-          if (this.val.USER_ID) {
-            this.setPaypal(this.val, this.getTotal, this.createOrder);
-          }
+          if (this.val.USER_ID) this.setPaypal(this.val, this.getTotal, this.createOrder);
         }
       })
       .catch(err => { setError(err) });
@@ -223,37 +212,36 @@ export default {
   },
 
   computed: {
-    ...mapState([
-      "user", 
-      "orders"
-    ])
+    ...mapState(["user", "orders"])
   },
 
   methods: {
-    ...mapActions([
-      "readUser", 
-      "listUserOrders"
-    ]),
+    ...mapActions(["readUser", "listUserOrders"]),
 
     /**
-     * CHECK ROLE
-     * @param {string} role
-     * @returns
+     * ? CHECK SESSION
+     * * Checks the session for the specified role.
+     * @param {string} role - The role to check.
+     * @return {boolean} Returns true if the user has the specified role, otherwise false.
      */
     checkSession(role) {
       return checkRole(this.user.role, role);
     },
 
     /**
-     * GET TOTAL
-     * @returns
+     * ? GET TOTAL
+     * * Get the total value.
+     * @return {number} The total value.
      */
     getTotal() {
       return this.total;
     },
 
     /**
-     * SET BASKET
+     * ? SET BASKET
+     * * Sets the value of the "basket" property by retrieving it from local storage.
+     * @param {type} None
+     * @return {type} None
      */
     setBasket() {
       if (localStorage.getItem("basket") !== null) {
@@ -262,14 +250,15 @@ export default {
     },
 
     /**
-     * SET ORDER
+     * ? SET ORDER
+     * * Sets the order by matching the products in the basket with the products in the store.
      */
     setOrder() {
       for (let i = 0; i < this.products.length; i++) {
-        let product = this.products[i];
+        const product = this.products[i];
 
         for (let j = 0; j < this.basket.length; j++) {
-          let item = this.basket[j];
+          const item = this.basket[j];
 
           if (product.id === item.id) {
             let order = {};
@@ -288,10 +277,11 @@ export default {
     },
 
     /**
-     * SET PAYPAL
-     * @param {object} val
-     * @param {function} getTotal
-     * @param {function} createOrder
+     * ? SET PAYPAL
+     * * Sets up the Paypal payment option and renders the Paypal button on the page.
+     * @param {Object} val - The object containing Paypal configuration values.
+     * @param {Function} getTotal - The function to get the total value for the Paypal payment.
+     * @param {Function} createOrder - The function to create an order with Paypal.
      */
     setPaypal(val, getTotal, createOrder) {
       loadScript({ 
@@ -299,7 +289,6 @@ export default {
         "data-namespace": val.PAYPAL_NAMESPACE,
         currency: val.CURRENCY_ISO 
       })
-
         .then((paypal) => {
           paypal
             .Buttons({
@@ -308,7 +297,6 @@ export default {
                 shape: val.PAYPAL_SHAPE,
                 label: val.PAYPAL_LABEL
               },
-
               createOrder: function(data, actions) {
                 return actions.order.create({
                   purchase_units: [{ 
@@ -319,7 +307,6 @@ export default {
                   }]
                 });
               },
-
               onApprove: function(data, actions) {
                 return actions.order.capture()
                   .then((orderData) => {
@@ -328,50 +315,42 @@ export default {
                     }
                   );
               },
-
-              onCancel : function () {
-                alert(val.PAYPAL_CANCEL);
-              },
-
+              onCancel : function () { alert(val.PAYPAL_CANCEL) },
               onError: function(err) {
                 alert(val.PAYPAL_ERROR);
                 throw new Error(err);
               }
             })
-
             .render("#paypal")
-
-            .catch((error) => {
-              console.error(val.PAYPAL_BTN, error);
-            });
+            .catch((error) => console.error(val.PAYPAL_BTN, error));
         })
-
-        .catch((error) => {
-          console.error(val.PAYPAL_SDK, error);
-        });
+        .catch((error) => console.error(val.PAYPAL_SDK, error));
     },
 
     /**
-     * SET TOTAL
+     * ? SET TOTAL
+     * * Sets the total value based on the prices and quantities of the items in the order.
      */
     setTotal() {
       this.total = 0;
 
       for (let i = 0; i < this.order.length; i++) {
-        let productTotal = this.order[i].price * this.order[i].quantity
+        const productTotal = this.order[i].price * this.order[i].quantity
         this.total += Number(productTotal);
       }
     },
 
     /**
-     * CREATE ORDER
-     * @param {string} orderId
+     * ? CREATE ORDER
+     * * Creates an order with the given orderId.
+     * @param {number} orderId - The ID of the order.
+     * @return {void} This function does not return a value.
      */
     createOrder(orderId) {
-      let order     = new FormData();
-      let products  = [];
+      const order     = new FormData();
+      const products  = [];
 
-      for (let product of this.order) {
+      for (const product of this.order) {
         delete product.image;
         products.push(product);
       }
@@ -392,17 +371,18 @@ export default {
     },
 
     /**
-     * UPDATE PRODUCT QUANTITY
-     * @param {string} id 
-     * @param {string} option 
+     * ? UPDATE PRODUCT QUANTITY
+     * * Updates the quantity of a product in the basket based on the provided ID and option.
+     * @param {number} id - The ID of the product.
+     * @param {string} option - The option of the product.
      */
     updateProductQuantity(id, option) {
       for (let i = 0; i < this.order.length; i++) {
-        let element = this.order[i];
+        const element = this.order[i];
 
         if (element.id === id && element.option === option) {
           for (let j = 0; j < this.basket.length; j++) {
-            let item = this.basket[j];
+            const item = this.basket[j];
 
             if (item.id === element.id && item.option === element.option) {
               this.basket[j].quantity = Number(element.quantity);
@@ -415,25 +395,20 @@ export default {
     },
 
     /**
-     * DELETE PRODUCT
-     * @param {string} id 
-     * @param {string} option 
+     * ? DELETE PRODUCT
+     * Deletes a product from the order and basket arrays based on the given id and option.
+     * @param {number} id - The id of the product to be deleted.
+     * @param {string} option - The option of the product to be deleted.
      */
     deleteProduct(id, option) {
       for (let i = 0; i < this.order.length; i++) {
-        let element = this.order[i];
-
-        if (element.id === id && element.option === option) {
-          this.order.splice(i, 1);
-        }
+        const element = this.order[i];
+        if (element.id === id && element.option === option) this.order.splice(i, 1);
       }
 
       for (let i = 0; i < this.basket.length; i++) {
-        let item = this.basket[i];
-
-        if (item.id === id && item.option === option) {
-          this.basket.splice(i, 1);
-        }
+        const item = this.basket[i];
+        if (item.id === id && item.option === option) this.basket.splice(i, 1);
       }
 
       this.setTotal();
@@ -441,7 +416,8 @@ export default {
     },
 
     /**
-     * DELETE BASKET
+     * ? DELETE BASKET
+     * Deletes the basket.
      */
     deleteBasket() {
       if (confirm(this.val.CONFIRM_BASKET) === true) {

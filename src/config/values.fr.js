@@ -389,7 +389,7 @@ export default {
 
   INFO_ALT : "Texte alternatif",
   INFO_AUTHOR: "Écrivez le nom de l'auteur",
-  INFO_CATEGORY : "Choisissez une catégorie",
+  INFO_CAT : "Choisissez une catégorie",
   INFO_DESCRIPTION: "Écrivez une description",
   INFO_EMAIL : "john@doe.com",
   INFO_IMAGE : "Fichier image uniquement",
@@ -425,7 +425,7 @@ export default {
 
   LEGEND_ALT : "Alt",
   LEGEND_AUTHOR : "Auteur",
-  LEGEND_CATEGORY : "Catégorie",
+  LEGEND_CAT : "Catégorie",
   LEGEND_DESCRIPTION : "Description",
   LEGEND_EMAIL : "Email",
   LEGEND_GALLERY : "Galerie",
@@ -446,7 +446,7 @@ export default {
   
   LABEL_ALT : "Ecrivez le texte alternatif",
   LABEL_AUTHOR : "Indiquer le nom de l'auteur",
-  LABEL_CATEGORY : "Choisissez la catégorie la plus appropriée",
+  LABEL_CAT : "Choisissez la catégorie la plus appropriée",
   LABEL_DESCRIPTION : "Ecrivez la description",
   LABEL_EMAIL : "Ecrivez votre email",
   LABEL_IMAGE : "Fournissez une image",

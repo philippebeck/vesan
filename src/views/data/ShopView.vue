@@ -22,13 +22,10 @@
       </template>
     </NavElt>
 
-    <CardElt id="top"
-      :isArticle="true"
-      class="container-90md-80lg-70wd">
+    <CardElt id="top" :isArticle="true" class="container-90md-80lg-70wd">
       <template #header>
         <h1 class="sky-dark">
-          <i class="fa-solid fa-store fa-lg"></i>
-          {{ val.SHOP_VIEW }}
+          <i class="fa-solid fa-store fa-lg"></i> {{ val.SHOP_VIEW }}
         </h1>
         <b>{{ val.INTRO_PRODUCT }}</b>
       </template>
@@ -42,8 +39,7 @@
           </template>
 
           <template #nested="slotProps">
-            <CardElt itemscope
-              itemtype="https://schema.org/Product">
+            <CardElt itemscope itemtype="https://schema.org/Product">
               <template #header>
                   <h3 itemprop="name" class="sky-dark">{{ slotProps.value.name }}</h3>
               </template>
@@ -59,6 +55,7 @@
                     :width="val.THUMB_WIDTH"
                     :height="val.THUMB_HEIGHT"
                     itemprop="image">
+
                     <template #figcaption>
                       <p v-html="slotProps.value.description.split(':')[0]" class="monospace figcaption"></p>
                       <p itemprop="offers" itemscope itemtype="https://schema.org/Offer">
@@ -82,26 +79,19 @@
 </template>
 
 <script>
+import { checkRole, getCats, getItemsByCat, setMeta } from "servidio"
+import { mapState, mapActions } from "vuex"
+
 import CardElt from "@/assets/elements/CardElt"
 import ListElt from "@/assets/elements/ListElt"
 import MediaElt from "@/assets/elements/MediaElt"
 import NavElt from "@/assets/elements/NavElt"
 import ProductSet from "@/assets/setters/ProductSet"
 
-import { checkRole, getCats, getItemsByCat, setMeta } from "servidio"
-import { mapState, mapActions } from "vuex"
-
 export default {
   name: "ShopView",
-  components: {
-    CardElt,
-    ListElt,
-    MediaElt,
-    NavElt,
-    ProductSet
-  },
+  components: { CardElt, ListElt, MediaElt, NavElt, ProductSet },
   props: ["val", "user"],
-
   data() {
     return {
       scores: [],
@@ -135,8 +125,7 @@ export default {
 
     /**
      * ? GET CATEGORIES
-     * Retrieves the categories of the products.
-     *
+     * * Retrieves the categories of the products.
      * @return {type} The categories of the products.
      */
     getCategories() {
@@ -149,8 +138,7 @@ export default {
 
     /**
      * ? CHECK SESSION
-     * Check the session for the given role.
-     *
+     * * Check the session for the given role.
      * @param {string} role - The role to check.
      * @return {boolean} The result of the session check.
      */
@@ -160,8 +148,7 @@ export default {
 
     /**
      * ? GET ITEMS BY CATEGORY
-     * Retrieves items by category.
-     *
+     * * Retrieves items by category.
      * @param {Array} items - The array of items.
      * @return {Array} The items filtered by category.
      */

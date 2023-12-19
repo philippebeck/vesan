@@ -16,9 +16,7 @@
       </template>
     </NavElt>
 
-    <CardElt id="top"
-      :isArticle="true"
-      class="container-90md-80lg-70wd">
+    <CardElt id="top" :isArticle="true" class="container-90md-80lg-70wd">
       <template #header>
         <h1 class="sky-dark">
           <i class="fa-solid fa-blog fa-lg"></i>
@@ -77,11 +75,9 @@
                   </template>
                 </BtnElt>
 
-                <a :href="`article/${slotProps.value.id}`"
+                <a :href="`article/${slotProps.value.id}`" 
                   :title="val.TITLE_READ + slotProps.value.name">
-
-                  <MediaElt 
-                    :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
+                  <MediaElt :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
                     :src="`img/thumbnails/articles/${slotProps.value.image}`" 
                     :alt="`${slotProps.value.alt}`" 
                     :width="val.THUMB_WIDTH"
@@ -108,6 +104,9 @@
 </template>
 
 <script>
+import { checkRole, getCats, getItemsByCat, putData, setError, setMeta } from "servidio"
+import { mapState, mapActions } from "vuex"
+
 import BtnElt from "@/assets/elements/BtnElt"
 import CardElt from "@/assets/elements/CardElt"
 import ListElt from "@/assets/elements/ListElt"
@@ -115,23 +114,14 @@ import MediaElt from "@/assets/elements/MediaElt"
 import NavElt from "@/assets/elements/NavElt"
 import ArticleSet from "@/assets/setters/ArticleSet"
 
-import { checkRole, getCats, getItemsByCat, putData, setError, setMeta } from "servidio"
-import { mapState, mapActions } from "vuex"
-
 export default {
   name: "BlogView",
-  components: {
-    BtnElt,
-    CardElt,
-    ListElt,
-    MediaElt,
-    NavElt,
-    ArticleSet
-  },
+  components: { BtnElt, CardElt, ListElt, MediaElt, NavElt, ArticleSet },
   props: ["val", "user"],
 
   created() {
     this.$store.dispatch("listArticles");
+
     setMeta(
       this.val.HEAD_BLOG, 
       this.val.META_BLOG,
@@ -142,9 +132,7 @@ export default {
 
   updated() {
     const textArray = document.getElementsByClassName("figcaption");
-    for (let textElt of textArray) {
-      textElt.firstChild.setAttribute("itemprop", "text");
-    }
+    for (let textElt of textArray) textElt.firstChild.setAttribute("itemprop", "text");
   },
 
   computed: {
@@ -152,8 +140,7 @@ export default {
 
     /**
      * ? GET CATEGORIES
-     * Retrieves the categories of articles.
-     *
+     * * Retrieves the categories of articles.
      * @return {Array} An array of article categories.
      */
     getCategories() {
@@ -166,8 +153,7 @@ export default {
 
     /**
      * ? CHECK SESSION
-     * Checks the session for the specified role.
-     *
+     * * Checks the session for the specified role.
      * @param {type} role - the role to check
      * @return {type} the result of the role check
      */
@@ -177,8 +163,7 @@ export default {
 
     /**
      * ? GET ITEMS BY CATEGORY
-     * Retrieves items based on category.
-     *
+     * * Retrieves items based on category.
      * @param {Array} items - The list of items to filter.
      * @return {Array} The filtered list of items.
      */
@@ -188,9 +173,7 @@ export default {
 
     /**
      * ? CHECK LIKES
-     * Check if the given ID is present in the likes array of any article
-     * associated with the current user.
-     *
+     * * Check if the given ID is present in the likes array of any user article.
      * @param {type} id - The ID to check for in the likes array.
      * @return {type} - Returns a boolean indicating whether the ID is present in the likes array.
      */
@@ -200,27 +183,22 @@ export default {
 
     /**
      * ? ADD LIKE
-     * Add a like to the article with the specified ID.
-     *
+     * * Add a like to the article with the specified ID.
      * @param {number} id - The ID of the article.
      */
     addLike(id) {
       const { USER_ID, API_URL, TOKEN } = this.val;
-
       const article = this.articles.find(a => a.id === id);
+
       if (!article) return;
 
       const { name, text, image, alt, likes, cat } = article;
       const index = likes.indexOf(USER_ID);
 
-      if (index > -1) {
-        likes.splice(index, 1);
-      } else {
-        likes.push(USER_ID);
-      }
+      index > -1 ? likes.splice(index, 1) : likes.push(USER_ID);
 
-      const URL = `${API_URL}/articles/${id}`;
-      const data = new FormData();
+      const URL   = `${API_URL}/articles/${id}`;
+      const data  = new FormData();
 
       data.append("name", name);
       data.append("text", text);

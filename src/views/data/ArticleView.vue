@@ -2,7 +2,8 @@
   <main>
     <CardElt v-if="checkSession('editor')">
       <template #header>
-        <h2>{{ val.EDIT }} {{ article.name }}</h2>
+        <h1>{{ val.EDIT }} {{ article.name }}</h1>
+        <h2>{{ article.cat }}</h2>
       </template>
 
       <template #body>
@@ -10,7 +11,8 @@
           <ListElt :items="val.ARTICLE_FORM">
 
             <template #item-1>
-              <FieldElt v-model:value="article.name"
+              <FieldElt id="name"
+                v-model:value="article.name"
                 @keyup.enter="updateArticle()"
                 :info="val.INFO_NAME"
                 :min="2">
@@ -45,7 +47,8 @@
             </template>
 
             <template #item-4>
-              <FieldElt type="textarea"
+              <FieldElt id="alt"
+                type="textarea"
                 v-model:value="article.alt"
                 @keyup.enter="updateArticle()"
                 :info="val.INFO_ALT">
@@ -55,13 +58,14 @@
             </template>
 
             <template #item-5>
-              <FieldElt type="select"
+              <FieldElt id="cat"
+                type="select"
                 :list="val.CATS_ARTICLE"
                 v-model:value="article.cat"
                 @keyup.enter="updateArticle()"
-                :info="val.INFO_CATEGORY">
-                <template #legend>{{ val.LEGEND_CATEGORY }}</template>
-                <template #label>{{ val.LABEL_CATEGORY }}</template>
+                :info="val.INFO_CAT">
+                <template #legend>{{ val.LEGEND_CAT }}</template>
+                <template #label>{{ val.LABEL_CAT }}</template>
               </FieldElt>
             </template>
           </ListElt>
@@ -94,7 +98,7 @@
       itemtype="https://schema.org/Article">
       <template #header>
         <h1 itemprop="name">{{ article.name }}</h1>
-        <strong>{{ article.cat }}</strong>
+        <h2>{{ article.cat }}</h2>
       </template>
 
       <template #body>
@@ -146,11 +150,8 @@
           :height="val.IMG_HEIGHT"
           itemprop="image">
           <template #figcaption>
-            <blockquote v-html="article.text"
-              id="figcaption"
-              class="container width-sm bord bord-sky blue">
-            </blockquote>
-            <p class="gray">
+            <blockquote v-html="article.text" id="figcaption" class="blue"></blockquote>
+            <p>
               {{ val.PUBLISHED_ON }}
               <i itemprop="dateCreated">{{ new Date(article.createdAt).toLocaleDateString() }}</i>
             </p>
@@ -162,6 +163,8 @@
 </template>
 
 <script>
+import { checkRange, checkRole, deleteData, getData, putData, setError, setMeta } from "servidio"
+
 import BtnElt from "@/assets/elements/BtnElt"
 import CardElt from "@/assets/elements/CardElt"
 import FieldElt from "@/assets/elements/FieldElt"
@@ -169,19 +172,9 @@ import ListElt from "@/assets/elements/ListElt"
 import MediaElt from "@/assets/elements/MediaElt"
 import Editor from "@tinymce/tinymce-vue"
 
-import { checkRange, checkRole, deleteData, getData, putData, setError, setMeta } from "servidio"
-
 export default {
   name: "ArticleView",
-  components: {
-    BtnElt,
-    CardElt,
-    FieldElt,
-    ListElt,
-    MediaElt,
-    Editor
-  },
-
+  components: { BtnElt, CardElt, FieldElt, ListElt, MediaElt, Editor },
   props: ["user", "val"],
   data() {
     return {
@@ -219,8 +212,7 @@ export default {
   methods: {
     /**
      * ? CHECK SESSION
-     * Checks the session for the specified role.
-     *
+     * * Checks the session for the specified role.
      * @param {string} role - The role to check.
      * @return {boolean} The result of the session check.
      */
@@ -230,8 +222,7 @@ export default {
 
     /**
      * ? CHECK LIKES
-     * Check if the current user has liked the article.
-     *
+     * * Check if the current user has liked the article.
      * @return {boolean} True if the user has liked the article, false otherwise.
      */
     checkLikes() {
@@ -240,7 +231,7 @@ export default {
 
     /**
      * ? ADD LIKE
-     * Adds a like to the article.
+     * * Adds a like to the article.
      */
     addLike() {
       const { USER_ID, API_URL, TOKEN } = this.val;
@@ -263,7 +254,7 @@ export default {
 
     /**
      * ? UPDATE ARTICLE
-     * Updates the article with the provided data.
+     * * Updates the article with the provided data.
      */
     updateArticle() {
       const { CHECK_STRING, TEXT_MIN, TEXT_MAX, API_URL, TOKEN, ALERT_UPDATED } = this.val;
@@ -295,7 +286,7 @@ export default {
 
     /**
      * ? DELETE ARTICLE
-     * Deletes an article with the given ID.
+     * * Deletes an article with the given ID.
      */
     deleteArticle() {
       const { TITLE_DELETE, API_URL, TOKEN, ALERT_DELETED } = this.val;

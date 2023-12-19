@@ -28,11 +28,7 @@ import MediaElt from "@/assets/elements/MediaElt"
 
 export default {
   name: 'ErrorView',
-  components: {
-    BtnElt,
-    CardElt,
-    MediaElt
-  },
+  components: { BtnElt, CardElt, MediaElt },
   props: ["val"]
 }
 </script>
