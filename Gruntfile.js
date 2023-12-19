@@ -13,7 +13,6 @@ module.exports = function(grunt) {
       table: { src: ["node_modules/vue-elt/components/elements/TableElt.vue"], dest: "src/assets/elements/TableElt.vue" },
 
       articleSet: { src: ["node_modules/vue-elt/components/setters/ArticleSet.vue"], dest: "src/assets/setters/ArticleSet.vue" },
-      authSet: { src: ["node_modules/vue-elt/components/setters/AuthSet.vue"], dest: "src/assets/setters/AuthSet.vue" },
       gallerySet: { src: ["node_modules/vue-elt/components/setters/GallerySet.vue"], dest: "src/assets/setters/GallerySet.vue" },
       imageSet: { src: ["node_modules/vue-elt/components/setters/ImageSet.vue"], dest: "src/assets/setters/ImageSet.vue" },
       linkSet: { src: ["node_modules/vue-elt/components/setters/LinkSet.vue"], dest: "src/assets/setters/LinkSet.vue" },

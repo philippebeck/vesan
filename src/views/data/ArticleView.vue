@@ -37,6 +37,7 @@
               <MediaElt v-if="article.image"
                 :src="'/img/thumbnails/articles/' + article.image"
                 :alt="article.alt" />
+
               <FieldElt id="image"
                 type="file"
                 v-model:value="image"

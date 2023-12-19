@@ -10,8 +10,8 @@
         <form enctype="multipart/form-data">
           <ListElt :items="val.PRODUCT_FORM">
 
-            <template #item-1="slotProps">
-              <FieldElt :id="`name-${slotProps.index.id}`"
+            <template #item-1>
+              <FieldElt id="name"
                 v-model:value="product.name"
                 @keyup.enter="updateProduct()"
                 :info="val.INFO_NAME"
@@ -21,12 +21,12 @@
               </FieldElt>
             </template>
 
-            <template #item-2="slotProps">
-              <label :for="`description-${slotProps.index.id}`">
+            <template #item-2>
+              <label for="description">
                 {{ val.LEGEND_DESCRIPTION }}
               </label>
 
-              <Editor :id="`description-${slotProps.index.id}`"
+              <Editor id="description"
                 :api-key="val.TINY_KEY"
                 v-model="product.description"
                 :init="{ toolbar:
@@ -50,8 +50,8 @@
               </FieldElt>
             </template>
 
-            <template #item-4="slotProps">
-              <FieldElt :id="`alt-${slotProps.index.id}`"
+            <template #item-4>
+              <FieldElt id="alt"
                 type="textarea"
                 v-model:value="product.alt"
                 :info="val.INFO_ALT">
@@ -60,8 +60,8 @@
               </FieldElt>
             </template>
 
-            <template #item-5="slotProps">
-              <FieldElt :id="`price-${slotProps.index.id}`"
+            <template #item-5>
+              <FieldElt id="price"
                 type="number"
                 v-model:value="product.price"
                 @keyup.enter="updateProduct()"
@@ -73,8 +73,8 @@
               </FieldElt>
             </template>
 
-            <template #item-6="slotProps">
-              <FieldElt :id="`options-${slotProps.index.id}`"
+            <template #item-6>
+              <FieldElt id="options"
                 type="textarea"
                 v-model:value="product.options"
                 @keyup.enter="updateProduct()"
@@ -85,8 +85,8 @@
               </FieldElt>
             </template>
 
-            <template #item-7="slotProps">
-              <FieldElt :id="`cat-${slotProps.index.id}`"
+            <template #item-7>
+              <FieldElt id="cat"
                 type="select"
                 :list="val.CATS_PRODUCT"
                 v-model:value="product.cat"
