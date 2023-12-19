@@ -1,15 +1,11 @@
 <template>
   <NavElt :items="val.NAV_MAIN">
     <template #brand>
-      <img :src="val.LOGO_SRC"
-        :alt="val.LOGO_ALT"
-        :width="val.LOGO_WIDTH">
+      <img :src="val.LOGO_SRC" :alt="val.LOGO_ALT" :width="val.LOGO_WIDTH">
     </template>
 
     <template #profile>
-      <a v-if="checkSession('user')"
-        href="/profile"
-        :title="val.PROFILE_OF + user.name">
+      <a v-if="checkSession('user')" href="/profile" :title="val.PROFILE_OF + user.name">
         <img :src="`/img/thumbnails/users/${user.image}`"
           :alt="user.name"
           :height="40"
@@ -17,34 +13,23 @@
           class="bord bord-circle">
       </a>
 
-      <a v-else
-        href="/login"
-        :title="val.TITLE_LOGIN">
+      <a v-else href="/login" :title="val.TITLE_LOGIN">
         <i class="fa-solid fa-right-to-bracket fa-fw"></i>
       </a>
     </template>
   </NavElt>
 
-  <router-view v-slot="{ Component }"
-    :val="val"
-    :user="user">
+  <router-view v-slot="{ Component }" :val="val" :user="user">
     <transition name="slide">
-      <component :is="Component" 
-        :key="$route.path"/>
+      <component :is="Component" :key="$route.path"/>
     </transition>
   </router-view>
 
-  <FootElt
-    :title1="val.FOOT_TITLE1"
-    :title2="val.FOOT_TITLE2"
-    :title3="val.FOOT_TITLE3">
-
+  <FootElt :title1="val.FOOT_TITLE1" :title2="val.FOOT_TITLE2" :title3="val.FOOT_TITLE3">
     <template #foot1>
-      <ListElt :dynamic="true"
-        :items="val.FOOT1">
+      <ListElt :dynamic="true" :items="val.FOOT1">
         <template #items="slotProps">
-          <a :href="slotProps.item.href"
-            :title="slotProps.item.title">
+          <a :href="slotProps.item.href" :title="slotProps.item.title">
             {{ slotProps.item.content }}
           </a>
         </template>
@@ -52,11 +37,9 @@
     </template>
 
     <template #foot2>
-      <ListElt :dynamic="true"
-        :items="val.FOOT2">
+      <ListElt :dynamic="true" :items="val.FOOT2">
         <template #items="slotProps">
-          <a :href="slotProps.item.href"
-            :title="slotProps.item.title">
+          <a :href="slotProps.item.href" :title="slotProps.item.title">
             {{ slotProps.item.content }}
           </a>
         </template>
@@ -64,11 +47,9 @@
     </template>
 
     <template #foot3>
-      <ListElt :dynamic="true"
-        :items="val.FOOT3">
+      <ListElt :dynamic="true" :items="val.FOOT3">
         <template #items="slotProps">
-          <a :href="slotProps.item.href"
-            :title="slotProps.item.title">
+          <a :href="slotProps.item.href" :title="slotProps.item.title">
             {{ slotProps.item.content }}
           </a>
         </template>
@@ -76,11 +57,9 @@
     </template>
 
     <template #foot>
-      <ListElt :dynamic="true"
-        :items="val.FOOT">
+      <ListElt :dynamic="true" :items="val.FOOT">
         <template #items="slotProps">
-          <a :href="slotProps.item.href"
-            :title="slotProps.item.title">
+          <a :href="slotProps.item.href" :title="slotProps.item.title">
             <i :class="`fa-brands fa-${slotProps.item.fa} fa-lg fa-fw ${slotProps.item.color}`"></i>
           </a>
         </template>
