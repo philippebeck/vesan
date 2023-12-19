@@ -18,7 +18,8 @@
           <ListElt :items="val.USER_FORM">
 
             <template #item-1>
-              <FieldElt v-model:value="user.name"
+              <FieldElt id="name"
+                v-model:value="user.name"
                 @keyup.enter="updateUser()"
                 :info="val.INFO_NAME"
                 :min="2">
@@ -28,7 +29,8 @@
             </template>
 
             <template #item-2>
-              <FieldElt type="email"
+              <FieldElt id="email"
+                type="email"
                 v-model:value="user.email"
                 @keyup.enter="updateUser()"
                 :info="val.INFO_EMAIL">
@@ -41,6 +43,7 @@
               <MediaElt v-if="user.image"
                 :src="'/img/thumbnails/users/' + user.image"
                 :alt="user.name" />
+
               <FieldElt id="image"
                 type="file"
                 v-model:value="image"
@@ -51,7 +54,8 @@
             </template>
 
             <template #item-4>
-              <FieldElt type="password"
+              <FieldElt id="pass"
+                type="password"
                 v-model:value="pass"
                 @keyup.enter="updateUser()"
                 :info="val.INFO_PASSWORD">
@@ -112,15 +116,9 @@ import MediaElt from "@/assets/elements/MediaElt"
 import UserSet from "@/assets/setters/UserSet"
 
 export default {
-  name: "ProfileEditor",
+  name: "ProfileView",
   components: { BtnElt, CardElt, FieldElt, ListElt, MediaElt, UserSet },
   props: ["val"],
-  data() {
-    return {
-      image: "",
-      pass: ""
-    }
-  },
 
   created() {
     if (this.val.USER_ID) {
@@ -177,16 +175,16 @@ export default {
       if (checkRange(this.user.name, CHECK_STRING) && 
         checkRegex(this.user.email, CHECK_EMAIL, REGEX_EMAIL)) {
 
-        const URL = `${API_URL}/users/${this.user.id}`
+        const URL   = `${API_URL}/users/${this.user.id}`
         const data  = new FormData();
-        const img = document.getElementById("image")?.files[0] ?? this.user.image;
+        const img   = document.getElementById("image")?.files[0] ?? this.user.image;
 
         data.append("name", this.user.name);
         data.append("email", this.user.email);
         data.append("image", img);
         data.append("role", this.user.role);
 
-        if (this.pass !== "" && checkRegex(this.pass, CHECK_PASS, REGEX_PASS)) {
+        if (this.pass && checkRegex(this.pass, CHECK_PASS, REGEX_PASS)) {
           data.append("pass", this.pass);
         }
 
