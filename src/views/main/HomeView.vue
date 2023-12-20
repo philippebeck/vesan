@@ -26,15 +26,11 @@ import ListElt from "@/assets/elements/ListElt"
 export default {
   name: "HomeView",
   components: { CardElt, ListElt },
-  props: ["val", "user"],
+  props: ["user", "val"],
 
   created() {
-    setMeta(
-      this.val.HEAD_HOME, 
-      this.val.META_HOME,
-      this.val.UI_URL,
-      this.val.UI_URL + this.val.LOGO_SRC
-    );
+    const { HEAD_HOME, LOGO_SRC, META_HOME, UI_URL } = this.val;
+    setMeta(HEAD_HOME, META_HOME, UI_URL, UI_URL + LOGO_SRC);
   }
 }
 </script>

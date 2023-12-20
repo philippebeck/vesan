@@ -5,3 +5,4 @@ public/fonts/
 public/img/
 src/assets/
 src/config/values.js
+src/config/values.compile.js

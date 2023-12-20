@@ -62,7 +62,7 @@ import ImageSet from "@/assets/setters/ImageSet"
 export default {
   name: "ImageView",
   components: { CardElt, ListElt, MediaElt, SliderElt, ImageSet },
-  props: ["val", "user"],
+  props: ["user", "val"],
   data() {
     return {
       gallery: {}
@@ -70,15 +70,17 @@ export default {
   },
 
   created() {
-    getData(this.val.API_URL + "/galleries/" + this.$route.params.id)
+    const { API_URL, HEAD, META_IMAGE, UI_URL } = this.val;
+
+    getData(`${API_URL}/galleries/${this.$route.params.id}`)
       .then((gallery) => {
         this.gallery = gallery;
 
         setMeta(
-          gallery.name + this.val.HEAD, 
-          this.val.META_IMAGE + gallery.author,
-          this.val.UI_URL + "/gallery/" + gallery.id,
-          this.val.UI_URL + "/img/thumbnails/galleries/" + gallery.cover
+          gallery.name + HEAD, 
+          META_IMAGE + gallery.author,
+          `${UI_URL}/gallery/${gallery.id}`,
+          `${UI_URL}/img/thumbnails/galleries/${gallery.cover}`
         );
       })
       .catch(err => { 

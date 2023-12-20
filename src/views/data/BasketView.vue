@@ -173,7 +173,7 @@ import TableElt from "@/assets/elements/TableElt"
 export default {
   name: "BasketView",
   components: { BtnElt, CardElt, FieldElt, MediaElt, TableElt },
-  props: ["val", "user"],
+  props: ["user", "val"],
   data() {
     return {
       products: [],
@@ -184,30 +184,27 @@ export default {
   },
 
   created() {
-    getData(this.val.API_URL + "/products")
+    const { API_URL, HEAD_BASKET, META_BASKET, LOGO_SRC, UI_URL, USER_ID } = this.val;
+
+    getData(`${API_URL}/products`)
       .then(res => { 
         this.products = res;
         this.setBasket();
 
-        setMeta(
-          this.val.HEAD_BASKET, 
-          this.val.META_BASKET,
-          this.val.UI_URL + "/basket",
-          this.val.UI_URL + this.val.LOGO_SRC
-        );
+        setMeta(HEAD_BASKET, META_BASKET, `${UI_URL}/basket`, UI_URL + LOGO_SRC);
 
         if (this.basket[0] !== undefined) {
           this.setOrder();
           this.setTotal();
 
-          if (this.val.USER_ID) this.setPaypal(this.val, this.getTotal, this.createOrder);
+          if (USER_ID) this.setPaypal(this.val, this.getTotal, this.createOrder);
         }
       })
       .catch(err => { setError(err) });
 
-      if (this.val.USER_ID) {
-        this.$store.dispatch("readUser", this.val.USER_ID);
-        this.$store.dispatch("listUserOrders", this.val.USER_ID);
+      if (USER_ID) {
+        this.$store.dispatch("readUser", USER_ID);
+        this.$store.dispatch("listUserOrders", USER_ID);
       }
   },
 

@@ -207,16 +207,18 @@ export default {
   },
 
   created() {
-    getData(this.val.API_URL + "/products/" + this.$route.params.id)
+    const { API_URL, HEAD, UI_URL } = this.val;
+
+    getData(`${API_URL}/products/${this.$route.params.id}`)
       .then((product => {
         product.options = product.options.split(",");
         this.product = product;
 
         setMeta(
-          product.name + this.val.HEAD, 
+          product.name + HEAD, 
           (product.description || "").slice(0, 160).replace(/(<([^>]+)>)/gi, ""),
-          this.val.UI_URL + "/product/" + product.id,
-          this.val.UI_URL + "/img/thumbnails/products/" + product.image
+          `${UI_URL}/product/${product.id}`,
+          `${UI_URL}/img/thumbnails/products/${product.image}`
         );
       }))
       .catch(err => { 
