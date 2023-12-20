@@ -3,7 +3,7 @@
     <header>
       <h1 class="sky-dark">
         <i class="fa-solid fa-user-gear fa-lg"></i>
-        {{ val.PROFILE_EDITOR }}
+        {{ val.PROFILE_VIEW }}
       </h1>
     </header>
 
