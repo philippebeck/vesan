@@ -73,13 +73,10 @@ export default {
   props: ["val", "user"],
 
   created() {
+    const { HEAD_LINK, LOGO_SRC, META_LINK, UI_URL } = this.val;
+
     this.$store.dispatch("listLinks");
-    setMeta(
-      this.val.HEAD_LINK, 
-      this.val.META_LINK,
-      this.val.UI_URL + "/link",
-      this.val.UI_URL + this.val.LOGO_SRC
-    );
+    setMeta(HEAD_LINK, META_LINK, `${UI_URL}/link`, UI_URL + LOGO_SRC);
   },
 
   computed: {

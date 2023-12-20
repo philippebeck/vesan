@@ -121,19 +121,16 @@ export default {
   props: ["val"],
 
   created() {
-    if (this.val.USER_ID) {
-      this.$store.dispatch("readUser", this.val.USER_ID);
+    const { ALERT_LOGOUT, HEAD_PROFILE, LOGO_SRC, META_PROFILE, UI_URL, USER_ID } = this.val;
+
+    if (USER_ID) {
+      this.$store.dispatch("readUser", USER_ID);
       this.$store.dispatch("listUsers");
 
-      setMeta(
-      this.val.HEAD_PROFILE, 
-      this.val.META_PROFILE,
-      this.val.UI_URL,
-      this.val.UI_URL + this.val.LOGO_SRC
-    );
+      setMeta(HEAD_PROFILE, META_PROFILE, UI_URL, UI_URL + LOGO_SRC);
 
     } else {
-      alert("Go back Home !");
+      alert(ALERT_LOGOUT);
       this.$router.push("/");
     }
   },

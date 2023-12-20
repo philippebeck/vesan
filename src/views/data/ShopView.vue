@@ -100,16 +100,11 @@ export default {
   },
 
   created() {
+    const { CURRENCY_ISO, HEAD_SHOP, LOGO_SRC, META_SHOP, UI_URL } = this.val;
     this.$store.dispatch("listProducts");
 
-    setMeta(
-      this.val.HEAD_SHOP, 
-      this.val.META_SHOP,
-      this.val.UI_URL + "/shop",
-      this.val.UI_URL + this.val.LOGO_SRC
-    );
-
-    this.priceCurrency = this.val.CURRENCY_ISO;
+    setMeta(HEAD_SHOP, META_SHOP, `${UI_URL}/shop`, UI_URL + LOGO_SRC);
+    this.priceCurrency = CURRENCY_ISO;
   },
 
   updated() {

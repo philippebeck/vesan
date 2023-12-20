@@ -226,12 +226,8 @@ export default {
   },
 
   created() {
-    setMeta(
-      this.val.HEAD_LOGIN, 
-      this.val.META_LOGIN,
-      this.val.UI_URL + "/login",
-      this.val.UI_URL + this.val.LOGO_SRC
-    );
+    const { HEAD_LOGIN, LOGO_SRC, META_LOGIN, UI_URL } = this.val;
+    setMeta(HEAD_LOGIN, META_LOGIN, `${UI_URL}/login`, UI_URL + LOGO_SRC);
 
     if (localStorage.userId) this.$router.push("/");
   },

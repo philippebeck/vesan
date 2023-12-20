@@ -184,20 +184,21 @@ export default {
   },
 
   created () {
-    getData(this.val.API_URL + "/articles/" + this.$route.params.id)
+    const { API_URL, HEAD, UI_URL } = this.val;
+
+    getData(`${API_URL}/articles/${this.$route.params.id}`)
       .then((article => {
         article.likes = JSON.parse(article.likes);
-        this.article = article;
+        this.article  = article;
 
         setMeta(
-          article.name + this.val.HEAD, 
+          article.name + HEAD,
           (article.text || "").slice(0, 160).replace( /(<([^>]+)>)/gi, ""),
-          this.val.UI_URL + "/article/" + article.id,
-          this.val.UI_URL + "/img/thumbnails/articles/" + article.image
+          `${UI_URL}/article/${article.id}`,
+          `${UI_URL}/img/thumbnails/articles/${article.image}`
         );
-
       }))
-      .catch(err => { 
+      .catch(err => {
         setError(err);
         this.$router.push("/blog");
       });

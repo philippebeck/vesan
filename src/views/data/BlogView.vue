@@ -120,14 +120,10 @@ export default {
   props: ["val", "user"],
 
   created() {
-    this.$store.dispatch("listArticles");
+    const { HEAD_BLOG, LOGO_SRC, META_BLOG, UI_URL } = this.val;
 
-    setMeta(
-      this.val.HEAD_BLOG, 
-      this.val.META_BLOG,
-      this.val.UI_URL + "/blog",
-      this.val.UI_URL + this.val.LOGO_SRC
-    );
+    this.$store.dispatch("listArticles");
+    setMeta(HEAD_BLOG, META_BLOG, `${UI_URL}/blog`, UI_URL + LOGO_SRC);
   },
 
   updated() {

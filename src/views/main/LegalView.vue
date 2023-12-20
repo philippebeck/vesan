@@ -28,12 +28,8 @@ export default {
   props: ["val", "user"],
 
   created() {
-    setMeta(
-      this.val.HEAD_LEGAL, 
-      this.val.META_LEGAL,
-      this.val.UI_URL + "/legal",
-      this.val.UI_URL + this.val.LOGO_SRC
-    );
+    const { HEAD_LEGAL, LOGO_SRC, META_LEGAL, UI_URL } = this.val;
+    setMeta(HEAD_LEGAL, META_LEGAL, `${UI_URL}/legal`, UI_URL + LOGO_SRC);
   }
 }
 </script>

@@ -93,12 +93,8 @@ export default {
   },
 
   created() {
-    setMeta(
-      this.val.HEAD_CONTACT, 
-      this.val.META_CONTACT,
-      this.val.UI_URL + "/contact",
-      this.val.UI_URL + this.val.LOGO_SRC
-    );
+    const { HEAD_CONTACT, LOGO_SRC, META_CONTACT, UI_URL } = this.val;
+    setMeta(HEAD_CONTACT, META_CONTACT, `${UI_URL}/contact`, UI_URL + LOGO_SRC);
   },
 
   methods: {
