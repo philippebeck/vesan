@@ -91,7 +91,7 @@ import ProductSet from "@/assets/setters/ProductSet"
 export default {
   name: "ShopView",
   components: { CardElt, ListElt, MediaElt, NavElt, ProductSet },
-  props: ["val", "user"],
+  props: ["user", "val"],
   data() {
     return {
       scores: [],

@@ -62,7 +62,7 @@ import ImageSet from "@/assets/setters/ImageSet"
 export default {
   name: "ImageView",
   components: { CardElt, ListElt, MediaElt, SliderElt, ImageSet },
-  props: ["val", "user"],
+  props: ["user", "val"],
   data() {
     return {
       gallery: {}

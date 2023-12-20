@@ -70,7 +70,7 @@ import LinkSet from "@/assets/setters/LinkSet"
 export default {
   name: "LinkView",
   components: { BtnElt, CardElt, ListElt, NavElt, LinkSet },
-  props: ["val", "user"],
+  props: ["user", "val"],
 
   created() {
     const { HEAD_LINK, LOGO_SRC, META_LINK, UI_URL } = this.val;

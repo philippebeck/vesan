@@ -173,7 +173,7 @@ import TableElt from "@/assets/elements/TableElt"
 export default {
   name: "BasketView",
   components: { BtnElt, CardElt, FieldElt, MediaElt, TableElt },
-  props: ["val", "user"],
+  props: ["user", "val"],
   data() {
     return {
       products: [],

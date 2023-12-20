@@ -45,7 +45,7 @@ import GallerySet from "@/assets/setters/GallerySet"
 export default {
   name: "GalleryView",
   components: { CardElt, ListElt, MediaElt, GallerySet },
-  props: ["val", "user"],
+  props: ["user", "val"],
 
   created() {
     const { HEAD_GALLERY, LOGO_SRC, META_GALLERY, UI_URL } = this.val;
