@@ -58,16 +58,18 @@ Yarn : `yarn add vesan`
 
 ## Installation
 
-Install the frontend dependencies & create assets components :  
+Install the frontend dependencies :  
 `$ npm install`  
+
+Create assets components & compiled values :  
 `$ grunt`  
 
 ---
 
 ## Configuration
 
-To configure the frontend, replace values :  
-`values.en.js || values.fr.js` *(then rename it values.js)*  
+To configure the frontend constants, replace values :  
+`values.compile.js` *(then rename it values.js)*  
 
 ---
 
