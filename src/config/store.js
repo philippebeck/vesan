@@ -1,5 +1,6 @@
 import { getData, setError } from "servidio"
 import { createStore } from "vuex"
+import val from "../config/values"
 
 export default createStore({
   namespaced: true,
@@ -101,7 +102,7 @@ export default createStore({
      * @return {Promise} A promise that resolves to the result of reading the avatar.
      */
     async readAvatar(context, id) {
-      getData(`${process.env.VUE_APP_API_URL}/auth/${id}`)
+      getData(`${val.API_URL}/auth/${id}`)
         .then(avatar => { context.commit("setAvatar", avatar) })
         .catch(setError);
     },
@@ -132,7 +133,7 @@ export default createStore({
      * @return {Promise} A promise that resolves when the user is successfully retrieved & the state is updated.
      */
     async readUser(context, id) {
-      getData(`${process.env.VUE_APP_API_URL}/users/${id}`, context.rootState.token)
+      getData(`${val.API_URL}/users/${id}`, context.rootState.token)
         .then(user => { context.commit("setUser", user) })
         .catch(setError);
     },
@@ -144,7 +145,7 @@ export default createStore({
      * @return {Promise} A promise that resolves with the list of users.
      */
     async listUsers(context) {
-      getData(`${process.env.VUE_APP_API_URL}/users`, context.rootState.token)
+      getData(`${val.API_URL}/users`, context.rootState.token)
         .then(users => { context.commit("setUsers", users) })
         .catch(setError);
     },
@@ -159,7 +160,7 @@ export default createStore({
      * @return {Promise} A promise that resolves when the article is read & committed to the context.
      */
     async readArticle(context, id) {
-      getData(`${process.env.VUE_APP_API_URL}/articles/${id}`)
+      getData(`${val.API_URL}/articles/${id}`)
         .then(article => { context.commit("setArticle", article) })
         .catch(setError);
     },
@@ -171,7 +172,7 @@ export default createStore({
      * @return {Promise} A promise that resolves with the result of the API call.
      */
     async listArticles(context) {
-      getData(`${process.env.VUE_APP_API_URL}/articles`)
+      getData(`${val.API_URL}/articles`)
         .then(articles => { context.commit("setArticles", articles) })
         .catch(setError);
     },
@@ -183,7 +184,7 @@ export default createStore({
      * @return {Promise} A promise that resolves when the galleries are set in the context state.
      */
     async listGalleries(context) {
-      getData(`${process.env.VUE_APP_API_URL}/galleries`)
+      getData(`${val.API_URL}/galleries`)
         .then(galleries => { context.commit("setGalleries", galleries) })
         .catch(setError);
     },
@@ -196,7 +197,7 @@ export default createStore({
      * @return {Promise} A promise that resolves when the images have been retrieved and the state has been updated.
      */
     async listImages(context, id) {
-      getData(`${process.env.VUE_APP_API_URL}/images/${id}`)
+      getData(`${val.API_URL}/images/${id}`)
         .then(images => { context.commit("setImages", images) })
         .catch(setError);
     },
@@ -208,7 +209,7 @@ export default createStore({
      * @return {Promise} A promise that resolves
      */
     async listLinks(context) {
-      getData(`${process.env.VUE_APP_API_URL}/links`)
+      getData(`${val.API_URL}/links`)
         .then(links => { context.commit("setLinks", links) })
         .catch(setError);
     },
@@ -220,7 +221,7 @@ export default createStore({
      * @return {Promise} A promise that resolves with the list of orders.
      */
     async listOrders(context) {
-      getData(`${process.env.VUE_APP_API_URL}/orders`, context.rootState.token)
+      getData(`${val.API_URL}/orders`, context.rootState.token)
         .then(orders => { context.commit("setOrders", orders) })
         .catch(setError);
     },
@@ -233,7 +234,7 @@ export default createStore({
      * @return {Promise} A promise that resolves with the user orders or rejects with an error.
      */
     async listUserOrders(context, id) {
-      getData(`${process.env.VUE_APP_API_URL}/orders/${id}`, context.rootState.token)
+      getData(`${val.API_URL}/orders/${id}`, context.rootState.token)
         .then(orders => { context.commit("setUserOrders", orders) })
         .catch(setError);
     },
@@ -246,7 +247,7 @@ export default createStore({
      * @return {Promise} A promise that resolves with the product data.
      */
     async readProduct(context, id) {
-      getData(`${process.env.VUE_APP_API_URL}/products/${id}`)
+      getData(`${val.API_URL}/products/${id}`)
         .then(product => { context.commit("setProduct", product) })
         .catch(setError);
     },
@@ -258,7 +259,7 @@ export default createStore({
      * @return {Promise} A promise that resolves
      */
     async listProducts(context) {
-      getData(`${process.env.VUE_APP_API_URL}/products`)
+      getData(`${val.API_URL}/products`)
         .then(products => { context.commit("setProducts", products) })
         .catch(setError);
     }
