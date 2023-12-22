@@ -25,7 +25,7 @@ import CardElt from "@/assets/elements/CardElt"
 export default {
   name: "LegalView",
   components: { CardElt },
-  props: ["val", "user"],
+  props: ["val"],
 
   created() {
     const { HEAD_LEGAL, LOGO_SRC, META_LEGAL, UI_URL } = this.val;
