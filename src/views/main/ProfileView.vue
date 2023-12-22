@@ -121,10 +121,13 @@ export default {
   props: ["val"],
 
   created() {
-    const { ALERT_LOGOUT, HEAD_PROFILE, LOGO_SRC, META_PROFILE, UI_URL, USER_ID } = this.val;
+    const { ALERT_LOGOUT, HEAD_PROFILE, LOGO_SRC, META_PROFILE, UI_URL } = this.val;
 
-    if (USER_ID) {
-      this.$store.dispatch("readUser", USER_ID);
+    this.$store.dispatch("readId");
+    this.$store.dispatch("readToken");
+
+    if (this.token) {
+      this.$store.dispatch("readUser", this.id);
       this.$store.dispatch("listUsers");
 
       setMeta(HEAD_PROFILE, META_PROFILE, UI_URL, UI_URL + LOGO_SRC);
@@ -136,11 +139,11 @@ export default {
   },
 
   computed: {
-    ...mapState(["user", "users"])
+    ...mapState(["id", "token", "user", "users"])
   },
 
   methods: {
-    ...mapActions(["readUser", "listUsers"]),
+    ...mapActions(["readId", "readToken", "readUser", "listUsers"]),
 
     /**
      * ? CHECK SESSION
