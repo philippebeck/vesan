@@ -98,7 +98,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["id", "token", "avatar"]),
+    ...mapState(["avatar", "id", "token"]),
   },
 
   methods: {
