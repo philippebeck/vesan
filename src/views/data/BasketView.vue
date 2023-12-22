@@ -173,7 +173,7 @@ import TableElt from "@/assets/elements/TableElt"
 export default {
   name: "BasketView",
   components: { BtnElt, CardElt, FieldElt, MediaElt, TableElt },
-  props: ["user", "val"],
+  props: ["avatar", "val"],
   data() {
     return {
       products: [],
@@ -209,11 +209,11 @@ export default {
   },
 
   computed: {
-    ...mapState(["user", "orders"])
+    ...mapState(["orders"])
   },
 
   methods: {
-    ...mapActions(["readUser", "listUserOrders"]),
+    ...mapActions(["listUserOrders"]),
 
     /**
      * ? CHECK SESSION
@@ -222,7 +222,7 @@ export default {
      * @return {boolean} Returns true if the user has the specified role, otherwise false.
      */
     checkSession(role) {
-      return checkRole(this.user.role, role);
+      return checkRole(this.avatar.role, role);
     },
 
     /**

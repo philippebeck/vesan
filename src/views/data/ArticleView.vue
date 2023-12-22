@@ -176,7 +176,7 @@ import Editor from "@tinymce/tinymce-vue"
 export default {
   name: "ArticleView",
   components: { BtnElt, CardElt, FieldElt, ListElt, MediaElt, Editor },
-  props: ["user", "val"],
+  props: ["avatar", "val"],
   data() {
     return {
       article: {}
@@ -219,7 +219,7 @@ export default {
      * @return {boolean} The result of the session check.
      */
     checkSession(role) {
-      return checkRole(this.user.role, role);
+      return checkRole(this.avatar.role, role);
     },
 
     /**

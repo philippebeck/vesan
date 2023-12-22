@@ -117,12 +117,12 @@ import ArticleSet from "@/assets/setters/ArticleSet"
 export default {
   name: "BlogView",
   components: { BtnElt, CardElt, ListElt, MediaElt, NavElt, ArticleSet },
-  props: ["val", "user"],
+  props: ["avatar", "val"],
 
   created() {
     const { HEAD_BLOG, LOGO_SRC, META_BLOG, UI_URL } = this.val;
-
     this.$store.dispatch("listArticles");
+
     setMeta(HEAD_BLOG, META_BLOG, `${UI_URL}/blog`, UI_URL + LOGO_SRC);
   },
 
@@ -154,7 +154,7 @@ export default {
      * @return {type} the result of the role check
      */
     checkSession(role) {
-      return checkRole(this.user.role, role);
+      return checkRole(this.avatar.role, role);
     },
 
     /**

@@ -45,12 +45,12 @@ import GallerySet from "@/assets/setters/GallerySet"
 export default {
   name: "GalleryView",
   components: { CardElt, ListElt, MediaElt, GallerySet },
-  props: ["user", "val"],
+  props: ["avatar", "val"],
 
   created() {
     const { HEAD_GALLERY, LOGO_SRC, META_GALLERY, UI_URL } = this.val;
-
     this.$store.dispatch("listGalleries");
+
     setMeta(HEAD_GALLERY, META_GALLERY, `${UI_URL}/galleries`, UI_URL + LOGO_SRC);
   },
 
@@ -68,7 +68,7 @@ export default {
      * @return {type} the result of the session check
      */
     checkSession(role) {
-      return checkRole(this.user.role, role);
+      return checkRole(this.avatar.role, role);
     }
   }
 }

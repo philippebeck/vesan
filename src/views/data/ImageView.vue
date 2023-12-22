@@ -62,7 +62,7 @@ import ImageSet from "@/assets/setters/ImageSet"
 export default {
   name: "ImageView",
   components: { CardElt, ListElt, MediaElt, SliderElt, ImageSet },
-  props: ["user", "val"],
+  props: ["avatar", "val"],
   data() {
     return {
       gallery: {}
@@ -106,7 +106,7 @@ export default {
      * @return {boolean} Returns true if the session has the specified role, otherwise false.
      */
     checkSession(role) {
-      return checkRole(this.user.role, role);
+      return checkRole(this.avatar.role, role);
     }
   }
 }
