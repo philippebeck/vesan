@@ -26,7 +26,7 @@ import ListElt from "@/assets/elements/ListElt"
 export default {
   name: "HomeView",
   components: { CardElt, ListElt },
-  props: ["user", "val"],
+  props: ["val"],
 
   created() {
     const { HEAD_HOME, LOGO_SRC, META_HOME, UI_URL } = this.val;

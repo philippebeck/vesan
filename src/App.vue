@@ -5,9 +5,9 @@
     </template>
 
     <template #profile>
-      <a v-if="checkSession('user')" href="/profile" :title="val.PROFILE_OF + user.name">
-        <img :src="`/img/thumbnails/users/${user.image}`"
-          :alt="user.name"
+      <a v-if="checkSession('user')" href="/profile" :title="val.PROFILE_OF + avatar.name">
+        <img :src="`/img/thumbnails/users/${avatar.image}`"
+          :alt="avatar.name"
           :height="40"
           :width="40"
           class="bord bord-circle">
@@ -19,7 +19,7 @@
     </template>
   </NavElt>
 
-  <router-view v-slot="{ Component }" :val="val" :user="user">
+  <router-view v-slot="{ Component }" :val="val" :avatar="avatar">
     <transition name="slide">
       <component :is="Component" :key="$route.path"/>
     </transition>
@@ -69,23 +69,18 @@
 </template>
 
 <script>
+import { checkRole, setGlobalMeta } from "servidio"
+import { mapState, mapActions } from "vuex"
+
 import FootElt from "@/assets/elements/FootElt"
 import ListElt from "@/assets/elements/ListElt"
 import NavElt from "@/assets/elements/NavElt"
 
 import val from "./config/values"
 
-import { checkRole, setGlobalMeta } from "servidio"
-import { mapState, mapActions } from "vuex"
-
 export default {
   name: 'App',
-  components: {
-    FootElt,
-    ListElt,
-    NavElt
-  },
-
+  components: { FootElt, ListElt, NavElt },
   data() {
     return {
       val: {}
@@ -93,28 +88,30 @@ export default {
   },
 
   created() {
+    this.$store.dispatch("readId");
+    this.$store.dispatch("readToken");
+
     this.val = val;
     setGlobalMeta(val.LANG, val.ICON);
 
-    if (val.USER_ID) {
-      this.$store.dispatch("readAvatar", val.USER_ID);
-    }
+    if (this.token) this.$store.dispatch("readAvatar", this.id);
   },
 
   computed: {
-    ...mapState(["user"]),
+    ...mapState(["avatar", "id", "token"]),
   },
 
   methods: {
-    ...mapActions(["readAvatar"]),
+    ...mapActions(["readId", "readToken", "readAvatar"]),
 
     /**
-     * CHECK ROLE
-     * @param {string} role
-     * @returns
+     * ? CHECK SESSION
+     * * Checks the session for a specific role.
+     * @param {type} role - the role to check
+     * @return {type} the result of the check
      */
     checkSession(role) {
-      return checkRole(this.user.role, role);
+      return checkRole(this.avatar.role, role);
     }
   }
 };

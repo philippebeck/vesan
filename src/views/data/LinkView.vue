@@ -70,12 +70,12 @@ import LinkSet from "@/assets/setters/LinkSet"
 export default {
   name: "LinkView",
   components: { BtnElt, CardElt, ListElt, NavElt, LinkSet },
-  props: ["user", "val"],
+  props: ["avatar", "val"],
 
   created() {
     const { HEAD_LINK, LOGO_SRC, META_LINK, UI_URL } = this.val;
-
     this.$store.dispatch("listLinks");
+
     setMeta(HEAD_LINK, META_LINK, `${UI_URL}/link`, UI_URL + LOGO_SRC);
   },
 
@@ -102,7 +102,7 @@ export default {
      * @return {boolean} the result of the session check
      */
     checkSession(role) {
-      return checkRole(this.user.role, role);
+      return checkRole(this.avatar.role, role);
     },
 
     /**

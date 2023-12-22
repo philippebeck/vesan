@@ -193,7 +193,7 @@ import Editor from "@tinymce/tinymce-vue"
 export default {
   name: "ProductView",
   components: { BtnElt, CardElt, FieldElt, ListElt, MediaElt, Editor },
-  props: ["user", "val"],
+  props: ["avatar", "val"],
   data() {
     return {
       basket: [],
@@ -244,7 +244,7 @@ export default {
      * @return {boolean} The result of the session check.
      */
     checkSession(role) {
-      return checkRole(this.user.role, role);
+      return checkRole(this.avatar.role, role);
     },
 
     /**

@@ -91,7 +91,7 @@ import ProductSet from "@/assets/setters/ProductSet"
 export default {
   name: "ShopView",
   components: { CardElt, ListElt, MediaElt, NavElt, ProductSet },
-  props: ["user", "val"],
+  props: ["avatar", "val"],
   data() {
     return {
       scores: [],
@@ -138,7 +138,7 @@ export default {
      * @return {boolean} The result of the session check.
      */
     checkSession(role) {
-      return checkRole(this.user.role, role);
+      return checkRole(this.avatar.role, role);
     },
 
     /**

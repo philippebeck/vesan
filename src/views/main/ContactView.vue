@@ -83,7 +83,7 @@ export default {
     ListElt,
     VueRecaptcha 
   },
-  props: ["user", "val"],
+  props: ["val"],
   data() {
     return {
       email: "",
