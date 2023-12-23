@@ -92,19 +92,12 @@ export default {
   name: "ShopView",
   components: { CardElt, ListElt, MediaElt, NavElt, ProductSet },
   props: ["avatar", "val"],
-  data() {
-    return {
-      scores: [],
-      priceCurrency: ""
-    }
-  },
 
   created() {
-    const { CURRENCY_ISO, HEAD_SHOP, LOGO_SRC, META_SHOP, UI_URL } = this.val;
+    const { HEAD_SHOP, LOGO_SRC, META_SHOP, UI_URL } = this.val;
     this.$store.dispatch("listProducts");
 
     setMeta(HEAD_SHOP, META_SHOP, `${UI_URL}/shop`, UI_URL + LOGO_SRC);
-    this.priceCurrency = CURRENCY_ISO;
   },
 
   updated() {
