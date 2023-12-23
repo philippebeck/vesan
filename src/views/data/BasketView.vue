@@ -209,7 +209,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["orders"])
+    ...mapState(["orders", "token"])
   },
 
   methods: {
@@ -344,6 +344,7 @@ export default {
      * @return {void} This function does not return a value.
      */
     createOrder(orderId) {
+      const URL       = `${this.val.API_URL}/orders/`;
       const order     = new FormData();
       const products  = [];
 
@@ -358,7 +359,7 @@ export default {
       order.append("status", this.val.ORDER_STATUS);
       order.append("userId", this.val.USER_ID);
 
-      postData(this.val.API_URL + "/orders/", order)
+      postData(URL, order, this.token)
         .then(() => {
           alert(this.val.ALERT_ORDER_CREATED);
           localStorage.removeItem("basket");

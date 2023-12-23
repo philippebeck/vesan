@@ -132,7 +132,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["articles"]),
+    ...mapState(["articles", "token"]),
 
     /**
      * ? GET CATEGORIES
@@ -183,7 +183,7 @@ export default {
      * @param {number} id - The ID of the article.
      */
     addLike(id) {
-      const { USER_ID, API_URL, TOKEN } = this.val;
+      const { USER_ID, API_URL } = this.val;
       const article = this.articles.find(a => a.id === id);
 
       if (!article) return;
@@ -203,7 +203,7 @@ export default {
       data.append("likes", JSON.stringify(likes));
       data.append("cat", cat);
 
-      putData(URL, data, TOKEN).catch(setError);
+      putData(URL, data, this.token).catch(setError);
     }
   }
 }
