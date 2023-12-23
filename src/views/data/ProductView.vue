@@ -79,7 +79,7 @@
                 v-model:value="product.options"
                 @keyup.enter="updateProduct()"
                 :info="val.INFO_OPTIONS"
-                :max="100">
+                :max="200">
                 <template #legend>{{ val.LEGEND_OPTIONS }}</template>
                 <template #label>{{ val.LABEL_OPTIONS }}</template>
               </FieldElt>
