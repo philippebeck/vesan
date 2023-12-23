@@ -97,7 +97,7 @@
       </template>
 
       <template #aside v-if="checkSession('editor')">
-        <ArticleSet :val="val"/>
+        <ArticleSet :token="token" :val="val"/>
       </template>
     </CardElt>
   </main>

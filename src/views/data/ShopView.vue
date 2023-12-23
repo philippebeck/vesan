@@ -72,7 +72,7 @@
       </template>
 
       <template #aside v-if="checkSession('editor')">
-        <ProductSet :val="val"/>
+        <ProductSet :token="token" :val="val"/>
       </template>
     </CardElt>
   </main>
@@ -109,7 +109,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["products"]),
+    ...mapState(["products", "token"]),
 
     /**
      * ? GET CATEGORIES

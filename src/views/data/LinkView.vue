@@ -51,7 +51,7 @@
 
       </template>
       <template #aside v-if="checkSession('admin')">
-        <LinkSet :val="val" :links="links"/>
+        <LinkSet :links="links" :token="token" :val="val"/>
       </template>
     </CardElt>
   </main>
@@ -80,7 +80,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["links"]),
+    ...mapState(["links", "token"]),
 
     /**
      * ? GET CATEGORIES

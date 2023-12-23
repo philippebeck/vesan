@@ -98,7 +98,7 @@
       </template>
 
       <template #aside v-if="checkSession('admin')">
-        <UserSet :val="val" :users="users"/>
+        <UserSet :val="val" :token="token" :users="users"/>
       </template>
     </CardElt>
   </main>

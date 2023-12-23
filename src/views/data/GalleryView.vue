@@ -27,7 +27,7 @@
       </template>
 
       <template #aside v-if="checkSession('admin')">
-        <GallerySet :val="val" :galleries="galleries"/>
+        <GallerySet :galleries="galleries" :token="token" :val="val"/>
       </template>
     </CardElt>
   </main>
@@ -55,7 +55,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["galleries"]),
+    ...mapState(["galleries", "token"]),
   },
 
   methods: {
