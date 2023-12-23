@@ -112,7 +112,7 @@ export default {
      * @return {Array} The array of items filtered by category.
      */
     getItemsByCategory(items) {
-      return getItemsByCat(items);
+      return getItemsByCat(items, "name");
     }
   }
 }
