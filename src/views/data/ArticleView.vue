@@ -213,7 +213,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["token"])
+    ...mapState(["id", "token"])
   },
 
   methods: {
@@ -233,7 +233,7 @@ export default {
      * @return {boolean} True if the user has liked the article, false otherwise.
      */
     checkLikes() {
-      return this.article.likes && this.article.likes.includes(this.val.USER_ID);
+      return this.article.likes && this.article.likes.includes(this.id);
     },
 
     /**
@@ -241,10 +241,10 @@ export default {
      * * Adds a like to the article.
      */
     addLike() {
-      const { USER_ID, API_URL } = this.val;
+      const { API_URL } = this.val;
       let { id, name, text, image, alt, likes, cat } = this.article;
 
-      likes.includes(USER_ID) ? likes.splice(likes.indexOf(USER_ID), 1) : likes.push(USER_ID);
+      likes.includes(this.id) ? likes.splice(this.id, 1) : likes.push(this.id);
 
       const URL = `${API_URL}/articles/${id}`;
       const data = new FormData();
