@@ -285,7 +285,7 @@ export default {
         putData(URL, data, this.token)
           .then(() => {
             alert(name + ALERT_UPDATED);
-            this.$router.go();
+            this.$router.push("/blog");
           })
           .catch(setError);
       }
