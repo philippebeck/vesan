@@ -59,8 +59,8 @@
                     <template #figcaption>
                       <p v-html="slotProps.value.description.split(':')[0]" class="monospace figcaption"></p>
                       <p itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                        <b itemprop="price">{{ slotProps.value.price }}</b>
-                        <b itemprop="priceCurrency">{{ this.priceCurrency }}</b>
+                        <b itemprop="price" class="monospace">{{ slotProps.value.price }}</b>
+                        <i itemprop="priceCurrency">{{ val.CURRENCY_ISO }} TTC</i>
                       </p>
                     </template>
                   </MediaElt>
@@ -72,7 +72,7 @@
       </template>
 
       <template #aside v-if="checkSession('editor')">
-        <ProductSet :val="val"/>
+        <ProductSet :token="token" :val="val"/>
       </template>
     </CardElt>
   </main>
@@ -92,19 +92,12 @@ export default {
   name: "ShopView",
   components: { CardElt, ListElt, MediaElt, NavElt, ProductSet },
   props: ["avatar", "val"],
-  data() {
-    return {
-      scores: [],
-      priceCurrency: ""
-    }
-  },
 
   created() {
-    const { CURRENCY_ISO, HEAD_SHOP, LOGO_SRC, META_SHOP, UI_URL } = this.val;
+    const { HEAD_SHOP, LOGO_SRC, META_SHOP, UI_URL } = this.val;
     this.$store.dispatch("listProducts");
 
     setMeta(HEAD_SHOP, META_SHOP, `${UI_URL}/shop`, UI_URL + LOGO_SRC);
-    this.priceCurrency = CURRENCY_ISO;
   },
 
   updated() {
@@ -116,7 +109,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["products"]),
+    ...mapState(["products", "token"]),
 
     /**
      * ? GET CATEGORIES

@@ -98,7 +98,7 @@
       </template>
 
       <template #aside v-if="checkSession('admin')">
-        <UserSet :val="val" :users="users"/>
+        <UserSet :val="val" :token="token" :users="users"/>
       </template>
     </CardElt>
   </main>
@@ -123,9 +123,6 @@ export default {
   created() {
     const { ALERT_LOGOUT, HEAD_PROFILE, LOGO_SRC, META_PROFILE, UI_URL } = this.val;
 
-    this.$store.dispatch("readId");
-    this.$store.dispatch("readToken");
-
     if (this.token) {
       this.$store.dispatch("readUser", this.id);
       this.$store.dispatch("listUsers");
@@ -143,7 +140,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["readId", "readToken", "readUser", "listUsers"]),
+    ...mapActions(["readUser", "listUsers"]),
 
     /**
      * ? CHECK SESSION
@@ -170,7 +167,7 @@ export default {
      * * Updates the user information on the server.
      */
     updateUser() {
-      const { API_URL, CHECK_EMAIL, CHECK_PASS, CHECK_STRING, REGEX_EMAIL, REGEX_PASS, TOKEN } = this.val;
+      const { API_URL, CHECK_EMAIL, CHECK_PASS, CHECK_STRING, REGEX_EMAIL, REGEX_PASS } = this.val;
 
       if (checkRange(this.user.name, CHECK_STRING) && 
         checkRegex(this.user.email, CHECK_EMAIL, REGEX_EMAIL)) {
@@ -188,7 +185,7 @@ export default {
           data.append("pass", this.pass);
         }
 
-        putData(URL, data, TOKEN)
+        putData(URL, data, this.token)
           .then(() => {
             alert(this.user.name + this.val.ALERT_UPDATED);
             this.$router.go();
@@ -202,13 +199,13 @@ export default {
      * * Deletes a user from the system.
      */
     deleteUser() {
-      const { ALERT_DELETED, API_URL, TITLE_DELETE, TOKEN } = this.val;
+      const { ALERT_DELETED, API_URL, TITLE_DELETE } = this.val;
       const NAME = this.user.name;
 
       if (confirm(`${TITLE_DELETE} ${NAME} ?`) === true) {
         const URL = `${API_URL}/users/${this.user.id}`;
 
-        deleteData(URL, TOKEN)
+        deleteData(URL, this.token)
           .then(() => {
             localStorage.removeItem("userId");
             localStorage.removeItem("userToken");

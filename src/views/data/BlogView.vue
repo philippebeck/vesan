@@ -97,7 +97,7 @@
       </template>
 
       <template #aside v-if="checkSession('editor')">
-        <ArticleSet :val="val"/>
+        <ArticleSet :token="token" :val="val"/>
       </template>
     </CardElt>
   </main>
@@ -132,7 +132,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["articles"]),
+    ...mapState(["articles", "id", "token"]),
 
     /**
      * ? GET CATEGORIES
@@ -174,7 +174,7 @@ export default {
      * @return {type} - Returns a boolean indicating whether the ID is present in the likes array.
      */
     checkLikes(id) {
-      return this.articles.some(a => a.id === id && a.likes.includes(this.val.USER_ID));
+      return this.articles.some(a => a.id === id && a.likes.includes(this.id));
     },
 
     /**
@@ -183,15 +183,15 @@ export default {
      * @param {number} id - The ID of the article.
      */
     addLike(id) {
-      const { USER_ID, API_URL, TOKEN } = this.val;
+      const { API_URL } = this.val;
       const article = this.articles.find(a => a.id === id);
 
       if (!article) return;
 
       const { name, text, image, alt, likes, cat } = article;
-      const index = likes.indexOf(USER_ID);
+      const index = likes.indexOf(this.id);
 
-      index > -1 ? likes.splice(index, 1) : likes.push(USER_ID);
+      index > -1 ? likes.splice(index, 1) : likes.push(this.id);
 
       const URL   = `${API_URL}/articles/${id}`;
       const data  = new FormData();
@@ -203,7 +203,7 @@ export default {
       data.append("likes", JSON.stringify(likes));
       data.append("cat", cat);
 
-      putData(URL, data, TOKEN).catch(setError);
+      putData(URL, data, this.token).catch(setError);
     }
   }
 }

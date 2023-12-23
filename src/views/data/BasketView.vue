@@ -184,7 +184,7 @@ export default {
   },
 
   created() {
-    const { API_URL, HEAD_BASKET, META_BASKET, LOGO_SRC, UI_URL, USER_ID } = this.val;
+    const { API_URL, HEAD_BASKET, META_BASKET, LOGO_SRC, UI_URL } = this.val;
 
     getData(`${API_URL}/products`)
       .then(res => { 
@@ -197,19 +197,19 @@ export default {
           this.setOrder();
           this.setTotal();
 
-          if (USER_ID) this.setPaypal(this.val, this.getTotal, this.createOrder);
+          if (this.token) this.setPaypal(this.val, this.getTotal, this.createOrder);
         }
       })
       .catch(err => { setError(err) });
 
-      if (USER_ID) {
-        this.$store.dispatch("readUser", USER_ID);
-        this.$store.dispatch("listUserOrders", USER_ID);
+      if (this.token) {
+        this.$store.dispatch("readUser", this.id);
+        this.$store.dispatch("listUserOrders", this.id);
       }
   },
 
   computed: {
-    ...mapState(["orders"])
+    ...mapState(["id", "orders", "token"])
   },
 
   methods: {
@@ -344,6 +344,7 @@ export default {
      * @return {void} This function does not return a value.
      */
     createOrder(orderId) {
+      const URL       = `${this.val.API_URL}/orders/`;
       const order     = new FormData();
       const products  = [];
 
@@ -356,9 +357,9 @@ export default {
       order.append("total", this.total);
       order.append("paymentId", orderId);
       order.append("status", this.val.ORDER_STATUS);
-      order.append("userId", this.val.USER_ID);
+      order.append("userId", this.id);
 
-      postData(this.val.API_URL + "/orders/", order)
+      postData(URL, order, this.token)
         .then(() => {
           alert(this.val.ALERT_ORDER_CREATED);
           localStorage.removeItem("basket");

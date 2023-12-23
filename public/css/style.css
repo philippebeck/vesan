@@ -37,7 +37,7 @@
 
 /* SHOP */
 .figcaption {
-  height: 50px;
+  height: 100px;
 }
 
 [itemprop="offers"] {
@@ -48,12 +48,6 @@
 .tox {
   margin: auto;
   max-width: 1000px;
-  height: 500px;
-}
-
-/* ADMIN IMG */
-[id="admin"] img {
-  max-width: 100px;
 }
 
 /* ADMIN TABLES */

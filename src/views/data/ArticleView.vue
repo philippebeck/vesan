@@ -165,6 +165,7 @@
 
 <script>
 import { checkRange, checkRole, deleteData, getData, putData, setError, setMeta } from "servidio"
+import { mapState } from "vuex"
 
 import BtnElt from "@/assets/elements/BtnElt"
 import CardElt from "@/assets/elements/CardElt"
@@ -211,6 +212,10 @@ export default {
     }
   },
 
+  computed: {
+    ...mapState(["id", "token"])
+  },
+
   methods: {
     /**
      * ? CHECK SESSION
@@ -228,7 +233,7 @@ export default {
      * @return {boolean} True if the user has liked the article, false otherwise.
      */
     checkLikes() {
-      return this.article.likes && this.article.likes.includes(this.val.USER_ID);
+      return this.article.likes && this.article.likes.includes(this.id);
     },
 
     /**
@@ -236,10 +241,10 @@ export default {
      * * Adds a like to the article.
      */
     addLike() {
-      const { USER_ID, API_URL, TOKEN } = this.val;
+      const { API_URL } = this.val;
       let { id, name, text, image, alt, likes, cat } = this.article;
 
-      likes.includes(USER_ID) ? likes.splice(likes.indexOf(USER_ID), 1) : likes.push(USER_ID);
+      likes.includes(this.id) ? likes.splice(this.id, 1) : likes.push(this.id);
 
       const URL = `${API_URL}/articles/${id}`;
       const data = new FormData();
@@ -251,7 +256,7 @@ export default {
       data.append("likes", JSON.stringify(likes));
       data.append("cat", cat);
 
-      putData(URL, data, TOKEN).catch(setError);
+      putData(URL, data, this.token).catch(setError);
     },
 
     /**
@@ -259,7 +264,7 @@ export default {
      * * Updates the article with the provided data.
      */
     updateArticle() {
-      const { CHECK_STRING, TEXT_MIN, TEXT_MAX, API_URL, TOKEN, ALERT_UPDATED } = this.val;
+      const { CHECK_STRING, TEXT_MIN, TEXT_MAX, API_URL, ALERT_UPDATED } = this.val;
       let { id, name, text, image, alt, likes, cat } = this.article;
 
       if (checkRange(name, CHECK_STRING) &&
@@ -277,10 +282,10 @@ export default {
         data.append("likes", JSON.stringify(likes));
         data.append("cat", cat);
 
-        putData(URL, data, TOKEN)
+        putData(URL, data, this.token)
           .then(() => {
             alert(name + ALERT_UPDATED);
-            this.$router.go();
+            this.$router.push("/blog");
           })
           .catch(setError);
       }
@@ -291,13 +296,13 @@ export default {
      * * Deletes an article with the given ID.
      */
     deleteArticle() {
-      const { TITLE_DELETE, API_URL, TOKEN, ALERT_DELETED } = this.val;
+      const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val;
       let { id, name } = this.article;
 
       if (confirm(`${TITLE_DELETE} ${name} ?`) === true) {
         const URL = `${API_URL}/articles/${id}`
 
-        deleteData(URL, TOKEN)
+        deleteData(URL, this.token)
           .then(() => {
             alert(name + ALERT_DELETED);
             this.$router.go();

@@ -43,7 +43,7 @@
       </template>
 
       <template #aside v-if="checkSession('admin')">
-        <ImageSet :val="val" :images="images" :galleries="galleries"/>
+        <ImageSet :images="images" :galleries="galleries" :token="token" :val="val"/>
       </template>
     </CardElt>
   </main>
@@ -93,7 +93,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["images", "galleries"])
+    ...mapState(["images", "galleries", "token"])
   },
 
   methods: {

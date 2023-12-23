@@ -79,7 +79,7 @@
                 v-model:value="product.options"
                 @keyup.enter="updateProduct()"
                 :info="val.INFO_OPTIONS"
-                :max="100">
+                :max="200">
                 <template #legend>{{ val.LEGEND_OPTIONS }}</template>
                 <template #label>{{ val.LABEL_OPTIONS }}</template>
               </FieldElt>
@@ -138,8 +138,8 @@
           <template #figcaption>
             <p id="figcaption" v-html="product.description"></p>
             <p itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-              <b itemprop="price">{{ product.price }}</b>
-              <b itemprop="priceCurrency">{{ this.priceCurrency }}</b>
+              <b itemprop="price" class="monospace">{{ slotProps.value.price }}</b>
+              <i itemprop="priceCurrency">{{ val.CURRENCY_ISO }} TTC</i>
             </p>
           </template>
         </MediaElt>
@@ -182,6 +182,7 @@
 
 <script>
 import { checkRange, checkRole, deleteData, getData, putData, setError, setMeta } from "servidio"
+import { mapState } from "vuex"
 
 import BtnElt from "@/assets/elements/BtnElt"
 import CardElt from "@/assets/elements/CardElt"
@@ -200,7 +201,6 @@ export default {
       product: {},
       order: {},
       option: "",
-      priceCurrency: "",
       quantity: 1,
       isInBasket: false
     }
@@ -225,8 +225,6 @@ export default {
         setError(err);
         this.$router.push("/shop");
       });
-
-    this.priceCurrency = this.val.CURRENCY_ISO;
   },
 
   updated() {
@@ -234,6 +232,10 @@ export default {
       const descriptionElt = document.getElementById("figcaption");
       descriptionElt.firstChild.setAttribute("itemprop", "description");
     }
+  },
+
+  computed: {
+    ...mapState(["token"])
   },
 
   methods: {
@@ -325,7 +327,7 @@ export default {
      * * Updates the product by sending a PUT request to the API.
      */
     updateProduct() {
-      const { CHECK_STRING, TEXT_MIN, TEXT_MAX, CHECK_NUMBER, PRICE_MIN, PRICE_MAX, API_URL, TOKEN, ALERT_UPDATED } = this.val;
+      const { CHECK_STRING, TEXT_MIN, TEXT_MAX, CHECK_NUMBER, PRICE_MIN, PRICE_MAX, API_URL, ALERT_UPDATED } = this.val;
       let { id, name, description, image, alt, price, options, cat } = this.product;
 
       if (checkRange(name, CHECK_STRING) && 
@@ -345,7 +347,7 @@ export default {
         data.append("options", options);
         data.append("cat", cat);
 
-        putData(URL, data, TOKEN)
+        putData(URL, data, this.token)
           .then(() => {
             alert(name + ALERT_UPDATED);
             this.$router.push("/shop");
@@ -359,13 +361,13 @@ export default {
      * * Deletes a product from the system.
      */
     deleteProduct() {
-      const { TITLE_DELETE, API_URL, TOKEN, ALERT_DELETED } = this.val;
+      const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val;
       let { id, name } = this.product;
 
       if (confirm(`${TITLE_DELETE} ${name} ?`) === true) {
         const URL = `${API_URL}/products/${id}`;
 
-        deleteData(URL, TOKEN)
+        deleteData(URL, this.token)
           .then(() => {
             alert(name + ALERT_DELETED);
             this.$router.push("/shop");
