@@ -59,8 +59,8 @@
                     <template #figcaption>
                       <p v-html="slotProps.value.description.split(':')[0]" class="monospace figcaption"></p>
                       <p itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                        <b itemprop="price" class="monospace">{{ slotProps.value.price }}</b> 
-                        <b itemprop="priceCurrency">{{ val.CURRENCY_ISO }}</b>
+                        <b itemprop="price" class="monospace">{{ slotProps.value.price }}</b>
+                        <i itemprop="priceCurrency">{{ val.CURRENCY_ISO }} TTC</i>
                       </p>
                     </template>
                   </MediaElt>

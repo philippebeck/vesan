@@ -138,8 +138,8 @@
           <template #figcaption>
             <p id="figcaption" v-html="product.description"></p>
             <p itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-              <b itemprop="price">{{ product.price }}</b>
-              <b itemprop="priceCurrency">{{ this.priceCurrency }}</b>
+              <b itemprop="price" class="monospace">{{ slotProps.value.price }}</b>
+              <i itemprop="priceCurrency">{{ val.CURRENCY_ISO }} TTC</i>
             </p>
           </template>
         </MediaElt>
@@ -201,7 +201,6 @@ export default {
       product: {},
       order: {},
       option: "",
-      priceCurrency: "",
       quantity: 1,
       isInBasket: false
     }
@@ -226,8 +225,6 @@ export default {
         setError(err);
         this.$router.push("/shop");
       });
-
-    this.priceCurrency = this.val.CURRENCY_ISO;
   },
 
   updated() {
