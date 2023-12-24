@@ -79,7 +79,7 @@
                 v-model:value="product.options"
                 @keyup.enter="updateProduct()"
                 :info="val.INFO_OPTIONS"
-                :max="200">
+                :max="250">
                 <template #legend>{{ val.LEGEND_OPTIONS }}</template>
                 <template #label>{{ val.LABEL_OPTIONS }}</template>
               </FieldElt>
@@ -138,7 +138,7 @@
           <template #figcaption>
             <p id="figcaption" v-html="product.description"></p>
             <p itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-              <b itemprop="price" class="monospace">{{ slotProps.value.price }}</b>
+              <b itemprop="price" class="monospace">{{ product.price }}</b>
               <i itemprop="priceCurrency">{{ val.CURRENCY_ISO }} TTC</i>
             </p>
           </template>
