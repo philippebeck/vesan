@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main id="top">
     <NavElt :items="getCategories" class="sidebar">
       <template #hide>
         <i class="fa-solid fa-eye fa-fw" :title="val.TITLE_TOGGLE"></i>
@@ -16,7 +16,7 @@
       </template>
     </NavElt>
 
-    <CardElt id="top" :isArticle="true" class="container-90md-80lg-70wd">
+    <CardElt :isArticle="true" class="container-90md-80lg-70wd">
       <template #header>
         <h1 class="sky-dark">
           <i class="fa-solid fa-blog fa-lg"></i>
