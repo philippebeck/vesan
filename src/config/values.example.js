@@ -61,7 +61,7 @@ export default {
 
   CHECK_EMAIL : "Your Email is not a valid address.",
   CHECK_NUMBER : "The number must be between ",
-  CHECK_PASS : "Your Password must have 8 to 50 characters, with uppercase, lowercase, 1 number minimum & no space.",
+  CHECK_PASS : "Your Password must have 8 to 100 characters, with uppercase, lowercase, 1 number minimum & no space.",
   CHECK_STRING : "The number of characters must be between ",
   CHECK_URL : "This URL is not a valid path.",
 
@@ -93,7 +93,7 @@ export default {
 
   ORDER_STATUS : "Pending",
 
-  PRICE_MAX : 5000,
+  PRICE_MAX : 10000,
   PRICE_MIN : 1,
 
   RECAPTCHA_KEY : "{your-recaptcha-key}",
@@ -102,8 +102,8 @@ export default {
   REGEX_PASS : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,50}$/,
   REGEX_URL : /((https?|ftp|ssh|mailto):\/\/)?[a-z0-9\/:%_+.,#?!@&=-]+$/,
 
-  TEXT_MAX : 5000,
-  TEXT_MIN : 8,
+  TEXT_MAX : 10000,
+  TEXT_MIN : 5,
 
   THUMB_WIDTH : 200,
   THUMB_HEIGHT : 200,
@@ -112,7 +112,7 @@ export default {
 
   UI_URL : "http://localhost:8080",
 
-  URL_MAX : 100,
+  URL_MAX : 200,
   URL_MIN : 5,
 
   // ! ********** CONTENT **********
@@ -309,6 +309,7 @@ export default {
   INFO_OPTION : "Choose an option",
   INFO_OPTIONS : "option-1,option-2,option-3,etc",
   INFO_PASSWORD : "********",
+  INFO_PRODUCT : "Add complement information",
   INFO_PRICE : "100 €",
   INFO_QUANTITY : "Choose a quantity",
   INFO_SUBJECT : "The subject of your message ?",
@@ -389,6 +390,11 @@ export default {
     "Animadio for Design",
     "NemJS for Backend Middlewares"
   ],
+
+  PRODUCT_LINK :{
+    "href": "https://philippebeck.net",
+    "content": "(clic here to see the creator website)"
+  },
 
   ROLES_USER : [
     "admin",
