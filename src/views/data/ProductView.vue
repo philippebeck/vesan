@@ -139,7 +139,7 @@
             <p id="figcaption" v-html="product.description"></p>
             <p itemprop="offers" itemscope itemtype="https://schema.org/Offer">
               <b itemprop="price" class="monospace">{{ product.price }}</b>
-              <i itemprop="priceCurrency">{{ val.CURRENCY_ISO }} TTC</i>
+              <i itemprop="priceCurrency">{{ val.CURRENCY_ISO }}</i>
             </p>
           </template>
         </MediaElt>
