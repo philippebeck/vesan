@@ -137,6 +137,9 @@
 
           <template #figcaption>
             <p id="figcaption" v-html="product.description"></p>
+            <a :href="val.PRODUCT_LINK.href" class="deco" target="_blank" rel="noopener noreferrer">
+              <i>{{ val.PRODUCT_LINK.content }}</i>
+            </a>
             <p itemprop="offers" itemscope itemtype="https://schema.org/Offer">
               <b itemprop="price" class="monospace">{{ product.price }}</b>
               <i itemprop="priceCurrency">{{ val.CURRENCY_ISO }}</i>
