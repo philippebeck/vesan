@@ -28,6 +28,8 @@
           <i class="fa-solid fa-store fa-lg"></i> {{ val.SHOP_VIEW }}
         </h1>
         <b>{{ val.INTRO_PRODUCT }}</b>
+        <br>
+        <i>{{ val.INFO_PRODUCT }}</i>
       </template>
 
       <template #body>
