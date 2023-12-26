@@ -71,6 +71,18 @@
             </CardElt>
           </template>
         </ListElt>
+        <MediaElt :src="val.PRODUCT_HELP.image" 
+          :alt="val.PRODUCT_HELP.alt" 
+          :width="val.PRODUCT_HELP.width" 
+          :height="val.PRODUCT_HELP.height">
+
+          <template #figcaption>
+              <a :href="val.PRODUCT_HELP.href" class="deco" target="_blank" rel="noopener noreferrer">
+              <i>{{ val.PRODUCT_HELP.info }}</i>
+            </a>
+            <i>{{ val.PRODUCT_HELP.note }}</i>
+          </template>
+        </MediaElt>
       </template>
 
       <template #aside v-if="checkSession('editor')">
