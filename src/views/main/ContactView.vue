@@ -113,8 +113,8 @@ export default {
         const URL = `${API_URL}/auth/recaptcha`;
 
         postData(URL, { response })
-          .then(({ success }) => success ? this.send() : alert("Failed captcha verification") )
-          .catch(setError)
+          .then(({ success }) => success ? this.send() : alert("Failed captcha verification"))
+          .catch(err => setError(err))
           .finally(() => this.$router.go());
       }
     },
@@ -136,7 +136,7 @@ export default {
           alert(this.subject + this.val.ALERT_SENDED);
           this.$router.push("/");
         })
-        .catch(setError);
+        .catch(err => setError(err));
     }
   }
 }

@@ -128,7 +128,7 @@
 
         <BtnElt type="button"
           @click="setType('signUp')"
-          class="btn-sky-dark"
+          class="btn-blue"
           :content="val.CONTENT_SIGNUP"
           :title="val.TITLE_GO + val.SIGN_UP">
           <template #btn>
@@ -183,7 +183,7 @@
 
         <BtnElt type="button"
           @click="setType('signUp')"
-          class="btn-sky-dark"
+          class="btn-blue"
           :content="val.CONTENT_SIGNUP"
           :title="val.TITLE_GO + val.SIGN_UP">
           <template #btn>
@@ -257,7 +257,7 @@ export default {
         this.type === "signIn" && checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL) && 
         checkRegex(this.pass, CHECK_PASS, REGEX_PASS)
         ||
-        this.type === "forgot" && checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL)
+        this.type === "forgotPass" && checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL)
       ) {
         const URL = `${API_URL}/auth/recaptcha`;
 
@@ -267,13 +267,10 @@ export default {
 
             if      (success && this.type === "signUp") this.createUser();
             else if (success && this.type === "signIn") this.signIn();
-            else if (success && this.type === "forgot") this.forgotPass();
+            else if (success && this.type === "forgotPass") this.forgotPass();
             else alert("Failed captcha verification");
           })
-          .catch(err => { 
-            setError(err);
-            this.$router.go();
-          });
+          .catch(err => setError(err));
       }
     },
 
@@ -300,7 +297,7 @@ export default {
             alert(this.name + ALERT_CREATED);
             this.$router.go();
           })
-          .catch(err => { setError(err) });
+          .catch(err => setError(err));
 
       } else {
         alert(ALERT_IMG);
@@ -323,9 +320,9 @@ export default {
           localStorage.setItem("userToken", JSON.stringify(res.token));
           localStorage.setItem("userId", JSON.stringify(res.userId));
 
-          this.$router.go();
+          this.$router.push("/profile");
         })
-        .catch(setError);
+        .catch(err => setError(err));
     },
 
     /**
@@ -335,7 +332,7 @@ export default {
     forgotPass() {
       const { CONFIRM_FORGOT, API_URL, FORGOT_SUBJECT, FORGOT_TEXT, ALERT_SENDED } = this.val;
 
-      if (confirm(CONFIRM_FORGOT) === true) {
+      if (confirm(CONFIRM_FORGOT)) {
         const URL   = `${API_URL}/auth/pass`;
         const data  = new FormData();
 
@@ -346,9 +343,9 @@ export default {
         postData(URL, data)
           .then(() => {
             alert(FORGOT_SUBJECT + ALERT_SENDED);
-            this.$router.push("/login");
+            this.$router.go();
           })
-          .catch(setError);
+          .catch(err => setError(err));
       }
     }
   }

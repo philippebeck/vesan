@@ -22,7 +22,7 @@
       </template>
     </NavElt>
 
-    <CardElt :isArticle="true" class="container-90md-80lg-70wd">
+    <CardElt :isArticle="true" class="container-90lg-70wd">
       <template #header>
         <h1 class="sky-dark">
           <i class="fa-solid fa-store fa-lg"></i> {{ val.SHOP_VIEW }}
@@ -59,7 +59,7 @@
                     itemprop="image">
 
                     <template #figcaption>
-                      <p v-html="slotProps.value.description.split(':')[0]" class="monospace figcaption"></p>
+                      <p v-html="slotProps.value.description.split(':')[0]" class="monospace shop"></p>
                       <p itemprop="offers" itemscope itemtype="https://schema.org/Offer">
                         <b itemprop="price" class="monospace">{{ slotProps.value.price }}</b>
                         <i itemprop="priceCurrency">{{ val.CURRENCY_ISO }}</i>
@@ -71,6 +71,18 @@
             </CardElt>
           </template>
         </ListElt>
+        <MediaElt :src="val.PRODUCT_HELP.image" 
+          :alt="val.PRODUCT_HELP.alt" 
+          :width="val.PRODUCT_HELP.width" 
+          :height="val.PRODUCT_HELP.height">
+
+          <template #figcaption>
+              <a :href="val.PRODUCT_HELP.href" class="deco" target="_blank" rel="noopener noreferrer">
+              <i>{{ val.PRODUCT_HELP.info }}</i>
+            </a>
+            <i>{{ val.PRODUCT_HELP.note }}</i>
+          </template>
+        </MediaElt>
       </template>
 
       <template #aside v-if="checkSession('editor')">

@@ -10,7 +10,9 @@
       </template>
 
       <template #body>
-        <ListElt :items="galleries" :dynamic="true" class="grid-2md-3lg-4wd content-center">
+        <ListElt :items="galleries"
+          :dynamic="true"
+          class="grid-2sm-3md-4lg-5xl-6wd content-center">
           <template #items="slotProps">
             <a :href="`gallery/${slotProps.item.id}`" :title="val.TITLE_WATCH + slotProps.item.name">
 
@@ -19,7 +21,9 @@
                 :alt="val.COVER_OF + slotProps.item.name" 
                 :width="val.THUMB_WIDTH"
                 :height="val.THUMB_HEIGHT">
-                <template #figcaption>{{ slotProps.item.name }}</template>
+                <template #figcaption>
+                  <p class="gallery">{{ slotProps.item.name }}</p>
+                </template>
               </MediaElt>
             </a>
           </template>

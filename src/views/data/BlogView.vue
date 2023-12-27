@@ -16,7 +16,7 @@
       </template>
     </NavElt>
 
-    <CardElt :isArticle="true" class="container-90md-80lg-70wd">
+    <CardElt :isArticle="true" class="container-90lg-70wd">
       <template #header>
         <h1 class="sky-dark">
           <i class="fa-solid fa-blog fa-lg"></i>
@@ -28,7 +28,7 @@
       <template #body>
         <ListElt :items="getItemsByCategory(articles)" :dynamic="true">
           <template #items="slotProps">
-            <h2 :id="slotProps.item[0].cat" class="sky-dark ani-turn3D-loop-altrev-into">
+            <h2 :id="slotProps.item[0].cat" class="sky-dark ani-turnXZ-loop-altrev-into">
               {{ slotProps.item[0].cat }}
             </h2>
           </template>
@@ -84,8 +84,7 @@
                     :height="val.THUMB_HEIGHT"
                     itemprop="image">
                     <template #figcaption>
-                      <blockquote v-html="slotProps.value.text.split(':')[0]" 
-                        class="monospace figcaption">
+                      <blockquote v-html="slotProps.value.text.split(':')[0]">
                       </blockquote>
                     </template>
                   </MediaElt>
@@ -203,7 +202,7 @@ export default {
       data.append("likes", JSON.stringify(likes));
       data.append("cat", cat);
 
-      putData(URL, data, this.token).catch(setError);
+      putData(URL, data, this.token).catch(err => setError(err));
     }
   }
 }

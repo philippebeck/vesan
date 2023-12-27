@@ -176,21 +176,21 @@ export default {
         const data  = new FormData();
         const img   = document.getElementById("image")?.files[0] ?? this.user.image;
 
+        if (this.pass && checkRegex(this.pass, CHECK_PASS, REGEX_PASS)) {
+          data.append("pass", this.pass);
+        }
+
         data.append("name", this.user.name);
         data.append("email", this.user.email);
         data.append("image", img);
         data.append("role", this.user.role);
-
-        if (this.pass && checkRegex(this.pass, CHECK_PASS, REGEX_PASS)) {
-          data.append("pass", this.pass);
-        }
 
         putData(URL, data, this.token)
           .then(() => {
             alert(this.user.name + this.val.ALERT_UPDATED);
             this.$router.go();
           })
-          .catch(err => { setError(err) });
+          .catch(err => setError(err));
       }
     },
 
@@ -202,7 +202,7 @@ export default {
       const { ALERT_DELETED, API_URL, TITLE_DELETE } = this.val;
       const NAME = this.user.name;
 
-      if (confirm(`${TITLE_DELETE} ${NAME} ?`) === true) {
+      if (confirm(`${TITLE_DELETE} ${NAME} ?`)) {
         const URL = `${API_URL}/users/${this.user.id}`;
 
         deleteData(URL, this.token)
@@ -211,9 +211,9 @@ export default {
             localStorage.removeItem("userToken");
 
             alert(NAME + ALERT_DELETED);
-            this.$router.go();
+            this.$router.push("/home");
           })
-          .catch(setError);
+          .catch(err => setError(err));
       }
     }
   }

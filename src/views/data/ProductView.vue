@@ -137,9 +137,6 @@
 
           <template #figcaption>
             <p id="figcaption" v-html="product.description"></p>
-            <a :href="val.PRODUCT_LINK.href" class="deco" target="_blank" rel="noopener noreferrer">
-              <i>{{ val.PRODUCT_LINK.content }}</i>
-            </a>
             <p itemprop="offers" itemscope itemtype="https://schema.org/Offer">
               <b itemprop="price" class="monospace">{{ product.price }}</b>
               <i itemprop="priceCurrency">{{ val.CURRENCY_ISO }}</i>
@@ -355,7 +352,7 @@ export default {
             alert(name + ALERT_UPDATED);
             this.$router.push("/shop");
           })
-          .catch(setError);
+          .catch(err => setError(err));
       }
     },
 
@@ -367,7 +364,7 @@ export default {
       const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val;
       let { id, name } = this.product;
 
-      if (confirm(`${TITLE_DELETE} ${name} ?`) === true) {
+      if (confirm(`${TITLE_DELETE} ${name} ?`)) {
         const URL = `${API_URL}/products/${id}`;
 
         deleteData(URL, this.token)
@@ -375,7 +372,7 @@ export default {
             alert(name + ALERT_DELETED);
             this.$router.push("/shop");
           })
-          .catch(setError);
+          .catch(err => setError(err));
       }
     }
   }

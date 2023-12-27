@@ -36,11 +36,12 @@
 }
 
 /* SHOP */
-.figcaption {
-  height: 100px;
+.shop {
+  height: 70px;
+  max-width: 200px;
 }
 
-.figcaption h4 {
+.shop h4 {
   font-size: 2rem;
 }
 
@@ -48,16 +49,13 @@
   font-size: 2.5rem;
 }
 
+/* GALLERY */
+.gallery {
+  max-width: 200px;
+}
+
 /* TINYMCE EDITOR */
 .tox {
   margin: auto;
   max-width: 1000px;
-}
-
-/* ADMIN TABLES */
-[id*="products-"] > *,
-[id*="likes-"] {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 }

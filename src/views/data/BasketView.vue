@@ -155,6 +155,10 @@
           </template>
         </TableElt>
       </template>
+
+      <template #aside v-if="checkSession('user')">
+        <OrderSet :token="token" :val="val"/>
+      </template>
     </CardElt>
   </main>
 </template>
@@ -200,7 +204,7 @@ export default {
           if (this.token) this.setPaypal(this.val, this.getTotal, this.createOrder);
         }
       })
-      .catch(err => { setError(err) });
+      .catch(err => setError(err));
 
       if (this.token) {
         this.$store.dispatch("readUser", this.id);
@@ -363,9 +367,9 @@ export default {
         .then(() => {
           alert(this.val.ALERT_ORDER_CREATED);
           localStorage.removeItem("basket");
-          this.$router.push("/profile");
+          this.$router.go();
         })
-        .catch(err => { setError(err) });
+        .catch(err => setError(err));
     },
 
     /**
@@ -418,7 +422,7 @@ export default {
      * Deletes the basket.
      */
     deleteBasket() {
-      if (confirm(this.val.CONFIRM_BASKET) === true) {
+      if (confirm(this.val.CONFIRM_BASKET)) {
         localStorage.removeItem("basket");
         this.$router.go();
       }
