@@ -28,7 +28,7 @@
       <template #body>
         <ListElt :items="getItemsByCategory(articles)" :dynamic="true">
           <template #items="slotProps">
-            <h2 :id="slotProps.item[0].cat" class="sky-dark ani-turn3D-loop-altrev-into">
+            <h2 :id="slotProps.item[0].cat" class="sky-dark ani-turnXZ-loop-altrev-into">
               {{ slotProps.item[0].cat }}
             </h2>
           </template>
