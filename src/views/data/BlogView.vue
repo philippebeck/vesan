@@ -84,8 +84,7 @@
                     :height="val.THUMB_HEIGHT"
                     itemprop="image">
                     <template #figcaption>
-                      <blockquote v-html="slotProps.value.text.split(':')[0]" 
-                        class="monospace figcaption">
+                      <blockquote v-html="slotProps.value.text.split(':')[0]">
                       </blockquote>
                     </template>
                   </MediaElt>
