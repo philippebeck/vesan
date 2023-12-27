@@ -176,14 +176,14 @@ export default {
         const data  = new FormData();
         const img   = document.getElementById("image")?.files[0] ?? this.user.image;
 
+        if (this.pass && checkRegex(this.pass, CHECK_PASS, REGEX_PASS)) {
+          data.append("pass", this.pass);
+        }
+
         data.append("name", this.user.name);
         data.append("email", this.user.email);
         data.append("image", img);
         data.append("role", this.user.role);
-
-        if (this.pass && checkRegex(this.pass, CHECK_PASS, REGEX_PASS)) {
-          data.append("pass", this.pass);
-        }
 
         putData(URL, data, this.token)
           .then(() => {
