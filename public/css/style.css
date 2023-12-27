@@ -38,6 +38,7 @@
 /* SHOP */
 .figcaption {
   height: 60px;
+  max-width: 200px;
 }
 
 .figcaption h4 {
