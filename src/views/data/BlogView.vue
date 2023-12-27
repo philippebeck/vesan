@@ -203,7 +203,7 @@ export default {
       data.append("likes", JSON.stringify(likes));
       data.append("cat", cat);
 
-      putData(URL, data, this.token).catch(err => { setError(err) });
+      putData(URL, data, this.token).catch(err => setError(err));
     }
   }
 }
