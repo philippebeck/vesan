@@ -257,7 +257,7 @@ export default {
         this.type === "signIn" && checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL) && 
         checkRegex(this.pass, CHECK_PASS, REGEX_PASS)
         ||
-        this.type === "forgot" && checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL)
+        this.type === "forgotPass" && checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL)
       ) {
         const URL = `${API_URL}/auth/recaptcha`;
 
@@ -267,7 +267,7 @@ export default {
 
             if      (success && this.type === "signUp") this.createUser();
             else if (success && this.type === "signIn") this.signIn();
-            else if (success && this.type === "forgot") this.forgotPass();
+            else if (success && this.type === "forgotPass") this.forgotPass();
             else alert("Failed captcha verification");
           })
           .catch(err => { 
