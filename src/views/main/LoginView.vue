@@ -128,7 +128,7 @@
 
         <BtnElt type="button"
           @click="setType('signUp')"
-          class="btn-sky-dark"
+          class="btn-blue"
           :content="val.CONTENT_SIGNUP"
           :title="val.TITLE_GO + val.SIGN_UP">
           <template #btn>
@@ -183,7 +183,7 @@
 
         <BtnElt type="button"
           @click="setType('signUp')"
-          class="btn-sky-dark"
+          class="btn-blue"
           :content="val.CONTENT_SIGNUP"
           :title="val.TITLE_GO + val.SIGN_UP">
           <template #btn>
