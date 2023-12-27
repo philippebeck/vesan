@@ -325,7 +325,7 @@ export default {
 
           this.$router.go();
         })
-        .catch(setError);
+        .catch(err => { setError(err) });
     },
 
     /**
@@ -348,7 +348,7 @@ export default {
             alert(FORGOT_SUBJECT + ALERT_SENDED);
             this.$router.push("/login");
           })
-          .catch(setError);
+          .catch(err => { setError(err) });
       }
     }
   }

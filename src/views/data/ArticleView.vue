@@ -256,7 +256,7 @@ export default {
       data.append("likes", JSON.stringify(likes));
       data.append("cat", cat);
 
-      putData(URL, data, this.token).catch(setError);
+      putData(URL, data, this.token).catch(err => { setError(err) });
     },
 
     /**
@@ -287,7 +287,7 @@ export default {
             alert(name + ALERT_UPDATED);
             this.$router.push("/blog");
           })
-          .catch(setError);
+          .catch(err => { setError(err) });
       }
     },
 
@@ -305,9 +305,9 @@ export default {
         deleteData(URL, this.token)
           .then(() => {
             alert(name + ALERT_DELETED);
-            this.$router.go();
+            this.$router.push("/blog");
           })
-          .catch(setError);
+          .catch(err => { setError(err) });
       }
     }
   }

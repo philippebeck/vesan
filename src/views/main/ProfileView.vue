@@ -211,9 +211,9 @@ export default {
             localStorage.removeItem("userToken");
 
             alert(NAME + ALERT_DELETED);
-            this.$router.go();
+            this.$router.push("/home");
           })
-          .catch(setError);
+          .catch(err => { setError(err) });
       }
     }
   }

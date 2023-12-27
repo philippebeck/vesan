@@ -352,7 +352,7 @@ export default {
             alert(name + ALERT_UPDATED);
             this.$router.push("/shop");
           })
-          .catch(setError);
+          .catch(err => { setError(err) });
       }
     },
 
@@ -372,7 +372,7 @@ export default {
             alert(name + ALERT_DELETED);
             this.$router.push("/shop");
           })
-          .catch(setError);
+          .catch(err => { setError(err) });
       }
     }
   }
