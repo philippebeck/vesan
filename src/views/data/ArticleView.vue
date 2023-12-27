@@ -256,7 +256,7 @@ export default {
       data.append("likes", JSON.stringify(likes));
       data.append("cat", cat);
 
-      putData(URL, data, this.token).catch(err => { setError(err) });
+      putData(URL, data, this.token).catch(err => setError(err));
     },
 
     /**
@@ -287,7 +287,7 @@ export default {
             alert(name + ALERT_UPDATED);
             this.$router.push("/blog");
           })
-          .catch(err => { setError(err) });
+          .catch(err => setError(err));
       }
     },
 
@@ -299,7 +299,7 @@ export default {
       const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val;
       let { id, name } = this.article;
 
-      if (confirm(`${TITLE_DELETE} ${name} ?`) === true) {
+      if (confirm(`${TITLE_DELETE} ${name} ?`)) {
         const URL = `${API_URL}/articles/${id}`
 
         deleteData(URL, this.token)
@@ -307,7 +307,7 @@ export default {
             alert(name + ALERT_DELETED);
             this.$router.push("/blog");
           })
-          .catch(err => { setError(err) });
+          .catch(err => setError(err));
       }
     }
   }
