@@ -59,7 +59,7 @@
                     itemprop="image">
 
                     <template #figcaption>
-                      <p v-html="slotProps.value.description.split(':')[0]" class="monospace figcaption"></p>
+                      <p v-html="slotProps.value.description.split(':')[0]" class="monospace shop"></p>
                       <p itemprop="offers" itemscope itemtype="https://schema.org/Offer">
                         <b itemprop="price" class="monospace">{{ slotProps.value.price }}</b>
                         <i itemprop="priceCurrency">{{ val.CURRENCY_ISO }}</i>

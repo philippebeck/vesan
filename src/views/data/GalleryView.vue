@@ -21,7 +21,9 @@
                 :alt="val.COVER_OF + slotProps.item.name" 
                 :width="val.THUMB_WIDTH"
                 :height="val.THUMB_HEIGHT">
-                <template #figcaption>{{ slotProps.item.name }}</template>
+                <template #figcaption>
+                  <p class="gallery">{{ slotProps.item.name }}</p>
+                </template>
               </MediaElt>
             </a>
           </template>

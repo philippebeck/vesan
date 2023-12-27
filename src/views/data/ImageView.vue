@@ -36,7 +36,7 @@
                 :width="val.THUMB_WIDTH"
                 :height="val.THUMB_HEIGHT">
                 <template #figcaption>
-                  <p>{{ slotProps.item.description }}</p>
+                  <p class="gallery">{{ slotProps.item.description }}</p>
                 </template>
               </MediaElt>
             </a>
