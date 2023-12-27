@@ -22,7 +22,7 @@
       </template>
     </NavElt>
 
-    <CardElt :isArticle="true" class="container-90md-80lg-70wd">
+    <CardElt :isArticle="true" class="container-90lg-70wd">
       <template #header>
         <h1 class="sky-dark">
           <i class="fa-solid fa-store fa-lg"></i> {{ val.SHOP_VIEW }}
