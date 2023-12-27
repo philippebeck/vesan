@@ -10,7 +10,9 @@
       </template>
 
       <template #body>
-        <ListElt :items="galleries" :dynamic="true" class="grid-2md-3lg-4wd content-center">
+        <ListElt :items="galleries"
+          :dynamic="true"
+          class="grid-2sm-3md-4lg-5xl-6wd gap-md1-xl2 content-evenly">
           <template #items="slotProps">
             <a :href="`gallery/${slotProps.item.id}`" :title="val.TITLE_WATCH + slotProps.item.name">
 
