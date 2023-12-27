@@ -270,10 +270,7 @@ export default {
             else if (success && this.type === "forgotPass") this.forgotPass();
             else alert("Failed captcha verification");
           })
-          .catch(err => { 
-            setError(err);
-            this.$router.go();
-          });
+          .catch(err => setError(err));
       }
     },
 
@@ -300,7 +297,7 @@ export default {
             alert(this.name + ALERT_CREATED);
             this.$router.go();
           })
-          .catch(err => { setError(err) });
+          .catch(err => setError(err));
 
       } else {
         alert(ALERT_IMG);
@@ -323,9 +320,9 @@ export default {
           localStorage.setItem("userToken", JSON.stringify(res.token));
           localStorage.setItem("userId", JSON.stringify(res.userId));
 
-          this.$router.go();
+          this.$router.push("/profile");
         })
-        .catch(err => { setError(err) });
+        .catch(err => setError(err));
     },
 
     /**
@@ -335,7 +332,7 @@ export default {
     forgotPass() {
       const { CONFIRM_FORGOT, API_URL, FORGOT_SUBJECT, FORGOT_TEXT, ALERT_SENDED } = this.val;
 
-      if (confirm(CONFIRM_FORGOT) === true) {
+      if (confirm(CONFIRM_FORGOT)) {
         const URL   = `${API_URL}/auth/pass`;
         const data  = new FormData();
 
@@ -346,9 +343,9 @@ export default {
         postData(URL, data)
           .then(() => {
             alert(FORGOT_SUBJECT + ALERT_SENDED);
-            this.$router.push("/login");
+            this.$router.go();
           })
-          .catch(err => { setError(err) });
+          .catch(err => setError(err));
       }
     }
   }
