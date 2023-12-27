@@ -352,7 +352,7 @@ export default {
             alert(name + ALERT_UPDATED);
             this.$router.push("/shop");
           })
-          .catch(err => { setError(err) });
+          .catch(err => setError(err));
       }
     },
 
@@ -364,7 +364,7 @@ export default {
       const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val;
       let { id, name } = this.product;
 
-      if (confirm(`${TITLE_DELETE} ${name} ?`) === true) {
+      if (confirm(`${TITLE_DELETE} ${name} ?`)) {
         const URL = `${API_URL}/products/${id}`;
 
         deleteData(URL, this.token)
@@ -372,7 +372,7 @@ export default {
             alert(name + ALERT_DELETED);
             this.$router.push("/shop");
           })
-          .catch(err => { setError(err) });
+          .catch(err => setError(err));
       }
     }
   }
