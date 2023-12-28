@@ -12,7 +12,7 @@
       </template>
 
       <template #last v-if="checkSession('editor')">
-        <a href="#product-set" :title="val.PRODUCT_CREATOR">
+        <a href="#product-set" :title="val.PRODUCT_MANAGER">
           <i class="fa-regular fa-lightbulb fa-fw"></i>
         </a>
       </template>
