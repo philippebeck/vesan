@@ -71,7 +71,12 @@ export default createStore({
     setGalleries(state, galleries) { state.galleries = galleries },
     setImages(state, images) { state.images = images },
     setLinks(state, links) { state.links = links },
-    setOrders(state, orders) { state.orders = orders },
+    setOrders(state, orders) {
+      for (const order of orders) {
+        order.products = JSON.parse(order.products);
+      }
+      state.orders = orders
+    },
 
     setProduct(state, product) {
       product.options = product.options.split(",");
@@ -84,7 +89,10 @@ export default createStore({
     },
 
     setUserOrders(state, orders) {
-      for (const order of orders) delete order.user;
+      for (const order of orders) {
+        delete order.user;
+        order.products = JSON.parse(order.products);
+      }
       state.orders = orders;
     },
   },

@@ -1,6 +1,6 @@
 <template>
   <main>
-    <CardElt v-if="checkSession('editor')">
+    <CardElt v-if="checkSession('admin')">
       <template #header>
         <h1>{{ val.EDIT }} {{ product.name }}</h1>
         <h2>{{ product.cat }}</h2>

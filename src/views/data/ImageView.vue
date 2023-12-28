@@ -1,5 +1,21 @@
 <template>
-  <main>
+  <main id="top">
+    <NavElt v-if="checkSession('admin')" class="sidebar">
+      <template #hide>
+        <i class="fa-solid fa-eye fa-fw" :title="val.TITLE_TOGGLE"></i>
+      </template>
+
+      <template #last>
+        <a href="#image-set" :title="val.IMAGE_MANAGER">
+          <i class="fa-solid fa-image fa-fw"></i>
+        </a>
+      </template>
+
+      <template #top>
+        <i class="fa-solid fa-chevron-circle-up fa-fw" :title="val.TITLE_TOP"></i>
+      </template>
+    </NavElt>
+
     <CardElt>
       <template #header>
         <h1 class="sky-dark">
@@ -58,12 +74,13 @@ import { mapState, mapActions } from "vuex"
 import CardElt from "@/assets/elements/CardElt"
 import ListElt from "@/assets/elements/ListElt"
 import MediaElt from "@/assets/elements/MediaElt"
+import NavElt from "@/assets/elements/NavElt"
 import SliderElt from "@/assets/elements/SliderElt"
 import ImageSet from "@/assets/setters/ImageSet"
 
 export default {
   name: "ImageView",
-  components: { CardElt, ListElt, MediaElt, SliderElt, ImageSet },
+  components: { CardElt, ListElt, MediaElt, NavElt, SliderElt, ImageSet },
   props: ["avatar", "val"],
   data() {
     return {

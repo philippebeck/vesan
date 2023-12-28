@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main id="top">
     <header>
       <h1 class="sky-dark">
         <i class="fa-solid fa-link fa-lg"></i> {{ val.LINK_VIEW }}
@@ -15,9 +15,9 @@
         <i :class="`fa-brands fa-${slotProps.item.toLowerCase()} fa-fw`"></i>
       </template>
 
-      <template #last v-if="checkSession('admin')">
-        <a href="#link-set" :title="val.LINK_CREATOR">
-          <i class="fa-solid fa-link fa-fw"></i>
+      <template #last v-if="checkSession('editor')">
+        <a href="#link-set" :title="val.LINK_MANAGER">
+          <i class="fa-solid fa-list-check fa-fw"></i>
         </a>
       </template>
 
@@ -26,7 +26,7 @@
       </template>
     </NavElt>
 
-    <CardElt id="top" :isArticle="true" class="container-90md-80xl">
+    <CardElt :isArticle="true" class="container-90md-80xl">
       <template #header>
         <h2 class="ani-shrink-loop-altrev-into">{{ val.LINK_SUB }}</h2>
         <b>{{ val.INTRO_LINK }}</b>
@@ -37,7 +37,7 @@
 
           <template #items="slotProps">
             <i :id="slotProps.index"
-              :class="`fa-brands fa-${slotProps.index.toLowerCase()} fa-5x blue-light mar-lg`">
+              :class="`fa-brands fa-${slotProps.index.toLowerCase()} fa-5x sky-dark mar-lg`">
             </i>
           </template>
 
@@ -50,7 +50,7 @@
         </ListElt>
 
       </template>
-      <template #aside v-if="checkSession('admin')">
+      <template #aside v-if="checkSession('editor')">
         <LinkSet :links="links" :token="token" :val="val"/>
       </template>
     </CardElt>

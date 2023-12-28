@@ -6,7 +6,7 @@
       </template>
 
       <template #last  v-if="checkSession('editor')">
-        <a href="#article-set" :title="val.ARTICLE_CREATOR">
+        <a href="#article-set" :title="val.ARTICLE_MANAGER">
           <i class="fa-regular fa-pen-to-square fa-fw"></i>
         </a>
       </template>

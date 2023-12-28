@@ -106,11 +106,19 @@
       </template>
     </CardElt>
 
-    <b v-else>{{ val.BASKET_EMPTY }}</b>
+    <b v-else-if="!checkSession('admin')">{{ val.BASKET_EMPTY }}</b>
 
-    <CardElt v-if="orders.length !== 0">
+    <OrderSet v-if="checkSession('admin') && orders.length !== 0" 
+      :orders="orders" 
+      :token="token" 
+      :val="val"/>
+
+    <CardElt v-else-if="checkSession('user') && orders.length !== 0">
       <template #header>
-        <h2>{{ val.ORDERS_SUB }}</h2>
+        <h2>
+          <i class="fa-solid fa-gift fa-lg"></i>
+          {{ val.ORDERS_SUB }}
+        </h2>
       </template>
 
       <template #body>
@@ -146,18 +154,14 @@
             <b>{{ orders[slotProps.index].total }} €</b>
           </template>
 
-          <template #cell-created="slotProps">
-            {{ new Date(orders[slotProps.index].created).toLocaleString() }}
+          <template #cell-createdAt="slotProps">
+            {{ new Date(orders[slotProps.index].createdAt).toLocaleString() }}
           </template>
 
-          <template #cell-updated="slotProps">
-            {{ new Date(orders[slotProps.index].updated).toLocaleString() }}
+          <template #cell-updatedAt="slotProps">
+            {{ new Date(orders[slotProps.index].updatedAt).toLocaleString() }}
           </template>
         </TableElt>
-      </template>
-
-      <template #aside v-if="checkSession('user')">
-        <OrderSet :token="token" :val="val"/>
       </template>
     </CardElt>
   </main>
@@ -173,10 +177,11 @@ import CardElt from "@/assets/elements/CardElt"
 import FieldElt from "@/assets/elements/FieldElt"
 import MediaElt from "@/assets/elements/MediaElt"
 import TableElt from "@/assets/elements/TableElt"
+import OrderSet from "@/assets/setters/OrderSet"
 
 export default {
   name: "BasketView",
-  components: { BtnElt, CardElt, FieldElt, MediaElt, TableElt },
+  components: { BtnElt, CardElt, FieldElt, MediaElt, TableElt, OrderSet },
   props: ["avatar", "val"],
   data() {
     return {

@@ -1,5 +1,21 @@
 <template>
-  <main>
+  <main id="top">
+    <NavElt v-if="checkSession('admin')" class="sidebar">
+      <template #hide>
+        <i class="fa-solid fa-eye fa-fw" :title="val.TITLE_TOGGLE"></i>
+      </template>
+
+      <template #last>
+        <a href="#gallery-set" :title="val.GALLERY_MANAGER">
+          <i class="fa-solid fa-images fa-fw"></i>
+        </a>
+      </template>
+
+      <template #top>
+        <i class="fa-solid fa-chevron-circle-up fa-fw" :title="val.TITLE_TOP"></i>
+      </template>
+    </NavElt>
+
     <CardElt>
       <template #header>
         <h1 class="sky-dark">
@@ -44,11 +60,12 @@ import { mapState, mapActions } from "vuex"
 import CardElt from "@/assets/elements/CardElt"
 import ListElt from "@/assets/elements/ListElt"
 import MediaElt from "@/assets/elements/MediaElt"
+import NavElt from "@/assets/elements/NavElt"
 import GallerySet from "@/assets/setters/GallerySet"
 
 export default {
   name: "GalleryView",
-  components: { CardElt, ListElt, MediaElt, GallerySet },
+  components: { CardElt, ListElt, MediaElt, NavElt, GallerySet },
   props: ["avatar", "val"],
 
   created() {

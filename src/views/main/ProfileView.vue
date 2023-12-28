@@ -1,11 +1,27 @@
 <template>
-  <main>
+  <main id="top">
     <header>
       <h1 class="sky-dark">
         <i class="fa-solid fa-user-gear fa-lg"></i>
         {{ val.PROFILE_VIEW }}
       </h1>
     </header>
+
+    <NavElt v-if="checkSession('admin')" class="sidebar">
+      <template #hide>
+        <i class="fa-solid fa-eye fa-fw" :title="val.TITLE_TOGGLE"></i>
+      </template>
+
+      <template #last>
+        <a href="#user-set" :title="val.USER_MANAGER">
+          <i class="fa-solid fa-users-gear fa-fw"></i>
+        </a>
+      </template>
+
+      <template #top>
+        <i class="fa-solid fa-chevron-circle-up fa-fw" :title="val.TITLE_TOP"></i>
+      </template>
+    </NavElt>
 
     <CardElt>
       <template #header>
@@ -113,11 +129,12 @@ import CardElt from "@/assets/elements/CardElt"
 import FieldElt from "@/assets/elements/FieldElt"
 import ListElt from "@/assets/elements/ListElt"
 import MediaElt from "@/assets/elements/MediaElt"
+import NavElt from "@/assets/elements/NavElt"
 import UserSet from "@/assets/setters/UserSet"
 
 export default {
   name: "ProfileView",
-  components: { BtnElt, CardElt, FieldElt, ListElt, MediaElt, UserSet },
+  components: { BtnElt, CardElt, FieldElt, ListElt, MediaElt, NavElt, UserSet },
   props: ["val"],
 
   created() {
