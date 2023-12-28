@@ -106,7 +106,7 @@
       </template>
     </CardElt>
 
-    <b v-else>{{ val.BASKET_EMPTY }}</b>
+    <b v-else-if="!checkSession('admin')">{{ val.BASKET_EMPTY }}</b>
 
     <OrderSet v-if="checkSession('admin') && orders.length !== 0" 
       :orders="orders" 
