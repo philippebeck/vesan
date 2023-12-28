@@ -11,7 +11,7 @@
         </a>
       </template>
 
-      <template #last v-if="checkSession('editor')">
+      <template #last v-if="checkSession('admin')">
         <a href="#product-set" :title="val.PRODUCT_MANAGER">
           <i class="fa-regular fa-lightbulb fa-fw"></i>
         </a>
@@ -85,7 +85,7 @@
         </MediaElt>
       </template>
 
-      <template #aside v-if="checkSession('editor')">
+      <template #aside v-if="checkSession('admin')">
         <ProductSet :token="token" :val="val"/>
       </template>
     </CardElt>
