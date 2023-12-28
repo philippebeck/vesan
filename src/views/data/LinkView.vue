@@ -37,7 +37,7 @@
 
           <template #items="slotProps">
             <i :id="slotProps.index"
-              :class="`fa-brands fa-${slotProps.index.toLowerCase()} fa-5x blue-light mar-lg`">
+              :class="`fa-brands fa-${slotProps.index.toLowerCase()} fa-5x sky-dark mar-lg`">
             </i>
           </template>
 
