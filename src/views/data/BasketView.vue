@@ -108,9 +108,17 @@
 
     <b v-else>{{ val.BASKET_EMPTY }}</b>
 
-    <CardElt v-if="checkSession('user') && orders.length !== 0">
+    <OrderSet v-if="checkSession('admin') && orders.length !== 0" 
+      :orders="orders" 
+      :token="token" 
+      :val="val"/>
+
+    <CardElt v-else-if="checkSession('user') && orders.length !== 0">
       <template #header>
-        <h2>{{ val.ORDERS_SUB }}</h2>
+        <h2>
+          <i class="fa-solid fa-gift fa-lg"></i>
+          {{ val.ORDERS_SUB }}
+        </h2>
       </template>
 
       <template #body>
@@ -154,10 +162,6 @@
             {{ new Date(orders[slotProps.index].updatedAt).toLocaleString() }}
           </template>
         </TableElt>
-      </template>
-
-      <template #aside v-if="checkSession('admin')">
-        <OrderSet :orders="orders" :token="token" :val="val"/>
       </template>
     </CardElt>
   </main>
