@@ -1,6 +1,6 @@
 {
   "name": "vesan",
-  "version": "2.0.15",
+  "version": "2.0.16",
   "description": "UI with Vue-Elt, Servidio & Animadio",
   "author": {
     "name": "Philippe Beck",
@@ -50,7 +50,7 @@
     "core-js": "^3.8.3",
     "servidio": "^3.1.0",
     "vue": "^3.3.9",
-    "vue-elt": "^2.3.1-alpha",
+    "vue-elt": "^2.3.2-alpha",
     "vue-recaptcha": "^2.0.3",
     "vue-router": "^4.1.6",
     "vuex": "^4.0.2"
