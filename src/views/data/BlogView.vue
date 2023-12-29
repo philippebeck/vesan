@@ -46,7 +46,7 @@
                   class="btn-sky-dark"
                   :title="val.TITLE_LIKE_LOGIN + slotProps.value.name">
                   <template #btn>
-                    <i class="fa-regular fa-thumbs-up fa-lg"></i>
+                    <i class="fa-regular fa-thumbs-up fa-lg fa-fw"></i>
                     <b itemprop="contentRating">{{ slotProps.value.likes.length }}</b>
                   </template>
                 </BtnElt>
@@ -58,7 +58,7 @@
                   class="btn-sky"
                   :title="val.TITLE_LIKE + slotProps.value.name">
                   <template #btn>
-                    <i class="fa-regular fa-thumbs-up fa-lg"></i>
+                    <i class="fa-regular fa-thumbs-up fa-lg fa-fw"></i>
                     <b itemprop="contentRating">{{ slotProps.value.likes.length }}</b>
                   </template>
                 </BtnElt>
@@ -70,7 +70,7 @@
                   class="btn-sky"
                   :title="val.TITLE_DISLIKE + slotProps.value.name">
                   <template #btn>
-                    <i class="fa-regular fa-thumbs-up fa-lg"></i>
+                    <i class="fa-solid fa-thumbs-up fa-lg fa-fw"></i>
                     <b itemprop="contentRating">{{ slotProps.value.likes.length }}</b>
                   </template>
                 </BtnElt>
