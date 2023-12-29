@@ -54,8 +54,7 @@
   max-width: 200px;
 }
 
-[id="image-set"] img,
-[id="user-set"] img {
+[id="image-set"] img {
   --ve-media-img-max-width: 200px;
 }
 
