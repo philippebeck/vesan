@@ -54,7 +54,8 @@
                 :src="`/img/thumbnails/galleries/${slotProps.item.name}`" 
                 :alt="val.IMAGE_OF + slotProps.item.description" 
                 :width="val.THUMB_WIDTH"
-                :height="val.THUMB_HEIGHT">
+                :height="val.THUMB_HEIGHT"
+                loading="lazy">
                 <template #figcaption>
                   <p class="gallery">{{ slotProps.item.description }}</p>
                 </template>
