@@ -45,7 +45,9 @@
             <BtnElt :href="`https://${slotProps.value.url}`" 
               class="btn-sky"
               :content="slotProps.value.name"
-              :title="slotProps.value.url"/>
+              :title="slotProps.value.url"
+              target="_blank"
+              rel="noopener noreferrer"/>
           </template>
         </ListElt>
 

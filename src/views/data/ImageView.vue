@@ -28,7 +28,9 @@
         <SliderElt :slides="images">
           <template #slide="slotProps">
             <a :href="`/img/galleries/${slotProps.slide.name}`"
-              :title="val.TITLE_WATCH + slotProps.slide.name">
+              :title="val.TITLE_WATCH + slotProps.slide.name"
+              target="_blank"
+              rel="noopener noreferrer">
 
               <MediaElt :src="`/img/galleries/${slotProps.slide.name}`"
                 :alt="val.MAP_OF + slotProps.slide.description"
@@ -44,7 +46,9 @@
           class="grid-2sm-3md-4lg-5xl-6wd content-center">
           <template #items="slotProps">
             <a :href="`/img/galleries/${slotProps.item.name}`"
-              :title="val.TITLE_WATCH + slotProps.item.name">
+              :title="val.TITLE_WATCH + slotProps.item.name"
+              target="_blank"
+              rel="noopener noreferrer">
 
               <MediaElt :id="`${slotProps.item.name.toLowerCase()}`"
                 :src="`/img/thumbnails/galleries/${slotProps.item.name}`" 

@@ -109,7 +109,7 @@
           class="btn-blue"
           :title="val.TITLE_LIKE_LOGIN + article.name">
           <template #btn>
-            <i class="fa-regular fa-thumbs-up fa-lg"></i>
+            <i class="fa-regular fa-thumbs-up fa-lg fa-fw"></i>
             <b v-if="article.likes" itemprop="contentRating">
               {{ article.likes.length }}
             </b>
@@ -123,7 +123,7 @@
           class="btn-blue"
           :title="val.TITLE_LIKE + article.name">
           <template #btn>
-            <i class="fa-regular fa-thumbs-up fa-lg"></i>
+            <i class="fa-regular fa-thumbs-up fa-lg fa-fw"></i>
             <b v-if="article.likes" itemprop="contentRating">
               {{ article.likes.length }}
             </b>
@@ -137,7 +137,7 @@
           class="btn-sky"
           :title="val.TITLE_DISLIKE + article.name">
           <template #btn>
-            <i class="fa-regular fa-thumbs-up fa-lg"></i>
+            <i class="fa-solid fa-thumbs-up fa-lg fa-fw"></i>
             <b v-if="article.likes" itemprop="contentRating">
               {{ article.likes.length }}
             </b>
