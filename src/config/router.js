@@ -24,7 +24,7 @@ const routes = [
     path: "/login",
     name: "login",
     component: () => import("@/views/main/LoginView"),
-    alias: ["/connection"]
+    alias: ["/signin"]
   },
   {
     path: "/profile",
