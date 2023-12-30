@@ -90,7 +90,7 @@ export default createStore({
 
     setUserOrders(state, orders) {
       for (const order of orders) {
-        delete order.user;
+        delete order.userId;
         order.products = JSON.parse(order.products);
       }
       state.orders = orders;
@@ -235,19 +235,6 @@ export default createStore({
     },
 
     /**
-     * ? LIST USER ORDERS
-     * * Retrieves a list of user orders.
-     * @param {Object} context - The context object.
-     * @param {string} id - The ID of the user.
-     * @return {Promise} A promise that resolves with the user orders or rejects with an error.
-     */
-    async listUserOrders(context, id) {
-      getData(`${val.API_URL}/orders/${id}`, context.rootState.token)
-        .then(orders => { context.commit("setUserOrders", orders) })
-        .catch(err => { setError(err) });
-    },
-
-    /**
      * ? READ PRODUCT
      * * Reads a product from the API using the specified ID.
      * @param {Object} context - The context object.
@@ -270,6 +257,20 @@ export default createStore({
       getData(`${val.API_URL}/products`)
         .then(products => { context.commit("setProducts", products) })
         .catch(err => { setError(err) });
-    }
+    },
+
+    /**
+     * ? LIST USER ORDERS
+     * * Retrieves a list of user orders.
+     * @param {Object} context - The context object.
+     * @param {string} id - The ID of the user.
+     * @return {Promise} A promise that resolves with the user orders or rejects with an error.
+     */
+    async listUserOrders(context, id) {
+      getData(`${val.API_URL}/orders/${id}`, context.rootState.token)
+        .then(orders => { context.commit("setUserOrders", orders) })
+        .catch(err => { setError(err) });
+    },
+
   }
 })
