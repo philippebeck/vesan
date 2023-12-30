@@ -76,12 +76,12 @@
             </template>
           </TableElt>
 
-          <p class="bord bord-violet container-60sm-50md">
+          <p class="deco">
             {{ val.BASKET_TOTAL }}
             <b class="black">{{ total }} {{ val.CURRENCY_SYMBOL }}</b>
           </p>
-
-          <div v-if="checkSession('user')" id="paypal" class="mar-lg"></div>
+          <br>
+          <div v-if="checkSession('user')" id="paypal"></div>
 
           <BtnElt v-else
             href="/login"
@@ -125,8 +125,7 @@
         <TableElt :items="orders">
 
           <template #cell-id="slotProps">
-            <b>#{{ slotProps.index + 1 }}</b>
-            ({{ orders[slotProps.index].id }})
+            <b>#{{ orders[slotProps.index].id }}</b>
           </template>
 
           <template #cell-products="slotProps">
@@ -211,18 +210,20 @@ export default {
       })
       .catch(err => setError(err));
 
-      if (this.token) {
-        this.$store.dispatch("readUser", this.id);
+      if (this.checkSession("admin")) {
+        this.$store.dispatch("listOrders", this.id);
+
+      } else if (this.checkSession("user")) {
         this.$store.dispatch("listUserOrders", this.id);
       }
   },
 
   computed: {
-    ...mapState(["id", "orders", "token"])
+    ...mapState(["id", "orders", "token"]),
   },
 
   methods: {
-    ...mapActions(["listUserOrders"]),
+    ...mapActions(["listOrders", "listUserOrders"]),
 
     /**
      * ? CHECK SESSION
