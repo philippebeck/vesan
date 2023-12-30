@@ -49,6 +49,11 @@
   font-size: 2.5rem;
 }
 
+[id="paypal"] {
+  margin: auto;
+  max-width: 300px;
+}
+
 /* GALLERY */
 .gallery {
   max-width: 200px;
