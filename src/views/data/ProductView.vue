@@ -172,7 +172,7 @@
 
           <BtnElt type="button"
             @click="addToBasket()"
-            class="btn-green width-sm"
+            class="btn-green"
             :content="val.CONTENT_ADD"
             :title="val.CONTENT_ADD + product.name">
             <template #btn>
