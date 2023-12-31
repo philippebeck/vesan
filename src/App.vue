@@ -20,9 +20,7 @@
   </NavElt>
 
   <router-view v-slot="{ Component }" :val="val" :avatar="avatar">
-    <transition name="slide">
-      <component :is="Component" :key="$route.path"/>
-    </transition>
+    <component :is="Component" :key="$route.path"/>
   </router-view>
 
   <FootElt :title1="val.FOOT_TITLE1" :title2="val.FOOT_TITLE2" :title3="val.FOOT_TITLE3">
@@ -123,16 +121,3 @@ export default {
   }
 };
 </script>
-
-<style>
-.slide-enter-active,
-.slide-leave-active {
-  transition: opacity 500ms, transform 500ms;
-}
-
-.slide-enter-from,
-.slide-leave-to {
-  opacity: 0;
-  transform: translateY(10%);
-}
-</style>

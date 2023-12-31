@@ -62,16 +62,17 @@
                       <p v-html="slotProps.value.description.split(':')[0]" 
                         class="monospace shop">
                       </p>
-                      <p itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                        <b itemprop="price" class="monospace" :content="slotProps.value.price + '.00'">
-                          {{ slotProps.value.price }}
-                        </b>
-                        <i itemprop="priceCurrency" :content="val.CURRENCY_ISO">
-                          {{ val.CURRENCY_SYMBOL }}
-                        </i>
-                      </p>
                     </template>
                   </MediaElt>
+
+                  <p itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                    <b itemprop="price" class="monospace" :content="slotProps.value.price + '.00'">
+                      {{ slotProps.value.price }}
+                    </b>
+                    <i itemprop="priceCurrency" :content="val.CURRENCY_ISO">
+                      {{ val.CURRENCY_SYMBOL }}
+                    </i>
+                  </p>
                 </a>
               </template>
             </CardElt>

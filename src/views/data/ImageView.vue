@@ -16,12 +16,12 @@
       </template>
     </NavElt>
 
-    <CardElt>
+    <CardElt itemscope itemtype="https://schema.org/ImageGallery">
       <template #header>
-        <h1 class="sky-dark">
+        <h1 class="sky-dark" itemprop="name">
           <i class="fa-regular fa-image fa-lg"></i> {{ gallery.name }}
         </h1>
-        <b>{{ gallery.author }}</b>
+        <b itemprop="author">{{ gallery.author }}</b>
       </template>
 
       <template #body>
@@ -29,6 +29,7 @@
           <template #slide="slotProps">
             <a :href="`/img/galleries/${slotProps.slide.name}`"
               :title="val.TITLE_WATCH + slotProps.slide.name"
+              itemprop="url"
               target="_blank"
               rel="noopener noreferrer">
 
@@ -47,6 +48,7 @@
           <template #items="slotProps">
             <a :href="`/img/galleries/${slotProps.item.name}`"
               :title="val.TITLE_WATCH + slotProps.item.name"
+              itemprop="url"
               target="_blank"
               rel="noopener noreferrer">
 
