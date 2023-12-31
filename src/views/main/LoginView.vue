@@ -320,7 +320,7 @@ export default {
           localStorage.setItem("userToken", JSON.stringify(res.token));
           localStorage.setItem("userId", JSON.stringify(res.userId));
 
-          this.$router.push("/profile");
+          this.$router.go();
         })
         .catch(err => setError(err));
     },
