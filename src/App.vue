@@ -23,7 +23,10 @@
     <component :is="Component" :key="$route.path"/>
   </router-view>
 
-  <FootElt :title1="val.FOOT_TITLE1" :title2="val.FOOT_TITLE2" :title3="val.FOOT_TITLE3">
+  <FootElt class="ani-slideT-it"
+    :title1="val.FOOT_TITLE1" 
+    :title2="val.FOOT_TITLE2" 
+    :title3="val.FOOT_TITLE3">
     <template #foot1>
       <ListElt :dynamic="true" :items="val.FOOT1">
         <template #items="slotProps">
