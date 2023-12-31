@@ -6,7 +6,7 @@
 
     <CardElt class="flex-col gap-tn4">
       <template #header>
-        <h2 class="ani-flipperX-loop-altrev-into">{{ val.HOME_SUB }}</h2>
+        <h2>{{ val.HOME_SUB }}</h2>
         <b>{{ val.INTRO_HOME }}</b>
       </template>
 
