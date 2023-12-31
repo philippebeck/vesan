@@ -33,7 +33,7 @@
               rel="noopener noreferrer">
 
               <MediaElt :src="`/img/galleries/${slotProps.slide.name}`"
-                :alt="val.MAP_OF + slotProps.slide.description"
+                :alt="val.IMAGE_OF + slotProps.slide.description"
                 :width="val.MEDIA_WIDTH">
                 <template #figcaption>{{ slotProps.slide.description }}</template>
               </MediaElt>
@@ -54,8 +54,7 @@
                 :src="`/img/thumbnails/galleries/${slotProps.item.name}`" 
                 :alt="val.IMAGE_OF + slotProps.item.description" 
                 :width="val.THUMB_WIDTH"
-                :height="val.THUMB_HEIGHT"
-                loading="lazy">
+                :height="val.THUMB_HEIGHT">
                 <template #figcaption>
                   <p class="gallery">{{ slotProps.item.description }}</p>
                 </template>
