@@ -150,8 +150,9 @@
           :width="val.IMG_WIDTH"
           :height="val.IMG_HEIGHT"
           itemprop="image">
+
           <template #figcaption>
-            <blockquote v-html="article.text" id="figcaption" class="blue"></blockquote>
+            <p v-html="article.text" id="figcaption" class="blue"></p>
             <p>
               {{ val.PUBLISHED_ON }}
               <i itemprop="dateCreated">{{ new Date(article.createdAt).toLocaleDateString() }}</i>
