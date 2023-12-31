@@ -138,8 +138,12 @@
           <template #figcaption>
             <p id="figcaption" v-html="product.description"></p>
             <p itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-              <b itemprop="price" class="monospace">{{ product.price }}</b>
-              <i itemprop="priceCurrency">{{ val.CURRENCY_ISO }}</i>
+              <b itemprop="price" class="monospace" :content="product.price + '.00'">
+                {{ product.price }}
+              </b>
+              <i itemprop="priceCurrency" :content="val.CURRENCY_ISO">
+                {{ val.CURRENCY_SYMBOL }}
+              </i>
             </p>
           </template>
         </MediaElt>

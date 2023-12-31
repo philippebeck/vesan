@@ -64,6 +64,7 @@
         <template #items="slotProps">
           <a :href="slotProps.item.href" 
             :title="slotProps.item.title"
+            :aria-label="slotProps.item.title"
             target="_blank"
             rel="noopener noreferrer">
             <i :class="`fa-brands fa-${slotProps.item.fa} fa-lg fa-fw ${slotProps.item.color}`"></i>
