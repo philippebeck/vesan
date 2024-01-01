@@ -37,11 +37,11 @@
 
 /* SHOP */
 .shop {
-  height: 50px;
+  height: 70px;
   max-width: 200px;
 }
 
-.shop h4 {
+.shop > * {
   font-size: 2rem;
 }
 
