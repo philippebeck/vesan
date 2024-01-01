@@ -135,7 +135,7 @@
           :height="val.IMG_HEIGHT"
           itemprop="image"/>
 
-        <p v-html="product.description" itemprop="description"></p>
+        <section v-html="product.description" itemprop="description"></section>
 
         <p itemprop="offers" itemscope itemtype="https://schema.org/Offer">
           <b itemprop="price" class="monospace" :content="product.price + '.00'">
