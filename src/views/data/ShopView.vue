@@ -22,7 +22,7 @@
       </template>
     </NavElt>
 
-    <CardElt :isArticle="true" class="container-90lg-70wd">
+    <CardElt :isArticle="true" class="container-90sm-80lg">
       <template #header>
         <h1 class="sky-dark">
           <i class="fa-solid fa-store fa-lg"></i> {{ val.SHOP_VIEW }}
@@ -70,16 +70,15 @@
                     :width="val.THUMB_WIDTH"
                     :height="val.THUMB_HEIGHT"
                     itemprop="image">
-
-                    <template #figcaption>
-                      <p v-html="slotProps.value.description.split(':')[0]" 
-                        class="monospace shop">
-                      </p>
-                    </template>
                   </MediaElt>
 
+                  <p v-html="slotProps.value.description.split(':')[0]" 
+                    itemprop="description" 
+                    class="shop">
+                  </p>
+
                   <p itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                    <b itemprop="price" class="monospace" :content="slotProps.value.price + '.00'">
+                    <b itemprop="price" :content="slotProps.value.price + '.00'">
                       {{ slotProps.value.price }}
                     </b>
                     <i itemprop="priceCurrency" :content="val.CURRENCY_ISO">

@@ -4,7 +4,7 @@
       <h1 class="sky-dark">{{ val.HOME_VIEW }}</h1>
     </header>
 
-    <CardElt class="flex-col gap-tn4">
+    <CardElt>
       <template #header>
         <h2>{{ val.HOME_SUB }}</h2>
         <b>{{ val.INTRO_HOME }}</b>
@@ -12,8 +12,7 @@
 
       <template #body>
         <ListElt :dynamic="true" 
-          :items="val.HOME_CONTENT" 
-          class="flex-col gap-tn2"/>
+          :items="val.HOME_CONTENT"/>
       </template>
     </CardElt>
   </main>
