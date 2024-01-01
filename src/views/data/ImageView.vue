@@ -16,7 +16,7 @@
       </template>
     </NavElt>
 
-    <CardElt itemscope itemtype="https://schema.org/ImageGallery">
+    <CardElt itemscope itemtype="https://schema.org/CreativeWork">
       <template #header>
         <h1 class="sky-dark" itemprop="name">
           <i class="fa-regular fa-image fa-lg"></i> {{ gallery.name }}
