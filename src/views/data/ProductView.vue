@@ -133,12 +133,9 @@
           :alt="product.alt"
           :width="val.IMG_WIDTH"
           :height="val.IMG_HEIGHT"
-          itemprop="image">
+          itemprop="image"/>
 
-          <template #figcaption>
-            <p id="figcaption" v-html="product.description"></p>
-          </template>
-        </MediaElt>
+        <p v-html="product.description" itemprop="description"></p>
 
         <p itemprop="offers" itemscope itemtype="https://schema.org/Offer">
           <b itemprop="price" class="monospace" :content="product.price + '.00'">
