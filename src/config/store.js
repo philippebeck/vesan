@@ -211,6 +211,18 @@ export default createStore({
     },
 
     /**
+     * ? LIST IMAGES
+     * * Retrieves a list of all images from the server & updates the state.
+     * @param {Object} context - The Vuex context object.
+     * @return {Promise} A promise that resolves when the images have been retrieved and the state has been updated.
+     */
+    async listImages(context) {
+      getData(`${val.API_URL}/images`)
+        .then(images => { context.commit("setImages", images) })
+        .catch(err => { setError(err) });
+    },
+
+    /**
      * ? LIST LINKS
      * * Asynchronously lists links.
      * @param {Object} context - The context object.

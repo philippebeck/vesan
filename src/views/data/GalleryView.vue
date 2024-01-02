@@ -49,7 +49,7 @@
       </template>
 
       <template #aside v-if="checkSession('admin')">
-        <GallerySet :galleries="galleries" :token="token" :val="val"/>
+        <GallerySet :galleries="galleries" :images="images" :token="token" :val="val"/>
       </template>
     </CardElt>
   </main>
@@ -73,16 +73,17 @@ export default {
   created() {
     const { HEAD_GALLERY, LOGO_SRC, META_GALLERY, UI_URL } = this.val;
     this.$store.dispatch("listGalleries");
+    this.$store.dispatch("listImages");
 
     setMeta(HEAD_GALLERY, META_GALLERY, `${UI_URL}/galleries`, UI_URL + LOGO_SRC);
   },
 
   computed: {
-    ...mapState(["galleries", "token"]),
+    ...mapState(["galleries", "images", "token"]),
   },
 
   methods: {
-    ...mapActions(["listGalleries"]),
+    ...mapActions(["listGalleries", "listImages"]),
 
     /**
      * ? CHECK SESSION
