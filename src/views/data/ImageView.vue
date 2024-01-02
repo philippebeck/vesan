@@ -113,7 +113,7 @@ export default {
         this.$router.push("/galleries");
       });
 
-    this.$store.dispatch("listImages", this.$route.params.id);
+    this.$store.dispatch("listGalleryImages", this.$route.params.id);
     this.$store.dispatch("listGalleries");
   },
 
@@ -122,7 +122,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["listImages", "listGalleries"]),
+    ...mapActions(["listGalleryImages", "listGalleries"]),
 
     /**
      * ? CHECK SESSION

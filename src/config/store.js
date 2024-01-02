@@ -198,13 +198,13 @@ export default createStore({
     },
 
     /**
-     * ? LIST IMAGES
-     * * Retrieves a list of gallery images  * from the server & updates the state.
+     * ? LIST GALLERY IMAGES
+     * * Retrieves a list of gallery images from the server & updates the state.
      * @param {Object} context - The Vuex context object.
      * @param {string} id - The ID of the gallery.
      * @return {Promise} A promise that resolves when the images have been retrieved and the state has been updated.
      */
-    async listImages(context, id) {
+    async listGalleryImages(context, id) {
       getData(`${val.API_URL}/images/${id}`)
         .then(images => { context.commit("setImages", images) })
         .catch(err => { setError(err) });
