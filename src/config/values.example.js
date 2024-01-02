@@ -300,6 +300,60 @@ export default {
   PRODUCT_MANAGER : "Product manager",
   USER_MANAGER : "User manager",
 
+  // ! ********** HOME **********
+
+  HOME_CONTENT : [
+    "Vue-Elt for Components",
+    "Servidio for Frontend Services",
+    "Animadio for Design",
+    "NemJS for Backend Middlewares"
+  ],
+
+  HOME_LINKS : [
+    {
+      "href": "/shop",
+      "title": "See my Services for Dev, Learning & Consulting",
+      "content": "See my Services",
+      "fa": "store"
+    },
+    {
+      "href": "/legal",
+      "title": "Show my Legal Notice for Services",
+      "content": "Show my Legal Notice",
+      "fa": "scale-balanced"
+    },
+    {
+      "href": "/blog",
+      "title": "Lire my Articles about Dev",
+      "content": "Read my Blog",
+      "fa": "blog"
+    },
+    {
+      "href": "/login",
+      "title": "Login to Like & Order",
+      "content": "Login",
+      "fa": "right-to-bracket"
+    },
+    {
+      "href": "/links",
+      "title": "Access to my Links for Developers",
+      "content": "Access to my Links",
+      "fa": "link"
+    },
+    {
+      "href": "/contact",
+      "title": "Contact me for any questions",
+      "content": "Contact me",
+      "fa": "paper-plane"
+    },
+    {
+      "href": "/galleries",
+      "title": "Watch my old celestial Atlases",
+      "content": "Watch my Images",
+      "fa": "images"
+    }
+  ],
+
   // ! ********** INFO **********
 
   INFO_ALT : "Alternative text",
@@ -386,13 +440,6 @@ export default {
   LEGEND_URL : "Url",
 
   // ! ********** LIST **********
-
-  HOME_CONTENT : [
-    "Vue-Elt for Components",
-    "Servidio for Frontend Services",
-    "Animadio for Design",
-    "NemJS for Backend Middlewares"
-  ],
 
   PRODUCT_HELP :{
     "image": "img/your-image.jpg",

@@ -65,7 +65,7 @@
               <br>
 
               <BtnElt type="button"
-                @click="deleteProduct(`${slotProps.item.id}`, `${slotProps.item.option}`)"
+                @click="deleteProduct(slotProps.item.id, slotProps.item.option)"
                 class="btn-orange"
                 :content="val.TITLE_DELETE"
                 :title="val.TITLE_DELETE + slotProps.item.name">
