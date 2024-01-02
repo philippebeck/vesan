@@ -4,7 +4,7 @@
       <h1 class="sky-dark">{{ val.HOME_VIEW }}</h1>
     </header>
 
-    <CardElt>
+    <CardElt class="flex-col gap-tn4">
       <template #header>
         <h2>{{ val.HOME_SUB }}</h2>
         <b>{{ val.INTRO_HOME }}</b>
@@ -13,6 +13,21 @@
       <template #body>
         <ListElt :dynamic="true" 
           :items="val.HOME_CONTENT"/>
+
+        <ListElt :dynamic="true"
+          :items="val.HOME_LINKS"
+          class="flex-wrap content-center">
+          <template #items="slotProps">
+            <BtnElt :href="slotProps.item.href"
+              class="btn-blue"
+              :content="slotProps.item.content"
+              :title="slotProps.item.title">
+              <template #btn>
+                <i :class="`fa-solid fa-${slotProps.item.fa} fa-lg fa-fw`"></i>
+              </template>
+            </BtnElt>
+          </template>
+        </ListElt>
       </template>
     </CardElt>
   </main>
@@ -21,12 +36,13 @@
 <script>
 import { setMeta } from "servidio"
 
+import BtnElt from "@/assets/elements/BtnElt"
 import CardElt from "@/assets/elements/CardElt"
 import ListElt from "@/assets/elements/ListElt"
 
 export default {
   name: "HomeView",
-  components: { CardElt, ListElt },
+  components: { BtnElt, CardElt, ListElt },
   props: ["val"],
 
   created() {
