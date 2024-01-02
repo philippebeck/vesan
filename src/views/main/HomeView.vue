@@ -4,7 +4,7 @@
       <h1 class="sky-dark">{{ val.HOME_VIEW }}</h1>
     </header>
 
-    <CardElt class="flex-col gap-tn4">
+    <CardElt class="container-90sm-80md-70lg-60xl-50wd flex-col gap-tn4">
       <template #header>
         <h2>{{ val.HOME_SUB }}</h2>
         <b>{{ val.INTRO_HOME }}</b>
