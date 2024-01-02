@@ -35,6 +35,10 @@
   --ani-monospace: "Ubuntu Mono", Courier, monospace;
 }
 
+body {
+  --ani-body-max-width: 100%; 
+}
+
 /* SHOP */
 .shop {
   height: 70px;
