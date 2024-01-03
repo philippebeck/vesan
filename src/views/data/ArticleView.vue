@@ -26,11 +26,7 @@
               <Editor id="text"
                 :api-key="val.TINY_KEY"
                 v-model="article.text"
-                :init="{ toolbar:
-                  'undo redo outdent indent align lineheight | \
-                  bold italic underline strikethrough backcolor | \
-                  blocks fontfamily fontsize'
-                }"/>
+                :init="val.TINY_INIT"/>
             </template>
 
             <template #item-3>
