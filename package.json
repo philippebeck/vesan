@@ -48,7 +48,7 @@
     "animadio": "^6.2.5",
     "axios": "^1.4.0",
     "core-js": "^3.8.3",
-    "servidio": "^3.1.0",
+    "servidio": "^3.1.1",
     "vue": "^3.3.9",
     "vue-elt": "^2.3.13-alpha",
     "vue-recaptcha": "^2.0.3",
