@@ -245,7 +245,8 @@ export default {
       const { API_URL } = this.val;
       let { id, name, text, image, alt, likes, cat } = this.article;
 
-      likes.includes(this.id) ? likes.splice(this.id, 1) : likes.push(this.id);
+      const index = likes.indexOf(this.id);
+      index > -1 ? likes.splice(index, 1) : likes.push(this.id);
 
       const URL = `${API_URL}/articles/${id}`;
       const data = new FormData();
