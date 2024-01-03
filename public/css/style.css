@@ -39,6 +39,21 @@ body {
   --ani-body-max-width: 100%; 
 }
 
+/* BLOG */
+.blog h3 {
+  font-size: 2rem;
+}
+
+.article {
+  text-align: justify;
+}
+
+.article ul {
+  list-style: circle;
+  padding-left: 40px;
+}
+
+
 /* SHOP */
 .shop {
   height: 70px;
