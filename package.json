@@ -50,7 +50,7 @@
     "core-js": "^3.8.3",
     "servidio": "^3.1.1",
     "vue": "^3.3.9",
-    "vue-elt": "^2.3.13-alpha",
+    "vue-elt": "^2.3.14-alpha",
     "vue-recaptcha": "^2.0.3",
     "vue-router": "^4.1.6",
     "vuex": "^4.0.2"
