@@ -29,11 +29,7 @@
               <Editor id="description"
                 :api-key="val.TINY_KEY"
                 v-model="product.description"
-                :init="{ toolbar:
-                  'undo redo outdent indent align lineheight | \
-                  bold italic underline strikethrough backcolor | \
-                  blocks fontfamily fontsize'
-                }"/>
+                :init="val.TINY_INIT"/>
             </template>
 
             <template #item-3>

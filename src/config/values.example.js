@@ -108,6 +108,16 @@ export default {
   THUMB_WIDTH : 200,
   THUMB_HEIGHT : 200,
 
+  TINY_INIT : { 
+    plugins: 'code image link media emoticons visualblocks preview searchreplace',
+    menubar: 'format edit insert view',
+    toolbar:
+    'bold italic underline strikethrough code forecolor backcolor | \
+    undo redo cut copy paste | \
+    image link media emoticons | \
+    visualblocks preview searchreplace | \
+    blocks fontfamily fontsize styles'
+  },
   TINY_KEY : "{your-tinymce-key}",
 
   UI_URL : "http://localhost:8080",

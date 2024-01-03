@@ -185,10 +185,9 @@ export default {
       const article = this.articles.find(a => a.id === id);
 
       if (!article) return;
+      let { name, text, image, alt, likes, cat } = article;
 
-      const { name, text, image, alt, likes, cat } = article;
       const index = likes.indexOf(this.id);
-
       index > -1 ? likes.splice(index, 1) : likes.push(this.id);
 
       const URL   = `${API_URL}/articles/${id}`;

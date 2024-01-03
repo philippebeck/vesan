@@ -53,6 +53,9 @@ body {
   padding-left: 40px;
 }
 
+.article li {
+  margin: 10px 0;
+}
 
 /* SHOP */
 .shop {
