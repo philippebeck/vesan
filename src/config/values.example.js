@@ -102,7 +102,7 @@ export default {
   REGEX_PASS : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,50}$/,
   REGEX_URL : /((https?|ftp|ssh|mailto):\/\/)?[a-z0-9\/:%_+.,#?!@&=-]+$/,
 
-  TEXT_MAX : 10000,
+  TEXT_MAX : 65000,
   TEXT_MIN : 5,
 
   THUMB_WIDTH : 200,
@@ -112,7 +112,7 @@ export default {
 
   UI_URL : "http://localhost:8080",
 
-  URL_MAX : 200,
+  URL_MAX : 250,
   URL_MIN : 5,
 
   // ! ********** CONTENT **********

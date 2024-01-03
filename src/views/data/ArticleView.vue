@@ -152,7 +152,7 @@
           itemprop="image">
 
           <template #figcaption>
-            <p v-html="article.text" id="figcaption" class="blue"></p>
+            <section v-html="article.text" id="figcaption" class="article"></section>
             <p>
               {{ val.PUBLISHED_ON }}
               <i itemprop="dateCreated">{{ new Date(article.createdAt).toLocaleDateString() }}</i>
@@ -265,7 +265,7 @@ export default {
      * * Updates the article with the provided data.
      */
     updateArticle() {
-      const { CHECK_STRING, TEXT_MIN, TEXT_MAX, API_URL, ALERT_UPDATED } = this.val;
+      const { API_URL, ALERT_UPDATED, CHECK_STRING, TEXT_MAX, TEXT_MIN } = this.val;
       let { id, name, text, image, alt, likes, cat } = this.article;
 
       if (checkRange(name, CHECK_STRING) &&

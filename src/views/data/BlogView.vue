@@ -84,7 +84,7 @@
                     :height="val.THUMB_HEIGHT"
                     itemprop="image">
                     <template #figcaption>
-                      <p v-html="slotProps.value.text.split(':')[0]"></p>
+                      <p v-html="slotProps.value.text.split(':')[0]" class="blog"></p>
                     </template>
                   </MediaElt>
                 </a>
