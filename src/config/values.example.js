@@ -451,16 +451,6 @@ export default {
 
   // ! ********** LIST **********
 
-  PRODUCT_HELP :{
-    "image": "img/your-image.jpg",
-    "alt": "your-alternative-text",
-    "width": "400",
-    "height": "300",
-    "href": "https://philippebeck.net",
-    "info": "Info about this help",
-    "note": "(More infos)"
-    },
-
   ROLES_USER : [
     "admin",
     "editor",
