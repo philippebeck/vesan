@@ -57,6 +57,15 @@ body {
   margin: 10px 0;
 }
 
+.article a {
+  color: var(--ani-violet);
+}
+
+.article pre {
+  --ani-code-overflow: auto;
+  background-color: var(--ani-black);
+}
+
 /* SHOP */
 .shop {
   height: 70px;
