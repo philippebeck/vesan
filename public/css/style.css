@@ -40,30 +40,12 @@ body {
 }
 
 /* BLOG */
+.blog {
+  --ve-card-width: 350px;
+}
+
 .blog h3 {
-  font-size: 2rem;
-}
-
-.article {
-  text-align: justify;
-}
-
-.article ul {
-  list-style: circle;
-  padding-left: 40px;
-}
-
-.article li {
-  margin: 10px 0;
-}
-
-.article a {
-  color: var(--ani-violet);
-}
-
-.article pre {
-  --ani-code-overflow: auto;
-  background-color: var(--ani-black);
+  height: 120px;
 }
 
 /* SHOP */

@@ -328,11 +328,12 @@ export default {
       const { CHECK_STRING, TEXT_MIN, TEXT_MAX, CHECK_NUMBER, PRICE_MIN, PRICE_MAX, API_URL, ALERT_UPDATED } = this.val;
       let { id, name, description, image, alt, price, options, cat } = this.product;
 
-      if (checkRange(name, CHECK_STRING) && 
-          checkRange(description, CHECK_STRING, TEXT_MIN, TEXT_MAX) && 
-          checkRange(alt, CHECK_STRING) && 
-          checkRange(price, CHECK_NUMBER, PRICE_MIN, PRICE_MAX)) {
+      const IS_NAME_CHECKED   = checkRange(name, CHECK_STRING);
+      const IS_DESC_CHECKED   = checkRange(description, CHECK_STRING, TEXT_MIN, TEXT_MAX);
+      const IS_ALT_CHECKED    = checkRange(alt, CHECK_STRING);
+      const IS_PRICE_CHECKED  = checkRange(price, CHECK_NUMBER, PRICE_MIN, PRICE_MAX);
 
+      if (IS_NAME_CHECKED && IS_DESC_CHECKED && IS_ALT_CHECKED && IS_PRICE_CHECKED) {
         const URL   = `${API_URL}/products/${id}`;
         const data  = new FormData();
         const img   = document.getElementById("image")?.files[0] ?? image;
