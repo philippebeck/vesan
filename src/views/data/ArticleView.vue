@@ -158,7 +158,7 @@
           itemprop="image">
 
           <template #figcaption>
-            <section v-html="article.text" id="figcaption" class="article"></section>
+            <section v-html="article.text" id="figcaption"></section>
             <p>
               {{ val.PUBLISHED_ON }}
               <time itemprop="dateCreated" :datetime="article.createdAt">
