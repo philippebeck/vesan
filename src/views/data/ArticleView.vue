@@ -55,6 +55,16 @@
             </template>
 
             <template #item-5>
+              <FieldElt id="url"
+                v-model:value="article.url"
+                @keyup.enter="updateArticle()"
+                :info="val.INFO_URL">
+                <template #legend>{{ val.LEGEND_URL }}</template>
+                <template #label>{{ val.LABEL_URL }}</template>
+              </FieldElt>
+            </template>
+
+            <template #item-6>
               <FieldElt id="cat"
                 type="select"
                 :list="val.CATS_ARTICLE"
@@ -151,7 +161,9 @@
             <section v-html="article.text" id="figcaption" class="article"></section>
             <p>
               {{ val.PUBLISHED_ON }}
-              <i itemprop="dateCreated">{{ new Date(article.createdAt).toLocaleDateString() }}</i>
+              <time itemprop="dateCreated" :datetime="article.createdAt">
+                {{ new Date(article.createdAt).toLocaleDateString() }}
+              </time>
             </p>
           </template>
         </MediaElt>
@@ -161,7 +173,7 @@
 </template>
 
 <script>
-import { checkRange, checkRole, deleteData, getData, putData, setError, setMeta } from "servidio"
+import { checkRange, checkRegex, checkRole, deleteData, getData, putData, setError, setMeta } from "servidio"
 import { mapState } from "vuex"
 
 import BtnElt from "@/assets/elements/BtnElt"
@@ -239,7 +251,7 @@ export default {
      */
     addLike() {
       const { API_URL } = this.val;
-      let { id, name, text, image, alt, likes, cat } = this.article;
+      let { id, name, text, image, alt, url, likes, cat } = this.article;
 
       const index = likes.indexOf(this.id);
       index > -1 ? likes.splice(index, 1) : likes.push(this.id);
@@ -251,6 +263,7 @@ export default {
       data.append("text", text);
       data.append("image", image);
       data.append("alt", alt);
+      data.append("url", url);
       data.append("likes", JSON.stringify(likes));
       data.append("cat", cat);
 
@@ -262,13 +275,15 @@ export default {
      * * Updates the article with the provided data.
      */
     updateArticle() {
-      const { API_URL, ALERT_UPDATED, CHECK_STRING, TEXT_MAX, TEXT_MIN } = this.val;
-      let { id, name, text, image, alt, likes, cat } = this.article;
+      const { API_URL, ALERT_UPDATED, CHECK_STRING, REGEX_URL, TEXT_MAX, TEXT_MIN } = this.val;
+      let { id, name, text, image, alt, url, likes, cat } = this.article;
 
-      if (checkRange(name, CHECK_STRING) &&
-          checkRange(text, CHECK_STRING, TEXT_MIN, TEXT_MAX) &&
-          checkRange(alt, CHECK_STRING)) {
+      const IS_NAME_CHECKED = checkRange(name, CHECK_STRING);
+      const IS_TEXT_CHECKED = checkRange(text, CHECK_STRING, TEXT_MIN, TEXT_MAX);
+      const IS_ALT_CHECKED  = checkRange(alt, CHECK_STRING);
+      const IS_URL_CHECKED  = url ? checkRegex(url, CHECK_STRING, REGEX_URL) : true;
 
+      if (IS_NAME_CHECKED && IS_TEXT_CHECKED && IS_ALT_CHECKED && IS_URL_CHECKED) {
         const URL   = `${API_URL}/articles/${id}`;
         const data  = new FormData();
         const img   = document.getElementById("image")?.files[0] ?? image;
@@ -277,6 +292,7 @@ export default {
         data.append("text", text);
         data.append("image", img);
         data.append("alt", alt);
+        data.append("url", url);
         data.append("likes", JSON.stringify(likes));
         data.append("cat", cat);
 

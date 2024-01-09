@@ -5,7 +5,7 @@
         <i class="fa-solid fa-eye fa-fw" :title="val.TITLE_TOGGLE"></i>
       </template>
 
-      <template #last  v-if="checkSession('editor')">
+      <template #last v-if="checkSession('editor')">
         <a href="#article-set" :title="val.ARTICLE_MANAGER">
           <i class="fa-regular fa-pen-to-square fa-fw"></i>
         </a>
@@ -16,7 +16,7 @@
       </template>
     </NavElt>
 
-    <CardElt :isArticle="true" class="container-90lg-70wd">
+    <CardElt :isArticle="true">
       <template #header>
         <h1 class="sky-dark">
           <i class="fa-solid fa-blog fa-lg"></i>
@@ -34,7 +34,7 @@
           </template>
 
           <template #nested="slotProps">
-            <CardElt itemscope itemtype="https://schema.org/Article">
+            <CardElt itemscope itemtype="https://schema.org/Article" class="blog">
               <template #header>
                 <h3 itemprop="name" class="sky-dark">{{ slotProps.value.name }}</h3>
               </template>
@@ -75,8 +75,26 @@
                   </template>
                 </BtnElt>
 
-                <a :href="`article/${slotProps.value.id}`" 
+                <a v-if="!slotProps.value.url || checkSession('editor')"
+                  :href="`article/${slotProps.value.id}`" 
                   :title="val.TITLE_READ + slotProps.value.name">
+                  <MediaElt :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
+                    :src="`img/thumbnails/articles/${slotProps.value.image}`" 
+                    :alt="`${slotProps.value.alt}`" 
+                    :width="val.THUMB_WIDTH"
+                    :height="val.THUMB_HEIGHT"
+                    itemprop="image">
+                    <template #figcaption>
+                      <p v-html="slotProps.value.text.split(':')[0]"></p>
+                    </template>
+                  </MediaElt>
+                </a>
+
+                <a v-else
+                  :href="`https://${slotProps.value.url}`" 
+                  :title="val.TITLE_READ + slotProps.value.name"
+                  target="_blank"
+                  rel="noopener noreferrer">
                   <MediaElt :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
                     :src="`img/thumbnails/articles/${slotProps.value.image}`" 
                     :alt="`${slotProps.value.alt}`" 
@@ -185,7 +203,7 @@ export default {
       const article = this.articles.find(a => a.id === id);
 
       if (!article) return;
-      let { name, text, image, alt, likes, cat } = article;
+      let { name, text, image, alt, url, likes, cat } = article;
 
       const index = likes.indexOf(this.id);
       index > -1 ? likes.splice(index, 1) : likes.push(this.id);
@@ -197,6 +215,7 @@ export default {
       data.append("text", text);
       data.append("image", image);
       data.append("alt", alt);
+      data.append("url", url);
       data.append("likes", JSON.stringify(likes));
       data.append("cat", cat);
 
