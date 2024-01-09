@@ -250,15 +250,15 @@ export default {
     onVerify(response) {
       const { CHECK_EMAIL, CHECK_STRING, REGEX_EMAIL, CHECK_PASS, REGEX_PASS, API_URL } = this.val;
 
-      if (
-        this.type === "signUp" && checkRange(this.name, CHECK_STRING) && 
-        checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL) && checkRegex(this.pass, CHECK_PASS, REGEX_PASS)
-        ||
-        this.type === "signIn" && checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL) && 
-        checkRegex(this.pass, CHECK_PASS, REGEX_PASS)
-        ||
-        this.type === "forgotPass" && checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL)
-      ) {
+      const IS_NAME_CHECKED   = this.name ? checkRange(this.name, CHECK_STRING) : true;
+      const IS_EMAIL_CHECKED  = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL);
+      const IS_PASS_CHECKED   = this.pass ? checkRegex(this.pass, CHECK_PASS, REGEX_PASS) : true;
+
+      const IS_SIGN_UP      = this.type === "signUp" && IS_NAME_CHECKED && IS_EMAIL_CHECKED && IS_PASS_CHECKED;
+      const IS_SIGN_IN      = this.type === "signIn" && IS_EMAIL_CHECKED && IS_PASS_CHECKED;
+      const IS_FORGOT_PASS  = this.type === "forgotPass" && IS_EMAIL_CHECKED;
+
+      if (IS_SIGN_UP || IS_SIGN_IN || IS_FORGOT_PASS) {
         const URL = `${API_URL}/auth/recaptcha`;
 
         postData(URL, { response })

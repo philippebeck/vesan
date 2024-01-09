@@ -186,16 +186,17 @@ export default {
     updateUser() {
       const { API_URL, CHECK_EMAIL, CHECK_PASS, CHECK_STRING, REGEX_EMAIL, REGEX_PASS } = this.val;
 
-      if (checkRange(this.user.name, CHECK_STRING) && 
-        checkRegex(this.user.email, CHECK_EMAIL, REGEX_EMAIL)) {
+      const IS_NAME_CHECKED   = checkRange(this.user.name, CHECK_STRING);
+      const IS_EMAIL_CHECKED  = checkRegex(this.user.email, CHECK_EMAIL, REGEX_EMAIL);
 
+      const IS_PASS_CHECKED = this.pass && checkRegex(this.pass, CHECK_PASS, REGEX_PASS);
+
+      if (IS_NAME_CHECKED && IS_EMAIL_CHECKED) {
         const URL   = `${API_URL}/users/${this.user.id}`
         const data  = new FormData();
         const img   = document.getElementById("image")?.files[0] ?? this.user.image;
 
-        if (this.pass && checkRegex(this.pass, CHECK_PASS, REGEX_PASS)) {
-          data.append("pass", this.pass);
-        }
+        if (IS_PASS_CHECKED) data.append("pass", this.pass);
 
         data.append("name", this.user.name);
         data.append("email", this.user.email);
