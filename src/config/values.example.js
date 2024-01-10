@@ -339,34 +339,22 @@ export default {
 
   HOME_LINKS : [
     {
-      "href": "/shop",
-      "title": "See my Services for Dev, Learning & Consulting",
-      "content": "See my Services",
-      "fa": "store"
-    },
-    {
-      "href": "/legal",
-      "title": "Show my Legal Notice for Services",
-      "content": "Show my Legal Notice",
-      "fa": "scale-balanced"
-    },
-    {
       "href": "/blog",
       "title": "Lire my Articles about Dev",
       "content": "Read my Blog",
       "fa": "blog"
     },
     {
-      "href": "/login",
-      "title": "Login to Like & Order",
-      "content": "Login",
-      "fa": "right-to-bracket"
+      "href": "/portfolio",
+      "title": "Discover my Projects of Dev",
+      "content": "Discover my Portfolio",
+      "fa": "briefcase"
     },
     {
-      "href": "/links",
-      "title": "Access to my Links for Developers",
-      "content": "Access to my Links",
-      "fa": "link"
+      "href": "/shop",
+      "title": "See my Services for Dev, Learning & Consulting",
+      "content": "See my Services",
+      "fa": "store"
     },
     {
       "href": "/contact",
@@ -377,8 +365,26 @@ export default {
     {
       "href": "/galleries",
       "title": "Watch my old celestial Atlases",
-      "content": "Watch my Images",
+      "content": "Watch my Atlases",
       "fa": "images"
+    },
+    {
+      "href": "/links",
+      "title": "Access to my Links for Developers",
+      "content": "Access to my Links",
+      "fa": "link"
+    },
+    {
+      "href": "/legal",
+      "title": "Show my Legal Notice for Services",
+      "content": "Show my Legal Notice",
+      "fa": "scale-balanced"
+    },
+    {
+      "href": "/login",
+      "title": "Login to Like & Order",
+      "content": "Login",
+      "fa": "right-to-bracket"
     }
   ],
 
