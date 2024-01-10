@@ -524,6 +524,10 @@ export default {
   PAYPAL_SDK : "Failed to load the PayPal JS SDK script",
   PAYPAL_SHAPE : "pill",
   PAYPAL_STATUS : "Status of transaction #",
+  PAYPAL_TERMS_BTN : "Read the T&Cs",
+  PAYPAL_TERMS_ERROR : "Please accept the T&Cs to validate your order",
+  PAYPAL_TERMS_LABEL : "You must accept the T&Cs to validate your order.",
+  PAYPAL_TERMS_LEGEND : "I accept the Terms & Conditions",
 
   // ! ********** TITLE **********
 
