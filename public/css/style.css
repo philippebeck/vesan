@@ -48,6 +48,12 @@ body {
   height: 120px;
 }
 
+/* PORTFOLIO */
+.portfolio {
+  --ve-card-width: 350px;
+}
+
+
 /* SHOP */
 .shop {
   height: 70px;
