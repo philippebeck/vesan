@@ -71,6 +71,12 @@ const routes = [
     alias: ["/link"]
   },
   {
+    path: "/portfolio",
+    name: "portfolio",
+    component: () => import("@/views/data/PortfolioView"),
+    alias: ["/projects"]
+  },
+  {
     path: "/product/:id",
     name: "product",
     component: () => import("@/views/data/ProductView"),
