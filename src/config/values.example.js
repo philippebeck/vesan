@@ -57,6 +57,11 @@ export default {
     "Travel"
   ],
 
+  CATS_PROJECT : [
+    "Packages",
+    "Websites"
+  ],
+
   // ! ********** CHECK **********
 
   CHECK_EMAIL : "Your Email is not a valid address.",
@@ -72,6 +77,7 @@ export default {
   CAT_ARTICLE : "Technology",
   CAT_LINK : "Technology",
   CAT_PRODUCT : "Technology",
+  CAT_PROJECT : "Websites",
 
   CURRENCY_ISO : "USD",
   CURRENCY_SYMBOL : "$",
@@ -258,6 +264,15 @@ export default {
     "cat"
   ],
 
+  PROJECT_FORM : [
+    "name", 
+    "description", 
+    "image", 
+    "alt",
+    "url",
+    "cat"
+  ],
+
   USER_FORM : [
     "name", 
     "email",
@@ -275,6 +290,7 @@ export default {
   HEAD_LEGAL: "General Conditions",
   HEAD_LINK: "Links",
   HEAD_LOGIN: "Login",
+  HEAD_PORTFOLIO : "Portfolio",
   HEAD_PROFILE: "Profile",
   HEAD_SHOP: "Services",
 
@@ -286,6 +302,7 @@ export default {
   CONTACT_SUB : "Send me a message",
   CONTACT_VIEW : "Contact",
   ERROR_VIEW : "Error",
+  FORGOT_PASS : "Forgot password",
   GALLERY_VIEW : "Images galleries",
   HOME_SUB : "UI with Vue-Elt, Servidio & Animadio",
   HOME_VIEW : "Vesan",
@@ -294,13 +311,13 @@ export default {
   LINK_SUB : "Links for developers",
   LINK_VIEW : "Links",
   LOGIN_VIEW : "Connection",
-  FORGOT_PASS : "Forgot password",
-  SIGN_IN : "User entrance",
-  SIGN_UP : "Registration",
+  ORDERS_SUB : "Orders",
+  PORTFOLIO_VIEW : "Portfolio",
   PROFILE_SUB : "Profile",
   PROFILE_VIEW : "Account",
-  ORDERS_SUB : "Orders",
   SHOP_VIEW : "Shop",
+  SIGN_IN : "User entrance",
+  SIGN_UP : "Registration",
 
   ARTICLE_MANAGER : "Article manager",
   GALLERY_MANAGER : "Gallery manager",
@@ -308,6 +325,7 @@ export default {
   LINK_MANAGER : "Link manager",
   ORDER_MANAGER : "Order manager",
   PRODUCT_MANAGER : "Product manager",
+  PROJECT_MANAGER : "Project Manager",
   USER_MANAGER : "User manager",
 
   // ! ********** HOME **********
@@ -321,34 +339,22 @@ export default {
 
   HOME_LINKS : [
     {
-      "href": "/shop",
-      "title": "See my Services for Dev, Learning & Consulting",
-      "content": "See my Services",
-      "fa": "store"
-    },
-    {
-      "href": "/legal",
-      "title": "Show my Legal Notice for Services",
-      "content": "Show my Legal Notice",
-      "fa": "scale-balanced"
-    },
-    {
       "href": "/blog",
       "title": "Lire my Articles about Dev",
       "content": "Read my Blog",
       "fa": "blog"
     },
     {
-      "href": "/login",
-      "title": "Login to Like & Order",
-      "content": "Login",
-      "fa": "right-to-bracket"
+      "href": "/portfolio",
+      "title": "Discover my Projects of Dev",
+      "content": "Discover my Portfolio",
+      "fa": "briefcase"
     },
     {
-      "href": "/links",
-      "title": "Access to my Links for Developers",
-      "content": "Access to my Links",
-      "fa": "link"
+      "href": "/shop",
+      "title": "See my Services for Dev, Learning & Consulting",
+      "content": "See my Services",
+      "fa": "store"
     },
     {
       "href": "/contact",
@@ -359,8 +365,26 @@ export default {
     {
       "href": "/galleries",
       "title": "Watch my old celestial Atlases",
-      "content": "Watch my Images",
+      "content": "Watch my Atlases",
       "fa": "images"
+    },
+    {
+      "href": "/links",
+      "title": "Access to my Links for Developers",
+      "content": "Access to my Links",
+      "fa": "link"
+    },
+    {
+      "href": "/legal",
+      "title": "Show my Legal Notice for Services",
+      "content": "Show my Legal Notice",
+      "fa": "scale-balanced"
+    },
+    {
+      "href": "/login",
+      "title": "Login to Like & Order",
+      "content": "Login",
+      "fa": "right-to-bracket"
     }
   ],
 
@@ -468,6 +492,7 @@ export default {
   META_LEGAL: "General terms of use",
   META_LINK: "Links for...",
   META_LOGIN: "Login & registration",
+  META_PORTFOLIO : "Portfolio of ...",
   META_PROFILE: "Profile management",
   META_SHOP: "Services of...",
 
@@ -479,6 +504,12 @@ export default {
       "name": "Blog",
       "type": "solid",
       "icon": "blog"
+    },
+    {
+      "href": "/portfolio",
+      "name": "Portfolio",
+      "type": "solid",
+      "icon": "briefcase"
     },
     {
       "href": "/shop",
@@ -524,6 +555,10 @@ export default {
   PAYPAL_SDK : "Failed to load the PayPal JS SDK script",
   PAYPAL_SHAPE : "pill",
   PAYPAL_STATUS : "Status of transaction #",
+  PAYPAL_TERMS_BTN : "Read the T&Cs",
+  PAYPAL_TERMS_ERROR : "Please accept the T&Cs to validate your order",
+  PAYPAL_TERMS_LABEL : "You must accept the T&Cs to validate your order.",
+  PAYPAL_TERMS_LEGEND : "I accept the Terms & Conditions",
 
   // ! ********** TITLE **********
 
@@ -547,11 +582,13 @@ export default {
   TITLE_ORDER : "Login to order those Products",
   TITLE_PRODUCT : "Create product",
   TITLE_READ : "Read ",
+  TITLE_SEE_CODE : "See the code of the project ",
   TITLE_SIGNIN : "SignIn to your account",
   TITLE_SIGNUP : "SignUp a new user",
   TITLE_TOGGLE : "Toggle",
   TITLE_TOP : "Go up",
   TITLE_UPDATE : "Update ",
   TITLE_UPDATE_ORDER : "Update status of order #",
-  TITLE_WATCH : "Watch "
+  TITLE_WATCH : "Watch ",
+  TITLE_WATCH_PROJECT : "Watch a screenshot of the project "
 }

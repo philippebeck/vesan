@@ -23,7 +23,8 @@ export default createStore({
     links:      [],
     orders:     [],
     product:    {},
-    products:   []
+    products:   [],
+    projects:   []
   },
 
   // ! ******************** GETTERS ********************
@@ -44,7 +45,8 @@ export default createStore({
     getLinks:     state => state.links,
     getOrders:    state => state.orders,
     getProduct:   state => state.product,
-    getProducts:  state => state.products
+    getProducts:  state => state.products,
+    getProjects:  state => state.projects
   },
 
   // ! ******************** MUTATIONS ********************
@@ -87,6 +89,8 @@ export default createStore({
       for (const product of products) product.options = product.options.split(",");
       state.products = products;
     },
+
+    setProjects(state, projects) { state.projects = projects },
 
     setUserOrders(state, orders) {
       for (const order of orders) {
@@ -270,6 +274,18 @@ export default createStore({
         .then(products => { context.commit("setProducts", products) })
         .catch(err => { setError(err) });
     },
+
+        /**
+     * ? LIST PROJECTS
+     * * Asynchronously lists projects.
+     * @param {Object} context - The context object.
+     * @return {Promise} A promise that resolves
+     */
+        async listProjects(context) {
+          getData(`${val.API_URL}/projects`)
+            .then(projects => { context.commit("setProjects", projects) })
+            .catch(err => { setError(err) });
+        },
 
     /**
      * ? LIST USER ORDERS
