@@ -81,6 +81,21 @@
             <b class="black">{{ total }} {{ val.CURRENCY_SYMBOL }}</b>
           </p>
           <br>
+
+          <BtnElt href="/legal" 
+            :content="val.PAYPAL_TERMS_BTN" 
+            class="btn-blue"
+            target="_blank" 
+            rel="noopener noreferrer"/>
+
+          <FieldElt id="checkTerms"
+            type="checkbox"
+            v-model="isTermsAccepted"
+            @click="toggleTerms()">
+            <template #legend>{{ val.PAYPAL_TERMS_LEGEND }}</template>
+            <template #label>{{ val.PAYPAL_TERMS_LABEL }}</template>
+          </FieldElt>
+
           <div v-if="checkSession('user')" id="paypal"></div>
 
           <BtnElt v-else
@@ -187,7 +202,8 @@ export default {
       products: [],
       basket: [],
       order: [],
-      total: 0
+      total: 0,
+      isTermsAccepted: false
     }
   },
 
@@ -233,6 +249,14 @@ export default {
      */
     checkSession(role) {
       return checkRole(this.avatar.role, role);
+    },
+
+    /**
+     * ? TOGGLE TERMS
+     * * Toggles the value of the isTermsAccepted property.
+     */
+    toggleTerms() {
+      this.isTermsAccepted = !this.isTermsAccepted;
     },
 
     /**
@@ -304,6 +328,24 @@ export default {
                 shape: val.PAYPAL_SHAPE,
                 label: val.PAYPAL_LABEL
               },
+              onInit: function(data, actions) {
+                actions.disable();
+
+                document.querySelector('#checkTerms')
+                  .addEventListener('change', function(event) {
+
+                    if (event.target.checked) {
+                      actions.enable();
+                    } else {
+                      actions.disable();
+                    }
+                  });
+                },
+                onClick: function() {
+                if (!document.querySelector('#checkTerms').checked) {
+                  alert(val.PAYPAL_TERMS_ERROR);
+                }
+              },
               createOrder: function(data, actions) {
                 return actions.order.create({
                   purchase_units: [{ 
@@ -316,11 +358,11 @@ export default {
               },
               onApprove: function(data, actions) {
                 return actions.order.capture()
-                  .then((orderData) => {
-                      alert(val.PAYPAL_STATUS + orderData.id + " : " + orderData.status);
-                      createOrder(orderData.id);
-                    }
-                  );
+                .then((orderData) => {
+                    alert(val.PAYPAL_STATUS + orderData.id + " : " + orderData.status);
+                    createOrder(orderData.id);
+                  }
+                );
               },
               onCancel : function () { alert(val.PAYPAL_CANCEL) },
               onError: function(err) {
