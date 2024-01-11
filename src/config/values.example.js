@@ -518,10 +518,16 @@ export default {
       "icon": "store"
     },
     {
-      "href": "/link",
-      "name": "Links",
+      "href": "/basket",
+      "name": "Basket",
       "type": "solid",
-      "icon": "link"
+      "icon": "basket-shopping"
+    },
+    {
+      "href": "/contact",
+      "name": "Contact",
+      "type": "regular",
+      "icon": "paper-plane"
     }
   ],
 

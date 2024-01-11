@@ -5,12 +5,6 @@
         <i class="fa-solid fa-eye fa-fw" :title="val.TITLE_TOGGLE"></i>
       </template>
 
-      <template #first>
-        <a href="/basket" :title="val.TITLE_BASKET">
-          <i class="fa-solid fa-basket-shopping fa-fw"></i>
-        </a>
-      </template>
-
       <template #last v-if="checkSession('admin')">
         <a href="#product-set" :title="val.PRODUCT_MANAGER">
           <i class="fa-regular fa-lightbulb fa-fw"></i>
