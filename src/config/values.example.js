@@ -576,6 +576,7 @@ export default {
   TITLE_IMAGE : "Create image",
   TITLE_LIKE : "Like ",
   TITLE_LIKE_LOGIN : "Login to like ",
+  TITLE_LINK : "Create a link",
   TITLE_LOGIN : "Login",
   TITLE_LOGOUT : "Logout",
   TITLE_MESSAGE : "Send a message",
