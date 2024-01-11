@@ -327,3 +327,10 @@ export default {
   }
 }
 </script>
+
+<style>
+.tox {
+  margin: auto;
+  max-width: 1000px;
+}
+</style>

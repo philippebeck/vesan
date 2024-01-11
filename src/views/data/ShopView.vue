@@ -154,3 +154,18 @@ export default {
   }
 }
 </script>
+
+<style>
+.shop {
+  height: 70px;
+  max-width: 212px;
+}
+
+.shop > * {
+  font-size: 2rem;
+}
+
+[itemprop="price"] {
+  font-size: 2.5rem;
+}
+</style>

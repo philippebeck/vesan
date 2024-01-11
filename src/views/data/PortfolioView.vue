@@ -143,3 +143,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.portfolio {
+  --ve-card-width: 350px;
+}
+</style>

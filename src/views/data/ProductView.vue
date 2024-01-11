@@ -377,3 +377,14 @@ export default {
   }
 }
 </script>
+
+<style>
+[itemprop="price"] {
+  font-size: 2.5rem;
+}
+
+.tox {
+  margin: auto;
+  max-width: 1000px;
+}
+</style>

@@ -224,3 +224,13 @@ export default {
   }
 }
 </script>
+
+<style>
+.blog {
+  --ve-card-width: 350px;
+}
+
+.blog h3 {
+  height: 120px;
+}
+</style>
