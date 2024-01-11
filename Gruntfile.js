@@ -18,6 +18,7 @@ module.exports = function(grunt) {
       linkSet: { src: ["node_modules/vue-elt/components/setters/LinkSet.vue"], dest: "src/assets/setters/LinkSet.vue" },
       orderSet: { src: ["node_modules/vue-elt/components/setters/OrderSet.vue"], dest: "src/assets/setters/OrderSet.vue" },
       productSet: { src: ["node_modules/vue-elt/components/setters/ProductSet.vue"], dest: "src/assets/setters/ProductSet.vue" },
+      projectSet: { src: ["node_modules/vue-elt/components/setters/projectSet.vue"], dest: "src/assets/setters/projectSet.vue" },
       userSet: { src: ["node_modules/vue-elt/components/setters/UserSet.vue"], dest: "src/assets/setters/UserSet.vue" },
     }
   });
