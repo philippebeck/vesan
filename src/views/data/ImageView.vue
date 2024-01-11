@@ -136,3 +136,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.gallery {
+  max-width: 200px;
+}
+</style>

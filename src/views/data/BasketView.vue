@@ -478,3 +478,10 @@ export default {
   }
 }
 </script>
+
+<style>
+[id="paypal"] {
+  margin: auto;
+  max-width: 300px;
+}
+</style>

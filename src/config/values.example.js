@@ -518,10 +518,16 @@ export default {
       "icon": "store"
     },
     {
-      "href": "/link",
-      "name": "Links",
+      "href": "/basket",
+      "name": "Basket",
       "type": "solid",
-      "icon": "link"
+      "icon": "basket-shopping"
+    },
+    {
+      "href": "/contact",
+      "name": "Contact",
+      "type": "regular",
+      "icon": "paper-plane"
     }
   ],
 
@@ -576,6 +582,7 @@ export default {
   TITLE_IMAGE : "Create image",
   TITLE_LIKE : "Like ",
   TITLE_LIKE_LOGIN : "Login to like ",
+  TITLE_LINK : "Create a link",
   TITLE_LOGIN : "Login",
   TITLE_LOGOUT : "Logout",
   TITLE_MESSAGE : "Send a message",
