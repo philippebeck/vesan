@@ -83,7 +83,7 @@
 
 <script>
 import { checkRole, setGlobalMeta } from "servidio"
-import { mapState, mapActions } from "vuex"
+import { mapActions, mapMutations, mapState } from "vuex"
 
 import FootElt from "@/assets/elements/FootElt"
 import ListElt from "@/assets/elements/ListElt"
@@ -101,11 +101,11 @@ export default {
   },
 
   created() {
-    this.$store.dispatch("readId");
-    this.$store.dispatch("readToken");
-
     this.val = val;
     setGlobalMeta(val.LANG, val.ICON);
+
+    this.$store.commit("setId");
+    this.$store.commit("setToken");
 
     if (this.token) this.$store.dispatch("readAvatar", this.id);
   },
@@ -115,7 +115,8 @@ export default {
   },
 
   methods: {
-    ...mapActions(["readId", "readToken", "readAvatar"]),
+    ...mapMutations(["setId", "setToken"]),
+    ...mapActions(["readAvatar"]),
 
     /**
      * ? CHECK SESSION
