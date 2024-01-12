@@ -2,7 +2,7 @@ import { createApp } from "vue"
 import App from "./App.vue"
 
 import router from "./config/router.js"
-import store from "./config/store.js"
+import store from "./store"
 
 import font from '@fortawesome/fontawesome-free/css/all.min.css'
 import anima from "animadio/dist/animadio.min.css"
