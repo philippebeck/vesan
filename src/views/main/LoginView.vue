@@ -2,119 +2,31 @@
   <main>
     <header>
       <h1 class="sky-dark">
-        <i class="fa-solid fa-right-to-bracket fa-lg"></i>
-        {{ val.LOGIN_VIEW }}
+        <i class="fa-solid fa-right-to-bracket fa-lg"></i> {{ val.LOGIN_VIEW }}
       </h1>
     </header>
-
-    <CardElt v-if="type === 'signUp'">
-      <template #header>
-        <h2 class="sky-dark">
-          <i class="fa-solid fa-user-plus fa-lg"></i>
-          {{ val.SIGN_UP }}
-        </h2>
-        <p>{{ val.INTRO_SIGNUP }}</p>
-      </template>
-
-      <template #body>
-        <form enctype="multipart/form-data">
-
-          <FieldElt id="name"
-            v-model:value="name"
-            :info="val.INFO_NAME"
-            :min="2">
-            <template #legend>{{ val.LEGEND_NAME }}</template>
-            <template #label>{{ val.LABEL_NAME }}</template>
-          </FieldElt>
-
-          <FieldElt id="email"
-            type="email"
-            v-model:value="email"
-            :info="val.INFO_EMAIL">
-            <template #legend>{{ val.LEGEND_EMAIL }}</template>
-            <template #label>{{ val.LABEL_EMAIL }}</template>
-          </FieldElt>
-
-          <FieldElt id="image"
-            type="file"
-            v-model:value="image"
-            :info="val.INFO_IMAGE">
-            <template #legend>{{ val.LEGEND_IMAGE }}</template>
-            <template #label>{{ val.LABEL_IMAGE }}</template>
-          </FieldElt>
-
-          <FieldElt id="pass"
-            type="password"
-            v-model:value="pass"
-            :info="val.INFO_PASSWORD">
-            <template #legend>{{ val.LEGEND_PASSWORD }}</template>
-            <template #label>{{ val.LABEL_PASSWORD }}</template>
-          </FieldElt>
-
-          <vue-recaptcha :sitekey="val.RECAPTCHA_KEY"
-            @verify="onVerify">
-            <BtnElt type="button"
-              class="btn-blue"
-              :content="val.CONTENT_SIGNUP"
-              :title="val.TITLE_SIGNUP">
-              <template #btn>
-                <i class="fa-solid fa-user-plus fa-lg"></i>
-              </template>
-            </BtnElt>
-          </vue-recaptcha>
-        </form>
-
-        <BtnElt type="button"
-            @click="setType('signIn')"
-            class="btn-green"
-            :content="val.CONTENT_ENTER"
-            :title="val.TITLE_GO + val.SIGN_IN">
-            <template #btn>
-              <i class="fa-solid fa-door-open fa-lg"></i>
-            </template>
-          </BtnElt>
-
-          <BtnElt type="button"
-            @click="setType('forgotPass')"
-            class="btn-orange"
-            :content="val.CONTENT_SEND"
-            :title="val.TITLE_GO + val.FORGOT_PASS">
-            <template #btn>
-              <i class="fa-regular fa-paper-plane fa-lg"></i>
-            </template>
-          </BtnElt>
-      </template>
-    </CardElt>
 
     <CardElt v-if="type === 'signIn'">
       <template #header>
         <h2 class="sky-dark">
-          <i class="fa-solid fa-door-open fa-lg"></i>
-          {{ val.SIGN_IN }}
+          <i class="fa-solid fa-door-open fa-lg"></i> {{ val.SIGN_IN }}
         </h2>
         <p>{{ val.INTRO_SIGNIN }}</p>
       </template>
 
       <template #body>
         <form>
-          <FieldElt id="email"
-            type="email"
-            v-model:value="email"
-            :info="val.INFO_EMAIL">
+          <FieldElt type="email" v-model:value="email" :info="val.INFO_EMAIL">
             <template #legend>{{ val.LEGEND_EMAIL }}</template>
             <template #label>{{ val.LABEL_EMAIL }}</template>
           </FieldElt>
 
-          <FieldElt id="pass"
-            type="password"
-            v-model:value="pass"
-            :info="val.INFO_PASSWORD">
+          <FieldElt type="password" v-model:value="pass" :info="val.INFO_PASSWORD">
             <template #legend>{{ val.LEGEND_PASSWORD }}</template>
             <template #label>{{ val.LABEL_PASSWORD }}</template>
           </FieldElt>
 
-          <vue-recaptcha :sitekey="val.RECAPTCHA_KEY"
-            @verify="onVerify">
+          <vue-recaptcha :sitekey="val.RECAPTCHA_KEY" @verify="onVerify">
             <BtnElt type="button"
               class="btn-green"
               :content="val.CONTENT_ENTER"
@@ -127,7 +39,7 @@
         </form>
 
         <BtnElt type="button"
-          @click="setType('signUp')"
+          @click="type = 'signUp'"
           class="btn-blue"
           :content="val.CONTENT_SIGNUP"
           :title="val.TITLE_GO + val.SIGN_UP">
@@ -137,7 +49,7 @@
         </BtnElt>
 
         <BtnElt type="button"
-          @click="setType('forgotPass')"
+          @click="type = 'forgotPass'"
           class="btn-orange"
           :content="val.CONTENT_SEND"
           :title="val.TITLE_GO + val.FORGOT_PASS">
@@ -148,28 +60,87 @@
       </template>
     </CardElt>
 
-    <CardElt v-if="type === 'forgotPass'">
+    <CardElt v-else-if="type === 'signUp'">
       <template #header>
         <h2 class="sky-dark">
-          <i class="fa-solid fa-key fa-lg"></i>
-          {{ val.FORGOT_PASS }}
+          <i class="fa-solid fa-user-plus fa-lg"></i> {{ val.SIGN_UP }}
+        </h2>
+        <p>{{ val.INTRO_SIGNUP }}</p>
+      </template>
+
+      <template #body>
+        <form enctype="multipart/form-data">
+
+          <FieldElt v-model:value="name" :info="val.INFO_NAME" :min="2">
+            <template #legend>{{ val.LEGEND_NAME }}</template>
+            <template #label>{{ val.LABEL_NAME }}</template>
+          </FieldElt>
+
+          <FieldElt type="email" v-model:value="email" :info="val.INFO_EMAIL">
+            <template #legend>{{ val.LEGEND_EMAIL }}</template>
+            <template #label>{{ val.LABEL_EMAIL }}</template>
+          </FieldElt>
+
+          <FieldElt type="file" v-model:value="image" :info="val.INFO_IMAGE">
+            <template #legend>{{ val.LEGEND_IMAGE }}</template>
+            <template #label>{{ val.LABEL_IMAGE }}</template>
+          </FieldElt>
+
+          <FieldElt type="password" v-model:value="pass" :info="val.INFO_PASSWORD">
+            <template #legend>{{ val.LEGEND_PASSWORD }}</template>
+            <template #label>{{ val.LABEL_PASSWORD }}</template>
+          </FieldElt>
+
+          <vue-recaptcha :sitekey="val.RECAPTCHA_KEY" @verify="onVerify">
+            <BtnElt type="button"
+              class="btn-blue"
+              :content="val.CONTENT_SIGNUP"
+              :title="val.TITLE_SIGNUP">
+              <template #btn>
+                <i class="fa-solid fa-user-plus fa-lg"></i>
+              </template>
+            </BtnElt>
+          </vue-recaptcha>
+        </form>
+
+        <BtnElt type="button"
+            @click="type = 'signIn'"
+            class="btn-green"
+            :content="val.CONTENT_ENTER"
+            :title="val.TITLE_GO + val.SIGN_IN">
+            <template #btn>
+              <i class="fa-solid fa-door-open fa-lg"></i>
+            </template>
+          </BtnElt>
+
+          <BtnElt type="button"
+            @click="type = 'forgotPass'"
+            class="btn-orange"
+            :content="val.CONTENT_SEND"
+            :title="val.TITLE_GO + val.FORGOT_PASS">
+            <template #btn>
+              <i class="fa-regular fa-paper-plane fa-lg"></i>
+            </template>
+          </BtnElt>
+      </template>
+    </CardElt>
+
+    <CardElt v-else-if="type === 'forgotPass'">
+      <template #header>
+        <h2 class="sky-dark">
+          <i class="fa-solid fa-key fa-lg"></i> {{ val.FORGOT_PASS }}
         </h2>
         <p>{{ val.INTRO_FORGOT }}</p>
       </template>
 
       <template #body>
         <form>
-          <FieldElt id="email"
-            type="email"
-            v-model:value="email"
-            :info="val.INFO_EMAIL"
-            required>
+          <FieldElt type="email" v-model:value="email" :info="val.INFO_EMAIL">
             <template #legend>{{ val.LEGEND_EMAIL }}</template>
             <template #label>{{ val.LABEL_EMAIL }}</template>
           </FieldElt>
 
-          <vue-recaptcha :sitekey="val.RECAPTCHA_KEY"
-            @verify="onVerify">
+          <vue-recaptcha :sitekey="val.RECAPTCHA_KEY" @verify="onVerify">
             <BtnElt type="button"
               class="btn-orange"
               :content="val.CONTENT_SEND"
@@ -182,7 +153,7 @@
         </form>
 
         <BtnElt type="button"
-          @click="setType('signUp')"
+          @click="type = 'signUp'"
           class="btn-blue"
           :content="val.CONTENT_SIGNUP"
           :title="val.TITLE_GO + val.SIGN_UP">
@@ -192,7 +163,7 @@
         </BtnElt>
 
         <BtnElt type="button"
-          @click="setType('signIn')"
+          @click="type = 'signIn'"
           class="btn-green"
           :content="val.CONTENT_ENTER"
           :title="val.TITLE_GO + val.SIGN_IN">
@@ -219,7 +190,9 @@ export default {
   props: ["val"],
   data() {
     return {
+      name: "",
       email: "",
+      image: "",
       pass: "",
       type: "signIn"
     }
@@ -234,74 +207,22 @@ export default {
 
   methods: {
     /**
-     * ? SET TYPE
-     * * Set the type of the object.
-     * @param {type} type - the new type of the object
-     */
-    setType(type) {
-      this.type = type;
-    },
-
-    /**
      * ? ON VERIFY
-     * * Handles the verification response.
-     * @param {type} response - the verification response
+     * * Handles the verification of the response from the reCAPTCHA.
+     * @param {Object} response - The response from the reCAPTCHA.
      */
     onVerify(response) {
-      const { CHECK_EMAIL, CHECK_STRING, REGEX_EMAIL, CHECK_PASS, REGEX_PASS, API_URL } = this.val;
+      const { ALERT_RECAPTCHA, API_URL } = this.val;
+      const URL = `${API_URL}/auth/recaptcha`;
 
-      const IS_NAME_CHECKED   = this.name ? checkRange(this.name, CHECK_STRING) : true;
-      const IS_EMAIL_CHECKED  = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL);
-      const IS_PASS_CHECKED   = this.pass ? checkRegex(this.pass, CHECK_PASS, REGEX_PASS) : true;
-
-      const IS_SIGN_UP      = this.type === "signUp" && IS_NAME_CHECKED && IS_EMAIL_CHECKED && IS_PASS_CHECKED;
-      const IS_SIGN_IN      = this.type === "signIn" && IS_EMAIL_CHECKED && IS_PASS_CHECKED;
-      const IS_FORGOT_PASS  = this.type === "forgotPass" && IS_EMAIL_CHECKED;
-
-      if (IS_SIGN_UP || IS_SIGN_IN || IS_FORGOT_PASS) {
-        const URL = `${API_URL}/auth/recaptcha`;
-
-        postData(URL, { response })
-          .then(result => {
-            const { success } = result;
-
-            if      (success && this.type === "signUp") this.createUser();
-            else if (success && this.type === "signIn") this.signIn();
-            else if (success && this.type === "forgotPass") this.forgotPass();
-            else alert("Failed captcha verification");
-          })
-          .catch(err => setError(err));
-      }
-    },
-
-    /**
-     * ? CREATE USER
-     * * Creates a new user.
-     */
-    createUser() {
-      const { API_URL, ALERT_CREATED, ALERT_IMG } = this.val;
-
-      const URL   = `${API_URL}/users`;
-      const data  = new FormData();
-      const img   = document.getElementById("image")?.files[0];
-
-      if (img !== undefined) {
-        data.append("name", this.name);
-        data.append("email", this.email);
-        data.append("image", img);
-        data.append("pass", this.pass);
-        data.append("role", "user");
-
-        postData(URL, data)
-          .then(() => {
-            alert(this.name + ALERT_CREATED);
-            this.$router.go();
-          })
-          .catch(err => setError(err));
-
-      } else {
-        alert(ALERT_IMG);
-      }
+      postData(URL, { response })
+        .then(({ success }) => {
+          if      (success && this.type === "signIn")     this.signIn();
+          else if (success && this.type === "signUp")     this.signUp();
+          else if (success && this.type === "forgotPass") this.forgotPass();
+          else    alert(ALERT_RECAPTCHA);
+        })
+        .catch(err => setError(err));
     },
 
     /**
@@ -309,20 +230,59 @@ export default {
      * * Signs in the user.
      */
     signIn() {
-      const URL   = `${this.val.API_URL}/auth`;
-      const data  = new FormData();
+      const { API_URL, CHECK_EMAIL, CHECK_PASS, REGEX_EMAIL, REGEX_PASS } = this.val;
+      const IS_EMAIL_CHECKED  = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL);
+      const IS_PASS_CHECKED   = checkRegex(this.pass, CHECK_PASS, REGEX_PASS);
 
-      data.append("email", this.email);
-      data.append("pass", this.pass);
+      if (IS_EMAIL_CHECKED && IS_PASS_CHECKED) {
+        const URL   = `${API_URL}/auth`;
+        const data  = new FormData();
 
-      postData(URL, data)
-        .then((res) => {
-          localStorage.setItem("userToken", JSON.stringify(res.token));
-          localStorage.setItem("userId", JSON.stringify(res.userId));
+        data.append("email", this.email);
+        data.append("pass", this.pass);
 
-          this.$router.go();
-        })
-        .catch(err => setError(err));
+        postData(URL, data)
+          .then((res) => {
+            localStorage.setItem("userToken", JSON.stringify(res.token));
+            localStorage.setItem("userId", JSON.stringify(res.userId));
+            this.$router.go();
+          })
+          .catch(err => setError(err));
+      }
+    },
+
+    /**
+     * ? SIGN UP
+     * * Creates a new user.
+     */
+    signUp() {
+      const { ALERT_CREATED, ALERT_IMG, API_URL, CHECK_EMAIL, CHECK_PASS, CHECK_STRING, REGEX_EMAIL, REGEX_PASS } = this.val;
+
+      const IS_NAME_CHECKED   = checkRange(this.name, CHECK_STRING);
+      const IS_EMAIL_CHECKED  = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL);
+      const IS_PASS_CHECKED   = checkRegex(this.pass, CHECK_PASS, REGEX_PASS);
+
+      if (IS_NAME_CHECKED && IS_EMAIL_CHECKED && IS_PASS_CHECKED) {
+        const URL   = `${API_URL}/users`;
+        const data  = new FormData();
+        const img   = document.querySelector('[type="file"]')?.files[0];
+
+        if (img !== undefined) {
+          data.append("name", this.name);
+          data.append("email", this.email);
+          data.append("image", img);
+          data.append("pass", this.pass);
+          data.append("role", "user");
+
+          postData(URL, data)
+            .then(() => {
+              alert(this.name + ALERT_CREATED);
+              this.$router.go();
+            })
+            .catch(err => setError(err));
+
+        } else { alert(ALERT_IMG) }
+      }
     },
 
     /**
@@ -330,9 +290,10 @@ export default {
      * * Executes the forgot password functionality.
      */
     forgotPass() {
-      const { CONFIRM_FORGOT, API_URL, FORGOT_SUBJECT, FORGOT_TEXT, ALERT_SENDED } = this.val;
+      const { ALERT_SENDED, API_URL, CHECK_EMAIL, CONFIRM_FORGOT, FORGOT_SUBJECT, FORGOT_TEXT, REGEX_EMAIL } = this.val;
+      const IS_EMAIL_CHECKED = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL);
 
-      if (confirm(CONFIRM_FORGOT)) {
+      if (IS_EMAIL_CHECKED && confirm(CONFIRM_FORGOT)) {
         const URL   = `${API_URL}/auth/pass`;
         const data  = new FormData();
 
