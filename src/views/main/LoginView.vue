@@ -182,7 +182,7 @@ import { checkRange, checkRegex, postData, setError, setMeta } from "servidio"
 import BtnElt from "@/assets/elements/BtnElt"
 import CardElt from "@/assets/elements/CardElt"
 import FieldElt from "@/assets/elements/FieldElt"
-import { VueRecaptcha } from "vue-recaptcha";
+import { VueRecaptcha } from "vue-recaptcha"
 
 export default {
   name: "LoginView",
