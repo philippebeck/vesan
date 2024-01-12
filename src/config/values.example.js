@@ -15,6 +15,7 @@ export default {
   ALERT_OPTION : "You need to choose an option !",
   ALERT_ORDER : "Order #",
   ALERT_ORDER_CREATED : "Order created !",
+  ALERT_RECAPTCHA : "Failed Recaptcha check !",
   ALERT_SENDED : " sended !",
   ALERT_UPDATED : " updated !",
 

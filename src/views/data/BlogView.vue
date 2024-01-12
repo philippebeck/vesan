@@ -16,7 +16,7 @@
       </template>
     </NavElt>
 
-    <CardElt :isArticle="true">
+    <CardElt :isArticle="true" class="container-90lg">
       <template #header>
         <h1 class="sky-dark">
           <i class="fa-solid fa-blog fa-lg"></i>
