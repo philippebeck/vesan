@@ -81,14 +81,17 @@
 </template>
 
 <script>
-import { checkRole, getCats, getItemsByCat, setMeta } from "servidio"
-import { mapState, mapActions } from "vuex"
+import CardElt from "@/components/elements/CardElt"
+import ListElt from "@/components/elements/ListElt"
+import MediaElt from "@/components/elements/MediaElt"
+import NavElt from "@/components/elements/NavElt"
+import ProductSet from "@/components/setters/ProductSet"
 
-import CardElt from "@/assets/elements/CardElt"
-import ListElt from "@/assets/elements/ListElt"
-import MediaElt from "@/assets/elements/MediaElt"
-import NavElt from "@/assets/elements/NavElt"
-import ProductSet from "@/assets/setters/ProductSet"
+import { checkRole } from "@/services/checkers"
+import { getCats, getItemsByCat } from "@/services/getters"
+import { setMeta } from "@/services/setters"
+
+import { mapState, mapActions } from "vuex"
 
 export default {
   name: "ShopView",

@@ -120,15 +120,19 @@
 </template>
 
 <script>
-import { checkRole, getCats, getItemsByCat, putData, setError, setMeta } from "servidio"
-import { mapState, mapActions } from "vuex"
+import BtnElt from "@/components/elements/BtnElt"
+import CardElt from "@/components/elements/CardElt"
+import ListElt from "@/components/elements/ListElt"
+import MediaElt from "@/components/elements/MediaElt"
+import NavElt from "@/components/elements/NavElt"
+import ArticleSet from "@/components/setters/ArticleSet"
 
-import BtnElt from "@/assets/elements/BtnElt"
-import CardElt from "@/assets/elements/CardElt"
-import ListElt from "@/assets/elements/ListElt"
-import MediaElt from "@/assets/elements/MediaElt"
-import NavElt from "@/assets/elements/NavElt"
-import ArticleSet from "@/assets/setters/ArticleSet"
+import { checkRole } from "@/services/checkers"
+import { putData } from "@/services/fetchers"
+import { getCats, getItemsByCat } from "@/services/getters"
+import { setError, setMeta } from "@/services/setters"
+
+import { mapState, mapActions } from "vuex"
 
 export default {
   name: "BlogView",

@@ -173,15 +173,18 @@
 </template>
 
 <script>
-import { checkRange, checkRegex, checkRole, deleteData, getData, putData, setError, setMeta } from "servidio"
-import { mapState } from "vuex"
+import BtnElt from "@/components/elements/BtnElt"
+import CardElt from "@/components/elements/CardElt"
+import FieldElt from "@/components/elements/FieldElt"
+import ListElt from "@/components/elements/ListElt"
+import MediaElt from "@/components/elements/MediaElt"
 
-import BtnElt from "@/assets/elements/BtnElt"
-import CardElt from "@/assets/elements/CardElt"
-import FieldElt from "@/assets/elements/FieldElt"
-import ListElt from "@/assets/elements/ListElt"
-import MediaElt from "@/assets/elements/MediaElt"
+import { checkRange, checkRegex, checkRole } from "@/services/checkers"
+import { deleteData, getData, putData } from "@/services/fetchers"
+import { setError, setMeta } from "@/services/setters"
+
 import Editor from "@tinymce/tinymce-vue"
+import { mapState } from "vuex"
 
 export default {
   name: "ArticleView",

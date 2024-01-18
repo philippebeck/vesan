@@ -66,13 +66,16 @@
 </template>
 
 <script>
-import { checkRange, checkRegex, postData, setError, setMeta } from "servidio"
-import { VueRecaptcha } from "vue-recaptcha"
+import BtnElt from "@/components/elements/BtnElt"
+import CardElt from "@/components/elements/CardElt"
+import FieldElt from "@/components/elements/FieldElt"
+import ListElt from "@/components/elements/ListElt"
 
-import BtnElt from "@/assets/elements/BtnElt"
-import CardElt from "@/assets/elements/CardElt"
-import FieldElt from "@/assets/elements/FieldElt"
-import ListElt from "@/assets/elements/ListElt"
+import { checkRange, checkRegex } from "@/services/checkers"
+import { postData } from "@/services/fetchers"
+import { setError, setMeta } from "@/services/setters"
+
+import { VueRecaptcha } from "vue-recaptcha"
 
 export default {
   name: "ContactView",

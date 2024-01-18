@@ -177,11 +177,14 @@
 </template>
 
 <script>
-import { checkRange, checkRegex, postData, setError, setMeta } from "servidio"
+import BtnElt from "@/components/elements/BtnElt"
+import CardElt from "@/components/elements/CardElt"
+import FieldElt from "@/components/elements/FieldElt"
 
-import BtnElt from "@/assets/elements/BtnElt"
-import CardElt from "@/assets/elements/CardElt"
-import FieldElt from "@/assets/elements/FieldElt"
+import { checkRange, checkRegex } from "@/services/checkers"
+import { postData } from "@/services/fetchers"
+import { setError, setMeta } from "@/services/setters"
+
 import { VueRecaptcha } from "vue-recaptcha"
 
 export default {

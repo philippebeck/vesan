@@ -121,16 +121,19 @@
 </template>
 
 <script>
-import { checkRange, checkRegex, checkRole, deleteData, putData, setError, setMeta } from "servidio"
-import { mapState, mapActions } from "vuex"
+import BtnElt from "@/components/elements/BtnElt"
+import CardElt from "@/components/elements/CardElt"
+import FieldElt from "@/components/elements/FieldElt"
+import ListElt from "@/components/elements/ListElt"
+import MediaElt from "@/components/elements/MediaElt"
+import NavElt from "@/components/elements/NavElt"
+import UserSet from "@/components/setters/UserSet"
 
-import BtnElt from "@/assets/elements/BtnElt"
-import CardElt from "@/assets/elements/CardElt"
-import FieldElt from "@/assets/elements/FieldElt"
-import ListElt from "@/assets/elements/ListElt"
-import MediaElt from "@/assets/elements/MediaElt"
-import NavElt from "@/assets/elements/NavElt"
-import UserSet from "@/assets/setters/UserSet"
+import { checkRange, checkRegex, checkRole } from "@/services/checkers"
+import { deleteData, putData } from "@/services/fetchers"
+import { setError, setMeta } from "@/services/setters"
+
+import { mapState, mapActions } from "vuex"
 
 export default {
   name: "ProfileView",
