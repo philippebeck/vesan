@@ -1,7 +1,7 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import { createStore } from 'vuex';
 import * as serve from "servidio"
-import ProfileEditor from "../../views/admin/ProfileView"
+import ProfileEditor from "../../../views/main/ProfileView"
 
 let wrapper;
 let store;

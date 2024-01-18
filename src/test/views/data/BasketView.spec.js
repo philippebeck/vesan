@@ -1,6 +1,6 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import * as serve from "servidio"
-import BasketView from "../../views/shop/BasketView"
+import BasketView from "../../../views/data/BasketView"
 
 global.fetch = jest.fn(() =>
   Promise.resolve({

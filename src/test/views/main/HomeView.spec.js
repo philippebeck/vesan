@@ -1,6 +1,6 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import * as serve from "servidio"
-import HomeView from "../../views/base/HomeView"
+import HomeView from "../../../views/main/HomeView"
 
 let wrapper;
 

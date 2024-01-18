@@ -1,7 +1,7 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import { createStore } from 'vuex';
 import * as serve from "servidio"
-import LinkView from "../../views/data/LinkView"
+import LinkView from "../../../views/data/LinkView"
 
 let wrapper;
 let store;

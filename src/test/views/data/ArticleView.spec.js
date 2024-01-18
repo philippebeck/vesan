@@ -1,7 +1,7 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import { createStore } from "vuex"
+import { createStore } from 'vuex';
 import * as serve from "servidio"
-import ImageView from "../../views/data/ImageView"
+import ArticleView from "../../../views/data/ArticleView"
 
 global.fetch = jest.fn(() =>
   Promise.resolve({
@@ -27,20 +27,31 @@ const mockRouter = {
   push: jest.fn()
 }
 
+const role = "user";
+const user = {
+  name: "John Doe",
+  role: role
+}
+
 let wrapper;
 let store;
 let actions;
 let state;
 
+/**
+ * @jest-environment jsdom
+ */
 beforeEach(() => {
   jest.spyOn(serve, "setMeta").mockImplementation(() => {});
 
   actions = {
-    listGalleryImages: jest.fn()
+    listArticleComments: jest.fn(),
+    readArticle: jest.fn()
   };
 
   state = {
-    images: []
+    article: {},
+    comments: []
   };
 
   store = createStore({
@@ -52,17 +63,13 @@ beforeEach(() => {
 
   mockRouter.push(mockRoute);
 
-  wrapper = shallowMount(ImageView, {
+  wrapper = shallowMount(ArticleView, {
     props: {
       val: {
         TEST: "test"
       },
-      user: {
-        name: "test",
-        email: "email@test.com"
-      }
+      user: user
     },
-
     global: {
       plugins: [store],
       mocks: {
@@ -78,26 +85,27 @@ enableAutoUnmount(afterEach)
 /**
  * @jest-environment jsdom
  */
-describe("ImageView", () => {
-  test("wrapper", () => { 
+describe("ArticleView", () => {
+  test("wrapper must be a vue instance", () => { 
     expect(wrapper.exists()).toBe(true)
   })
 
   test("components", () => { 
-    expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object") 
-    expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object") 
-    expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object") 
-    expect(typeof wrapper.findComponent({ name: "SliderElt" })).toBe("object") 
-    expect(typeof wrapper.findComponent({ name: "ImageCreator" })).toBe("object") 
+    expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "CommentCreator" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "CommentList" })).toBe("object")
   })
 
   test("props", () => { 
-    expect(wrapper.props("val")).toStrictEqual({ TEST: "test" })
-    expect(wrapper.props("user")).toStrictEqual({ name: "test", email: "email@test.com"})
+    expect(wrapper.props().val).toStrictEqual({ TEST: "test" })
   })
 
   test("methods", () => { 
-    expect(typeof wrapper.vm.listGalleryImages).toBe("function")
+    expect(typeof wrapper.vm.listArticleComments).toBe("function")
     expect(typeof wrapper.vm.checkSession).toBe("function")
+    expect(typeof wrapper.vm.checkLikes).toBe("function")
+    expect(typeof wrapper.vm.addLike).toBe("function")
   })
 })
