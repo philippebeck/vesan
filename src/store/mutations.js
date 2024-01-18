@@ -160,8 +160,8 @@ const mutations = {
   /**
    * ? SET USER
    * * Set a user in the state.
-   * @param {any} state - The state object.
-   * @param {any} user - The user to be set.
+   * @param {Object} state - The state object.
+   * @param {Array} user - The user to be set.
    */
   setUser(state, user) {
     state.user = user;
