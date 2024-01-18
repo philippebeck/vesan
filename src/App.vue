@@ -82,14 +82,15 @@
 </template>
 
 <script>
-import { checkRole, setGlobalMeta } from "servidio"
-import { mapActions, mapMutations, mapState } from "vuex"
+import FootElt from "@/components/elements/FootElt"
+import ListElt from "@/components/elements/ListElt"
+import NavElt from "@/components/elements/NavElt"
 
-import FootElt from "@/assets/elements/FootElt"
-import ListElt from "@/assets/elements/ListElt"
-import NavElt from "@/assets/elements/NavElt"
+import { checkRole } from "@/services/checkers"
+import { setGlobalMeta } from "@/services/setters"
 
 import val from "./config/values"
+import { mapActions, mapMutations, mapState } from "vuex"
 
 export default {
   name: 'App',
