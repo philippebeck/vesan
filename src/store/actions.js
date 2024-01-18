@@ -1,5 +1,6 @@
-import { getData, setError } from "servidio"
 import val from "../config/values"
+import { getData } from "../services/fetchers"
+import { setError } from "../services/setters"
 
 const actions = {
 

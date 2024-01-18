@@ -56,14 +56,16 @@
 </template>
 
 <script>
-import { checkRole, setMeta } from "servidio"
-import { mapState, mapActions } from "vuex"
+import CardElt from "@/components/elements/CardElt"
+import ListElt from "@/components/elements/ListElt"
+import MediaElt from "@/components/elements/MediaElt"
+import NavElt from "@/components/elements/NavElt"
+import GallerySet from "@/components/setters/GallerySet"
 
-import CardElt from "@/assets/elements/CardElt"
-import ListElt from "@/assets/elements/ListElt"
-import MediaElt from "@/assets/elements/MediaElt"
-import NavElt from "@/assets/elements/NavElt"
-import GallerySet from "@/assets/setters/GallerySet"
+import { checkRole } from "@/services/checkers"
+import { setMeta } from "@/services/setters"
+
+import { mapState, mapActions } from "vuex"
 
 export default {
   name: "GalleryView",
