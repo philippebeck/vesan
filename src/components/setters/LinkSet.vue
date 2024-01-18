@@ -141,13 +141,16 @@
 </template>
 
 <script>
-import { checkRange, checkRegex, deleteData, getItemName, getItemsByCat, postData, putData, setError } from "servidio"
+import BtnElt from "@/components/elements/BtnElt"
+import CardElt from "@/components/elements/CardElt"
+import FieldElt from "@/components/elements/FieldElt"
+import ListElt from "@/components/elements/ListElt"
+import TableElt from "@/components/elements/TableElt"
 
-import BtnElt from "../elements/BtnElt"
-import CardElt from "../elements/CardElt"
-import FieldElt from "../elements/FieldElt"
-import ListElt from "../elements/ListElt"
-import TableElt from "../elements/TableElt"
+import { checkRange, checkRegex } from "@/services/checkers"
+import { deleteData, postData, putData } from "@/services/fetchers"
+import { getItemName, getItemsByCat } from "@/services/getters"
+import { setError } from "@/services/setters"
 
 export default {
   name: "LinkSet",

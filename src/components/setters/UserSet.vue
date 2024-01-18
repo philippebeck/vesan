@@ -95,13 +95,16 @@
 </template>
 
 <script>
-import { checkRange, checkRegex, deleteData, getItemName, putData, setError } from "servidio"
+import BtnElt from "@/components/elements/BtnElt"
+import CardElt from "@/components/elements/CardElt"
+import FieldElt from "@/components/elements/FieldElt"
+import MediaElt from "@/components/elements/MediaElt"
+import TableElt from "@/components/elements/TableElt"
 
-import BtnElt from "../elements/BtnElt"
-import CardElt from "../elements/CardElt"
-import FieldElt from "../elements/FieldElt"
-import MediaElt from "../elements/MediaElt"
-import TableElt from "../elements/TableElt"
+import { checkRange, checkRegex } from "@/services/checkers"
+import { deleteData, putData } from "@/services/fetchers"
+import { getItemName } from "@/services/getters"
+import { setError } from "@/services/setters"
 
 export default {
   name: "UserSet",
