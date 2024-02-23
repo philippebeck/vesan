@@ -177,13 +177,13 @@
 </template>
 
 <script>
-import BtnElt from "@/components/elements/BtnElt"
-import CardElt from "@/components/elements/CardElt"
-import FieldElt from "@/components/elements/FieldElt"
+import BtnElt from "../../components/elements/BtnElt"
+import CardElt from "../../components/elements/CardElt"
+import FieldElt from "../../components/elements/FieldElt"
 
-import { checkRange, checkRegex } from "@/services/checkers"
-import { postData } from "@/services/fetchers"
-import { setError, setMeta } from "@/services/setters"
+import { checkRange, checkRegex } from "../../services/checkers"
+import { postData } from "../../services/fetchers"
+import { setError, setMeta } from "../../services/setters"
 
 import { VueRecaptcha } from "vue-recaptcha"
 

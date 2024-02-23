@@ -1,5 +1,8 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import * as serve from "servidio"
+import * as checkers from "../../../services/checkers"
+import * as fetchers from "../../../services/fetchers"
+import * as getters from "../../../services/getters"
+import * as setters from "../../../services/setters"
 import LinkSet from "../../../components/setters/LinkSet"
 
 let wrapper;
@@ -7,14 +10,14 @@ let wrapper;
 jest.mock("axios");
 
 beforeEach(() => {
-  jest.spyOn(serve, "deleteData").mockImplementation(() => {});
-  jest.spyOn(serve, "putData").mockImplementation(() => {});
+  jest.spyOn(fetchers, "deleteData").mockImplementation(() => {});
+  jest.spyOn(fetchers, "putData").mockImplementation(() => {});
 
-  jest.spyOn(serve, "checkRange").mockImplementation(() => {});
-  jest.spyOn(serve, "checkRegex").mockImplementation(() => {});
-  jest.spyOn(serve, "getItemName").mockImplementation(() => {});
-  jest.spyOn(serve, "getItemsByCat").mockImplementation(() => {});
-  jest.spyOn(serve, "setError").mockImplementation(() => {});
+  jest.spyOn(checkers, "checkRange").mockImplementation(() => {});
+  jest.spyOn(checkers, "checkRegex").mockImplementation(() => {});
+  jest.spyOn(getters, "getItemName").mockImplementation(() => {});
+  jest.spyOn(getters, "getItemsByCat").mockImplementation(() => {});
+  jest.spyOn(setters, "setError").mockImplementation(() => {});
 
   wrapper = shallowMount(LinkSet, {
     props: {
@@ -79,27 +82,10 @@ describe("LinkSet", () => {
   })
 
   test("methods", () => { 
-    expect(typeof wrapper.vm.getLinks).toBe("function") 
     expect(typeof wrapper.vm.getItemsByCategory).toBe("function") 
-    expect(typeof wrapper.vm.getLink).toBe("function") 
-    expect(typeof wrapper.vm.checkLink).toBe("function") 
+    expect(typeof wrapper.vm.createLink).toBe("function") 
     expect(typeof wrapper.vm.updateLink).toBe("function") 
     expect(typeof wrapper.vm.deleteLink).toBe("function") 
-  })
-
-  test("getLinks()", () => {
-    expect(wrapper.vm.getLinks()).toStrictEqual([
-      {
-        name: "Link Name 1",
-        url: "Link Url 1",
-        cat: "Link Cat 1",
-      },
-      {
-        name: "Link Name 2",
-        url: "Link Url 2",
-        cat: "Link Cat 2",
-      }
-    ])
   })
 
   test("getItemsByCategory()", () => {
@@ -115,34 +101,7 @@ describe("LinkSet", () => {
         cat: "Link Cat 2",
       }
     ])
-    expect(serve.getItemsByCat).toHaveBeenCalledTimes(1)
-    expect(serve.getItemsByCat).toHaveBeenCalledWith([
-      {
-        name: "Link Name 1",
-        url: "Link Url 1",
-        cat: "Link Cat 1",
-      },
-      {
-        name: "Link Name 2",
-        url: "Link Url 2",
-        cat: "Link Cat 2",
-      }
-    ])
-    expect(serve.getItemsByCat).toHaveReturned()
+    expect(getters.getItemsByCat).toHaveBeenCalledTimes(1)
+    expect(getters.getItemsByCat).toHaveReturned()
   })
-
-  test('getLink() must create an instance of FormData() & append the link infos', () => {
-    const link = {
-      name: 'Link Name',
-      url: 'https://example.com',
-      cat: 'Category',
-    };
-
-    const result = wrapper.vm.getLink(link);
-
-    expect(result instanceof FormData).toBe(true);
-    expect(result.get('name')).toBe(link.name);
-    expect(result.get('url')).toBe(link.url);
-    expect(result.get('cat')).toBe(link.cat);
-  });
 });

@@ -1,6 +1,6 @@
 // ! ******************** CHECKERS TESTS ********************
 
-import { checkRange, checkRegex, checkRole } from "../src/checkers";
+import { checkRange, checkRegex, checkRole } from "../../services/checkers";
 
 global.alert = jest.fn();
 

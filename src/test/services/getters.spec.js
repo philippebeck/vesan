@@ -1,6 +1,6 @@
 // ! ******************** GETTERS TESTS ********************
 
-import { getCats, getItemName, getItemsByCat } from "../src/getters"
+import { getCats, getItemName, getItemsByCat } from "../../services/getters"
 
 /**
  * ? GET CATS

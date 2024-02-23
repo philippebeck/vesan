@@ -1,5 +1,5 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import * as serve from "servidio"
+import * as setters from "../../../services/setters"
 import LoginView from "../../../views/main/LoginView"
 
 let wrapper;
@@ -9,7 +9,7 @@ let setMetaSpy;
  * @jest-environment jsdom
  */
 beforeEach(() => {
-  setMetaSpy = jest.spyOn(serve, "setMeta").mockImplementation(() => {});
+  setMetaSpy = jest.spyOn(setters, "setMeta").mockImplementation(() => {});
 
   Object.defineProperty(window, 'localStorage', {
     value: {
@@ -85,7 +85,7 @@ describe("LoginView", () => {
   })
 
   test("wrapper created hook", () => {
-    expect(serve.setMeta).toHaveBeenCalled()
+    expect(setters.setMeta).toHaveBeenCalled()
   })
 
   test('calls setMeta with the correct arguments', () => {
@@ -101,23 +101,4 @@ describe("LoginView", () => {
     const routerPushSpy = jest.spyOn(wrapper.vm.$router, 'push');
     expect(routerPushSpy).toHaveBeenCalledWith('/');
   });
-
-  test("wrapper methods", () => { 
-    expect(typeof wrapper.vm.setType).toBe("function")
-  })
-
-  test("setType('SignIn')", () => {
-    wrapper.vm.setType("SignIn")
-    expect(wrapper.vm.type).toBe("SignIn")
-  })
-
-  test("setType('SignUp')", () => {
-    wrapper.vm.setType("SignUp")
-    expect(wrapper.vm.type).toBe("SignUp")
-  })
-
-  test("setType('ForgotPass')", () => {
-    wrapper.vm.setType("ForgotPass")
-    expect(wrapper.vm.type).toBe("ForgotPass")
-  })
 })

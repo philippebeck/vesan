@@ -1,6 +1,6 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import { createStore } from 'vuex';
-import * as serve from "servidio"
+import * as setters from "../../../services/setters"
 import BlogView from "../../../views/data/BlogView"
 
 let wrapper;
@@ -9,7 +9,7 @@ let actions;
 let state;
 
 beforeEach(() => {
-  jest.spyOn(serve, "setMeta").mockImplementation(() => {});
+  jest.spyOn(setters, "setMeta").mockImplementation(() => {});
 
   actions = {
     listArticles: jest.fn()

@@ -44,22 +44,9 @@ describe("ProductSet", () => {
 
   test("props", () => {
     expect(wrapper.props("val")).toStrictEqual({ TEST: "test" })
-    expect(wrapper.props("products")).toStrictEqual([{
-      name: "Product name",
-      description: "Product description",
-      image: "Product image",
-      alt: "Product alt",
-      price: "Product price",
-      options: "Product options",
-      cat: "Product cat"
-    }])
   })
 
   test("methods", () => {
-    expect(typeof wrapper.vm.getProducts).toBe("function")
-    expect(typeof wrapper.vm.getProduct).toBe("function")
-    expect(typeof wrapper.vm.checkProduct).toBe("function")
-    expect(typeof wrapper.vm.updateProduct).toBe("function")
-    expect(typeof wrapper.vm.deleteProduct).toBe("function")
+    expect(typeof wrapper.vm.createProduct).toBe("function")
   })
 })

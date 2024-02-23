@@ -182,16 +182,16 @@
 </template>
 
 <script>
-import BtnElt from "@/components/elements/BtnElt"
-import CardElt from "@/components/elements/CardElt"
-import FieldElt from "@/components/elements/FieldElt"
-import MediaElt from "@/components/elements/MediaElt"
-import TableElt from "@/components/elements/TableElt"
-import OrderSet from "@/components/setters/OrderSet"
+import BtnElt from "../../components/elements/BtnElt"
+import CardElt from "../../components/elements/CardElt"
+import FieldElt from "../../components/elements/FieldElt"
+import MediaElt from "../../components/elements/MediaElt"
+import TableElt from "../../components/elements/TableElt"
+import OrderSet from "../../components/setters/OrderSet"
 
-import { checkRole } from "@/services/checkers"
-import { getData, postData } from "@/services/fetchers"
-import { setError, setMeta } from "@/services/setters"
+import { checkRole } from "../../services/checkers"
+import { getData, postData } from "../../services/fetchers"
+import { setError, setMeta } from "../../services/setters"
 
 import { loadScript } from "@paypal/paypal-js"
 import { mapState, mapActions } from "vuex"

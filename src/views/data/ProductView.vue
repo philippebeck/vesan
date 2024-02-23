@@ -179,17 +179,17 @@
 </template>
 
 <script>
-import BtnElt from "@/components/elements/BtnElt"
-import CardElt from "@/components/elements/CardElt"
-import FieldElt from "@/components/elements/FieldElt"
-import ListElt from "@/components/elements/ListElt"
-import MediaElt from "@/components/elements/MediaElt"
+import BtnElt from "../../components/elements/BtnElt"
+import CardElt from "../../components/elements/CardElt"
+import FieldElt from "../../components/elements/FieldElt"
+import ListElt from "../../components/elements/ListElt"
+import MediaElt from "../../components/elements/MediaElt"
+
+import { checkRange, checkRole } from "../../services/checkers"
+import { deleteData, getData, putData } from "../../services/fetchers"
+import { setError, setMeta } from "../../services/setters"
+
 import Editor from "@tinymce/tinymce-vue"
-
-import { checkRange, checkRole } from "@/services/checkers"
-import { deleteData, getData, putData } from "@/services/fetchers"
-import { setError, setMeta } from "@/services/setters"
-
 import { mapState } from "vuex"
 
 export default {

@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * ? CHECK RANGE
  * * Checks whether a given value is within a specified range of min & max values,

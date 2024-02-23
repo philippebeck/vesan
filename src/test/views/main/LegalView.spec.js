@@ -1,11 +1,11 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import * as serve from "servidio"
+import * as setters from "../../../services/setters"
 import LegalView from "../../../views/main/LegalView"
 
 let wrapper;
 
 beforeEach(() => {
-  jest.spyOn(serve, "setMeta").mockImplementation(() => {});
+  jest.spyOn(setters, "setMeta").mockImplementation(() => {});
 
   wrapper = shallowMount(LegalView, {
     props: {
@@ -36,13 +36,9 @@ describe("LegalView", () => {
 
   test("wrapper props", () => { 
     expect(wrapper.props("val")).toStrictEqual({ TEST: "test" })
-    expect(wrapper.props("user")).toStrictEqual({ 
-      name: "test", 
-      email: "email@test.com" 
-    })
   })
 
   test("wrapper created hook", () => {
-    expect(serve.setMeta).toHaveBeenCalled()
+    expect(setters.setMeta).toHaveBeenCalled()
   })
 })

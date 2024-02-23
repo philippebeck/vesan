@@ -1,7 +1,7 @@
 // ! ******************** FETCHERS TESTS ********************
 
 import axios from "axios";
-import { setAxios, postData, getData, putData, deleteData } from "../src/fetchers";
+import { setAxios, postData, getData, putData, deleteData } from "../../services/fetchers";
 
 const DEFAULT = "multipart/form-data";
 const TOKEN   = "abc123";

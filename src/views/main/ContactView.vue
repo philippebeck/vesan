@@ -66,14 +66,14 @@
 </template>
 
 <script>
-import BtnElt from "@/components/elements/BtnElt"
-import CardElt from "@/components/elements/CardElt"
-import FieldElt from "@/components/elements/FieldElt"
-import ListElt from "@/components/elements/ListElt"
+import BtnElt from "../../components/elements/BtnElt"
+import CardElt from "../../components/elements/CardElt"
+import FieldElt from "../../components/elements/FieldElt"
+import ListElt from "../../components/elements/ListElt"
 
-import { checkRange, checkRegex } from "@/services/checkers"
-import { postData } from "@/services/fetchers"
-import { setError, setMeta } from "@/services/setters"
+import { checkRange, checkRegex } from "../../services/checkers"
+import { postData } from "../../services/fetchers"
+import { setError, setMeta } from "../../services/setters"
 
 import { VueRecaptcha } from "vue-recaptcha"
 
