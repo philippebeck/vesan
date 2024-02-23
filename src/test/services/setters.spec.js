@@ -1,6 +1,8 @@
 // ! ******************** SETTERS TESTS ********************
 
-import { setError, setGlobalMeta, setMeta } from "../src/setters"
+import { setError, setGlobalMeta, setMeta } from "../../services/setters"
+
+global.alert = jest.fn();
 
 /**
  * ? SET ERROR
@@ -10,11 +12,9 @@ describe("setError()", () => {
 
   test("logs the error message from the provided error object", () => {
     const error = new Error("Test error message");
-    const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
     setError(error);
 
-    expect(consoleErrorSpy).toHaveBeenCalledWith("Test error message");
-    consoleErrorSpy.mockRestore();
+    expect(alert).toHaveBeenCalledWith("Test error message");
   });
 
   test("logs the error message from the error response data if it exists", () => {
@@ -27,11 +27,9 @@ describe("setError()", () => {
       message: "Error message without response data"
     };
 
-    const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
     setError(error);
 
-    expect(consoleErrorSpy).toHaveBeenCalledWith("Test error message");
-    consoleErrorSpy.mockRestore();
+    expect(alert).toHaveBeenCalledWith("Test error message");
   });
 });
 
