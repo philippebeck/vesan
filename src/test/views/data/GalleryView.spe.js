@@ -1,6 +1,6 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import { createStore } from 'vuex';
-import * as serve from "servidio"
+import * as setters from "../../../services/setters"
 import GalleryView from "../../../views/data/GalleryView"
 
 let wrapper;
@@ -12,7 +12,7 @@ let state;
  * @jest-environment jsdom
  */
 beforeEach(() => {
-  jest.spyOn(serve, "setMeta").mockImplementation(() => {});
+  jest.spyOn(setters, "setMeta").mockImplementation(() => {});
 
   actions = {
     listGalleries: jest.fn()

@@ -1,6 +1,6 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import { createStore } from 'vuex';
-import * as serve from "servidio"
+import * as setters from "../../../services/setters"
 import ProductView from "../../../views/data/ProductView"
 
 global.fetch = jest.fn(() =>
@@ -36,7 +36,7 @@ let state;
  * @jest-environment jsdom
  */
 beforeEach(() => {
-  jest.spyOn(serve, "setMeta").mockImplementation(() => {});
+  jest.spyOn(setters, "setMeta").mockImplementation(() => {});
 
   actions = {
     listProductReviews: jest.fn(),
