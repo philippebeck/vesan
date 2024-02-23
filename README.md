@@ -1,6 +1,6 @@
 # Vesan 
 
-UI with Vue-Elt, Servidio & Animadio
+Vesan is a User Interface Framework made with Vue & Animadio
 
 [![NPM Version](https://badgen.net/npm/v/vesan)](https://www.npmjs.com/package/vesan)
 [![NPM Downloads](https://badgen.net/npm/dt/vesan)](https://www.npmjs.com/package/vesan)
@@ -13,18 +13,7 @@ UI with Vue-Elt, Servidio & Animadio
 [![GitHub Top Language](https://img.shields.io/github/languages/top/philippebeck/vesan)](https://github.com/philippebeck/vesan)
 [![Code Size](https://img.shields.io/github/languages/code-size/philippebeck/vesan)](https://github.com/philippebeck/vesan/tree/master)
 
-## Overview
-
-Vesan is a complete User Interface made from Vue & built with 3 complementary "homemade" packages :
--  Vue-Elt, for the SFC components, as main structure  
--  Servidio, for Axios calls & front securities, as frontend services  
--  Animadio, a CSS library built with Sass, as design  
-
-## Summary
-
 - [Vesan](#vesan)
-  - [Overview](#overview)
-  - [Summary](#summary)
   - [Download](#download)
   - [Package](#package)
   - [Installation](#installation)
@@ -61,21 +50,18 @@ Yarn : `yarn add vesan`
 Install the frontend dependencies :  
 `$ npm install`  
 
-Create assets components :  
-`$ grunt`  
-
 ---
 
 ## Configuration
 
 To configure the frontend constants, replace values :  
-`values.example.js` *(then rename it values.js)*  
+`/src/config/values.example.js` *(then rename it /src/config/values.js)*  
 
 ---
 
 ## Usage
 
-To run the frontend :  
+To run the UI :  
 `$ npm start`  
 
 ---
@@ -90,6 +76,27 @@ To run the frontend :
 ---
 ## Content
 
+Elements Components :  
+-   **BtnElt**  
+-   **CardElt**  
+-   **FieldElt**  
+-   **FootElt**  
+-   **ListElt**  
+-   **MediaElt**  
+-   **NavElt**  
+-   **SliderElt**  
+-   **TableElt**  
+
+Setters Components :  
+-   **ArticleSet** *(Article Setter)*  
+-   **GallerySet** *(Gallery Setter)*  
+-   **ImageSet** *(Image Setter)*  
+-   **LinkSet** *(Link Setter)*  
+-   **OrderSet** *(Order Setter)*  
+-   **ProductSet** *(Product Setter)*  
+-   **ProjectSet** *(Project Setter)*  
+-   **UserSet** *(User Setter)*  
+
 Main Views :  
 -   **HomeView** *(Home)*  
 -   **ContactView** *(Contact)*  
@@ -101,12 +108,19 @@ Main Views :
 Data Views :  
 -   **BlogView** *(Blog with articles list)*  
 -   **ArticleView** *(Article of the blog)*  
+-   **PortfolioView** *(Portfolio of projects)*
 -   **ShopView** *(Shop with products list)*  
 -   **ProductView** *(Product of the shop)*  
 -   **BasketView** *(Basket & order process)*  
 -   **GalleryView** *(Galleries list)*  
 -   **ImageView** *(Images of a gallery)*  
 -   **LinkView** *(Links list)*  
+
+Services :  
+-   **Checkers** : checkRange(), checkRegex(), checkRole()  
+-   **Fetchers** : getData(), postData(), putData(), deleteData()  
+-   **Getters** : getCats(), getItemName(), getItemsByCat()  
+-   **Setters** : setError(), setGlobalMeta(), setMeta()  
 
 ---
 
@@ -116,6 +130,4 @@ Available Demo :
 -   [**Animadio**](https://philippebeck.github.io/animadio)  
 
 Available Readme :  
--   [**Vue-Elt**](https://github.com/philippebeck/vue-elt)  
--   [**Servidio**](https://github.com/philippebeck/servidio)  
 -   [**Animadio**](https://github.com/philippebeck/animadio)  
