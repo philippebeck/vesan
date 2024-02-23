@@ -60,15 +60,15 @@
 </template>
 
 <script>
-import BtnElt from "@/components/elements/BtnElt"
-import CardElt from "@/components/elements/CardElt"
-import ListElt from "@/components/elements/ListElt"
-import NavElt from "@/components/elements/NavElt"
-import LinkSet from "@/components/setters/LinkSet"
+import BtnElt from "../../components/elements/BtnElt"
+import CardElt from "../../components/elements/CardElt"
+import ListElt from "../../components/elements/ListElt"
+import NavElt from "../../components/elements/NavElt"
+import LinkSet from "../../components/setters/LinkSet"
 
-import { checkRole } from "@/services/checkers"
-import { getCats, getItemsByCat } from "@/services/getters"
-import { setMeta } from "@/services/setters"
+import { checkRole } from "../../services/checkers"
+import { getCats, getItemsByCat } from "../../services/getters"
+import { setMeta } from "../../services/setters"
 
 import { mapState, mapActions } from "vuex"
 

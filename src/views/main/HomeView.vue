@@ -34,11 +34,11 @@
 </template>
 
 <script>
-import BtnElt from "@/components/elements/BtnElt"
-import CardElt from "@/components/elements/CardElt"
-import ListElt from "@/components/elements/ListElt"
+import BtnElt from "../../components/elements/BtnElt"
+import CardElt from "../../components/elements/CardElt"
+import ListElt from "../../components/elements/ListElt"
 
-import { setMeta } from "@/services/setters"
+import { setMeta } from "../../services/setters"
 
 export default {
   name: "HomeView",

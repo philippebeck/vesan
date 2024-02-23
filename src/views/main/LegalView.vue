@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import CardElt from "@/components/elements/CardElt"
-import { setMeta } from "@/services/setters"
+import CardElt from "../../components/elements/CardElt"
+import { setMeta } from "../../services/setters"
 
 export default {
   name: "LegalView",
