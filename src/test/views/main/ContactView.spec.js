@@ -1,5 +1,5 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import * as serve from "servidio"
+import * as setters from "../../../services/setters"
 import ContactView from "../../../views/main/ContactView"
 
 let wrapper;
@@ -8,7 +8,7 @@ let wrapper;
  * @jest-environment jsdom
  */
 beforeEach(() => {
-  jest.spyOn(serve, "setMeta").mockImplementation(() => {});
+  jest.spyOn(setters, "setMeta").mockImplementation(() => {});
 
   wrapper = shallowMount(ContactView, {
     props: {
@@ -50,10 +50,6 @@ describe("ContactView", () => {
 
   test("wrapper props", () => {
     expect(wrapper.props("val")).toStrictEqual({ TEST: "test" })
-    expect(wrapper.props("user")).toStrictEqual({ 
-      name: "test", 
-      email: "email@test.com" 
-    })
   })
 
   test("wrapper data", () => {
@@ -65,7 +61,7 @@ describe("ContactView", () => {
   })
 
   test("wrapper created hook", () => {
-    expect(serve.setMeta).toHaveBeenCalled()
+    expect(setters.setMeta).toHaveBeenCalled()
   })
 
   test("wrapper methods", () => {

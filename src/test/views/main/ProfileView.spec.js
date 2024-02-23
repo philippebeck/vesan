@@ -1,7 +1,7 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import { createStore } from 'vuex';
-import * as serve from "servidio"
-import ProfileEditor from "../../../views/main/ProfileView"
+import * as setters from "../../../services/setters"
+import ProfileView from "../../../views/main/ProfileView"
 
 let wrapper;
 let store;
@@ -9,7 +9,7 @@ let actions;
 let state;
 
 beforeEach(() => {
-  jest.spyOn(serve, "setMeta").mockImplementation(() => {});
+  jest.spyOn(setters, "setMeta").mockImplementation(() => {});
 
   global.alert = jest.fn();
   const push = jest.fn();
@@ -34,7 +34,7 @@ beforeEach(() => {
     actions: actions
   })
 
-  wrapper = shallowMount(ProfileEditor, {
+  wrapper = shallowMount(ProfileView, {
     props: {
       val: {
         TEST: "test"
@@ -60,7 +60,7 @@ enableAutoUnmount(afterEach)
 /**
  * @jest-environment jsdom
  */
-describe("ProfileEditor", () => {
+describe("ProfileView", () => {
   test("wrapper", () => { 
     expect(wrapper.exists()).toBe(true)
   })
@@ -85,7 +85,7 @@ describe("ProfileEditor", () => {
 
   test("methods", () => { 
     expect(typeof wrapper.vm.readUser).toBe("function")
-    expect(typeof wrapper.vm.listUserOrders).toBe("function")
+    expect(typeof wrapper.vm.listUsers).toBe("function")
     expect(typeof wrapper.vm.checkSession).toBe("function")
     expect(typeof wrapper.vm.logout).toBe("function")
     expect(typeof wrapper.vm.updateUser).toBe("function")
