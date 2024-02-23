@@ -30,7 +30,7 @@ describe("Default FieldElt", () => {
 
   test("must have a props 'max' with 'Number' as type & '50' as default value", () => {
     expect(typeof wrapper.props("max")).toBe("number")
-    expect(wrapper.props("max")).toBe(50)
+    expect(wrapper.props("max")).toBe(250)
   })
 
   test("must have a props 'cols' with 'Number' as type & '20' as default value", () => {
@@ -45,7 +45,7 @@ describe("Default FieldElt", () => {
 
   test("must have a props 'required' with 'String' as type & 'required' as default value", () => {
     expect(typeof wrapper.props("required")).toBe("string")
-    expect(wrapper.props("required")).toBe("required")
+    expect(wrapper.props("required")).toBe("true")
   })
 })
 

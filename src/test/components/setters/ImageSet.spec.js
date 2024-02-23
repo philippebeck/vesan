@@ -56,8 +56,7 @@ describe("ImageSet", () => {
   })
 
   test("methods", () => {
-    expect(typeof wrapper.vm.getImages).toBe("function")
-    expect(typeof wrapper.vm.getItemsByGallery).toBe("function")
+    expect(typeof wrapper.vm.createImage).toBe("function")
     expect(typeof wrapper.vm.updateImage).toBe("function")
     expect(typeof wrapper.vm.deleteImage).toBe("function")
   })

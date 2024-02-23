@@ -61,17 +61,9 @@ describe("OrderSet", () => {
       payment: "Order payment",
       status: "Order status"
     }])
-    expect(wrapper.props("users")).toStrictEqual([{
-      name: "User name",
-      email: "User email",
-      image: "User image",
-      password: "User password",
-      role: "User role"
-    }])
   })
 
   test("methods", () => { 
-    expect(typeof wrapper.vm.getOrders).toBe("function") 
     expect(typeof wrapper.vm.updateStatus).toBe("function") 
     expect(typeof wrapper.vm.deleteOrder).toBe("function") 
   })

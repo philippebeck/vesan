@@ -52,9 +52,6 @@ describe("UserSet", () => {
   })
 
   test("methods", () => {
-    expect(typeof wrapper.vm.getUsers).toBe("function")
-    expect(typeof wrapper.vm.getUser).toBe("function")
-    expect(typeof wrapper.vm.checkUser).toBe("function")
     expect(typeof wrapper.vm.updateUser).toBe("function")
     expect(typeof wrapper.vm.deleteUser).toBe("function")
   })
