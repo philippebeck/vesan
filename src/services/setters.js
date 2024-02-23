@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * ? SET ERROR
  * * Logs an error message from the provided error object

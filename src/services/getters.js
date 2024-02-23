@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * ? GET CATEGORIES
  * * Returns an array of unique categories from the given items
