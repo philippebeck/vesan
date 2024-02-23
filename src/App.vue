@@ -82,12 +82,12 @@
 </template>
 
 <script>
-import FootElt from "@/components/elements/FootElt"
-import ListElt from "@/components/elements/ListElt"
-import NavElt from "@/components/elements/NavElt"
+import FootElt from "./components/elements/FootElt"
+import ListElt from "./components/elements/ListElt"
+import NavElt from "./components/elements/NavElt"
 
-import { checkRole } from "@/services/checkers"
-import { setGlobalMeta } from "@/services/setters"
+import { checkRole } from "./services/checkers"
+import { setGlobalMeta } from "./services/setters"
 
 import val from "./config/values"
 import { mapActions, mapMutations, mapState } from "vuex"
