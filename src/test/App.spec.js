@@ -1,9 +1,9 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import { createStore } from 'vuex';
 import { createRouter, createWebHistory } from 'vue-router'
-import * as serve from "servidio"
-import val from "../../val.js"
-import App from "../../App"
+import * as setters from "../services/setters"
+import values from "../config/values"
+import App from "../App"
 
 const router = createRouter({
   history: createWebHistory(),
@@ -24,7 +24,7 @@ let state;
  * @jest-environment jsdom
  */
 beforeEach(() => {
-  jest.spyOn(serve, "setGlobalMeta").mockImplementation(() => {});
+  jest.spyOn(setters, "setGlobalMeta").mockImplementation(() => {});
 
   actions = {
     readAvatar: jest.fn()
@@ -44,7 +44,7 @@ beforeEach(() => {
   wrapper = shallowMount(App, {
     data() {
       return {
-        val: val
+        values: values
       }
     },
     global: {
@@ -70,7 +70,7 @@ describe("App", () => {
   })
 
   test("data", () => { 
-    expect(wrapper.vm.val).toStrictEqual(val)
+    expect(wrapper.vm.values).toStrictEqual(values)
   })
 
   test("methods", () => { 
