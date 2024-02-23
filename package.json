@@ -1,7 +1,7 @@
 {
   "name": "vesan",
-  "version": "2.5.0",
-  "description": "UI with Vue-Elt, Servidio & Animadio",
+  "version": "2.5.1",
+  "description": "UI Framework with Vue & Animadio",
   "author": {
     "name": "Philippe Beck",
     "email": "philippe@philippebeck.net",

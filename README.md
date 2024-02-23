@@ -77,15 +77,15 @@ To run the UI :
 ## Content
 
 Elements Components :  
--   **BtnElt**  
--   **CardElt**  
--   **FieldElt**  
--   **FootElt**  
--   **ListElt**  
--   **MediaElt**  
--   **NavElt**  
--   **SliderElt**  
--   **TableElt**  
+-   **BtnElt** *(Link & Button Elements)*  
+-   **CardElt** *(Article & Section Elements)*  
+-   **FieldElt** *(User Input & User Select Elements)*  
+-   **FootElt** *(Footer Element)*  
+-   **ListElt** *(List Element)*  
+-   **MediaElt** *(Audio, Image, Quote & Video Elements)*  
+-   **NavElt** *(Navbar & Sidebar Elements)*  
+-   **SliderElt** *(Slider Element)*  
+-   **TableElt** *(Table Element)*  
 
 Setters Components :  
 -   **ArticleSet** *(Article Setter)*  
