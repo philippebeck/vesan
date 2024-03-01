@@ -1,16 +1,16 @@
 <template>
-  <article v-if="isArticle === true" :class="$attrs.class" :id="id">
+  <article v-if="isArticle" :class="$attrs.class" :id="id">
     <header>
       <slot name="header"></slot>
     </header>
 
     <slot name="body"></slot>
 
-    <aside v-if="hasSlot('aside')">
+    <aside v-if="hasAsideSlot">
       <slot name="aside"></slot>
     </aside>
 
-    <footer v-if="hasSlot('footer')">
+    <footer v-if="hasFooterSlot">
       <slot name="footer"></slot>
     </footer>
   </article>
@@ -22,36 +22,35 @@
 
     <slot name="body"></slot>
 
-    <aside v-if="hasSlot('aside')">
+    <aside v-if="hasAsideSlot">
       <slot name="aside"></slot>
     </aside>
 
-    <footer v-if="hasSlot('footer')">
+    <footer v-if="hasFooterSlot">
       <slot name="footer"></slot>
     </footer>
   </section>
 </template>
 
 <script>
-export default {
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "CardElt",
   props: {
     isArticle: { type: Boolean, default: false },
     id: String
   },
-  
-  methods: {
-    /**
-     * ? HAS SLOT
-     * * Determines if the specified slot name is available in the component's slots.
-     * @param {string} name - The name of the slot to check for.
-     * @return {boolean} Returns true if the component has the specified slot, false otherwise.
-     */
-    hasSlot(name) {
-      return Object.prototype.hasOwnProperty.call(this.$slots, name);
-    }
+  setup(props, { slots }) {
+    const hasAsideSlot  = () => Object.prototype.hasOwnProperty.call(slots, "aside");
+    const hasFooterSlot = () => Object.prototype.hasOwnProperty.call(slots, "footer");
+
+    return {
+      hasAsideSlot,
+      hasFooterSlot
+    };
   }
-}
+});
 </script>
 
 <style>
@@ -80,10 +79,9 @@ section {
   width: var(--ve-card-width);
   background-color: var(--ve-card-background-color);
   color: var(--ve-card-color);
-}
 
-article header,
-section header {
-  margin-bottom: var(--ve-card-header-margin-bottom);
+  header {
+    margin-bottom: var(--ve-card-header-margin-bottom);
+  }
 }
 </style>
