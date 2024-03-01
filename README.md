@@ -56,7 +56,7 @@ Install the frontend dependencies :
 ## Configuration
 
 To configure the frontend constants, replace values :  
-`/src/config/values.example.js` *(then rename it /src/config/values.js)*  
+`/src/app/values.example.js` *(then rename it /src/app/values.js)*  
 
 ---
 
