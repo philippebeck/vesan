@@ -1,12 +1,12 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import GallerySet from "../../../components/setters/GallerySet"
+import ImageSet from "../../components/ImageSet"
 
 let wrapper;
 
 jest.mock("axios");
 
 beforeEach(() => {
-  wrapper = shallowMount(GallerySet, {
+  wrapper = shallowMount(ImageSet, {
     props: {
       val: {
         TEST: "test"
@@ -14,6 +14,11 @@ beforeEach(() => {
       galleries: [{
         name: "Gallery name",
         author: "Gallery author"
+      }],
+      images: [{
+        name: "Image name",
+        description: "Image description",
+        gallery: "Gallery name"
       }]
     }
   });
@@ -24,7 +29,7 @@ enableAutoUnmount(afterEach)
 /**
  * @jest-environment jsdom
  */
-describe("GallerySet", () => {
+describe("ImageSet", () => {
   test("wrapper", () => {
     expect(wrapper.exists()).toBe(true)
   })
@@ -33,6 +38,7 @@ describe("GallerySet", () => {
     expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "TableElt" })).toBe("object")
   })
 
@@ -42,11 +48,16 @@ describe("GallerySet", () => {
       name: "Gallery name",
       author: "Gallery author"
     }])
+    expect(wrapper.props("images")).toStrictEqual([{
+      name: "Image name",
+      description: "Image description",
+      gallery: "Gallery name"
+    }])
   })
 
   test("methods", () => {
-    expect(typeof wrapper.vm.createGallery).toBe("function")
-    expect(typeof wrapper.vm.updateGallery).toBe("function")
-    expect(typeof wrapper.vm.deleteGallery).toBe("function")
+    expect(typeof wrapper.vm.createImage).toBe("function")
+    expect(typeof wrapper.vm.updateImage).toBe("function")
+    expect(typeof wrapper.vm.deleteImage).toBe("function")
   })
 })

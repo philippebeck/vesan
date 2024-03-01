@@ -1,5 +1,5 @@
 import { mount, enableAutoUnmount } from "@vue/test-utils"
-import BtnElt from "../../../components/elements/BtnElt"
+import BtnElt from "../../components/BtnElt"
 
 let wrapper;
 
@@ -95,48 +95,5 @@ describe("BtnElt as a button", () => {
     expect(typeof wrapper.props("content")).toBe("string")
     expect(wrapper.props("content")).toBe("Test Content")
     expect(wrapper.find("button").text()).toBe("Test Content")
-  })
-})
-
-/**
- * ! GET BTN TYPE
- * @jest-environment jsdom
- */
-describe("getBtnType() method", () => {
-
-  test("must return 'button' if props 'type' is 'button'", () => {
-    wrapper = mount(BtnElt, {
-      props: {
-        type: "button"
-      }
-    })
-    expect(wrapper.vm.getBtnType()).toBe("button")
-  })
-
-  test("must return 'button' if props 'type' is 'submit'", () => {
-    wrapper = mount(BtnElt, {
-      props: {
-        type: "submit"
-      }
-    })
-    expect(wrapper.vm.getBtnType()).toBe("button")
-  })
-
-  test("must return 'button' if props 'type' is 'reset'", () => {
-    wrapper = mount(BtnElt, {
-      props: {
-        type: "reset"
-      }
-    })
-    expect(wrapper.vm.getBtnType()).toBe("button")
-  })
-
-  test("must return 'link' if props 'type' is everything else", () => {
-    wrapper = mount(BtnElt, {
-      props: {
-        type: "test"
-      }
-    })
-    expect(wrapper.vm.getBtnType()).toBe("link")
   })
 })

@@ -1,24 +1,22 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import ProductSet from "../../../components/setters/ProductSet"
+import UserSet from "../../components/UserSet"
 
 let wrapper;
 
 jest.mock("axios");
 
 beforeEach(() => {
-  wrapper = shallowMount(ProductSet, {
+  wrapper = shallowMount(UserSet, {
     props: {
       val: {
         TEST: "test"
       },
-      products: [{
-        name: "Product name",
-        description: "Product description",
-        image: "Product image",
-        alt: "Product alt",
-        price: "Product price",
-        options: "Product options",
-        cat: "Product cat"
+      users: [{
+        name: "User name",
+        email: "User email",
+        image: "User image",
+        password: "User password",
+        role: "User role"
       }]
     }
   });
@@ -29,7 +27,7 @@ enableAutoUnmount(afterEach)
 /**
  * @jest-environment jsdom
  */
-describe("ProductSet", () => {
+describe("UserSet", () => {
   test("wrapper", () => {
     expect(wrapper.exists()).toBe(true)
   })
@@ -44,9 +42,17 @@ describe("ProductSet", () => {
 
   test("props", () => {
     expect(wrapper.props("val")).toStrictEqual({ TEST: "test" })
+    expect(wrapper.props("users")).toStrictEqual([{
+      name: "User name",
+      email: "User email",
+      image: "User image",
+      password: "User password",
+      role: "User role"
+    }])
   })
 
   test("methods", () => {
-    expect(typeof wrapper.vm.createProduct).toBe("function")
+    expect(typeof wrapper.vm.updateUser).toBe("function")
+    expect(typeof wrapper.vm.deleteUser).toBe("function")
   })
 })

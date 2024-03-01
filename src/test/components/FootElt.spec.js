@@ -1,5 +1,5 @@
 import { enableAutoUnmount, mount } from "@vue/test-utils"
-import FootElt from "../../../components/elements/FootElt"
+import FootElt from "../../components/FootElt"
 
 let wrapper;
 

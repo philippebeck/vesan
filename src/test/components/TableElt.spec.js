@@ -1,5 +1,5 @@
 import { enableAutoUnmount, mount } from "@vue/test-utils"
-import TableElt from "../../../components/elements/TableElt"
+import TableElt from "../../components/TableElt"
 
 let wrapper;
 

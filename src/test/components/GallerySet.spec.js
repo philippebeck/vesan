@@ -1,22 +1,19 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import UserSet from "../../../components/setters/UserSet"
+import GallerySet from "../../components/GallerySet"
 
 let wrapper;
 
 jest.mock("axios");
 
 beforeEach(() => {
-  wrapper = shallowMount(UserSet, {
+  wrapper = shallowMount(GallerySet, {
     props: {
       val: {
         TEST: "test"
       },
-      users: [{
-        name: "User name",
-        email: "User email",
-        image: "User image",
-        password: "User password",
-        role: "User role"
+      galleries: [{
+        name: "Gallery name",
+        author: "Gallery author"
       }]
     }
   });
@@ -27,7 +24,7 @@ enableAutoUnmount(afterEach)
 /**
  * @jest-environment jsdom
  */
-describe("UserSet", () => {
+describe("GallerySet", () => {
   test("wrapper", () => {
     expect(wrapper.exists()).toBe(true)
   })
@@ -36,23 +33,20 @@ describe("UserSet", () => {
     expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "FieldElt" })).toBe("object")
-    expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "TableElt" })).toBe("object")
   })
 
   test("props", () => {
     expect(wrapper.props("val")).toStrictEqual({ TEST: "test" })
-    expect(wrapper.props("users")).toStrictEqual([{
-      name: "User name",
-      email: "User email",
-      image: "User image",
-      password: "User password",
-      role: "User role"
+    expect(wrapper.props("galleries")).toStrictEqual([{
+      name: "Gallery name",
+      author: "Gallery author"
     }])
   })
 
   test("methods", () => {
-    expect(typeof wrapper.vm.updateUser).toBe("function")
-    expect(typeof wrapper.vm.deleteUser).toBe("function")
+    expect(typeof wrapper.vm.createGallery).toBe("function")
+    expect(typeof wrapper.vm.updateGallery).toBe("function")
+    expect(typeof wrapper.vm.deleteGallery).toBe("function")
   })
 })

@@ -1,5 +1,5 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import ArticleSet from "../../../components/setters/ArticleSet"
+import ArticleSet from "../../components/ArticleSet"
 
 let wrapper;
 

@@ -1,23 +1,19 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import * as checkers from "../../../services/checkers"
-import * as fetchers from "../../../services/fetchers"
-import * as getters from "../../../services/getters"
-import * as setters from "../../../services/setters"
-import LinkSet from "../../../components/setters/LinkSet"
+import * as services from "../../app/services"
+import LinkSet from "../../components/LinkSet"
 
 let wrapper;
 
 jest.mock("axios");
 
 beforeEach(() => {
-  jest.spyOn(fetchers, "deleteData").mockImplementation(() => {});
-  jest.spyOn(fetchers, "putData").mockImplementation(() => {});
-
-  jest.spyOn(checkers, "checkRange").mockImplementation(() => {});
-  jest.spyOn(checkers, "checkRegex").mockImplementation(() => {});
-  jest.spyOn(getters, "getItemName").mockImplementation(() => {});
-  jest.spyOn(getters, "getItemsByCat").mockImplementation(() => {});
-  jest.spyOn(setters, "setError").mockImplementation(() => {});
+  jest.spyOn(services, "deleteData").mockImplementation(() => {});
+  jest.spyOn(services, "putData").mockImplementation(() => {});
+  jest.spyOn(services, "checkRange").mockImplementation(() => {});
+  jest.spyOn(services, "checkRegex").mockImplementation(() => {});
+  jest.spyOn(services, "getItemName").mockImplementation(() => {});
+  jest.spyOn(services, "getItemsByCat").mockImplementation(() => {});
+  jest.spyOn(services, "setError").mockImplementation(() => {});
 
   wrapper = shallowMount(LinkSet, {
     props: {
@@ -101,7 +97,7 @@ describe("LinkSet", () => {
         cat: "Link Cat 2",
       }
     ])
-    expect(getters.getItemsByCat).toHaveBeenCalledTimes(1)
-    expect(getters.getItemsByCat).toHaveReturned()
+    expect(services.getItemsByCat).toHaveBeenCalledTimes(1)
+    expect(services.getItemsByCat).toHaveReturned()
   })
 });

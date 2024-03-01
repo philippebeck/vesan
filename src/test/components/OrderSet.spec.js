@@ -1,5 +1,5 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import OrderSet from "../../../components/setters/OrderSet"
+import OrderSet from "../../components/OrderSet"
 
 let wrapper;
 
