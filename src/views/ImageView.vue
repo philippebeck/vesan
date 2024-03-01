@@ -74,17 +74,14 @@
 </template>
 
 <script>
-import CardElt from "../../components/elements/CardElt"
-import ListElt from "../../components/elements/ListElt"
-import MediaElt from "../../components/elements/MediaElt"
-import NavElt from "../../components/elements/NavElt"
-import SliderElt from "../../components/elements/SliderElt"
-import ImageSet from "../../components/setters/ImageSet"
+import CardElt from "../components/CardElt"
+import ImageSet from "../components/ImageSet"
+import ListElt from "../components/ListElt"
+import MediaElt from "../components/MediaElt"
+import NavElt from "../components/NavElt"
+import SliderElt from "../components/SliderElt"
 
-import { checkRole } from "../../services/checkers"
-import { getData } from "../../services/fetchers"
-import { setError, setMeta } from "../../services/setters"
-
+import { checkRole, getData, setError, setMeta } from "../app/services"
 import { mapState, mapActions } from "vuex"
 
 export default {

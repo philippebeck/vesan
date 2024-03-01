@@ -120,18 +120,14 @@
 </template>
 
 <script>
-import BtnElt from "../../components/elements/BtnElt"
-import CardElt from "../../components/elements/CardElt"
-import ListElt from "../../components/elements/ListElt"
-import MediaElt from "../../components/elements/MediaElt"
-import NavElt from "../../components/elements/NavElt"
-import ArticleSet from "../../components/setters/ArticleSet"
+import ArticleSet from "../components/ArticleSet"
+import BtnElt from "../components/BtnElt"
+import CardElt from "../components/CardElt"
+import ListElt from "../components/ListElt"
+import MediaElt from "../components/MediaElt"
+import NavElt from "../components/NavElt"
 
-import { checkRole } from "../../services/checkers"
-import { putData } from "../../services/fetchers"
-import { getCats, getItemsByCat } from "../../services/getters"
-import { setError, setMeta } from "../../services/setters"
-
+import { checkRole, getCats, getItemsByCat, putData, setError, setMeta } from "../app/services"
 import { mapState, mapActions } from "vuex"
 
 export default {

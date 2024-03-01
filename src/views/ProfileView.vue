@@ -121,18 +121,15 @@
 </template>
 
 <script>
-import BtnElt from "../../components/elements/BtnElt"
-import CardElt from "../../components/elements/CardElt"
-import FieldElt from "../../components/elements/FieldElt"
-import ListElt from "../../components/elements/ListElt"
-import MediaElt from "../../components/elements/MediaElt"
-import NavElt from "../../components/elements/NavElt"
-import UserSet from "../../components/setters/UserSet"
+import BtnElt from "../components/BtnElt"
+import CardElt from "../components/CardElt"
+import FieldElt from "../components/FieldElt"
+import ListElt from "../components/ListElt"
+import MediaElt from "../components/MediaElt"
+import NavElt from "../components/NavElt"
+import UserSet from "../components/UserSet"
 
-import { checkRange, checkRegex, checkRole } from "../../services/checkers"
-import { deleteData, putData } from "../../services/fetchers"
-import { setError, setMeta } from "../../services/setters"
-
+import { checkRange, checkRegex, checkRole, deleteData, putData, setError, setMeta } from "../app/services"
 import { mapState, mapActions } from "vuex"
 
 export default {

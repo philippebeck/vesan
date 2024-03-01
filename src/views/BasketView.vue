@@ -182,19 +182,16 @@
 </template>
 
 <script>
-import BtnElt from "../../components/elements/BtnElt"
-import CardElt from "../../components/elements/CardElt"
-import FieldElt from "../../components/elements/FieldElt"
-import MediaElt from "../../components/elements/MediaElt"
-import TableElt from "../../components/elements/TableElt"
-import OrderSet from "../../components/setters/OrderSet"
+import BtnElt from "../components/BtnElt"
+import CardElt from "../components/CardElt"
+import FieldElt from "../components/FieldElt"
+import MediaElt from "../components/MediaElt"
+import OrderSet from "../components/OrderSet"
+import TableElt from "../components/TableElt"
 
-import { checkRole } from "../../services/checkers"
-import { getData, postData } from "../../services/fetchers"
-import { setError, setMeta } from "../../services/setters"
-
-import { loadScript } from "@paypal/paypal-js"
+import { checkRole, getData, postData, setError, setMeta } from "../app/services"
 import { mapState, mapActions } from "vuex"
+import { loadScript } from "@paypal/paypal-js"
 
 export default {
   name: "BasketView",

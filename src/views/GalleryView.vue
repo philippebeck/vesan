@@ -56,15 +56,13 @@
 </template>
 
 <script>
-import CardElt from "../../components/elements/CardElt"
-import ListElt from "../../components/elements/ListElt"
-import MediaElt from "../../components/elements/MediaElt"
-import NavElt from "../../components/elements/NavElt"
-import GallerySet from "../../components/setters/GallerySet"
+import CardElt from "../components/CardElt"
+import GallerySet from "../components/GallerySet"
+import ListElt from "../components/ListElt"
+import MediaElt from "../components/MediaElt"
+import NavElt from "../components/NavElt"
 
-import { checkRole } from "../../services/checkers"
-import { setMeta } from "../../services/setters"
-
+import { checkRole, setMeta } from "../app/services"
 import { mapState, mapActions } from "vuex"
 
 export default {

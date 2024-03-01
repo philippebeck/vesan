@@ -179,18 +179,16 @@
 </template>
 
 <script>
-import BtnElt from "../../components/elements/BtnElt"
-import CardElt from "../../components/elements/CardElt"
-import FieldElt from "../../components/elements/FieldElt"
-import ListElt from "../../components/elements/ListElt"
-import MediaElt from "../../components/elements/MediaElt"
+import BtnElt from "../components/BtnElt"
+import CardElt from "../components/CardElt"
+import FieldElt from "../components/FieldElt"
+import ListElt from "../components/ListElt"
+import MediaElt from "../components/MediaElt"
 
-import { checkRange, checkRole } from "../../services/checkers"
-import { deleteData, getData, putData } from "../../services/fetchers"
-import { setError, setMeta } from "../../services/setters"
+import { checkRange, checkRole, deleteData, getData, putData, setError, setMeta } from "../app/services"
+import { mapState } from "vuex"
 
 import Editor from "@tinymce/tinymce-vue"
-import { mapState } from "vuex"
 
 export default {
   name: "ProductView",
