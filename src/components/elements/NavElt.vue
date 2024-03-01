@@ -53,72 +53,64 @@
 </template>
 
 <script>
-export default {
+import { defineComponent, ref, onMounted, onUnmounted } from "vue";
+
+export default defineComponent({
   name: "NavElt",
+
   props: {
     class: { type: String, default: "navbar" },
     items: { type: Array }
   },
 
-  data() {
-    return {
-      isMobile: false
+  setup(props, { slots }) {
+    const isMobile = ref(false);
+
+    const getNavClass = () => {
+      return props.class === "sidebar" ? "sidebar" : "navbar";
     };
-  },
 
-  mounted() {
-    window.addEventListener('resize', this.handleResize);
-    this.handleResize();
-  },
+    const handleResize = () => {
+      isMobile.value = window.innerWidth < 768;
+    };
 
-  unmounted() {
-    window.removeEventListener('resize', this.handleResize);
-  },
+    const hasSlot = (name) => {
+      return Object.prototype.hasOwnProperty.call(slots, name);
+    };
 
-  methods: {
-    /**
-     * ? GET NAV CLASS
-     * * Returns a string representing the navigation class based on the value of 'class'.
-     * @return {string} Either 'sidebar' or 'navbar'.
-     */
-    getNavClass() {
-      return this.class === "sidebar" ? "sidebar" : "navbar";
-    },
-
-    /**
-     * ? HANDLE RESIZE
-     * * Handles the resize event & updates the `isMobile` flag accordingly.
-     */
-    handleResize() {
-      this.isMobile = window.innerWidth < 768;
-    },
-
-    /**
-     * ? HAS SLOT
-     * * Determines if the specified slot name is available in the component's slots.
-     * @param {string} name - The name of the slot to check for.
-     * @return {boolean} Returns true if the component has the specified slot, false otherwise.
-     */
-    hasSlot(name) {
-      return Object.prototype.hasOwnProperty.call(this.$slots, name);
-    },
-
-    /**
-     * ? TOGGLE SIDE
-     * * Toggles the visibility of the side element by toggling its show/hide classes.
-     */
-    toggleSide() {
+    const toggleSide = () => {
       const side = document.getElementById("side");
       side.classList.replace("show", "hide") || side.classList.replace("hide", "show");
-    }
+    };
+
+    onMounted(() => {
+      window.addEventListener("resize", handleResize);
+      handleResize();
+    });
+
+    onUnmounted(() => {
+      window.removeEventListener("resize", handleResize);
+    });
+
+    return {
+      isMobile,
+      getNavClass,
+      hasSlot,
+      toggleSide
+    };
   }
-}
+});
 </script>
 
 <style>
 :root {
   --ve-nav-margin: 10px;
   --ve-nav-height: 50px;
+
+  @media (min-width: 768px) {
+    --ve-nav-margin: 20px;
+    --ve-nav-height: 80px;
+  }
 }
 
 .navbar {
@@ -150,6 +142,15 @@ export default {
   --ve-nav-button-border: none;
   --ve-nav-button-cursor: pointer;
   --ve-nav-i-place-self: center;
+
+  @media (min-width: 576px) {
+    --ve-nav-place-content: space-around;
+  }
+
+  @media (min-width: 768px) {
+    --ve-nav-button-display: none;
+    --ve-nav-ul-a-not-i-display: flex;
+  }
 }
 
 .sidebar {
@@ -187,24 +188,6 @@ export default {
   --ve-side-show-display: flex;
 }
 
-@media (min-width: 576px) {
-  .navbar {
-    --ve-nav-place-content: space-around;
-  }
-}
-
-@media (min-width: 768px) {
-  :root {
-    --ve-nav-margin: 20px;
-    --ve-nav-height: 80px;
-  }
-
-  .navbar {
-    --ve-nav-button-display: none;
-    --ve-nav-ul-a-not-i-display: flex;
-  }
-}
-
 [id="app"] {
   margin-top: calc(var(--ve-nav-height) + var(--ve-nav-margin));
 }
@@ -223,61 +206,61 @@ export default {
   z-index: var(--ve-nav-z-index);
   height: var(--ve-nav-height);
   background-color: var(--ve-nav-background-color);
-}
 
-.navbar :deep(a),
-.navbar :deep(button) {
-  padding: var(--ve-nav-a-padding);
-  color: var(--ve-nav-a-color);
-  cursor: var(--ve-nav-a-cursor);
-}
+  & :deep(a),
+  & :deep(button) {
+    padding: var(--ve-nav-a-padding);
+    color: var(--ve-nav-a-color);
+    cursor: var(--ve-nav-a-cursor);
+  }
 
-.navbar :deep(ul) {
-  display: var(--ve-nav-ul-display);
-  place-items: var(--ve-nav-ul-place-items);
-  margin: var(--ve-nav-ul-margin);
-  padding: var(--ve-nav-ul-padding);
-  list-style: var(--ve-nav-ul-list-style);
-}
+  & :deep(ul) {
+    display: var(--ve-nav-ul-display);
+    place-items: var(--ve-nav-ul-place-items);
+    margin: var(--ve-nav-ul-margin);
+    padding: var(--ve-nav-ul-padding);
+    list-style: var(--ve-nav-ul-list-style);
+  }
 
-.navbar ul a,
-.navbar ul button {
-  display: var(--ve-nav-ul-a-display);
-}
+  ul a,
+  ul button {
+    display: var(--ve-nav-ul-a-display);
+  }
 
-.navbar ul a :not(i),
-.navbar ul button :not(i) {
-  display: var(--ve-nav-ul-a-not-i-display);
-}
+  ul a :not(i),
+  ul button :not(i) {
+    display: var(--ve-nav-ul-a-not-i-display);
+  }
 
-.navbar :deep(ul) a,
-.navbar :deep(ul) button {
-  flex-direction: var(--ve-nav-ul-a-flex-direction);
-}
+  & :deep(ul) a,
+  & :deep(ul) button {
+    flex-direction: var(--ve-nav-ul-a-flex-direction);
+  }
 
-.navbar ul a:hover,
-.navbar ul a:focus,
-.navbar ul button:hover,
-.navbar ul button:focus {
-  color: var(--ve-nav-ul-a-hover-color) !important;
-  transform: var(--ve-nav-ul-a-hover-transform) !important;
-}
+  ul a:hover,
+  ul a:focus,
+  ul button:hover,
+  ul button:focus {
+    color: var(--ve-nav-ul-a-hover-color) !important;
+    transform: var(--ve-nav-ul-a-hover-transform) !important;
+  }
 
-.navbar :deep(aside) a:hover,
-.navbar :deep(aside) a:focus,
-.navbar :deep(aside) button:hover,
-.navbar :deep(aside) button:focus {
-  color: var(--ve-nav-aside-hover-color);
-}
+  & :deep(aside) a:hover,
+  & :deep(aside) a:focus,
+  & :deep(aside) button:hover,
+  & :deep(aside) button:focus {
+    color: var(--ve-nav-aside-hover-color);
+  }
 
-.navbar :deep(button) {
-  background-color: var(--ve-nav-button-background-color);
-  border: var(--ve-nav-button-border);
-  cursor: var(--ve-nav-button-cursor);
-}
+  & :deep(button) {
+    background-color: var(--ve-nav-button-background-color);
+    border: var(--ve-nav-button-border);
+    cursor: var(--ve-nav-button-cursor);
+  }
 
-.navbar :deep(i) {
-  place-self: var(--ve-nav-i-place-self);
+  & :deep(i) {
+    place-self: var(--ve-nav-i-place-self);
+  }
 }
 
 .sidebar {
@@ -288,43 +271,43 @@ export default {
   left: var(--ve-side-left);
   z-index: var(--ve-side-z-index);
   width: var(--ve-side-width);
-}
 
-.sidebar ul {
-  display: var(--ve-side-ul-display);
-  flex-flow: var(--ve-side-ul-flex-flow);
-}
+  ul {
+    display: var(--ve-side-ul-display);
+    flex-flow: var(--ve-side-ul-flex-flow);
+  }
 
-.sidebar :deep(a),
-.sidebar button {
-  display: var(--ve-side-a-display);
-  place-content: var(--ve-side-a-place-content);
-  place-items: var(--ve-side-a-place-items);
-  margin: var(--ve-side-a-margin);
-  border: var(--ve-side-a-border);
-  border-radius: var(--ve-side-a-border-radius);
-  outline: var(--ve-side-a-outline);
-  padding: var(--ve-side-a-padding);
-  width: var(--ve-side-a-width);
-  background-color: var(--ve-side-a-background-color);
-  color: var(--ve-side-a-color);
-  cursor: var(--ve-side-a-cursor);
-}
+  & :deep(a),
+  button {
+    display: var(--ve-side-a-display);
+    place-content: var(--ve-side-a-place-content);
+    place-items: var(--ve-side-a-place-items);
+    margin: var(--ve-side-a-margin);
+    border: var(--ve-side-a-border);
+    border-radius: var(--ve-side-a-border-radius);
+    outline: var(--ve-side-a-outline);
+    padding: var(--ve-side-a-padding);
+    width: var(--ve-side-a-width);
+    background-color: var(--ve-side-a-background-color);
+    color: var(--ve-side-a-color);
+    cursor: var(--ve-side-a-cursor);
+  }
 
-.sidebar :deep(a:hover),
-.sidebar :deep(a:focus),
-.sidebar button:hover,
-.sidebar button:focus {
-  color: var(--ve-side-a-hover-color);
-  background-color: var(--ve-side-a-hover-background-color);
-  transition: var(--ve-side-a-hover-transition);
-}
+  & :deep(a:hover),
+  & :deep(a:focus),
+  button:hover,
+  button:focus {
+    color: var(--ve-side-a-hover-color);
+    background-color: var(--ve-side-a-hover-background-color);
+    transition: var(--ve-side-a-hover-transition);
+  }
 
-.hide {
-  display: var(--ve-side-hide-display) !important;
-}
+  .hide {
+    display: var(--ve-side-hide-display);
+  }
 
-.show {
-  display: var(--ve-side-show-display);
+  .show {
+    display: var(--ve-side-show-display);
+  }
 }
 </style>

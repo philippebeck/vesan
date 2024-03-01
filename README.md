@@ -1,6 +1,6 @@
 # Vesan 
 
-Vesan is a User Interface Framework made with Vue & Animadio
+Vesan is a Frontend Framework made with Vue & Animadio
 
 [![NPM Version](https://badgen.net/npm/v/vesan)](https://www.npmjs.com/package/vesan)
 [![GitHub Top Language](https://img.shields.io/github/languages/top/philippebeck/vesan)](https://github.com/philippebeck/vesan)

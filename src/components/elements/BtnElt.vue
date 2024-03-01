@@ -1,16 +1,16 @@
 <template>
-  <button v-if="getBtnType() === 'button'"
-    :type="type"
-    :value="value"
-    :class="$attrs.class"
+  <button v-if="isBtnTypeButton" 
+    :type="type" 
+    :value="value" 
+    :class="buttonClass" 
     :title="title">
     <slot name="btn"></slot>
     {{ content }}
   </button>
 
-  <a v-else
-    :href="href"
-    :class="$attrs.class"
+  <a v-else 
+    :href="href" 
+    :class="linkClass" 
     :title="title">
     <slot name="btn"></slot>
     {{ content }}
@@ -18,29 +18,39 @@
 </template>
 
 <script>
-  export default {
-    name: "BtnElt",
-    props: {
-      type: { type: String, default: "link" },
-      value: String,
-      href: String,
-      content: String,
-      title: String
-    },
+import { defineComponent, computed } from "vue";
 
-    methods: {
-      /**
-       * ? GET BTN TYPE
-       * * Determines the type of button based on the 'type' property.
-       * @return {string} Returns 'button', 'submit', 'reset' or 'link'.
-       */
-      getBtnType() {
-        const validTypes = ["button", "submit", "reset"];
+export default defineComponent({
+  name: "BtnElt",
 
-        return validTypes.includes(this.type) ? "button" : "link";
-      }
-    }
+  props: {
+    type: { type: String, default: "link" },
+    value: String,
+    href: String,
+    content: String,
+    title: String
+  },
+  setup(props) {
+    const isBtnTypeButton = computed(() => {
+      const validTypes = ["button", "submit", "reset"];
+      return validTypes.includes(props.type);
+    });
+
+    const buttonClass = computed(() => {
+      return isBtnTypeButton.value ? props.class : "";
+    });
+
+    const linkClass = computed(() => {
+      return isBtnTypeButton.value ? "" : props.class;
+    });
+
+    return {
+      isBtnTypeButton,
+      buttonClass,
+      linkClass
+    };
   }
+});
 </script>
 
 <style lang="scss">

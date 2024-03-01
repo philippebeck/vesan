@@ -1,9 +1,8 @@
 <template>
-  <!-- ! AUDIO -->
   <figure v-if="type === 'audio'"
     :itemprop="itemprop"
     itemscope 
-    itemtype="https://schema.org/AudioObject">
+    :itemtype="getItemType(type)">
 
     <audio controls
       :src="src"
@@ -24,11 +23,10 @@
     </figcaption>
   </figure>
 
-  <!-- ! VIDEO -->
   <figure v-else-if="type === 'video'"
     :itemprop="itemprop"
     itemscope 
-    itemtype="https://schema.org/VideoObject">
+    :itemtype="getItemType(type)">
 
     <video controls
       :src="src"
@@ -51,11 +49,10 @@
     </figcaption>
   </figure>
 
-  <!-- ! QUOTE -->
   <figure v-else-if="type === 'quote'"
     :itemprop="itemprop"
     itemscope 
-    itemtype="https://schema.org/Quotation">
+    :itemtype="getItemType(type)">
 
     <blockquote :cite="src"
       :title="title"
@@ -70,11 +67,10 @@
     </figcaption>
   </figure>
 
-  <!-- ! PICTURE -->
   <figure v-else-if="type === 'picture'"
     itemprop="image"
     itemscope 
-    itemtype="https://schema.org/ImageObject">
+    :itemtype="getItemType(type)">
 
     <picture>
       <source v-for="(picture, index) in medias"
@@ -96,11 +92,10 @@
     </figcaption>
   </figure>
 
-  <!-- ! IMG -->
   <figure v-else
     itemprop="image"
     itemscope 
-    itemtype="https://schema.org/ImageObject">
+    :itemtype="getItemType(type)">
 
     <img :src="src"
       :alt="alt"
@@ -118,8 +113,11 @@
 </template>
 
 <script>
-export default {
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "MediaElt",
+
   props: {
     type: { type: String, default: "img" },
     width: { type: Number, default: 300 },
@@ -132,19 +130,33 @@ export default {
     height: Number,
     itemprop: String
   },
-  
-  methods: {
-    /**
-     * ? HAS SLOT
-     * * Determines if the specified slot name is available in the component's slots.
-     * @param {string} name - The name of the slot to check for.
-     * @return {boolean} Returns true if the component has the specified slot, false otherwise.
-     */
-    hasSlot(name) {
-      return Object.prototype.hasOwnProperty.call(this.$slots, name);
-    },
+
+  setup(props, { slots }) {
+    const hasSlot = (name) => {
+      return Object.prototype.hasOwnProperty.call(slots, name);
+    };
+
+    const getItemType = (type) => {
+      if (type === "audio") {
+        return "https://schema.org/AudioObject";
+
+      } else if (type === "video") {
+        return "https://schema.org/VideoObject";
+
+      } else if (type === "quote") {
+        return "https://schema.org/Quotation";
+
+      } else {
+        return "https://schema.org/ImageObject";
+      }
+    };
+
+    return {
+      hasSlot,
+      getItemType
+    };
   }
-}
+});
 </script>
 
 <style>
