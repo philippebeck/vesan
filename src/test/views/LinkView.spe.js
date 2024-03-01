@@ -1,7 +1,7 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import { createStore } from 'vuex';
-import * as setters from "../../../services/setters"
-import LinkView from "../../../views/data/LinkView"
+import * as services from "../../services"
+import LinkView from "../../views/LinkView"
 
 let wrapper;
 let store;
@@ -9,7 +9,7 @@ let actions;
 let state;
 
 beforeEach(() => {
-  jest.spyOn(setters, "setMeta").mockImplementation(() => {});
+  jest.spyOn(services, "setMeta").mockImplementation(() => {});
 
   actions = {
     listLinks: jest.fn()

@@ -1,6 +1,6 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import * as setters from "../../../services/setters"
-import HomeView from "../../../views/main/HomeView"
+import * as services from "../../app/services"
+import HomeView from "../../views/HomeView"
 
 let wrapper;
 
@@ -8,7 +8,7 @@ let wrapper;
  * @jest-environment jsdom
  */
 beforeEach(() => {
-  jest.spyOn(setters, "setMeta").mockImplementation(() => {});
+  jest.spyOn(services, "setMeta").mockImplementation(() => {});
 
   wrapper = shallowMount(HomeView, {
     props: {
@@ -53,6 +53,6 @@ describe("HomeView", () => {
   })
 
   test("wrapper created hook", () => {
-    expect(setters.setMeta).toHaveBeenCalled()
+    expect(services.setMeta).toHaveBeenCalled()
   })
 })

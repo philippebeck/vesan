@@ -1,25 +1,22 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import { createStore } from 'vuex';
-import * as setters from "../../../services/setters"
-import GalleryView from "../../../views/data/GalleryView"
+import * as services from "../../services"
+import BlogView from "../../views/BlogView"
 
 let wrapper;
 let store;
 let actions;
 let state;
 
-/**
- * @jest-environment jsdom
- */
 beforeEach(() => {
-  jest.spyOn(setters, "setMeta").mockImplementation(() => {});
+  jest.spyOn(services, "setMeta").mockImplementation(() => {});
 
   actions = {
-    listGalleries: jest.fn()
+    listArticles: jest.fn()
   };
 
   state = {
-    galleries: []
+    articles: []
   };
 
   store = createStore({
@@ -29,7 +26,7 @@ beforeEach(() => {
     actions: actions
   })
 
-  wrapper = shallowMount(GalleryView, {
+  wrapper = shallowMount(BlogView, {
     props: {
       val: {
         TEST: "test"
@@ -47,30 +44,33 @@ beforeEach(() => {
 
 enableAutoUnmount(afterEach)
 
-describe("GalleryView", () => {
-  test("wrapper must be a vue instance", () => {
+/**
+ * @jest-environment jsdom
+ */
+describe("BlogView", () => {
+  test("wrapper", () => { 
     expect(wrapper.exists()).toBe(true)
   })
 
-  test("wrapper components", () => {
+  test("components", () => { 
+    expect(typeof wrapper.findComponent({ name: "BtnElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "CardElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "ListElt" })).toBe("object")
     expect(typeof wrapper.findComponent({ name: "MediaElt" })).toBe("object")
-    expect(typeof wrapper.findComponent({ name: "GalleryCreator" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "NavElt" })).toBe("object")
+    expect(typeof wrapper.findComponent({ name: "ArticleCreator" })).toBe("object")
   })
 
-  test("wrapper props", () => {
+  test("props", () => { 
     expect(wrapper.props("val")).toStrictEqual({ TEST: "test" })
     expect(wrapper.props("user")).toStrictEqual({ name: "test", email: "email@test.com" })
   })
 
-  test("wrapper created hook", () => {
-    expect(serve.setMeta).toHaveBeenCalled()
-    expect(actions.listGalleries).toHaveBeenCalled()
-  })
-
-  test("wrapper methods", () => {
-    expect(typeof wrapper.vm.listGalleries).toBe("function")
+  test("methods", () => { 
+    expect(typeof wrapper.vm.listArticles).toBe("function")
     expect(typeof wrapper.vm.checkSession).toBe("function")
+    expect(typeof wrapper.vm.getItemsByCategory).toBe("function")
+    expect(typeof wrapper.vm.checkLikes).toBe("function")
+    expect(typeof wrapper.vm.addLike).toBe("function")
   })
 })

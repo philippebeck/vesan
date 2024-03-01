@@ -1,6 +1,6 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import * as setters from "../../../services/setters"
-import BasketView from "../../../views/data/BasketView"
+import * as services from "../../services"
+import BasketView from "../../views/BasketView"
 
 global.fetch = jest.fn(() =>
   Promise.resolve({
@@ -19,7 +19,7 @@ global.fetch = jest.fn(() =>
 let wrapper;
 
 beforeEach(() => {
-  jest.spyOn(setters, "setMeta").mockImplementation(() => {});
+  jest.spyOn(services, "setMeta").mockImplementation(() => {});
 
   wrapper = shallowMount(BasketView, {
     props: {

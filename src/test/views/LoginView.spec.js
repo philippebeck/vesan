@@ -1,6 +1,6 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import * as setters from "../../../services/setters"
-import LoginView from "../../../views/main/LoginView"
+import * as services from "../../app/services"
+import LoginView from "../../views/LoginView"
 
 let wrapper;
 let setMetaSpy;
@@ -9,7 +9,7 @@ let setMetaSpy;
  * @jest-environment jsdom
  */
 beforeEach(() => {
-  setMetaSpy = jest.spyOn(setters, "setMeta").mockImplementation(() => {});
+  setMetaSpy = jest.spyOn(services, "setMeta").mockImplementation(() => {});
 
   Object.defineProperty(window, 'localStorage', {
     value: {
@@ -85,7 +85,7 @@ describe("LoginView", () => {
   })
 
   test("wrapper created hook", () => {
-    expect(setters.setMeta).toHaveBeenCalled()
+    expect(services.setMeta).toHaveBeenCalled()
   })
 
   test('calls setMeta with the correct arguments', () => {

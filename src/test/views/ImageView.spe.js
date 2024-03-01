@@ -1,7 +1,7 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import { createStore } from "vuex"
-import * as setters from "../../../services/setters"
-import ImageView from "../../../views/data/ImageView"
+import * as services from "../../services"
+import ImageView from "../../views/ImageView"
 
 global.fetch = jest.fn(() =>
   Promise.resolve({
@@ -33,7 +33,7 @@ let actions;
 let state;
 
 beforeEach(() => {
-  jest.spyOn(setters, "setMeta").mockImplementation(() => {});
+  jest.spyOn(services, "setMeta").mockImplementation(() => {});
 
   actions = {
     listGalleryImages: jest.fn()

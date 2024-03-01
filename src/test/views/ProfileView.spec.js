@@ -1,7 +1,7 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
 import { createStore } from 'vuex';
-import * as setters from "../../../services/setters"
-import ProfileView from "../../../views/main/ProfileView"
+import * as services from "../../app/services"
+import ProfileView from "../../views/ProfileView"
 
 let wrapper;
 let store;
@@ -9,7 +9,7 @@ let actions;
 let state;
 
 beforeEach(() => {
-  jest.spyOn(setters, "setMeta").mockImplementation(() => {});
+  jest.spyOn(services, "setMeta").mockImplementation(() => {});
 
   global.alert = jest.fn();
   const push = jest.fn();
