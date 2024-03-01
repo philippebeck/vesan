@@ -4,7 +4,7 @@
       <slot name="legend"></slot>
     </legend>
 
-    <input v-if="getFieldType() === 'number'" 
+    <input v-if="fieldType === 'number'" 
       :type="type"
       :id="id"
       :name="name"
@@ -16,7 +16,7 @@
       :itemprop="itemprop"
       :required="required">
 
-    <input v-else-if="getFieldType() === 'special'"
+    <input v-else-if="fieldType === 'special'"
       :type="type"
       :id="id"
       :name="name"
@@ -26,7 +26,7 @@
       :itemprop="itemprop"
       :required="required">
 
-    <select v-else-if="getFieldType() === 'list' && content"
+    <select v-else-if="fieldType === 'list' && content"
       :id="id"
       :name="name"
       @input="onInput"
@@ -42,7 +42,7 @@
       </option>
     </select>
 
-    <select v-else-if="getFieldType() === 'list'"
+    <select v-else-if="fieldType === 'list'"
       :id="id"
       :name="name"
       @input="onInput"
@@ -58,7 +58,7 @@
       </option>
     </select>
 
-    <textarea v-else-if="getFieldType() === 'area'"
+    <textarea v-else-if="fieldType === 'area'"
       :id="id"
       :name="name"
       :value="value"
@@ -92,8 +92,11 @@
 </template>
 
 <script>
-export default {
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
   name: "FieldElt",
+
   props: {
     model: { prop: "value", event: "update" },
     type: { type: String, default: "text" },
@@ -112,44 +115,38 @@ export default {
     required: { type: String, default: "true" }
   },
 
-  methods: {
-    /**
-     * ? HAS SLOT
-     * * Determines if the specified slot name is available in the component's slots.
-     * @param {string} name - The name of the slot to check for.
-     * @return {boolean} Returns true if the component has the slot, false otherwise.
-     */
-    hasSlot(name) {
-      return Object.prototype.hasOwnProperty.call(this.$slots, name);
-    },
+  setup(props, { slots, emit }) {
+    const fieldType = ref("");
 
-    /**
-     * ? ON INPUT
-     * * Handles input events and emits an update with the new value.
-     * @param {Event} event - The input event triggered by the user.
-     * @return {void} This function does not return a value.
-     */
-    onInput(event) {
-      this.$emit("update:value", event.target.value)
-    },
+    const hasSlot = (name) => {
+      return Object.prototype.hasOwnProperty.call(slots, name);
+    };
 
-    /**
-     * ? GET FIELD TYPE
-     * * Returns the type of the input field based on the 'type' property.
-     * @return {string} The type of the input field.
-     */
-    getFieldType() {
+    const onInput = (event) => {
+      emit("update:value", event.target.value);
+    };
+
+    const getFieldType = () => {
       const fieldTypes = {
         "number": ["number", "date", "time", "range"],
         "special": ["checkbox", "radio", "color"],
         "list": ["option", "select"],
         "area": ["textarea"]
-      }
+      };
 
-      return Object.keys(fieldTypes).find(key => fieldTypes[key].includes(this.type)) || "text";
+      fieldType.value = Object.keys(fieldTypes).find(key => fieldTypes[key].includes(props.type)) || "text";
+    };
+
+    getFieldType();
+
+    return {
+      fieldType,
+      hasSlot,
+      onInput,
+      getFieldType
     }
   }
-}
+});
 </script>
 
 <style>
@@ -202,9 +199,11 @@ textarea {
 }
 
 @media (min-width: 1200px) {
-  table legend,
-  table label {
-    display: none;
+  table {
+    legend,
+    label {
+      display: none;
+    }
   }
 }
 </style>
@@ -220,30 +219,53 @@ fieldset {
   max-width: var(--ve-field-max-width);
   text-align: var(--ve-field-text-align);
   transition: var(--ve-field-transition);
-}
 
-fieldset > * {
-  box-sizing: var(--ve-field-child-box-sizing);
-  margin: var(--ve-field-child-margin);
-  padding: var(--ve-field-child-padding);
-}
+  & > * {
+    box-sizing: var(--ve-field-child-box-sizing);
+    margin: var(--ve-field-child-margin);
+    padding: var(--ve-field-child-padding);
+  }
 
-legend {
-  width: var(--ve-field-legend-width);
-  font-size: var(--ve-field-legend-font-size);
-  color: var(--ve-field-legend-color);
-}
+  legend {
+    width: var(--ve-field-legend-width);
+    font-size: var(--ve-field-legend-font-size);
+    color: var(--ve-field-legend-color);
+  }
 
-fieldset:hover legend {
-  color: var(--ve-field-hover-legend-color);
-}
+  &:hover legend {
+    color: var(--ve-field-hover-legend-color);
+  }
 
-label {
-  width: var(--ve-field-label-width);
-  visibility: var(--ve-field-label-visibility);
-  font-size: var(--ve-field-label-font-size);
-  font-style: var(--ve-field-label-font-style);
-  color: var(--ve-field-label-color);
+  label {
+    width: var(--ve-field-label-width);
+    visibility: var(--ve-field-label-visibility);
+    font-size: var(--ve-field-label-font-size);
+    font-style: var(--ve-field-label-font-style);
+    color: var(--ve-field-label-color);
+  }
+
+  input,
+  select,
+  textarea {
+    border: var(--ve-field-input-border);
+    border-radius: var(--ve-field-input-border-radius);
+    outline: var(--ve-field-input-outline);
+    width: var(--ve-field-input-width);
+    line-height: var(--ve-field-input-line-height);
+    background-color: var(--ve-field-input-background-color);
+  }
+
+  &:hover > input,
+  &:hover > select,
+  &:hover > textarea,
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border: var(--ve-field-hover-input-border);
+    border-radius: var(--ve-field-hover-input-border-radius);
+    background-color: var(--ve-field-hover-input-background-color);
+    transition: var(--ve-field-hover-input-transition);
+  }
 }
 
 fieldset:hover > label,
@@ -253,28 +275,5 @@ textarea:focus + label {
   visibility: var(--ve-field-hover-label-visibility);
   transform: var(--ve-field-hover-label-transform);
   transition: var(--ve-field-hover-label-transition);
-}
-
-input,
-select,
-textarea {
-  border: var(--ve-field-input-border);
-  border-radius: var(--ve-field-input-border-radius);
-  outline: var(--ve-field-input-outline);
-  width: var(--ve-field-input-width);
-  line-height: var(--ve-field-input-line-height);
-  background-color: var(--ve-field-input-background-color);
-}
-
-fieldset:hover > input,
-fieldset:hover > select,
-fieldset:hover > textarea,
-input:focus,
-select:focus,
-textarea:focus {
-  border: var(--ve-field-hover-input-border);
-  border-radius: var(--ve-field-hover-input-border-radius);
-  background-color: var(--ve-field-hover-input-background-color);
-  transition: var(--ve-field-hover-input-transition);
 }
 </style>
