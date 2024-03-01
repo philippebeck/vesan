@@ -1,20 +1,20 @@
 <template>
-  <CardElt id="article-set">
+  <CardElt id="product-set">
     <template #header>
       <h2>
-        <i class="fa-regular fa-pen-to-square fa-lg"></i>
-        {{ val.ARTICLE_MANAGER }}
+        <i class="fa-regular fa-lightbulb fa-lg"></i>
+        {{ val.PRODUCT_MANAGER }}
       </h2>
     </template>
 
     <template #body>
       <form enctype="multipart/form-data">
-        <ListElt :items="val.ARTICLE_FORM">
+        <ListElt :items="val.PRODUCT_FORM">
 
           <template #item-1>
             <FieldElt id="name"
-              v-model:value="name" 
-              @keyup.enter="createArticle()"
+              v-model:value="name"
+              @keyup.enter="createProduct()"
               :info="val.INFO_NAME">
               <template #legend>{{ val.LEGEND_NAME }}</template>
               <template #label>{{ val.LABEL_NAME }}</template>
@@ -22,16 +22,16 @@
           </template>
 
           <template #item-2>
-            <label for="text">{{ val.LEGEND_TEXT }}</label>
-            <Editor id="text"
+            <label for="description">{{ val.LEGEND_DESCRIPTION }}</label>
+            <Editor id="description"
               :api-key="val.TINY_KEY"
-              v-model="text"
-              @keyup.enter="createArticle()"
+              v-model="description"
+              @keyup.enter="createProduct()"
               :init="val.TINY_INIT"/>
           </template>
 
           <template #item-3>
-            <FieldElt id="image" 
+            <FieldElt id="image"
               type="file"
               v-model:value="image"
               :info="val.INFO_IMAGE">
@@ -44,7 +44,6 @@
             <FieldElt id="alt"
               type="textarea"
               v-model:value="alt"
-              @keyup.enter="createArticle()"
               :info="val.INFO_ALT">
               <template #legend>{{ val.LEGEND_ALT }}</template>
               <template #label>{{ val.LABEL_ALT }}</template>
@@ -52,34 +51,48 @@
           </template>
 
           <template #item-5>
-              <FieldElt id="url"
-                v-model:value="url"
-                @keyup.enter="updateArticle()"
-                :info="val.INFO_URL">
-                <template #legend>{{ val.LEGEND_URL }}</template>
-                <template #label>{{ val.LABEL_URL }}</template>
-              </FieldElt>
-            </template>
+            <FieldElt id="price"
+              type="number"
+              v-model:value="price"
+              @keyup.enter="createProduct()"
+              :info="val.INFO_PRICE"
+              :min="val.PRICE_MIN"
+              :max="val.PRICE_MAX">
+              <template #legend>{{ val.LEGEND_PRICE }}</template>
+              <template #label>{{ val.LABEL_PRICE }}</template>
+            </FieldElt>
+          </template>
 
           <template #item-6>
+            <FieldElt id="options"
+              type="textarea"
+              v-model:value="options"
+              @keyup.enter="createProduct()"
+              :info="val.INFO_OPTIONS"
+              :max="100">
+              <template #legend>{{ val.LEGEND_OPTIONS }}</template>
+              <template #label>{{ val.LABEL_OPTIONS }}</template>
+            </FieldElt>
+          </template>
+
+          <template #item-7>
             <FieldElt id="cat"
               type="select"
-              :list="val.CATS_ARTICLE"
+              :list="val.CATS_PRODUCT"
               v-model:value="cat"
-              @keyup.enter="createArticle()"
+              @keyup.enter="createProduct()"
               :info="val.INFO_CAT">
               <template #legend>{{ val.LEGEND_CAT }}</template>
               <template #label>{{ val.LABEL_CAT }}</template>
             </FieldElt>
           </template>
         </ListElt>
-        <br>
 
         <BtnElt type="button"
-          @click="createArticle()" 
+          @click="createProduct()" 
           class="btn-green"
           :content="val.CONTENT_CREATE"
-          :title="val.TITLE_ARTICLE">
+          :title="val.TITLE_PRODUCT">
           <template #btn>
             <i class="fa-solid fa-square-plus fa-lg"></i>
           </template>
@@ -90,61 +103,58 @@
 </template>
 
 <script>
-import BtnElt from "../elements/BtnElt"
-import CardElt from "../elements/CardElt"
-import FieldElt from "../elements/FieldElt"
-import ListElt from "../elements/ListElt"
-
-import { checkRange, checkRegex } from "../../services/checkers"
-import { postData } from "../../services/fetchers"
-import { setError } from "../../services/setters"
-
+import BtnElt from "./BtnElt"
+import CardElt from "./CardElt"
+import FieldElt from "./FieldElt"
+import ListElt from "./ListElt"
 import Editor from "@tinymce/tinymce-vue"
 
+import { checkRange, postData, setError } from "../app/services"
+
 export default {
-  name: "ArticleSet",
+  name: "ProductSet",
   components: { BtnElt, CardElt, FieldElt, ListElt, Editor },
   props: ["token", "val"],
   data() {
     return {
       name: "",
-      text:"",
+      description:"",
       image: "",
       alt: "",
-      url: "",
+      price: null,
+      options: [],
       cat: ""
     }
   },
 
   methods: {
     /**
-     * ? CREATE ARTICLE
-     * * Creates an article by sending a POST request to the server with the provided data.
+     * ? CREATE PRODUCT
+     * * Create a product by sending a POST request to the server.
      */
-    createArticle() {
-      const { ALERT_CREATED, ALERT_IMG, API_URL, CAT_ARTICLE, CHECK_STRING, CHECK_URL, REGEX_URL, TEXT_MIN, TEXT_MAX } = this.val;
+    createProduct() {
+      const { ALERT_CREATED, ALERT_IMG, API_URL, CAT_PRODUCT, CHECK_STRING, TEXT_MAX, TEXT_MIN } = this.val;
 
-      if (this.url.startsWith("http")) this.url = this.url.split('//')[1];
-      if (this.cat === "") this.cat = CAT_ARTICLE;
+      if (this.price < 1) this.price = 1;
+      if (this.cat === "") this.cat = CAT_PRODUCT;
 
       const IS_NAME_CHECKED = checkRange(this.name, CHECK_STRING);
-      const IS_TEXT_CHECKED = checkRange(this.text, CHECK_STRING, TEXT_MIN, TEXT_MAX);
+      const IS_DESC_CHECKED = checkRange(this.description, CHECK_STRING, TEXT_MIN, TEXT_MAX);
       const IS_ALT_CHECKED  = checkRange(this.alt, CHECK_STRING);
 
-      const IS_URL_CHECKED = this.url ? checkRegex(this.url, CHECK_URL, REGEX_URL) : true;
-
-      if (IS_NAME_CHECKED && IS_TEXT_CHECKED && IS_ALT_CHECKED && IS_URL_CHECKED) {
+      if (IS_NAME_CHECKED && IS_DESC_CHECKED && IS_ALT_CHECKED) {
         const img = document.getElementById("image")?.files[0];
 
         if (img !== undefined) {
-          const URL   = `${API_URL}/articles`;
+          const URL   = `${API_URL}/products`;
           const data  = new FormData();
 
           data.append("name", this.name);
-          data.append("text", this.text);
+          data.append("description", this.description);
           data.append("image", img);
           data.append("alt", this.alt);
-          data.append("url", this.url);
+          data.append("price", this.price);
+          data.append("options", this.options);
           data.append("cat", this.cat);
 
           postData(URL, data, this.token)

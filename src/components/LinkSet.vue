@@ -141,16 +141,13 @@
 </template>
 
 <script>
-import BtnElt from "../elements/BtnElt"
-import CardElt from "../elements/CardElt"
-import FieldElt from "../elements/FieldElt"
-import ListElt from "../elements/ListElt"
-import TableElt from "../elements/TableElt"
+import BtnElt from "./BtnElt"
+import CardElt from "./CardElt"
+import FieldElt from "./FieldElt"
+import ListElt from "./ListElt"
+import TableElt from "./TableElt"
 
-import { checkRange, checkRegex } from "../../services/checkers"
-import { deleteData, postData, putData } from "../../services/fetchers"
-import { getItemName, getItemsByCat } from "../../services/getters"
-import { setError } from "../../services/setters"
+import { checkRange, checkRegex, deleteData, getItemName, getItemsByCat, postData, putData, setError } from "../app/services"
 
 export default {
   name: "LinkSet",

@@ -86,13 +86,12 @@
 </template>
 
 <script>
-import BtnElt from "../elements/BtnElt"
-import CardElt from "../elements/CardElt"
-import FieldElt from "../elements/FieldElt"
-import TableElt from "../elements/TableElt"
+import BtnElt from "./BtnElt"
+import CardElt from "./CardElt"
+import FieldElt from "./FieldElt"
+import TableElt from "./TableElt"
 
-import { deleteData, putData } from "../../services/fetchers"
-import { setError } from "../../services/setters"
+import { deleteData, putData, setError } from "../app/services"
 
 export default {
   name: "OrderSet",
