@@ -1,5 +1,5 @@
 <template>
-  <ul v-if="dynamic === true">
+  <ul v-if="dynamic">
     <li v-for="(item, index) in items" :key="index">
 
       <slot name="items"
@@ -49,25 +49,26 @@
 </template>
 
 <script>
-export default {
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "ListElt",
+
   props: {
     items: { type: Object, required: true },
     dynamic: { type: Boolean, default: false }
   },
 
-  methods: {
-    /**
-     * ? HAS SLOT
-     * * Determines if the specified slot name is available in the component's slots.
-     * @param {string} name - The name of the slot to check for.
-     * @return {boolean} Returns true if the component has the specified slot, false otherwise.
-     */
-    hasSlot(name) {
-      return Object.prototype.hasOwnProperty.call(this.$slots, name);
-    }
+  setup(props, { slots }) {
+    const hasSlot = (name) => {
+      return Object.prototype.hasOwnProperty.call(slots, name);
+    };
+
+    return {
+      hasSlot
+    };
   }
-}
+});
 </script>
 
 <style>
@@ -93,15 +94,17 @@ ul {
   text-align: var(--ve-list-text-align);
 }
 
-li > ul {
-  display: var(--ve-list-li-ul-display);
-  flex-flow: var(--ve-list-li-ul-flex-flow);
-  gap: var(--ve-list-li-ul-gap);
-  place-content: var(--ve-list-li-ul-place-content);
-  place-items: var(--ve-list-li-ul-place-items);
-}
+li {
+  & > ul {
+    display: var(--ve-list-li-ul-display);
+    flex-flow: var(--ve-list-li-ul-flex-flow);
+    gap: var(--ve-list-li-ul-gap);
+    place-content: var(--ve-list-li-ul-place-content);
+    place-items: var(--ve-list-li-ul-place-items);
+  }
 
-li li {
-  max-width: var(--ve-list-li-li-max-width);
+  li {
+    max-width: var(--ve-list-li-li-max-width);
+  }
 }
 </style>
