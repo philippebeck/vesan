@@ -1,8 +1,9 @@
 import { shallowMount, enableAutoUnmount } from "@vue/test-utils"
-import { createStore } from 'vuex';
 import { createRouter, createWebHistory } from 'vue-router'
-import * as setters from "../services/setters"
-import values from "../config/values"
+import { createStore } from 'vuex';
+
+import * as services from "../app/services"
+import values from "../app/values"
 import App from "../App"
 
 const router = createRouter({
@@ -24,7 +25,7 @@ let state;
  * @jest-environment jsdom
  */
 beforeEach(() => {
-  jest.spyOn(setters, "setGlobalMeta").mockImplementation(() => {});
+  jest.spyOn(services, "setGlobalMeta").mockImplementation(() => {});
 
   actions = {
     readAvatar: jest.fn()
