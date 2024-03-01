@@ -1,6 +1,5 @@
-import val from "../config/values"
-import { getData } from "../services/fetchers"
-import { setError } from "../services/setters"
+import val from "../app/values"
+import { getData, setError } from "../app/services"
 
 const actions = {
 

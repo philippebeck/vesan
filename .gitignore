@@ -3,4 +3,4 @@ dist/
 node_modules/
 public/fonts/
 public/img/
-src/config/values.js
+src/app/values.js
