@@ -1,14 +1,14 @@
 <template>
   <table>
-    <caption v-if="hasSlot('title')">
-      <slot name="title">{{ title }}</slot>
+    <caption v-if="hasTitleSlot">
+      <slot name="title" :title="title">{{ title }}</slot>
     </caption>
 
     <thead>
       <tr>
         <th v-for="(value, key) in items[0]" :key="key">{{ key }}</th>
 
-        <th v-if="hasSlot('head')">
+        <th v-if="hasHeadSlot">
           <slot name="head"></slot>
         </th>
       </tr>
@@ -26,38 +26,41 @@
           </slot>
         </td>
 
-        <td v-if="hasSlot('body')">
+        <td v-if="hasBodySlot">
           <slot name="body" :index="index" :item="item"></slot>
         </td>
       </tr>
     </tbody>
 
-    <tfoot v-if="hasSlot('foot')">
+    <tfoot v-if="hasFootSlot">
       <slot name="foot"></slot>
     </tfoot>
   </table>
 </template>
 
 <script>
-export default {
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "TableElt",
   props: {
     title: { type: String },
     items: { type: Array, required: true }
   },
+  setup(props, { slots }) {
+    const hasTitleSlot = () => Object.prototype.hasOwnProperty.call(slots, "title");
+    const hasHeadSlot  = () => Object.prototype.hasOwnProperty.call(slots, "head");
+    const hasBodySlot  = () => Object.prototype.hasOwnProperty.call(slots, "body");
+    const hasFootSlot  = () => Object.prototype.hasOwnProperty.call(slots, "foot");
 
-  methods: {
-    /**
-     * ? HAS SLOT
-     * * Determines if the specified slot name is available in the component's slots.
-     * @param {string} name - The name of the slot to check for.
-     * @return {boolean} Returns true if the component has the specified slot, false otherwise.
-     */
-    hasSlot(name) {
-      return Object.prototype.hasOwnProperty.call(this.$slots, name);
-    }
+    return {
+      hasTitleSlot,
+      hasHeadSlot,
+      hasBodySlot,
+      hasFootSlot
+    };
   }
-}
+});
 </script>
 
 <style>
@@ -168,20 +171,22 @@ tr {
   padding: var(--ve-table-tr-padding);
 }
 
-tbody tr:nth-child(even) {
-  background-color: var(--ve-table-tbody-tr-even-background-color);
-  color: var(--ve-table-tbody-tr-even-color);
-}
+tbody {
+  tr:nth-child(even) {
+    background-color: var(--ve-table-tbody-tr-even-background-color);
+    color: var(--ve-table-tbody-tr-even-color);
+  }
 
-tbody tr:nth-child(odd) {
-  background-color: var(--ve-table-tbody-tr-odd-background-color);
-  color: var(--ve-table-tbody-tr-odd-color);
-}
+  tr:nth-child(odd) {
+    background-color: var(--ve-table-tbody-tr-odd-background-color);
+    color: var(--ve-table-tbody-tr-odd-color);
+  }
 
-tbody tr:hover,
-tbody tr:focus {
-  background-color: var(--ve-table-tbody-tr-hover-background-color);
-  color: var(--ve-table-tbody-tr-hover-color);
+  tr:hover,
+  tr:focus {
+    background-color: var(--ve-table-tbody-tr-hover-background-color);
+    color: var(--ve-table-tbody-tr-hover-color);
+  }
 }
 
 th {
