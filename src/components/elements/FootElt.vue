@@ -4,11 +4,10 @@
       <slot name="hide"></slot>
     </button>
 
-    <ul
-      id="foot"
+    <ul id="foot"
       v-if="hasFoot1Slot || hasFoot2Slot || hasFoot3Slot"
-      :class="{ 'hide': isMobile, 'show': !isMobile }"
-    >
+      :class="{ 'hide': isMobile, 'show': !isMobile }">
+
       <li v-if="hasFoot1Slot">
         <section>
           <h3>{{ title1 }}</h3>

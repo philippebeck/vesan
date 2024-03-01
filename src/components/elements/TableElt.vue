@@ -13,6 +13,7 @@
         </th>
       </tr>
     </thead>
+
     <tbody>
       <tr v-for="(item, index) in items" :key="index">
 
@@ -43,10 +44,12 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "TableElt",
+
   props: {
     title: { type: String },
     items: { type: Array, required: true }
   },
+
   setup(props, { slots }) {
     const hasTitleSlot = () => Object.prototype.hasOwnProperty.call(slots, "title");
     const hasHeadSlot  = () => Object.prototype.hasOwnProperty.call(slots, "head");

@@ -37,10 +37,12 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "CardElt",
+
   props: {
     isArticle: { type: Boolean, default: false },
     id: String
   },
+
   setup(props, { slots }) {
     const hasAsideSlot  = () => Object.prototype.hasOwnProperty.call(slots, "aside");
     const hasFooterSlot = () => Object.prototype.hasOwnProperty.call(slots, "footer");

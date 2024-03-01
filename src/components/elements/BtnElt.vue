@@ -22,6 +22,7 @@ import { defineComponent, computed } from "vue";
 
 export default defineComponent({
   name: "BtnElt",
+
   props: {
     type: { type: String, default: "link" },
     value: String,
