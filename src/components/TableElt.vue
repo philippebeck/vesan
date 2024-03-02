@@ -1,6 +1,6 @@
 <template>
   <table>
-    <caption v-if="hasTitleSlot">
+    <caption v-if="hasSlot('title')">
       <slot name="title" :title="title">{{ title }}</slot>
     </caption>
 
@@ -8,7 +8,7 @@
       <tr>
         <th v-for="(value, key) in items[0]" :key="key">{{ key }}</th>
 
-        <th v-if="hasHeadSlot">
+        <th v-if="hasSlot('head')">
           <slot name="head"></slot>
         </th>
       </tr>
@@ -27,13 +27,13 @@
           </slot>
         </td>
 
-        <td v-if="hasBodySlot">
+        <td v-if="hasSlot('body')">
           <slot name="body" :index="index" :item="item"></slot>
         </td>
       </tr>
     </tbody>
 
-    <tfoot v-if="hasFootSlot">
+    <tfoot v-if="hasSlot('foot')">
       <slot name="foot"></slot>
     </tfoot>
   </table>
@@ -41,6 +41,7 @@
 
 <script>
 import { defineComponent } from "vue";
+import { checkSlot } from "../app/services";
 
 export default defineComponent({
   name: "TableElt",
@@ -50,18 +51,21 @@ export default defineComponent({
     items: { type: Array, required: true }
   },
 
+  /**
+   * ? SETUP
+   * * Setup the component
+   * @param {Object} props 
+   * @param {Object} - Object that contains the slots of the component.
+   */
   setup(props, { slots }) {
-    const hasTitleSlot = () => Object.prototype.hasOwnProperty.call(slots, "title");
-    const hasHeadSlot  = () => Object.prototype.hasOwnProperty.call(slots, "head");
-    const hasBodySlot  = () => Object.prototype.hasOwnProperty.call(slots, "body");
-    const hasFootSlot  = () => Object.prototype.hasOwnProperty.call(slots, "foot");
+    /**
+     * ? HAS SLOT
+     * * Checks if the component has a slot
+     * @param {string} name 
+     */
+    const hasSlot = (name) => checkSlot(slots, name);
 
-    return {
-      hasTitleSlot,
-      hasHeadSlot,
-      hasBodySlot,
-      hasFootSlot
-    };
+    return { hasSlot };
   }
 });
 </script>
