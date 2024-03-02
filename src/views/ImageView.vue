@@ -87,6 +87,7 @@ import { mapState, mapActions } from "vuex"
 export default {
   name: "ImageView",
   components: { CardElt, ListElt, MediaElt, NavElt, SliderElt, ImageSet },
+
   props: ["avatar", "val"],
   data() {
     return {
@@ -94,27 +95,27 @@ export default {
     }
   },
 
-  created() {
+  async created() {
     const { API_URL, HEAD, META_IMAGE, UI_URL } = this.val;
 
-    getData(`${API_URL}/galleries/${this.$route.params.id}`)
-      .then((gallery) => {
-        this.gallery = gallery;
+    try {
+      const gallery = await getData(`${API_URL}/galleries/${this.$route.params.id}`);
+      this.gallery = gallery;
 
-        setMeta(
-          gallery.name + HEAD, 
-          META_IMAGE + gallery.author,
-          `${UI_URL}/gallery/${gallery.id}`,
-          `${UI_URL}/img/thumbnails/galleries/${gallery.cover}`
-        );
-      })
-      .catch(err => { 
-        setError(err);
-        this.$router.push("/galleries");
-      });
+      setMeta(
+        gallery.name + HEAD, 
+        META_IMAGE + gallery.author,
+        `${UI_URL}/gallery/${gallery.id}`,
+        `${UI_URL}/img/thumbnails/galleries/${gallery.cover}`
+      );
 
-    this.$store.dispatch("listGalleryImages", this.$route.params.id);
-    this.$store.dispatch("listGalleries");
+    } catch (err) {
+      setError(err);
+      this.$router.push("/galleries");
+    }
+
+    await this.$store.dispatch("listGalleryImages", this.$route.params.id);
+    await this.$store.dispatch("listGalleries");
   },
 
   computed: {
@@ -130,9 +131,7 @@ export default {
      * @param {string} role - The role to check the session against.
      * @return {boolean} Returns true if the session has the specified role, otherwise false.
      */
-    checkSession(role) {
-      return checkRole(this.avatar.role, role);
-    }
+    checkSession(role) { return checkRole(this.avatar.role, role) }
   }
 }
 </script>

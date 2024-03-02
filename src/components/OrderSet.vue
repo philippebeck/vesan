@@ -100,27 +100,29 @@ export default {
 
   methods: {
     /**
-     * ? UPDATE STATUS
-     * * Updates the status of an order.
-     * @param {number} id - The ID of the order to update.
-     */
-    updateStatus(id) {
+    * ? UPDATE STATUS
+    * * Updates the status of an order.
+    * @param {number} id - The ID of the order to update.
+    */
+    async updateStatus(id) {
       const { ALERT_ORDER, ALERT_UPDATED, API_URL } = this.val;
-
       const order = this.orders.find(o => o.id === id);
 
       if (order) {
-        const URL   = `${API_URL}/orders/${id}`
-        const data  = new FormData();
+        const URL  = `${API_URL}/orders/${id}`
+        const data = new FormData();
 
         data.append("status", order.status);
 
-        putData(URL, data, this.token)
-          .then(() => {
-            alert(ALERT_ORDER + id + ALERT_UPDATED);
-            this.$router.go();
-          })
-          .catch(err => setError(err));
+        try {
+          await putData(URL, data, this.token);
+          alert(ALERT_ORDER + id + ALERT_UPDATED);
+
+        } catch (err) {
+          setError(err);
+        } finally {
+          this.$router.go();
+        }
       }
     },
 
@@ -129,20 +131,24 @@ export default {
      * * Deletes an order from the API.
      * @param {number} id - the ID of the order to delete
      */
-    deleteOrder(id) {
+    async deleteOrder(id) {
       const { TITLE_DELETE_ORDER, API_URL, ALERT_ORDER, ALERT_DELETED } = this.val;
 
       if (confirm(`${TITLE_DELETE_ORDER} ${id} ?`)) {
         const URL = `${API_URL}/orders/${id}`
 
-        deleteData(URL, this.token)
-          .then(() => {
-            alert(ALERT_ORDER + id + ALERT_DELETED);
-            this.$router.go();
-          })
-          .catch(err => setError(err));
+        try {
+          await deleteData(URL, this.token);
+          alert(ALERT_ORDER + id + ALERT_DELETED);
+
+        } catch (err) {
+          setError(err);
+        } finally {
+          this.$router.go();
+        }
       }
     }
+
   }
 }
 </script>

@@ -152,6 +152,7 @@ import { checkRange, checkRegex, deleteData, getItemName, getItemsByCat, postDat
 export default {
   name: "LinkSet",
   components: { BtnElt, CardElt, FieldElt, ListElt, TableElt },
+
   props: ["val", "links", "token"],
   data() {
     return {
@@ -168,15 +169,13 @@ export default {
      * @param {Array} items - The array of items.
      * @return {Array} The filtered array of items.
      */
-    getItemsByCategory(items) {
-      return getItemsByCat(items, "name");
-    },
+    getItemsByCategory: (items) => { return getItemsByCat(items, "name") },
 
     /**
      * ? CREATE LINK
      * * Creates a link by sending a POST request to the server with the provided data.
      */
-    createLink() {
+    async createLink() {
       const { ALERT_CREATED, API_URL, CAT_LINK, CHECK_STRING, CHECK_URL, REGEX_URL } = this.val;
 
       if (this.url.startsWith("http")) this.url = this.url.split('//')[1];
@@ -186,19 +185,22 @@ export default {
       const IS_URL_CHECKED  = checkRegex(this.url, CHECK_URL, REGEX_URL);
 
       if (IS_NAME_CHECKED && IS_URL_CHECKED) {
-        const URL   = `${API_URL}/links`;
-        const data  = new FormData();
+        const URL  = `${API_URL}/links`;
+        const data = new FormData();
 
         data.append("name", this.name);
         data.append("url", this.url);
         data.append("cat", this.cat);
 
-        postData(URL, data, this.token)
-          .then(() => {
-            alert(this.name + ALERT_CREATED);
-            this.$router.go();
-          })
-          .catch(err => setError(err));
+        try {
+          await postData(URL, data, this.token);
+          alert(this.name + ALERT_CREATED);
+
+        } catch (err) {
+          setError(err);
+        } finally {
+          this.$router.go();
+        }
       }
     },
 
@@ -207,7 +209,7 @@ export default {
      * * Updates a link based on its ID.
      * @param {number} id - The ID of the link to update.
      */
-    updateLink(id) {
+    async updateLink(id) {
       const { CHECK_STRING, REGEX_URL, CHECK_URL, API_URL, ALERT_UPDATED } = this.val;
 
       const link = this.links.find(l => l.id === id);
@@ -217,8 +219,8 @@ export default {
       const IS_URL_CHECKED  = link && checkRegex(url, CHECK_URL, REGEX_URL);
 
       if (IS_NAME_CHECKED && IS_URL_CHECKED) {
-        const URL   = `${API_URL}/links/${id}`;
-        const data  = new FormData();
+        const URL  = `${API_URL}/links/${id}`;
+        const data = new FormData();
 
         if (url.startsWith("http")) url = url.split('//')[1];
 
@@ -226,9 +228,13 @@ export default {
         data.append("url", url);
         data.append("cat", cat);
 
-        putData(URL, data, this.token)
-          .then(() => alert(`${name} ${ALERT_UPDATED}`))
-          .catch(err => setError(err));
+        try {
+          await putData(URL, data, this.token);
+          alert(`${name} ${ALERT_UPDATED}`);
+
+        } catch (err) {
+          setError(err);
+        }
       }
     },
 
@@ -237,19 +243,22 @@ export default {
      * * Deletes a link based on its ID.
      * @param {number} id - The ID of the link to be deleted.
      */
-    deleteLink(id) {
+    async deleteLink(id) {
       const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val;
       const NAME = getItemName(id, this.links);
 
       if (confirm(`${TITLE_DELETE} ${NAME} ?`)) {
         const URL = `${API_URL}/links/${id}`;
 
-        deleteData(URL, this.token)
-          .then(() => {
-            alert(NAME + ALERT_DELETED);
-            this.$router.go();
-          })
-          .catch(err => setError(err));
+        try {
+          await deleteData(URL, this.token);
+          alert(NAME + ALERT_DELETED);
+
+        } catch (err) {
+          setError(err);
+        } finally {
+          this.$router.go();
+        }
       }
     }
   }

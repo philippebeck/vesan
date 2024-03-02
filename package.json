@@ -1,6 +1,6 @@
 {
   "name": "vesan",
-  "version": "2.5.4",
+  "version": "2.5.5",
   "description": "Frontend Framework with Vue & Animadio",
   "author": {
     "name": "Philippe Beck",
@@ -30,12 +30,6 @@
         "node-addons"
       ]
     },
-    "testPathIgnorePatterns": [
-      "<rootDir>/src/components/"
-    ],
-    "coveragePathIgnorePatterns": [
-      "<rootDir>/src/components/"
-    ],
     "transform": {
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
       ".*\\.(vue)$": "<rootDir>/node_modules/@vue/vue3-jest"

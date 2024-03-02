@@ -1,28 +1,28 @@
 <template>
   <footer>
-    <button v-if="hasHideSlot" @click="toggleSide" aria-label="show/hide">
+    <button v-if="hasSlot('hide')" @click="toggleSide" aria-label="show/hide">
       <slot name="hide"></slot>
     </button>
 
     <ul id="foot"
-      v-if="hasFoot1Slot || hasFoot2Slot || hasFoot3Slot"
+      v-if="hasSlot('foot1') || hasSlot('foot2') || hasSlot('foot3')"
       :class="{ 'hide': isMobile, 'show': !isMobile }">
 
-      <li v-if="hasFoot1Slot">
+      <li v-if="hasSlot('foot1')">
         <section>
           <h3>{{ title1 }}</h3>
           <slot name="foot1"></slot>
         </section>
       </li>
 
-      <li v-if="hasFoot2Slot">
+      <li v-if="hasSlot('foot2')">
         <section>
           <h3>{{ title2 }}</h3>
           <slot name="foot2"></slot>
         </section>
       </li>
 
-      <li v-if="hasFoot3Slot">
+      <li v-if="hasSlot('foot3')">
         <section>
           <h3>{{ title3 }}</h3>
           <slot name="foot3"></slot>
@@ -30,58 +30,72 @@
       </li>
     </ul>
 
-    <aside v-if="hasFootSlot">
+    <aside v-if="hasSlot('foot')">
       <slot name="foot"></slot>
     </aside>
   </footer>
 </template>
 
 <script>
-import { defineComponent, onMounted, onUnmounted, ref } from 'vue';
+import { defineComponent, onMounted, onUnmounted, ref } from "vue";
+import { checkSlot } from "../app/services";
 
 export default defineComponent({
   name: "FootElt",
+
   props: {
     title1: { type: String, default: "" },
     title2: { type: String, default: "" },
     title3: { type: String, default: "" }
   },
+
+  /**
+   * ? SETUP
+   * * Setup the component
+   * @param {Object} props - The props of the component.
+   * @param {Object} - Object that contains the slots of the component.
+   */
   setup(props, { slots }) {
     const isMobile = ref(false);
-    const hasHideSlot  = () => Object.prototype.hasOwnProperty.call(slots, 'hide');
-    const hasFoot1Slot = () => Object.prototype.hasOwnProperty.call(slots, 'foot1');
-    const hasFoot2Slot = () => Object.prototype.hasOwnProperty.call(slots, 'foot2');
-    const hasFoot3Slot = () => Object.prototype.hasOwnProperty.call(slots, 'foot3');
-    const hasFootSlot  = () => Object.prototype.hasOwnProperty.call(slots, 'foot');
 
-    const handleResize = () => {
-      isMobile.value = window.innerWidth < 1600;
-    };
+    /**
+     * ? HAS SLOT
+     * * Checks if the component has a slot
+     * @param {string} name 
+     */
+    const hasSlot = (name)  => checkSlot(slots, name);
 
+    /**
+     * ? HANDLE RESIZE
+     * * Handles the resize if the window is smaller than 1600
+     */
+    const handleResize = () => isMobile.value = window.innerWidth < 1600;
+
+    /**
+     * ? TOGGLE SIDE
+     * * Toggles the footer main part by adding or removing the hide/show classes
+     */
     const toggleSide = () => {
       const foot = document.getElementById("foot");
       foot.classList.replace("show", "hide") || foot.classList.replace("hide", "show");
     };
 
+    /**
+     * ? ON MOUNTED
+     * * Adds the event listener on the resize
+     */
     onMounted(() => {
-      window.addEventListener('resize', handleResize);
+      window.addEventListener("resize", handleResize);
       handleResize();
     });
 
-    onUnmounted(() => {
-      window.removeEventListener('resize', handleResize);
-    });
+    /**
+     * ? ON UNMOUNTED
+     * * Removes the event listener on the resize
+     */
+    onUnmounted(() => window.removeEventListener("resize", handleResize));
 
-    return {
-      isMobile,
-      hasHideSlot,
-      hasFoot1Slot,
-      hasFoot2Slot,
-      hasFoot3Slot,
-      hasFootSlot,
-      handleResize,
-      toggleSide
-    };
+    return { isMobile, handleResize, hasSlot, toggleSide };
   }
 });
 </script>

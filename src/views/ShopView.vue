@@ -95,13 +95,22 @@ export default {
   components: { CardElt, ListElt, MediaElt, NavElt, ProductSet },
   props: ["avatar", "val"],
 
+  /**
+   * ? CREATED
+   * * Retrieves the products from the server.
+   * * Sets the meta tags.
+   */
   created() {
     const { HEAD_SHOP, LOGO_SRC, META_SHOP, UI_URL } = this.val;
-    this.$store.dispatch("listProducts");
 
+    this.$store.dispatch("listProducts");
     setMeta(HEAD_SHOP, META_SHOP, `${UI_URL}/shop`, UI_URL + LOGO_SRC);
   },
 
+  /**
+   * ? UPDATED
+   * * Sets the itemprop of the description elements.
+   */
   updated() {
     const descriptionArray = document.getElementsByClassName("figcaption");
 
@@ -118,9 +127,7 @@ export default {
      * * Retrieves the categories of the products.
      * @return {type} The categories of the products.
      */
-    getCategories() {
-      return getCats(this.products);
-    }
+    getCategories() { return getCats(this.products) }
   },
 
   methods: {
@@ -132,9 +139,7 @@ export default {
      * @param {string} role - The role to check.
      * @return {boolean} The result of the session check.
      */
-    checkSession(role) {
-      return checkRole(this.avatar.role, role);
-    },
+    checkSession(role) { return checkRole(this.avatar.role, role) },
 
     /**
      * ? GET ITEMS BY CATEGORY
@@ -142,9 +147,7 @@ export default {
      * @param {Array} items - The array of items.
      * @return {Array} The items filtered by category.
      */
-    getItemsByCategory(items) {
-      return getItemsByCat(items);
-    }
+    getItemsByCategory(items) { return getItemsByCat(items) }
   }
 }
 </script>

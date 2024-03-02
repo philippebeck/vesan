@@ -211,6 +211,7 @@ import { checkRange, checkRegex, deleteData, getItemName, postData, putData, set
 export default {
   name: "ProjectSet",
   components: { BtnElt, CardElt, FieldElt, ListElt, MediaElt, TableElt },
+
   props: ["projects", "token", "val"],
   data() {
     return {
@@ -226,9 +227,9 @@ export default {
   methods: {
     /**
      * ? CREATE PROJECT
-     * * Creates an project by sending a POST request to the server with the provided data.
+     * * Creates a project by sending a POST request to the server with the provided data.
      */
-    createProject() {
+    async createProject() {
       const { ALERT_CREATED, ALERT_IMG, API_URL, CAT_PROJECT, CHECK_STRING, CHECK_URL, REGEX_URL, TEXT_MIN, TEXT_MAX } = this.val;
 
       if (this.url.startsWith("http")) this.url = this.url.split('//')[1];
@@ -237,15 +238,14 @@ export default {
       const IS_NAME_CHECKED = checkRange(this.name, CHECK_STRING);
       const IS_DESC_CHECKED = checkRange(this.description, CHECK_STRING, TEXT_MIN, TEXT_MAX);
       const IS_ALT_CHECKED  = checkRange(this.alt, CHECK_STRING);
-
-      const IS_URL_CHECKED = this.url ? checkRegex(this.url, CHECK_URL, REGEX_URL) : true;
+      const IS_URL_CHECKED  = this.url ? checkRegex(this.url, CHECK_URL, REGEX_URL) : true;
 
       if (IS_NAME_CHECKED && IS_DESC_CHECKED && IS_ALT_CHECKED && IS_URL_CHECKED) {
         const img = document.getElementById("image")?.files[0];
 
         if (img !== undefined) {
-          const URL   = `${API_URL}/projects`;
-          const data  = new FormData();
+          const URL  = `${API_URL}/projects`;
+          const data = new FormData();
 
           data.append("name", this.name);
           data.append("description", this.description);
@@ -253,13 +253,16 @@ export default {
           data.append("alt", this.alt);
           data.append("url", this.url);
           data.append("cat", this.cat);
+          
+          try {
+            await postData(URL, data, this.token);
+            alert(this.name + ALERT_CREATED);
 
-          postData(URL, data, this.token)
-            .then(() => {
-              alert(this.name + ALERT_CREATED);
-              this.$router.go();
-            })
-            .catch(err => setError(err));
+          } catch (err) {
+            setError(err);
+          } finally {
+            this.$router.go();
+          }
 
         } else {
           alert(ALERT_IMG);
@@ -272,7 +275,7 @@ export default {
      * * Updates the project with the provided data.
      * @param {type} id - The ID of the project to update.
      */
-    updateProject(id) {
+    async updateProject(id) {
       const { API_URL, ALERT_UPDATED, CHECK_STRING, REGEX_URL, TEXT_MAX, TEXT_MIN } = this.val;
       const project = this.projects.find(p => p.id === id);
       let { name, description, image, alt, url, cat } = project;
@@ -294,12 +297,15 @@ export default {
         data.append("url", url);
         data.append("cat", cat);
 
-        putData(URL, data, this.token)
-          .then(() => {
-            alert(name + ALERT_UPDATED);
-            this.$router.go();
-          })
-          .catch(err => setError(err));
+        try {
+          await putData(URL, data, this.token);
+          alert(name + ALERT_UPDATED);
+
+        } catch (err) {
+          setError(err);
+        } finally {
+          this.$router.go();
+        }
       }
     },
 
@@ -308,19 +314,22 @@ export default {
      * * Deletes an project with the given ID.
      * @param {type} id - The ID of the project to delete.
      */
-    deleteProject(id) {
+    async deleteProject(id) {
       const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val;
       const NAME = getItemName(id, this.projects);
 
       if (confirm(`${TITLE_DELETE} ${NAME} ?`)) {
         const URL = `${API_URL}/projects/${id}`
 
-        deleteData(URL, this.token)
-          .then(() => {
-            alert(NAME + ALERT_DELETED);
-            this.$router.go();
-          })
-          .catch(err => setError(err));
+        try {
+          await deleteData(URL, this.token);
+          alert(NAME + ALERT_DELETED);
+
+        } catch (err) {
+          setError(err);
+        } finally {
+          this.$router.go();
+        }
       }
     }
   }

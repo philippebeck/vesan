@@ -124,6 +124,7 @@ import { checkRange, deleteData, getItemName, postData, putData, setError } from
 export default {
   name: "GallerySet",
   components: { BtnElt, CardElt, FieldElt, ListElt, TableElt },
+
   props: ["galleries", "images", "token", "val"],
   data() {
     return {
@@ -157,7 +158,7 @@ export default {
      * ? CREATE GALLERY
      * * Creates a galleryby sending a POST request to the server.
      */
-    createGallery() {
+    async createGallery() {
       const { ALERT_CREATED, API_URL, CHECK_STRING } = this.val;
 
       const IS_NAME_CHECKED   = checkRange(this.name, CHECK_STRING);
@@ -170,12 +171,15 @@ export default {
         data.append("name", this.name);
         data.append("author", this.author);
 
-        postData(URL, data, this.token)
-          .then(() => {
-            alert(this.name + ALERT_CREATED);
-            this.$router.go();
-          })
-          .catch(err => setError(err));
+        try {
+          await postData(URL, data, this.token);
+          alert(this.name + ALERT_CREATED);
+
+        } catch (err) {
+          setError(err);
+        } finally {
+          this.$router.go();
+        }
       }
     },
 
@@ -184,7 +188,7 @@ export default {
      * * Update the gallery with the given ID.
      * @param {number} id - The ID of the gallery to update.
      */
-    updateGallery(id) {
+    async updateGallery(id) {
       const { CHECK_STRING, API_URL, ALERT_UPDATED } = this.val;
 
       const gallery = this.galleries.find(g => g.id === id);
@@ -201,9 +205,13 @@ export default {
         data.append("author", author);
         data.append("cover", cover);
 
-        putData(URL, data, this.token)
-          .then(() => alert(name + ALERT_UPDATED))
-          .catch(err => setError(err));
+        try {
+          await putData(URL, data, this.token);
+          alert(name + ALERT_UPDATED);
+
+        } catch (err) {
+          setError(err);
+        }
       }
     },
 
@@ -212,21 +220,25 @@ export default {
      * * Deletes a gallery with the specified ID.
      * @param {number} id - The ID of the gallery to be deleted.
      */
-    deleteGallery(id) {
+    async deleteGallery(id) {
       const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val;
       const NAME = getItemName(id, this.galleries);
 
       if (confirm(`${TITLE_DELETE} ${NAME} ?`)) {
         const URL = `${API_URL}/galleries/${id}`
 
-        deleteData(URL, this.token)
-          .then(() => {
-            alert(NAME + ALERT_DELETED);
-            this.$router.go();
-          })
-          .catch(err => setError(err));
+        try {
+          await deleteData(URL, this.token);
+          alert(NAME + ALERT_DELETED);
+
+        } catch (err) {
+          setError(err);
+        } finally {
+          this.$router.go();
+        }
       }
     }
+
   }
 }
 </script>

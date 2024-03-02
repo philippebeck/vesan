@@ -135,13 +135,21 @@ export default {
   components: { BtnElt, CardElt, ListElt, MediaElt, NavElt, ArticleSet },
   props: ["avatar", "val"],
 
-  created() {
+  /**
+   * ? CREATED
+   * * A function that retrieves the articles & sets the meta data of the page.
+   */
+  async created() {
     const { HEAD_BLOG, LOGO_SRC, META_BLOG, UI_URL } = this.val;
-    this.$store.dispatch("listArticles");
 
+    await this.$store.dispatch("listArticles");
     setMeta(HEAD_BLOG, META_BLOG, `${UI_URL}/blog`, UI_URL + LOGO_SRC);
   },
 
+  /**
+   * ? UPDATED
+   * * A function that updates the text elements by setting the "itemprop" attribute to "text".
+   */
   updated() {
     const textArray = document.getElementsByClassName("figcaption");
     for (let textElt of textArray) textElt.firstChild.setAttribute("itemprop", "text");
@@ -155,9 +163,7 @@ export default {
      * * Retrieves the categories of articles.
      * @return {Array} An array of article categories.
      */
-    getCategories() {
-      return getCats(this.articles);
-    }
+    getCategories() { return getCats(this.articles) }
   },
 
   methods: {
@@ -169,9 +175,7 @@ export default {
      * @param {type} role - the role to check
      * @return {type} the result of the role check
      */
-    checkSession(role) {
-      return checkRole(this.avatar.role, role);
-    },
+    checkSession(role) { return checkRole(this.avatar.role, role) },
 
     /**
      * ? GET ITEMS BY CATEGORY
@@ -179,9 +183,7 @@ export default {
      * @param {Array} items - The list of items to filter.
      * @return {Array} The filtered list of items.
      */
-    getItemsByCategory(items) {
-      return getItemsByCat(items);
-    },
+    getItemsByCategory(items) { return getItemsByCat(items) },
 
     /**
      * ? CHECK LIKES
@@ -189,16 +191,14 @@ export default {
      * @param {type} id - The ID to check for in the likes array.
      * @return {type} - Returns a boolean indicating whether the ID is present in the likes array.
      */
-    checkLikes(id) {
-      return this.articles.some(a => a.id === id && a.likes.includes(this.id));
-    },
+    checkLikes(id) { return this.articles.some(a => a.id === id && a.likes.includes(this.id)) },
 
     /**
      * ? ADD LIKE
-     * * Add a like to the article with the specified ID.
-     * @param {number} id - The ID of the article.
+     * * Asynchronously adds a like to the specified article.
+     * @param {number} id - The ID of the article to add a like to
      */
-    addLike(id) {
+    async addLike(id) {
       const { API_URL } = this.val;
       const article = this.articles.find(a => a.id === id);
 
@@ -219,7 +219,11 @@ export default {
       data.append("likes", JSON.stringify(likes));
       data.append("cat", cat);
 
-      putData(URL, data, this.token).catch(err => setError(err));
+      try {
+        await putData(URL, data, this.token);
+      } catch (err) {
+        setError(err);
+      }
     }
   }
 }

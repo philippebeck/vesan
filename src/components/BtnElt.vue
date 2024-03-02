@@ -30,25 +30,36 @@ export default defineComponent({
     content: String,
     title: String
   },
+
+  /**
+   * ? SETUP
+   * * Setup the component
+   * @param {Object} props - The props of the component.
+   */
   setup(props) {
+    /**
+     * ? IS BTN TYPE BUTTON
+     * * Checks if the type of the button is 'button'
+     */
     const isBtnTypeButton = computed(() => {
       const validTypes = ["button", "submit", "reset"];
+
       return validTypes.includes(props.type);
     });
 
-    const buttonClass = computed(() => {
-      return isBtnTypeButton.value ? props.class : "";
-    });
+    /**
+     * ? BUTTON CLASS
+     * * Returns the class of the button
+     */
+    const buttonClass = computed(() => { return isBtnTypeButton.value ? props.class : "" });
 
-    const linkClass = computed(() => {
-      return isBtnTypeButton.value ? "" : props.class;
-    });
+    /**
+     * ? LINK CLASS
+     * * Returns the class of the link
+     */
+    const linkClass = computed(() => { return isBtnTypeButton.value ? "" : props.class });
 
-    return {
-      isBtnTypeButton,
-      buttonClass,
-      linkClass
-    };
+    return { buttonClass, isBtnTypeButton, linkClass };
   }
 });
 </script>

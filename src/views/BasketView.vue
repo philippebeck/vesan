@@ -196,6 +196,7 @@ import { loadScript } from "@paypal/paypal-js"
 export default {
   name: "BasketView",
   components: { BtnElt, CardElt, FieldElt, MediaElt, TableElt, OrderSet },
+
   props: ["avatar", "val"],
   data() {
     return {
@@ -207,31 +208,38 @@ export default {
     }
   },
 
-  created() {
+  /**
+   * ? CREATED
+   * * Sets the order by matching the products in the basket with the products in the store
+   * * Checks if the user is logged in & with which role
+   * @return {Promise<void>} A promise that gets "products"
+   */
+  async created() {
     const { API_URL, HEAD_BASKET, META_BASKET, LOGO_SRC, UI_URL } = this.val;
 
-    getData(`${API_URL}/products`)
-      .then(res => { 
-        this.products = res;
-        this.setBasket();
+    try {
+      const res = await getData(`${API_URL}/products`);
+      this.products = res;
+      this.setBasket();
+      setMeta(HEAD_BASKET, META_BASKET, `${UI_URL}/basket`, UI_URL + LOGO_SRC);
 
-        setMeta(HEAD_BASKET, META_BASKET, `${UI_URL}/basket`, UI_URL + LOGO_SRC);
+      if (this.basket[0] !== undefined) {
+        this.setOrder();
+        this.setTotal();
 
-        if (this.basket[0] !== undefined) {
-          this.setOrder();
-          this.setTotal();
-
-          if (this.token) this.setPaypal(this.val, this.getTotal, this.createOrder);
-        }
-      })
-      .catch(err => setError(err));
-
-      if (this.checkSession("admin")) {
-        this.$store.dispatch("listOrders", this.id);
-
-      } else if (this.checkSession("user")) {
-        this.$store.dispatch("listUserOrders", this.id);
+        if (this.token) this.setPaypal(this.val, this.getTotal, this.createOrder);
       }
+
+    } catch (err) {
+      setError(err);
+    }
+
+    if (this.checkSession("admin")) {
+      await this.$store.dispatch("listOrders", this.id);
+
+    } else if (this.checkSession("user")) {
+      await this.$store.dispatch("listUserOrders", this.id);
+    }
   },
 
   computed: {
@@ -247,26 +255,20 @@ export default {
      * @param {string} role - The role to check.
      * @return {boolean} Returns true if the user has the specified role, otherwise false.
      */
-    checkSession(role) {
-      return checkRole(this.avatar.role, role);
-    },
+    checkSession(role) { return checkRole(this.avatar.role, role) },
 
     /**
      * ? TOGGLE TERMS
      * * Toggles the value of the isTermsAccepted property.
      */
-    toggleTerms() {
-      this.isTermsAccepted = !this.isTermsAccepted;
-    },
+    toggleTerms() { this.isTermsAccepted = !this.isTermsAccepted },
 
     /**
      * ? GET TOTAL
      * * Get the total value.
      * @return {number} The total value.
      */
-    getTotal() {
-      return this.total;
-    },
+    getTotal() { return this.total },
 
     /**
      * ? SET BASKET
@@ -294,12 +296,12 @@ export default {
           if (product.id === item.id) {
             let order = {};
 
-            order.id        = item.id;
-            order.name      = product.name;
-            order.image     = product.image;
-            order.option    = item.option;
-            order.quantity  = Number(item.quantity);
-            order.price     = Number(product.price);
+            order.id       = item.id;
+            order.name     = product.name;
+            order.image    = product.image;
+            order.option   = item.option;
+            order.quantity = Number(item.quantity);
+            order.price    = Number(product.price);
 
             this.order.push(order);
           }
@@ -364,7 +366,7 @@ export default {
                   }
                 );
               },
-              onCancel : function () { alert(val.PAYPAL_CANCEL) },
+              onCancel: function() { alert(val.PAYPAL_CANCEL) },
               onError: function(err) {
                 alert(val.PAYPAL_ERROR);
                 throw new Error(err);
@@ -395,10 +397,10 @@ export default {
      * @param {number} orderId - The ID of the order.
      * @return {void} This function does not return a value.
      */
-    createOrder(orderId) {
-      const URL       = `${this.val.API_URL}/orders/`;
-      const order     = new FormData();
-      const products  = [];
+    async createOrder(orderId) {
+      const URL      = `${this.val.API_URL}/orders/`;
+      const order    = new FormData();
+      const products = [];
 
       for (const product of this.order) {
         delete product.image;
@@ -411,13 +413,16 @@ export default {
       order.append("status", this.val.ORDER_STATUS);
       order.append("userId", this.id);
 
-      postData(URL, order, this.token)
-        .then(() => {
-          alert(this.val.ALERT_ORDER_CREATED);
-          localStorage.removeItem("basket");
-          this.$router.go();
-        })
-        .catch(err => setError(err));
+      try {
+        await postData(URL, order, this.token);
+        alert(this.val.ALERT_ORDER_CREATED);
+        localStorage.removeItem("basket");
+
+      } catch (err) {
+        setError(err);
+      } finally {
+        this.$router.go();
+      }
     },
 
     /**

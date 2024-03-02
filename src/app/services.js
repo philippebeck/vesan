@@ -52,6 +52,16 @@ export const checkRole = (userRole, role) => {
         : false;
 };
 
+/**
+ * ? CHECK SLOT
+ * * Check if the given slot name exists.
+ * @param {string} name - The name of the slot to check.
+ * @return {boolean} Whether the slot exists or not.
+ */
+export const checkSlot = (slots, name) => {
+  return Object.prototype.hasOwnProperty.call(slots, name);
+}
+
 // ! ******************** FETCHERS ********************
 
 /**
@@ -202,7 +212,6 @@ export const setGlobalMeta = (lang = "en", icon = "img/favicon.ico") => {
   const iconElt = document.querySelector('[rel="icon"]');
 
   document.documentElement.lang = lang;
-
   if (iconElt) iconElt.href = icon;
 };
 
@@ -215,21 +224,21 @@ export const setGlobalMeta = (lang = "en", icon = "img/favicon.ico") => {
  * @param {string|null} [image] - The image to set
  */
 export const setMeta = (title, description, url, image = null) => {
-  const canonicalTag = document.querySelector('[rel="canonical"]');
+  const titleTag          = document.querySelector("title");
+  const canonicalTag      = document.querySelector('[rel="canonical"]');
+  const descriptionTag    = document.querySelector('[name="description"]');
 
-  const titleTag = document.querySelector("title");
-  const ogTitleTag = document.querySelector('[property="og:title"]');
-  const descriptionTag = document.querySelector('[name="description"]');
-  const ogDescriptionTag = document.querySelector('[property="og:description"]');
-  const ogUrlTag = document.querySelector('[property="og:url"]');
-  const ogImageTag = image ? document.querySelector('[property="og:image"]') : null;
+  const ogTitleTag        = document.querySelector('[property="og:title"]');
+  const ogUrlTag          = document.querySelector('[property="og:url"]');
+  const ogDescriptionTag  = document.querySelector('[property="og:description"]');
+  const ogImageTag        = image ? document.querySelector('[property="og:image"]') : null;
 
-  if (canonicalTag) canonicalTag.href = url;
   if (titleTag) titleTag.innerText = title;
+  if (canonicalTag) canonicalTag.href = url;
+  if (descriptionTag) descriptionTag.setAttribute("content", description);
 
   if (ogTitleTag) ogTitleTag.setAttribute("content", title);
-  if (descriptionTag) descriptionTag.setAttribute("content", description);
-  if (ogDescriptionTag) ogDescriptionTag.setAttribute("content", description);
   if (ogUrlTag) ogUrlTag.setAttribute("content", url);
+  if (ogDescriptionTag) ogDescriptionTag.setAttribute("content", description);
   if (image && ogImageTag) ogImageTag.setAttribute("content", image);
 };

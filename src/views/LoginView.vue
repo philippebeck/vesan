@@ -187,6 +187,7 @@ import { VueRecaptcha } from "vue-recaptcha"
 export default {
   name: "LoginView",
   components: { BtnElt, CardElt, FieldElt, VueRecaptcha },
+
   props: ["val"],
   data() {
     return {
@@ -198,6 +199,11 @@ export default {
     }
   },
 
+  /**
+   * ? CREATED
+   * * A function that sets the meta data of the page
+   * * Redirects to the home page if the user is logged in
+   */
   created() {
     const { HEAD_LOGIN, LOGO_SRC, META_LOGIN, UI_URL } = this.val;
     setMeta(HEAD_LOGIN, META_LOGIN, `${UI_URL}/login`, UI_URL + LOGO_SRC);
@@ -208,46 +214,66 @@ export default {
   methods: {
     /**
      * ? ON VERIFY
-     * * Handles the verification of the response from the reCAPTCHA.
-     * @param {Object} response - The response from the reCAPTCHA.
+     * * Asynchronously handles the verification of a response.
+     * @param {type} response - the response to be verified
+     * @return {type} description of return value
      */
-    onVerify(response) {
+    async onVerify(response) {
       const { ALERT_RECAPTCHA, API_URL } = this.val;
       const URL = `${API_URL}/auth/recaptcha`;
 
-      postData(URL, { response })
-        .then(({ success }) => {
-          if      (success && this.type === "signIn")     this.signIn();
-          else if (success && this.type === "signUp")     this.signUp();
-          else if (success && this.type === "forgotPass") this.forgotPass();
-          else    alert(ALERT_RECAPTCHA);
-        })
-        .catch(err => setError(err));
+      try {
+        const { success } = await postData(URL, { response });
+
+        if (success) {
+          switch (this.type) {
+            case "signIn":
+              this.signIn();
+              break;
+            case "signUp":
+              this.signUp();
+              break;
+            case "forgotPass":
+              this.forgotPass();
+              break;
+          }
+
+        } else {
+          alert(ALERT_RECAPTCHA);
+        }
+      } catch (err) {
+        setError(err);
+      }
     },
 
     /**
      * ? SIGN IN
      * * Signs in the user.
      */
-    signIn() {
+    async signIn() {
       const { API_URL, CHECK_EMAIL, CHECK_PASS, REGEX_EMAIL, REGEX_PASS } = this.val;
-      const IS_EMAIL_CHECKED  = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL);
-      const IS_PASS_CHECKED   = checkRegex(this.pass, CHECK_PASS, REGEX_PASS);
+
+      const IS_EMAIL_CHECKED = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL);
+      const IS_PASS_CHECKED  = checkRegex(this.pass, CHECK_PASS, REGEX_PASS);
 
       if (IS_EMAIL_CHECKED && IS_PASS_CHECKED) {
-        const URL   = `${API_URL}/auth`;
-        const data  = new FormData();
+        const URL  = `${API_URL}/auth`;
+        const data = new FormData();
 
         data.append("email", this.email);
         data.append("pass", this.pass);
 
-        postData(URL, data)
-          .then((res) => {
-            localStorage.setItem("userToken", JSON.stringify(res.token));
-            localStorage.setItem("userId", JSON.stringify(res.userId));
-            this.$router.go();
-          })
-          .catch(err => setError(err));
+        try {
+          const res = await postData(URL, data);
+
+          localStorage.setItem("userToken", JSON.stringify(res.token));
+          localStorage.setItem("userId", JSON.stringify(res.userId));
+
+        } catch (err) {
+          setError(err)
+        } finally {
+          this.$router.go()
+        }
       }
     },
 
@@ -255,17 +281,17 @@ export default {
      * ? SIGN UP
      * * Creates a new user.
      */
-    signUp() {
+    async signUp() {
       const { ALERT_CREATED, ALERT_IMG, API_URL, CHECK_EMAIL, CHECK_PASS, CHECK_STRING, REGEX_EMAIL, REGEX_PASS } = this.val;
 
-      const IS_NAME_CHECKED   = checkRange(this.name, CHECK_STRING);
-      const IS_EMAIL_CHECKED  = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL);
-      const IS_PASS_CHECKED   = checkRegex(this.pass, CHECK_PASS, REGEX_PASS);
+      const IS_NAME_CHECKED  = checkRange(this.name, CHECK_STRING);
+      const IS_EMAIL_CHECKED = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL);
+      const IS_PASS_CHECKED  = checkRegex(this.pass, CHECK_PASS, REGEX_PASS);
 
       if (IS_NAME_CHECKED && IS_EMAIL_CHECKED && IS_PASS_CHECKED) {
-        const URL   = `${API_URL}/users`;
-        const data  = new FormData();
-        const img   = document.querySelector('[type="file"]')?.files[0];
+        const URL  = `${API_URL}/users`;
+        const data = new FormData();
+        const img  = document.querySelector('[type="file"]')?.files[0];
 
         if (img !== undefined) {
           data.append("name", this.name);
@@ -274,14 +300,18 @@ export default {
           data.append("pass", this.pass);
           data.append("role", "user");
 
-          postData(URL, data)
-            .then(() => {
-              alert(this.name + ALERT_CREATED);
-              this.$router.go();
-            })
-            .catch(err => setError(err));
+          try {
+            await postData(URL, data);
+            alert(this.name + ALERT_CREATED);
+          } catch (err) {
+            setError(err)
+          } finally {
+            this.$router.go()
+          }
 
-        } else { alert(ALERT_IMG) }
+        } else { 
+          alert(ALERT_IMG)
+        }
       }
     },
 
@@ -289,24 +319,26 @@ export default {
      * ? FORGOT PASS
      * * Executes the forgot password functionality.
      */
-    forgotPass() {
+    async forgotPass() {
       const { ALERT_SENDED, API_URL, CHECK_EMAIL, CONFIRM_FORGOT, FORGOT_SUBJECT, FORGOT_TEXT, REGEX_EMAIL } = this.val;
       const IS_EMAIL_CHECKED = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL);
 
       if (IS_EMAIL_CHECKED && confirm(CONFIRM_FORGOT)) {
-        const URL   = `${API_URL}/auth/pass`;
-        const data  = new FormData();
+        const URL  = `${API_URL}/auth/pass`;
+        const data = new FormData();
 
         data.append("email", this.email);
         data.append("subject", FORGOT_SUBJECT);
         data.append("html", FORGOT_TEXT);
 
-        postData(URL, data)
-          .then(() => {
-            alert(FORGOT_SUBJECT + ALERT_SENDED);
-            this.$router.go();
-          })
-          .catch(err => setError(err));
+        try {
+          await postData(URL, data);
+          alert(FORGOT_SUBJECT + ALERT_SENDED);
+        } catch (err) {
+          setError(err)
+        } finally {
+          this.$router.go()
+        }
       }
     }
   }

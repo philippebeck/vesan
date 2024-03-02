@@ -186,6 +186,7 @@ import { mapState } from "vuex"
 export default {
   name: "ArticleView",
   components: { BtnElt, CardElt, FieldElt, ListElt, MediaElt, Editor },
+
   props: ["avatar", "val"],
   data() {
     return {
@@ -193,27 +194,38 @@ export default {
     }
   },
 
-  created () {
+  /**
+   * ? CREATED
+   * * Retrieves the article from the API
+   * * Sets the meta tags
+   * @return {Promise<void>} A promise that gets an "article"
+   */
+  async created() {
     const { API_URL, HEAD, UI_URL } = this.val;
 
-    getData(`${API_URL}/articles/${this.$route.params.id}`)
-      .then((article => {
-        article.likes = JSON.parse(article.likes);
-        this.article  = article;
+    try {
+      const article = await getData(`${API_URL}/articles/${this.$route.params.id}`);
+      article.likes = JSON.parse(article.likes);
+      this.article = article;
 
-        setMeta(
-          article.name + HEAD,
-          (article.text || "").slice(0, 160).replace( /(<([^>]+)>)/gi, ""),
-          `${UI_URL}/article/${article.id}`,
-          `${UI_URL}/img/thumbnails/articles/${article.image}`
-        );
-      }))
-      .catch(err => {
-        setError(err);
-        this.$router.push("/blog");
-      });
+      setMeta(
+        article.name + HEAD,
+        (article.text || "").slice(0, 160).replace( /(<([^>]+)>)/gi, ""),
+        `${UI_URL}/article/${article.id}`,
+        `${UI_URL}/img/thumbnails/articles/${article.image}`
+      );
+
+    } catch (err) {
+      setError(err);
+      this.$router.push("/blog");
+    }
   },
 
+  /**
+   * ? UPDATED
+   * * A function that updates the text element's itemprop attribute 
+   * * if the "figcaption" element is present.
+   */
   updated() {
     if (document.getElementById("figcaption")) {
       const textElt = document.getElementById("figcaption");
@@ -221,9 +233,7 @@ export default {
     }
   },
 
-  computed: {
-    ...mapState(["id", "token"])
-  },
+  computed: { ...mapState(["id", "token"]) },
 
   methods: {
     /**
@@ -232,31 +242,27 @@ export default {
      * @param {string} role - The role to check.
      * @return {boolean} The result of the session check.
      */
-    checkSession(role) {
-      return checkRole(this.avatar.role, role);
-    },
+    checkSession(role) { return checkRole(this.avatar.role, role) },
 
     /**
      * ? CHECK LIKES
      * * Check if the current user has liked the article.
      * @return {boolean} True if the user has liked the article, false otherwise.
      */
-    checkLikes() {
-      return this.article.likes && this.article.likes.includes(this.id);
-    },
+    checkLikes() { return this.article.likes && this.article.likes.includes(this.id) },
 
     /**
      * ? ADD LIKE
      * * Adds a like to the article.
      */
-    addLike() {
+    async addLike() {
       const { API_URL } = this.val;
       let { id, name, text, image, alt, url, likes, cat } = this.article;
 
       const index = likes.indexOf(this.id);
       index > -1 ? likes.splice(index, 1) : likes.push(this.id);
 
-      const URL = `${API_URL}/articles/${id}`;
+      const URL  = `${API_URL}/articles/${id}`;
       const data = new FormData();
 
       data.append("name", name);
@@ -267,14 +273,18 @@ export default {
       data.append("likes", JSON.stringify(likes));
       data.append("cat", cat);
 
-      putData(URL, data, this.token).catch(err => setError(err));
+      try {
+        await putData(URL, data, this.token);
+      } catch (err) {
+        setError(err);
+      }
     },
 
     /**
      * ? UPDATE ARTICLE
      * * Updates the article with the provided data.
      */
-    updateArticle() {
+    async updateArticle() {
       const { API_URL, ALERT_UPDATED, CHECK_STRING, REGEX_URL, TEXT_MAX, TEXT_MIN } = this.val;
       let { id, name, text, image, alt, url, likes, cat } = this.article;
 
@@ -296,12 +306,14 @@ export default {
         data.append("likes", JSON.stringify(likes));
         data.append("cat", cat);
 
-        putData(URL, data, this.token)
-          .then(() => {
-            alert(name + ALERT_UPDATED);
-            this.$router.push("/blog");
-          })
-          .catch(err => setError(err));
+        try {
+          await putData(URL, data, this.token);
+          alert(name + ALERT_UPDATED);
+        } catch (err) {
+          setError(err);
+        } finally {
+          this.$router.push("/blog");
+        }
       }
     },
 
@@ -309,19 +321,21 @@ export default {
      * ? DELETE ARTICLE
      * * Deletes an article with the given ID.
      */
-    deleteArticle() {
+    async deleteArticle() {
       const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val;
       let { id, name } = this.article;
 
       if (confirm(`${TITLE_DELETE} ${name} ?`)) {
         const URL = `${API_URL}/articles/${id}`
 
-        deleteData(URL, this.token)
-          .then(() => {
-            alert(name + ALERT_DELETED);
-            this.$router.push("/blog");
-          })
-          .catch(err => setError(err));
+        try {
+          await deleteData(URL, this.token);
+          alert(name + ALERT_DELETED);
+        } catch (err) {
+          setError(err);
+        } finally {
+          this.$router.push("/blog");
+        }
       }
     }
   }

@@ -7,8 +7,8 @@ export default createStore({
   namespaced: true,
 
   state: {
-    id:     0,
-    token:  "",
+    id:     null,
+    token:  null,
 
     article:  {},
     avatar:   {},
@@ -42,6 +42,6 @@ export default createStore({
     getUsers:     state => state.users
   },
 
-  mutations,
-  actions
+  mutations: mutations,
+  actions: actions
 });

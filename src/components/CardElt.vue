@@ -6,11 +6,11 @@
 
     <slot name="body"></slot>
 
-    <aside v-if="hasAsideSlot">
+    <aside v-if="hasSlot('aside')">
       <slot name="aside"></slot>
     </aside>
 
-    <footer v-if="hasFooterSlot">
+    <footer v-if="hasSlot('footer')">
       <slot name="footer"></slot>
     </footer>
   </article>
@@ -22,11 +22,11 @@
 
     <slot name="body"></slot>
 
-    <aside v-if="hasAsideSlot">
+    <aside v-if="hasSlot('aside')">
       <slot name="aside"></slot>
     </aside>
 
-    <footer v-if="hasFooterSlot">
+    <footer v-if="hasSlot('footer')">
       <slot name="footer"></slot>
     </footer>
   </section>
@@ -34,6 +34,7 @@
 
 <script>
 import { defineComponent } from "vue";
+import { checkSlot } from "../app/services";
 
 export default defineComponent({
   name: "CardElt",
@@ -43,14 +44,21 @@ export default defineComponent({
     id: String
   },
 
+  /**
+   * ? SETUP
+   * * Setup the component
+   * @param {Object} props - The props of the component.
+   * @param {Object} - Object that contains the slots of the component.
+   */
   setup(props, { slots }) {
-    const hasAsideSlot  = () => Object.prototype.hasOwnProperty.call(slots, "aside");
-    const hasFooterSlot = () => Object.prototype.hasOwnProperty.call(slots, "footer");
+    /**
+     * ? HAS SLOT
+     * * Checks if the component has a slot
+     * @param {string} name 
+     */
+    const hasSlot = (name) => checkSlot(slots, name);
 
-    return {
-      hasAsideSlot,
-      hasFooterSlot
-    };
+    return { hasSlot };
   }
 });
 </script>

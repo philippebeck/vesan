@@ -106,6 +106,7 @@ import { checkRange, checkRegex, deleteData, getItemName, putData, setError } fr
 export default {
   name: "UserSet",
   components: { BtnElt, CardElt, FieldElt, MediaElt, TableElt },
+
   props: ["token", "users", "val"],
   data() {
     return {
@@ -122,31 +123,34 @@ export default {
      * * Update a user by their ID.
      * @param {number} id - The ID of the user to update.
      */
-    updateUser(id) {
+    async updateUser(id) {
       const { ALERT_UPDATED, API_URL, CHECK_EMAIL, CHECK_STRING, REGEX_EMAIL } = this.val;
 
       const user = this.users.find(u => u.id === id);
       let { name, email, image, role } = user;
 
-      const IS_NAME_CHECKED   = user && checkRange(name, CHECK_STRING);
-      const IS_EMAIL_CHECKED  = user && checkRegex(email, CHECK_EMAIL, REGEX_EMAIL);
+      const IS_NAME_CHECKED  = user && checkRange(name, CHECK_STRING);
+      const IS_EMAIL_CHECKED = user && checkRegex(email, CHECK_EMAIL, REGEX_EMAIL);
 
       if (IS_NAME_CHECKED && IS_EMAIL_CHECKED) {
-        const URL   = `${API_URL}/users/${id}`;
-        const img   = document.getElementById(`image-${id}`)?.files[0] ?? image;
-        const data  = new FormData();
+        const URL  = `${API_URL}/users/${id}`;
+        const img  = document.getElementById(`image-${id}`)?.files[0] ?? image;
+        const data = new FormData();
 
         data.append("name", name);
         data.append("email", email);
         data.append("image", img);
         data.append("role", role);
 
-        putData(URL, data, this.token)
-          .then(() => {
-            alert(name + ALERT_UPDATED);
-            this.$router.go();
-          })
-          .catch(err => setError(err));
+        try {
+          await putData(URL, data, this.token);
+          alert(name + ALERT_UPDATED);
+
+        } catch (err) {
+          setError(err);
+        } finally {
+          this.$router.go();
+        }
       }
     },
 
@@ -155,19 +159,22 @@ export default {
      * * Delete a user by their ID.
      * @param {number} id - The ID of the user to be deleted.
      */
-    deleteUser(id) {
+    async deleteUser(id) {
       const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val;
       const NAME = getItemName(id, this.users);
 
       if (confirm(`${TITLE_DELETE} ${NAME} ?`)) {
         const URL = `${API_URL}/users/${id}`;
 
-        deleteData(URL, this.token)
-          .then(() => {
-            alert(NAME + ALERT_DELETED);
-            this.$router.push("/home");
-          })
-          .catch(err => setError(err));
+        try {
+          await deleteData(URL, this.token);
+          alert(NAME + ALERT_DELETED);
+
+        } catch (err) {
+          setError(err);
+        } finally {
+          this.$router.push("/home");
+        }
       }
     }
   }
