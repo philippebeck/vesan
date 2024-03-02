@@ -70,10 +70,11 @@ export default {
   components: { CardElt, ListElt, MediaElt, NavElt, GallerySet },
   props: ["avatar", "val"],
 
-  created() {
+  async created() {
     const { HEAD_GALLERY, LOGO_SRC, META_GALLERY, UI_URL } = this.val;
-    this.$store.dispatch("listGalleries");
-    this.$store.dispatch("listImages");
+
+    await this.$store.dispatch("listGalleries");
+    await this.$store.dispatch("listImages");
 
     setMeta(HEAD_GALLERY, META_GALLERY, `${UI_URL}/galleries`, UI_URL + LOGO_SRC);
   },
@@ -91,9 +92,7 @@ export default {
      * @param {type} role - the role to check the session for
      * @return {type} the result of the session check
      */
-    checkSession(role) {
-      return checkRole(this.avatar.role, role);
-    }
+    checkSession(role) { return checkRole(this.avatar.role, role) }
   }
 }
 </script>
