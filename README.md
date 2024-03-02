@@ -118,7 +118,7 @@ Data Views :
 -   **LinkView** *(Links list)*  
 
 Services :  
--   **Checkers** : checkRange(), checkRegex(), checkRole()  
+-   **Checkers** : checkRange(), checkRegex(), checkRole(), checkSlot()  
 -   **Fetchers** : getData(), postData(), putData(), deleteData()  
 -   **Getters** : getCats(), getItemName(), getItemsByCat()  
 -   **Setters** : setError(), setGlobalMeta(), setMeta()  
