@@ -102,6 +102,7 @@ export default {
    */
   created() {
     const { HEAD_SHOP, LOGO_SRC, META_SHOP, UI_URL } = this.val;
+
     this.$store.dispatch("listProducts");
     setMeta(HEAD_SHOP, META_SHOP, `${UI_URL}/shop`, UI_URL + LOGO_SRC);
   },

@@ -141,6 +141,7 @@ export default {
    */
   async created() {
     const { HEAD_BLOG, LOGO_SRC, META_BLOG, UI_URL } = this.val;
+
     await this.$store.dispatch("listArticles");
     setMeta(HEAD_BLOG, META_BLOG, `${UI_URL}/blog`, UI_URL + LOGO_SRC);
   },

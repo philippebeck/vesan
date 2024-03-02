@@ -196,8 +196,9 @@ export default {
 
   /**
    * ? CREATED
-   * * Perform asynchronous operations on component creation.
-   * @return {Promise<void>} A promise that resolves when the operations are completed
+   * * Retrieves the article from the API
+   * * Sets the meta tags
+   * @return {Promise<void>} A promise that gets an "article"
    */
   async created() {
     const { API_URL, HEAD, UI_URL } = this.val;
