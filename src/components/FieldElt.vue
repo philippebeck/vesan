@@ -93,6 +93,7 @@
 
 <script>
 import { defineComponent, ref } from "vue";
+import { checkSlot } from "../app/services";
 
 export default defineComponent({
   name: "FieldElt",
@@ -115,23 +116,40 @@ export default defineComponent({
     required: { type: String, default: "true" }
   },
 
+  /**
+   * ? SETUP
+   * * Checks if the component has a slot
+   * * Get the type of the field
+   * @param {Object} props - The props of the component.
+   * @param {Object} - Object that contains the slots & the emits of the component.
+   */
   setup(props, { slots, emit }) {
     const fieldType = ref("");
 
-    const hasSlot = (name) => {
-      return Object.prototype.hasOwnProperty.call(slots, name);
-    };
+    /**
+     * ? HAS SLOT
+     * * Checks if the component has a slot
+     * @param {string} name 
+     */
+    const hasSlot = (name)  => checkSlot(slots, name);
 
-    const onInput = (event) => {
-      emit("update:value", event.target.value);
-    };
+    /**
+     * ? ON INPUT
+     * * Emit the input event
+     * @param {Event} event 
+     */
+    const onInput = (event) => emit("update:value", event.target.value);
 
+    /**
+     * ? GET FIELD TYPE
+     * * Get the type of the field
+     */
     const getFieldType = () => {
       const fieldTypes = {
-        "number": ["number", "date", "time", "range"],
+        "number":  ["number", "date", "time", "range"],
         "special": ["checkbox", "radio", "color"],
-        "list": ["option", "select"],
-        "area": ["textarea"]
+        "list":    ["option", "select"],
+        "area":    ["textarea"]
       };
 
       fieldType.value = Object.keys(fieldTypes).find(key => fieldTypes[key].includes(props.type)) || "text";
@@ -139,12 +157,7 @@ export default defineComponent({
 
     getFieldType();
 
-    return {
-      fieldType,
-      hasSlot,
-      onInput,
-      getFieldType
-    }
+    return { fieldType, getFieldType, hasSlot, onInput };
   }
 });
 </script>

@@ -38,45 +38,64 @@
 
 <script>
 import { defineComponent, onMounted, onUnmounted, ref } from "vue";
+import { checkSlot } from "../app/services";
 
 export default defineComponent({
   name: "FootElt",
+
   props: {
     title1: { type: String, default: "" },
     title2: { type: String, default: "" },
     title3: { type: String, default: "" }
   },
+
+  /**
+   * ? SETUP
+   * * Setup the component
+   * @param {Object} props - The props of the component.
+   * @param {Object} - Object that contains the slots of the component.
+   */
   setup(props, { slots }) {
     const isMobile = ref(false);
 
-    const hasSlot = (name) => {
-      return Object.prototype.hasOwnProperty.call(slots, name);
-    };
+    /**
+     * ? HAS SLOT
+     * * Checks if the component has a slot
+     * @param {string} name 
+     */
+    const hasSlot = (name)  => checkSlot(slots, name);
 
-    const handleResize = () => {
-      isMobile.value = window.innerWidth < 1600;
-    };
+    /**
+     * ? HANDLE RESIZE
+     * * Handles the resize if the window is smaller than 1600
+     */
+    const handleResize = () => isMobile.value = window.innerWidth < 1600;
 
+    /**
+     * ? TOGGLE SIDE
+     * * Toggles the footer main part by adding or removing the hide/show classes
+     */
     const toggleSide = () => {
       const foot = document.getElementById("foot");
       foot.classList.replace("show", "hide") || foot.classList.replace("hide", "show");
     };
 
+    /**
+     * ? ON MOUNTED
+     * * Adds the event listener on the resize
+     */
     onMounted(() => {
       window.addEventListener("resize", handleResize);
       handleResize();
     });
 
-    onUnmounted(() => {
-      window.removeEventListener("resize", handleResize);
-    });
+    /**
+     * ? ON UNMOUNTED
+     * * Removes the event listener on the resize
+     */
+    onUnmounted(() => window.removeEventListener("resize", handleResize));
 
-    return {
-      isMobile,
-      hasSlot,
-      handleResize,
-      toggleSide
-    };
+    return { isMobile, handleResize, hasSlot, toggleSide };
   }
 });
 </script>

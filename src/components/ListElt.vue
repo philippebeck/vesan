@@ -50,6 +50,7 @@
 
 <script>
 import { defineComponent } from "vue";
+import { checkSlot } from "../app/services";
 
 export default defineComponent({
   name: "ListElt",
@@ -59,14 +60,21 @@ export default defineComponent({
     dynamic: { type: Boolean, default: false }
   },
 
+  /**
+   * ? SETUP
+   * * Setup the component
+   * @param {Object} props - The props of the component.
+   * @param {Object} - Object that contains the slots of the component.
+   */
   setup(props, { slots }) {
-    const hasSlot = (name) => {
-      return Object.prototype.hasOwnProperty.call(slots, name);
-    };
+    /**
+     * ? HAS SLOT
+     * * Checks if the component has a slot
+     * @param {string} name 
+     */
+    const hasSlot = (name) => checkSlot(slots, name);
 
-    return {
-      hasSlot
-    };
+    return { hasSlot };
   }
 });
 </script>

@@ -54,6 +54,7 @@
 
 <script>
 import { defineComponent, ref, onMounted, onUnmounted } from "vue";
+import { checkSlot } from "../app/services";
 
 export default defineComponent({
   name: "NavElt",
@@ -63,41 +64,59 @@ export default defineComponent({
     items: { type: Array }
   },
 
+  /**
+   * ? SETUP
+   * * Setup the component
+   * @param {Object} props - The props of the component.
+   * @param {Object} - Object that contains the slots of the component.
+   */
   setup(props, { slots }) {
     const isMobile = ref(false);
 
-    const getNavClass = () => {
-      return props.class === "sidebar" ? "sidebar" : "navbar";
-    };
+    /**
+     * ? GET NAV CLASS
+     * * Get the class of the navigation then returns it
+     */
+    const getNavClass = ()  => { return props.class === "sidebar" ? "sidebar" : "navbar" };
 
-    const handleResize = () => {
-      isMobile.value = window.innerWidth < 768;
-    };
+    /**
+     * ? HANDLE RESIZE
+     * * Handles the resize if the window is smaller than 768
+     */
+    const handleResize = () => isMobile.value = window.innerWidth < 768;
 
-    const hasSlot = (name) => {
-      return Object.prototype.hasOwnProperty.call(slots, name);
-    };
+    /**
+     * ? HAS SLOT
+     * * Checks if the component has a slot
+     * @param {string} name 
+     */
+    const hasSlot = (name)  => checkSlot(slots, name);
 
+    /**
+     * ? TOGGLE SIDE
+     * * Toggles the sidebar by adding or removing the hide/show classes
+     */
     const toggleSide = () => {
       const side = document.getElementById("side");
       side.classList.replace("show", "hide") || side.classList.replace("hide", "show");
     };
 
+    /**
+     * ? ON MOUNTED
+     * * Add the event listener for the resize
+     */
     onMounted(() => {
       window.addEventListener("resize", handleResize);
       handleResize();
     });
 
-    onUnmounted(() => {
-      window.removeEventListener("resize", handleResize);
-    });
+    /**
+     * ? ON UNMOUNTED
+     * * Removes the event listener for the resize
+     */
+    onUnmounted(() => window.removeEventListener("resize", handleResize));
 
-    return {
-      isMobile,
-      getNavClass,
-      hasSlot,
-      toggleSide
-    };
+    return { isMobile, getNavClass, hasSlot, toggleSide };
   }
 });
 </script>

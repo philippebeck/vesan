@@ -114,6 +114,7 @@
 
 <script>
 import { defineComponent } from "vue";
+import { checkSlot } from "../app/services";
 
 export default defineComponent({
   name: "MediaElt",
@@ -131,30 +132,39 @@ export default defineComponent({
     itemprop: String
   },
 
+  /**
+   * ? SETUP
+   * * Setup the component
+   * @param {Object} props - The props of the component.
+   * @param {Object} - Object that contains the slots of the component.
+   */
   setup(props, { slots }) {
-    const hasSlot = (name) => {
-      return Object.prototype.hasOwnProperty.call(slots, name);
-    };
+    /**
+     * ? HAS SLOT
+     * * Checks if the component has a slot
+     * @param {string} name 
+     */
+    const hasSlot = (name) => checkSlot(slots, name);
 
+    /**
+     * ? GET ITEM TYPE
+     * * Returns the item type for the schema
+     * @param {string} type 
+     */
     const getItemType = (type) => {
-      if (type === "audio") {
-        return "https://schema.org/AudioObject";
-
-      } else if (type === "video") {
-        return "https://schema.org/VideoObject";
-
-      } else if (type === "quote") {
-        return "https://schema.org/Quotation";
-
-      } else {
-        return "https://schema.org/ImageObject";
+      switch (type) {
+        case "audio":
+          return "https://schema.org/AudioObject";
+        case "video":
+          return "https://schema.org/VideoObject";
+        case "quote":
+          return "https://schema.org/Quotation";
+        default:
+          return "https://schema.org/ImageObject";
       }
     };
 
-    return {
-      hasSlot,
-      getItemType
-    };
+    return { getItemType, hasSlot };
   }
 });
 </script>

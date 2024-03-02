@@ -58,7 +58,8 @@
 </template>
 
 <script>
-import { defineComponent, ref, onMounted, onUnmounted } from 'vue';
+import { defineComponent, ref, onMounted, onUnmounted } from "vue";
+import { checkSlot } from '../app/services';
 
 export default defineComponent({
   name: "SliderElt",
@@ -70,30 +71,51 @@ export default defineComponent({
     random: { type: Boolean, default: false }
   },
 
+  /**
+   * ? SETUP
+   * * Setup the component
+   * @param {Object} props 
+   * @param {Object} - Object that contains the slots of the component.
+   */
   setup(props, { slots }) {
-    const index = ref(-1);
-    const intervalId = ref(0);
-    const autoElt = ref(null);
-    const randomElt = ref(null);
-    const autoState = ref(props.auto);
+    const index       = ref(-1);
+    const intervalId  = ref(0);
+    const autoElt     = ref(null);
+    const randomElt   = ref(null);
+    const autoState   = ref(props.auto);
     const randomState = ref(props.random);
 
-    const hasSlot = (name) => {
-      return Object.prototype.hasOwnProperty.call(slots, name);
-    };
+    /**
+     * ? HAS SLOT
+     * * Checks if the component has a slot
+     * @param {string} name 
+     */
+    const hasSlot = (name)  => checkSlot(slots, name);
 
+    /**
+     * ? SET KEYBOARD
+     * * Set the keyboard
+     * @param {Event} event 
+     */
     const setKeyboard = (event) => {
       const actions = {
-        ArrowLeft: goPrevious,
-        ArrowUp: checkRandom,
-        ArrowDown: checkAuto,
+        ArrowUp:    checkRandom,
         ArrowRight: goNext,
+        ArrowDown:  checkAuto,
+        ArrowLeft:  goPrevious
       };
 
       const action = actions[event.code];
       if (action) action();
     };
 
+    /**
+     * ? SET ICON
+     * * Set the icon
+     * @param {HTMLElement} icon 
+     * @param {string} add 
+     * @param {string} remove 
+     */
     const setIcon = (icon, add, remove) => {
       const classes = icon.classList;
 
@@ -101,10 +123,12 @@ export default defineComponent({
       classes.remove(remove);
     };
 
+    /**
+     * ? REFRESH SLIDE
+     * * Refresh the slide
+     */
     const refreshSlide = () => {
-      if (randomState.value) {
-        index.value = getRandomInteger(0, props.slides.length - 1);
-      }
+      if (randomState.value) index.value = getRandomInteger(0, props.slides.length - 1);
 
       for (let i = 1; i <= props.slides.length; i++) {
         const slide = document.getElementById(`slide-${i}`);
@@ -115,10 +139,15 @@ export default defineComponent({
       if (currentSlide) currentSlide.classList.add("show");
     };
 
+    /**
+     * ? CHECK AUTO
+     * * Check the auto state, then set the pause or play icon
+     */
     const checkAuto = () => {
       if (autoState.value) {
         setAuto(false, "Play", "fa-play", "fa-pause");
         clearInterval(intervalId.value);
+
       } else {
         setAuto(true, "Pause", "fa-pause", "fa-play");
         intervalId.value = setInterval(goNext, props.delay);
@@ -127,52 +156,98 @@ export default defineComponent({
       refreshSlide();
     };
 
+    /**
+     * ? CHECK RANDOM
+     * * Check the random state, then set the random or continue icon
+     */
     const checkRandom = () => {
       randomState.value ?
         setRandom(false, "Random", "fa-random", "fa-long-arrow-alt-right") :
-        setRandom(true, "Normal",
-          "fa-long-arrow-alt-right", "fa-random");
+        setRandom(true, "Normal", "fa-long-arrow-alt-right", "fa-random");
 
       refreshSlide();
     };
 
+    /**
+     * ? GO PREVIOUS
+     * * Go to the previous slide
+     */
     const goPrevious = () => {
       index.value = (index.value - 1 + props.slides.length) % props.slides.length;
       refreshSlide();
     };
 
+    /**
+     * ? GO NEXT
+     * * Go to the next slide
+     */
     const goNext = () => {
       index.value = (index.value + 1) % props.slides.length;
       refreshSlide();
     };
 
+    /**
+     * ? RUN SLIDER
+     * * Run the slider
+     */
     const runSlider = () => {
       autoState.value ?
         intervalId.value = window.setInterval(goNext, props.delay) :
         goNext();
     };
 
+    /**
+     * ? GET RANDOM INTEGER
+     * * Get a random integer
+     * @param {number} min 
+     * @param {number} max 
+     */
     const getRandomInteger = (min, max) => {
       const range = max - min + 1;
       return Math.floor(Math.random() * range) + min;
     };
 
+    /**
+     * ? SET AUTO
+     * * Set the auto state
+     * @param {boolean} state 
+     * @param {string} title 
+     * @param {string} add 
+     * @param {string} remove 
+     */
     const setAuto = (state, title, add, remove) => {
       const icon = autoElt.value.querySelector("i");
+
       autoState.value = state;
       autoElt.value.title = title;
       setIcon(icon, add, remove);
     };
 
-    const setRandom = (state, title, addIcon, removeIcon) => {
-      const randomIcon = randomElt.value.querySelector("i");
+    /**
+     * ? SET RANDOM
+     * * Set the random state
+     * @param {boolean} state 
+     * @param {string} title 
+     * @param {string} add 
+     * @param {string} remove 
+     */
+    const setRandom = (state, title, add, remove) => {
+      const icon = randomElt.value.querySelector("i");
+
       randomState.value = state;
       randomElt.value.title = title;
-      setIcon(randomIcon, addIcon, removeIcon);
+      setIcon(icon, add, remove);
     };
 
+    /**
+     * ? ON MOUNTED
+     * * Sets the auto & random states
+     * * Adds the keyboard event
+     * * Sets the first slide
+     * * Runs the slider
+     */
     onMounted(() => {
-      autoElt.value = document.getElementById("slider-auto");
+      autoElt.value   = document.getElementById("slider-auto");
       randomElt.value = document.getElementById("slider-random");
 
       document.addEventListener("keydown", setKeyboard);
@@ -183,22 +258,17 @@ export default defineComponent({
       runSlider();
     });
 
+    /**
+     * ? ON UNMOUNTED
+     * * Clear the interval
+     */
     onUnmounted(() => {
       for (let i = 0; i < 1000; i++) {
         clearTimeout(i);
       }
     });
 
-    return {
-      hasSlot,
-      refreshSlide,
-      setKeyboard,
-      setIcon,
-      checkAuto,
-      checkRandom,
-      goPrevious,
-      goNext
-    };
+    return { checkAuto, checkRandom, goNext, goPrevious, hasSlot, refreshSlide, setIcon, setKeyboard };
   }
 });
 </script>
