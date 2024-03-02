@@ -1,4 +1,4 @@
-const mutations = {
+export default {
 
   // ! ********** ARTICLES **********
 
@@ -8,7 +8,7 @@ const mutations = {
    * @param {Object} state - The state object.
    * @param {Object} article - The article to be set.
    */
-  setArticle(state, article) {
+  setArticle: (state, article) => {
     article.likes = JSON.parse(article.likes);
     state.article = article;
   },
@@ -19,7 +19,7 @@ const mutations = {
    * @param {Object} state - The state object.
    * @param {Array} articles - The articles to be set.
    */
-  setArticles(state, articles) {
+  setArticles: (state, articles) => {
     for (const article of articles) article.likes = JSON.parse(article.likes);
     state.articles = articles;
   },
@@ -32,7 +32,7 @@ const mutations = {
    * @param {Object} state - The state object.
    * @param {Object} avatar - The avatar to be set.
    */
-    setAvatar(state, avatar) { 
+    setAvatar: (state, avatar) => { 
       state.avatar = avatar;
     },
 
@@ -41,7 +41,7 @@ const mutations = {
    * * Sets an ID of the state.
    * @param {object} state - The state object.
    */
-  setId(state) {
+  setId: (state) => {
     state.id = JSON.parse(localStorage.getItem("userId"));
   },
 
@@ -50,7 +50,7 @@ const mutations = {
    * * Sets a token in the state.
    * @param {Object} state - The state object.
    */
-  setToken(state) { 
+  setToken: (state) => { 
     state.token = JSON.parse(localStorage.getItem("userToken"));
   },
 
@@ -62,7 +62,7 @@ const mutations = {
    * @param {Object} state - The state object.
    * @param {Array} galleries - The galleries to be set.
    */
-  setGalleries(state, galleries) {
+  setGalleries: (state, galleries) => {
     state.galleries = galleries;
   },
 
@@ -74,7 +74,7 @@ const mutations = {
    * @param {Object} state - The state object.
    * @param {Array} images - The images to be set.
    */
-  setImages(state, images) {
+  setImages: (state, images) => {
     state.images = images;
   },
 
@@ -86,7 +86,7 @@ const mutations = {
    * @param {Object} state - The state object.
    * @param {Array} links - The links to be set.
    */
-  setLinks(state, links) {
+  setLinks: (state, links) => {
     state.links = links;
   },
 
@@ -98,7 +98,7 @@ const mutations = {
    * @param {Object} state - The state object.
    * @param {Array} orders - The orders to be set.
    */
-  setOrders(state, orders) {
+  setOrders: (state, orders) => {
     for (const order of orders) {
       order.products = JSON.parse(order.products);
     }
@@ -111,7 +111,7 @@ const mutations = {
    * @param {Object} state - The state object.
    * @param {Array} orders - The user orders to be set.
    */
-    setUserOrders(state, orders) {
+    setUserOrders: (state, orders) => {
       for (const order of orders) {
         delete order.userId;
         order.products = JSON.parse(order.products);
@@ -127,7 +127,7 @@ const mutations = {
    * @param {Object} state - The state object.
    * @param {Object} product - The product to be set.
    */
-  setProduct(state, product) {
+  setProduct: (state, product) => {
     product.options = product.options.split(",");
     state.product = product;
   },
@@ -138,7 +138,7 @@ const mutations = {
  * @param {Object} state - The state object.
  * @param {Array} products - The products to be set.
  */
-  setProducts(state, products) { 
+  setProducts: (state, products) => { 
     for (const product of products) product.options = product.options.split(",");
     state.products = products;
   },
@@ -151,7 +151,7 @@ const mutations = {
    * @param {Object} state - The state object.
    * @param {Array} projects - The projects to be set.
    */
-  setProjects(state, projects) {
+  setProjects: (state, projects) => {
     state.projects = projects;
   },
 
@@ -163,7 +163,7 @@ const mutations = {
    * @param {Object} state - The state object.
    * @param {Array} user - The user to be set.
    */
-  setUser(state, user) {
+  setUser: (state, user) => {
     state.user = user;
   },
 
@@ -173,9 +173,7 @@ const mutations = {
    * @param {Object} state - The state object.
    * @param {Array} users - The users to be set.
    */
-  setUsers(state, users) {
+  setUsers: (state, users) => {
     state.users = users;
   }
 };
-
-export default mutations;
