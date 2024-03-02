@@ -74,10 +74,15 @@ export default {
   components: { BtnElt, CardElt, ListElt, NavElt, LinkSet },
   props: ["avatar", "val"],
 
-  created() {
+  /**
+   * ? CREATED
+   * * Get the list of links
+   * * Set the meta tags
+   */
+  async created() {
     const { HEAD_LINK, LOGO_SRC, META_LINK, UI_URL } = this.val;
-    this.$store.dispatch("listLinks");
 
+    await this.$store.dispatch("listLinks");
     setMeta(HEAD_LINK, META_LINK, `${UI_URL}/link`, UI_URL + LOGO_SRC);
   },
 
@@ -89,9 +94,7 @@ export default {
      * * Retrieves the categories using the provided links.
      * @return {Array} An array of categories.
      */
-    getCategories() {
-      return getCats(this.links);
-    }
+    getCategories() { return getCats(this.links) }
   },
 
   methods: {
@@ -103,9 +106,7 @@ export default {
      * @param {string} role - the role to check
      * @return {boolean} the result of the session check
      */
-    checkSession(role) {
-      return checkRole(this.avatar.role, role);
-    },
+    checkSession(role) { return checkRole(this.avatar.role, role) },
 
     /**
      * ? GET ITEMS BY CATEGORY
@@ -113,9 +114,7 @@ export default {
      * @param {Array} items - The array of items.
      * @return {Array} The array of items filtered by category.
      */
-    getItemsByCategory(items) {
-      return getItemsByCat(items, "name");
-    }
+    getItemsByCategory(items) { return getItemsByCat(items, "name") }
   }
 }
 </script>

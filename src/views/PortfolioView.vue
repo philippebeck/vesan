@@ -93,13 +93,22 @@ export default {
   components: { CardElt, ListElt, MediaElt, NavElt, ProjectSet },
   props: ["avatar", "val"],
 
-  created() {
+  /**
+   * ? CREATED
+   * * Retrieves projects from the API.
+   * * Sets the meta tags.
+   */
+  async created() {
     const { HEAD_PORTFOLIO, LOGO_SRC, META_PORTFOLIO, UI_URL } = this.val;
-    this.$store.dispatch("listProjects");
 
+    await this.$store.dispatch("listProjects");
     setMeta(HEAD_PORTFOLIO, META_PORTFOLIO, `${UI_URL}/portfolio`, UI_URL + LOGO_SRC);
   },
 
+  /**
+   * ? UPDATED
+   * * A function that updates the text elements by setting the "itemprop" attribute to "description".
+   */
   updated() {
     const textArray = document.getElementsByClassName("figcaption");
     for (let textElt of textArray) textElt.firstChild.setAttribute("itemprop", "description");
@@ -113,9 +122,7 @@ export default {
      * * Retrieves the categories of projects.
      * @return {Array} An array of project categories.
      */
-    getCategories() {
-      return getCats(this.projects);
-    }
+    getCategories() { return getCats(this.projects) }
   },
 
   methods: {
@@ -127,9 +134,7 @@ export default {
      * @param {type} role - the role to check
      * @return {type} the result of the role check
      */
-    checkSession(role) {
-      return checkRole(this.avatar.role, role);
-    },
+    checkSession(role) { return checkRole(this.avatar.role, role) },
 
     /**
      * ? GET ITEMS BY CATEGORY
@@ -137,9 +142,7 @@ export default {
      * @param {Array} items - The list of items to filter.
      * @return {Array} The filtered list of items.
      */
-    getItemsByCategory(items) {
-      return getItemsByCat(items);
-    },
+    getItemsByCategory(items) { return getItemsByCat(items) },
   }
 }
 </script>
