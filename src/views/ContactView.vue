@@ -83,6 +83,7 @@ export default {
     ListElt,
     VueRecaptcha 
   },
+  
   props: ["val"],
   data() {
     return {
@@ -92,6 +93,10 @@ export default {
     }
   },
 
+  /**
+   * ? CREATED
+   * * A function that sets the meta data of the page
+   */
   created() {
     const { HEAD_CONTACT, LOGO_SRC, META_CONTACT, UI_URL } = this.val;
     setMeta(HEAD_CONTACT, META_CONTACT, `${UI_URL}/contact`, UI_URL + LOGO_SRC);
@@ -103,7 +108,7 @@ export default {
      * * Handles the verification process.
      * @param {any} response - The response from the verification process.
      */
-    onVerify(response) {
+    async onVerify(response) {
       const {CHECK_EMAIL, CHECK_STRING, REGEX_EMAIL, TEXT_MIN, TEXT_MAX, API_URL } = this.val;
 
       if (checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL) &&
@@ -112,18 +117,29 @@ export default {
 
         const URL = `${API_URL}/auth/recaptcha`;
 
-        postData(URL, { response })
-          .then(({ success }) => success ? this.send() : alert("Failed captcha verification"))
-          .catch(err => setError(err))
-          .finally(() => this.$router.go());
+        try {
+          const { success } = await postData(URL, { response });
+
+          if (success) {
+            this.send();
+          } else {
+            alert("Failed captcha verification");
+          }
+
+        } catch (err) {
+          setError(err);
+        } finally {
+          this.$router.go();
+        }
       }
     },
 
     /**
      * ? SEND
-     * * Sends a message to the API.
+     * * Asynchronously sends a message to the specified URL using the email, subject & text provided.
+     * @return {Promise} A Promise that resolves when the message is successfully sent & rejects if an error occurs.
      */
-    send() {
+    async send() {
       const URL   = `${this.val.API_URL}/users/message`;
       const data  = new FormData();
 
@@ -131,12 +147,15 @@ export default {
       data.append("subject", this.subject);
       data.append("html", this.text);
 
-      postData(URL, data)
-        .then(() => {
-          alert(this.subject + this.val.ALERT_SENDED);
-          this.$router.push("/");
-        })
-        .catch(err => setError(err));
+      try {
+        await postData(URL, data);
+        alert(this.subject + this.val.ALERT_SENDED);
+
+      } catch (err) {
+        setError(err);
+      } finally {
+        this.$router.push("/");
+      }
     }
   }
 }

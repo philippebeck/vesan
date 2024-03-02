@@ -100,6 +100,12 @@ export default {
     }
   },
 
+  /**
+   * ? CREATED
+   * * A function that sets the global meta data for all pages
+   * * Gets the Id & the token from the store
+   * * Checks if the token is valid to read the avatar
+   */
   created() {
     this.val = val;
     setGlobalMeta(val.LANG, val.ICON);
@@ -121,12 +127,10 @@ export default {
     /**
      * ? CHECK SESSION
      * * Checks the session for a specific role.
-     * @param {type} role - the role to check
-     * @return {type} the result of the check
+     * @param {string} role - the role to check
+     * @return {boolean} the result of the check
      */
-    checkSession(role) {
-      return checkRole(this.avatar.role, role);
-    }
+    checkSession(role) { return checkRole(this.avatar.role, role) }
   }
 };
 </script>
