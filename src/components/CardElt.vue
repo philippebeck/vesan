@@ -6,11 +6,11 @@
 
     <slot name="body"></slot>
 
-    <aside v-if="hasAsideSlot">
+    <aside v-if="hasSlot('aside')">
       <slot name="aside"></slot>
     </aside>
 
-    <footer v-if="hasFooterSlot">
+    <footer v-if="hasSlot('footer')">
       <slot name="footer"></slot>
     </footer>
   </article>
@@ -22,11 +22,11 @@
 
     <slot name="body"></slot>
 
-    <aside v-if="hasAsideSlot">
+    <aside v-if="hasSlot('aside')">
       <slot name="aside"></slot>
     </aside>
 
-    <footer v-if="hasFooterSlot">
+    <footer v-if="hasSlot('footer')">
       <slot name="footer"></slot>
     </footer>
   </section>
@@ -44,12 +44,12 @@ export default defineComponent({
   },
 
   setup(props, { slots }) {
-    const hasAsideSlot  = () => Object.prototype.hasOwnProperty.call(slots, "aside");
-    const hasFooterSlot = () => Object.prototype.hasOwnProperty.call(slots, "footer");
+    const hasSlot = (name) => {
+      return Object.prototype.hasOwnProperty.call(slots, name);
+    };
 
     return {
-      hasAsideSlot,
-      hasFooterSlot
+      hasSlot
     };
   }
 });
