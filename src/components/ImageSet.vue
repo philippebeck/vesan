@@ -132,6 +132,7 @@ import { checkRange, deleteData, putData, postData, setError } from "../app/serv
 export default {
   name: "ImageSet",
   components: { BtnElt, CardElt, FieldElt, ListElt, MediaElt, TableElt },
+
   props: ["galleries", "images", "token", "val"],
   data() {
     return {
@@ -165,26 +166,29 @@ export default {
      * ? CREATE IMAGE
      * * Create an image by sending a POST request to the server.
      */
-    createImage() {
+    async createImage() {
       const { CHECK_STRING, API_URL, ALERT_CREATED, ALERT_IMG } = this.val;
 
       if (checkRange(this.description, CHECK_STRING)) {
         const img = document.getElementById("image")?.files[0];
 
         if (img !== undefined) {
-          const URL   = API_URL + "/images";
-          const data  = new FormData();
+          const URL  = API_URL + "/images";
+          const data = new FormData();
 
           data.append("image", img);
           data.append("description", this.description);
           data.append("galleryId", this.$route.params.id);
 
-          postData(URL, data, this.token)
-            .then(() => {
-              alert(this.description + ALERT_CREATED);
-              this.$router.go();
-            })
-            .catch(err => setError(err));
+          try {
+            await postData(URL, data, this.token);
+            alert(this.description + ALERT_CREATED);
+
+          } catch (err) {
+            setError(err);
+          } finally {
+            this.$router.go();
+          }
 
         } else {
           alert(ALERT_IMG);
@@ -197,7 +201,7 @@ export default {
      * * Updates an image.
      * @param {number} id - The ID of the image to be updated.
      */
-    updateImage(id) {
+    async updateImage(id) {
       const { ALERT_IMAGE, ALERT_UPDATED, API_URL, CHECK_STRING } = this.val;
 
       const image = this.images.find(i => i.id === id);
@@ -207,21 +211,24 @@ export default {
       const IS_DESC_CHECKED = image && checkRange(description, CHECK_STRING);
 
       if (IS_NAME_CHECKED && IS_DESC_CHECKED) {
-        const URL   = `${API_URL}/images/${id}`
-        const img   = document.getElementById(`image-${id}`)?.files[0] ?? name;
-        const data  = new FormData();
+        const URL  = `${API_URL}/images/${id}`
+        const img  = document.getElementById(`image-${id}`)?.files[0] ?? name;
+        const data = new FormData();
 
         data.append("name", name);
         data.append("image", img);
         data.append("description", description);
         data.append("galleryId", galleryId);
 
-        putData(URL, data, this.token)
-          .then(() => {
-            alert(ALERT_IMAGE + id + ALERT_UPDATED);
-            this.$router.go();
-          })
-          .catch(err => setError(err));
+        try {
+          await putData(URL, data, this.token);
+          alert(ALERT_IMAGE + id + ALERT_UPDATED);
+
+        } catch (err) {
+          setError(err);
+        } finally {
+          this.$router.go();
+        }
       }
     },
 
@@ -230,20 +237,24 @@ export default {
      * * Deletes an image from the server based on the provided ID.
      * @param {number} id - The ID of the image to be deleted.
      */
-    deleteImage(id) {
+    async deleteImage(id) {
       const { TITLE_DELETE_IMAGE, API_URL, ALERT_IMAGE, ALERT_DELETED } = this.val;
 
       if (confirm(`${TITLE_DELETE_IMAGE} ${id} ?`)) {
         const URL = `${API_URL}/images/${id}`
 
-        deleteData(URL, this.token)
-          .then(() => {
-            alert(ALERT_IMAGE + id + ALERT_DELETED);
-            this.$router.go();
-          })
-          .catch(err => setError(err));
+        try {
+          await deleteData(URL, this.token);
+          alert(ALERT_IMAGE + id + ALERT_DELETED);
+
+        } catch (err) {
+          setError(err);
+        } finally {
+          this.$router.go();
+        }
       }
     }
+
   }
 }
 </script>
