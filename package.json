@@ -30,12 +30,6 @@
         "node-addons"
       ]
     },
-    "testPathIgnorePatterns": [
-      "<rootDir>/src/components/"
-    ],
-    "coveragePathIgnorePatterns": [
-      "<rootDir>/src/components/"
-    ],
     "transform": {
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
       ".*\\.(vue)$": "<rootDir>/node_modules/@vue/vue3-jest"
