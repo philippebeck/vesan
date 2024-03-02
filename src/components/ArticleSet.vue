@@ -94,14 +94,14 @@ import BtnElt from "./BtnElt"
 import CardElt from "./CardElt"
 import FieldElt from "./FieldElt"
 import ListElt from "./ListElt"
+import Editor from "@tinymce/tinymce-vue"
 
 import { checkRange, checkRegex, postData, setError } from "../app/services"
-
-import Editor from "@tinymce/tinymce-vue"
 
 export default {
   name: "ArticleSet",
   components: { BtnElt, CardElt, FieldElt, ListElt, Editor },
+
   props: ["token", "val"],
   data() {
     return {
@@ -119,7 +119,7 @@ export default {
      * ? CREATE ARTICLE
      * * Creates an article by sending a POST request to the server with the provided data.
      */
-    createArticle() {
+    async createArticle() {
       const { ALERT_CREATED, ALERT_IMG, API_URL, CAT_ARTICLE, CHECK_STRING, CHECK_URL, REGEX_URL, TEXT_MIN, TEXT_MAX } = this.val;
 
       if (this.url.startsWith("http")) this.url = this.url.split('//')[1];
@@ -145,12 +145,15 @@ export default {
           data.append("url", this.url);
           data.append("cat", this.cat);
 
-          postData(URL, data, this.token)
-            .then(() => {
-              alert(this.name + ALERT_CREATED);
-              this.$router.go();
-            })
-            .catch(err => setError(err));
+          try {
+            await postData(URL, data, this.token);
+            alert(this.name + ALERT_CREATED);
+
+          } catch(err) {
+            setError(err);
+          } finally {
+            this.$router.go();
+          }
 
         } else {
           alert(ALERT_IMG);

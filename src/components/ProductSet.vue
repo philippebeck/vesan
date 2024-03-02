@@ -114,6 +114,7 @@ import { checkRange, postData, setError } from "../app/services"
 export default {
   name: "ProductSet",
   components: { BtnElt, CardElt, FieldElt, ListElt, Editor },
+
   props: ["token", "val"],
   data() {
     return {
@@ -132,7 +133,7 @@ export default {
      * ? CREATE PRODUCT
      * * Create a product by sending a POST request to the server.
      */
-    createProduct() {
+    async createProduct() {
       const { ALERT_CREATED, ALERT_IMG, API_URL, CAT_PRODUCT, CHECK_STRING, TEXT_MAX, TEXT_MIN } = this.val;
 
       if (this.price < 1) this.price = 1;
@@ -157,12 +158,15 @@ export default {
           data.append("options", this.options);
           data.append("cat", this.cat);
 
-          postData(URL, data, this.token)
-            .then(() => {
-              alert(this.name + ALERT_CREATED);
-              this.$router.go();
-            })
-            .catch(err => setError(err));
+          try {
+            await postData(URL, data, this.token);
+            alert(this.name + ALERT_CREATED);
+
+          } catch (err) {
+            setError(err);
+          } finally {
+            this.$router.go();
+          }
 
         } else {
           alert(ALERT_IMG);
