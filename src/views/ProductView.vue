@@ -184,15 +184,15 @@ import CardElt from "../components/CardElt"
 import FieldElt from "../components/FieldElt"
 import ListElt from "../components/ListElt"
 import MediaElt from "../components/MediaElt"
+import Editor from "@tinymce/tinymce-vue"
 
 import { checkRange, checkRole, deleteData, getData, putData, setError, setMeta } from "../app/services"
 import { mapState } from "vuex"
 
-import Editor from "@tinymce/tinymce-vue"
-
 export default {
   name: "ProductView",
   components: { BtnElt, CardElt, FieldElt, ListElt, MediaElt, Editor },
+
   props: ["avatar", "val"],
   data() {
     return {
@@ -205,27 +205,37 @@ export default {
     }
   },
 
-  created() {
+  /**
+   * ? CREATED
+   * * Retrieves the product from the API.
+   * * Sets the meta tags.
+   * @return {Promise<void>} a promise that gets a "product"
+   */
+  async created() {
     const { API_URL, HEAD, UI_URL } = this.val;
 
-    getData(`${API_URL}/products/${this.$route.params.id}`)
-      .then((product => {
-        product.options = product.options.split(",");
-        this.product = product;
+    try {
+      const product   = await getData(`${API_URL}/products/${this.$route.params.id}`);
+      product.options = product.options.split(",");
+      this.product    = product;
 
-        setMeta(
-          product.name + HEAD, 
-          (product.description || "").slice(0, 160).replace(/(<([^>]+)>)/gi, ""),
-          `${UI_URL}/product/${product.id}`,
-          `${UI_URL}/img/thumbnails/products/${product.image}`
-        );
-      }))
-      .catch(err => { 
-        setError(err);
-        this.$router.push("/shop");
-      });
+      setMeta(
+        product.name + HEAD, 
+        (product.description || "").slice(0, 160).replace(/(<([^>]+)>)/gi, ""),
+        `${UI_URL}/product/${product.id}`,
+        `${UI_URL}/img/thumbnails/products/${product.image}`
+      );
+
+    } catch (err) {
+      setError(err);
+      this.$router.push("/shop");
+    }
   },
 
+  /**
+   * ? UPDATED
+   * * Updating the description element if it exists.
+   */
   updated() {
     if (document.getElementById("figcaption")) {
       const descriptionElt = document.getElementById("figcaption");
@@ -244,9 +254,7 @@ export default {
      * @param {string} role - The role to check.
      * @return {boolean} The result of the session check.
      */
-    checkSession(role) {
-      return checkRole(this.avatar.role, role);
-    },
+    checkSession(role) { return checkRole(this.avatar.role, role) },
 
     /**
      * ? ADD TO BASKET
@@ -317,7 +325,6 @@ export default {
 
       localStorage.setItem("basket", JSON.stringify(this.basket));
       alert(`${this.order.quantity} "${this.product.name}" (${this.order.option}) ${this.val.ALERT_BASKET_ADDED}`);
-
       this.$router.push("/shop");
     },
 
@@ -325,19 +332,19 @@ export default {
      * ? UPDATE PRODUCT
      * * Updates the product by sending a PUT request to the API.
      */
-    updateProduct() {
+    async updateProduct() {
       const { CHECK_STRING, TEXT_MIN, TEXT_MAX, CHECK_NUMBER, PRICE_MIN, PRICE_MAX, API_URL, ALERT_UPDATED } = this.val;
       let { id, name, description, image, alt, price, options, cat } = this.product;
 
-      const IS_NAME_CHECKED   = checkRange(name, CHECK_STRING);
-      const IS_DESC_CHECKED   = checkRange(description, CHECK_STRING, TEXT_MIN, TEXT_MAX);
-      const IS_ALT_CHECKED    = checkRange(alt, CHECK_STRING);
-      const IS_PRICE_CHECKED  = checkRange(price, CHECK_NUMBER, PRICE_MIN, PRICE_MAX);
+      const IS_NAME_CHECKED  = checkRange(name, CHECK_STRING);
+      const IS_DESC_CHECKED  = checkRange(description, CHECK_STRING, TEXT_MIN, TEXT_MAX);
+      const IS_ALT_CHECKED   = checkRange(alt, CHECK_STRING);
+      const IS_PRICE_CHECKED = checkRange(price, CHECK_NUMBER, PRICE_MIN, PRICE_MAX);
 
       if (IS_NAME_CHECKED && IS_DESC_CHECKED && IS_ALT_CHECKED && IS_PRICE_CHECKED) {
-        const URL   = `${API_URL}/products/${id}`;
-        const data  = new FormData();
-        const img   = document.getElementById("image")?.files[0] ?? image;
+        const URL  = `${API_URL}/products/${id}`;
+        const data = new FormData();
+        const img  = document.getElementById("image")?.files[0] ?? image;
 
         data.append("name", name);
         data.append("description", description);
@@ -347,12 +354,14 @@ export default {
         data.append("options", options);
         data.append("cat", cat);
 
-        putData(URL, data, this.token)
-          .then(() => {
-            alert(name + ALERT_UPDATED);
-            this.$router.push("/shop");
-          })
-          .catch(err => setError(err));
+        try {
+          await putData(URL, data, this.token);
+          alert(name + ALERT_UPDATED);
+        } catch (err) {
+          setError(err);
+        } finally {
+          this.$router.push("/shop");
+        }
       }
     },
 
@@ -360,19 +369,21 @@ export default {
      * ? DELETE PRODUCT
      * * Deletes a product from the system.
      */
-    deleteProduct() {
+    async deleteProduct() {
       const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val;
       let { id, name } = this.product;
 
       if (confirm(`${TITLE_DELETE} ${name} ?`)) {
         const URL = `${API_URL}/products/${id}`;
 
-        deleteData(URL, this.token)
-          .then(() => {
-            alert(name + ALERT_DELETED);
-            this.$router.push("/shop");
-          })
-          .catch(err => setError(err));
+        try {
+          await deleteData(URL, this.token);
+          alert(name + ALERT_DELETED);
+        } catch (err) {
+          setError(err);
+        } finally {
+          this.$router.push("/shop");
+        }
       }
     }
   }
