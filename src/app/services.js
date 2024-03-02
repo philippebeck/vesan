@@ -52,6 +52,16 @@ export const checkRole = (userRole, role) => {
         : false;
 };
 
+/**
+ * ? CHECK SLOT
+ * * Check if the given slot name exists.
+ * @param {string} name - The name of the slot to check.
+ * @return {boolean} Whether the slot exists or not.
+ */
+export const checkSlot = (slots, name) => {
+  return Object.prototype.hasOwnProperty.call(slots, name);
+}
+
 // ! ******************** FETCHERS ********************
 
 /**
