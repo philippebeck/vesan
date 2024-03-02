@@ -1,28 +1,28 @@
 <template>
   <footer>
-    <button v-if="hasHideSlot" @click="toggleSide" aria-label="show/hide">
+    <button v-if="hasSlot('hide')" @click="toggleSide" aria-label="show/hide">
       <slot name="hide"></slot>
     </button>
 
     <ul id="foot"
-      v-if="hasFoot1Slot || hasFoot2Slot || hasFoot3Slot"
+      v-if="hasSlot('foot1') || hasSlot('foot2') || hasSlot('foot3')"
       :class="{ 'hide': isMobile, 'show': !isMobile }">
 
-      <li v-if="hasFoot1Slot">
+      <li v-if="hasSlot('foot1')">
         <section>
           <h3>{{ title1 }}</h3>
           <slot name="foot1"></slot>
         </section>
       </li>
 
-      <li v-if="hasFoot2Slot">
+      <li v-if="hasSlot('foot2')">
         <section>
           <h3>{{ title2 }}</h3>
           <slot name="foot2"></slot>
         </section>
       </li>
 
-      <li v-if="hasFoot3Slot">
+      <li v-if="hasSlot('foot3')">
         <section>
           <h3>{{ title3 }}</h3>
           <slot name="foot3"></slot>
@@ -30,14 +30,14 @@
       </li>
     </ul>
 
-    <aside v-if="hasFootSlot">
+    <aside v-if="hasSlot('foot')">
       <slot name="foot"></slot>
     </aside>
   </footer>
 </template>
 
 <script>
-import { defineComponent, onMounted, onUnmounted, ref } from 'vue';
+import { defineComponent, onMounted, onUnmounted, ref } from "vue";
 
 export default defineComponent({
   name: "FootElt",
@@ -48,11 +48,10 @@ export default defineComponent({
   },
   setup(props, { slots }) {
     const isMobile = ref(false);
-    const hasHideSlot  = () => Object.prototype.hasOwnProperty.call(slots, 'hide');
-    const hasFoot1Slot = () => Object.prototype.hasOwnProperty.call(slots, 'foot1');
-    const hasFoot2Slot = () => Object.prototype.hasOwnProperty.call(slots, 'foot2');
-    const hasFoot3Slot = () => Object.prototype.hasOwnProperty.call(slots, 'foot3');
-    const hasFootSlot  = () => Object.prototype.hasOwnProperty.call(slots, 'foot');
+
+    const hasSlot = (name) => {
+      return Object.prototype.hasOwnProperty.call(slots, name);
+    };
 
     const handleResize = () => {
       isMobile.value = window.innerWidth < 1600;
@@ -64,21 +63,17 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      window.addEventListener('resize', handleResize);
+      window.addEventListener("resize", handleResize);
       handleResize();
     });
 
     onUnmounted(() => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     });
 
     return {
       isMobile,
-      hasHideSlot,
-      hasFoot1Slot,
-      hasFoot2Slot,
-      hasFoot3Slot,
-      hasFootSlot,
+      hasSlot,
       handleResize,
       toggleSide
     };
