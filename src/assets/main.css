@@ -1,0 +1,38 @@
+@import url('../../node_modules/@fortawesome/fontawesome-free/css/all.min.css');
+@import url('../../node_modules/animadio/dist/animadio.min.css');
+
+@font-face {
+  font-family: 'Geologica';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    local('Geologica-Regular'),
+    url('./fonts/Geologica-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Trocchi';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    local('Trocchi-Regular'),
+    url('./fonts/Trocchi-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Ubuntu Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    local('UbuntuMono-Regular'),
+    url('./fonts/UbuntuMono-Regular.ttf') format('truetype');
+}
+
+:root {
+  --ani-sans-serif: Geo, Helvetica, sans-serif;
+  --ani-serif: Trocchi, Times, serif;
+  --ani-monospace: 'Ubuntu Mono', Courier, monospace;
+}
