@@ -1,9 +1,7 @@
 <template>
   <main id="top">
     <header>
-      <h1 class="sky-dark">
-        <i class="fa-solid fa-link fa-lg"></i> {{ val.LINK_VIEW }}
-      </h1>
+      <h1 class="sky-dark"><i class="fa-solid fa-link fa-lg"></i> {{ val.LINK_VIEW }}</h1>
     </header>
 
     <NavElt :items="getCategories" class="sidebar">
@@ -34,45 +32,47 @@
 
       <template #body>
         <ListElt :items="getItemsByCategory(links)" :dynamic="true">
-
           <template #items="slotProps">
-            <i :id="slotProps.index"
-              :class="`fa-brands fa-${slotProps.index.toLowerCase()} fa-5x sky-dark mar-lg`">
+            <i
+              :id="slotProps.index"
+              :class="`fa-brands fa-${slotProps.index.toLowerCase()} fa-5x sky-dark mar-lg`"
+            >
             </i>
           </template>
 
           <template #nested="slotProps">
-            <BtnElt :href="`https://${slotProps.value.url}`" 
+            <BtnElt
+              :href="`https://${slotProps.value.url}`"
               class="btn-sky"
               :content="slotProps.value.name"
               :title="slotProps.value.url"
               target="_blank"
-              rel="noopener noreferrer"/>
+              rel="noopener noreferrer"
+            />
           </template>
         </ListElt>
-
       </template>
       <template #aside v-if="checkSession('editor')">
-        <LinkSet :links="links" :token="token" :val="val"/>
+        <LinkSet :links="links" :token="token" :val="val" />
       </template>
     </CardElt>
   </main>
 </template>
 
 <script>
-import BtnElt from "../components/BtnElt"
-import CardElt from "../components/CardElt"
-import ListElt from "../components/ListElt"
-import LinkSet from "../components/LinkSet"
-import NavElt from "../components/NavElt"
+import BtnElt from '../components/BtnElt.vue'
+import CardElt from '../components/CardElt.vue'
+import ListElt from '../components/ListElt.vue'
+import LinkSet from '../components/LinkSet.vue'
+import NavElt from '../components/NavElt.vue'
 
-import { checkRole, getCats, getItemsByCat, setMeta } from "../app/services"
-import { mapState, mapActions } from "vuex"
+import { checkRole, getCats, getItemsByCat, setMeta } from '../assets/services'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  name: "LinkView",
+  name: 'LinkView',
   components: { BtnElt, CardElt, ListElt, NavElt, LinkSet },
-  props: ["avatar", "val"],
+  props: ['avatar', 'val'],
 
   /**
    * ? CREATED
@@ -80,25 +80,27 @@ export default {
    * * Set the meta tags
    */
   async created() {
-    const { HEAD_LINK, LOGO_SRC, META_LINK, UI_URL } = this.val;
+    const { HEAD_LINK, LOGO_SRC, META_LINK, UI_URL } = this.val
 
-    await this.$store.dispatch("listLinks");
-    setMeta(HEAD_LINK, META_LINK, `${UI_URL}/link`, UI_URL + LOGO_SRC);
+    await this.$store.dispatch('listLinks')
+    setMeta(HEAD_LINK, META_LINK, `${UI_URL}/link`, UI_URL + LOGO_SRC)
   },
 
   computed: {
-    ...mapState(["links", "token"]),
+    ...mapState(['links', 'token']),
 
     /**
      * ? GET CATEGORIES
      * * Retrieves the categories using the provided links.
      * @return {Array} An array of categories.
      */
-    getCategories() { return getCats(this.links) }
+    getCategories() {
+      return getCats(this.links)
+    }
   },
 
   methods: {
-    ...mapActions(["listLinks"]),
+    ...mapActions(['listLinks']),
 
     /**
      * ? CHECK SESSION
@@ -106,7 +108,9 @@ export default {
      * @param {string} role - the role to check
      * @return {boolean} the result of the session check
      */
-    checkSession(role) { return checkRole(this.avatar.role, role) },
+    checkSession(role) {
+      return checkRole(this.avatar.role, role)
+    },
 
     /**
      * ? GET ITEMS BY CATEGORY
@@ -114,7 +118,9 @@ export default {
      * @param {Array} items - The array of items.
      * @return {Array} The array of items filtered by category.
      */
-    getItemsByCategory(items) { return getItemsByCat(items, "name") }
+    getItemsByCategory(items) {
+      return getItemsByCat(items, 'name')
+    }
   }
 }
 </script>

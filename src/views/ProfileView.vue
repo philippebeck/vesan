@@ -32,80 +32,90 @@
       <template #body>
         <form enctype="multipart/form-data">
           <ListElt :items="val.USER_FORM">
-
             <template #item-1>
-              <FieldElt id="name"
+              <FieldElt
+                id="name"
                 v-model:value="user.name"
                 @keyup.enter="updateUser()"
                 :info="val.INFO_NAME"
-                :min="2">
+                :min="2"
+              >
                 <template #legend>{{ val.LEGEND_NAME }}</template>
                 <template #label>{{ val.LABEL_NAME }}</template>
               </FieldElt>
             </template>
 
             <template #item-2>
-              <FieldElt id="email"
+              <FieldElt
+                id="email"
                 type="email"
                 v-model:value="user.email"
                 @keyup.enter="updateUser()"
-                :info="val.INFO_EMAIL">
+                :info="val.INFO_EMAIL"
+              >
                 <template #legend>{{ val.LEGEND_EMAIL }}</template>
                 <template #label>{{ val.LABEL_EMAIL }}</template>
               </FieldElt>
             </template>
-            
-            <template #item-3>
-              <MediaElt v-if="user.image"
-                :src="'/img/thumbnails/users/' + user.image"
-                :alt="user.name" />
 
-              <FieldElt id="image"
-                type="file"
-                v-model:value="image"
-                :info="val.INFO_IMAGE">
+            <template #item-3>
+              <MediaElt
+                v-if="user.image"
+                :src="'/img/thumbnails/users/' + user.image"
+                :alt="user.name"
+              />
+
+              <FieldElt id="image" type="file" v-model:value="image" :info="val.INFO_IMAGE">
                 <template #legend>{{ val.LEGEND_IMAGE }}</template>
                 <template #label>{{ val.LABEL_IMAGE }}</template>
               </FieldElt>
             </template>
 
             <template #item-4>
-              <FieldElt id="pass"
+              <FieldElt
+                id="pass"
                 type="password"
                 v-model:value="pass"
                 @keyup.enter="updateUser()"
-                :info="val.INFO_PASSWORD">
+                :info="val.INFO_PASSWORD"
+              >
                 <template #legend>{{ val.LEGEND_PASSWORD }}</template>
                 <template #label>{{ val.LABEL_PASSWORD }}</template>
               </FieldElt>
             </template>
           </ListElt>
 
-          <BtnElt type="button"
-            @click="updateUser()" 
+          <BtnElt
+            type="button"
+            @click="updateUser()"
             class="btn-sky"
             :content="val.TITLE_UPDATE"
-            :title="val.INFO_UP_PROFILE">
+            :title="val.INFO_UP_PROFILE"
+          >
             <template #btn>
               <i class="fa-solid fa-user-pen fa-lg"></i>
             </template>
           </BtnElt>
 
-          <BtnElt type="button"
-            @click="logout()" 
+          <BtnElt
+            type="button"
+            @click="logout()"
             class="btn-orange"
             :content="val.CONTENT_LOGOUT"
-            :title="val.TITLE_LOGOUT">
+            :title="val.TITLE_LOGOUT"
+          >
             <template #btn>
               <i class="fa-solid fa-right-from-bracket fa-lg"></i>
             </template>
           </BtnElt>
 
-          <BtnElt type="button"
-            @click="deleteUser()" 
+          <BtnElt
+            type="button"
+            @click="deleteUser()"
             class="btn-red"
             :content="val.TITLE_DELETE"
-            :title="val.TITLE_DELETE_ACCOUNT">
+            :title="val.TITLE_DELETE_ACCOUNT"
+          >
             <template #btn>
               <i class="fa-solid fa-user-slash fa-lg"></i>
             </template>
@@ -114,28 +124,36 @@
       </template>
 
       <template #aside v-if="checkSession('admin')">
-        <UserSet :val="val" :token="token" :users="users"/>
+        <UserSet :val="val" :token="token" :users="users" />
       </template>
     </CardElt>
   </main>
 </template>
 
 <script>
-import BtnElt from "../components/BtnElt"
-import CardElt from "../components/CardElt"
-import FieldElt from "../components/FieldElt"
-import ListElt from "../components/ListElt"
-import MediaElt from "../components/MediaElt"
-import NavElt from "../components/NavElt"
-import UserSet from "../components/UserSet"
+import BtnElt from '../components/BtnElt.vue'
+import CardElt from '../components/CardElt.vue'
+import FieldElt from '../components/FieldElt.vue'
+import ListElt from '../components/ListElt.vue'
+import MediaElt from '../components/MediaElt.vue'
+import NavElt from '../components/NavElt.vue'
+import UserSet from '../components/UserSet.vue'
 
-import { checkRange, checkRegex, checkRole, deleteData, putData, setError, setMeta } from "../app/services"
-import { mapState, mapActions } from "vuex"
+import {
+  checkRange,
+  checkRegex,
+  checkRole,
+  deleteData,
+  putData,
+  setError,
+  setMeta
+} from '../assets/services'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  name: "ProfileView",
+  name: 'ProfileView',
   components: { BtnElt, CardElt, FieldElt, ListElt, MediaElt, NavElt, UserSet },
-  props: ["val"],
+  props: ['val'],
 
   /**
    * ? CREATED
@@ -143,26 +161,25 @@ export default {
    * * If the user is not logged in, redirect to the login page
    */
   async created() {
-    const { ALERT_LOGOUT, HEAD_PROFILE, LOGO_SRC, META_PROFILE, UI_URL } = this.val;
+    const { ALERT_LOGOUT, HEAD_PROFILE, LOGO_SRC, META_PROFILE, UI_URL } = this.val
 
     if (this.token) {
-      await this.$store.dispatch("readUser", this.id);
-      await this.$store.dispatch("listUsers");
+      await this.$store.dispatch('readUser', this.id)
+      await this.$store.dispatch('listUsers')
 
-      setMeta(HEAD_PROFILE, META_PROFILE, UI_URL, UI_URL + LOGO_SRC);
-
+      setMeta(HEAD_PROFILE, META_PROFILE, UI_URL, UI_URL + LOGO_SRC)
     } else {
-      alert(ALERT_LOGOUT);
-      this.$router.push("/");
+      alert(ALERT_LOGOUT)
+      this.$router.push('/')
     }
   },
 
   computed: {
-    ...mapState(["id", "token", "user", "users"])
+    ...mapState(['id', 'token', 'user', 'users'])
   },
 
   methods: {
-    ...mapActions(["readUser", "listUsers"]),
+    ...mapActions(['readUser', 'listUsers']),
 
     /**
      * ? CHECK SESSION
@@ -170,17 +187,19 @@ export default {
      * @param {type} role - the role to check the session against
      * @return {type} the result of the session check
      */
-    checkSession(role) { return checkRole(this.user.role, role) },
+    checkSession(role) {
+      return checkRole(this.user.role, role)
+    },
 
     /**
      * ? LOGOUT
      * * Logout the user by removing the userId & userToken from localStorage
      */
     logout() {
-      localStorage.removeItem("userId");
-      localStorage.removeItem("userToken");
+      localStorage.removeItem('userId')
+      localStorage.removeItem('userToken')
 
-      this.$router.go();
+      this.$router.go()
     },
 
     /**
@@ -188,32 +207,31 @@ export default {
      * * Updates the user information on the server.
      */
     async updateUser() {
-      const { API_URL, CHECK_EMAIL, CHECK_PASS, CHECK_STRING, REGEX_EMAIL, REGEX_PASS } = this.val;
+      const { API_URL, CHECK_EMAIL, CHECK_PASS, CHECK_STRING, REGEX_EMAIL, REGEX_PASS } = this.val
 
-      const IS_NAME_CHECKED  = checkRange(this.user.name, CHECK_STRING);
-      const IS_EMAIL_CHECKED = checkRegex(this.user.email, CHECK_EMAIL, REGEX_EMAIL);
-      const IS_PASS_CHECKED  = this.pass && checkRegex(this.pass, CHECK_PASS, REGEX_PASS);
+      const IS_NAME_CHECKED = checkRange(this.user.name, CHECK_STRING)
+      const IS_EMAIL_CHECKED = checkRegex(this.user.email, CHECK_EMAIL, REGEX_EMAIL)
+      const IS_PASS_CHECKED = this.pass && checkRegex(this.pass, CHECK_PASS, REGEX_PASS)
 
       if (IS_NAME_CHECKED && IS_EMAIL_CHECKED) {
-        const URL  = `${API_URL}/users/${this.user.id}`
-        const data = new FormData();
-        const img  = document.getElementById("image")?.files[0] ?? this.user.image;
+        const URL = `${API_URL}/users/${this.user.id}`
+        const data = new FormData()
+        const img = document.getElementById('image')?.files[0] ?? this.user.image
 
-        if (IS_PASS_CHECKED) data.append("pass", this.pass);
+        if (IS_PASS_CHECKED) data.append('pass', this.pass)
 
-        data.append("name", this.user.name);
-        data.append("email", this.user.email);
-        data.append("image", img);
-        data.append("role", this.user.role);
+        data.append('name', this.user.name)
+        data.append('email', this.user.email)
+        data.append('image', img)
+        data.append('role', this.user.role)
 
         try {
-          await putData(URL, data, this.token);
-          alert(this.user.name + this.val.ALERT_UPDATED);
-
+          await putData(URL, data, this.token)
+          alert(this.user.name + this.val.ALERT_UPDATED)
         } catch (err) {
-          setError(err);
+          setError(err)
         } finally {
-          this.$router.go();
+          this.$router.go()
         }
       }
     },
@@ -223,24 +241,23 @@ export default {
      * * Deletes a user from the system.
      */
     async deleteUser() {
-      const { ALERT_DELETED, API_URL, TITLE_DELETE } = this.val;
-      const NAME = this.user.name;
+      const { ALERT_DELETED, API_URL, TITLE_DELETE } = this.val
+      const NAME = this.user.name
 
       if (confirm(`${TITLE_DELETE} ${NAME} ?`)) {
-        const URL = `${API_URL}/users/${this.user.id}`;
+        const URL = `${API_URL}/users/${this.user.id}`
 
         try {
-          await deleteData(URL, this.token);
+          await deleteData(URL, this.token)
 
-          localStorage.removeItem("userId");
-          localStorage.removeItem("userToken");
+          localStorage.removeItem('userId')
+          localStorage.removeItem('userToken')
 
-          alert(NAME + ALERT_DELETED);
-
+          alert(NAME + ALERT_DELETED)
         } catch (err) {
-          setError(err);
+          setError(err)
         } finally {
-          this.$router.push("/home");
+          this.$router.push('/home')
         }
       }
     }

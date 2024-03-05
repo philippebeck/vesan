@@ -27,36 +27,40 @@
       <template #body>
         <SliderElt :slides="images">
           <template #slide="slotProps">
-            <a :href="`/img/galleries/${slotProps.slide.name}`"
+            <a
+              :href="`/img/galleries/${slotProps.slide.name}`"
               :title="val.TITLE_WATCH + slotProps.slide.name"
               itemprop="url"
               target="_blank"
-              rel="noopener noreferrer">
-
-              <MediaElt :src="`/img/galleries/${slotProps.slide.name}`"
+              rel="noopener noreferrer"
+            >
+              <MediaElt
+                :src="`/img/galleries/${slotProps.slide.name}`"
                 :alt="val.IMAGE_OF + slotProps.slide.description"
-                :width="val.MEDIA_WIDTH">
+                :width="val.MEDIA_WIDTH"
+              >
                 <template #figcaption>{{ slotProps.slide.description }}</template>
               </MediaElt>
             </a>
           </template>
         </SliderElt>
 
-        <ListElt :items="images"
-          :dynamic="true"
-          class="grid-2sm-3md-4lg-5xl-6wd content-center">
+        <ListElt :items="images" :dynamic="true" class="grid-2sm-3md-4lg-5xl-6wd content-center">
           <template #items="slotProps">
-            <a :href="`/img/galleries/${slotProps.item.name}`"
+            <a
+              :href="`/img/galleries/${slotProps.item.name}`"
               :title="val.TITLE_WATCH + slotProps.item.name"
               itemprop="url"
               target="_blank"
-              rel="noopener noreferrer">
-
-              <MediaElt :id="`${slotProps.item.name.toLowerCase()}`"
-                :src="`/img/thumbnails/galleries/${slotProps.item.name}`" 
-                :alt="val.IMAGE_OF + slotProps.item.description" 
+              rel="noopener noreferrer"
+            >
+              <MediaElt
+                :id="`${slotProps.item.name.toLowerCase()}`"
+                :src="`/img/thumbnails/galleries/${slotProps.item.name}`"
+                :alt="val.IMAGE_OF + slotProps.item.description"
                 :width="val.THUMB_WIDTH"
-                :height="val.THUMB_HEIGHT">
+                :height="val.THUMB_HEIGHT"
+              >
                 <template #figcaption>
                   <p class="gallery">{{ slotProps.item.description }}</p>
                 </template>
@@ -67,28 +71,28 @@
       </template>
 
       <template #aside v-if="checkSession('admin')">
-        <ImageSet :images="images" :galleries="galleries" :token="token" :val="val"/>
+        <ImageSet :images="images" :galleries="galleries" :token="token" :val="val" />
       </template>
     </CardElt>
   </main>
 </template>
 
 <script>
-import CardElt from "../components/CardElt"
-import ImageSet from "../components/ImageSet"
-import ListElt from "../components/ListElt"
-import MediaElt from "../components/MediaElt"
-import NavElt from "../components/NavElt"
-import SliderElt from "../components/SliderElt"
+import CardElt from '../components/CardElt.vue'
+import ImageSet from '../components/ImageSet.vue'
+import ListElt from '../components/ListElt.vue'
+import MediaElt from '../components/MediaElt.vue'
+import NavElt from '../components/NavElt.vue'
+import SliderElt from '../components/SliderElt.vue'
 
-import { checkRole, getData, setError, setMeta } from "../app/services"
-import { mapState, mapActions } from "vuex"
+import { checkRole, getData, setError, setMeta } from '../assets/services'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  name: "ImageView",
+  name: 'ImageView',
   components: { CardElt, ListElt, MediaElt, NavElt, SliderElt, ImageSet },
 
-  props: ["avatar", "val"],
+  props: ['avatar', 'val'],
   data() {
     return {
       gallery: {}
@@ -96,34 +100,33 @@ export default {
   },
 
   async created() {
-    const { API_URL, HEAD, META_IMAGE, UI_URL } = this.val;
+    const { API_URL, HEAD, META_IMAGE, UI_URL } = this.val
 
     try {
-      const gallery = await getData(`${API_URL}/galleries/${this.$route.params.id}`);
-      this.gallery = gallery;
+      const gallery = await getData(`${API_URL}/galleries/${this.$route.params.id}`)
+      this.gallery = gallery
 
       setMeta(
-        gallery.name + HEAD, 
+        gallery.name + HEAD,
         META_IMAGE + gallery.author,
         `${UI_URL}/gallery/${gallery.id}`,
         `${UI_URL}/img/thumbnails/galleries/${gallery.cover}`
-      );
-
+      )
     } catch (err) {
-      setError(err);
-      this.$router.push("/galleries");
+      setError(err)
+      this.$router.push('/galleries')
     }
 
-    await this.$store.dispatch("listGalleryImages", this.$route.params.id);
-    await this.$store.dispatch("listGalleries");
+    await this.$store.dispatch('listGalleryImages', this.$route.params.id)
+    await this.$store.dispatch('listGalleries')
   },
 
   computed: {
-    ...mapState(["images", "galleries", "token"])
+    ...mapState(['images', 'galleries', 'token'])
   },
 
   methods: {
-    ...mapActions(["listGalleryImages", "listGalleries"]),
+    ...mapActions(['listGalleryImages', 'listGalleries']),
 
     /**
      * ? CHECK SESSION
@@ -131,7 +134,9 @@ export default {
      * @param {string} role - The role to check the session against.
      * @return {boolean} Returns true if the session has the specified role, otherwise false.
      */
-    checkSession(role) { return checkRole(this.avatar.role, role) }
+    checkSession(role) {
+      return checkRole(this.avatar.role, role)
+    }
   }
 }
 </script>

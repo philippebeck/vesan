@@ -7,7 +7,7 @@
       </template>
 
       <template #body>
-        <MediaElt src="/img/errors/error-404.webp" :alt="val.ERROR_ALT" />
+        <MediaElt src="@/assets/img/errors/error-404.webp" :alt="val.ERROR_ALT" />
 
         <BtnElt href="/">
           <template #btn>
@@ -22,13 +22,13 @@
 </template>
 
 <script>
-import BtnElt from "../components/BtnElt"
-import CardElt from "../components/CardElt"
-import MediaElt from "../components/MediaElt"
+import BtnElt from '../components/BtnElt.vue'
+import CardElt from '../components/CardElt.vue'
+import MediaElt from '../components/MediaElt.vue'
 
 export default {
   name: 'ErrorView',
   components: { BtnElt, CardElt, MediaElt },
-  props: ["val"]
+  props: ['val']
 }
 </script>

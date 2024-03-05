@@ -8,9 +8,7 @@
 
     <CardElt v-if="type === 'signIn'">
       <template #header>
-        <h2 class="sky-dark">
-          <i class="fa-solid fa-door-open fa-lg"></i> {{ val.SIGN_IN }}
-        </h2>
+        <h2 class="sky-dark"><i class="fa-solid fa-door-open fa-lg"></i> {{ val.SIGN_IN }}</h2>
         <p>{{ val.INTRO_SIGNIN }}</p>
       </template>
 
@@ -27,10 +25,12 @@
           </FieldElt>
 
           <vue-recaptcha :sitekey="val.RECAPTCHA_KEY" @verify="onVerify">
-            <BtnElt type="button"
+            <BtnElt
+              type="button"
               class="btn-green"
               :content="val.CONTENT_ENTER"
-              :title="val.TITLE_SIGNIN">
+              :title="val.TITLE_SIGNIN"
+            >
               <template #btn>
                 <i class="fa-solid fa-door-open fa-lg"></i>
               </template>
@@ -38,21 +38,25 @@
           </vue-recaptcha>
         </form>
 
-        <BtnElt type="button"
+        <BtnElt
+          type="button"
           @click="type = 'signUp'"
           class="btn-blue"
           :content="val.CONTENT_SIGNUP"
-          :title="val.TITLE_GO + val.SIGN_UP">
+          :title="val.TITLE_GO + val.SIGN_UP"
+        >
           <template #btn>
             <i class="fa-solid fa-user-plus fa-lg"></i>
           </template>
         </BtnElt>
 
-        <BtnElt type="button"
+        <BtnElt
+          type="button"
           @click="type = 'forgotPass'"
           class="btn-orange"
           :content="val.CONTENT_SEND"
-          :title="val.TITLE_GO + val.FORGOT_PASS">
+          :title="val.TITLE_GO + val.FORGOT_PASS"
+        >
           <template #btn>
             <i class="fa-regular fa-paper-plane fa-lg"></i>
           </template>
@@ -62,15 +66,12 @@
 
     <CardElt v-else-if="type === 'signUp'">
       <template #header>
-        <h2 class="sky-dark">
-          <i class="fa-solid fa-user-plus fa-lg"></i> {{ val.SIGN_UP }}
-        </h2>
+        <h2 class="sky-dark"><i class="fa-solid fa-user-plus fa-lg"></i> {{ val.SIGN_UP }}</h2>
         <p>{{ val.INTRO_SIGNUP }}</p>
       </template>
 
       <template #body>
         <form enctype="multipart/form-data">
-
           <FieldElt v-model:value="name" :info="val.INFO_NAME" :min="2">
             <template #legend>{{ val.LEGEND_NAME }}</template>
             <template #label>{{ val.LABEL_NAME }}</template>
@@ -92,10 +93,12 @@
           </FieldElt>
 
           <vue-recaptcha :sitekey="val.RECAPTCHA_KEY" @verify="onVerify">
-            <BtnElt type="button"
+            <BtnElt
+              type="button"
               class="btn-blue"
               :content="val.CONTENT_SIGNUP"
-              :title="val.TITLE_SIGNUP">
+              :title="val.TITLE_SIGNUP"
+            >
               <template #btn>
                 <i class="fa-solid fa-user-plus fa-lg"></i>
               </template>
@@ -103,33 +106,35 @@
           </vue-recaptcha>
         </form>
 
-        <BtnElt type="button"
-            @click="type = 'signIn'"
-            class="btn-green"
-            :content="val.CONTENT_ENTER"
-            :title="val.TITLE_GO + val.SIGN_IN">
-            <template #btn>
-              <i class="fa-solid fa-door-open fa-lg"></i>
-            </template>
-          </BtnElt>
+        <BtnElt
+          type="button"
+          @click="type = 'signIn'"
+          class="btn-green"
+          :content="val.CONTENT_ENTER"
+          :title="val.TITLE_GO + val.SIGN_IN"
+        >
+          <template #btn>
+            <i class="fa-solid fa-door-open fa-lg"></i>
+          </template>
+        </BtnElt>
 
-          <BtnElt type="button"
-            @click="type = 'forgotPass'"
-            class="btn-orange"
-            :content="val.CONTENT_SEND"
-            :title="val.TITLE_GO + val.FORGOT_PASS">
-            <template #btn>
-              <i class="fa-regular fa-paper-plane fa-lg"></i>
-            </template>
-          </BtnElt>
+        <BtnElt
+          type="button"
+          @click="type = 'forgotPass'"
+          class="btn-orange"
+          :content="val.CONTENT_SEND"
+          :title="val.TITLE_GO + val.FORGOT_PASS"
+        >
+          <template #btn>
+            <i class="fa-regular fa-paper-plane fa-lg"></i>
+          </template>
+        </BtnElt>
       </template>
     </CardElt>
 
     <CardElt v-else-if="type === 'forgotPass'">
       <template #header>
-        <h2 class="sky-dark">
-          <i class="fa-solid fa-key fa-lg"></i> {{ val.FORGOT_PASS }}
-        </h2>
+        <h2 class="sky-dark"><i class="fa-solid fa-key fa-lg"></i> {{ val.FORGOT_PASS }}</h2>
         <p>{{ val.INTRO_FORGOT }}</p>
       </template>
 
@@ -141,10 +146,12 @@
           </FieldElt>
 
           <vue-recaptcha :sitekey="val.RECAPTCHA_KEY" @verify="onVerify">
-            <BtnElt type="button"
+            <BtnElt
+              type="button"
               class="btn-orange"
               :content="val.CONTENT_SEND"
-              :title="val.TITLE_FORGOT">
+              :title="val.TITLE_FORGOT"
+            >
               <template #btn>
                 <i class="fa-regular fa-paper-plane fa-lg"></i>
               </template>
@@ -152,21 +159,25 @@
           </vue-recaptcha>
         </form>
 
-        <BtnElt type="button"
+        <BtnElt
+          type="button"
           @click="type = 'signUp'"
           class="btn-blue"
           :content="val.CONTENT_SIGNUP"
-          :title="val.TITLE_GO + val.SIGN_UP">
+          :title="val.TITLE_GO + val.SIGN_UP"
+        >
           <template #btn>
             <i class="fa-solid fa-user-plus fa-lg"></i>
           </template>
         </BtnElt>
 
-        <BtnElt type="button"
+        <BtnElt
+          type="button"
           @click="type = 'signIn'"
           class="btn-green"
           :content="val.CONTENT_ENTER"
-          :title="val.TITLE_GO + val.SIGN_IN">
+          :title="val.TITLE_GO + val.SIGN_IN"
+        >
           <template #btn>
             <i class="fa-solid fa-door-open fa-lg"></i>
           </template>
@@ -177,25 +188,25 @@
 </template>
 
 <script>
-import BtnElt from "../components/BtnElt"
-import CardElt from "../components/CardElt"
-import FieldElt from "../components/FieldElt"
+import BtnElt from '../components/BtnElt.vue'
+import CardElt from '../components/CardElt.vue'
+import FieldElt from '../components/FieldElt.vue'
 
-import { checkRange, checkRegex, postData, setError, setMeta } from "../app/services"
-import { VueRecaptcha } from "vue-recaptcha"
+import { checkRange, checkRegex, postData, setError, setMeta } from '../assets/services'
+import { VueRecaptcha } from 'vue-recaptcha'
 
 export default {
-  name: "LoginView",
+  name: 'LoginView',
   components: { BtnElt, CardElt, FieldElt, VueRecaptcha },
 
-  props: ["val"],
+  props: ['val'],
   data() {
     return {
-      name: "",
-      email: "",
-      image: "",
-      pass: "",
-      type: "signIn"
+      name: '',
+      email: '',
+      image: '',
+      pass: '',
+      type: 'signIn'
     }
   },
 
@@ -205,10 +216,10 @@ export default {
    * * Redirects to the home page if the user is logged in
    */
   created() {
-    const { HEAD_LOGIN, LOGO_SRC, META_LOGIN, UI_URL } = this.val;
-    setMeta(HEAD_LOGIN, META_LOGIN, `${UI_URL}/login`, UI_URL + LOGO_SRC);
+    const { HEAD_LOGIN, LOGO_SRC, META_LOGIN, UI_URL } = this.val
+    setMeta(HEAD_LOGIN, META_LOGIN, `${UI_URL}/login`, UI_URL + LOGO_SRC)
 
-    if (localStorage.userId) this.$router.push("/");
+    if (localStorage.userId) this.$router.push('/')
   },
 
   methods: {
@@ -219,30 +230,29 @@ export default {
      * @return {type} description of return value
      */
     async onVerify(response) {
-      const { ALERT_RECAPTCHA, API_URL } = this.val;
-      const URL = `${API_URL}/auth/recaptcha`;
+      const { ALERT_RECAPTCHA, API_URL } = this.val
+      const URL = `${API_URL}/auth/recaptcha`
 
       try {
-        const { success } = await postData(URL, { response });
+        const { success } = await postData(URL, { response })
 
         if (success) {
           switch (this.type) {
-            case "signIn":
-              this.signIn();
-              break;
-            case "signUp":
-              this.signUp();
-              break;
-            case "forgotPass":
-              this.forgotPass();
-              break;
+            case 'signIn':
+              this.signIn()
+              break
+            case 'signUp':
+              this.signUp()
+              break
+            case 'forgotPass':
+              this.forgotPass()
+              break
           }
-
         } else {
-          alert(ALERT_RECAPTCHA);
+          alert(ALERT_RECAPTCHA)
         }
       } catch (err) {
-        setError(err);
+        setError(err)
       }
     },
 
@@ -251,24 +261,23 @@ export default {
      * * Signs in the user.
      */
     async signIn() {
-      const { API_URL, CHECK_EMAIL, CHECK_PASS, REGEX_EMAIL, REGEX_PASS } = this.val;
+      const { API_URL, CHECK_EMAIL, CHECK_PASS, REGEX_EMAIL, REGEX_PASS } = this.val
 
-      const IS_EMAIL_CHECKED = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL);
-      const IS_PASS_CHECKED  = checkRegex(this.pass, CHECK_PASS, REGEX_PASS);
+      const IS_EMAIL_CHECKED = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL)
+      const IS_PASS_CHECKED = checkRegex(this.pass, CHECK_PASS, REGEX_PASS)
 
       if (IS_EMAIL_CHECKED && IS_PASS_CHECKED) {
-        const URL  = `${API_URL}/auth`;
-        const data = new FormData();
+        const URL = `${API_URL}/auth`
+        const data = new FormData()
 
-        data.append("email", this.email);
-        data.append("pass", this.pass);
+        data.append('email', this.email)
+        data.append('pass', this.pass)
 
         try {
-          const res = await postData(URL, data);
+          const res = await postData(URL, data)
 
-          localStorage.setItem("userToken", JSON.stringify(res.token));
-          localStorage.setItem("userId", JSON.stringify(res.userId));
-
+          localStorage.setItem('userToken', JSON.stringify(res.token))
+          localStorage.setItem('userId', JSON.stringify(res.userId))
         } catch (err) {
           setError(err)
         } finally {
@@ -282,34 +291,42 @@ export default {
      * * Creates a new user.
      */
     async signUp() {
-      const { ALERT_CREATED, ALERT_IMG, API_URL, CHECK_EMAIL, CHECK_PASS, CHECK_STRING, REGEX_EMAIL, REGEX_PASS } = this.val;
+      const {
+        ALERT_CREATED,
+        ALERT_IMG,
+        API_URL,
+        CHECK_EMAIL,
+        CHECK_PASS,
+        CHECK_STRING,
+        REGEX_EMAIL,
+        REGEX_PASS
+      } = this.val
 
-      const IS_NAME_CHECKED  = checkRange(this.name, CHECK_STRING);
-      const IS_EMAIL_CHECKED = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL);
-      const IS_PASS_CHECKED  = checkRegex(this.pass, CHECK_PASS, REGEX_PASS);
+      const IS_NAME_CHECKED = checkRange(this.name, CHECK_STRING)
+      const IS_EMAIL_CHECKED = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL)
+      const IS_PASS_CHECKED = checkRegex(this.pass, CHECK_PASS, REGEX_PASS)
 
       if (IS_NAME_CHECKED && IS_EMAIL_CHECKED && IS_PASS_CHECKED) {
-        const URL  = `${API_URL}/users`;
-        const data = new FormData();
-        const img  = document.querySelector('[type="file"]')?.files[0];
+        const URL = `${API_URL}/users`
+        const data = new FormData()
+        const img = document.querySelector('[type="file"]')?.files[0]
 
         if (img !== undefined) {
-          data.append("name", this.name);
-          data.append("email", this.email);
-          data.append("image", img);
-          data.append("pass", this.pass);
-          data.append("role", "user");
+          data.append('name', this.name)
+          data.append('email', this.email)
+          data.append('image', img)
+          data.append('pass', this.pass)
+          data.append('role', 'user')
 
           try {
-            await postData(URL, data);
-            alert(this.name + ALERT_CREATED);
+            await postData(URL, data)
+            alert(this.name + ALERT_CREATED)
           } catch (err) {
             setError(err)
           } finally {
             this.$router.go()
           }
-
-        } else { 
+        } else {
           alert(ALERT_IMG)
         }
       }
@@ -320,20 +337,28 @@ export default {
      * * Executes the forgot password functionality.
      */
     async forgotPass() {
-      const { ALERT_SENDED, API_URL, CHECK_EMAIL, CONFIRM_FORGOT, FORGOT_SUBJECT, FORGOT_TEXT, REGEX_EMAIL } = this.val;
-      const IS_EMAIL_CHECKED = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL);
+      const {
+        ALERT_SENDED,
+        API_URL,
+        CHECK_EMAIL,
+        CONFIRM_FORGOT,
+        FORGOT_SUBJECT,
+        FORGOT_TEXT,
+        REGEX_EMAIL
+      } = this.val
+      const IS_EMAIL_CHECKED = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL)
 
       if (IS_EMAIL_CHECKED && confirm(CONFIRM_FORGOT)) {
-        const URL  = `${API_URL}/auth/pass`;
-        const data = new FormData();
+        const URL = `${API_URL}/auth/pass`
+        const data = new FormData()
 
-        data.append("email", this.email);
-        data.append("subject", FORGOT_SUBJECT);
-        data.append("html", FORGOT_TEXT);
+        data.append('email', this.email)
+        data.append('subject', FORGOT_SUBJECT)
+        data.append('html', FORGOT_TEXT)
 
         try {
-          await postData(URL, data);
-          alert(FORGOT_SUBJECT + ALERT_SENDED);
+          await postData(URL, data)
+          alert(FORGOT_SUBJECT + ALERT_SENDED)
         } catch (err) {
           setError(err)
         } finally {
