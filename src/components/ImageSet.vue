@@ -10,34 +10,34 @@
     <template #body>
       <form enctype="multipart/form-data">
         <ListElt :items="val.IMAGE_FORM">
-
           <template #item-1>
-            <FieldElt id="image" 
-              type="file"
-              v-model:value="image"
-              :info="val.INFO_IMAGE">
+            <FieldElt id="image" type="file" v-model:value="image" :info="val.INFO_IMAGE">
               <template #legend>{{ val.LEGEND_IMAGE }}</template>
               <template #label>{{ val.LABEL_IMAGE }}</template>
             </FieldElt>
           </template>
 
           <template #item-2>
-            <FieldElt id="description" 
+            <FieldElt
+              id="description"
               v-model:value="description"
               @keyup.enter="createImage()"
               :info="val.INFO_DESCRIPTION"
-              :max="val.TEXT_MAX">
+              :max="val.TEXT_MAX"
+            >
               <template #legend>{{ val.LEGEND_DESCRIPTION }}</template>
               <template #label>{{ val.LABEL_DESCRIPTION }}</template>
             </FieldElt>
           </template>
         </ListElt>
 
-        <BtnElt type="button"
+        <BtnElt
+          type="button"
           @click="createImage()"
           class="btn-green"
           :content="val.CONTENT_CREATE"
-          :title="val.TITLE_IMAGE">
+          :title="val.TITLE_IMAGE"
+        >
           <template #btn>
             <i class="fa-solid fa-square-plus fa-lg"></i>
           </template>
@@ -49,65 +49,75 @@
           <template #head>{{ val.HEAD_UP }}</template>
 
           <template #cell-id="slotProps">
-            <BtnElt :content="slotProps.item.id"
+            <BtnElt
+              :content="slotProps.item.id"
               :href="`${val.UI_URL}/img/galleries/${slotProps.item.name}`"
               :title="slotProps.item.description"
               target="_blank"
-              rel="noopener noreferrer"/>
+              rel="noopener noreferrer"
+            />
           </template>
 
           <template #cell-name="slotProps">
-            <MediaElt :src="'/img/thumbnails/galleries/' + slotProps.item.name"
+            <MediaElt
+              :src="'/img/thumbnails/galleries/' + slotProps.item.name"
               :alt="slotProps.item.description"
               :title="slotProps.item.name"
-              loading="lazy"/>
+              loading="lazy"
+            />
 
-            <FieldElt :id="`image-${slotProps.item.id}`"
-              type="file"
-              :info="val.INFO_UP_IMAGE">
+            <FieldElt :id="`image-${slotProps.item.id}`" type="file" :info="val.INFO_UP_IMAGE">
               <template #legend>{{ val.LEGEND_IMAGE }}</template>
               <template #label>{{ val.LABEL_IMAGE }}</template>
             </FieldElt>
           </template>
 
           <template #cell-description="slotProps">
-            <FieldElt :id="`description-${slotProps.item.id}`"
+            <FieldElt
+              :id="`description-${slotProps.item.id}`"
               type="textarea"
               v-model:value="slotProps.item.description"
               @keyup.enter="updateImage(slotProps.item.id)"
-              :info="val.INFO_UP_DESCRIPTION">
+              :info="val.INFO_UP_DESCRIPTION"
+            >
               <template #legend>{{ val.LEGEND_DESCRIPTION }}</template>
               <template #label>{{ val.LABEL_DESCRIPTION }}</template>
             </FieldElt>
           </template>
 
           <template #cell-Gallery="slotProps">
-            <FieldElt :id="`gallery-${slotProps.item.id}`"
+            <FieldElt
+              :id="`gallery-${slotProps.item.id}`"
               type="select"
               :list="getGalleries"
               v-model:value="slotProps.item.Gallery.name"
               :content="slotProps.item.Gallery.name"
               @keyup.enter="updateImage(slotProps.item.id)"
-              :info="val.INFO_UP_GALLERY">
+              :info="val.INFO_UP_GALLERY"
+            >
               <template #legend>{{ val.LEGEND_NAME }}</template>
               <template #label>{{ val.LABEL_NAME }}</template>
             </FieldElt>
           </template>
 
           <template #body="slotProps">
-            <BtnElt type="button"
-              @click="updateImage(slotProps.item.id)" 
+            <BtnElt
+              type="button"
+              @click="updateImage(slotProps.item.id)"
               class="btn-sky"
-              :title="val.TITLE_UPDATE + slotProps.item.description">
+              :title="val.TITLE_UPDATE + slotProps.item.description"
+            >
               <template #btn>
                 <i class="fa-solid fa-cloud-arrow-up fa-lg fa-fw"></i>
               </template>
             </BtnElt>
 
-            <BtnElt type="button"
-              @click="deleteImage(slotProps.item.id)" 
+            <BtnElt
+              type="button"
+              @click="deleteImage(slotProps.item.id)"
               class="btn-red"
-              :title="val.TITLE_DELETE + slotProps.item.description">
+              :title="val.TITLE_DELETE + slotProps.item.description"
+            >
               <template #btn>
                 <i class="fa-solid fa-trash-arrow-up fa-lg fa-fw"></i>
               </template>
@@ -120,24 +130,24 @@
 </template>
 
 <script>
-import BtnElt from "./BtnElt"
-import CardElt from "./CardElt"
-import FieldElt from "./FieldElt"
-import ListElt from "./ListElt"
-import MediaElt from "./MediaElt"
-import TableElt from "./TableElt"
+import BtnElt from './BtnElt.vue'
+import CardElt from './CardElt.vue'
+import FieldElt from './FieldElt.vue'
+import ListElt from './ListElt.vue'
+import MediaElt from './MediaElt.vue'
+import TableElt from './TableElt.vue'
 
-import { checkRange, deleteData, putData, postData, setError } from "../app/services"
+import { checkRange, deleteData, putData, postData, setError } from '../assets/services'
 
 export default {
-  name: "ImageSet",
+  name: 'ImageSet',
   components: { BtnElt, CardElt, FieldElt, ListElt, MediaElt, TableElt },
 
-  props: ["galleries", "images", "token", "val"],
+  props: ['galleries', 'images', 'token', 'val'],
   data() {
     return {
-      description: "",
-      gallery: ""
+      description: '',
+      gallery: ''
     }
   },
 
@@ -148,7 +158,7 @@ export default {
      * @return {Array} An array of objects with the content & value properties.
      */
     getGalleries() {
-      const galleries = [];
+      const galleries = []
 
       for (let i = 0; i < this.galleries.length; i++) {
         galleries.push({
@@ -157,7 +167,7 @@ export default {
         })
       }
 
-      return galleries; 
+      return galleries
     }
   },
 
@@ -167,31 +177,29 @@ export default {
      * * Create an image by sending a POST request to the server.
      */
     async createImage() {
-      const { CHECK_STRING, API_URL, ALERT_CREATED, ALERT_IMG } = this.val;
+      const { CHECK_STRING, API_URL, ALERT_CREATED, ALERT_IMG } = this.val
 
       if (checkRange(this.description, CHECK_STRING)) {
-        const img = document.getElementById("image")?.files[0];
+        const img = document.getElementById('image')?.files[0]
 
         if (img !== undefined) {
-          const URL  = API_URL + "/images";
-          const data = new FormData();
+          const URL = API_URL + '/images'
+          const data = new FormData()
 
-          data.append("image", img);
-          data.append("description", this.description);
-          data.append("galleryId", this.$route.params.id);
+          data.append('image', img)
+          data.append('description', this.description)
+          data.append('galleryId', this.$route.params.id)
 
           try {
-            await postData(URL, data, this.token);
-            alert(this.description + ALERT_CREATED);
-
+            await postData(URL, data, this.token)
+            alert(this.description + ALERT_CREATED)
           } catch (err) {
-            setError(err);
+            setError(err)
           } finally {
-            this.$router.go();
+            this.$router.go()
           }
-
         } else {
-          alert(ALERT_IMG);
+          alert(ALERT_IMG)
         }
       }
     },
@@ -202,32 +210,31 @@ export default {
      * @param {number} id - The ID of the image to be updated.
      */
     async updateImage(id) {
-      const { ALERT_IMAGE, ALERT_UPDATED, API_URL, CHECK_STRING } = this.val;
+      const { ALERT_IMAGE, ALERT_UPDATED, API_URL, CHECK_STRING } = this.val
 
-      const image = this.images.find(i => i.id === id);
-      let { name, description, galleryId } = image;
+      const image = this.images.find((i) => i.id === id)
+      let { name, description, galleryId } = image
 
-      const IS_NAME_CHECKED = image && checkRange(name, CHECK_STRING);
-      const IS_DESC_CHECKED = image && checkRange(description, CHECK_STRING);
+      const IS_NAME_CHECKED = image && checkRange(name, CHECK_STRING)
+      const IS_DESC_CHECKED = image && checkRange(description, CHECK_STRING)
 
       if (IS_NAME_CHECKED && IS_DESC_CHECKED) {
-        const URL  = `${API_URL}/images/${id}`
-        const img  = document.getElementById(`image-${id}`)?.files[0] ?? name;
-        const data = new FormData();
+        const URL = `${API_URL}/images/${id}`
+        const img = document.getElementById(`image-${id}`)?.files[0] ?? name
+        const data = new FormData()
 
-        data.append("name", name);
-        data.append("image", img);
-        data.append("description", description);
-        data.append("galleryId", galleryId);
+        data.append('name', name)
+        data.append('image', img)
+        data.append('description', description)
+        data.append('galleryId', galleryId)
 
         try {
-          await putData(URL, data, this.token);
-          alert(ALERT_IMAGE + id + ALERT_UPDATED);
-
+          await putData(URL, data, this.token)
+          alert(ALERT_IMAGE + id + ALERT_UPDATED)
         } catch (err) {
-          setError(err);
+          setError(err)
         } finally {
-          this.$router.go();
+          this.$router.go()
         }
       }
     },
@@ -238,23 +245,21 @@ export default {
      * @param {number} id - The ID of the image to be deleted.
      */
     async deleteImage(id) {
-      const { TITLE_DELETE_IMAGE, API_URL, ALERT_IMAGE, ALERT_DELETED } = this.val;
+      const { TITLE_DELETE_IMAGE, API_URL, ALERT_IMAGE, ALERT_DELETED } = this.val
 
       if (confirm(`${TITLE_DELETE_IMAGE} ${id} ?`)) {
         const URL = `${API_URL}/images/${id}`
 
         try {
-          await deleteData(URL, this.token);
-          alert(ALERT_IMAGE + id + ALERT_DELETED);
-
+          await deleteData(URL, this.token)
+          alert(ALERT_IMAGE + id + ALERT_DELETED)
         } catch (err) {
-          setError(err);
+          setError(err)
         } finally {
-          this.$router.go();
+          this.$router.go()
         }
       }
     }
-
   }
 }
 </script>

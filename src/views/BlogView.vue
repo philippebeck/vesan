@@ -40,67 +40,81 @@
               </template>
 
               <template #body>
-                <BtnElt v-if="!checkSession('user')"
+                <BtnElt
+                  v-if="!checkSession('user')"
                   :id="`like-${slotProps.value.id}`"
                   href="/login"
                   class="btn-sky-dark"
-                  :title="val.TITLE_LIKE_LOGIN + slotProps.value.name">
+                  :title="val.TITLE_LIKE_LOGIN + slotProps.value.name"
+                >
                   <template #btn>
                     <i class="fa-regular fa-thumbs-up fa-lg fa-fw"></i>
                     <b itemprop="contentRating">{{ slotProps.value.likes.length }}</b>
                   </template>
                 </BtnElt>
 
-                <BtnElt v-else-if="checkLikes(slotProps.value.id) === false"
+                <BtnElt
+                  v-else-if="checkLikes(slotProps.value.id) === false"
                   :id="`like-${slotProps.value.id}`"
                   type="button"
                   @click="addLike(slotProps.value.id)"
                   class="btn-sky"
-                  :title="val.TITLE_LIKE + slotProps.value.name">
+                  :title="val.TITLE_LIKE + slotProps.value.name"
+                >
                   <template #btn>
                     <i class="fa-regular fa-thumbs-up fa-lg fa-fw"></i>
                     <b itemprop="contentRating">{{ slotProps.value.likes.length }}</b>
                   </template>
                 </BtnElt>
 
-                <BtnElt v-else-if="checkLikes(slotProps.value.id) === true"
+                <BtnElt
+                  v-else-if="checkLikes(slotProps.value.id) === true"
                   :id="`like-${slotProps.value.id}`"
                   type="button"
                   @click="addLike(slotProps.value.id)"
                   class="btn-sky"
-                  :title="val.TITLE_DISLIKE + slotProps.value.name">
+                  :title="val.TITLE_DISLIKE + slotProps.value.name"
+                >
                   <template #btn>
                     <i class="fa-solid fa-thumbs-up fa-lg fa-fw"></i>
                     <b itemprop="contentRating">{{ slotProps.value.likes.length }}</b>
                   </template>
                 </BtnElt>
 
-                <a v-if="!slotProps.value.url || checkSession('editor')"
-                  :href="`article/${slotProps.value.id}`" 
-                  :title="val.TITLE_READ + slotProps.value.name">
-                  <MediaElt :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
-                    :src="`img/thumbnails/articles/${slotProps.value.image}`" 
-                    :alt="`${slotProps.value.alt}`" 
+                <a
+                  v-if="!slotProps.value.url || checkSession('editor')"
+                  :href="`article/${slotProps.value.id}`"
+                  :title="val.TITLE_READ + slotProps.value.name"
+                >
+                  <MediaElt
+                    :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
+                    :src="`img/thumbnails/articles/${slotProps.value.image}`"
+                    :alt="`${slotProps.value.alt}`"
                     :width="val.THUMB_WIDTH"
                     :height="val.THUMB_HEIGHT"
-                    itemprop="image">
+                    itemprop="image"
+                  >
                     <template #figcaption>
                       <p v-html="slotProps.value.text.split(':')[0]"></p>
                     </template>
                   </MediaElt>
                 </a>
 
-                <a v-else
-                  :href="`https://${slotProps.value.url}`" 
+                <a
+                  v-else
+                  :href="`https://${slotProps.value.url}`"
                   :title="val.TITLE_READ + slotProps.value.name"
                   target="_blank"
-                  rel="noopener noreferrer">
-                  <MediaElt :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
-                    :src="`img/thumbnails/articles/${slotProps.value.image}`" 
-                    :alt="`${slotProps.value.alt}`" 
+                  rel="noopener noreferrer"
+                >
+                  <MediaElt
+                    :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
+                    :src="`img/thumbnails/articles/${slotProps.value.image}`"
+                    :alt="`${slotProps.value.alt}`"
                     :width="val.THUMB_WIDTH"
                     :height="val.THUMB_HEIGHT"
-                    itemprop="image">
+                    itemprop="image"
+                  >
                     <template #figcaption>
                       <p v-html="slotProps.value.text.split(':')[0]" class="blog"></p>
                     </template>
@@ -113,116 +127,139 @@
       </template>
 
       <template #aside v-if="checkSession('editor')">
-        <ArticleSet :token="token" :val="val"/>
+        <ArticleSet :token="token" :val="val" />
       </template>
     </CardElt>
   </main>
 </template>
 
-<script>
-import ArticleSet from "../components/ArticleSet"
-import BtnElt from "../components/BtnElt"
-import CardElt from "../components/CardElt"
-import ListElt from "../components/ListElt"
-import MediaElt from "../components/MediaElt"
-import NavElt from "../components/NavElt"
+<script lang="ts">
+import ArticleSet from '../components/ArticleSet.vue'
+import BtnElt from '../components/BtnElt.vue'
+import CardElt from '../components/CardElt.vue'
+import ListElt from '../components/ListElt.vue'
+import MediaElt from '../components/MediaElt.vue'
+import NavElt from '../components/NavElt.vue'
 
-import { checkRole, getCats, getItemsByCat, putData, setError, setMeta } from "../app/services"
-import { mapState, mapActions } from "vuex"
+import { checkRole, getCats, getItemsByCat, putData, setError, setMeta } from '../assets/services'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  name: "BlogView",
+  name: 'BlogView',
   components: { BtnElt, CardElt, ListElt, MediaElt, NavElt, ArticleSet },
-  props: ["avatar", "val"],
+  props: ['avatar', 'val'],
 
   /**
    * ? CREATED
    * * A function that retrieves the articles & sets the meta data of the page.
+   *
+   * @returns {Promise<Article>}
    */
-  async created() {
-    const { HEAD_BLOG, LOGO_SRC, META_BLOG, UI_URL } = this.val;
+  async created(): Promise<Article> {
+    const { HEAD_BLOG, LOGO_SRC, META_BLOG, UI_URL } = this.val as {
+      HEAD_BLOG: string
+      LOGO_SRC: string
+      META_BLOG: string
+      UI_URL: string
+    }
 
-    await this.$store.dispatch("listArticles");
-    setMeta(HEAD_BLOG, META_BLOG, `${UI_URL}/blog`, UI_URL + LOGO_SRC);
+    await this.$store.dispatch('listArticles')
+    setMeta(HEAD_BLOG, META_BLOG, `${UI_URL}/blog`, UI_URL + LOGO_SRC)
   },
 
   /**
    * ? UPDATED
    * * A function that updates the text elements by setting the "itemprop" attribute to "text".
+   *
+   * @returns {void}
    */
-  updated() {
-    const textArray = document.getElementsByClassName("figcaption");
-    for (let textElt of textArray) textElt.firstChild.setAttribute("itemprop", "text");
+  updated(): void {
+    const textArray = document.getElementsByClassName('figcaption')
+    for (let textElt of textArray) textElt.firstChild.setAttribute('itemprop', 'text')
   },
 
   computed: {
-    ...mapState(["articles", "id", "token"]),
+    ...mapState(['articles', 'id', 'token']),
 
     /**
      * ? GET CATEGORIES
      * * Retrieves the categories of articles.
-     * @return {Array} An array of article categories.
+     *
+     * @return {Array<string>} An array of article categories.
      */
-    getCategories() { return getCats(this.articles) }
+    getCategories(): Array<string> {
+      return getCats(this.articles)
+    }
   },
 
   methods: {
-    ...mapActions(["listArticles"]),
+    ...mapActions(['listArticles']),
 
     /**
      * ? CHECK SESSION
      * * Checks the session for the specified role.
-     * @param {type} role - the role to check
-     * @return {type} the result of the role check
+     *
+     * @param {string} role - the role to check
+     * @return {boolean} the result of the role check
      */
-    checkSession(role) { return checkRole(this.avatar.role, role) },
+    checkSession(role: string): boolean {
+      return checkRole(this.avatar.role, role)
+    },
 
     /**
      * ? GET ITEMS BY CATEGORY
-     * * Retrieves items based on category.
-     * @param {Array} items - The list of items to filter.
-     * @return {Array} The filtered list of items.
+     * Retrieves items based on category.
+     *
+     * @param {Array<Item>} items - The list of items to filter.
+     * @return {Array<Item>} The filtered list of items.
      */
-    getItemsByCategory(items) { return getItemsByCat(items) },
+    getItemsByCategory(items: Array<Item>): Array<Item> {
+      return getItemsByCat(items)
+    },
 
     /**
      * ? CHECK LIKES
      * * Check if the given ID is present in the likes array of any user article.
-     * @param {type} id - The ID to check for in the likes array.
-     * @return {type} - Returns a boolean indicating whether the ID is present in the likes array.
+     *
+     * @param {number} id - The ID to check for in the likes array.
+     * @return {boolean} - Returns a boolean indicating whether the ID is present in the likes array.
      */
-    checkLikes(id) { return this.articles.some(a => a.id === id && a.likes.includes(this.id)) },
+    checkLikes(id: number): boolean {
+      return this.articles.some((a) => a.id === id && a.likes.includes(this.id))
+    },
 
     /**
      * ? ADD LIKE
      * * Asynchronously adds a like to the specified article.
+     *
      * @param {number} id - The ID of the article to add a like to
+     * @returns {Promise<void>} A promise that resolves when the like is added.
      */
-    async addLike(id) {
-      const { API_URL } = this.val;
-      const article = this.articles.find(a => a.id === id);
+    async addLike(id: number): Promise<void> {
+      const { API_URL }: { API_URL: string } = this.val
+      const article: Article | undefined = this.articles.find((a: Article) => a.id === id)
 
-      if (!article) return;
-      let { name, text, image, alt, url, likes, cat } = article;
+      if (!article) return
+      let { name, text, image, alt, url, likes, cat }: Article = article
 
-      const index = likes.indexOf(this.id);
-      index > -1 ? likes.splice(index, 1) : likes.push(this.id);
+      const index: number = likes.indexOf(this.id)
+      index > -1 ? likes.splice(index, 1) : likes.push(this.id)
 
-      const URL   = `${API_URL}/articles/${id}`;
-      const data  = new FormData();
+      const URL: string = `${API_URL}/articles/${id}`
+      const data: FormData = new FormData()
 
-      data.append("name", name);
-      data.append("text", text);
-      data.append("image", image);
-      data.append("alt", alt);
-      data.append("url", url);
-      data.append("likes", JSON.stringify(likes));
-      data.append("cat", cat);
+      data.append('name', name)
+      data.append('text', text)
+      data.append('image', image)
+      data.append('alt', alt)
+      data.append('url', url)
+      data.append('likes', JSON.stringify(likes))
+      data.append('cat', cat)
 
       try {
-        await putData(URL, data, this.token);
-      } catch (err) {
-        setError(err);
+        await putData(URL, data, this.token)
+      } catch (err: any) {
+        setError(err)
       }
     }
   }

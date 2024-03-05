@@ -1,126 +1,89 @@
 <template>
-  <figure v-if="type === 'audio'"
-    :itemprop="itemprop"
-    itemscope 
-    :itemtype="getItemType(type)">
-
-    <audio controls
-      :src="src"
-      :loop="loop"
-      :title="title"
-      itemprop="contentUrl">
-
-      <source v-for="(audio, index) in medias"
-        :key="index"
-        :src="audio.src"
-        :type="audio.type">
+  <figure v-if="type === 'audio'" :itemprop="itemprop" itemscope :itemtype="getItemType(type)">
+    <audio controls :src="src" :loop="loop" :title="title" itemprop="contentUrl">
+      <source v-for="(audio, index) in medias" :key="index" :src="audio.src" :type="audio.type" />
       <slot name="audio"></slot>
     </audio>
 
-    <figcaption v-if="hasSlot('figcaption')"
-      itemprop="description">
+    <figcaption v-if="hasSlot('figcaption')" itemprop="description">
       <slot name="figcaption"></slot>
     </figcaption>
   </figure>
 
-  <figure v-else-if="type === 'video'"
-    :itemprop="itemprop"
-    itemscope 
-    :itemtype="getItemType(type)">
-
-    <video controls
+  <figure v-else-if="type === 'video'" :itemprop="itemprop" itemscope :itemtype="getItemType(type)">
+    <video
+      controls
       :src="src"
       :loop="loop"
       :height="height"
       :width="width"
       :title="title"
-      itemprop="contentUrl">
-
-      <source v-for="(video, index) in medias"
-        :key="index"
-        :src="video.src"
-        :type="video.type">
+      itemprop="contentUrl"
+    >
+      <source v-for="(video, index) in medias" :key="index" :src="video.src" :type="video.type" />
       <slot name="video"></slot>
     </video>
 
-    <figcaption v-if="hasSlot('figcaption')"
-      itemprop="description">
+    <figcaption v-if="hasSlot('figcaption')" itemprop="description">
       <slot name="figcaption"></slot>
     </figcaption>
   </figure>
 
-  <figure v-else-if="type === 'quote'"
-    :itemprop="itemprop"
-    itemscope 
-    :itemtype="getItemType(type)">
-
-    <blockquote :cite="src"
-      :title="title"
-      itemprop="text">
+  <figure v-else-if="type === 'quote'" :itemprop="itemprop" itemscope :itemtype="getItemType(type)">
+    <blockquote :cite="src" :title="title" itemprop="text">
       {{ content }}
       <slot name="quote"></slot>
     </blockquote>
 
-    <figcaption v-if="hasSlot('figcaption')"
-      itemprop="description">
+    <figcaption v-if="hasSlot('figcaption')" itemprop="description">
       <slot name="figcaption"></slot>
     </figcaption>
   </figure>
 
-  <figure v-else-if="type === 'picture'"
-    itemprop="image"
-    itemscope 
-    :itemtype="getItemType(type)">
-
+  <figure v-else-if="type === 'picture'" itemprop="image" itemscope :itemtype="getItemType(type)">
     <picture>
-      <source v-for="(picture, index) in medias"
+      <source
+        v-for="(picture, index) in medias"
         :key="index"
         :type="picture.type"
         :srcset="picture.src"
-        :media="picture.media">
+        :media="picture.media"
+      />
 
-      <img :src="src"
-        :alt="alt"
-        :title="title"
-        itemprop="contentUrl"
-        loading="lazy">
+      <img :src="src" :alt="alt" :title="title" itemprop="contentUrl" loading="lazy" />
     </picture>
 
-    <figcaption v-if="hasSlot('figcaption')"
-      itemprop="description">
+    <figcaption v-if="hasSlot('figcaption')" itemprop="description">
       <slot name="figcaption"></slot>
     </figcaption>
   </figure>
 
-  <figure v-else
-    itemprop="image"
-    itemscope 
-    :itemtype="getItemType(type)">
-
-    <img :src="src"
+  <figure v-else itemprop="image" itemscope :itemtype="getItemType(type)">
+    <img
+      :src="src"
       :alt="alt"
       :height="height"
       :width="width"
       :title="title"
       itemprop="contentUrl"
-      loading="lazy">
+      loading="lazy"
+    />
 
-    <figcaption v-if="hasSlot('figcaption')"
-      itemprop="description">
+    <figcaption v-if="hasSlot('figcaption')" itemprop="description">
       <slot name="figcaption"></slot>
     </figcaption>
   </figure>
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import { checkSlot } from "../app/services";
+import { defineComponent } from 'vue'
+import { checkSlot } from '../assets/services'
 
 export default defineComponent({
-  name: "MediaElt",
+  name: 'MediaElt',
 
   props: {
-    type: { type: String, default: "img" },
+    type: { type: String, default: 'img' },
     width: { type: Number, default: 300 },
     loop: { type: Boolean, default: false },
     content: String,
@@ -142,31 +105,31 @@ export default defineComponent({
     /**
      * ? HAS SLOT
      * * Checks if the component has a slot
-     * @param {string} name 
+     * @param {string} name
      */
-    const hasSlot = (name) => checkSlot(slots, name);
+    const hasSlot = (name) => checkSlot(slots, name)
 
     /**
      * ? GET ITEM TYPE
      * * Returns the item type for the schema
-     * @param {string} type 
+     * @param {string} type
      */
     const getItemType = (type) => {
       switch (type) {
-        case "audio":
-          return "https://schema.org/AudioObject";
-        case "video":
-          return "https://schema.org/VideoObject";
-        case "quote":
-          return "https://schema.org/Quotation";
+        case 'audio':
+          return 'https://schema.org/AudioObject'
+        case 'video':
+          return 'https://schema.org/VideoObject'
+        case 'quote':
+          return 'https://schema.org/Quotation'
         default:
-          return "https://schema.org/ImageObject";
+          return 'https://schema.org/ImageObject'
       }
-    };
+    }
 
-    return { getItemType, hasSlot };
+    return { getItemType, hasSlot }
   }
-});
+})
 </script>
 
 <style>

@@ -26,19 +26,20 @@
       </template>
 
       <template #body>
-        <ListElt :items="galleries"
-          :dynamic="true"
-          class="grid-2sm-3md-4lg-5xl-6wd content-center">
+        <ListElt :items="galleries" :dynamic="true" class="grid-2sm-3md-4lg-5xl-6wd content-center">
           <template #items="slotProps">
-            <a :href="`gallery/${slotProps.item.id}`" 
+            <a
+              :href="`gallery/${slotProps.item.id}`"
               :title="val.TITLE_WATCH + slotProps.item.name"
-              itemprop="url">
-
-              <MediaElt :id="`${slotProps.item.name.toLowerCase()}`"
-                :src="`/img/thumbnails/galleries/${slotProps.item.cover}`" 
-                :alt="val.COVER_OF + slotProps.item.name" 
+              itemprop="url"
+            >
+              <MediaElt
+                :id="`${slotProps.item.name.toLowerCase()}`"
+                :src="`/img/thumbnails/galleries/${slotProps.item.cover}`"
+                :alt="val.COVER_OF + slotProps.item.name"
                 :width="val.THUMB_WIDTH"
-                :height="val.THUMB_HEIGHT">
+                :height="val.THUMB_HEIGHT"
+              >
                 <template #figcaption>
                   <p class="gallery">{{ slotProps.item.name }}</p>
                 </template>
@@ -49,42 +50,42 @@
       </template>
 
       <template #aside v-if="checkSession('admin')">
-        <GallerySet :galleries="galleries" :images="images" :token="token" :val="val"/>
+        <GallerySet :galleries="galleries" :images="images" :token="token" :val="val" />
       </template>
     </CardElt>
   </main>
 </template>
 
 <script>
-import CardElt from "../components/CardElt"
-import GallerySet from "../components/GallerySet"
-import ListElt from "../components/ListElt"
-import MediaElt from "../components/MediaElt"
-import NavElt from "../components/NavElt"
+import CardElt from '../components/CardElt.vue'
+import GallerySet from '../components/GallerySet.vue'
+import ListElt from '../components/ListElt.vue'
+import MediaElt from '../components/MediaElt.vue'
+import NavElt from '../components/NavElt.vue'
 
-import { checkRole, setMeta } from "../app/services"
-import { mapState, mapActions } from "vuex"
+import { checkRole, setMeta } from '../assets/services'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  name: "GalleryView",
+  name: 'GalleryView',
   components: { CardElt, ListElt, MediaElt, NavElt, GallerySet },
-  props: ["avatar", "val"],
+  props: ['avatar', 'val'],
 
   async created() {
-    const { HEAD_GALLERY, LOGO_SRC, META_GALLERY, UI_URL } = this.val;
+    const { HEAD_GALLERY, LOGO_SRC, META_GALLERY, UI_URL } = this.val
 
-    await this.$store.dispatch("listGalleries");
-    await this.$store.dispatch("listImages");
+    await this.$store.dispatch('listGalleries')
+    await this.$store.dispatch('listImages')
 
-    setMeta(HEAD_GALLERY, META_GALLERY, `${UI_URL}/galleries`, UI_URL + LOGO_SRC);
+    setMeta(HEAD_GALLERY, META_GALLERY, `${UI_URL}/galleries`, UI_URL + LOGO_SRC)
   },
 
   computed: {
-    ...mapState(["galleries", "images", "token"]),
+    ...mapState(['galleries', 'images', 'token'])
   },
 
   methods: {
-    ...mapActions(["listGalleries", "listImages"]),
+    ...mapActions(['listGalleries', 'listImages']),
 
     /**
      * ? CHECK SESSION
@@ -92,7 +93,9 @@ export default {
      * @param {type} role - the role to check the session for
      * @return {type} the result of the session check
      */
-    checkSession(role) { return checkRole(this.avatar.role, role) }
+    checkSession(role) {
+      return checkRole(this.avatar.role, role)
+    }
   }
 }
 </script>

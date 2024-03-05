@@ -10,78 +10,86 @@
     <template #body>
       <form enctype="multipart/form-data">
         <ListElt :items="val.PROJECT_FORM">
-
           <template #item-1>
-            <FieldElt id="name"
-              v-model:value="name" 
+            <FieldElt
+              id="name"
+              v-model:value="name"
               @keyup.enter="createProject()"
-              :info="val.INFO_NAME">
+              :info="val.INFO_NAME"
+            >
               <template #legend>{{ val.LEGEND_NAME }}</template>
               <template #label>{{ val.LABEL_NAME }}</template>
             </FieldElt>
           </template>
 
           <template #item-2>
-            <FieldElt id="description"
+            <FieldElt
+              id="description"
               type="textarea"
               v-model:value="description"
               @keyup.enter="createProject()"
-              :info="val.INFO_DESCRIPTION">
+              :info="val.INFO_DESCRIPTION"
+            >
               <template #label>{{ val.LABEL_DESCRIPTION }}</template>
               <template #legend>{{ val.LEGEND_DESCRIPTION }}</template>
             </FieldElt>
           </template>
 
           <template #item-3>
-            <FieldElt id="image" 
-              type="file"
-              v-model:value="image"
-              :info="val.INFO_IMAGE">
+            <FieldElt id="image" type="file" v-model:value="image" :info="val.INFO_IMAGE">
               <template #legend>{{ val.LEGEND_IMAGE }}</template>
               <template #label>{{ val.LABEL_IMAGE }}</template>
             </FieldElt>
           </template>
 
           <template #item-4>
-            <FieldElt id="alt"
+            <FieldElt
+              id="alt"
               type="textarea"
               v-model:value="alt"
               @keyup.enter="createProject()"
-              :info="val.INFO_ALT">
+              :info="val.INFO_ALT"
+            >
               <template #legend>{{ val.LEGEND_ALT }}</template>
               <template #label>{{ val.LABEL_ALT }}</template>
             </FieldElt>
           </template>
 
           <template #item-5>
-              <FieldElt id="url"
-                v-model:value="url"
-                @keyup.enter="createProject()"
-                :info="val.INFO_URL">
-                <template #legend>{{ val.LEGEND_URL }}</template>
-                <template #label>{{ val.LABEL_URL }}</template>
-              </FieldElt>
-            </template>
+            <FieldElt
+              id="url"
+              v-model:value="url"
+              @keyup.enter="createProject()"
+              :info="val.INFO_URL"
+            >
+              <template #legend>{{ val.LEGEND_URL }}</template>
+              <template #label>{{ val.LABEL_URL }}</template>
+            </FieldElt>
+          </template>
 
           <template #item-6>
-            <FieldElt id="cat"
+            <FieldElt
+              id="cat"
               type="select"
               :list="val.CATS_PROJECT"
               v-model:value="cat"
               @keyup.enter="createProject()"
-              :info="val.INFO_CAT">
+              :info="val.INFO_CAT"
+            >
               <template #legend>{{ val.LEGEND_CAT }}</template>
               <template #label>{{ val.LABEL_CAT }}</template>
             </FieldElt>
           </template>
         </ListElt>
-        <br>
+        <br />
 
-        <BtnElt type="button"
-          @click="createProject()" 
+        <BtnElt
+          type="button"
+          @click="createProject()"
           class="btn-green"
           :content="val.CONTENT_CREATE"
-          :title="val.TITLE_PROJECT">
+          :title="val.TITLE_PROJECT"
+        >
           <template #btn>
             <i class="fa-solid fa-square-plus fa-lg"></i>
           </template>
@@ -91,77 +99,86 @@
       <form v-if="projects.length > 0">
         <TableElt :items="projects">
           <template #cell-id="slotProps">
-            <BtnElt :content="slotProps.item.id"
-              :href="`https://${slotProps.item.url}`"/>
+            <BtnElt :content="slotProps.item.id" :href="`https://${slotProps.item.url}`" />
           </template>
 
           <template #cell-name="slotProps">
-            <FieldElt :id="`name-${slotProps.item.id}`"
+            <FieldElt
+              :id="`name-${slotProps.item.id}`"
               v-model:value="slotProps.item.name"
               @keyup.enter="updateProject(slotProps.item.id)"
-              :info="val.INFO_UP_NAME">
+              :info="val.INFO_UP_NAME"
+            >
               <template #legend>{{ val.LEGEND_NAME }}</template>
               <template #label>{{ val.LABEL_NAME }}</template>
             </FieldElt>
           </template>
 
           <template #cell-description="slotProps">
-            <FieldElt :id="`description-${slotProps.item.id}`"
+            <FieldElt
+              :id="`description-${slotProps.item.id}`"
               type="textarea"
               v-model:value="slotProps.item.description"
               @keyup.enter="updateProject(slotProps.item.id)"
-              :info="val.INFO_UP_NAME">
+              :info="val.INFO_UP_NAME"
+            >
               <template #legend>{{ val.LEGEND_DESCRIPTION }}</template>
               <template #label>{{ val.LABEL_DESCRIPTION }}</template>
             </FieldElt>
           </template>
 
           <template #cell-image="slotProps">
-            <MediaElt :src="'/img/thumbnails/projects/' + slotProps.item.image"
+            <MediaElt
+              :src="'/img/thumbnails/projects/' + slotProps.item.image"
               :alt="slotProps.item.alt"
               :title="slotProps.item.image"
-              loading="lazy"/>
+              loading="lazy"
+            />
 
-            <FieldElt :id="`image-${slotProps.item.id}`"
-              type="file"
-              :info="val.INFO_UP_IMAGE">
+            <FieldElt :id="`image-${slotProps.item.id}`" type="file" :info="val.INFO_UP_IMAGE">
               <template #legend>{{ val.LEGEND_IMAGE }}</template>
               <template #label>{{ val.LABEL_IMAGE }}</template>
             </FieldElt>
           </template>
 
           <template #cell-alt="slotProps">
-            <FieldElt :id="`alt-${slotProps.item.id}`"
+            <FieldElt
+              :id="`alt-${slotProps.item.id}`"
               type="textarea"
               v-model:value="slotProps.item.alt"
               @keyup.enter="updateProject(slotProps.item.id)"
-              :info="val.INFO_ALT">
+              :info="val.INFO_ALT"
+            >
               <template #legend>{{ val.LEGEND_ALT }}</template>
               <template #label>{{ val.LABEL_ALT }}</template>
             </FieldElt>
           </template>
 
           <template #cell-url="slotProps">
-            <FieldElt :id="`url-${slotProps.item.id}`"
+            <FieldElt
+              :id="`url-${slotProps.item.id}`"
               type="url"
               v-model:value="slotProps.item.url"
               @keyup.enter="updateProject(slotProps.item.id)"
               :info="val.INFO_UP_URL"
               :label="val.INFO_UP_URL"
-              :max="parseInt('250')">
+              :max="parseInt('250')"
+            >
               <template #legend>{{ val.LEGEND_URL }}</template>
               <template #label>{{ val.LABEL_URL }}</template>
             </FieldElt>
           </template>
 
           <template #cell-cat="slotProps">
-            <FieldElt :id="`cat-${slotProps.item.id}`"
+            <FieldElt
+              :id="`cat-${slotProps.item.id}`"
               type="select"
               :list="val.CATS_PROJECT"
               v-model:value="slotProps.item.cat"
               @keyup.enter="updateProject(slotProps.item.id)"
               :info="val.INFO_UP_CAT"
-              :label="val.INFO_UP_CAT">
+              :label="val.INFO_UP_CAT"
+            >
               <template #legend>{{ val.LEGEND_CAT }}</template>
               <template #label>{{ val.LABEL_CAT }}</template>
             </FieldElt>
@@ -170,10 +187,12 @@
           <template #cell-createdAt="slotProps">
             <p>{{ new Date(slotProps.item.createdAt).toLocaleString() }}</p>
 
-            <BtnElt type="button"
-              @click="deleteProject(slotProps.item.id)" 
+            <BtnElt
+              type="button"
+              @click="deleteProject(slotProps.item.id)"
               class="btn-red"
-              :title="val.TITLE_DELETE + slotProps.item.name">
+              :title="val.TITLE_DELETE + slotProps.item.name"
+            >
               <template #btn>
                 <i class="fa-solid fa-trash-arrow-up fa-lg fa-fw"></i>
               </template>
@@ -183,10 +202,12 @@
           <template #cell-updatedAt="slotProps">
             <p>{{ new Date(slotProps.item.updatedAt).toLocaleString() }}</p>
 
-            <BtnElt type="button"
-              @click="updateProject(slotProps.item.id)" 
+            <BtnElt
+              type="button"
+              @click="updateProject(slotProps.item.id)"
               class="btn-sky"
-              :title="val.TITLE_UPDATE + slotProps.item.name">
+              :title="val.TITLE_UPDATE + slotProps.item.name"
+            >
               <template #btn>
                 <i class="fa-solid fa-cloud-arrow-up fa-lg fa-fw"></i>
               </template>
@@ -199,28 +220,36 @@
 </template>
 
 <script>
-import BtnElt from "./BtnElt"
-import CardElt from "./CardElt"
-import FieldElt from "./FieldElt"
-import ListElt from "./ListElt"
-import MediaElt from "./MediaElt"
-import TableElt from "./TableElt"
+import BtnElt from './BtnElt.vue'
+import CardElt from './CardElt.vue'
+import FieldElt from './FieldElt.vue'
+import ListElt from './ListElt.vue'
+import MediaElt from './MediaElt.vue'
+import TableElt from './TableElt.vue'
 
-import { checkRange, checkRegex, deleteData, getItemName, postData, putData, setError } from "../app/services"
+import {
+  checkRange,
+  checkRegex,
+  deleteData,
+  getItemName,
+  postData,
+  putData,
+  setError
+} from '../assets/services'
 
 export default {
-  name: "ProjectSet",
+  name: 'ProjectSet',
   components: { BtnElt, CardElt, FieldElt, ListElt, MediaElt, TableElt },
 
-  props: ["projects", "token", "val"],
+  props: ['projects', 'token', 'val'],
   data() {
     return {
-      name: "",
-      description:"",
-      image: "",
-      alt: "",
-      url: "",
-      cat: ""
+      name: '',
+      description: '',
+      image: '',
+      alt: '',
+      url: '',
+      cat: ''
     }
   },
 
@@ -230,42 +259,50 @@ export default {
      * * Creates a project by sending a POST request to the server with the provided data.
      */
     async createProject() {
-      const { ALERT_CREATED, ALERT_IMG, API_URL, CAT_PROJECT, CHECK_STRING, CHECK_URL, REGEX_URL, TEXT_MIN, TEXT_MAX } = this.val;
+      const {
+        ALERT_CREATED,
+        ALERT_IMG,
+        API_URL,
+        CAT_PROJECT,
+        CHECK_STRING,
+        CHECK_URL,
+        REGEX_URL,
+        TEXT_MIN,
+        TEXT_MAX
+      } = this.val
 
-      if (this.url.startsWith("http")) this.url = this.url.split('//')[1];
-      if (this.cat === "") this.cat = CAT_PROJECT;
+      if (this.url.startsWith('http')) this.url = this.url.split('//')[1]
+      if (this.cat === '') this.cat = CAT_PROJECT
 
-      const IS_NAME_CHECKED = checkRange(this.name, CHECK_STRING);
-      const IS_DESC_CHECKED = checkRange(this.description, CHECK_STRING, TEXT_MIN, TEXT_MAX);
-      const IS_ALT_CHECKED  = checkRange(this.alt, CHECK_STRING);
-      const IS_URL_CHECKED  = this.url ? checkRegex(this.url, CHECK_URL, REGEX_URL) : true;
+      const IS_NAME_CHECKED = checkRange(this.name, CHECK_STRING)
+      const IS_DESC_CHECKED = checkRange(this.description, CHECK_STRING, TEXT_MIN, TEXT_MAX)
+      const IS_ALT_CHECKED = checkRange(this.alt, CHECK_STRING)
+      const IS_URL_CHECKED = this.url ? checkRegex(this.url, CHECK_URL, REGEX_URL) : true
 
       if (IS_NAME_CHECKED && IS_DESC_CHECKED && IS_ALT_CHECKED && IS_URL_CHECKED) {
-        const img = document.getElementById("image")?.files[0];
+        const img = document.getElementById('image')?.files[0]
 
         if (img !== undefined) {
-          const URL  = `${API_URL}/projects`;
-          const data = new FormData();
+          const URL = `${API_URL}/projects`
+          const data = new FormData()
 
-          data.append("name", this.name);
-          data.append("description", this.description);
-          data.append("image", img);
-          data.append("alt", this.alt);
-          data.append("url", this.url);
-          data.append("cat", this.cat);
-          
+          data.append('name', this.name)
+          data.append('description', this.description)
+          data.append('image', img)
+          data.append('alt', this.alt)
+          data.append('url', this.url)
+          data.append('cat', this.cat)
+
           try {
-            await postData(URL, data, this.token);
-            alert(this.name + ALERT_CREATED);
-
+            await postData(URL, data, this.token)
+            alert(this.name + ALERT_CREATED)
           } catch (err) {
-            setError(err);
+            setError(err)
           } finally {
-            this.$router.go();
+            this.$router.go()
           }
-
         } else {
-          alert(ALERT_IMG);
+          alert(ALERT_IMG)
         }
       }
     },
@@ -276,35 +313,34 @@ export default {
      * @param {type} id - The ID of the project to update.
      */
     async updateProject(id) {
-      const { API_URL, ALERT_UPDATED, CHECK_STRING, REGEX_URL, TEXT_MAX, TEXT_MIN } = this.val;
-      const project = this.projects.find(p => p.id === id);
-      let { name, description, image, alt, url, cat } = project;
+      const { API_URL, ALERT_UPDATED, CHECK_STRING, REGEX_URL, TEXT_MAX, TEXT_MIN } = this.val
+      const project = this.projects.find((p) => p.id === id)
+      let { name, description, image, alt, url, cat } = project
 
-      const IS_NAME_CHECKED = checkRange(name, CHECK_STRING);
-      const IS_DESC_CHECKED = checkRange(description, CHECK_STRING, TEXT_MIN, TEXT_MAX);
-      const IS_ALT_CHECKED  = checkRange(alt, CHECK_STRING);
-      const IS_URL_CHECKED  = url ? checkRegex(url, CHECK_STRING, REGEX_URL) : true;
+      const IS_NAME_CHECKED = checkRange(name, CHECK_STRING)
+      const IS_DESC_CHECKED = checkRange(description, CHECK_STRING, TEXT_MIN, TEXT_MAX)
+      const IS_ALT_CHECKED = checkRange(alt, CHECK_STRING)
+      const IS_URL_CHECKED = url ? checkRegex(url, CHECK_STRING, REGEX_URL) : true
 
       if (IS_NAME_CHECKED && IS_DESC_CHECKED && IS_ALT_CHECKED && IS_URL_CHECKED) {
-        const URL   = `${API_URL}/projects/${id}`;
-        const data  = new FormData();
-        const img   = document.getElementById(`image-${id}`)?.files[0] ?? image;
+        const URL = `${API_URL}/projects/${id}`
+        const data = new FormData()
+        const img = document.getElementById(`image-${id}`)?.files[0] ?? image
 
-        data.append("name", name);
-        data.append("description", description);
-        data.append("image", img);
-        data.append("alt", alt);
-        data.append("url", url);
-        data.append("cat", cat);
+        data.append('name', name)
+        data.append('description', description)
+        data.append('image', img)
+        data.append('alt', alt)
+        data.append('url', url)
+        data.append('cat', cat)
 
         try {
-          await putData(URL, data, this.token);
-          alert(name + ALERT_UPDATED);
-
+          await putData(URL, data, this.token)
+          alert(name + ALERT_UPDATED)
         } catch (err) {
-          setError(err);
+          setError(err)
         } finally {
-          this.$router.go();
+          this.$router.go()
         }
       }
     },
@@ -315,20 +351,19 @@ export default {
      * @param {type} id - The ID of the project to delete.
      */
     async deleteProject(id) {
-      const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val;
-      const NAME = getItemName(id, this.projects);
+      const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val
+      const NAME = getItemName(id, this.projects)
 
       if (confirm(`${TITLE_DELETE} ${NAME} ?`)) {
         const URL = `${API_URL}/projects/${id}`
 
         try {
-          await deleteData(URL, this.token);
-          alert(NAME + ALERT_DELETED);
-
+          await deleteData(URL, this.token)
+          alert(NAME + ALERT_DELETED)
         } catch (err) {
-          setError(err);
+          setError(err)
         } finally {
-          this.$router.go();
+          this.$router.go()
         }
       }
     }

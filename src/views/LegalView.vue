@@ -19,17 +19,17 @@
 </template>
 
 <script>
-import CardElt from "../components/CardElt"
-import { setMeta } from "../app/services"
+import CardElt from '../components/CardElt.vue'
+import { setMeta } from '../assets/services'
 
 export default {
-  name: "LegalView",
+  name: 'LegalView',
   components: { CardElt },
-  props: ["val"],
+  props: ['val'],
 
   created() {
-    const { HEAD_LEGAL, LOGO_SRC, META_LEGAL, UI_URL } = this.val;
-    setMeta(HEAD_LEGAL, META_LEGAL, `${UI_URL}/legal`, UI_URL + LOGO_SRC);
+    const { HEAD_LEGAL, LOGO_SRC, META_LEGAL, UI_URL } = this.val
+    setMeta(HEAD_LEGAL, META_LEGAL, `${UI_URL}/legal`, UI_URL + LOGO_SRC)
   }
 }
 </script>

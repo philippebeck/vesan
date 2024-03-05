@@ -10,15 +10,13 @@
     <template #body>
       <form>
         <TableElt :items="orders">
-
           <template #cell-id="slotProps">
             <b>{{ slotProps.item.id }}</b>
           </template>
 
           <template #cell-products="slotProps">
             <ul :id="'products-' + slotProps.item.id">
-              <li v-for="(item, index) in slotProps.item.products"
-                :key="index">
+              <li v-for="(item, index) in slotProps.item.products" :key="index">
                 <a :href="`/product/${item.id}`">
                   <ul :title="val.TITLE_GO + item.name">
                     <li>
@@ -27,9 +25,7 @@
                     <li>
                       <i>({{ item.option }})</i>
                     </li>
-                    <li class="black">
-                      {{ item.quantity }}x {{ item.price }}€
-                    </li>
+                    <li class="black">{{ item.quantity }}x {{ item.price }}€</li>
                   </ul>
                 </a>
               </li>
@@ -45,11 +41,13 @@
           </template>
 
           <template #cell-status="slotProps">
-            <FieldElt type="select"
+            <FieldElt
+              type="select"
               :list="val.CATS_ORDER"
               v-model:value="slotProps.item.status"
               @keyup.enter="updateStatus(slotProps.item.id)"
-              :info="val.INFO_UP_STATUS"/>
+              :info="val.INFO_UP_STATUS"
+            />
           </template>
 
           <template #cell-userId="slotProps">
@@ -58,10 +56,12 @@
 
           <template #cell-createdAt="slotProps">
             <p>{{ new Date(slotProps.item.createdAt).toLocaleString() }}</p>
-            <BtnElt type="button"
-              @click="deleteOrder(slotProps.item.id)" 
+            <BtnElt
+              type="button"
+              @click="deleteOrder(slotProps.item.id)"
               class="btn-red"
-              :title="val.TITLE_DELETE_ORDER + slotProps.item.id">
+              :title="val.TITLE_DELETE_ORDER + slotProps.item.id"
+            >
               <template #btn>
                 <i class="fa-solid fa-trash-arrow-up fa-lg fa-fw"></i>
               </template>
@@ -70,10 +70,12 @@
 
           <template #cell-updatedAt="slotProps">
             <p>{{ new Date(slotProps.item.updatedAt).toLocaleString() }}</p>
-            <BtnElt type="button"
-              @click="updateStatus(slotProps.item.id)" 
+            <BtnElt
+              type="button"
+              @click="updateStatus(slotProps.item.id)"
               class="btn-green"
-              :title="val.TITLE_UPDATE_ORDER + slotProps.item.id">
+              :title="val.TITLE_UPDATE_ORDER + slotProps.item.id"
+            >
               <template #btn>
                 <i class="fa-regular fa-calendar-check fa-lg fa-fw"></i>
               </template>
@@ -86,42 +88,41 @@
 </template>
 
 <script>
-import BtnElt from "./BtnElt"
-import CardElt from "./CardElt"
-import FieldElt from "./FieldElt"
-import TableElt from "./TableElt"
+import BtnElt from './BtnElt.vue'
+import CardElt from './CardElt.vue'
+import FieldElt from './FieldElt.vue'
+import TableElt from './TableElt.vue'
 
-import { deleteData, putData, setError } from "../app/services"
+import { deleteData, putData, setError } from '../assets/services'
 
 export default {
-  name: "OrderSet",
+  name: 'OrderSet',
   components: { BtnElt, CardElt, FieldElt, TableElt },
-  props: ["orders", "token", "val"],
+  props: ['orders', 'token', 'val'],
 
   methods: {
     /**
-    * ? UPDATE STATUS
-    * * Updates the status of an order.
-    * @param {number} id - The ID of the order to update.
-    */
+     * ? UPDATE STATUS
+     * * Updates the status of an order.
+     * @param {number} id - The ID of the order to update.
+     */
     async updateStatus(id) {
-      const { ALERT_ORDER, ALERT_UPDATED, API_URL } = this.val;
-      const order = this.orders.find(o => o.id === id);
+      const { ALERT_ORDER, ALERT_UPDATED, API_URL } = this.val
+      const order = this.orders.find((o) => o.id === id)
 
       if (order) {
-        const URL  = `${API_URL}/orders/${id}`
-        const data = new FormData();
+        const URL = `${API_URL}/orders/${id}`
+        const data = new FormData()
 
-        data.append("status", order.status);
+        data.append('status', order.status)
 
         try {
-          await putData(URL, data, this.token);
-          alert(ALERT_ORDER + id + ALERT_UPDATED);
-
+          await putData(URL, data, this.token)
+          alert(ALERT_ORDER + id + ALERT_UPDATED)
         } catch (err) {
-          setError(err);
+          setError(err)
         } finally {
-          this.$router.go();
+          this.$router.go()
         }
       }
     },
@@ -132,23 +133,21 @@ export default {
      * @param {number} id - the ID of the order to delete
      */
     async deleteOrder(id) {
-      const { TITLE_DELETE_ORDER, API_URL, ALERT_ORDER, ALERT_DELETED } = this.val;
+      const { TITLE_DELETE_ORDER, API_URL, ALERT_ORDER, ALERT_DELETED } = this.val
 
       if (confirm(`${TITLE_DELETE_ORDER} ${id} ?`)) {
         const URL = `${API_URL}/orders/${id}`
 
         try {
-          await deleteData(URL, this.token);
-          alert(ALERT_ORDER + id + ALERT_DELETED);
-
+          await deleteData(URL, this.token)
+          alert(ALERT_ORDER + id + ALERT_DELETED)
         } catch (err) {
-          setError(err);
+          setError(err)
         } finally {
-          this.$router.go();
+          this.$router.go()
         }
       }
     }
-
   }
 }
 </script>

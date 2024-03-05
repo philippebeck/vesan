@@ -10,12 +10,13 @@
     <template #body>
       <form enctype="multipart/form-data">
         <ListElt :items="val.PRODUCT_FORM">
-
           <template #item-1>
-            <FieldElt id="name"
+            <FieldElt
+              id="name"
               v-model:value="name"
               @keyup.enter="createProduct()"
-              :info="val.INFO_NAME">
+              :info="val.INFO_NAME"
+            >
               <template #legend>{{ val.LEGEND_NAME }}</template>
               <template #label>{{ val.LABEL_NAME }}</template>
             </FieldElt>
@@ -23,76 +24,80 @@
 
           <template #item-2>
             <label for="description">{{ val.LEGEND_DESCRIPTION }}</label>
-            <Editor id="description"
+            <Editor
+              id="description"
               :api-key="val.TINY_KEY"
               v-model="description"
               @keyup.enter="createProduct()"
-              :init="val.TINY_INIT"/>
+              :init="val.TINY_INIT"
+            />
           </template>
 
           <template #item-3>
-            <FieldElt id="image"
-              type="file"
-              v-model:value="image"
-              :info="val.INFO_IMAGE">
+            <FieldElt id="image" type="file" v-model:value="image" :info="val.INFO_IMAGE">
               <template #legend>{{ val.LEGEND_IMAGE }}</template>
               <template #label>{{ val.LABEL_IMAGE }}</template>
             </FieldElt>
           </template>
 
           <template #item-4>
-            <FieldElt id="alt"
-              type="textarea"
-              v-model:value="alt"
-              :info="val.INFO_ALT">
+            <FieldElt id="alt" type="textarea" v-model:value="alt" :info="val.INFO_ALT">
               <template #legend>{{ val.LEGEND_ALT }}</template>
               <template #label>{{ val.LABEL_ALT }}</template>
             </FieldElt>
           </template>
 
           <template #item-5>
-            <FieldElt id="price"
+            <FieldElt
+              id="price"
               type="number"
               v-model:value="price"
               @keyup.enter="createProduct()"
               :info="val.INFO_PRICE"
               :min="val.PRICE_MIN"
-              :max="val.PRICE_MAX">
+              :max="val.PRICE_MAX"
+            >
               <template #legend>{{ val.LEGEND_PRICE }}</template>
               <template #label>{{ val.LABEL_PRICE }}</template>
             </FieldElt>
           </template>
 
           <template #item-6>
-            <FieldElt id="options"
+            <FieldElt
+              id="options"
               type="textarea"
               v-model:value="options"
               @keyup.enter="createProduct()"
               :info="val.INFO_OPTIONS"
-              :max="100">
+              :max="100"
+            >
               <template #legend>{{ val.LEGEND_OPTIONS }}</template>
               <template #label>{{ val.LABEL_OPTIONS }}</template>
             </FieldElt>
           </template>
 
           <template #item-7>
-            <FieldElt id="cat"
+            <FieldElt
+              id="cat"
               type="select"
               :list="val.CATS_PRODUCT"
               v-model:value="cat"
               @keyup.enter="createProduct()"
-              :info="val.INFO_CAT">
+              :info="val.INFO_CAT"
+            >
               <template #legend>{{ val.LEGEND_CAT }}</template>
               <template #label>{{ val.LABEL_CAT }}</template>
             </FieldElt>
           </template>
         </ListElt>
 
-        <BtnElt type="button"
-          @click="createProduct()" 
+        <BtnElt
+          type="button"
+          @click="createProduct()"
           class="btn-green"
           :content="val.CONTENT_CREATE"
-          :title="val.TITLE_PRODUCT">
+          :title="val.TITLE_PRODUCT"
+        >
           <template #btn>
             <i class="fa-solid fa-square-plus fa-lg"></i>
           </template>
@@ -103,28 +108,28 @@
 </template>
 
 <script>
-import BtnElt from "./BtnElt"
-import CardElt from "./CardElt"
-import FieldElt from "./FieldElt"
-import ListElt from "./ListElt"
-import Editor from "@tinymce/tinymce-vue"
+import BtnElt from './BtnElt.vue'
+import CardElt from './CardElt.vue'
+import FieldElt from './FieldElt.vue'
+import ListElt from './ListElt.vue'
+import Editor from '@tinymce/tinymce-vue'
 
-import { checkRange, postData, setError } from "../app/services"
+import { checkRange, postData, setError } from '../assets/services'
 
 export default {
-  name: "ProductSet",
+  name: 'ProductSet',
   components: { BtnElt, CardElt, FieldElt, ListElt, Editor },
 
-  props: ["token", "val"],
+  props: ['token', 'val'],
   data() {
     return {
-      name: "",
-      description:"",
-      image: "",
-      alt: "",
+      name: '',
+      description: '',
+      image: '',
+      alt: '',
       price: null,
       options: [],
-      cat: ""
+      cat: ''
     }
   },
 
@@ -134,42 +139,41 @@ export default {
      * * Create a product by sending a POST request to the server.
      */
     async createProduct() {
-      const { ALERT_CREATED, ALERT_IMG, API_URL, CAT_PRODUCT, CHECK_STRING, TEXT_MAX, TEXT_MIN } = this.val;
+      const { ALERT_CREATED, ALERT_IMG, API_URL, CAT_PRODUCT, CHECK_STRING, TEXT_MAX, TEXT_MIN } =
+        this.val
 
-      if (this.price < 1) this.price = 1;
-      if (this.cat === "") this.cat = CAT_PRODUCT;
+      if (this.price < 1) this.price = 1
+      if (this.cat === '') this.cat = CAT_PRODUCT
 
-      const IS_NAME_CHECKED = checkRange(this.name, CHECK_STRING);
-      const IS_DESC_CHECKED = checkRange(this.description, CHECK_STRING, TEXT_MIN, TEXT_MAX);
-      const IS_ALT_CHECKED  = checkRange(this.alt, CHECK_STRING);
+      const IS_NAME_CHECKED = checkRange(this.name, CHECK_STRING)
+      const IS_DESC_CHECKED = checkRange(this.description, CHECK_STRING, TEXT_MIN, TEXT_MAX)
+      const IS_ALT_CHECKED = checkRange(this.alt, CHECK_STRING)
 
       if (IS_NAME_CHECKED && IS_DESC_CHECKED && IS_ALT_CHECKED) {
-        const img = document.getElementById("image")?.files[0];
+        const img = document.getElementById('image')?.files[0]
 
         if (img !== undefined) {
-          const URL   = `${API_URL}/products`;
-          const data  = new FormData();
+          const URL = `${API_URL}/products`
+          const data = new FormData()
 
-          data.append("name", this.name);
-          data.append("description", this.description);
-          data.append("image", img);
-          data.append("alt", this.alt);
-          data.append("price", this.price);
-          data.append("options", this.options);
-          data.append("cat", this.cat);
+          data.append('name', this.name)
+          data.append('description', this.description)
+          data.append('image', img)
+          data.append('alt', this.alt)
+          data.append('price', this.price)
+          data.append('options', this.options)
+          data.append('cat', this.cat)
 
           try {
-            await postData(URL, data, this.token);
-            alert(this.name + ALERT_CREATED);
-
+            await postData(URL, data, this.token)
+            alert(this.name + ALERT_CREATED)
           } catch (err) {
-            setError(err);
+            setError(err)
           } finally {
-            this.$router.go();
+            this.$router.go()
           }
-
         } else {
-          alert(ALERT_IMG);
+          alert(ALERT_IMG)
         }
       }
     }

@@ -18,11 +18,9 @@
 
     <CardElt :isArticle="true" class="container-90sm-80lg">
       <template #header>
-        <h1 class="sky-dark">
-          <i class="fa-solid fa-store fa-lg"></i> {{ val.SHOP_VIEW }}
-        </h1>
+        <h1 class="sky-dark"><i class="fa-solid fa-store fa-lg"></i> {{ val.SHOP_VIEW }}</h1>
         <b>{{ val.INTRO_PRODUCT }}</b>
-        <br>
+        <br />
         <i>{{ val.INFO_PRODUCT }}</i>
       </template>
 
@@ -37,26 +35,30 @@
           <template #nested="slotProps">
             <CardElt itemscope itemtype="https://schema.org/Product">
               <template #header>
-                  <h3 itemprop="name" class="sky-dark">{{ slotProps.value.name }}</h3>
+                <h3 itemprop="name" class="sky-dark">{{ slotProps.value.name }}</h3>
               </template>
 
               <template #body>
-                <a :href="`product/${slotProps.value.id}`"
+                <a
+                  :href="`product/${slotProps.value.id}`"
                   itemprop="url"
-                  :title="val.TITLE_WATCH + slotProps.value.name">
-
-                  <MediaElt :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
-                    :src="`img/thumbnails/products/${slotProps.value.image}`" 
-                    :alt="`${slotProps.value.alt}`" 
+                  :title="val.TITLE_WATCH + slotProps.value.name"
+                >
+                  <MediaElt
+                    :id="`${slotProps.value.name.toLowerCase()}-${slotProps.value.cat.toLowerCase()}`"
+                    :src="`img/thumbnails/products/${slotProps.value.image}`"
+                    :alt="`${slotProps.value.alt}`"
                     :width="val.THUMB_WIDTH"
                     :height="val.THUMB_HEIGHT"
-                    itemprop="image">
+                    itemprop="image"
+                  >
                   </MediaElt>
 
-                  <p v-html="slotProps.value.description.split(':')[0]" 
-                    itemprop="description" 
-                    class="shop">
-                  </p>
+                  <p
+                    v-html="slotProps.value.description.split(':')[0]"
+                    itemprop="description"
+                    class="shop"
+                  ></p>
 
                   <p itemprop="offers" itemscope itemtype="https://schema.org/Offer">
                     <b itemprop="price" :content="slotProps.value.price + '.00'">
@@ -74,26 +76,26 @@
       </template>
 
       <template #aside v-if="checkSession('admin')">
-        <ProductSet :token="token" :val="val"/>
+        <ProductSet :token="token" :val="val" />
       </template>
     </CardElt>
   </main>
 </template>
 
 <script>
-import CardElt from "../components/CardElt"
-import ListElt from "../components/ListElt"
-import MediaElt from "../components/MediaElt"
-import NavElt from "../components/NavElt"
-import ProductSet from "../components/ProductSet"
+import CardElt from '../components/CardElt.vue'
+import ListElt from '../components/ListElt.vue'
+import MediaElt from '../components/MediaElt.vue'
+import NavElt from '../components/NavElt.vue'
+import ProductSet from '../components/ProductSet.vue'
 
-import { checkRole, getCats, getItemsByCat, setMeta } from "../app/services"
-import { mapState, mapActions } from "vuex"
+import { checkRole, getCats, getItemsByCat, setMeta } from '../assets/services'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  name: "ShopView",
+  name: 'ShopView',
   components: { CardElt, ListElt, MediaElt, NavElt, ProductSet },
-  props: ["avatar", "val"],
+  props: ['avatar', 'val'],
 
   /**
    * ? CREATED
@@ -101,10 +103,10 @@ export default {
    * * Sets the meta tags.
    */
   created() {
-    const { HEAD_SHOP, LOGO_SRC, META_SHOP, UI_URL } = this.val;
+    const { HEAD_SHOP, LOGO_SRC, META_SHOP, UI_URL } = this.val
 
-    this.$store.dispatch("listProducts");
-    setMeta(HEAD_SHOP, META_SHOP, `${UI_URL}/shop`, UI_URL + LOGO_SRC);
+    this.$store.dispatch('listProducts')
+    setMeta(HEAD_SHOP, META_SHOP, `${UI_URL}/shop`, UI_URL + LOGO_SRC)
   },
 
   /**
@@ -112,26 +114,28 @@ export default {
    * * Sets the itemprop of the description elements.
    */
   updated() {
-    const descriptionArray = document.getElementsByClassName("figcaption");
+    const descriptionArray = document.getElementsByClassName('figcaption')
 
     for (let descriptionElt of descriptionArray) {
-      descriptionElt.firstChild.setAttribute("itemprop", "description");
+      descriptionElt.firstChild.setAttribute('itemprop', 'description')
     }
   },
 
   computed: {
-    ...mapState(["products", "token"]),
+    ...mapState(['products', 'token']),
 
     /**
      * ? GET CATEGORIES
      * * Retrieves the categories of the products.
      * @return {type} The categories of the products.
      */
-    getCategories() { return getCats(this.products) }
+    getCategories() {
+      return getCats(this.products)
+    }
   },
 
   methods: {
-    ...mapActions(["listProducts"]),
+    ...mapActions(['listProducts']),
 
     /**
      * ? CHECK SESSION
@@ -139,7 +143,9 @@ export default {
      * @param {string} role - The role to check.
      * @return {boolean} The result of the session check.
      */
-    checkSession(role) { return checkRole(this.avatar.role, role) },
+    checkSession(role) {
+      return checkRole(this.avatar.role, role)
+    },
 
     /**
      * ? GET ITEMS BY CATEGORY
@@ -147,7 +153,9 @@ export default {
      * @param {Array} items - The array of items.
      * @return {Array} The items filtered by category.
      */
-    getItemsByCategory(items) { return getItemsByCat(items) }
+    getItemsByCategory(items) {
+      return getItemsByCat(items)
+    }
   }
 }
 </script>
@@ -162,7 +170,7 @@ export default {
   font-size: 2rem;
 }
 
-[itemprop="price"] {
+[itemprop='price'] {
   font-size: 2.5rem;
 }
 </style>

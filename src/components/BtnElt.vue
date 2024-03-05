@@ -1,30 +1,23 @@
 <template>
-  <button v-if="isBtnTypeButton" 
-    :type="type" 
-    :value="value" 
-    :class="buttonClass" 
-    :title="title">
+  <button v-if="isBtnTypeButton" :type="type" :value="value" :class="buttonClass" :title="title">
     <slot name="btn"></slot>
     {{ content }}
   </button>
 
-  <a v-else 
-    :href="href" 
-    :class="linkClass" 
-    :title="title">
+  <a v-else :href="href" :class="linkClass" :title="title">
     <slot name="btn"></slot>
     {{ content }}
   </a>
 </template>
 
 <script>
-import { defineComponent, computed } from "vue";
+import { defineComponent, computed } from 'vue'
 
 export default defineComponent({
-  name: "BtnElt",
+  name: 'BtnElt',
 
   props: {
-    type: { type: String, default: "link" },
+    type: { type: String, default: 'link' },
     value: String,
     href: String,
     content: String,
@@ -42,26 +35,30 @@ export default defineComponent({
      * * Checks if the type of the button is 'button'
      */
     const isBtnTypeButton = computed(() => {
-      const validTypes = ["button", "submit", "reset"];
+      const validTypes = ['button', 'submit', 'reset']
 
-      return validTypes.includes(props.type);
-    });
+      return validTypes.includes(props.type)
+    })
 
     /**
      * ? BUTTON CLASS
      * * Returns the class of the button
      */
-    const buttonClass = computed(() => { return isBtnTypeButton.value ? props.class : "" });
+    const buttonClass = computed(() => {
+      return isBtnTypeButton.value ? props.class : ''
+    })
 
     /**
      * ? LINK CLASS
      * * Returns the class of the link
      */
-    const linkClass = computed(() => { return isBtnTypeButton.value ? "" : props.class });
+    const linkClass = computed(() => {
+      return isBtnTypeButton.value ? '' : props.class
+    })
 
-    return { buttonClass, isBtnTypeButton, linkClass };
+    return { buttonClass, isBtnTypeButton, linkClass }
   }
-});
+})
 </script>
 
 <style lang="scss">
@@ -87,17 +84,7 @@ button {
   --ve-btn-child-margin: auto;
 }
 
-$colors: 
-  "red",
-  "orange",
-  "yellow",
-  "lime",
-  "green",
-  "aqua",
-  "cyan",
-  "sky",
-  "blue",
-  "violet";
+$colors: 'red', 'orange', 'yellow', 'lime', 'green', 'aqua', 'cyan', 'sky', 'blue', 'violet';
 
 @mixin btn-vars($color) {
   .btn-#{$color} {
@@ -145,17 +132,7 @@ button > * {
   margin: var(--ve-btn-child-margin);
 }
 
-$colors: 
-  "red",
-  "orange",
-  "yellow",
-  "lime",
-  "green",
-  "aqua",
-  "cyan",
-  "sky",
-  "blue",
-  "violet";
+$colors: 'red', 'orange', 'yellow', 'lime', 'green', 'aqua', 'cyan', 'sky', 'blue', 'violet';
 
 @mixin btn-props($color) {
   .btn-#{$color} {

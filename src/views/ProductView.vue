@@ -9,13 +9,14 @@
       <template #body>
         <form enctype="multipart/form-data">
           <ListElt :items="val.PRODUCT_FORM">
-
             <template #item-1>
-              <FieldElt id="name"
+              <FieldElt
+                id="name"
                 v-model:value="product.name"
                 @keyup.enter="updateProduct()"
                 :info="val.INFO_NAME"
-                :min="2">
+                :min="2"
+              >
                 <template #legend>{{ val.LEGEND_NAME }}</template>
                 <template #label>{{ val.LABEL_NAME }}</template>
               </FieldElt>
@@ -26,89 +27,97 @@
                 {{ val.LEGEND_DESCRIPTION }}
               </label>
 
-              <Editor id="description"
+              <Editor
+                id="description"
                 :api-key="val.TINY_KEY"
                 v-model="product.description"
-                :init="val.TINY_INIT"/>
+                :init="val.TINY_INIT"
+              />
             </template>
 
             <template #item-3>
-              <MediaElt v-if="product.image"
+              <MediaElt
+                v-if="product.image"
                 :src="'/img/thumbnails/products/' + product.image"
-                :alt="product.alt" />
+                :alt="product.alt"
+              />
 
-              <FieldElt id="image"
-                type="file"
-                v-model:value="image"
-                :info="val.INFO_IMAGE">
+              <FieldElt id="image" type="file" v-model:value="image" :info="val.INFO_IMAGE">
                 <template #legend>{{ val.LEGEND_IMAGE }}</template>
                 <template #label>{{ val.LABEL_IMAGE }}</template>
               </FieldElt>
             </template>
 
             <template #item-4>
-              <FieldElt id="alt"
-                type="textarea"
-                v-model:value="product.alt"
-                :info="val.INFO_ALT">
+              <FieldElt id="alt" type="textarea" v-model:value="product.alt" :info="val.INFO_ALT">
                 <template #legend>{{ val.LEGEND_ALT }}</template>
                 <template #label>{{ val.LABEL_ALT }}</template>
               </FieldElt>
             </template>
 
             <template #item-5>
-              <FieldElt id="price"
+              <FieldElt
+                id="price"
                 type="number"
                 v-model:value="product.price"
                 @keyup.enter="updateProduct()"
                 :info="val.INFO_PRICE"
                 :min="1"
-                :max="1000">
+                :max="1000"
+              >
                 <template #legend>{{ val.LEGEND_PRICE }}</template>
                 <template #label>{{ val.LABEL_PRICE }}</template>
               </FieldElt>
             </template>
 
             <template #item-6>
-              <FieldElt id="options"
+              <FieldElt
+                id="options"
                 type="textarea"
                 v-model:value="product.options"
                 @keyup.enter="updateProduct()"
                 :info="val.INFO_OPTIONS"
-                :max="1000">
+                :max="1000"
+              >
                 <template #legend>{{ val.LEGEND_OPTIONS }}</template>
                 <template #label>{{ val.LABEL_OPTIONS }}</template>
               </FieldElt>
             </template>
 
             <template #item-7>
-              <FieldElt id="cat"
+              <FieldElt
+                id="cat"
                 type="select"
                 :list="val.CATS_PRODUCT"
                 v-model:value="product.cat"
                 @keyup.enter="updateProduct()"
-                :info="val.INFO_CAT">
+                :info="val.INFO_CAT"
+              >
                 <template #legend>{{ val.LEGEND_CAT }}</template>
                 <template #label>{{ val.LABEL_CAT }}</template>
               </FieldElt>
             </template>
           </ListElt>
 
-          <BtnElt type="button"
-            @click="updateProduct()" 
+          <BtnElt
+            type="button"
+            @click="updateProduct()"
             class="btn-sky"
             :content="val.CONTENT_UPDATE"
-            :title="val.TITLE_UPDATE + product.name">
+            :title="val.TITLE_UPDATE + product.name"
+          >
             <template #btn>
               <i class="fa-solid fa-cloud-arrow-up fa-lg"></i>
             </template>
           </BtnElt>
 
-          <BtnElt type="button"
-            @click="deleteProduct()" 
+          <BtnElt
+            type="button"
+            @click="deleteProduct()"
             class="btn-red"
             :content="val.TITLE_DELETE"
-            :title="val.TITLE_DELETE + product.name">
+            :title="val.TITLE_DELETE + product.name"
+          >
             <template #btn>
               <i class="fa-solid fa-cloud-arrow-up fa-lg"></i>
             </template>
@@ -124,12 +133,14 @@
       </template>
 
       <template #body>
-        <MediaElt v-if="product.image"
+        <MediaElt
+          v-if="product.image"
           :src="`/img/products/${product.image}`"
           :alt="product.alt"
           :width="val.IMG_WIDTH"
           :height="val.IMG_HEIGHT"
-          itemprop="image"/>
+          itemprop="image"
+        />
 
         <section v-html="product.description" itemprop="description"></section>
 
@@ -143,31 +154,37 @@
         </p>
 
         <form>
-          <FieldElt id="basket-option"
+          <FieldElt
+            id="basket-option"
             type="select"
             :list="product.options"
             v-model:value="option"
             @keyup.enter="addToBasket()"
-            :info="val.INFO_OPTION">
+            :info="val.INFO_OPTION"
+          >
             <template #legend>{{ val.LEGEND_OPTION }}</template>
             <template #label>{{ val.LABEL_OPTION }}</template>
           </FieldElt>
 
-          <FieldElt id="basket-quantity"
+          <FieldElt
+            id="basket-quantity"
             type="number"
             v-model:value="quantity"
             @keyup.enter="addToBasket()"
             :info="val.INFO_QUANTITY"
-            :min="1">
+            :min="1"
+          >
             <template #legend>{{ val.LEGEND_QUANTITY }}</template>
             <template #label>{{ val.LABEL_QUANTITY }}</template>
           </FieldElt>
 
-          <BtnElt type="button"
+          <BtnElt
+            type="button"
             @click="addToBasket()"
             class="btn-green"
             :content="val.CONTENT_ADD"
-            :title="val.CONTENT_ADD + product.name">
+            :title="val.CONTENT_ADD + product.name"
+          >
             <template #btn>
               <i class="fa-solid fa-basket-shopping fa-lg"></i>
             </template>
@@ -179,27 +196,35 @@
 </template>
 
 <script>
-import BtnElt from "../components/BtnElt"
-import CardElt from "../components/CardElt"
-import FieldElt from "../components/FieldElt"
-import ListElt from "../components/ListElt"
-import MediaElt from "../components/MediaElt"
-import Editor from "@tinymce/tinymce-vue"
+import BtnElt from '../components/BtnElt.vue'
+import CardElt from '../components/CardElt.vue'
+import FieldElt from '../components/FieldElt.vue'
+import ListElt from '../components/ListElt.vue'
+import MediaElt from '../components/MediaElt.vue'
+import Editor from '@tinymce/tinymce-vue'
 
-import { checkRange, checkRole, deleteData, getData, putData, setError, setMeta } from "../app/services"
-import { mapState } from "vuex"
+import {
+  checkRange,
+  checkRole,
+  deleteData,
+  getData,
+  putData,
+  setError,
+  setMeta
+} from '../assets/services'
+import { mapState } from 'vuex'
 
 export default {
-  name: "ProductView",
+  name: 'ProductView',
   components: { BtnElt, CardElt, FieldElt, ListElt, MediaElt, Editor },
 
-  props: ["avatar", "val"],
+  props: ['avatar', 'val'],
   data() {
     return {
       basket: [],
       product: {},
       order: {},
-      option: "",
+      option: '',
       quantity: 1,
       isInBasket: false
     }
@@ -212,23 +237,22 @@ export default {
    * @return {Promise<void>} a promise that gets a "product"
    */
   async created() {
-    const { API_URL, HEAD, UI_URL } = this.val;
+    const { API_URL, HEAD, UI_URL } = this.val
 
     try {
-      const product   = await getData(`${API_URL}/products/${this.$route.params.id}`);
-      product.options = product.options.split(",");
-      this.product    = product;
+      const product = await getData(`${API_URL}/products/${this.$route.params.id}`)
+      product.options = product.options.split(',')
+      this.product = product
 
       setMeta(
-        product.name + HEAD, 
-        (product.description || "").slice(0, 160).replace(/(<([^>]+)>)/gi, ""),
+        product.name + HEAD,
+        (product.description || '').slice(0, 160).replace(/(<([^>]+)>)/gi, ''),
         `${UI_URL}/product/${product.id}`,
         `${UI_URL}/img/thumbnails/products/${product.image}`
-      );
-
+      )
     } catch (err) {
-      setError(err);
-      this.$router.push("/shop");
+      setError(err)
+      this.$router.push('/shop')
     }
   },
 
@@ -237,14 +261,14 @@ export default {
    * * Updating the description element if it exists.
    */
   updated() {
-    if (document.getElementById("figcaption")) {
-      const descriptionElt = document.getElementById("figcaption");
-      descriptionElt.firstChild.setAttribute("itemprop", "description");
+    if (document.getElementById('figcaption')) {
+      const descriptionElt = document.getElementById('figcaption')
+      descriptionElt.firstChild.setAttribute('itemprop', 'description')
     }
   },
 
   computed: {
-    ...mapState(["token"])
+    ...mapState(['token'])
   },
 
   methods: {
@@ -254,21 +278,22 @@ export default {
      * @param {string} role - The role to check.
      * @return {boolean} The result of the session check.
      */
-    checkSession(role) { return checkRole(this.avatar.role, role) },
+    checkSession(role) {
+      return checkRole(this.avatar.role, role)
+    },
 
     /**
      * ? ADD TO BASKET
      * * Adds the selected item to the basket.
      */
     addToBasket() {
-      if (this.option !== "") {
-        this.createOrder();
-        this.getBasket();
-        this.checkBasket();
-        this.setBasket();
-
+      if (this.option !== '') {
+        this.createOrder()
+        this.getBasket()
+        this.checkBasket()
+        this.setBasket()
       } else {
-        alert(this.val.ALERT_OPTION);
+        alert(this.val.ALERT_OPTION)
       }
     },
 
@@ -281,7 +306,7 @@ export default {
         id: this.product.id,
         option: this.option,
         quantity: this.quantity
-      };
+      }
     },
 
     /**
@@ -289,29 +314,28 @@ export default {
      * * Retrieves the basket from the local storage.
      */
     getBasket() {
-      if (localStorage.getItem("basket") === null) {
-        localStorage.setItem("basket", []);
-        this.basket = localStorage.getItem("basket").split();
-
+      if (localStorage.getItem('basket') === null) {
+        localStorage.setItem('basket', [])
+        this.basket = localStorage.getItem('basket').split()
       } else {
-        this.basket = JSON.parse(localStorage.getItem("basket"));
+        this.basket = JSON.parse(localStorage.getItem('basket'))
       }
     },
 
     /**
      * ? CHECK BASKET
-     * * Updates the basket quantity by checking if the order is already in it. 
+     * * Updates the basket quantity by checking if the order is already in it.
      * @return {Object} The updated item.
      */
     checkBasket() {
-      this.isInBasket = false;
+      this.isInBasket = false
 
-      this.basket = this.basket.map(item => {
+      this.basket = this.basket.map((item) => {
         if (item.id === this.order.id && item.option === this.option) {
-          item.quantity = Number(item.quantity) + Number(this.quantity);
-          this.isInBasket = true;
+          item.quantity = Number(item.quantity) + Number(this.quantity)
+          this.isInBasket = true
         }
-        return item;
+        return item
       })
     },
 
@@ -320,12 +344,14 @@ export default {
      * * Sets the basket by adding the order to the basket array & storing it in local storage.
      */
     setBasket() {
-      if (!this.isInBasket) this.basket.push(this.order);
-      if (this.basket[0] === "") this.basket.shift();
+      if (!this.isInBasket) this.basket.push(this.order)
+      if (this.basket[0] === '') this.basket.shift()
 
-      localStorage.setItem("basket", JSON.stringify(this.basket));
-      alert(`${this.order.quantity} "${this.product.name}" (${this.order.option}) ${this.val.ALERT_BASKET_ADDED}`);
-      this.$router.push("/shop");
+      localStorage.setItem('basket', JSON.stringify(this.basket))
+      alert(
+        `${this.order.quantity} "${this.product.name}" (${this.order.option}) ${this.val.ALERT_BASKET_ADDED}`
+      )
+      this.$router.push('/shop')
     },
 
     /**
@@ -333,34 +359,43 @@ export default {
      * * Updates the product by sending a PUT request to the API.
      */
     async updateProduct() {
-      const { CHECK_STRING, TEXT_MIN, TEXT_MAX, CHECK_NUMBER, PRICE_MIN, PRICE_MAX, API_URL, ALERT_UPDATED } = this.val;
-      let { id, name, description, image, alt, price, options, cat } = this.product;
+      const {
+        CHECK_STRING,
+        TEXT_MIN,
+        TEXT_MAX,
+        CHECK_NUMBER,
+        PRICE_MIN,
+        PRICE_MAX,
+        API_URL,
+        ALERT_UPDATED
+      } = this.val
+      let { id, name, description, image, alt, price, options, cat } = this.product
 
-      const IS_NAME_CHECKED  = checkRange(name, CHECK_STRING);
-      const IS_DESC_CHECKED  = checkRange(description, CHECK_STRING, TEXT_MIN, TEXT_MAX);
-      const IS_ALT_CHECKED   = checkRange(alt, CHECK_STRING);
-      const IS_PRICE_CHECKED = checkRange(price, CHECK_NUMBER, PRICE_MIN, PRICE_MAX);
+      const IS_NAME_CHECKED = checkRange(name, CHECK_STRING)
+      const IS_DESC_CHECKED = checkRange(description, CHECK_STRING, TEXT_MIN, TEXT_MAX)
+      const IS_ALT_CHECKED = checkRange(alt, CHECK_STRING)
+      const IS_PRICE_CHECKED = checkRange(price, CHECK_NUMBER, PRICE_MIN, PRICE_MAX)
 
       if (IS_NAME_CHECKED && IS_DESC_CHECKED && IS_ALT_CHECKED && IS_PRICE_CHECKED) {
-        const URL  = `${API_URL}/products/${id}`;
-        const data = new FormData();
-        const img  = document.getElementById("image")?.files[0] ?? image;
+        const URL = `${API_URL}/products/${id}`
+        const data = new FormData()
+        const img = document.getElementById('image')?.files[0] ?? image
 
-        data.append("name", name);
-        data.append("description", description);
-        data.append("image", img);
-        data.append("alt", alt);
-        data.append("price", price);
-        data.append("options", options);
-        data.append("cat", cat);
+        data.append('name', name)
+        data.append('description', description)
+        data.append('image', img)
+        data.append('alt', alt)
+        data.append('price', price)
+        data.append('options', options)
+        data.append('cat', cat)
 
         try {
-          await putData(URL, data, this.token);
-          alert(name + ALERT_UPDATED);
+          await putData(URL, data, this.token)
+          alert(name + ALERT_UPDATED)
         } catch (err) {
-          setError(err);
+          setError(err)
         } finally {
-          this.$router.push("/shop");
+          this.$router.push('/shop')
         }
       }
     },
@@ -370,19 +405,19 @@ export default {
      * * Deletes a product from the system.
      */
     async deleteProduct() {
-      const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val;
-      let { id, name } = this.product;
+      const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val
+      let { id, name } = this.product
 
       if (confirm(`${TITLE_DELETE} ${name} ?`)) {
-        const URL = `${API_URL}/products/${id}`;
+        const URL = `${API_URL}/products/${id}`
 
         try {
-          await deleteData(URL, this.token);
-          alert(name + ALERT_DELETED);
+          await deleteData(URL, this.token)
+          alert(name + ALERT_DELETED)
         } catch (err) {
-          setError(err);
+          setError(err)
         } finally {
-          this.$router.push("/shop");
+          this.$router.push('/shop')
         }
       }
     }
@@ -391,7 +426,7 @@ export default {
 </script>
 
 <style>
-[itemprop="price"] {
+[itemprop='price'] {
   font-size: 2.5rem;
 }
 

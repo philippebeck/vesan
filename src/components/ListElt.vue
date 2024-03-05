@@ -1,21 +1,13 @@
 <template>
   <ul v-if="dynamic">
     <li v-for="(item, index) in items" :key="index">
-
-      <slot name="items"
-        :index="index"
-        :item="item">
+      <slot name="items" :index="index" :item="item">
         {{ item }}
       </slot>
-      
+
       <ul v-if="hasSlot('nested')">
         <li v-for="(value, key) in item" :key="key">
-
-          <slot name="nested"
-            :index="index"
-            :item="item"
-            :key="key"
-            :value="value">
+          <slot name="nested" :index="index" :item="item" :key="key" :value="value">
             {{ value }}
           </slot>
         </li>
@@ -25,21 +17,13 @@
 
   <ul v-else>
     <li v-for="(item, index) in items" :key="index">
-
-      <slot :name="`item-${index + 1}`"
-        :index="index"
-        :item="item">
+      <slot :name="`item-${index + 1}`" :index="index" :item="item">
         {{ item }}
       </slot>
-      
+
       <ul v-if="hasSlot('nested')">
         <li v-for="(value, key) in item" :key="key">
-
-          <slot :name="`nested-${key + 1}`"
-            :index="index"
-            :item="item"
-            :key="key"
-            :value="value">
+          <slot :name="`nested-${key + 1}`" :index="index" :item="item" :key="key" :value="value">
             {{ value }}
           </slot>
         </li>
@@ -49,11 +33,11 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import { checkSlot } from "../app/services";
+import { defineComponent } from 'vue'
+import { checkSlot } from '../assets/services'
 
 export default defineComponent({
-  name: "ListElt",
+  name: 'ListElt',
 
   props: {
     items: { type: Object, required: true },
@@ -70,13 +54,13 @@ export default defineComponent({
     /**
      * ? HAS SLOT
      * * Checks if the component has a slot
-     * @param {string} name 
+     * @param {string} name
      */
-    const hasSlot = (name) => checkSlot(slots, name);
+    const hasSlot = (name) => checkSlot(slots, name)
 
-    return { hasSlot };
+    return { hasSlot }
   }
-});
+})
 </script>
 
 <style>

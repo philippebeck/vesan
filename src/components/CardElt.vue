@@ -33,11 +33,11 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import { checkSlot } from "../app/services";
+import { defineComponent } from 'vue'
+import { checkSlot } from '../assets/services'
 
 export default defineComponent({
-  name: "CardElt",
+  name: 'CardElt',
 
   props: {
     isArticle: { type: Boolean, default: false },
@@ -54,13 +54,13 @@ export default defineComponent({
     /**
      * ? HAS SLOT
      * * Checks if the component has a slot
-     * @param {string} name 
+     * @param {string} name
      */
-    const hasSlot = (name) => checkSlot(slots, name);
+    const hasSlot = (name) => checkSlot(slots, name)
 
-    return { hasSlot };
+    return { hasSlot }
   }
-});
+})
 </script>
 
 <style>

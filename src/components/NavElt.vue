@@ -1,31 +1,30 @@
 <template>
   <nav v-if="getNavClass() === 'sidebar'" class="sidebar">
-
     <button v-if="hasSlot('hide')" @click="toggleSide()" aria-label="show/hide">
       <slot name="hide"></slot>
     </button>
 
-    <ul id="side" :class="{ 'hide': isMobile, 'show': !isMobile }">
-        <li v-if="hasSlot('first')">
-          <slot name="first"></slot>
-        </li>
+    <ul id="side" :class="{ hide: isMobile, show: !isMobile }">
+      <li v-if="hasSlot('first')">
+        <slot name="first"></slot>
+      </li>
 
-        <li v-for="(item, index) in items" :key="index">
-          <a :href="`#${item}`" :title="item" :aria-label="item">
-            <slot name="items" :item="item" :index="index">
-              {{ item }}
-            </slot>
-          </a>
-        </li>
+      <li v-for="(item, index) in items" :key="index">
+        <a :href="`#${item}`" :title="item" :aria-label="item">
+          <slot name="items" :item="item" :index="index">
+            {{ item }}
+          </slot>
+        </a>
+      </li>
 
-        <li v-if="hasSlot('last')">
-          <slot name="last"></slot>
-        </li>
+      <li v-if="hasSlot('last')">
+        <slot name="last"></slot>
+      </li>
 
-        <li>
-          <a v-if="hasSlot('top')" href="#top" aria-label="top">
+      <li>
+        <a v-if="hasSlot('top')" href="#top" aria-label="top">
           <slot name="top"></slot>
-          </a>
+        </a>
       </li>
     </ul>
   </nav>
@@ -53,14 +52,14 @@
 </template>
 
 <script>
-import { defineComponent, ref, onMounted, onUnmounted } from "vue";
-import { checkSlot } from "../app/services";
+import { defineComponent, ref, onMounted, onUnmounted } from 'vue'
+import { checkSlot } from '../assets/services'
 
 export default defineComponent({
-  name: "NavElt",
+  name: 'NavElt',
 
   props: {
-    class: { type: String, default: "navbar" },
+    class: { type: String, default: 'navbar' },
     items: { type: Array }
   },
 
@@ -71,54 +70,56 @@ export default defineComponent({
    * @param {Object} - Object that contains the slots of the component.
    */
   setup(props, { slots }) {
-    const isMobile = ref(false);
+    const isMobile = ref(false)
 
     /**
      * ? GET NAV CLASS
      * * Get the class of the navigation then returns it
      */
-    const getNavClass = ()  => { return props.class === "sidebar" ? "sidebar" : "navbar" };
+    const getNavClass = () => {
+      return props.class === 'sidebar' ? 'sidebar' : 'navbar'
+    }
 
     /**
      * ? HANDLE RESIZE
      * * Handles the resize if the window is smaller than 768
      */
-    const handleResize = () => isMobile.value = window.innerWidth < 768;
+    const handleResize = () => (isMobile.value = window.innerWidth < 768)
 
     /**
      * ? HAS SLOT
      * * Checks if the component has a slot
-     * @param {string} name 
+     * @param {string} name
      */
-    const hasSlot = (name)  => checkSlot(slots, name);
+    const hasSlot = (name) => checkSlot(slots, name)
 
     /**
      * ? TOGGLE SIDE
      * * Toggles the sidebar by adding or removing the hide/show classes
      */
     const toggleSide = () => {
-      const side = document.getElementById("side");
-      side.classList.replace("show", "hide") || side.classList.replace("hide", "show");
-    };
+      const side = document.getElementById('side')
+      side.classList.replace('show', 'hide') || side.classList.replace('hide', 'show')
+    }
 
     /**
      * ? ON MOUNTED
      * * Add the event listener for the resize
      */
     onMounted(() => {
-      window.addEventListener("resize", handleResize);
-      handleResize();
-    });
+      window.addEventListener('resize', handleResize)
+      handleResize()
+    })
 
     /**
      * ? ON UNMOUNTED
      * * Removes the event listener for the resize
      */
-    onUnmounted(() => window.removeEventListener("resize", handleResize));
+    onUnmounted(() => window.removeEventListener('resize', handleResize))
 
-    return { isMobile, getNavClass, hasSlot, toggleSide };
+    return { isMobile, getNavClass, hasSlot, toggleSide }
   }
-});
+})
 </script>
 
 <style>
@@ -207,7 +208,7 @@ export default defineComponent({
   --ve-side-show-display: flex;
 }
 
-[id="app"] {
+[id='app'] {
   margin-top: calc(var(--ve-nav-height) + var(--ve-nav-margin));
 }
 </style>

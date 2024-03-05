@@ -11,17 +11,16 @@
       </template>
 
       <template #body>
-        <ListElt :dynamic="true" 
-          :items="val.HOME_CONTENT"/>
+        <ListElt :dynamic="true" :items="val.HOME_CONTENT" />
 
-        <ListElt :dynamic="true"
-          :items="val.HOME_LINKS"
-          class="flex-wrap content-center">
+        <ListElt :dynamic="true" :items="val.HOME_LINKS" class="flex-wrap content-center">
           <template #items="slotProps">
-            <BtnElt :href="slotProps.item.href"
+            <BtnElt
+              :href="slotProps.item.href"
               class="btn-blue"
               :content="slotProps.item.content"
-              :title="slotProps.item.title">
+              :title="slotProps.item.title"
+            >
               <template #btn>
                 <i :class="`fa-solid fa-${slotProps.item.fa} fa-lg fa-fw`"></i>
               </template>
@@ -34,20 +33,20 @@
 </template>
 
 <script>
-import BtnElt from "../components/BtnElt"
-import CardElt from "../components/CardElt"
-import ListElt from "../components/ListElt"
+import BtnElt from '../components/BtnElt.vue'
+import CardElt from '../components/CardElt.vue'
+import ListElt from '../components/ListElt.vue'
 
-import { setMeta } from "../app/services"
+import { setMeta } from '../assets/services'
 
 export default {
-  name: "HomeView",
+  name: 'HomeView',
   components: { BtnElt, CardElt, ListElt },
-  props: ["val"],
+  props: ['val'],
 
   created() {
-    const { HEAD_HOME, LOGO_SRC, META_HOME, UI_URL } = this.val;
-    setMeta(HEAD_HOME, META_HOME, UI_URL, UI_URL + LOGO_SRC);
+    const { HEAD_HOME, LOGO_SRC, META_HOME, UI_URL } = this.val
+    setMeta(HEAD_HOME, META_HOME, UI_URL, UI_URL + LOGO_SRC)
   }
 }
 </script>

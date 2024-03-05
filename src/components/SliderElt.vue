@@ -37,12 +37,10 @@
     <ul class="slides">
       <li v-for="(slide, index) in slides" :key="index" :id="'slide-' + (index + 1)">
         <figure>
-          <slot name="slide" :slide="slide" :index="index">
-          </slot>
+          <slot name="slide" :slide="slide" :index="index"> </slot>
 
           <figcaption v-if="hasSlot('info')">
-            <slot name="info" :slide="slide" :index="index">
-            </slot>
+            <slot name="info" :slide="slide" :index="index"> </slot>
           </figcaption>
         </figure>
       </li>
@@ -50,19 +48,18 @@
 
     <ul class="gallery">
       <li v-for="(slide, index) in slides" :key="index" @click="setSlide(index)">
-        <slot name="gallery" :slide="slide" :index="index">
-        </slot>
+        <slot name="gallery" :slide="slide" :index="index"> </slot>
       </li>
     </ul>
   </figure>
 </template>
 
 <script>
-import { defineComponent, ref, onMounted, onUnmounted } from "vue";
-import { checkSlot } from '../app/services';
+import { defineComponent, ref, onMounted, onUnmounted } from 'vue'
+import { checkSlot } from '../assets/services'
 
 export default defineComponent({
-  name: "SliderElt",
+  name: 'SliderElt',
 
   props: {
     slides: { type: Array },
@@ -74,70 +71,70 @@ export default defineComponent({
   /**
    * ? SETUP
    * * Setup the component
-   * @param {Object} props 
+   * @param {Object} props
    * @param {Object} - Object that contains the slots of the component.
    */
   setup(props, { slots }) {
-    const index       = ref(-1);
-    const intervalId  = ref(0);
-    const autoElt     = ref(null);
-    const randomElt   = ref(null);
-    const autoState   = ref(props.auto);
-    const randomState = ref(props.random);
+    const index = ref(-1)
+    const intervalId = ref(0)
+    const autoElt = ref(null)
+    const randomElt = ref(null)
+    const autoState = ref(props.auto)
+    const randomState = ref(props.random)
 
     /**
      * ? HAS SLOT
      * * Checks if the component has a slot
-     * @param {string} name 
+     * @param {string} name
      */
-    const hasSlot = (name)  => checkSlot(slots, name);
+    const hasSlot = (name) => checkSlot(slots, name)
 
     /**
      * ? SET KEYBOARD
      * * Set the keyboard
-     * @param {Event} event 
+     * @param {Event} event
      */
     const setKeyboard = (event) => {
       const actions = {
-        ArrowUp:    checkRandom,
+        ArrowUp: checkRandom,
         ArrowRight: goNext,
-        ArrowDown:  checkAuto,
-        ArrowLeft:  goPrevious
-      };
+        ArrowDown: checkAuto,
+        ArrowLeft: goPrevious
+      }
 
-      const action = actions[event.code];
-      if (action) action();
-    };
+      const action = actions[event.code]
+      if (action) action()
+    }
 
     /**
      * ? SET ICON
      * * Set the icon
-     * @param {HTMLElement} icon 
-     * @param {string} add 
-     * @param {string} remove 
+     * @param {HTMLElement} icon
+     * @param {string} add
+     * @param {string} remove
      */
     const setIcon = (icon, add, remove) => {
-      const classes = icon.classList;
+      const classes = icon.classList
 
-      classes.add(add);
-      classes.remove(remove);
-    };
+      classes.add(add)
+      classes.remove(remove)
+    }
 
     /**
      * ? REFRESH SLIDE
      * * Refresh the slide
      */
     const refreshSlide = () => {
-      if (randomState.value) index.value = getRandomInteger(0, props.slides.length - 1);
+      if (randomState.value) index.value = getRandomInteger(0, props.slides.length - 1)
 
       for (let i = 1; i <= props.slides.length; i++) {
-        const slide = document.getElementById(`slide-${i}`);
-        if (slide) slide.classList.remove("show");
+        const slide = document.getElementById(`slide-${i}`)
+        if (slide) slide.classList.remove('show')
       }
 
-      const currentSlide = document.getElementById(`slide-${index.value + 1}`);
-      if (currentSlide) currentSlide.classList.add("show");
-    };
+      const currentSlide = document.getElementById(`slide-${index.value + 1}`)
+      if (currentSlide) currentSlide.classList.add('show')
+    }
 
     /**
      * ? CHECK AUTO
@@ -145,99 +142,96 @@ export default defineComponent({
      */
     const checkAuto = () => {
       if (autoState.value) {
-        setAuto(false, "Play", "fa-play", "fa-pause");
-        clearInterval(intervalId.value);
-
+        setAuto(false, 'Play', 'fa-play', 'fa-pause')
+        clearInterval(intervalId.value)
       } else {
-        setAuto(true, "Pause", "fa-pause", "fa-play");
-        intervalId.value = setInterval(goNext, props.delay);
+        setAuto(true, 'Pause', 'fa-pause', 'fa-play')
+        intervalId.value = setInterval(goNext, props.delay)
       }
 
-      refreshSlide();
-    };
+      refreshSlide()
+    }
 
     /**
      * ? CHECK RANDOM
      * * Check the random state, then set the random or continue icon
      */
     const checkRandom = () => {
-      randomState.value ?
-        setRandom(false, "Random", "fa-random", "fa-long-arrow-alt-right") :
-        setRandom(true, "Normal", "fa-long-arrow-alt-right", "fa-random");
+      randomState.value
+        ? setRandom(false, 'Random', 'fa-random', 'fa-long-arrow-alt-right')
+        : setRandom(true, 'Normal', 'fa-long-arrow-alt-right', 'fa-random')
 
-      refreshSlide();
-    };
+      refreshSlide()
+    }
 
     /**
      * ? GO PREVIOUS
      * * Go to the previous slide
      */
     const goPrevious = () => {
-      index.value = (index.value - 1 + props.slides.length) % props.slides.length;
-      refreshSlide();
-    };
+      index.value = (index.value - 1 + props.slides.length) % props.slides.length
+      refreshSlide()
+    }
 
     /**
      * ? GO NEXT
      * * Go to the next slide
      */
     const goNext = () => {
-      index.value = (index.value + 1) % props.slides.length;
-      refreshSlide();
-    };
+      index.value = (index.value + 1) % props.slides.length
+      refreshSlide()
+    }
 
     /**
      * ? RUN SLIDER
      * * Run the slider
      */
     const runSlider = () => {
-      autoState.value ?
-        intervalId.value = window.setInterval(goNext, props.delay) :
-        goNext();
-    };
+      autoState.value ? (intervalId.value = window.setInterval(goNext, props.delay)) : goNext()
+    }
 
     /**
      * ? GET RANDOM INTEGER
      * * Get a random integer
-     * @param {number} min 
-     * @param {number} max 
+     * @param {number} min
+     * @param {number} max
      */
     const getRandomInteger = (min, max) => {
-      const range = max - min + 1;
-      return Math.floor(Math.random() * range) + min;
-    };
+      const range = max - min + 1
+      return Math.floor(Math.random() * range) + min
+    }
 
     /**
      * ? SET AUTO
      * * Set the auto state
-     * @param {boolean} state 
-     * @param {string} title 
-     * @param {string} add 
-     * @param {string} remove 
+     * @param {boolean} state
+     * @param {string} title
+     * @param {string} add
+     * @param {string} remove
      */
     const setAuto = (state, title, add, remove) => {
-      const icon = autoElt.value.querySelector("i");
+      const icon = autoElt.value.querySelector('i')
 
-      autoState.value = state;
-      autoElt.value.title = title;
-      setIcon(icon, add, remove);
-    };
+      autoState.value = state
+      autoElt.value.title = title
+      setIcon(icon, add, remove)
+    }
 
     /**
      * ? SET RANDOM
      * * Set the random state
-     * @param {boolean} state 
-     * @param {string} title 
-     * @param {string} add 
-     * @param {string} remove 
+     * @param {boolean} state
+     * @param {string} title
+     * @param {string} add
+     * @param {string} remove
      */
     const setRandom = (state, title, add, remove) => {
-      const icon = randomElt.value.querySelector("i");
+      const icon = randomElt.value.querySelector('i')
 
-      randomState.value = state;
-      randomElt.value.title = title;
-      setIcon(icon, add, remove);
-    };
+      randomState.value = state
+      randomElt.value.title = title
+      setIcon(icon, add, remove)
+    }
 
     /**
      * ? ON MOUNTED
@@ -247,16 +241,16 @@ export default defineComponent({
      * * Runs the slider
      */
     onMounted(() => {
-      autoElt.value   = document.getElementById("slider-auto");
-      randomElt.value = document.getElementById("slider-random");
+      autoElt.value = document.getElementById('slider-auto')
+      randomElt.value = document.getElementById('slider-random')
 
-      document.addEventListener("keydown", setKeyboard);
+      document.addEventListener('keydown', setKeyboard)
 
-      const slide1 = document.getElementById("slide-1");
-      if (slide1) slide1.classList.add("show");
+      const slide1 = document.getElementById('slide-1')
+      if (slide1) slide1.classList.add('show')
 
-      runSlider();
-    });
+      runSlider()
+    })
 
     /**
      * ? ON UNMOUNTED
@@ -264,13 +258,22 @@ export default defineComponent({
      */
     onUnmounted(() => {
       for (let i = 0; i < 1000; i++) {
-        clearTimeout(i);
+        clearTimeout(i)
       }
-    });
+    })
 
-    return { checkAuto, checkRandom, goNext, goPrevious, hasSlot, refreshSlide, setIcon, setKeyboard };
+    return {
+      checkAuto,
+      checkRandom,
+      goNext,
+      goPrevious,
+      hasSlot,
+      refreshSlide,
+      setIcon,
+      setKeyboard
+    }
   }
-});
+})
 </script>
 
 <style>
@@ -282,7 +285,7 @@ export default defineComponent({
   --ve-slider-text-align: center;
 }
 
-[id*="slide-"] {
+[id*='slide-'] {
   --ve-slider-slide-display: none;
 }
 
@@ -362,7 +365,7 @@ ul {
   }
 }
 
-[id*="slide-"] {
+[id*='slide-'] {
   display: var(--ve-slider-slide-display);
 }
 

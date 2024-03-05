@@ -16,33 +16,29 @@
       <template #body>
         <form>
           <ListElt :items="val.CONTACT_FORM">
-
             <template #item-1>
-              <FieldElt id="email"
-                type="email"
-                v-model:value="email"
-                :info="val.INFO_EMAIL">
+              <FieldElt id="email" type="email" v-model:value="email" :info="val.INFO_EMAIL">
                 <template #legend>{{ val.LEGEND_EMAIL }}</template>
                 <template #label>{{ val.LABEL_EMAIL }}</template>
               </FieldElt>
             </template>
 
             <template #item-2>
-              <FieldElt id="subject"
-                v-model:value="subject"
-                :info="val.INFO_SUBJECT">
+              <FieldElt id="subject" v-model:value="subject" :info="val.INFO_SUBJECT">
                 <template #legend>{{ val.LEGEND_SUBJECT }}</template>
                 <template #label>{{ val.LABEL_SUBJECT }}</template>
               </FieldElt>
             </template>
 
             <template #item-3>
-              <FieldElt id="text"
+              <FieldElt
+                id="text"
                 type="textarea"
                 v-model:value="text"
                 :info="val.INFO_TEXT"
                 :mix="val.TEXT_MIN"
-                :max="val.TEXT_MAX">
+                :max="val.TEXT_MAX"
+              >
                 <template #legend>{{ val.LEGEND_TEXT }}</template>
                 <template #label>{{ val.LABEL_TEXT }}</template>
               </FieldElt>
@@ -50,10 +46,12 @@
           </ListElt>
 
           <vue-recaptcha :sitekey="val.RECAPTCHA_KEY" @verify="onVerify">
-            <BtnElt type="button"
+            <BtnElt
+              type="button"
               class="btn-green"
               :content="val.CONTENT_SEND"
-              :title="val.TITLE_MESSAGE">
+              :title="val.TITLE_MESSAGE"
+            >
               <template #btn>
                 <i class="fa-regular fa-paper-plane fa-lg"></i>
               </template>
@@ -66,30 +64,30 @@
 </template>
 
 <script>
-import BtnElt from "../components/BtnElt"
-import CardElt from "../components/CardElt"
-import FieldElt from "../components/FieldElt"
-import ListElt from "../components/ListElt"
+import BtnElt from '../components/BtnElt.vue'
+import CardElt from '../components/CardElt.vue'
+import FieldElt from '../components/FieldElt.vue'
+import ListElt from '../components/ListElt.vue'
 
-import { checkRange, checkRegex, postData, setError, setMeta } from "../app/services"
-import { VueRecaptcha } from "vue-recaptcha"
+import { checkRange, checkRegex, postData, setError, setMeta } from '../assets/services'
+import { VueRecaptcha } from 'vue-recaptcha'
 
 export default {
-  name: "ContactView",
-  components: { 
+  name: 'ContactView',
+  components: {
     BtnElt,
     CardElt,
     FieldElt,
     ListElt,
-    VueRecaptcha 
+    VueRecaptcha
   },
-  
-  props: ["val"],
+
+  props: ['val'],
   data() {
     return {
-      email: "",
-      subject: "",
-      text: ""
+      email: '',
+      subject: '',
+      text: ''
     }
   },
 
@@ -98,8 +96,8 @@ export default {
    * * A function that sets the meta data of the page
    */
   created() {
-    const { HEAD_CONTACT, LOGO_SRC, META_CONTACT, UI_URL } = this.val;
-    setMeta(HEAD_CONTACT, META_CONTACT, `${UI_URL}/contact`, UI_URL + LOGO_SRC);
+    const { HEAD_CONTACT, LOGO_SRC, META_CONTACT, UI_URL } = this.val
+    setMeta(HEAD_CONTACT, META_CONTACT, `${UI_URL}/contact`, UI_URL + LOGO_SRC)
   },
 
   methods: {
@@ -109,27 +107,27 @@ export default {
      * @param {any} response - The response from the verification process.
      */
     async onVerify(response) {
-      const {CHECK_EMAIL, CHECK_STRING, REGEX_EMAIL, TEXT_MIN, TEXT_MAX, API_URL } = this.val;
+      const { CHECK_EMAIL, CHECK_STRING, REGEX_EMAIL, TEXT_MIN, TEXT_MAX, API_URL } = this.val
 
-      if (checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL) &&
-          checkRange(this.subject, CHECK_STRING) &&
-          checkRange(this.text, CHECK_STRING, TEXT_MIN, TEXT_MAX)) {
-
-        const URL = `${API_URL}/auth/recaptcha`;
+      if (
+        checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL) &&
+        checkRange(this.subject, CHECK_STRING) &&
+        checkRange(this.text, CHECK_STRING, TEXT_MIN, TEXT_MAX)
+      ) {
+        const URL = `${API_URL}/auth/recaptcha`
 
         try {
-          const { success } = await postData(URL, { response });
+          const { success } = await postData(URL, { response })
 
           if (success) {
-            this.send();
+            this.send()
           } else {
-            alert("Failed captcha verification");
+            alert('Failed captcha verification')
           }
-
         } catch (err) {
-          setError(err);
+          setError(err)
         } finally {
-          this.$router.go();
+          this.$router.go()
         }
       }
     },
@@ -140,21 +138,20 @@ export default {
      * @return {Promise} A Promise that resolves when the message is successfully sent & rejects if an error occurs.
      */
     async send() {
-      const URL   = `${this.val.API_URL}/users/message`;
-      const data  = new FormData();
+      const URL = `${this.val.API_URL}/users/message`
+      const data = new FormData()
 
-      data.append("email", this.email);
-      data.append("subject", this.subject);
-      data.append("html", this.text);
+      data.append('email', this.email)
+      data.append('subject', this.subject)
+      data.append('html', this.text)
 
       try {
-        await postData(URL, data);
-        alert(this.subject + this.val.ALERT_SENDED);
-
+        await postData(URL, data)
+        alert(this.subject + this.val.ALERT_SENDED)
       } catch (err) {
-        setError(err);
+        setError(err)
       } finally {
-        this.$router.push("/");
+        this.$router.push('/')
       }
     }
   }
