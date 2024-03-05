@@ -1,5 +1,4 @@
 export default {
-
   // ! ********** ARTICLES **********
 
   /**
@@ -9,8 +8,8 @@ export default {
    * @param {Object} article - The article to be set.
    */
   setArticle: (state, article) => {
-    article.likes = JSON.parse(article.likes);
-    state.article = article;
+    article.likes = JSON.parse(article.likes)
+    state.article = article
   },
 
   /**
@@ -20,21 +19,21 @@ export default {
    * @param {Array} articles - The articles to be set.
    */
   setArticles: (state, articles) => {
-    for (const article of articles) article.likes = JSON.parse(article.likes);
-    state.articles = articles;
+    for (const article of articles) article.likes = JSON.parse(article.likes)
+    state.articles = articles
   },
 
   // ! ********** AUTH **********
 
-    /**
+  /**
    * ? SET AVATAR
    * * Sets an avatar in the state.
    * @param {Object} state - The state object.
    * @param {Object} avatar - The avatar to be set.
    */
-    setAvatar: (state, avatar) => { 
-      state.avatar = avatar;
-    },
+  setAvatar: (state, avatar) => {
+    state.avatar = avatar
+  },
 
   /**
    * ? SET ID
@@ -42,7 +41,7 @@ export default {
    * @param {object} state - The state object.
    */
   setId: (state) => {
-    state.id = JSON.parse(localStorage.getItem("userId"));
+    state.id = JSON.parse(localStorage.getItem('userId'))
   },
 
   /**
@@ -50,8 +49,8 @@ export default {
    * * Sets a token in the state.
    * @param {Object} state - The state object.
    */
-  setToken: (state) => { 
-    state.token = JSON.parse(localStorage.getItem("userToken"));
+  setToken: (state) => {
+    state.token = JSON.parse(localStorage.getItem('userToken'))
   },
 
   // ! ********** GALLERIES **********
@@ -63,7 +62,7 @@ export default {
    * @param {Array} galleries - The galleries to be set.
    */
   setGalleries: (state, galleries) => {
-    state.galleries = galleries;
+    state.galleries = galleries
   },
 
   // ! ********** IMAGES **********
@@ -75,7 +74,7 @@ export default {
    * @param {Array} images - The images to be set.
    */
   setImages: (state, images) => {
-    state.images = images;
+    state.images = images
   },
 
   // ! ********** LINKS **********
@@ -87,7 +86,7 @@ export default {
    * @param {Array} links - The links to be set.
    */
   setLinks: (state, links) => {
-    state.links = links;
+    state.links = links
   },
 
   // ! ********** ORDERS **********
@@ -100,7 +99,7 @@ export default {
    */
   setOrders: (state, orders) => {
     for (const order of orders) {
-      order.products = JSON.parse(order.products);
+      order.products = JSON.parse(order.products)
     }
     state.orders = orders
   },
@@ -111,13 +110,13 @@ export default {
    * @param {Object} state - The state object.
    * @param {Array} orders - The user orders to be set.
    */
-    setUserOrders: (state, orders) => {
-      for (const order of orders) {
-        delete order.userId;
-        order.products = JSON.parse(order.products);
-      }
-      state.orders = orders;
-    },
+  setUserOrders: (state, orders) => {
+    for (const order of orders) {
+      delete order.userId
+      order.products = JSON.parse(order.products)
+    }
+    state.orders = orders
+  },
 
   // ! ********** PRODUCTS **********
 
@@ -128,19 +127,19 @@ export default {
    * @param {Object} product - The product to be set.
    */
   setProduct: (state, product) => {
-    product.options = product.options.split(",");
-    state.product = product;
+    product.options = product.options.split(',')
+    state.product = product
   },
 
-/**
- * ? SET PRODUCTS
- * * Set the products in the state.
- * @param {Object} state - The state object.
- * @param {Array} products - The products to be set.
- */
-  setProducts: (state, products) => { 
-    for (const product of products) product.options = product.options.split(",");
-    state.products = products;
+  /**
+   * ? SET PRODUCTS
+   * * Set the products in the state.
+   * @param {Object} state - The state object.
+   * @param {Array} products - The products to be set.
+   */
+  setProducts: (state, products) => {
+    for (const product of products) product.options = product.options.split(',')
+    state.products = products
   },
 
   // ! ********** PROJECTS **********
@@ -152,7 +151,7 @@ export default {
    * @param {Array} projects - The projects to be set.
    */
   setProjects: (state, projects) => {
-    state.projects = projects;
+    state.projects = projects
   },
 
   // ! ********** USERS **********
@@ -164,7 +163,7 @@ export default {
    * @param {Array} user - The user to be set.
    */
   setUser: (state, user) => {
-    state.user = user;
+    state.user = user
   },
 
   /**
@@ -174,6 +173,6 @@ export default {
    * @param {Array} users - The users to be set.
    */
   setUsers: (state, users) => {
-    state.users = users;
+    state.users = users
   }
-};
+}

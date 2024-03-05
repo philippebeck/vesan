@@ -1,8 +1,7 @@
-import val from "./values"
-import { getData, setError } from "./services"
+import val from '../assets/values'
+import { getData, setError } from '../assets/services'
 
 export default {
-
   // ! ********** ARTICLES **********
 
   /**
@@ -12,10 +11,10 @@ export default {
    */
   listArticles: async (context) => {
     try {
-      const articles = await getData(`${val.API_URL}/articles`);
-      context.commit("setArticles", articles);
+      const articles = await getData(`${val.API_URL}/articles`)
+      context.commit('setArticles', articles)
     } catch (err) {
-      setError(err);
+      setError(err)
     }
   },
 
@@ -27,10 +26,10 @@ export default {
    */
   readArticle: async (context, id) => {
     try {
-      const article = await getData(`${val.API_URL}/articles/${id}`);
-      context.commit("setArticle", article);
+      const article = await getData(`${val.API_URL}/articles/${id}`)
+      context.commit('setArticle', article)
     } catch (err) {
-      setError(err);
+      setError(err)
     }
   },
 
@@ -44,10 +43,10 @@ export default {
    */
   readAvatar: async (context, id) => {
     try {
-      const avatar = await getData(`${val.API_URL}/auth/${id}`);
-      context.commit("setAvatar", avatar);
+      const avatar = await getData(`${val.API_URL}/auth/${id}`)
+      context.commit('setAvatar', avatar)
     } catch (err) {
-      setError(err);
+      setError(err)
     }
   },
 
@@ -60,10 +59,10 @@ export default {
    */
   listGalleries: async (context) => {
     try {
-      const galleries = await getData(`${val.API_URL}/galleries`);
-      context.commit("setGalleries", galleries);
+      const galleries = await getData(`${val.API_URL}/galleries`)
+      context.commit('setGalleries', galleries)
     } catch (err) {
-      setError(err);
+      setError(err)
     }
   },
 
@@ -77,10 +76,10 @@ export default {
    */
   listGalleryImages: async (context, id) => {
     try {
-      const images = await getData(`${val.API_URL}/images/${id}`);
-      context.commit("setImages", images);
+      const images = await getData(`${val.API_URL}/images/${id}`)
+      context.commit('setImages', images)
     } catch (err) {
-      setError(err);
+      setError(err)
     }
   },
 
@@ -91,10 +90,10 @@ export default {
    */
   listImages: async (context) => {
     try {
-      const images = await getData(`${val.API_URL}/images`);
-      context.commit("setImages", images);
+      const images = await getData(`${val.API_URL}/images`)
+      context.commit('setImages', images)
     } catch (err) {
-      setError(err);
+      setError(err)
     }
   },
 
@@ -107,10 +106,10 @@ export default {
    */
   listLinks: async (context) => {
     try {
-      const links = await getData(`${val.API_URL}/links`);
-      context.commit("setLinks", links);
+      const links = await getData(`${val.API_URL}/links`)
+      context.commit('setLinks', links)
     } catch (err) {
-      setError(err);
+      setError(err)
     }
   },
 
@@ -123,10 +122,10 @@ export default {
    */
   listOrders: async (context) => {
     try {
-      const orders = await getData(`${val.API_URL}/orders`, context.rootState.token);
-      context.commit("setOrders", orders);
+      const orders = await getData(`${val.API_URL}/orders`, context.rootState.token)
+      context.commit('setOrders', orders)
     } catch (err) {
-      setError(err);
+      setError(err)
     }
   },
 
@@ -138,10 +137,10 @@ export default {
    */
   listUserOrders: async (context, id) => {
     try {
-      const orders = await getData(`${val.API_URL}/orders/${id}`, context.rootState.token);
-      context.commit("setUserOrders", orders);
+      const orders = await getData(`${val.API_URL}/orders/${id}`, context.rootState.token)
+      context.commit('setUserOrders', orders)
     } catch (err) {
-      setError(err);
+      setError(err)
     }
   },
 
@@ -154,10 +153,10 @@ export default {
    */
   listProducts: async (context) => {
     try {
-      const products = await getData(`${val.API_URL}/products`);
-      context.commit("setProducts", products);
+      const products = await getData(`${val.API_URL}/products`)
+      context.commit('setProducts', products)
     } catch (err) {
-      setError(err);
+      setError(err)
     }
   },
 
@@ -169,10 +168,10 @@ export default {
    */
   readProduct: async (context, id) => {
     try {
-      const product = await getData(`${val.API_URL}/products/${id}`);
-      context.commit("setProduct", product);
+      const product = await getData(`${val.API_URL}/products/${id}`)
+      context.commit('setProduct', product)
     } catch (err) {
-      setError(err);
+      setError(err)
     }
   },
 
@@ -185,10 +184,10 @@ export default {
    */
   listProjects: async (context) => {
     try {
-      const projects = await getData(`${val.API_URL}/projects`);
-      context.commit("setProjects", projects);
+      const projects = await getData(`${val.API_URL}/projects`)
+      context.commit('setProjects', projects)
     } catch (err) {
-      setError(err);
+      setError(err)
     }
   },
 
@@ -201,10 +200,10 @@ export default {
    */
   listUsers: async (context) => {
     try {
-      const users = await getData(`${val.API_URL}/users`, context.rootState.token);
-      context.commit("setUsers", users);
+      const users = await getData(`${val.API_URL}/users`, context.rootState.token)
+      context.commit('setUsers', users)
     } catch (err) {
-      setError(err);
+      setError(err)
     }
   },
 
@@ -216,10 +215,10 @@ export default {
    */
   readUser: async (context, id) => {
     try {
-      const user = await getData(`${val.API_URL}/users/${id}`, context.rootState.token);
-      context.commit("setUser", user);
+      const user = await getData(`${val.API_URL}/users/${id}`, context.rootState.token)
+      context.commit('setUser', user)
     } catch (err) {
-      setError(err);
+      setError(err)
     }
   }
 }
