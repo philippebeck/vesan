@@ -16,13 +16,8 @@
 
     <tbody>
       <tr v-for="(item, index) in items" :key="index">
-
         <td v-for="(value, key) in item" :key="key">
-          <slot :name="`cell-${key}`"
-            :index="index"
-            :item="item"
-            :key="key"
-            :value="value">
+          <slot :name="`cell-${key}`" :index="index" :item="item" :key="key" :value="value">
             {{ value }}
           </slot>
         </td>
@@ -40,11 +35,11 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import { checkSlot } from "../app/services";
+import { defineComponent } from 'vue'
+import { checkSlot } from '../assets/services'
 
 export default defineComponent({
-  name: "TableElt",
+  name: 'TableElt',
 
   props: {
     title: { type: String },
@@ -54,20 +49,20 @@ export default defineComponent({
   /**
    * ? SETUP
    * * Setup the component
-   * @param {Object} props 
+   * @param {Object} props
    * @param {Object} - Object that contains the slots of the component.
    */
   setup(props, { slots }) {
     /**
      * ? HAS SLOT
      * * Checks if the component has a slot
-     * @param {string} name 
+     * @param {string} name
      */
-    const hasSlot = (name) => checkSlot(slots, name);
+    const hasSlot = (name) => checkSlot(slots, name)
 
-    return { hasSlot };
+    return { hasSlot }
   }
-});
+})
 </script>
 
 <style>
@@ -213,7 +208,7 @@ td {
   padding: var(--ve-table-td-padding);
   text-align: var(--ve-table-td-text-align);
   vertical-align: var(--ve-table-td-vertical-align);
-  word-break: var(--ve-table-td-word-break);;
+  word-break: var(--ve-table-td-word-break);
   cursor: var(--ve-table-td-cursor);
 }
 </style>

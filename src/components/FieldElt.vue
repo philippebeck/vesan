@@ -4,7 +4,8 @@
       <slot name="legend"></slot>
     </legend>
 
-    <input v-if="fieldType === 'number'" 
+    <input
+      v-if="fieldType === 'number'"
       :type="type"
       :id="id"
       :name="name"
@@ -14,9 +15,11 @@
       :max="max"
       :aria-label="label"
       :itemprop="itemprop"
-      :required="required">
+      :required="required"
+    />
 
-    <input v-else-if="fieldType === 'special'"
+    <input
+      v-else-if="fieldType === 'special'"
       :type="type"
       :id="id"
       :name="name"
@@ -24,17 +27,19 @@
       @input="onInput"
       :aria-label="label"
       :itemprop="itemprop"
-      :required="required">
+      :required="required"
+    />
 
-    <select v-else-if="fieldType === 'list' && content"
+    <select
+      v-else-if="fieldType === 'list' && content"
       :id="id"
       :name="name"
       @input="onInput"
       :placeholder="info"
       :aria-label="label"
       :itemprop="itemprop"
-      :required="required">
-
+      :required="required"
+    >
       <option v-if="value" :value="value">{{ content }}</option>
       <option v-else>{{ info }}</option>
       <option v-for="(item, key) in list" :key="key" :value="item.value">
@@ -42,15 +47,16 @@
       </option>
     </select>
 
-    <select v-else-if="fieldType === 'list'"
+    <select
+      v-else-if="fieldType === 'list'"
       :id="id"
       :name="name"
       @input="onInput"
       :placeholder="info"
       :aria-label="label"
       :itemprop="itemprop"
-      :required="required">
-
+      :required="required"
+    >
       <option v-if="value" :value="value">{{ value }}</option>
       <option v-else>{{ info }}</option>
       <option v-for="(item, key) in list" :key="key" :value="item">
@@ -58,7 +64,8 @@
       </option>
     </select>
 
-    <textarea v-else-if="fieldType === 'area'"
+    <textarea
+      v-else-if="fieldType === 'area'"
       :id="id"
       :name="name"
       :value="value"
@@ -70,9 +77,11 @@
       :rows="rows"
       :aria-label="label"
       :itemprop="itemprop"
-      :required="required"></textarea>
+      :required="required"
+    ></textarea>
 
-    <input v-else
+    <input
+      v-else
       :type="type"
       :id="id"
       :name="name"
@@ -83,7 +92,8 @@
       :maxlength="max"
       :aria-label="label"
       :itemprop="itemprop"
-      :required="required">
+      :required="required"
+    />
 
     <label v-if="hasSlot('label')" :for="id">
       <slot name="label"></slot>
@@ -92,15 +102,15 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
-import { checkSlot } from "../app/services";
+import { defineComponent, ref } from 'vue'
+import { checkSlot } from '../assets/services'
 
 export default defineComponent({
-  name: "FieldElt",
+  name: 'FieldElt',
 
   props: {
-    model: { prop: "value", event: "update" },
-    type: { type: String, default: "text" },
+    model: { prop: 'value', event: 'update' },
+    type: { type: String, default: 'text' },
     value: [String, Number, Array],
     content: [String, Number],
     id: String,
@@ -113,7 +123,7 @@ export default defineComponent({
     rows: { type: Number, default: 5 },
     label: String,
     itemprop: String,
-    required: { type: String, default: "true" }
+    required: { type: String, default: 'true' }
   },
 
   /**
@@ -124,21 +134,21 @@ export default defineComponent({
    * @param {Object} - Object that contains the slots & the emits of the component.
    */
   setup(props, { slots, emit }) {
-    const fieldType = ref("");
+    const fieldType = ref('')
 
     /**
      * ? HAS SLOT
      * * Checks if the component has a slot
-     * @param {string} name 
+     * @param {string} name
      */
-    const hasSlot = (name)  => checkSlot(slots, name);
+    const hasSlot = (name) => checkSlot(slots, name)
 
     /**
      * ? ON INPUT
      * * Emit the input event
-     * @param {Event} event 
+     * @param {Event} event
      */
-    const onInput = (event) => emit("update:value", event.target.value);
+    const onInput = (event) => emit('update:value', event.target.value)
 
     /**
      * ? GET FIELD TYPE
@@ -146,20 +156,21 @@ export default defineComponent({
      */
     const getFieldType = () => {
       const fieldTypes = {
-        "number":  ["number", "date", "time", "range"],
-        "special": ["checkbox", "radio", "color"],
-        "list":    ["option", "select"],
-        "area":    ["textarea"]
-      };
+        number: ['number', 'date', 'time', 'range'],
+        special: ['checkbox', 'radio', 'color'],
+        list: ['option', 'select'],
+        area: ['textarea']
+      }
 
-      fieldType.value = Object.keys(fieldTypes).find(key => fieldTypes[key].includes(props.type)) || "text";
-    };
+      fieldType.value =
+        Object.keys(fieldTypes).find((key) => fieldTypes[key].includes(props.type)) || 'text'
+    }
 
-    getFieldType();
+    getFieldType()
 
-    return { fieldType, getFieldType, hasSlot, onInput };
+    return { fieldType, getFieldType, hasSlot, onInput }
   }
-});
+})
 </script>
 
 <style>
@@ -225,7 +236,7 @@ textarea {
 fieldset {
   display: var(--ve-field-display);
   flex-flow: var(--ve-field-flex-flow);
-  place-items: var(--ve-field-place-items);;
+  place-items: var(--ve-field-place-items);
   margin: var(--ve-field-margin);
   border: var(--ve-field-border);
   padding: var(--ve-field-padding);

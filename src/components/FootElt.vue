@@ -4,10 +4,11 @@
       <slot name="hide"></slot>
     </button>
 
-    <ul id="foot"
+    <ul
+      id="foot"
       v-if="hasSlot('foot1') || hasSlot('foot2') || hasSlot('foot3')"
-      :class="{ 'hide': isMobile, 'show': !isMobile }">
-
+      :class="{ hide: isMobile, show: !isMobile }"
+    >
       <li v-if="hasSlot('foot1')">
         <section>
           <h3>{{ title1 }}</h3>
@@ -37,16 +38,16 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, onUnmounted, ref } from "vue";
-import { checkSlot } from "../app/services";
+import { defineComponent, onMounted, onUnmounted, ref } from 'vue'
+import { checkSlot } from '../assets/services'
 
 export default defineComponent({
-  name: "FootElt",
+  name: 'FootElt',
 
   props: {
-    title1: { type: String, default: "" },
-    title2: { type: String, default: "" },
-    title3: { type: String, default: "" }
+    title1: { type: String, default: '' },
+    title2: { type: String, default: '' },
+    title3: { type: String, default: '' }
   },
 
   /**
@@ -56,48 +57,48 @@ export default defineComponent({
    * @param {Object} - Object that contains the slots of the component.
    */
   setup(props, { slots }) {
-    const isMobile = ref(false);
+    const isMobile = ref(false)
 
     /**
      * ? HAS SLOT
      * * Checks if the component has a slot
-     * @param {string} name 
+     * @param {string} name
      */
-    const hasSlot = (name)  => checkSlot(slots, name);
+    const hasSlot = (name) => checkSlot(slots, name)
 
     /**
      * ? HANDLE RESIZE
      * * Handles the resize if the window is smaller than 1600
      */
-    const handleResize = () => isMobile.value = window.innerWidth < 1600;
+    const handleResize = () => (isMobile.value = window.innerWidth < 1600)
 
     /**
      * ? TOGGLE SIDE
      * * Toggles the footer main part by adding or removing the hide/show classes
      */
     const toggleSide = () => {
-      const foot = document.getElementById("foot");
-      foot.classList.replace("show", "hide") || foot.classList.replace("hide", "show");
-    };
+      const foot = document.getElementById('foot')
+      foot.classList.replace('show', 'hide') || foot.classList.replace('hide', 'show')
+    }
 
     /**
      * ? ON MOUNTED
      * * Adds the event listener on the resize
      */
     onMounted(() => {
-      window.addEventListener("resize", handleResize);
-      handleResize();
-    });
+      window.addEventListener('resize', handleResize)
+      handleResize()
+    })
 
     /**
      * ? ON UNMOUNTED
      * * Removes the event listener on the resize
      */
-    onUnmounted(() => window.removeEventListener("resize", handleResize));
+    onUnmounted(() => window.removeEventListener('resize', handleResize))
 
-    return { isMobile, handleResize, hasSlot, toggleSide };
+    return { isMobile, handleResize, hasSlot, toggleSide }
   }
-});
+})
 </script>
 
 <style>
@@ -229,7 +230,7 @@ footer {
     cursor: var(--ve-foot-a-cursor);
   }
 
-  & > ul { 
+  & > ul {
     display: var(--ve-foot-ul-display);
     flex-flow: var(--ve-foot-ul-flex-flow);
     gap: var(--ve-foot-ul-gap);
