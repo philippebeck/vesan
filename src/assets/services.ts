@@ -7,18 +7,13 @@ import axios from 'axios'
  * * Checks whether a given value is within a specified range of min & max values,
  * * either by comparing their string length or their numerical value
  *
- * @param {number | string} value - The value to check against the range
+ * @param {number|string} value - The value to check against the range
  * @param {string} message - The message to display if the value is not within range
  * @param {number} [min=2] - The minimum value of range
- * @param {number} [max=200] - The maximum value of range
+ * @param {number} [max=250] - The maximum value of range
  * @return {boolean} Returns true if the value is within the specified range, otherwise false
  */
-export const checkRange = (
-  value: number | string,
-  message: string,
-  min: number = 2,
-  max: number = 250
-): boolean => {
+export const checkRange = (value: number | string, message: string, min: number = 2, max: number = 250): boolean => {
   const NUMBER: boolean = typeof value === 'number' && value >= min && value <= max
   const STRING: boolean = typeof value === 'string' && value.length >= min && value.length <= max
 
@@ -87,11 +82,9 @@ export const checkSlot = (slots: Record<string, unknown>, name: string): boolean
  * @param {string} [type="multipart/form-data"] - An optional Content-Type
  * @returns {void}
  */
-export const setAxios = (
-  token: string | null = null,
-  type: string = 'multipart/form-data'
-): void => {
+export const setAxios = (token: string | null = null, type: string = 'multipart/form-data'): void => {
   axios.defaults.headers.post['Content-Type'] = type
+
   if (token) axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 }
 
@@ -112,6 +105,7 @@ export const postData = async (
   type: string = 'multipart/form-data'
 ): Promise<any> => {
   setAxios(token, type)
+
   const response = await axios.post(url, data)
 
   return response?.data
@@ -122,7 +116,7 @@ export const postData = async (
  * * Fetch data from the specified URL
  *
  * @param {string} url - The URL to fetch data from
- * @param {string | null} token - The authentication token (optional)
+ * @param {string|null} token - The authentication token (optional)
  * @param {string} type - The content type (default: "multipart/form-data")
  * @returns {Promise<any>} The data fetched from the URL
  */
@@ -132,6 +126,7 @@ export const getData = async (
   type: string = 'multipart/form-data'
 ): Promise<any> => {
   setAxios(token, type)
+
   const response = await axios.get(url)
 
   return response?.data
@@ -155,6 +150,7 @@ export const putData = async (
   type: string = 'multipart/form-data'
 ): Promise<any> => {
   setAxios(token, type)
+
   const response = await axios.put(url, data)
 
   return response?.data
@@ -176,6 +172,7 @@ export const deleteData = async (
   type: string = 'multipart/form-data'
 ): Promise<any> => {
   setAxios(token, type)
+
   const response = await axios.delete(url)
 
   return response?.data
@@ -187,10 +184,10 @@ export const deleteData = async (
  * ? GET CATEGORIES
  * * Returns an array of unique categories from the given items
  *
- * @param {Array<{ cat: string }>} items - An array of objects representing items with a 'cat' property
+ * @param {{ cat: string }[]} items - An array of objects representing items with a 'cat' property
  * @returns {string[]} An array of unique cat categories from the given items
  */
-export function getCats(items: { cat: string }[]): string[] {
+export const getCats = (items: { cat: string }[]): string[] => {
   return [...new Set(items.map((item) => item.cat))]
 }
 
@@ -199,13 +196,10 @@ export function getCats(items: { cat: string }[]): string[] {
  * * Returns the name of the item with the given id from the provided array of items
  *
  * @param {string} id - The id of the item to search for
- * @param {Array<{id: string, name: string}>} items - An array of items to search through
+ * @param {{id: string, name: string}[]} items - An array of items to search through
  * @return {string|false} - The name of the item with the given id if found, false otherwise
  */
-export const getItemName = (
-  id: string,
-  items: Array<{ id: string; name: string }>
-): string | false => {
+export const getItemName = (id: string, items: { id: string; name: string }[]): string | false => {
   const item = items.find((item) => item.id === id)
 
   return item ? item.name : false
@@ -215,15 +209,15 @@ export const getItemName = (
  * ? GET ITEMS BY CATEGORY
  * * Groups an array of items by category & sorts each category's item list by id or name
  *
- * @param {Array<Object>} items - The array of items to group
+ * @param {{id: string, name: string, cat: string}[]} items - The array of items to group
  * @param {string} [sortBy="id"] - The property to sort the items by
- * @return {Record<string, Array<Object>>} An object where each key is a category & its value is the array of items belonging to that category
+ * @return {Record<string, {id: string, name: string}[]>} An object where each key is a category & its value is the array of items belonging to that category
  */
 export const getItemsByCat = (
-  items: Array<Object>,
+  items: { id: string; name: string; cat: string }[],
   sortBy: string = 'id'
-): Record<string, Array<Object>> => {
-  const itemsByCat: Record<string, Array<Object>> = {}
+): Record<string, { id: string; name: string }[]> => {
+  const itemsByCat: Record<string, { id: string; name: string }[]> = {}
 
   for (const item of items) {
     const cat: string = item.cat
@@ -232,9 +226,7 @@ export const getItemsByCat = (
   }
 
   for (const cat in itemsByCat) {
-    itemsByCat[cat].sort((a, b) =>
-      sortBy === 'id' ? Number(a.id) - Number(b.id) : a.name.localeCompare(b.name)
-    )
+    itemsByCat[cat].sort((a, b) => (sortBy === 'id' ? Number(a.id) - Number(b.id) : a.name.localeCompare(b.name)))
   }
 
   return itemsByCat
@@ -264,9 +256,10 @@ export const setError = (error: Error): void => {
  * @returns {void}
  */
 export const setGlobalMeta = (lang: string = 'en', icon: string = 'img/favicon.ico'): void => {
-  const iconElt = document.querySelector('[rel="icon"]')
+  const iconElt: HTMLLinkElement | null = document.querySelector('[rel="icon"]')
 
   document.documentElement.lang = lang
+
   if (iconElt) iconElt.href = icon
 }
 
@@ -280,20 +273,15 @@ export const setGlobalMeta = (lang: string = 'en', icon: string = 'img/favicon.i
  * @param {string|null} [image] - The image to set
  * @returns {void}
  */
-export const setMeta = (
-  title: string,
-  description: string,
-  url: string,
-  image: string | null
-): void => {
-  const titleTag = document.querySelector('title')
-  const canonicalTag = document.querySelector('[rel="canonical"]')
-  const descriptionTag = document.querySelector('[name="description"]')
+export const setMeta = (title: string, description: string, url: string, image: string | null): void => {
+  const titleTag: HTMLTitleElement | null = document.querySelector('title')
+  const canonicalTag: HTMLLinkElement | null = document.querySelector('[rel="canonical"]')
+  const descriptionTag: HTMLMetaElement | null = document.querySelector('[name="description"]')
 
-  const ogTitleTag = document.querySelector('[property="og:title"]')
-  const ogUrlTag = document.querySelector('[property="og:url"]')
-  const ogDescriptionTag = document.querySelector('[property="og:description"]')
-  const ogImageTag = image ? document.querySelector('[property="og:image"]') : null
+  const ogTitleTag: HTMLMetaElement | null = document.querySelector('[property="og:title"]')
+  const ogUrlTag: HTMLMetaElement | null = document.querySelector('[property="og:url"]')
+  const ogDescriptionTag: HTMLMetaElement | null = document.querySelector('[property="og:description"]')
+  const ogImageTag: HTMLMetaElement | null = image ? document.querySelector('[property="og:image"]') : null
 
   if (titleTag) titleTag.innerText = title
   if (canonicalTag) canonicalTag.href = url
