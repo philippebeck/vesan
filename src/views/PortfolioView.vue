@@ -86,7 +86,7 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
 import CardElt from '../components/CardElt.vue'
 import ListElt from '../components/ListElt.vue'
 import MediaElt from '../components/MediaElt.vue'
@@ -106,7 +106,7 @@ export default {
    * * Retrieves projects from the API.
    * * Sets the meta tags.
    */
-  async created() {
+  async created(): Promise<void> {
     const { HEAD_PORTFOLIO, LOGO_SRC, META_PORTFOLIO, UI_URL } = this.val
 
     await this.$store.dispatch('listProjects')
@@ -116,9 +116,13 @@ export default {
   /**
    * ? UPDATED
    * * A function that updates the text elements by setting the "itemprop" attribute to "description".
+   *
+   * @param {HTMLCollectionOf<HTMLDivElement>} textArray - The collection of text elements to be updated
+   * @returns {void}
    */
   updated() {
-    const textArray = document.getElementsByClassName('figcaption')
+    const textArray: HTMLCollectionOf<HTMLDivElement> =
+      document.getElementsByClassName('figcaption')
     for (let textElt of textArray) textElt.firstChild.setAttribute('itemprop', 'description')
   },
 
@@ -128,10 +132,12 @@ export default {
     /**
      * ? GET CATEGORIES
      * * Retrieves the categories of projects.
-     * @return {Array} An array of project categories.
+     *
+     * @param {Array<Project>} projects - The array of projects.
+     * @return {Array<Category>} An array of project categories.
      */
-    getCategories() {
-      return getCats(this.projects)
+    getCategories(projects: Project[]): Category[] {
+      return getCats(projects)
     }
   },
 
@@ -141,20 +147,24 @@ export default {
     /**
      * ? CHECK SESSION
      * * Checks the session for the specified role.
-     * @param {type} role - the role to check
-     * @return {type} the result of the role check
+     *
+     * @param {string} role - the role to check
+     * @return {boolean} the result of the role check
      */
-    checkSession(role) {
+    checkSession(role: string): boolean {
       return checkRole(this.avatar.role, role)
     },
 
     /**
      * ? GET ITEMS BY CATEGORY
      * * Retrieves items based on category.
-     * @param {Array} items - The list of items to filter.
-     * @return {Array} The filtered list of items.
+     *
+     * @param {Array<{name: string, category: string}>} items - The list of items to filter.
+     * @return {Array<{name: string, category: string}>} The filtered list of items.
      */
-    getItemsByCategory(items) {
+    getItemsByCategory(
+      items: Array<{ name: string; category: string }>
+    ): Array<{ name: string; category: string }> {
       return getItemsByCat(items)
     }
   }

@@ -59,7 +59,7 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
 import BtnElt from '../components/BtnElt.vue'
 import CardElt from '../components/CardElt.vue'
 import ListElt from '../components/ListElt.vue'
@@ -79,8 +79,13 @@ export default {
    * * Get the list of links
    * * Set the meta tags
    */
-  async created() {
-    const { HEAD_LINK, LOGO_SRC, META_LINK, UI_URL } = this.val
+  async created(): Promise<void> {
+    const {
+      HEAD_LINK,
+      LOGO_SRC,
+      META_LINK,
+      UI_URL
+    }: { HEAD_LINK: string; LOGO_SRC: string; META_LINK: string; UI_URL: string } = this.val
 
     await this.$store.dispatch('listLinks')
     setMeta(HEAD_LINK, META_LINK, `${UI_URL}/link`, UI_URL + LOGO_SRC)
@@ -92,10 +97,12 @@ export default {
     /**
      * ? GET CATEGORIES
      * * Retrieves the categories using the provided links.
+     *
+     * @param {Array} links - The list of links.
      * @return {Array} An array of categories.
      */
-    getCategories() {
-      return getCats(this.links)
+    getCategories(links: Array): Array {
+      return getCats(links)
     }
   },
 
@@ -105,21 +112,24 @@ export default {
     /**
      * ? CHECK SESSION
      * * Check the session for a given role.
+     *
      * @param {string} role - the role to check
      * @return {boolean} the result of the session check
      */
-    checkSession(role) {
+    checkSession(role: string): boolean {
       return checkRole(this.avatar.role, role)
     },
 
     /**
      * ? GET ITEMS BY CATEGORY
      * * Retrieves items by category.
-     * @param {Array} items - The array of items.
-     * @return {Array} The array of items filtered by category.
+     *
+     * @param {Array<Object>} items - The array of items.
+     * @param {string} category - The category name.
+     * @return {Array<Object>} The array of items filtered by category.
      */
-    getItemsByCategory(items) {
-      return getItemsByCat(items, 'name')
+    getItemsByCategory(items: Array<Object>, category: string): Array<Object> {
+      return getItemsByCat(items, category)
     }
   }
 }

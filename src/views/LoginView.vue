@@ -187,7 +187,7 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
 import BtnElt from '../components/BtnElt.vue'
 import CardElt from '../components/CardElt.vue'
 import FieldElt from '../components/FieldElt.vue'
@@ -215,9 +215,14 @@ export default {
    * * A function that sets the meta data of the page
    * * Redirects to the home page if the user is logged in
    */
-  created() {
-    const { HEAD_LOGIN, LOGO_SRC, META_LOGIN, UI_URL } = this.val
-    setMeta(HEAD_LOGIN, META_LOGIN, `${UI_URL}/login`, UI_URL + LOGO_SRC)
+  created(): void {
+    const {
+      HEAD_LOGIN,
+      LOGO_SRC,
+      META_LOGIN,
+      UI_URL
+    }: { HEAD_LOGIN: string; LOGO_SRC: string; META_LOGIN: string; UI_URL: string } = this.val
+    setMeta(HEAD_LOGIN, META_LOGIN, `${UI_URL}/login`, `${UI_URL}${LOGO_SRC}`)
 
     if (localStorage.userId) this.$router.push('/')
   },
@@ -226,15 +231,15 @@ export default {
     /**
      * ? ON VERIFY
      * * Asynchronously handles the verification of a response.
-     * @param {type} response - the response to be verified
-     * @return {type} description of return value
+     * @param {string} response - the response to be verified
+     * @return {Promise<void>} a promise that resolves with no value
      */
-    async onVerify(response) {
+    async onVerify(response: string): Promise<void> {
       const { ALERT_RECAPTCHA, API_URL } = this.val
-      const URL = `${API_URL}/auth/recaptcha`
+      const URL: string = `${API_URL}/auth/recaptcha`
 
       try {
-        const { success } = await postData(URL, { response })
+        const { success }: { success: boolean } = await postData(URL, { response })
 
         if (success) {
           switch (this.type) {
@@ -259,6 +264,8 @@ export default {
     /**
      * ? SIGN IN
      * * Signs in the user.
+     *
+     * @returns {Promise<void>} - A promise that resolves when the user is signed in.
      */
     async signIn() {
       const { API_URL, CHECK_EMAIL, CHECK_PASS, REGEX_EMAIL, REGEX_PASS } = this.val
@@ -289,8 +296,10 @@ export default {
     /**
      * ? SIGN UP
      * * Creates a new user.
+     *
+     * @returns {Promise<void>} A Promise that resolves when the new user is successfully created.
      */
-    async signUp() {
+    async signUp(): Promise<void> {
       const {
         ALERT_CREATED,
         ALERT_IMG,
@@ -300,18 +309,27 @@ export default {
         CHECK_STRING,
         REGEX_EMAIL,
         REGEX_PASS
+      }: {
+        ALERT_CREATED: string
+        ALERT_IMG: string
+        API_URL: string
+        CHECK_EMAIL: RegExp
+        CHECK_PASS: RegExp
+        CHECK_STRING: string
+        REGEX_EMAIL: RegExp
+        REGEX_PASS: RegExp
       } = this.val
 
-      const IS_NAME_CHECKED = checkRange(this.name, CHECK_STRING)
-      const IS_EMAIL_CHECKED = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL)
-      const IS_PASS_CHECKED = checkRegex(this.pass, CHECK_PASS, REGEX_PASS)
+      const IS_NAME_CHECKED: boolean = checkRange(this.name, CHECK_STRING)
+      const IS_EMAIL_CHECKED: boolean = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL)
+      const IS_PASS_CHECKED: boolean = checkRegex(this.pass, CHECK_PASS, REGEX_PASS)
 
       if (IS_NAME_CHECKED && IS_EMAIL_CHECKED && IS_PASS_CHECKED) {
-        const URL = `${API_URL}/users`
-        const data = new FormData()
-        const img = document.querySelector('[type="file"]')?.files[0]
+        const URL: string = `${API_URL}/users`
+        const data: FormData = new FormData()
+        const img: File | undefined = document.querySelector('[type="file"]')?.files[0]
 
-        if (img !== undefined) {
+        if (img) {
           data.append('name', this.name)
           data.append('email', this.email)
           data.append('image', img)
@@ -336,7 +354,7 @@ export default {
      * ? FORGOT PASS
      * * Executes the forgot password functionality.
      */
-    async forgotPass() {
+    async forgotPass(): Promise<void> {
       const {
         ALERT_SENDED,
         API_URL,
@@ -346,11 +364,11 @@ export default {
         FORGOT_TEXT,
         REGEX_EMAIL
       } = this.val
-      const IS_EMAIL_CHECKED = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL)
+      const IS_EMAIL_CHECKED: boolean = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL)
 
       if (IS_EMAIL_CHECKED && confirm(CONFIRM_FORGOT)) {
-        const URL = `${API_URL}/auth/pass`
-        const data = new FormData()
+        const URL: string = `${API_URL}/auth/pass`
+        const data: FormData = new FormData()
 
         data.append('email', this.email)
         data.append('subject', FORGOT_SUBJECT)

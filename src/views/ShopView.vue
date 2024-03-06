@@ -82,7 +82,7 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
 import CardElt from '../components/CardElt.vue'
 import ListElt from '../components/ListElt.vue'
 import MediaElt from '../components/MediaElt.vue'
@@ -102,22 +102,23 @@ export default {
    * * Retrieves the products from the server.
    * * Sets the meta tags.
    */
-  created() {
-    const { HEAD_SHOP, LOGO_SRC, META_SHOP, UI_URL } = this.val
+  created(): void {
+    const { HEAD_SHOP, LOGO_SRC, META_SHOP, UI_URL }: ValType = this.val
 
     this.$store.dispatch('listProducts')
-    setMeta(HEAD_SHOP, META_SHOP, `${UI_URL}/shop`, UI_URL + LOGO_SRC)
+    setMeta(HEAD_SHOP, META_SHOP, `${UI_URL}/shop`, `${UI_URL}${LOGO_SRC}`)
   },
 
   /**
    * ? UPDATED
    * * Sets the itemprop of the description elements.
    */
-  updated() {
-    const descriptionArray = document.getElementsByClassName('figcaption')
+  updated(): void {
+    const descriptionArray: HTMLCollectionOf<HTMLElement> =
+      document.getElementsByClassName('figcaption')
 
     for (let descriptionElt of descriptionArray) {
-      descriptionElt.firstChild.setAttribute('itemprop', 'description')
+      ;(descriptionElt.firstChild as HTMLElement).setAttribute('itemprop', 'description')
     }
   },
 
@@ -127,10 +128,12 @@ export default {
     /**
      * ? GET CATEGORIES
      * * Retrieves the categories of the products.
-     * @return {type} The categories of the products.
+     *
+     * @param {Array<Product>} products - The array of products.
+     * @return {Array<Category>} The categories of the products.
      */
-    getCategories() {
-      return getCats(this.products)
+    getCategories(products: Array<Product>): Array<Category> {
+      return getCats(products)
     }
   },
 
@@ -140,20 +143,22 @@ export default {
     /**
      * ? CHECK SESSION
      * * Check the session for the given role.
+     *
      * @param {string} role - The role to check.
      * @return {boolean} The result of the session check.
      */
-    checkSession(role) {
+    checkSession(role: string): boolean {
       return checkRole(this.avatar.role, role)
     },
 
     /**
      * ? GET ITEMS BY CATEGORY
      * * Retrieves items by category.
-     * @param {Array} items - The array of items.
-     * @return {Array} The items filtered by category.
+     *
+     * @param {Array<Item>} items - The array of items.
+     * @return {Array<Item>} The items filtered by category.
      */
-    getItemsByCategory(items) {
+    getItemsByCategory(items: Array<Item>): Array<Item> {
       return getItemsByCat(items)
     }
   }

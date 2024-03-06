@@ -192,7 +192,7 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
 import BtnElt from '../components/BtnElt.vue'
 import CardElt from '../components/CardElt.vue'
 import FieldElt from '../components/FieldElt.vue'
@@ -223,13 +223,26 @@ export default {
    * ? CREATED
    * * Sets the order by matching the products in the basket with the products in the store
    * * Checks if the user is logged in & with which role
+   *
    * @return {Promise<void>} A promise that gets "products"
    */
-  async created() {
-    const { API_URL, HEAD_BASKET, META_BASKET, LOGO_SRC, UI_URL } = this.val
+  async created(): Promise<void> {
+    const {
+      API_URL,
+      HEAD_BASKET,
+      META_BASKET,
+      LOGO_SRC,
+      UI_URL
+    }: {
+      API_URL: string
+      HEAD_BASKET: string
+      META_BASKET: string
+      LOGO_SRC: string
+      UI_URL: string
+    } = this.val
 
     try {
-      const res = await getData(`${API_URL}/products`)
+      const res: any = await getData(`${API_URL}/products`) // Replace 'any' with the actual type of 'res'
       this.products = res
       this.setBasket()
       setMeta(HEAD_BASKET, META_BASKET, `${UI_URL}/basket`, UI_URL + LOGO_SRC)
@@ -240,7 +253,7 @@ export default {
 
         if (this.token) this.setPaypal(this.val, this.getTotal, this.createOrder)
       }
-    } catch (err) {
+    } catch (err: any) {
       setError(err)
     }
 
@@ -261,10 +274,11 @@ export default {
     /**
      * ? CHECK SESSION
      * * Checks the session for the specified role.
+     *
      * @param {string} role - The role to check.
      * @return {boolean} Returns true if the user has the specified role, otherwise false.
      */
-    checkSession(role) {
+    checkSession(role: string): boolean {
       return checkRole(this.avatar.role, role)
     },
 
@@ -272,26 +286,27 @@ export default {
      * ? TOGGLE TERMS
      * * Toggles the value of the isTermsAccepted property.
      */
-    toggleTerms() {
+    toggleTerms(): void {
       this.isTermsAccepted = !this.isTermsAccepted
     },
 
     /**
      * ? GET TOTAL
      * * Get the total value.
+     *
      * @return {number} The total value.
      */
-    getTotal() {
+    getTotal(): number {
       return this.total
     },
 
     /**
      * ? SET BASKET
      * * Sets the value of the "basket" property by retrieving it from local storage.
-     * @param {type} None
-     * @return {type} None
+     *
+     * @return {void} None
      */
-    setBasket() {
+    setBasket(): void {
       if (localStorage.getItem('basket') !== null) {
         this.basket = JSON.parse(localStorage.getItem('basket'))
       }
@@ -300,16 +315,18 @@ export default {
     /**
      * ? SET ORDER
      * * Sets the order by matching the products in the basket with the products in the store.
+     *
+     * @return {void} None
      */
-    setOrder() {
+    setOrder(): void {
       for (let i = 0; i < this.products.length; i++) {
-        const product = this.products[i]
+        const product: Product = this.products[i]
 
         for (let j = 0; j < this.basket.length; j++) {
-          const item = this.basket[j]
+          const item: BasketItem = this.basket[j]
 
           if (product.id === item.id) {
-            let order = {}
+            let order: Order = {}
 
             order.id = item.id
             order.name = product.name
@@ -327,17 +344,19 @@ export default {
     /**
      * ? SET PAYPAL
      * * Sets up the Paypal payment option and renders the Paypal button on the page.
+     *
      * @param {Object} val - The object containing Paypal configuration values.
      * @param {Function} getTotal - The function to get the total value for the Paypal payment.
      * @param {Function} createOrder - The function to create an order with Paypal.
+     * @returns {void}
      */
-    setPaypal(val, getTotal, createOrder) {
+    setPaypal(val: Object, getTotal: Function, createOrder: Function): void {
       loadScript({
         'client-id': val.PAYPAL_ID,
         'data-namespace': val.PAYPAL_NAMESPACE,
         currency: val.CURRENCY_ISO
       })
-        .then((paypal) => {
+        .then((paypal: any) => {
           paypal
             .Buttons({
               style: {
@@ -345,23 +364,25 @@ export default {
                 shape: val.PAYPAL_SHAPE,
                 label: val.PAYPAL_LABEL
               },
-              onInit: function (data, actions) {
+              onInit: function (data: any, actions: any): void {
                 actions.disable()
 
-                document.querySelector('#checkTerms').addEventListener('change', function (event) {
-                  if (event.target.checked) {
-                    actions.enable()
-                  } else {
-                    actions.disable()
-                  }
-                })
+                document
+                  .querySelector('#checkTerms')
+                  .addEventListener('change', function (event: Event): void {
+                    if ((event.target as HTMLInputElement).checked) {
+                      actions.enable()
+                    } else {
+                      actions.disable()
+                    }
+                  })
               },
-              onClick: function () {
-                if (!document.querySelector('#checkTerms').checked) {
+              onClick: function (): void {
+                if (!(document.querySelector('#checkTerms') as HTMLInputElement).checked) {
                   alert(val.PAYPAL_TERMS_ERROR)
                 }
               },
-              createOrder: function (data, actions) {
+              createOrder: function (data: any, actions: any): any {
                 return actions.order.create({
                   purchase_units: [
                     {
@@ -373,49 +394,54 @@ export default {
                   ]
                 })
               },
-              onApprove: function (data, actions) {
-                return actions.order.capture().then((orderData) => {
+              onApprove: function (data: any, actions: any): any {
+                return actions.order.capture().then((orderData: any) => {
                   alert(val.PAYPAL_STATUS + orderData.id + ' : ' + orderData.status)
                   createOrder(orderData.id)
                 })
               },
-              onCancel: function () {
+              onCancel: function (): void {
                 alert(val.PAYPAL_CANCEL)
               },
-              onError: function (err) {
+              onError: function (err: any): void {
                 alert(val.PAYPAL_ERROR)
                 throw new Error(err)
               }
             })
             .render('#paypal')
-            .catch((error) => console.error(val.PAYPAL_BTN, error))
+            .catch((error: any) => console.error(val.PAYPAL_BTN, error))
         })
-        .catch((error) => console.error(val.PAYPAL_SDK, error))
+        .catch((error: any) => console.error(val.PAYPAL_SDK, error))
     },
 
     /**
      * ? SET TOTAL
      * * Sets the total value based on the prices and quantities of the items in the order.
+     *
+     * @returns The total value calculated from the order items.
      */
-    setTotal() {
-      this.total = 0
+    setTotal(): number {
+      let total: number = 0
 
       for (let i = 0; i < this.order.length; i++) {
-        const productTotal = this.order[i].price * this.order[i].quantity
-        this.total += Number(productTotal)
+        const productTotal: number = this.order[i].price * this.order[i].quantity
+        total += productTotal
       }
+
+      return total
     },
 
     /**
      * ? CREATE ORDER
      * * Creates an order with the given orderId.
+     *
      * @param {number} orderId - The ID of the order.
-     * @return {void} This function does not return a value.
+     * @return {Promise<void>} A promise that resolves when the order is created.
      */
-    async createOrder(orderId) {
-      const URL = `${this.val.API_URL}/orders/`
-      const order = new FormData()
-      const products = []
+    async createOrder(orderId: number): Promise<void> {
+      const URL: string = `${this.val.API_URL}/orders/`
+      const order: FormData = new FormData()
+      const products: Product[] = []
 
       for (const product of this.order) {
         delete product.image
@@ -423,16 +449,16 @@ export default {
       }
 
       order.append('products', JSON.stringify(products))
-      order.append('total', this.total)
-      order.append('paymentId', orderId)
+      order.append('total', this.total.toString())
+      order.append('paymentId', orderId.toString())
       order.append('status', this.val.ORDER_STATUS)
-      order.append('userId', this.id)
+      order.append('userId', this.id.toString())
 
       try {
         await postData(URL, order, this.token)
         alert(this.val.ALERT_ORDER_CREATED)
         localStorage.removeItem('basket')
-      } catch (err) {
+      } catch (err: any) {
         setError(err)
       } finally {
         this.$router.go()
@@ -442,10 +468,12 @@ export default {
     /**
      * ? UPDATE PRODUCT QUANTITY
      * * Updates the quantity of a product in the basket based on the provided ID and option.
+     *
      * @param {number} id - The ID of the product.
      * @param {string} option - The option of the product.
+     * @returns {void}
      */
-    updateProductQuantity(id, option) {
+    updateProductQuantity(id: number, option: string): void {
       for (let i = 0; i < this.order.length; i++) {
         const element = this.order[i]
 
@@ -465,11 +493,13 @@ export default {
 
     /**
      * ? DELETE PRODUCT
-     * Deletes a product from the order and basket arrays based on the given id and option.
+     * * Deletes a product from the order and basket arrays based on the given id and option.
+     *
      * @param {number} id - The id of the product to be deleted.
      * @param {string} option - The option of the product to be deleted.
+     * @returns {void}
      */
-    deleteProduct(id, option) {
+    deleteProduct(id: number, option: string): void {
       for (let i = 0; i < this.order.length; i++) {
         const element = this.order[i]
         if (element.id === id && element.option === option) this.order.splice(i, 1)
@@ -486,9 +516,9 @@ export default {
 
     /**
      * ? DELETE BASKET
-     * Deletes the basket.
+     * * Deletes the basket.
      */
-    deleteBasket() {
+    deleteBasket(): void {
       if (confirm(this.val.CONFIRM_BASKET)) {
         localStorage.removeItem('basket')
         this.$router.go()

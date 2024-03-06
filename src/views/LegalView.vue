@@ -18,7 +18,7 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
 import CardElt from '../components/CardElt.vue'
 import { setMeta } from '../assets/services'
 
@@ -27,6 +27,10 @@ export default {
   components: { CardElt },
   props: ['val'],
 
+  /**
+   * ? CREATED
+   * * Set meta data
+   */
   created() {
     const { HEAD_LEGAL, LOGO_SRC, META_LEGAL, UI_URL } = this.val
     setMeta(HEAD_LEGAL, META_LEGAL, `${UI_URL}/legal`, UI_URL + LOGO_SRC)

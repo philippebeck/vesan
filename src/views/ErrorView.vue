@@ -21,7 +21,7 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
 import BtnElt from '../components/BtnElt.vue'
 import CardElt from '../components/CardElt.vue'
 import MediaElt from '../components/MediaElt.vue'

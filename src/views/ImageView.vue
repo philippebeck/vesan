@@ -77,7 +77,7 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
 import CardElt from '../components/CardElt.vue'
 import ImageSet from '../components/ImageSet.vue'
 import ListElt from '../components/ListElt.vue'
@@ -99,11 +99,24 @@ export default {
     }
   },
 
-  async created() {
-    const { API_URL, HEAD, META_IMAGE, UI_URL } = this.val
+  /**
+   * ? CREATED
+   * * Retrieves the gallery from the API and sets the meta tags
+   * * Lists the images of the gallery
+   * * Lists the other galleries
+   *
+   * @returns {Promise<void>}
+   */
+  async created(): Promise<void> {
+    const {
+      API_URL,
+      HEAD,
+      META_IMAGE,
+      UI_URL
+    }: { API_URL: string; HEAD: string; META_IMAGE: string; UI_URL: string } = this.val
 
     try {
-      const gallery = await getData(`${API_URL}/galleries/${this.$route.params.id}`)
+      const gallery: GalleryType = await getData(`${API_URL}/galleries/${this.$route.params.id}`)
       this.gallery = gallery
 
       setMeta(
@@ -112,7 +125,7 @@ export default {
         `${UI_URL}/gallery/${gallery.id}`,
         `${UI_URL}/img/thumbnails/galleries/${gallery.cover}`
       )
-    } catch (err) {
+    } catch (err: Error) {
       setError(err)
       this.$router.push('/galleries')
     }
@@ -131,10 +144,11 @@ export default {
     /**
      * ? CHECK SESSION
      * * Checks the session for the specified role.
+     *
      * @param {string} role - The role to check the session against.
      * @return {boolean} Returns true if the session has the specified role, otherwise false.
      */
-    checkSession(role) {
+    checkSession(role: string): boolean {
       return checkRole(this.avatar.role, role)
     }
   }

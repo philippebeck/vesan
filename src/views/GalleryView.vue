@@ -56,7 +56,7 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
 import CardElt from '../components/CardElt.vue'
 import GallerySet from '../components/GallerySet.vue'
 import ListElt from '../components/ListElt.vue'
@@ -71,8 +71,18 @@ export default {
   components: { CardElt, ListElt, MediaElt, NavElt, GallerySet },
   props: ['avatar', 'val'],
 
-  async created() {
-    const { HEAD_GALLERY, LOGO_SRC, META_GALLERY, UI_URL } = this.val
+  /**
+   * Fetches the list of galleries and images
+   * Sets the meta tags
+   * @returns {Promise<void>}
+   */
+  async created(): Promise<void> {
+    const { HEAD_GALLERY, LOGO_SRC, META_GALLERY, UI_URL } = this.val as {
+      HEAD_GALLERY: string
+      LOGO_SRC: string
+      META_GALLERY: string
+      UI_URL: string
+    }
 
     await this.$store.dispatch('listGalleries')
     await this.$store.dispatch('listImages')
@@ -90,10 +100,11 @@ export default {
     /**
      * ? CHECK SESSION
      * Checks the session for a given role.
-     * @param {type} role - the role to check the session for
-     * @return {type} the result of the session check
+     *
+     * @param {string} role - the role to check the session for
+     * @return {boolean} the result of the session check
      */
-    checkSession(role) {
+    checkSession(role: string): boolean {
       return checkRole(this.avatar.role, role)
     }
   }

@@ -63,7 +63,7 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
 import BtnElt from '../components/BtnElt.vue'
 import CardElt from '../components/CardElt.vue'
 import FieldElt from '../components/FieldElt.vue'
@@ -104,9 +104,11 @@ export default {
     /**
      * ? ON VERIFY
      * * Handles the verification process.
-     * @param {any} response - The response from the verification process.
+     *
+     * @param {string} response - The response from the verification process.
+     * @returns {Promise<void>}
      */
-    async onVerify(response) {
+    async onVerify(response: string): Promise<void> {
       const { CHECK_EMAIL, CHECK_STRING, REGEX_EMAIL, TEXT_MIN, TEXT_MAX, API_URL } = this.val
 
       if (
@@ -114,10 +116,10 @@ export default {
         checkRange(this.subject, CHECK_STRING) &&
         checkRange(this.text, CHECK_STRING, TEXT_MIN, TEXT_MAX)
       ) {
-        const URL = `${API_URL}/auth/recaptcha`
+        const URL: string = `${API_URL}/auth/recaptcha`
 
         try {
-          const { success } = await postData(URL, { response })
+          const { success }: { success: boolean } = await postData(URL, { response })
 
           if (success) {
             this.send()
@@ -135,19 +137,23 @@ export default {
     /**
      * ? SEND
      * * Asynchronously sends a message to the specified URL using the email, subject & text provided.
-     * @return {Promise} A Promise that resolves when the message is successfully sent & rejects if an error occurs.
+     *
+     * @param {string} email - The email address to send the message to.
+     * @param {string} subject - The subject of the message.
+     * @param {string} text - The text of the message.
+     * @return {Promise<void>} A Promise that resolves when the message is successfully sent & rejects if an error occurs.
      */
-    async send() {
-      const URL = `${this.val.API_URL}/users/message`
-      const data = new FormData()
+    async send(email: string, subject: string, text: string): Promise<void> {
+      const URL: string = `${this.val.API_URL}/users/message`
+      const data: FormData = new FormData()
 
-      data.append('email', this.email)
-      data.append('subject', this.subject)
-      data.append('html', this.text)
+      data.append('email', email)
+      data.append('subject', subject)
+      data.append('html', text)
 
       try {
         await postData(URL, data)
-        alert(this.subject + this.val.ALERT_SENDED)
+        alert(subject + this.val.ALERT_SENDED)
       } catch (err) {
         setError(err)
       } finally {

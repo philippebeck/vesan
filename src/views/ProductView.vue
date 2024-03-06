@@ -195,7 +195,7 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
 import BtnElt from '../components/BtnElt.vue'
 import CardElt from '../components/CardElt.vue'
 import FieldElt from '../components/FieldElt.vue'
@@ -234,13 +234,14 @@ export default {
    * ? CREATED
    * * Retrieves the product from the API.
    * * Sets the meta tags.
+   *
    * @return {Promise<void>} a promise that gets a "product"
    */
-  async created() {
-    const { API_URL, HEAD, UI_URL } = this.val
+  async created(): Promise<void> {
+    const { API_URL, HEAD, UI_URL }: { API_URL: string; HEAD: string; UI_URL: string } = this.val
 
     try {
-      const product = await getData(`${API_URL}/products/${this.$route.params.id}`)
+      const product: Product = await getData(`${API_URL}/products/${this.$route.params.id}`)
       product.options = product.options.split(',')
       this.product = product
 
@@ -250,7 +251,7 @@ export default {
         `${UI_URL}/product/${product.id}`,
         `${UI_URL}/img/thumbnails/products/${product.image}`
       )
-    } catch (err) {
+    } catch (err: any) {
       setError(err)
       this.$router.push('/shop')
     }
@@ -259,11 +260,15 @@ export default {
   /**
    * ? UPDATED
    * * Updating the description element if it exists.
+   *
+   * @returns void
    */
-  updated() {
+  updated(): void {
     if (document.getElementById('figcaption')) {
-      const descriptionElt = document.getElementById('figcaption')
-      descriptionElt.firstChild.setAttribute('itemprop', 'description')
+      const descriptionElt: HTMLElement | null = document.getElementById('figcaption')
+      if (descriptionElt) {
+        descriptionElt.firstChild.setAttribute('itemprop', 'description')
+      }
     }
   },
 
@@ -275,10 +280,11 @@ export default {
     /**
      * ? CHECK SESSION
      * * Checks the session for the specified role.
+     *
      * @param {string} role - The role to check.
      * @return {boolean} The result of the session check.
      */
-    checkSession(role) {
+    checkSession(role: string): boolean {
       return checkRole(this.avatar.role, role)
     },
 
@@ -286,8 +292,8 @@ export default {
      * ? ADD TO BASKET
      * * Adds the selected item to the basket.
      */
-    addToBasket() {
-      if (this.option !== '') {
+    addToBasket(option: string): void {
+      if (option !== '') {
         this.createOrder()
         this.getBasket()
         this.checkBasket()
@@ -300,34 +306,41 @@ export default {
     /**
      * ? CREATE ORDER
      * * Create an order based on the selected product, option & quantity.
+     *
+     * @param {number} productId - The ID of the product
+     * @param {string} option - The selected product option
+     * @param {number} quantity - The quantity of the product
+     * @returns {Order} - The created order
      */
-    createOrder() {
-      this.order = {
-        id: this.product.id,
-        option: this.option,
-        quantity: this.quantity
+    createOrder(productId: number, option: string, quantity: number): Order {
+      return {
+        id: productId,
+        option: option,
+        quantity: quantity
       }
     },
 
     /**
-     * ? GET BASKET
-     * * Retrieves the basket from the local storage.
+     * Retrieves the basket from the local storage.
+     * @returns {Array<string>} The basket retrieved from local storage.
      */
-    getBasket() {
+    getBasket(): Array<string> {
       if (localStorage.getItem('basket') === null) {
-        localStorage.setItem('basket', [])
-        this.basket = localStorage.getItem('basket').split()
+        localStorage.setItem('basket', JSON.stringify([]))
+        this.basket = JSON.parse(localStorage.getItem('basket'))
       } else {
         this.basket = JSON.parse(localStorage.getItem('basket'))
       }
+      return this.basket
     },
 
     /**
      * ? CHECK BASKET
      * * Updates the basket quantity by checking if the order is already in it.
-     * @return {Object} The updated item.
+     *
+     * @return {Array<Object>} The updated basket.
      */
-    checkBasket() {
+    checkBasket(): Array<Object> {
       this.isInBasket = false
 
       this.basket = this.basket.map((item) => {
@@ -337,13 +350,17 @@ export default {
         }
         return item
       })
+
+      return this.basket
     },
 
     /**
      * ? SET BASKET
      * * Sets the basket by adding the order to the basket array & storing it in local storage.
+     * @param {void}
+     * @returns {void}
      */
-    setBasket() {
+    setBasket(): void {
       if (!this.isInBasket) this.basket.push(this.order)
       if (this.basket[0] === '') this.basket.shift()
 
@@ -357,8 +374,10 @@ export default {
     /**
      * ? UPDATE PRODUCT
      * * Updates the product by sending a PUT request to the API.
+     * @param {void}
+     * @returns {Promise<void>}
      */
-    async updateProduct() {
+    async updateProduct(): Promise<void> {
       const {
         CHECK_STRING,
         TEXT_MIN,
@@ -368,18 +387,46 @@ export default {
         PRICE_MAX,
         API_URL,
         ALERT_UPDATED
+      }: {
+        CHECK_STRING: string
+        TEXT_MIN: number
+        TEXT_MAX: number
+        CHECK_NUMBER: number
+        PRICE_MIN: number
+        PRICE_MAX: number
+        API_URL: string
+        ALERT_UPDATED: string
       } = this.val
-      let { id, name, description, image, alt, price, options, cat } = this.product
 
-      const IS_NAME_CHECKED = checkRange(name, CHECK_STRING)
-      const IS_DESC_CHECKED = checkRange(description, CHECK_STRING, TEXT_MIN, TEXT_MAX)
-      const IS_ALT_CHECKED = checkRange(alt, CHECK_STRING)
-      const IS_PRICE_CHECKED = checkRange(price, CHECK_NUMBER, PRICE_MIN, PRICE_MAX)
+      let {
+        id,
+        name,
+        description,
+        image,
+        alt,
+        price,
+        options,
+        cat
+      }: {
+        id: string
+        name: string
+        description: string
+        image: string
+        alt: string
+        price: number
+        options: string
+        cat: string
+      } = this.product
+
+      const IS_NAME_CHECKED: boolean = checkRange(name, CHECK_STRING)
+      const IS_DESC_CHECKED: boolean = checkRange(description, CHECK_STRING, TEXT_MIN, TEXT_MAX)
+      const IS_ALT_CHECKED: boolean = checkRange(alt, CHECK_STRING)
+      const IS_PRICE_CHECKED: boolean = checkRange(price, CHECK_NUMBER, PRICE_MIN, PRICE_MAX)
 
       if (IS_NAME_CHECKED && IS_DESC_CHECKED && IS_ALT_CHECKED && IS_PRICE_CHECKED) {
-        const URL = `${API_URL}/products/${id}`
-        const data = new FormData()
-        const img = document.getElementById('image')?.files[0] ?? image
+        const URL: string = `${API_URL}/products/${id}`
+        const data: FormData = new FormData()
+        const img: File | string = document.getElementById('image')?.files[0] ?? image
 
         data.append('name', name)
         data.append('description', description)
@@ -404,9 +451,12 @@ export default {
      * ? DELETE PRODUCT
      * * Deletes a product from the system.
      */
-    async deleteProduct() {
-      const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val
-      let { id, name } = this.product
+    async deleteProduct(id: number, name: string): Promise<void> {
+      const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val as {
+        TITLE_DELETE: string
+        API_URL: string
+        ALERT_DELETED: string
+      }
 
       if (confirm(`${TITLE_DELETE} ${name} ?`)) {
         const URL = `${API_URL}/products/${id}`

@@ -130,7 +130,7 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
 import BtnElt from '../components/BtnElt.vue'
 import CardElt from '../components/CardElt.vue'
 import FieldElt from '../components/FieldElt.vue'
@@ -159,9 +159,22 @@ export default {
    * ? CREATED
    * * Get the user data from the store & set the meta tags
    * * If the user is not logged in, redirect to the login page
+   * @returns {Promise<void>}
    */
-  async created() {
-    const { ALERT_LOGOUT, HEAD_PROFILE, LOGO_SRC, META_PROFILE, UI_URL } = this.val
+  async created(): Promise<void> {
+    const {
+      ALERT_LOGOUT,
+      HEAD_PROFILE,
+      LOGO_SRC,
+      META_PROFILE,
+      UI_URL
+    }: {
+      ALERT_LOGOUT: string
+      HEAD_PROFILE: string
+      LOGO_SRC: string
+      META_PROFILE: string
+      UI_URL: string
+    } = this.val
 
     if (this.token) {
       await this.$store.dispatch('readUser', this.id)
@@ -184,10 +197,11 @@ export default {
     /**
      * ? CHECK SESSION
      * * Checks the session based on the specified role.
-     * @param {type} role - the role to check the session against
-     * @return {type} the result of the session check
+     *
+     * @param {string} role - the role to check the session against
+     * @return {boolean} the result of the session check
      */
-    checkSession(role) {
+    checkSession(role: string): boolean {
       return checkRole(this.user.role, role)
     },
 
@@ -205,18 +219,25 @@ export default {
     /**
      * ? UPDATE USER
      * * Updates the user information on the server.
+     *
+     * @returns {Promise<void>}
      */
-    async updateUser() {
-      const { API_URL, CHECK_EMAIL, CHECK_PASS, CHECK_STRING, REGEX_EMAIL, REGEX_PASS } = this.val
-
-      const IS_NAME_CHECKED = checkRange(this.user.name, CHECK_STRING)
-      const IS_EMAIL_CHECKED = checkRegex(this.user.email, CHECK_EMAIL, REGEX_EMAIL)
-      const IS_PASS_CHECKED = this.pass && checkRegex(this.pass, CHECK_PASS, REGEX_PASS)
+    async updateUser(
+      API_URL: string,
+      CHECK_EMAIL: string,
+      CHECK_PASS: string,
+      CHECK_STRING: string,
+      REGEX_EMAIL: string,
+      REGEX_PASS: string
+    ): Promise<void> {
+      const IS_NAME_CHECKED: boolean = checkRange(this.user.name, CHECK_STRING)
+      const IS_EMAIL_CHECKED: boolean = checkRegex(this.user.email, CHECK_EMAIL, REGEX_EMAIL)
+      const IS_PASS_CHECKED: boolean = this.pass && checkRegex(this.pass, CHECK_PASS, REGEX_PASS)
 
       if (IS_NAME_CHECKED && IS_EMAIL_CHECKED) {
-        const URL = `${API_URL}/users/${this.user.id}`
-        const data = new FormData()
-        const img = document.getElementById('image')?.files[0] ?? this.user.image
+        const URL: string = `${API_URL}/users/${this.user.id}`
+        const data: FormData = new FormData()
+        const img: File = document.getElementById('image')?.files[0] ?? this.user.image
 
         if (IS_PASS_CHECKED) data.append('pass', this.pass)
 
@@ -239,13 +260,14 @@ export default {
     /**
      * ? DELETE USER
      * * Deletes a user from the system.
+     * @returns {Promise<void>}
      */
-    async deleteUser() {
-      const { ALERT_DELETED, API_URL, TITLE_DELETE } = this.val
-      const NAME = this.user.name
+    async deleteUser(API_URL: string, TITLE_DELETE: string): Promise<void> {
+      const { ALERT_DELETED } = this.val
+      const NAME: string = this.user.name
 
       if (confirm(`${TITLE_DELETE} ${NAME} ?`)) {
-        const URL = `${API_URL}/users/${this.user.id}`
+        const URL: string = `${API_URL}/users/${this.user.id}`
 
         try {
           await deleteData(URL, this.token)
