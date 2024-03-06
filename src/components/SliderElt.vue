@@ -54,7 +54,7 @@
   </figure>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent, ref, onMounted, onUnmounted } from 'vue'
 import { checkSlot } from '../assets/services'
 
@@ -71,10 +71,11 @@ export default defineComponent({
   /**
    * ? SETUP
    * * Setup the component
-   * @param {Object} props
-   * @param {Object} - Object that contains the slots of the component.
+   * @param {Object} props - The props of the component.
+   * @param {Object} context - Object that contains the slots of the component.
+   * @returns {{ index: Ref<number>, intervalId: Ref<number>, autoElt: Ref<null>, randomElt: Ref<null>, autoState: Ref<boolean>, randomState: Ref<boolean>, hasSlot: (name: string) => boolean, setKeyboard: (event: Event) => void, setIcon: (icon: HTMLElement, add: string, remove: string) => void, refreshSlide: () => void, checkAuto: () => void, checkRandom: () => void, goNext: () => void, goPrevious: () => void, runSlider: () => void }} - Object with strongly typed functions and refs.
    */
-  setup(props, { slots }) {
+  setup(props, context) {
     const index = ref(-1)
     const intervalId = ref(0)
     const autoElt = ref(null)
@@ -85,16 +86,19 @@ export default defineComponent({
     /**
      * ? HAS SLOT
      * * Checks if the component has a slot
-     * @param {string} name
+     *
+     * @param {string} name - Name of the slot to check.
+     * @returns {boolean} - True if the slot exists, false otherwise.
      */
-    const hasSlot = (name) => checkSlot(slots, name)
+    const hasSlot = (name: string): boolean => checkSlot(context.slots, name)
 
     /**
      * ? SET KEYBOARD
      * * Set the keyboard
-     * @param {Event} event
+     *
+     * @param {Event} event - The keyboard event.
      */
-    const setKeyboard = (event) => {
+    const setKeyboard = (event: Event): void => {
       const actions = {
         ArrowUp: checkRandom,
         ArrowRight: goNext,
@@ -109,11 +113,11 @@ export default defineComponent({
     /**
      * ? SET ICON
      * * Set the icon
-     * @param {HTMLElement} icon
-     * @param {string} add
-     * @param {string} remove
+     * @param {HTMLElement} icon - The icon element.
+     * @param {string} add - The class to add to the icon.
+     * @param {string} remove - The class to remove from the icon.
      */
-    const setIcon = (icon, add, remove) => {
+    const setIcon = (icon: HTMLElement, add: string, remove: string): void => {
       const classes = icon.classList
 
       classes.add(add)
@@ -124,7 +128,7 @@ export default defineComponent({
      * ? REFRESH SLIDE
      * * Refresh the slide
      */
-    const refreshSlide = () => {
+    const refreshSlide = (): void => {
       if (randomState.value) index.value = getRandomInteger(0, props.slides.length - 1)
 
       for (let i = 1; i <= props.slides.length; i++) {
@@ -140,7 +144,7 @@ export default defineComponent({
      * ? CHECK AUTO
      * * Check the auto state, then set the pause or play icon
      */
-    const checkAuto = () => {
+    const checkAuto = (): void => {
       if (autoState.value) {
         setAuto(false, 'Play', 'fa-play', 'fa-pause')
         clearInterval(intervalId.value)
@@ -156,7 +160,7 @@ export default defineComponent({
      * ? CHECK RANDOM
      * * Check the random state, then set the random or continue icon
      */
-    const checkRandom = () => {
+    const checkRandom = (): void => {
       randomState.value
         ? setRandom(false, 'Random', 'fa-random', 'fa-long-arrow-alt-right')
         : setRandom(true, 'Normal', 'fa-long-arrow-alt-right', 'fa-random')
@@ -168,7 +172,7 @@ export default defineComponent({
      * ? GO PREVIOUS
      * * Go to the previous slide
      */
-    const goPrevious = () => {
+    const goPrevious = (): void => {
       index.value = (index.value - 1 + props.slides.length) % props.slides.length
       refreshSlide()
     }
@@ -177,7 +181,7 @@ export default defineComponent({
      * ? GO NEXT
      * * Go to the next slide
      */
-    const goNext = () => {
+    const goNext = (): void => {
       index.value = (index.value + 1) % props.slides.length
       refreshSlide()
     }
@@ -186,17 +190,19 @@ export default defineComponent({
      * ? RUN SLIDER
      * * Run the slider
      */
-    const runSlider = () => {
+    const runSlider = (): void => {
       autoState.value ? (intervalId.value = window.setInterval(goNext, props.delay)) : goNext()
     }
 
     /**
      * ? GET RANDOM INTEGER
      * * Get a random integer
-     * @param {number} min
-     * @param {number} max
+     *
+     * @param {number} min - The minimum value.
+     * @param {number} max - The maximum value.
+     * @returns {number} - The random integer.
      */
-    const getRandomInteger = (min, max) => {
+    const getRandomInteger = (min: number, max: number): number => {
       const range = max - min + 1
       return Math.floor(Math.random() * range) + min
     }
@@ -204,12 +210,13 @@ export default defineComponent({
     /**
      * ? SET AUTO
      * * Set the auto state
-     * @param {boolean} state
-     * @param {string} title
-     * @param {string} add
-     * @param {string} remove
+     *
+     * @param {boolean} state - The state to set.
+     * @param {string} title - The title to set.
+     * @param {string} add - The class to add to the icon.
+     * @param {string} remove - The class to remove from the icon.
      */
-    const setAuto = (state, title, add, remove) => {
+    const setAuto = (state: boolean, title: string, add: string, remove: string): void => {
       const icon = autoElt.value.querySelector('i')
 
       autoState.value = state
@@ -220,12 +227,13 @@ export default defineComponent({
     /**
      * ? SET RANDOM
      * * Set the random state
-     * @param {boolean} state
-     * @param {string} title
-     * @param {string} add
-     * @param {string} remove
+     *
+     * @param {boolean} state - The state to set.
+     * @param {string} title - The title to set.
+     * @param {string} add - The class to add to the icon.
+     * @param {string} remove - The class to remove from the icon.
      */
-    const setRandom = (state, title, add, remove) => {
+    const setRandom = (state: boolean, title: string, add: string, remove: string): void => {
       const icon = randomElt.value.querySelector('i')
 
       randomState.value = state

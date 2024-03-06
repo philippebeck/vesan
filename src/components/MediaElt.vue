@@ -75,7 +75,7 @@
   </figure>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue'
 import { checkSlot } from '../assets/services'
 
@@ -98,23 +98,36 @@ export default defineComponent({
   /**
    * ? SETUP
    * * Setup the component
+   *
    * @param {Object} props - The props of the component.
    * @param {Object} - Object that contains the slots of the component.
+   * @returns {Object} - An object containing the functions getItemType and hasSlot.
    */
-  setup(props, { slots }) {
+  setup(
+    props: {
+      /* define prop types */
+    },
+    {
+      slots
+    }: {
+      /* define slot types */
+    }
+  ) {
     /**
      * ? HAS SLOT
      * * Checks if the component has a slot
-     * @param {string} name
+     * @param {string} name - The name of the slot to check.
+     * @returns {boolean} - Whether the component has the specified slot.
      */
-    const hasSlot = (name) => checkSlot(slots, name)
+    const hasSlot = (name: string): boolean => checkSlot(slots, name)
 
     /**
      * ? GET ITEM TYPE
      * * Returns the item type for the schema
-     * @param {string} type
+     * @param {string} type - The type of the item.
+     * @returns {string} - The schema type for the specified item type.
      */
-    const getItemType = (type) => {
+    const getItemType = (type: string): string => {
       switch (type) {
         case 'audio':
           return 'https://schema.org/AudioObject'

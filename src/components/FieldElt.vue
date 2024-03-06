@@ -101,7 +101,7 @@
   </fieldset>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent, ref } from 'vue'
 import { checkSlot } from '../assets/services'
 
@@ -130,32 +130,46 @@ export default defineComponent({
    * ? SETUP
    * * Checks if the component has a slot
    * * Get the type of the field
+   *
    * @param {Object} props - The props of the component.
    * @param {Object} - Object that contains the slots & the emits of the component.
+   * @returns {{ fieldType: Ref<string>, getFieldType: () => void, hasSlot: (name: string) => boolean, onInput: (event: Event) => void }} - Object with strong types.
    */
-  setup(props, { slots, emit }) {
-    const fieldType = ref('')
+  setup(
+    props: { type: string },
+    { slots, emit }: { slots: any; emit: any }
+  ): {
+    fieldType: Ref<string>
+    getFieldType: () => void
+    hasSlot: (name: string) => boolean
+    onInput: (event: Event) => void
+  } {
+    const fieldType: Ref<string> = ref('')
 
     /**
      * ? HAS SLOT
      * * Checks if the component has a slot
+     *
      * @param {string} name
+     * @returns {boolean} - Whether the component has the specified slot.
      */
-    const hasSlot = (name) => checkSlot(slots, name)
+    const hasSlot = (name: string): boolean => checkSlot(slots, name)
 
     /**
      * ? ON INPUT
      * * Emit the input event
+     *
      * @param {Event} event
      */
-    const onInput = (event) => emit('update:value', event.target.value)
+    const onInput = (event: Event): void =>
+      emit('update:value', (event.target as HTMLInputElement).value)
 
     /**
      * ? GET FIELD TYPE
      * * Get the type of the field
      */
-    const getFieldType = () => {
-      const fieldTypes = {
+    const getFieldType = (): void => {
+      const fieldTypes: { [key: string]: string[] } = {
         number: ['number', 'date', 'time', 'range'],
         special: ['checkbox', 'radio', 'color'],
         list: ['option', 'select'],

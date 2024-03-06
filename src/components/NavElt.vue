@@ -51,7 +51,7 @@
   </nav>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent, ref, onMounted, onUnmounted } from 'vue'
 import { checkSlot } from '../assets/services'
 
@@ -66,10 +66,20 @@ export default defineComponent({
   /**
    * ? SETUP
    * * Setup the component
+   *
    * @param {Object} props - The props of the component.
    * @param {Object} - Object that contains the slots of the component.
+   * @returns {Object} - An object containing the properties and methods used in the component.
    */
-  setup(props, { slots }) {
+  setup(
+    props: { class: string },
+    { slots }: { slots: any }
+  ): {
+    isMobile: Ref<boolean>
+    getNavClass: () => string
+    hasSlot: (name: string) => boolean
+    toggleSide: () => void
+  } {
     const isMobile = ref(false)
 
     /**
@@ -90,12 +100,14 @@ export default defineComponent({
      * ? HAS SLOT
      * * Checks if the component has a slot
      * @param {string} name
+     * @returns {boolean} - Indicates whether the component has a slot.
      */
-    const hasSlot = (name) => checkSlot(slots, name)
+    const hasSlot = (name: string) => checkSlot(slots, name)
 
     /**
      * ? TOGGLE SIDE
      * * Toggles the sidebar by adding or removing the hide/show classes
+     * @returns {void}
      */
     const toggleSide = () => {
       const side = document.getElementById('side')

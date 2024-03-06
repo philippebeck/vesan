@@ -10,7 +10,7 @@
   </a>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent, computed } from 'vue'
 
 export default defineComponent({
@@ -27,15 +27,21 @@ export default defineComponent({
   /**
    * ? SETUP
    * * Setup the component
+   *
    * @param {Object} props - The props of the component.
+   * @returns {Object} - The return object containing buttonClass, isBtnTypeButton, and linkClass.
    */
-  setup(props) {
+  setup(props: { type: string; class: string }): {
+    buttonClass: string
+    isBtnTypeButton: boolean
+    linkClass: string
+  } {
     /**
      * ? IS BTN TYPE BUTTON
      * * Checks if the type of the button is 'button'
      */
     const isBtnTypeButton = computed(() => {
-      const validTypes = ['button', 'submit', 'reset']
+      const validTypes: string[] = ['button', 'submit', 'reset']
 
       return validTypes.includes(props.type)
     })

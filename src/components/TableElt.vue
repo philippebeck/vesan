@@ -34,7 +34,7 @@
   </table>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue'
 import { checkSlot } from '../assets/services'
 
@@ -49,16 +49,20 @@ export default defineComponent({
   /**
    * ? SETUP
    * * Setup the component
-   * @param {Object} props
-   * @param {Object} - Object that contains the slots of the component.
+   *
+   * @param {Object} props - Object that contains the props of the component.
+   * @param {Object} ctx - Object that contains the slots of the component.
+   * @returns {Object} - Object with the hasSlot function.
    */
-  setup(props, { slots }) {
+  setup(props: Record<string, any>, ctx: SetupContext): { hasSlot: (name: string) => boolean } {
     /**
      * ? HAS SLOT
      * * Checks if the component has a slot
-     * @param {string} name
+     *
+     * @param {string} name - Name of the slot to check.
+     * @returns {boolean} - True if the slot exists, false otherwise.
      */
-    const hasSlot = (name) => checkSlot(slots, name)
+    const hasSlot = (name: string) => checkSlot(slots, name)
 
     return { hasSlot }
   }
