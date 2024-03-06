@@ -33,10 +33,7 @@
       <template #body>
         <ListElt :items="getItemsByCategory(links)" :dynamic="true">
           <template #items="slotProps">
-            <i
-              :id="slotProps.index"
-              :class="`fa-brands fa-${slotProps.index.toLowerCase()} fa-5x sky-dark mar-lg`"
-            >
+            <i :id="slotProps.index" :class="`fa-brands fa-${slotProps.index.toLowerCase()} fa-5x sky-dark mar-lg`">
             </i>
           </template>
 
@@ -98,11 +95,10 @@ export default {
      * ? GET CATEGORIES
      * * Retrieves the categories using the provided links.
      *
-     * @param {Array} links - The list of links.
-     * @return {Array} An array of categories.
+     * @return {string[]} An array of link categories.
      */
-    getCategories(links: Array): Array {
-      return getCats(links)
+    getCategories(): string[] {
+      return getCats(this.links)
     }
   },
 
@@ -124,12 +120,13 @@ export default {
      * ? GET ITEMS BY CATEGORY
      * * Retrieves items by category.
      *
-     * @param {Array<Object>} items - The array of items.
-     * @param {string} category - The category name.
-     * @return {Array<Object>} The array of items filtered by category.
+     * @param {{id: string, name: string, cat: string}[]} items - The array of items.
+     * @return {Record<string, { id: string; name: string }[]>} The items filtered by category.
      */
-    getItemsByCategory(items: Array<Object>, category: string): Array<Object> {
-      return getItemsByCat(items, category)
+    getItemsByCategory(
+      items: { id: string; name: string; cat: string }[]
+    ): Record<string, { id: string; name: string }[]> {
+      return getItemsByCat(items)
     }
   }
 }

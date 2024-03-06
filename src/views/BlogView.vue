@@ -153,9 +153,9 @@ export default {
    * ? CREATED
    * * A function that retrieves the articles & sets the meta data of the page.
    *
-   * @returns {Promise<Article>}
+   * @returns {Promise<any>}
    */
-  async created(): Promise<Article> {
+  async created(): Promise<any> {
     const { HEAD_BLOG, LOGO_SRC, META_BLOG, UI_URL } = this.val as {
       HEAD_BLOG: string
       LOGO_SRC: string
@@ -173,9 +173,15 @@ export default {
    *
    * @returns {void}
    */
-  updated(): void {
-    const textArray = document.getElementsByClassName('figcaption')
-    for (let textElt of textArray) textElt.firstChild.setAttribute('itemprop', 'text')
+  updated() {
+    const textArray: HTMLCollectionOf<Element> = document.getElementsByClassName('figcaption')
+
+    for (let textElt of textArray) {
+
+      if (textElt.firstChild) {
+        (textElt.firstChild as Element).setAttribute('itemprop', 'text')
+      }
+    }
   },
 
   computed: {
@@ -185,9 +191,9 @@ export default {
      * ? GET CATEGORIES
      * * Retrieves the categories of articles.
      *
-     * @return {Array<string>} An array of article categories.
+     * @return {string[]} An array of article categories.
      */
-    getCategories(): Array<string> {
+    getCategories(): string[] {
       return getCats(this.articles)
     }
   },
@@ -208,12 +214,14 @@ export default {
 
     /**
      * ? GET ITEMS BY CATEGORY
-     * Retrieves items based on category.
+     * * Retrieves items by category.
      *
-     * @param {Array<Item>} items - The list of items to filter.
-     * @return {Array<Item>} The filtered list of items.
+     * @param {{id: string, name: string, cat: string}[]} items - The array of items.
+     * @return {Record<string, { id: string; name: string }[]>} The items filtered by category.
      */
-    getItemsByCategory(items: Array<Item>): Array<Item> {
+    getItemsByCategory(
+      items: { id: string; name: string; cat: string }[]
+    ): Record<string, { id: string; name: string }[]> {
       return getItemsByCat(items)
     },
 
@@ -237,10 +245,10 @@ export default {
      */
     async addLike(id: number): Promise<void> {
       const { API_URL }: { API_URL: string } = this.val
-      const article: Article | undefined = this.articles.find((a: Article) => a.id === id)
+      const article: Object | undefined = this.articles.find((a: Object) => a.id === id)
 
       if (!article) return
-      let { name, text, image, alt, url, likes, cat }: Article = article
+      let { name, text, image, alt, url, likes, cat }: Object = article
 
       const index: number = likes.indexOf(this.id)
       index > -1 ? likes.splice(index, 1) : likes.push(this.id)

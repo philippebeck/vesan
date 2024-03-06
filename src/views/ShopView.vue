@@ -54,11 +54,7 @@
                   >
                   </MediaElt>
 
-                  <p
-                    v-html="slotProps.value.description.split(':')[0]"
-                    itemprop="description"
-                    class="shop"
-                  ></p>
+                  <p v-html="slotProps.value.description.split(':')[0]" itemprop="description" class="shop"></p>
 
                   <p itemprop="offers" itemscope itemtype="https://schema.org/Offer">
                     <b itemprop="price" :content="slotProps.value.price + '.00'">
@@ -103,7 +99,12 @@ export default {
    * * Sets the meta tags.
    */
   created(): void {
-    const { HEAD_SHOP, LOGO_SRC, META_SHOP, UI_URL }: ValType = this.val
+    const { HEAD_SHOP, LOGO_SRC, META_SHOP, UI_URL } = this.val as {
+      HEAD_SHOP: string
+      LOGO_SRC: string
+      META_SHOP: string
+      UI_URL: string
+    }
 
     this.$store.dispatch('listProducts')
     setMeta(HEAD_SHOP, META_SHOP, `${UI_URL}/shop`, `${UI_URL}${LOGO_SRC}`)
@@ -111,14 +112,18 @@ export default {
 
   /**
    * ? UPDATED
-   * * Sets the itemprop of the description elements.
+   * * A function that updates the text elements by setting the "itemprop" attribute to "description".
+   *
+   * @returns {void}
    */
-  updated(): void {
-    const descriptionArray: HTMLCollectionOf<HTMLElement> =
-      document.getElementsByClassName('figcaption')
+  updated() {
+    const descriptionArray: HTMLCollectionOf<Element> = document.getElementsByClassName('figcaption')
 
     for (let descriptionElt of descriptionArray) {
-      ;(descriptionElt.firstChild as HTMLElement).setAttribute('itemprop', 'description')
+
+      if (descriptionElt.firstChild) {
+        (descriptionElt.firstChild as Element).setAttribute('itemprop', 'description')
+      }
     }
   },
 
@@ -127,13 +132,12 @@ export default {
 
     /**
      * ? GET CATEGORIES
-     * * Retrieves the categories of the products.
+     * * Retrieves the categories of products.
      *
-     * @param {Array<Product>} products - The array of products.
-     * @return {Array<Category>} The categories of the products.
+     * @return {string[]} An array of the product categories.
      */
-    getCategories(products: Array<Product>): Array<Category> {
-      return getCats(products)
+    getCategories(): string[] {
+      return getCats(this.products)
     }
   },
 
@@ -155,10 +159,12 @@ export default {
      * ? GET ITEMS BY CATEGORY
      * * Retrieves items by category.
      *
-     * @param {Array<Item>} items - The array of items.
-     * @return {Array<Item>} The items filtered by category.
+     * @param {{id: string, name: string, cat: string}[]} items - The array of items.
+     * @return {Record<string, { id: string; name: string }[]>} The items filtered by category.
      */
-    getItemsByCategory(items: Array<Item>): Array<Item> {
+    getItemsByCategory(
+      items: { id: string; name: string; cat: string }[]
+    ): Record<string, { id: string; name: string }[]> {
       return getItemsByCat(items)
     }
   }

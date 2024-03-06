@@ -117,13 +117,17 @@ export default {
    * ? UPDATED
    * * A function that updates the text elements by setting the "itemprop" attribute to "description".
    *
-   * @param {HTMLCollectionOf<HTMLDivElement>} textArray - The collection of text elements to be updated
    * @returns {void}
    */
   updated() {
-    const textArray: HTMLCollectionOf<HTMLDivElement> =
-      document.getElementsByClassName('figcaption')
-    for (let textElt of textArray) textElt.firstChild.setAttribute('itemprop', 'description')
+    const descriptionArray: HTMLCollectionOf<Element> = document.getElementsByClassName('figcaption')
+
+    for (let descriptionElt of descriptionArray) {
+
+      if (descriptionElt.firstChild) {
+        (descriptionElt.firstChild as Element).setAttribute('itemprop', 'description')
+      }
+    }
   },
 
   computed: {
@@ -133,11 +137,10 @@ export default {
      * ? GET CATEGORIES
      * * Retrieves the categories of projects.
      *
-     * @param {Array<Project>} projects - The array of projects.
-     * @return {Array<Category>} An array of project categories.
+     * @return {string[]} An array of project categories.
      */
-    getCategories(projects: Project[]): Category[] {
-      return getCats(projects)
+    getCategories(): string[] {
+      return getCats(this.projects)
     }
   },
 
@@ -157,14 +160,14 @@ export default {
 
     /**
      * ? GET ITEMS BY CATEGORY
-     * * Retrieves items based on category.
+     * * Retrieves items by category.
      *
-     * @param {Array<{name: string, category: string}>} items - The list of items to filter.
-     * @return {Array<{name: string, category: string}>} The filtered list of items.
+     * @param {{id: string, name: string, cat: string}[]} items - The array of items.
+     * @return {Record<string, { id: string; name: string }[]>} The items filtered by category.
      */
     getItemsByCategory(
-      items: Array<{ name: string; category: string }>
-    ): Array<{ name: string; category: string }> {
+      items: { id: string; name: string; cat: string }[]
+    ): Record<string, { id: string; name: string }[]> {
       return getItemsByCat(items)
     }
   }
