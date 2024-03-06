@@ -11,12 +11,7 @@
       <form enctype="multipart/form-data">
         <ListElt :items="val.ARTICLE_FORM">
           <template #item-1>
-            <FieldElt
-              id="name"
-              v-model:value="name"
-              @keyup.enter="createArticle()"
-              :info="val.INFO_NAME"
-            >
+            <FieldElt id="name" v-model:value="name" @keyup.enter="createArticle()" :info="val.INFO_NAME">
               <template #legend>{{ val.LEGEND_NAME }}</template>
               <template #label>{{ val.LABEL_NAME }}</template>
             </FieldElt>
@@ -41,25 +36,14 @@
           </template>
 
           <template #item-4>
-            <FieldElt
-              id="alt"
-              type="textarea"
-              v-model:value="alt"
-              @keyup.enter="createArticle()"
-              :info="val.INFO_ALT"
-            >
+            <FieldElt id="alt" type="textarea" v-model:value="alt" @keyup.enter="createArticle()" :info="val.INFO_ALT">
               <template #legend>{{ val.LEGEND_ALT }}</template>
               <template #label>{{ val.LABEL_ALT }}</template>
             </FieldElt>
           </template>
 
           <template #item-5>
-            <FieldElt
-              id="url"
-              v-model:value="url"
-              @keyup.enter="updateArticle()"
-              :info="val.INFO_URL"
-            >
+            <FieldElt id="url" v-model:value="url" @keyup.enter="updateArticle()" :info="val.INFO_URL">
               <template #legend>{{ val.LEGEND_URL }}</template>
               <template #label>{{ val.LABEL_URL }}</template>
             </FieldElt>

@@ -95,25 +95,14 @@
             rel="noopener noreferrer"
           />
 
-          <FieldElt
-            id="checkTerms"
-            type="checkbox"
-            v-model="isTermsAccepted"
-            @click="toggleTerms()"
-          >
+          <FieldElt id="checkTerms" type="checkbox" v-model="isTermsAccepted" @click="toggleTerms()">
             <template #legend>{{ val.PAYPAL_TERMS_LEGEND }}</template>
             <template #label>{{ val.PAYPAL_TERMS_LABEL }}</template>
           </FieldElt>
 
           <div v-if="checkSession('user')" id="paypal"></div>
 
-          <BtnElt
-            v-else
-            href="/login"
-            class="btn-green width-sm"
-            :content="val.CONTENT_ORDER"
-            :title="val.TITLE_ORDER"
-          >
+          <BtnElt v-else href="/login" class="btn-green width-sm" :content="val.CONTENT_ORDER" :title="val.TITLE_ORDER">
             <template #btn>
               <i class="fa-solid fa-cash-register fa-lg"></i>
             </template>
@@ -136,12 +125,7 @@
 
     <b v-else-if="!checkSession('admin')">{{ val.BASKET_EMPTY }}</b>
 
-    <OrderSet
-      v-if="checkSession('admin') && orders.length !== 0"
-      :orders="orders"
-      :token="token"
-      :val="val"
-    />
+    <OrderSet v-if="checkSession('admin') && orders.length !== 0" :orders="orders" :token="token" :val="val" />
 
     <CardElt v-else-if="checkSession('user') && orders.length !== 0">
       <template #header>
@@ -367,15 +351,13 @@ export default {
               onInit: function (data: any, actions: any): void {
                 actions.disable()
 
-                document
-                  .querySelector('#checkTerms')
-                  .addEventListener('change', function (event: Event): void {
-                    if ((event.target as HTMLInputElement).checked) {
-                      actions.enable()
-                    } else {
-                      actions.disable()
-                    }
-                  })
+                document.querySelector('#checkTerms').addEventListener('change', function (event: Event): void {
+                  if ((event.target as HTMLInputElement).checked) {
+                    actions.enable()
+                  } else {
+                    actions.disable()
+                  }
+                })
               },
               onClick: function (): void {
                 if (!(document.querySelector('#checkTerms') as HTMLInputElement).checked) {

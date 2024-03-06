@@ -11,12 +11,7 @@
       <form enctype="multipart/form-data">
         <ListElt :items="val.PROJECT_FORM">
           <template #item-1>
-            <FieldElt
-              id="name"
-              v-model:value="name"
-              @keyup.enter="createProject()"
-              :info="val.INFO_NAME"
-            >
+            <FieldElt id="name" v-model:value="name" @keyup.enter="createProject()" :info="val.INFO_NAME">
               <template #legend>{{ val.LEGEND_NAME }}</template>
               <template #label>{{ val.LABEL_NAME }}</template>
             </FieldElt>
@@ -43,25 +38,14 @@
           </template>
 
           <template #item-4>
-            <FieldElt
-              id="alt"
-              type="textarea"
-              v-model:value="alt"
-              @keyup.enter="createProject()"
-              :info="val.INFO_ALT"
-            >
+            <FieldElt id="alt" type="textarea" v-model:value="alt" @keyup.enter="createProject()" :info="val.INFO_ALT">
               <template #legend>{{ val.LEGEND_ALT }}</template>
               <template #label>{{ val.LABEL_ALT }}</template>
             </FieldElt>
           </template>
 
           <template #item-5>
-            <FieldElt
-              id="url"
-              v-model:value="url"
-              @keyup.enter="createProject()"
-              :info="val.INFO_URL"
-            >
+            <FieldElt id="url" v-model:value="url" @keyup.enter="createProject()" :info="val.INFO_URL">
               <template #legend>{{ val.LEGEND_URL }}</template>
               <template #label>{{ val.LABEL_URL }}</template>
             </FieldElt>
@@ -227,15 +211,7 @@ import ListElt from './ListElt.vue'
 import MediaElt from './MediaElt.vue'
 import TableElt from './TableElt.vue'
 
-import {
-  checkRange,
-  checkRegex,
-  deleteData,
-  getItemName,
-  postData,
-  putData,
-  setError
-} from '../assets/services'
+import { checkRange, checkRegex, deleteData, getItemName, postData, putData, setError } from '../assets/services'
 
 export default {
   name: 'ProjectSet',
@@ -265,13 +241,7 @@ export default {
      * @param {string} cat - The category of the project.
      * @returns {Promise<void>} A promise that resolves when the project is created.
      */
-    async createProject(
-      name: string,
-      description: string,
-      alt: string,
-      url: string,
-      cat: string
-    ): Promise<void> {
+    async createProject(name: string, description: string, alt: string, url: string, cat: string): Promise<void> {
       const {
         ALERT_CREATED,
         ALERT_IMG,

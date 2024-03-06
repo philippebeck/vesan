@@ -24,20 +24,11 @@
 
             <template #item-2>
               <label for="text">{{ val.LEGEND_TEXT }}</label>
-              <Editor
-                id="text"
-                :api-key="val.TINY_KEY"
-                v-model="article.text"
-                :init="val.TINY_INIT"
-              />
+              <Editor id="text" :api-key="val.TINY_KEY" v-model="article.text" :init="val.TINY_INIT" />
             </template>
 
             <template #item-3>
-              <MediaElt
-                v-if="article.image"
-                :src="'/img/thumbnails/articles/' + article.image"
-                :alt="article.alt"
-              />
+              <MediaElt v-if="article.image" :src="'/img/thumbnails/articles/' + article.image" :alt="article.alt" />
 
               <FieldElt id="image" type="file" v-model:value="image" :info="val.INFO_IMAGE">
                 <template #legend>{{ val.LEGEND_IMAGE }}</template>
@@ -59,12 +50,7 @@
             </template>
 
             <template #item-5>
-              <FieldElt
-                id="url"
-                v-model:value="article.url"
-                @keyup.enter="updateArticle()"
-                :info="val.INFO_URL"
-              >
+              <FieldElt id="url" v-model:value="article.url" @keyup.enter="updateArticle()" :info="val.INFO_URL">
                 <template #legend>{{ val.LEGEND_URL }}</template>
                 <template #label>{{ val.LABEL_URL }}</template>
               </FieldElt>
@@ -197,16 +183,7 @@ import ListElt from '../components/ListElt.vue'
 import MediaElt from '../components/MediaElt.vue'
 import Editor from '@tinymce/tinymce-vue'
 
-import {
-  checkRange,
-  checkRegex,
-  checkRole,
-  deleteData,
-  getData,
-  putData,
-  setError,
-  setMeta
-} from '../assets/services'
+import { checkRange, checkRegex, checkRole, deleteData, getData, putData, setError, setMeta } from '../assets/services'
 
 import { mapState } from 'vuex'
 
@@ -427,11 +404,8 @@ export default {
      * @returns {Promise<void>} A promise that resolves when the article is deleted.
      */
     async deleteArticle(id: number, name: string): Promise<void> {
-      const {
-        TITLE_DELETE,
-        API_URL,
-        ALERT_DELETED
-      }: { TITLE_DELETE: string; API_URL: string; ALERT_DELETED: string } = this.val
+      const { TITLE_DELETE, API_URL, ALERT_DELETED }: { TITLE_DELETE: string; API_URL: string; ALERT_DELETED: string } =
+        this.val
 
       if (confirm(`${TITLE_DELETE} ${name} ?`)) {
         const URL: string = `${API_URL}/articles/${id}`

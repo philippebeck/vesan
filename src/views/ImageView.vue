@@ -18,9 +18,7 @@
 
     <CardElt itemscope itemtype="https://schema.org/CreativeWork">
       <template #header>
-        <h1 class="sky-dark" itemprop="name">
-          <i class="fa-regular fa-image fa-lg"></i> {{ gallery.name }}
-        </h1>
+        <h1 class="sky-dark" itemprop="name"><i class="fa-regular fa-image fa-lg"></i> {{ gallery.name }}</h1>
         <b itemprop="author">{{ gallery.author }}</b>
       </template>
 
@@ -108,12 +106,8 @@ export default {
    * @returns {Promise<void>}
    */
   async created(): Promise<void> {
-    const {
-      API_URL,
-      HEAD,
-      META_IMAGE,
-      UI_URL
-    }: { API_URL: string; HEAD: string; META_IMAGE: string; UI_URL: string } = this.val
+    const { API_URL, HEAD, META_IMAGE, UI_URL }: { API_URL: string; HEAD: string; META_IMAGE: string; UI_URL: string } =
+      this.val
 
     try {
       const gallery: GalleryType = await getData(`${API_URL}/galleries/${this.$route.params.id}`)

@@ -46,12 +46,7 @@
           </ListElt>
 
           <vue-recaptcha :sitekey="val.RECAPTCHA_KEY" @verify="onVerify">
-            <BtnElt
-              type="button"
-              class="btn-green"
-              :content="val.CONTENT_SEND"
-              :title="val.TITLE_MESSAGE"
-            >
+            <BtnElt type="button" class="btn-green" :content="val.CONTENT_SEND" :title="val.TITLE_MESSAGE">
               <template #btn>
                 <i class="fa-regular fa-paper-plane fa-lg"></i>
               </template>

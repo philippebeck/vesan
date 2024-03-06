@@ -11,12 +11,7 @@
       <form>
         <ListElt :items="val.GALLERY_FORM">
           <template #item-1>
-            <FieldElt
-              id="name"
-              v-model:value="name"
-              @keyup.enter="createGallery()"
-              :info="val.INFO_NAME"
-            >
+            <FieldElt id="name" v-model:value="name" @keyup.enter="createGallery()" :info="val.INFO_NAME">
               <template #legend>{{ val.LEGEND_NAME }}</template>
               <template #label>{{ val.LABEL_NAME }}</template>
             </FieldElt>
@@ -133,14 +128,7 @@ import FieldElt from './FieldElt.vue'
 import ListElt from './ListElt.vue'
 import TableElt from './TableElt.vue'
 
-import {
-  checkRange,
-  deleteData,
-  getItemName,
-  postData,
-  putData,
-  setError
-} from '../assets/services'
+import { checkRange, deleteData, getItemName, postData, putData, setError } from '../assets/services'
 
 export default {
   name: 'GallerySet',
@@ -225,12 +213,7 @@ export default {
      * @param {string} ALERT_UPDATED - The alert message for successful update.
      * @returns {Promise<void>} A promise that resolves when the gallery is updated.
      */
-    async updateGallery(
-      id: number,
-      CHECK_STRING: string,
-      API_URL: string,
-      ALERT_UPDATED: string
-    ): Promise<void> {
+    async updateGallery(id: number, CHECK_STRING: string, API_URL: string, ALERT_UPDATED: string): Promise<void> {
       const gallery = this.galleries.find((g) => g.id === id)
       let { name, author, cover } = gallery
 

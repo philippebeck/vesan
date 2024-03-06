@@ -161,8 +161,7 @@ export default defineComponent({
      *
      * @param {Event} event
      */
-    const onInput = (event: Event): void =>
-      emit('update:value', (event.target as HTMLInputElement).value)
+    const onInput = (event: Event): void => emit('update:value', (event.target as HTMLInputElement).value)
 
     /**
      * ? GET FIELD TYPE
@@ -176,8 +175,7 @@ export default defineComponent({
         area: ['textarea']
       }
 
-      fieldType.value =
-        Object.keys(fieldTypes).find((key) => fieldTypes[key].includes(props.type)) || 'text'
+      fieldType.value = Object.keys(fieldTypes).find((key) => fieldTypes[key].includes(props.type)) || 'text'
     }
 
     getFieldType()

@@ -1,9 +1,7 @@
 <template>
   <main>
     <header>
-      <h1 class="sky-dark">
-        <i class="fa-solid fa-right-to-bracket fa-lg"></i> {{ val.LOGIN_VIEW }}
-      </h1>
+      <h1 class="sky-dark"><i class="fa-solid fa-right-to-bracket fa-lg"></i> {{ val.LOGIN_VIEW }}</h1>
     </header>
 
     <CardElt v-if="type === 'signIn'">
@@ -25,12 +23,7 @@
           </FieldElt>
 
           <vue-recaptcha :sitekey="val.RECAPTCHA_KEY" @verify="onVerify">
-            <BtnElt
-              type="button"
-              class="btn-green"
-              :content="val.CONTENT_ENTER"
-              :title="val.TITLE_SIGNIN"
-            >
+            <BtnElt type="button" class="btn-green" :content="val.CONTENT_ENTER" :title="val.TITLE_SIGNIN">
               <template #btn>
                 <i class="fa-solid fa-door-open fa-lg"></i>
               </template>
@@ -93,12 +86,7 @@
           </FieldElt>
 
           <vue-recaptcha :sitekey="val.RECAPTCHA_KEY" @verify="onVerify">
-            <BtnElt
-              type="button"
-              class="btn-blue"
-              :content="val.CONTENT_SIGNUP"
-              :title="val.TITLE_SIGNUP"
-            >
+            <BtnElt type="button" class="btn-blue" :content="val.CONTENT_SIGNUP" :title="val.TITLE_SIGNUP">
               <template #btn>
                 <i class="fa-solid fa-user-plus fa-lg"></i>
               </template>
@@ -146,12 +134,7 @@
           </FieldElt>
 
           <vue-recaptcha :sitekey="val.RECAPTCHA_KEY" @verify="onVerify">
-            <BtnElt
-              type="button"
-              class="btn-orange"
-              :content="val.CONTENT_SEND"
-              :title="val.TITLE_FORGOT"
-            >
+            <BtnElt type="button" class="btn-orange" :content="val.CONTENT_SEND" :title="val.TITLE_FORGOT">
               <template #btn>
                 <i class="fa-regular fa-paper-plane fa-lg"></i>
               </template>
@@ -355,15 +338,7 @@ export default {
      * * Executes the forgot password functionality.
      */
     async forgotPass(): Promise<void> {
-      const {
-        ALERT_SENDED,
-        API_URL,
-        CHECK_EMAIL,
-        CONFIRM_FORGOT,
-        FORGOT_SUBJECT,
-        FORGOT_TEXT,
-        REGEX_EMAIL
-      } = this.val
+      const { ALERT_SENDED, API_URL, CHECK_EMAIL, CONFIRM_FORGOT, FORGOT_SUBJECT, FORGOT_TEXT, REGEX_EMAIL } = this.val
       const IS_EMAIL_CHECKED: boolean = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL)
 
       if (IS_EMAIL_CHECKED && confirm(CONFIRM_FORGOT)) {

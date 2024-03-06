@@ -109,11 +109,8 @@ export default {
      * @returns {Promise<void>} A promise that resolves when the status is updated.
      */
     async updateStatus(id: number): Promise<void> {
-      const {
-        ALERT_ORDER,
-        ALERT_UPDATED,
-        API_URL
-      }: { ALERT_ORDER: string; ALERT_UPDATED: string; API_URL: string } = this.val
+      const { ALERT_ORDER, ALERT_UPDATED, API_URL }: { ALERT_ORDER: string; ALERT_UPDATED: string; API_URL: string } =
+        this.val
       const order: OrderType | undefined = this.orders.find((o: OrderType) => o.id === id)
 
       if (order) {

@@ -28,11 +28,7 @@
       <template #body>
         <ListElt :items="galleries" :dynamic="true" class="grid-2sm-3md-4lg-5xl-6wd content-center">
           <template #items="slotProps">
-            <a
-              :href="`gallery/${slotProps.item.id}`"
-              :title="val.TITLE_WATCH + slotProps.item.name"
-              itemprop="url"
-            >
+            <a :href="`gallery/${slotProps.item.id}`" :title="val.TITLE_WATCH + slotProps.item.name" itemprop="url">
               <MediaElt
                 :id="`${slotProps.item.name.toLowerCase()}`"
                 :src="`/img/thumbnails/galleries/${slotProps.item.cover}`"

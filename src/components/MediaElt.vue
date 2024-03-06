@@ -11,15 +11,7 @@
   </figure>
 
   <figure v-else-if="type === 'video'" :itemprop="itemprop" itemscope :itemtype="getItemType(type)">
-    <video
-      controls
-      :src="src"
-      :loop="loop"
-      :height="height"
-      :width="width"
-      :title="title"
-      itemprop="contentUrl"
-    >
+    <video controls :src="src" :loop="loop" :height="height" :width="width" :title="title" itemprop="contentUrl">
       <source v-for="(video, index) in medias" :key="index" :src="video.src" :type="video.type" />
       <slot name="video"></slot>
     </video>
@@ -59,15 +51,7 @@
   </figure>
 
   <figure v-else itemprop="image" itemscope :itemtype="getItemType(type)">
-    <img
-      :src="src"
-      :alt="alt"
-      :height="height"
-      :width="width"
-      :title="title"
-      itemprop="contentUrl"
-      loading="lazy"
-    />
+    <img :src="src" :alt="alt" :height="height" :width="width" :title="title" itemprop="contentUrl" loading="lazy" />
 
     <figcaption v-if="hasSlot('figcaption')" itemprop="description">
       <slot name="figcaption"></slot>

@@ -27,20 +27,11 @@
                 {{ val.LEGEND_DESCRIPTION }}
               </label>
 
-              <Editor
-                id="description"
-                :api-key="val.TINY_KEY"
-                v-model="product.description"
-                :init="val.TINY_INIT"
-              />
+              <Editor id="description" :api-key="val.TINY_KEY" v-model="product.description" :init="val.TINY_INIT" />
             </template>
 
             <template #item-3>
-              <MediaElt
-                v-if="product.image"
-                :src="'/img/thumbnails/products/' + product.image"
-                :alt="product.alt"
-              />
+              <MediaElt v-if="product.image" :src="'/img/thumbnails/products/' + product.image" :alt="product.alt" />
 
               <FieldElt id="image" type="file" v-model:value="image" :info="val.INFO_IMAGE">
                 <template #legend>{{ val.LEGEND_IMAGE }}</template>
@@ -203,15 +194,7 @@ import ListElt from '../components/ListElt.vue'
 import MediaElt from '../components/MediaElt.vue'
 import Editor from '@tinymce/tinymce-vue'
 
-import {
-  checkRange,
-  checkRole,
-  deleteData,
-  getData,
-  putData,
-  setError,
-  setMeta
-} from '../assets/services'
+import { checkRange, checkRole, deleteData, getData, putData, setError, setMeta } from '../assets/services'
 import { mapState } from 'vuex'
 
 export default {
@@ -365,9 +348,7 @@ export default {
       if (this.basket[0] === '') this.basket.shift()
 
       localStorage.setItem('basket', JSON.stringify(this.basket))
-      alert(
-        `${this.order.quantity} "${this.product.name}" (${this.order.option}) ${this.val.ALERT_BASKET_ADDED}`
-      )
+      alert(`${this.order.quantity} "${this.product.name}" (${this.order.option}) ${this.val.ALERT_BASKET_ADDED}`)
       this.$router.push('/shop')
     },
 

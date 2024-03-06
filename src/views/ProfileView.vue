@@ -33,13 +33,7 @@
         <form enctype="multipart/form-data">
           <ListElt :items="val.USER_FORM">
             <template #item-1>
-              <FieldElt
-                id="name"
-                v-model:value="user.name"
-                @keyup.enter="updateUser()"
-                :info="val.INFO_NAME"
-                :min="2"
-              >
+              <FieldElt id="name" v-model:value="user.name" @keyup.enter="updateUser()" :info="val.INFO_NAME" :min="2">
                 <template #legend>{{ val.LEGEND_NAME }}</template>
                 <template #label>{{ val.LABEL_NAME }}</template>
               </FieldElt>
@@ -59,11 +53,7 @@
             </template>
 
             <template #item-3>
-              <MediaElt
-                v-if="user.image"
-                :src="'/img/thumbnails/users/' + user.image"
-                :alt="user.name"
-              />
+              <MediaElt v-if="user.image" :src="'/img/thumbnails/users/' + user.image" :alt="user.name" />
 
               <FieldElt id="image" type="file" v-model:value="image" :info="val.INFO_IMAGE">
                 <template #legend>{{ val.LEGEND_IMAGE }}</template>
@@ -139,15 +129,7 @@ import MediaElt from '../components/MediaElt.vue'
 import NavElt from '../components/NavElt.vue'
 import UserSet from '../components/UserSet.vue'
 
-import {
-  checkRange,
-  checkRegex,
-  checkRole,
-  deleteData,
-  putData,
-  setError,
-  setMeta
-} from '../assets/services'
+import { checkRange, checkRegex, checkRole, deleteData, putData, setError, setMeta } from '../assets/services'
 import { mapState, mapActions } from 'vuex'
 
 export default {

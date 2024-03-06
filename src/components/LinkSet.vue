@@ -11,12 +11,7 @@
       <form>
         <ListElt :items="val.LINK_FORM">
           <template #item-1>
-            <FieldElt
-              id="name"
-              v-model:value="name"
-              @keyup.enter="createLink()"
-              :info="val.INFO_NAME"
-            >
+            <FieldElt id="name" v-model:value="name" @keyup.enter="createLink()" :info="val.INFO_NAME">
               <template #legend>{{ val.LEGEND_NAME }}</template>
               <template #label>{{ val.LABEL_NAME }}</template>
             </FieldElt>
@@ -310,11 +305,8 @@ export default {
      * @returns {Promise<void>}
      */
     async deleteLink(id: number): Promise<void> {
-      const {
-        TITLE_DELETE,
-        API_URL,
-        ALERT_DELETED
-      }: { TITLE_DELETE: string; API_URL: string; ALERT_DELETED: string } = this.val
+      const { TITLE_DELETE, API_URL, ALERT_DELETED }: { TITLE_DELETE: string; API_URL: string; ALERT_DELETED: string } =
+        this.val
       const NAME: string = getItemName(id, this.links)
 
       if (confirm(`${TITLE_DELETE} ${NAME} ?`)) {

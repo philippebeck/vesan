@@ -109,14 +109,7 @@ import FieldElt from './FieldElt.vue'
 import MediaElt from './MediaElt.vue'
 import TableElt from './TableElt.vue'
 
-import {
-  checkRange,
-  checkRegex,
-  deleteData,
-  getItemName,
-  putData,
-  setError
-} from '../assets/services'
+import { checkRange, checkRegex, deleteData, getItemName, putData, setError } from '../assets/services'
 
 export default {
   name: 'UserSet',
@@ -156,12 +149,7 @@ export default {
       } = this.val
 
       const user: User | undefined = this.users.find((u: User) => u.id === id)
-      let {
-        name,
-        email,
-        image,
-        role
-      }: { name: string; email: string; image: string; role: string } = user || {
+      let { name, email, image, role }: { name: string; email: string; image: string; role: string } = user || {
         name: '',
         email: '',
         image: '',
@@ -200,11 +188,8 @@ export default {
      * @returns {Promise<void>} A Promise that resolves when the user is successfully deleted.
      */
     async deleteUser(id: number): Promise<void> {
-      const {
-        TITLE_DELETE,
-        API_URL,
-        ALERT_DELETED
-      }: { TITLE_DELETE: string; API_URL: string; ALERT_DELETED: string } = this.val
+      const { TITLE_DELETE, API_URL, ALERT_DELETED }: { TITLE_DELETE: string; API_URL: string; ALERT_DELETED: string } =
+        this.val
       const NAME: string = getItemName(id, this.users)
 
       if (confirm(`${TITLE_DELETE} ${NAME} ?`)) {
