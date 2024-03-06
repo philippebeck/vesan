@@ -107,7 +107,7 @@
   </CardElt>
 </template>
 
-<script>
+<script lang="ts">
 import BtnElt from './BtnElt.vue'
 import CardElt from './CardElt.vue'
 import FieldElt from './FieldElt.vue'
@@ -137,36 +137,66 @@ export default {
     /**
      * ? CREATE PRODUCT
      * * Create a product by sending a POST request to the server.
+     *
+     * @param {string} name - The name of the product.
+     * @param {string} description - The description of the product.
+     * @param {string} alt - The alternate text for the product image.
+     * @param {number} price - The price of the product.
+     * @param {string} options - Additional options for the product.
+     * @param {string} cat - The category of the product.
+     * @returns {Promise<void>} A promise that resolves when the product is created.
      */
-    async createProduct() {
-      const { ALERT_CREATED, ALERT_IMG, API_URL, CAT_PRODUCT, CHECK_STRING, TEXT_MAX, TEXT_MIN } =
-        this.val
+    async createProduct(
+      name: string,
+      description: string,
+      alt: string,
+      price: number,
+      options: string,
+      cat: string
+    ): Promise<void> {
+      const {
+        ALERT_CREATED,
+        ALERT_IMG,
+        API_URL,
+        CAT_PRODUCT,
+        CHECK_STRING,
+        TEXT_MAX,
+        TEXT_MIN
+      }: {
+        ALERT_CREATED: string
+        ALERT_IMG: string
+        API_URL: string
+        CAT_PRODUCT: string
+        CHECK_STRING: string
+        TEXT_MAX: number
+        TEXT_MIN: number
+      } = this.val
 
-      if (this.price < 1) this.price = 1
-      if (this.cat === '') this.cat = CAT_PRODUCT
+      if (price < 1) this.price = 1
+      if (cat === '') this.cat = CAT_PRODUCT
 
-      const IS_NAME_CHECKED = checkRange(this.name, CHECK_STRING)
-      const IS_DESC_CHECKED = checkRange(this.description, CHECK_STRING, TEXT_MIN, TEXT_MAX)
-      const IS_ALT_CHECKED = checkRange(this.alt, CHECK_STRING)
+      const IS_NAME_CHECKED: boolean = checkRange(name, CHECK_STRING)
+      const IS_DESC_CHECKED: boolean = checkRange(description, CHECK_STRING, TEXT_MIN, TEXT_MAX)
+      const IS_ALT_CHECKED: boolean = checkRange(alt, CHECK_STRING)
 
       if (IS_NAME_CHECKED && IS_DESC_CHECKED && IS_ALT_CHECKED) {
-        const img = document.getElementById('image')?.files[0]
+        const img: File | undefined = document.getElementById('image')?.files[0]
 
         if (img !== undefined) {
-          const URL = `${API_URL}/products`
-          const data = new FormData()
+          const URL: string = `${API_URL}/products`
+          const data: FormData = new FormData()
 
-          data.append('name', this.name)
-          data.append('description', this.description)
+          data.append('name', name)
+          data.append('description', description)
           data.append('image', img)
-          data.append('alt', this.alt)
-          data.append('price', this.price)
-          data.append('options', this.options)
-          data.append('cat', this.cat)
+          data.append('alt', alt)
+          data.append('price', price)
+          data.append('options', options)
+          data.append('cat', cat)
 
           try {
             await postData(URL, data, this.token)
-            alert(this.name + ALERT_CREATED)
+            alert(name + ALERT_CREATED)
           } catch (err) {
             setError(err)
           } finally {

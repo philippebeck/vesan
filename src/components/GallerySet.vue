@@ -126,7 +126,7 @@
   </CardElt>
 </template>
 
-<script>
+<script lang="ts">
 import BtnElt from './BtnElt.vue'
 import CardElt from './CardElt.vue'
 import FieldElt from './FieldElt.vue'
@@ -158,12 +158,12 @@ export default {
     /**
      * ? GET IMAGES
      * * Retrieves the images & transforms them into an array of objects.
-     * @return {Array} An array of objects with the content & value properties.
+     * @return {Array<{content: string, value: number}>} An array of objects with the content & value properties.
      */
-    getImages() {
-      const images = []
+    getImages(): Array<{ content: string; value: number }> {
+      const images: Array<{ name: string; id: number }> = []
 
-      for (let i = 0; i < this.images.length; i++) {
+      for (let i: number = 0; i < this.images.length; i++) {
         images.push({
           content: this.images[i].name,
           value: this.images[i].id
@@ -177,24 +177,36 @@ export default {
   methods: {
     /**
      * ? CREATE GALLERY
-     * * Creates a galleryby sending a POST request to the server.
+     * * Creates a gallery by sending a POST request to the server.
+     *
+     * @param {string} name - The name of the gallery.
+     * @param {string} author - The author of the gallery.
+     * @returns {Promise<void>} A promise that resolves when the gallery is created.
      */
-    async createGallery() {
-      const { ALERT_CREATED, API_URL, CHECK_STRING } = this.val
+    async createGallery(name: string, author: string): Promise<void> {
+      const {
+        ALERT_CREATED,
+        API_URL,
+        CHECK_STRING
+      }: {
+        ALERT_CREATED: string
+        API_URL: string
+        CHECK_STRING: string
+      } = this.val
 
-      const IS_NAME_CHECKED = checkRange(this.name, CHECK_STRING)
-      const IS_AUTHOR_CHECKED = checkRange(this.author, CHECK_STRING)
+      const IS_NAME_CHECKED: boolean = checkRange(name, CHECK_STRING)
+      const IS_AUTHOR_CHECKED: boolean = checkRange(author, CHECK_STRING)
 
       if (IS_NAME_CHECKED && IS_AUTHOR_CHECKED) {
-        const URL = `${API_URL}/galleries`
-        const data = new FormData()
+        const URL: string = `${API_URL}/galleries`
+        const data: FormData = new FormData()
 
-        data.append('name', this.name)
-        data.append('author', this.author)
+        data.append('name', name)
+        data.append('author', author)
 
         try {
           await postData(URL, data, this.token)
-          alert(this.name + ALERT_CREATED)
+          alert(name + ALERT_CREATED)
         } catch (err) {
           setError(err)
         } finally {
@@ -206,20 +218,28 @@ export default {
     /**
      * ? UPDATE GALLERY
      * * Update the gallery with the given ID.
+     *
      * @param {number} id - The ID of the gallery to update.
+     * @param {string} CHECK_STRING - The string used for checking the range.
+     * @param {string} API_URL - The URL of the API.
+     * @param {string} ALERT_UPDATED - The alert message for successful update.
+     * @returns {Promise<void>} A promise that resolves when the gallery is updated.
      */
-    async updateGallery(id) {
-      const { CHECK_STRING, API_URL, ALERT_UPDATED } = this.val
-
+    async updateGallery(
+      id: number,
+      CHECK_STRING: string,
+      API_URL: string,
+      ALERT_UPDATED: string
+    ): Promise<void> {
       const gallery = this.galleries.find((g) => g.id === id)
       let { name, author, cover } = gallery
 
-      const IS_NAME_CHECKED = gallery && checkRange(name, CHECK_STRING)
-      const IS_AUTHOR_CHECKED = gallery && checkRange(author, CHECK_STRING)
+      const IS_NAME_CHECKED: boolean = gallery && checkRange(name, CHECK_STRING)
+      const IS_AUTHOR_CHECKED: boolean = gallery && checkRange(author, CHECK_STRING)
 
       if (IS_NAME_CHECKED && IS_AUTHOR_CHECKED) {
-        const URL = `${API_URL}/galleries/${id}`
-        const data = new FormData()
+        const URL: string = `${API_URL}/galleries/${id}`
+        const data: FormData = new FormData()
 
         data.append('name', name)
         data.append('author', author)
@@ -237,14 +257,16 @@ export default {
     /**
      * ? DELETE GALLERY
      * * Deletes a gallery with the specified ID.
+     *
      * @param {number} id - The ID of the gallery to be deleted.
+     * @returns {Promise<void>}
      */
-    async deleteGallery(id) {
+    async deleteGallery(id: number): Promise<void> {
       const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val
-      const NAME = getItemName(id, this.galleries)
+      const NAME: string = getItemName(id, this.galleries)
 
       if (confirm(`${TITLE_DELETE} ${NAME} ?`)) {
-        const URL = `${API_URL}/galleries/${id}`
+        const URL: string = `${API_URL}/galleries/${id}`
 
         try {
           await deleteData(URL, this.token)

@@ -102,7 +102,7 @@
   </CardElt>
 </template>
 
-<script>
+<script lang="ts">
 import BtnElt from './BtnElt.vue'
 import CardElt from './CardElt.vue'
 import FieldElt from './FieldElt.vue'
@@ -136,21 +136,45 @@ export default {
     /**
      * ? UPDATE USER
      * * Update a user by their ID.
+     *
      * @param {number} id - The ID of the user to update.
+     * @returns {Promise<void>}
      */
-    async updateUser(id) {
-      const { ALERT_UPDATED, API_URL, CHECK_EMAIL, CHECK_STRING, REGEX_EMAIL } = this.val
+    async updateUser(id: number): Promise<void> {
+      const {
+        ALERT_UPDATED,
+        API_URL,
+        CHECK_EMAIL,
+        CHECK_STRING,
+        REGEX_EMAIL
+      }: {
+        ALERT_UPDATED: string
+        API_URL: string
+        CHECK_EMAIL: RegExp
+        CHECK_STRING: string
+        REGEX_EMAIL: RegExp
+      } = this.val
 
-      const user = this.users.find((u) => u.id === id)
-      let { name, email, image, role } = user
+      const user: User | undefined = this.users.find((u: User) => u.id === id)
+      let {
+        name,
+        email,
+        image,
+        role
+      }: { name: string; email: string; image: string; role: string } = user || {
+        name: '',
+        email: '',
+        image: '',
+        role: ''
+      }
 
-      const IS_NAME_CHECKED = user && checkRange(name, CHECK_STRING)
-      const IS_EMAIL_CHECKED = user && checkRegex(email, CHECK_EMAIL, REGEX_EMAIL)
+      const IS_NAME_CHECKED: boolean = user ? checkRange(name, CHECK_STRING) : false
+      const IS_EMAIL_CHECKED: boolean = user ? checkRegex(email, CHECK_EMAIL, REGEX_EMAIL) : false
 
       if (IS_NAME_CHECKED && IS_EMAIL_CHECKED) {
-        const URL = `${API_URL}/users/${id}`
-        const img = document.getElementById(`image-${id}`)?.files[0] ?? image
-        const data = new FormData()
+        const URL: string = `${API_URL}/users/${id}`
+        const img: File | string = document.getElementById(`image-${id}`)?.files[0] ?? image
+        const data: FormData = new FormData()
 
         data.append('name', name)
         data.append('email', email)
@@ -171,19 +195,25 @@ export default {
     /**
      * ? DELETE USER
      * * Delete a user by their ID.
+     *
      * @param {number} id - The ID of the user to be deleted.
+     * @returns {Promise<void>} A Promise that resolves when the user is successfully deleted.
      */
-    async deleteUser(id) {
-      const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val
-      const NAME = getItemName(id, this.users)
+    async deleteUser(id: number): Promise<void> {
+      const {
+        TITLE_DELETE,
+        API_URL,
+        ALERT_DELETED
+      }: { TITLE_DELETE: string; API_URL: string; ALERT_DELETED: string } = this.val
+      const NAME: string = getItemName(id, this.users)
 
       if (confirm(`${TITLE_DELETE} ${NAME} ?`)) {
-        const URL = `${API_URL}/users/${id}`
+        const URL: string = `${API_URL}/users/${id}`
 
         try {
           await deleteData(URL, this.token)
           alert(NAME + ALERT_DELETED)
-        } catch (err) {
+        } catch (err: any) {
           setError(err)
         } finally {
           this.$router.push('/home')

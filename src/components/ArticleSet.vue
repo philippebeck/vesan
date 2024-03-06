@@ -97,7 +97,7 @@
   </CardElt>
 </template>
 
-<script>
+<script lang="ts">
 import BtnElt from './BtnElt.vue'
 import CardElt from './CardElt.vue'
 import FieldElt from './FieldElt.vue'
@@ -126,8 +126,10 @@ export default {
     /**
      * ? CREATE ARTICLE
      * * Creates an article by sending a POST request to the server with the provided data.
+     *
+     * @returns {Promise<void>} A promise that resolves when the article is created.
      */
-    async createArticle() {
+    async createArticle(): Promise<void> {
       const {
         ALERT_CREATED,
         ALERT_IMG,
@@ -138,23 +140,33 @@ export default {
         REGEX_URL,
         TEXT_MIN,
         TEXT_MAX
+      }: {
+        ALERT_CREATED: string
+        ALERT_IMG: string
+        API_URL: string
+        CAT_ARTICLE: string
+        CHECK_STRING: string
+        CHECK_URL: RegExp
+        REGEX_URL: string
+        TEXT_MIN: number
+        TEXT_MAX: number
       } = this.val
 
       if (this.url.startsWith('http')) this.url = this.url.split('//')[1]
       if (this.cat === '') this.cat = CAT_ARTICLE
 
-      const IS_NAME_CHECKED = checkRange(this.name, CHECK_STRING)
-      const IS_TEXT_CHECKED = checkRange(this.text, CHECK_STRING, TEXT_MIN, TEXT_MAX)
-      const IS_ALT_CHECKED = checkRange(this.alt, CHECK_STRING)
+      const IS_NAME_CHECKED: boolean = checkRange(this.name, CHECK_STRING)
+      const IS_TEXT_CHECKED: boolean = checkRange(this.text, CHECK_STRING, TEXT_MIN, TEXT_MAX)
+      const IS_ALT_CHECKED: boolean = checkRange(this.alt, CHECK_STRING)
 
-      const IS_URL_CHECKED = this.url ? checkRegex(this.url, CHECK_URL, REGEX_URL) : true
+      const IS_URL_CHECKED: boolean = this.url ? checkRegex(this.url, CHECK_URL, REGEX_URL) : true
 
       if (IS_NAME_CHECKED && IS_TEXT_CHECKED && IS_ALT_CHECKED && IS_URL_CHECKED) {
-        const img = document.getElementById('image')?.files[0]
+        const img: File | undefined = document.getElementById('image')?.files[0]
 
         if (img !== undefined) {
-          const URL = `${API_URL}/articles`
-          const data = new FormData()
+          const URL: string = `${API_URL}/articles`
+          const data: FormData = new FormData()
 
           data.append('name', this.name)
           data.append('text', this.text)
