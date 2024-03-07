@@ -99,14 +99,16 @@ export default defineComponent({
     /**
      * ? HAS SLOT
      * * Checks if the component has a slot
-     * @param {string} name
+     *
+     * @param {string} name - Name of the slot to check.
      * @returns {boolean} - Indicates whether the component has a slot.
      */
-    const hasSlot = (name: string) => checkSlot(slots, name)
+    const hasSlot = (name: string): boolean => checkSlot(slots, name)
 
     /**
      * ? TOGGLE SIDE
      * * Toggles the sidebar by adding or removing the hide/show classes
+     *
      * @returns {void}
      */
     const toggleSide = () => {

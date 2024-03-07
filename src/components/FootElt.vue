@@ -78,9 +78,10 @@ export default defineComponent({
      * ? HAS SLOT
      * * Checks if the component has a slot
      *
-     * @param {string} name
+     * @param {string} name - Name of the slot to check.
+     * @returns {boolean} - Whether the component has the specified slot.
      */
-    const hasSlot = (name: string) => checkSlot(slots, name)
+    const hasSlot = (name: string): boolean => checkSlot(slots, name)
 
     /**
      * ? HANDLE RESIZE
