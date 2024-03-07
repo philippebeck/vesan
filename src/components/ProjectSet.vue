@@ -258,8 +258,8 @@ export default {
         API_URL: string
         CAT_PROJECT: string
         CHECK_STRING: string
-        CHECK_URL: RegExp
-        REGEX_URL: string
+        CHECK_URL: string
+        REGEX_URL: RegExp
         TEXT_MIN: number
         TEXT_MAX: number
       } = this.val
@@ -273,7 +273,7 @@ export default {
       const IS_URL_CHECKED: boolean = url ? checkRegex(url, CHECK_URL, REGEX_URL) : true
 
       if (IS_NAME_CHECKED && IS_DESC_CHECKED && IS_ALT_CHECKED && IS_URL_CHECKED) {
-        const img: File | undefined = document.getElementById('image')?.files[0]
+        const img: File | undefined = (document.getElementById('image') as HTMLInputElement)?.files?.[0]
 
         if (img !== undefined) {
           const URL: string = `${API_URL}/projects`
@@ -292,7 +292,7 @@ export default {
           } catch (err) {
             setError(err)
           } finally {
-            this.$router.go()
+            this.$router.go(0)
           }
         } else {
           alert(ALERT_IMG)
@@ -309,7 +309,7 @@ export default {
      */
     async updateProject(id: number): Promise<void> {
       const { API_URL, ALERT_UPDATED, CHECK_STRING, REGEX_URL, TEXT_MAX, TEXT_MIN } = this.val
-      const project = this.projects.find((p) => p.id === id)
+      const project = this.projects.find((p: { id: number }) => p.id === id)
       let { name, description, image, alt, url, cat } = project
 
       const IS_NAME_CHECKED: boolean = checkRange(name, CHECK_STRING)
@@ -320,7 +320,7 @@ export default {
       if (IS_NAME_CHECKED && IS_DESC_CHECKED && IS_ALT_CHECKED && IS_URL_CHECKED) {
         const URL: string = `${API_URL}/projects/${id}`
         const data: FormData = new FormData()
-        const img: File | string = document.getElementById(`image-${id}`)?.files[0] ?? image
+        const img: File | string = (document.getElementById(`image-${id}`) as HTMLInputElement)?.files?.[0] ?? image
 
         data.append('name', name)
         data.append('description', description)
@@ -332,10 +332,10 @@ export default {
         try {
           await putData(URL, data, this.token)
           alert(name + ALERT_UPDATED)
-        } catch (err: any) {
+        } catch (err) {
           setError(err)
         } finally {
-          this.$router.go()
+          this.$router.go(0)
         }
       }
     },
@@ -359,7 +359,7 @@ export default {
         } catch (err) {
           setError(err)
         } finally {
-          this.$router.go()
+          this.$router.go(0)
         }
       }
     }

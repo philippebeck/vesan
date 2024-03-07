@@ -43,7 +43,7 @@
           </template>
 
           <template #item-5>
-            <FieldElt id="url" v-model:value="url" @keyup.enter="updateArticle()" :info="val.INFO_URL">
+            <FieldElt id="url" v-model:value="url" @keyup.enter="createArticle()" :info="val.INFO_URL">
               <template #legend>{{ val.LEGEND_URL }}</template>
               <template #label>{{ val.LABEL_URL }}</template>
             </FieldElt>
@@ -130,8 +130,8 @@ export default {
         API_URL: string
         CAT_ARTICLE: string
         CHECK_STRING: string
-        CHECK_URL: RegExp
-        REGEX_URL: string
+        CHECK_URL: string
+        REGEX_URL: RegExp
         TEXT_MIN: number
         TEXT_MAX: number
       } = this.val
@@ -146,7 +146,7 @@ export default {
       const IS_URL_CHECKED: boolean = this.url ? checkRegex(this.url, CHECK_URL, REGEX_URL) : true
 
       if (IS_NAME_CHECKED && IS_TEXT_CHECKED && IS_ALT_CHECKED && IS_URL_CHECKED) {
-        const img: File | undefined = document.getElementById('image')?.files[0]
+        const img: File | undefined = (document.getElementById('image') as HTMLInputElement)?.files?.[0]
 
         if (img !== undefined) {
           const URL: string = `${API_URL}/articles`
@@ -165,7 +165,7 @@ export default {
           } catch (err) {
             setError(err)
           } finally {
-            this.$router.go()
+            this.$router.go(0)
           }
         } else {
           alert(ALERT_IMG)

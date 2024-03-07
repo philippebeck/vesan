@@ -143,12 +143,13 @@ export default {
       }: {
         ALERT_UPDATED: string
         API_URL: string
-        CHECK_EMAIL: RegExp
+        CHECK_EMAIL: string
         CHECK_STRING: string
         REGEX_EMAIL: RegExp
       } = this.val
 
-      const user: User | undefined = this.users.find((u: User) => u.id === id)
+      const user: { id: number; name: string; email: string; image: string; role: string } | undefined =
+        this.users.find((u: { id: number }) => u.id === id)
       let { name, email, image, role }: { name: string; email: string; image: string; role: string } = user || {
         name: '',
         email: '',
@@ -161,7 +162,7 @@ export default {
 
       if (IS_NAME_CHECKED && IS_EMAIL_CHECKED) {
         const URL: string = `${API_URL}/users/${id}`
-        const img: File | string = document.getElementById(`image-${id}`)?.files[0] ?? image
+        const img: File | string = (document.getElementById(`image-${id}`) as HTMLInputElement)?.files?.[0] ?? image
         const data: FormData = new FormData()
 
         data.append('name', name)
@@ -175,7 +176,7 @@ export default {
         } catch (err) {
           setError(err)
         } finally {
-          this.$router.go()
+          this.$router.go(0)
         }
       }
     },
@@ -190,7 +191,7 @@ export default {
     async deleteUser(id: number): Promise<void> {
       const { TITLE_DELETE, API_URL, ALERT_DELETED }: { TITLE_DELETE: string; API_URL: string; ALERT_DELETED: string } =
         this.val
-      const NAME: string = getItemName(id, this.users)
+      const NAME: string | false = getItemName(id.toString(), this.users)
 
       if (confirm(`${TITLE_DELETE} ${NAME} ?`)) {
         const URL: string = `${API_URL}/users/${id}`
@@ -198,7 +199,7 @@ export default {
         try {
           await deleteData(URL, this.token)
           alert(NAME + ALERT_DELETED)
-        } catch (err: any) {
+        } catch (err) {
           setError(err)
         } finally {
           this.$router.push('/home')

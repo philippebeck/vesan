@@ -122,10 +122,10 @@ export default {
         try {
           await putData(URL, data, this.token)
           alert(ALERT_ORDER + id + ALERT_UPDATED)
-        } catch (err: any) {
+        } catch (err) {
           setError(err)
         } finally {
-          this.$router.go()
+          this.$router.go(0)
         }
       }
     },
@@ -149,7 +149,7 @@ export default {
         } catch (err) {
           setError(err)
         } finally {
-          this.$router.go()
+          this.$router.go(0)
         }
       }
     }

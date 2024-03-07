@@ -186,7 +186,7 @@ export default {
       const { CHECK_STRING, API_URL, ALERT_CREATED, ALERT_IMG } = val
 
       if (checkRange(description, CHECK_STRING)) {
-        const img = document.getElementById('image')?.files[0]
+        const img = (document.getElementById('image') as HTMLInputElement)?.files?.[0]
 
         if (img !== undefined) {
           const URL = API_URL + '/images'
@@ -202,7 +202,7 @@ export default {
           } catch (err) {
             setError(err)
           } finally {
-            this.$router.go()
+            this.$router.go(0)
           }
         } else {
           alert(ALERT_IMG)
@@ -238,7 +238,7 @@ export default {
 
       if (IS_NAME_CHECKED && IS_DESC_CHECKED) {
         const URL: string = `${API_URL}/images/${id}`
-        const img: any = document.getElementById(`image-${id}`)?.files[0] ?? name
+        const img: any = (document.getElementById(`image-${id}`) as HTMLInputElement)?.files?.[0] ?? name
         const data: FormData = new FormData()
 
         data.append('name', name)
@@ -252,7 +252,7 @@ export default {
         } catch (err) {
           setError(err)
         } finally {
-          this.$router.go()
+          this.$router.go(0)
         }
       }
     },
@@ -285,7 +285,7 @@ export default {
         } catch (err) {
           setError(err)
         } finally {
-          this.$router.go()
+          this.$router.go(0)
         }
       }
     }
