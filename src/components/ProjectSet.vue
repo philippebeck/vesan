@@ -234,14 +234,9 @@ export default {
      * ? CREATE PROJECT
      * * Creates a project by sending a POST request to the server with the provided data.
      *
-     * @param {string} name - The name of the project.
-     * @param {string} description - The description of the project.
-     * @param {string} alt - The alternate text for the project image.
-     * @param {string} url - The URL for the project.
-     * @param {string} cat - The category of the project.
      * @returns {Promise<void>} A promise that resolves when the project is created.
      */
-    async createProject(name: string, description: string, alt: string, url: string, cat: string): Promise<void> {
+    async createProject(): Promise<void> {
       const {
         ALERT_CREATED,
         ALERT_IMG,
@@ -264,13 +259,13 @@ export default {
         TEXT_MAX: number
       } = this.val
 
-      if (url.startsWith('http')) url = url.split('//')[1]
-      if (cat === '') cat = CAT_PROJECT
+      if (this.url.startsWith('http')) this.url = this.url.split('//')[1]
+      if (this.cat === '') this.cat = CAT_PROJECT
 
-      const IS_NAME_CHECKED: boolean = checkRange(name, CHECK_STRING)
-      const IS_DESC_CHECKED: boolean = checkRange(description, CHECK_STRING, TEXT_MIN, TEXT_MAX)
-      const IS_ALT_CHECKED: boolean = checkRange(alt, CHECK_STRING)
-      const IS_URL_CHECKED: boolean = url ? checkRegex(url, CHECK_URL, REGEX_URL) : true
+      const IS_NAME_CHECKED: boolean = checkRange(this.name, CHECK_STRING)
+      const IS_DESC_CHECKED: boolean = checkRange(this.description, CHECK_STRING, TEXT_MIN, TEXT_MAX)
+      const IS_ALT_CHECKED: boolean = checkRange(this.alt, CHECK_STRING)
+      const IS_URL_CHECKED: boolean = this.url ? checkRegex(this.url, CHECK_URL, REGEX_URL) : true
 
       if (IS_NAME_CHECKED && IS_DESC_CHECKED && IS_ALT_CHECKED && IS_URL_CHECKED) {
         const img: File | undefined = (document.getElementById('image') as HTMLInputElement)?.files?.[0]
@@ -279,16 +274,16 @@ export default {
           const URL: string = `${API_URL}/projects`
           const data: FormData = new FormData()
 
-          data.append('name', name)
-          data.append('description', description)
+          data.append('name', this.name)
+          data.append('description', this.description)
           data.append('image', img)
-          data.append('alt', alt)
-          data.append('url', url)
-          data.append('cat', cat)
+          data.append('alt', this.alt)
+          data.append('url', this.url)
+          data.append('cat', this.cat)
 
           try {
             await postData(URL, data, this.token)
-            alert(name + ALERT_CREATED)
+            alert(this.name + ALERT_CREATED)
           } catch (err) {
             setError(err)
           } finally {
@@ -309,6 +304,7 @@ export default {
      */
     async updateProject(id: number): Promise<void> {
       const { API_URL, ALERT_UPDATED, CHECK_STRING, REGEX_URL, TEXT_MAX, TEXT_MIN } = this.val
+
       const project = this.projects.find((p: { id: number }) => p.id === id)
       let { name, description, image, alt, url, cat } = project
 
@@ -319,6 +315,7 @@ export default {
 
       if (IS_NAME_CHECKED && IS_DESC_CHECKED && IS_ALT_CHECKED && IS_URL_CHECKED) {
         const URL: string = `${API_URL}/projects/${id}`
+
         const data: FormData = new FormData()
         const img: File | string = (document.getElementById(`image-${id}`) as HTMLInputElement)?.files?.[0] ?? image
 
@@ -343,12 +340,13 @@ export default {
     /**
      * ? DELETE PROJECT
      * * Deletes a project with the given ID.
-     * @param {string} id - The ID of the project to delete.
+     * @param {number} id - The ID of the project to delete.
      * @returns {Promise<void>}
      */
-    async deleteProject(id: string): Promise<void> {
+    async deleteProject(id: number): Promise<void> {
       const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val
-      const NAME: string = getItemName(id, this.projects)
+
+      const NAME: string | false = getItemName(id, this.projects)
 
       if (confirm(`${TITLE_DELETE} ${NAME} ?`)) {
         const URL: string = `${API_URL}/projects/${id}`

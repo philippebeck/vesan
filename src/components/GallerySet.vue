@@ -246,7 +246,7 @@ export default {
      */
     async deleteGallery(id: number): Promise<void> {
       const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val
-      const NAME: string = getItemName(id, this.galleries)
+      const NAME: string | false = getItemName(id, this.galleries)
 
       if (confirm(`${TITLE_DELETE} ${NAME} ?`)) {
         const URL: string = `${API_URL}/galleries/${id}`

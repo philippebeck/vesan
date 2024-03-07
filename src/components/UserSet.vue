@@ -162,6 +162,7 @@ export default {
 
       if (IS_NAME_CHECKED && IS_EMAIL_CHECKED) {
         const URL: string = `${API_URL}/users/${id}`
+
         const img: File | string = (document.getElementById(`image-${id}`) as HTMLInputElement)?.files?.[0] ?? image
         const data: FormData = new FormData()
 
@@ -191,7 +192,8 @@ export default {
     async deleteUser(id: number): Promise<void> {
       const { TITLE_DELETE, API_URL, ALERT_DELETED }: { TITLE_DELETE: string; API_URL: string; ALERT_DELETED: string } =
         this.val
-      const NAME: string | false = getItemName(id.toString(), this.users)
+
+      const NAME: string | false = getItemName(id, this.users)
 
       if (confirm(`${TITLE_DELETE} ${NAME} ?`)) {
         const URL: string = `${API_URL}/users/${id}`

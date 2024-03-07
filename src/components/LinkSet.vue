@@ -307,7 +307,8 @@ export default {
     async deleteLink(id: number): Promise<void> {
       const { TITLE_DELETE, API_URL, ALERT_DELETED }: { TITLE_DELETE: string; API_URL: string; ALERT_DELETED: string } =
         this.val
-      const NAME: string = getItemName(id, this.links)
+
+      const NAME: string | false = getItemName(id, this.links)
 
       if (confirm(`${TITLE_DELETE} ${NAME} ?`)) {
         const URL: string = `${API_URL}/links/${id}`
