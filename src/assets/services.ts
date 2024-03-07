@@ -195,11 +195,11 @@ export const getCats = (items: { cat: string }[]): string[] => {
  * ? GET ITEM NAME
  * * Returns the name of the item with the given id from the provided array of items
  *
- * @param {string} id - The id of the item to search for
- * @param {{id: string, name: string}[]} items - An array of items to search through
+ * @param {number} id - The id of the item to search for
+ * @param {{id: number, name: string}[]} items - An array of items to search through
  * @return {string|false} - The name of the item with the given id if found, false otherwise
  */
-export const getItemName = (id: string, items: { id: string; name: string }[]): string | false => {
+export const getItemName = (id: number, items: { id: number; name: string }[]): string | false => {
   const item = items.find((item) => item.id === id)
 
   return item ? item.name : false
