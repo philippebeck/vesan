@@ -238,13 +238,16 @@ export const getItemsByCat = (
  * ? SET ERROR
  * * Logs an error message from the provided error object
  *
- * @param {Error} error - The error object to log the message from
+ * @param {any} error - The error object to log the message from
  * @returns {void}
  */
-export const setError = (error: Error): void => {
-  const { name, message } = error
-
-  alert(name && message ? name + ': ' + message : message)
+export const setError = (error: any): void => {
+  if (error instanceof Error) {
+    const { name, message }: Error = error
+    alert(name && message ? name + ': ' + message : message)
+  } else {
+    alert(error)
+  }
 }
 
 /**
