@@ -116,13 +116,12 @@ export default {
    *
    * @returns {void}
    */
-  updated() {
+  updated(): void {
     const descriptionArray: HTMLCollectionOf<Element> = document.getElementsByClassName('figcaption')
 
     for (let descriptionElt of descriptionArray) {
-
-      if (descriptionElt.firstChild) {
-        (descriptionElt.firstChild as Element).setAttribute('itemprop', 'description')
+      if (descriptionElt?.firstChild) {
+        ;(descriptionElt.firstChild as Element).setAttribute('itemprop', 'description')
       }
     }
   },

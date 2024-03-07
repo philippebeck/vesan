@@ -234,8 +234,11 @@ export default {
    */
   updated(): void {
     if (document.getElementById('figcaption')) {
-      const textElt = document.getElementById('figcaption') as HTMLElement
-      textElt.firstChild.setAttribute('itemprop', 'text')
+      const textElt: HTMLElement | null = document.getElementById('figcaption')
+
+      if (textElt?.firstChild) {
+        ;(textElt.firstChild as HTMLElement).setAttribute('itemprop', 'text')
+      }
     }
   },
 
@@ -374,7 +377,7 @@ export default {
       if (IS_NAME_CHECKED && IS_TEXT_CHECKED && IS_ALT_CHECKED && IS_URL_CHECKED) {
         const URL: string = `${API_URL}/articles/${id}`
         const data: FormData = new FormData()
-        const img: File | string = document.getElementById('image')?.files[0] ?? image
+        const img: File | string = (document.getElementById('image') as HTMLInputElement)?.files?.[0] ?? image
 
         data.append('name', name)
         data.append('text', text)
@@ -403,9 +406,11 @@ export default {
      * @param {string} name - The name of the article to be deleted
      * @returns {Promise<void>} A promise that resolves when the article is deleted.
      */
-    async deleteArticle(id: number, name: string): Promise<void> {
+    async deleteArticle(): Promise<void> {
       const { TITLE_DELETE, API_URL, ALERT_DELETED }: { TITLE_DELETE: string; API_URL: string; ALERT_DELETED: string } =
         this.val
+
+      let { id, name }: { id: number; name: string } = this.article
 
       if (confirm(`${TITLE_DELETE} ${name} ?`)) {
         const URL: string = `${API_URL}/articles/${id}`

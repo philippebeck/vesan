@@ -195,7 +195,7 @@ export default {
       localStorage.removeItem('userId')
       localStorage.removeItem('userToken')
 
-      this.$router.go()
+      this.$router.go(0)
     },
 
     /**
@@ -209,8 +209,8 @@ export default {
       CHECK_EMAIL: string,
       CHECK_PASS: string,
       CHECK_STRING: string,
-      REGEX_EMAIL: string,
-      REGEX_PASS: string
+      REGEX_EMAIL: RegExp,
+      REGEX_PASS: RegExp
     ): Promise<void> {
       const IS_NAME_CHECKED: boolean = checkRange(this.user.name, CHECK_STRING)
       const IS_EMAIL_CHECKED: boolean = checkRegex(this.user.email, CHECK_EMAIL, REGEX_EMAIL)
@@ -219,7 +219,7 @@ export default {
       if (IS_NAME_CHECKED && IS_EMAIL_CHECKED) {
         const URL: string = `${API_URL}/users/${this.user.id}`
         const data: FormData = new FormData()
-        const img: File = document.getElementById('image')?.files[0] ?? this.user.image
+        const img: File | string = (document.getElementById('image') as HTMLInputElement)?.files?.[0] ?? this.user.image
 
         if (IS_PASS_CHECKED) data.append('pass', this.pass)
 
@@ -234,7 +234,7 @@ export default {
         } catch (err) {
           setError(err)
         } finally {
-          this.$router.go()
+          this.$router.go(0)
         }
       }
     },

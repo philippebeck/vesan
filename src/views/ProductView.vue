@@ -234,7 +234,7 @@ export default {
         `${UI_URL}/product/${product.id}`,
         `${UI_URL}/img/thumbnails/products/${product.image}`
       )
-    } catch (err: any) {
+    } catch (err) {
       setError(err)
       this.$router.push('/shop')
     }
@@ -249,8 +249,9 @@ export default {
   updated(): void {
     if (document.getElementById('figcaption')) {
       const descriptionElt: HTMLElement | null = document.getElementById('figcaption')
-      if (descriptionElt) {
-        descriptionElt.firstChild.setAttribute('itemprop', 'description')
+
+      if (descriptionElt?.firstChild) {
+        ;(descriptionElt.firstChild as HTMLElement).setAttribute('itemprop', 'description')
       }
     }
   },
@@ -275,8 +276,8 @@ export default {
      * ? ADD TO BASKET
      * * Adds the selected item to the basket.
      */
-    addToBasket(option: string): void {
-      if (option !== '') {
+    addToBasket(): void {
+      if (this.option !== '') {
         this.createOrder()
         this.getBasket()
         this.checkBasket()
@@ -407,7 +408,7 @@ export default {
       if (IS_NAME_CHECKED && IS_DESC_CHECKED && IS_ALT_CHECKED && IS_PRICE_CHECKED) {
         const URL: string = `${API_URL}/products/${id}`
         const data: FormData = new FormData()
-        const img: File | string = document.getElementById('image')?.files[0] ?? image
+        const img: File | string = (document.getElementById('image') as HTMLInputElement)?.files?.[0] ?? image
 
         data.append('name', name)
         data.append('description', description)
@@ -432,12 +433,14 @@ export default {
      * ? DELETE PRODUCT
      * * Deletes a product from the system.
      */
-    async deleteProduct(id: number, name: string): Promise<void> {
+    async deleteProduct(): Promise<void> {
       const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val as {
         TITLE_DELETE: string
         API_URL: string
         ALERT_DELETED: string
       }
+
+      let { id, name }: { id: number; name: string } = this.product
 
       if (confirm(`${TITLE_DELETE} ${name} ?`)) {
         const URL = `${API_URL}/products/${id}`

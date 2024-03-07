@@ -177,9 +177,8 @@ export default {
     const textArray: HTMLCollectionOf<Element> = document.getElementsByClassName('figcaption')
 
     for (let textElt of textArray) {
-
-      if (textElt.firstChild) {
-        (textElt.firstChild as Element).setAttribute('itemprop', 'text')
+      if (textElt?.firstChild) {
+        ;(textElt.firstChild as Element).setAttribute('itemprop', 'text')
       }
     }
   },
@@ -233,7 +232,7 @@ export default {
      * @return {boolean} - Returns a boolean indicating whether the ID is present in the likes array.
      */
     checkLikes(id: number): boolean {
-      return this.articles.some((a) => a.id === id && a.likes.includes(this.id))
+      return this.articles.some((a: { id: number; likes: number[] }) => a.id === id && a.likes.includes(this.id))
     },
 
     /**
@@ -245,10 +244,29 @@ export default {
      */
     async addLike(id: number): Promise<void> {
       const { API_URL }: { API_URL: string } = this.val
-      const article: Object | undefined = this.articles.find((a: Object) => a.id === id)
+      const article:
+        | {
+            id: number
+            name: string
+            text: string
+            image: string
+            alt: string
+            url: string
+            likes: number[]
+            cat: string
+          }
+        | undefined = this.articles.find((a: { id: number }) => a.id === id)
 
       if (!article) return
-      let { name, text, image, alt, url, likes, cat }: Object = article
+      let {
+        name,
+        text,
+        image,
+        alt,
+        url,
+        likes,
+        cat
+      }: { name: string; text: string; image: string; alt: string; url: string; likes: number[]; cat: string } = article
 
       const index: number = likes.indexOf(this.id)
       index > -1 ? likes.splice(index, 1) : likes.push(this.id)
@@ -266,7 +284,7 @@ export default {
 
       try {
         await putData(URL, data, this.token)
-      } catch (err: any) {
+      } catch (err) {
         setError(err)
       }
     }

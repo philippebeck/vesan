@@ -119,7 +119,7 @@ export default {
         `${UI_URL}/gallery/${gallery.id}`,
         `${UI_URL}/img/thumbnails/galleries/${gallery.cover}`
       )
-    } catch (err: Error) {
+    } catch (err) {
       setError(err)
       this.$router.push('/galleries')
     }

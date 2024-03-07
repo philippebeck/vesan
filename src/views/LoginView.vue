@@ -271,7 +271,7 @@ export default {
         } catch (err) {
           setError(err)
         } finally {
-          this.$router.go()
+          this.$router.go(0)
         }
       }
     },
@@ -296,8 +296,8 @@ export default {
         ALERT_CREATED: string
         ALERT_IMG: string
         API_URL: string
-        CHECK_EMAIL: RegExp
-        CHECK_PASS: RegExp
+        CHECK_EMAIL: string
+        CHECK_PASS: string
         CHECK_STRING: string
         REGEX_EMAIL: RegExp
         REGEX_PASS: RegExp
@@ -310,7 +310,7 @@ export default {
       if (IS_NAME_CHECKED && IS_EMAIL_CHECKED && IS_PASS_CHECKED) {
         const URL: string = `${API_URL}/users`
         const data: FormData = new FormData()
-        const img: File | undefined = document.querySelector('[type="file"]')?.files[0]
+        const img: File | undefined = (document.querySelector('[type="file"]') as HTMLInputElement)?.files?.[0]
 
         if (img) {
           data.append('name', this.name)
@@ -325,7 +325,7 @@ export default {
           } catch (err) {
             setError(err)
           } finally {
-            this.$router.go()
+            this.$router.go(0)
           }
         } else {
           alert(ALERT_IMG)
@@ -355,7 +355,7 @@ export default {
         } catch (err) {
           setError(err)
         } finally {
-          this.$router.go()
+          this.$router.go(0)
         }
       }
     }

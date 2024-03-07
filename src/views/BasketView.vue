@@ -237,7 +237,7 @@ export default {
 
         if (this.token) this.setPaypal(this.val, this.getTotal, this.createOrder)
       }
-    } catch (err: any) {
+    } catch (err) {
       setError(err)
     }
 
@@ -440,10 +440,10 @@ export default {
         await postData(URL, order, this.token)
         alert(this.val.ALERT_ORDER_CREATED)
         localStorage.removeItem('basket')
-      } catch (err: any) {
+      } catch (err) {
         setError(err)
       } finally {
-        this.$router.go()
+        this.$router.go(0)
       }
     },
 
@@ -503,7 +503,7 @@ export default {
     deleteBasket(): void {
       if (confirm(this.val.CONFIRM_BASKET)) {
         localStorage.removeItem('basket')
-        this.$router.go()
+        this.$router.go(0)
       }
     }
   }
