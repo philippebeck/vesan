@@ -177,15 +177,12 @@ export default {
      * ? CREATE IMAGE
      * * Create an image by sending a POST request to the server.
      *
-     * @param {string} description - The description of the image
-     * @param {object} val - The object containing CHECK_STRING, API_URL, ALERT_CREATED, and ALERT_IMG
-     * @param {string} token - The authentication token
      * @returns {Promise<void>}
      */
-    async createImage(description, val, token) {
-      const { CHECK_STRING, API_URL, ALERT_CREATED, ALERT_IMG } = val
+    async createImage(): Promise<void> {
+      const { CHECK_STRING, API_URL, ALERT_CREATED, ALERT_IMG } = this.val
 
-      if (checkRange(description, CHECK_STRING)) {
+      if (checkRange(this.description, CHECK_STRING)) {
         const img = (document.getElementById('image') as HTMLInputElement)?.files?.[0]
 
         if (img !== undefined) {
@@ -193,12 +190,12 @@ export default {
           const data = new FormData()
 
           data.append('image', img)
-          data.append('description', description)
-          data.append('galleryId', this.$route.params.id)
+          data.append('description', this.description)
+          data.append('galleryId', this.$route.params.id.toString())
 
           try {
-            await postData(URL, data, token)
-            alert(description + ALERT_CREATED)
+            await postData(URL, data, this.token)
+            alert(this.description + ALERT_CREATED)
           } catch (err) {
             setError(err)
           } finally {

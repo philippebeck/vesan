@@ -111,7 +111,7 @@ export default {
     async updateStatus(id: number): Promise<void> {
       const { ALERT_ORDER, ALERT_UPDATED, API_URL }: { ALERT_ORDER: string; ALERT_UPDATED: string; API_URL: string } =
         this.val
-      const order: OrderType | undefined = this.orders.find((o: OrderType) => o.id === id)
+      const order: { id: number; status: string } | undefined = this.orders.find((o: { id: number }) => o.id === id)
 
       if (order) {
         const URL: string = `${API_URL}/orders/${id}`

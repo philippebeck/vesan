@@ -202,11 +202,18 @@ export default {
   components: { BtnElt, CardElt, FieldElt, ListElt, MediaElt, Editor },
 
   props: ['avatar', 'val'],
-  data() {
+  data(): {
+    basket: Array<{ id: number; option: string; quantity: number }>
+    product: Record<string, unknown>
+    order: { id: number; option: string; quantity: number }
+    option: string
+    quantity: number
+    isInBasket: boolean
+  } {
     return {
       basket: [],
       product: {},
-      order: {},
+      order: { id: 0, option: '', quantity: 0 },
       option: '',
       quantity: 1,
       isInBasket: false
@@ -224,7 +231,9 @@ export default {
     const { API_URL, HEAD, UI_URL }: { API_URL: string; HEAD: string; UI_URL: string } = this.val
 
     try {
-      const product: Product = await getData(`${API_URL}/products/${this.$route.params.id}`)
+      const product: { id: number; name: string; description: string; image: string; options: string } = await getData(
+        `${API_URL}/products/${this.$route.params.id}`
+      )
       product.options = product.options.split(',')
       this.product = product
 
@@ -291,30 +300,39 @@ export default {
      * ? CREATE ORDER
      * * Create an order based on the selected product, option & quantity.
      *
-     * @param {number} productId - The ID of the product
-     * @param {string} option - The selected product option
-     * @param {number} quantity - The quantity of the product
-     * @returns {Order} - The created order
+     * @returns { id: number, option: string, quantity: number } - The created order
      */
-    createOrder(productId: number, option: string, quantity: number): Order {
+    createOrder(): {
+      id: number
+      option: string
+      quantity: number
+    } {
       return {
-        id: productId,
-        option: option,
-        quantity: quantity
+        id: Number(this.productId),
+        option: this.option,
+        quantity: this.quantity
       }
     },
 
     /**
      * Retrieves the basket from the local storage.
-     * @returns {Array<string>} The basket retrieved from local storage.
+     * @returns {string[]} The basket retrieved from local storage.
      */
-    getBasket(): Array<string> {
-      if (localStorage.getItem('basket') === null) {
+    getBasket(): string[] {
+      let basketItem = localStorage.getItem('basket')
+
+      if (basketItem === null) {
         localStorage.setItem('basket', JSON.stringify([]))
-        this.basket = JSON.parse(localStorage.getItem('basket'))
-      } else {
-        this.basket = JSON.parse(localStorage.getItem('basket'))
       }
+
+      try {
+        this.basket = JSON.parse(localStorage.getItem('basket')!)
+      } catch (error) {
+        console.error(`Error retrieving basket from local storage: ${error}`)
+        localStorage.setItem('basket', JSON.stringify([]))
+        this.basket = []
+      }
+
       return this.basket
     },
 
@@ -322,20 +340,18 @@ export default {
      * ? CHECK BASKET
      * * Updates the basket quantity by checking if the order is already in it.
      *
-     * @return {Array<Object>} The updated basket.
+     * @return {Object[]} The updated basket.
      */
-    checkBasket(): Array<Object> {
+    checkBasket(): void {
       this.isInBasket = false
 
-      this.basket = this.basket.map((item) => {
+      this.basket = this.basket.map((item: { id: number; option: string; quantity: number }) => {
         if (item.id === this.order.id && item.option === this.option) {
           item.quantity = Number(item.quantity) + Number(this.quantity)
           this.isInBasket = true
         }
         return item
       })
-
-      return this.basket
     },
 
     /**
@@ -373,7 +389,7 @@ export default {
         CHECK_STRING: string
         TEXT_MIN: number
         TEXT_MAX: number
-        CHECK_NUMBER: number
+        CHECK_NUMBER: string
         PRICE_MIN: number
         PRICE_MAX: number
         API_URL: string

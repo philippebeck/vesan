@@ -191,10 +191,12 @@ export default {
      * ? GET ITEMS BY CATEGORY
      * * Retrieves items by category.
      *
-     * @param {Array<{ name: string }>} items - The array of items with a 'name' property.
-     * @returns {Array<{ name: string }>} The filtered array of items.
+     * @param {{id: string, name: string, cat: string}[]} items - The array of items.
+     * @return {Record<string, { id: string; name: string }[]>} The items filtered by category.
      */
-    getItemsByCategory: (items: Array<{ name: string }>): Array<{ name: string }> => {
+    getItemsByCategory(
+      items: { id: string; name: string; cat: string }[]
+    ): Record<string, { id: string; name: string }[]> {
       return getItemsByCat(items, 'name')
     },
 
@@ -202,7 +204,6 @@ export default {
      * ? CREATE LINK
      * * Creates a link by sending a POST request to the server with the provided data.
      *
-     * @param {FormData} data - The data to send in the request body
      * @returns {Promise<void>} A Promise that resolves when the link is created
      */
     async createLink(): Promise<void> {
@@ -218,8 +219,8 @@ export default {
         API_URL: string
         CAT_LINK: string
         CHECK_STRING: string
-        CHECK_URL: RegExp
-        REGEX_URL: string
+        CHECK_URL: string
+        REGEX_URL: RegExp
       } = this.val
 
       if (this.url.startsWith('http')) this.url = this.url.split('//')[1]
@@ -263,13 +264,16 @@ export default {
         ALERT_UPDATED
       }: {
         CHECK_STRING: string
-        REGEX_URL: string
-        CHECK_URL: RegExp
+        REGEX_URL: RegExp
+        CHECK_URL: string
         API_URL: string
         ALERT_UPDATED: string
       } = this.val
 
-      const link: LinkType | undefined = this.links.find((l: LinkType) => l.id === id)
+      const link: { id: number; name: string; url: string; cat: string } | undefined = this.links.find(
+        (l: { id: number }) => l.id === id
+      )
+
       let { name, url, cat }: { name: string; url: string; cat: string } = link || {
         name: '',
         url: '',

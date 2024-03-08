@@ -194,7 +194,20 @@ export default {
   props: ['avatar', 'val'],
   data() {
     return {
-      article: {}
+      id: 0 as number,
+      token: '' as string,
+      article: {
+        id: 0 as number,
+        name: '' as string,
+        text: '' as string,
+        image: '' as string,
+        alt: '' as string,
+        url: '' as string,
+        likes: [] as number[],
+        cat: '' as string,
+        createdAt: '' as string,
+        updatedAt: '' as string
+      }
     }
   },
 
@@ -205,11 +218,23 @@ export default {
    *
    * @return {Promise<Article>} A promise that gets an "article"
    */
-  async created(): Promise<Article> {
+  async created(): Promise<any> {
     const { API_URL, HEAD, UI_URL }: { API_URL: string; HEAD: string; UI_URL: string } = this.val
 
     try {
-      const article: Article = await getData(`${API_URL}/articles/${this.$route.params.id}`)
+      const article: {
+        id: number
+        name: string
+        text: string
+        image: string
+        alt: string
+        url: string
+        likes: number[]
+        cat: string
+        createdAt: string
+        updatedAt: string
+      } = await getData(`${API_URL}/articles/${this.$route.params.id}`)
+
       article.likes = JSON.parse(article.likes)
       this.article = article
 
@@ -260,10 +285,14 @@ export default {
      * ? CHECK LIKES
      * Check if the current user has liked the article.
      *
-     * @returns {boolean} - True if the user has liked the article, false otherwise.
+     * @returns {boolean|false} - True if the user has liked the article, false otherwise.
      */
-    checkLikes(): boolean {
-      return this.article.likes && this.article.likes.includes(this.id)
+    checkLikes(): boolean | false {
+      if (Array.isArray(this.article.likes)) {
+        return this.article.likes.includes(this.id)
+      } else {
+        return false
+      }
     },
 
     /**
@@ -320,19 +349,9 @@ export default {
      * ? UPDATE ARTICLE
      * * Updates the article with the provided data.
      *
-     * @param {Object} articleData - The data of the article to be updated.
      * @returns {Promise<void>} A promise that resolves when the article is updated.
      */
-    async updateArticle(articleData: {
-      id: number
-      name: string
-      text: string
-      image: string
-      alt: string
-      url: string
-      likes: number[]
-      cat: string
-    }): Promise<void> {
+    async updateArticle(): Promise<void> {
       const {
         API_URL,
         ALERT_UPDATED,
@@ -344,12 +363,12 @@ export default {
         API_URL: string
         ALERT_UPDATED: string
         CHECK_STRING: string
-        REGEX_URL: string
+        REGEX_URL: RegExp
         TEXT_MAX: number
         TEXT_MIN: number
       } = this.val
 
-      const {
+      let {
         id,
         name,
         text,
@@ -367,7 +386,7 @@ export default {
         url: string
         likes: number[]
         cat: string
-      } = articleData
+      } = this.article
 
       const IS_NAME_CHECKED: boolean = checkRange(name, CHECK_STRING)
       const IS_TEXT_CHECKED: boolean = checkRange(text, CHECK_STRING, TEXT_MIN, TEXT_MAX)
