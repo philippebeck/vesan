@@ -87,16 +87,7 @@ export default defineComponent({
    * @param {Object} - Object that contains the slots of the component.
    * @returns {Object} - An object containing the functions getItemType and hasSlot.
    */
-  setup(
-    props: {
-      /* define prop types */
-    },
-    {
-      slots
-    }: {
-      /* define slot types */
-    }
-  ) {
+  setup(props, { slots }) {
     /**
      * ? HAS SLOT
      * * Checks if the component has a slot

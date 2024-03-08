@@ -110,7 +110,9 @@ export default {
       this.val
 
     try {
-      const gallery: GalleryType = await getData(`${API_URL}/galleries/${this.$route.params.id}`)
+      const gallery: { id: number; name: string; author: string; cover: string } = await getData(
+        `${API_URL}/galleries/${this.$route.params.id}`
+      )
       this.gallery = gallery
 
       setMeta(
