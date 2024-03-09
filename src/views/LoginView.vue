@@ -171,14 +171,43 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import { VueRecaptcha } from 'vue-recaptcha'
+import { checkRange, checkRegex, postData, setError, setMeta } from '../assets/services'
+
 import BtnElt from '../components/BtnElt.vue'
 import CardElt from '../components/CardElt.vue'
 import FieldElt from '../components/FieldElt.vue'
 
-import { checkRange, checkRegex, postData, setError, setMeta } from '../assets/services'
-import { VueRecaptcha } from 'vue-recaptcha'
+interface Login {
+  name: string
+  email: string
+  image: string
+  pass: string
+  type: string
+}
 
-export default {
+interface Val {
+  ALERT_CREATED: string
+  ALERT_IMG: string
+  ALERT_SENDED: string
+  ALERT_SIGNUP: string
+  API_URL: string
+  CHECK_EMAIL: string
+  CHECK_PASS: string
+  CHECK_STRING: string
+  CONFIRM_FORGOT: string
+  FORGOT_SUBJECT: string
+  FORGOT_TEXT: string
+  HEAD_LOGIN: string
+  LOGO_SRC: string
+  META_LOGIN: string
+  REGEX_EMAIL: RegExp
+  REGEX_PASS: RegExp
+  UI_URL: string
+}
+
+export default defineComponent({
   name: 'LoginView',
   components: { BtnElt, CardElt, FieldElt, VueRecaptcha },
 
@@ -190,7 +219,7 @@ export default {
       image: '',
       pass: '',
       type: 'signIn'
-    }
+    } as Login
   },
 
   /**
@@ -199,12 +228,7 @@ export default {
    * * Redirects to the home page if the user is logged in
    */
   created(): void {
-    const {
-      HEAD_LOGIN,
-      LOGO_SRC,
-      META_LOGIN,
-      UI_URL
-    }: { HEAD_LOGIN: string; LOGO_SRC: string; META_LOGIN: string; UI_URL: string } = this.val
+    const { HEAD_LOGIN, LOGO_SRC, META_LOGIN, UI_URL }: Val = this.val
     setMeta(HEAD_LOGIN, META_LOGIN, `${UI_URL}/login`, `${UI_URL}${LOGO_SRC}`)
 
     if (localStorage.userId) this.$router.push('/')
@@ -250,8 +274,8 @@ export default {
      *
      * @returns {Promise<void>} - A promise that resolves when the user is signed in.
      */
-    async signIn() {
-      const { API_URL, CHECK_EMAIL, CHECK_PASS, REGEX_EMAIL, REGEX_PASS } = this.val
+    async signIn(): Promise<void> {
+      const { API_URL, CHECK_EMAIL, CHECK_PASS, REGEX_EMAIL, REGEX_PASS }: Val = this.val
 
       const IS_EMAIL_CHECKED = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL)
       const IS_PASS_CHECKED = checkRegex(this.pass, CHECK_PASS, REGEX_PASS)
@@ -283,25 +307,8 @@ export default {
      * @returns {Promise<void>} A Promise that resolves when the new user is successfully created.
      */
     async signUp(): Promise<void> {
-      const {
-        ALERT_CREATED,
-        ALERT_IMG,
-        API_URL,
-        CHECK_EMAIL,
-        CHECK_PASS,
-        CHECK_STRING,
-        REGEX_EMAIL,
-        REGEX_PASS
-      }: {
-        ALERT_CREATED: string
-        ALERT_IMG: string
-        API_URL: string
-        CHECK_EMAIL: string
-        CHECK_PASS: string
-        CHECK_STRING: string
-        REGEX_EMAIL: RegExp
-        REGEX_PASS: RegExp
-      } = this.val
+      const { ALERT_CREATED, ALERT_IMG, API_URL, CHECK_EMAIL, CHECK_PASS, CHECK_STRING, REGEX_EMAIL, REGEX_PASS }: Val =
+        this.val
 
       const IS_NAME_CHECKED: boolean = checkRange(this.name, CHECK_STRING)
       const IS_EMAIL_CHECKED: boolean = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL)
@@ -309,6 +316,7 @@ export default {
 
       if (IS_NAME_CHECKED && IS_EMAIL_CHECKED && IS_PASS_CHECKED) {
         const URL: string = `${API_URL}/users`
+
         const data: FormData = new FormData()
         const img: File | undefined = (document.querySelector('[type="file"]') as HTMLInputElement)?.files?.[0]
 
@@ -336,9 +344,13 @@ export default {
     /**
      * ? FORGOT PASS
      * * Executes the forgot password functionality.
+     *
+     * @returns {Promise<void>} A Promise that resolves when the forgot password process is completed.
      */
     async forgotPass(): Promise<void> {
-      const { ALERT_SENDED, API_URL, CHECK_EMAIL, CONFIRM_FORGOT, FORGOT_SUBJECT, FORGOT_TEXT, REGEX_EMAIL } = this.val
+      const { ALERT_SENDED, API_URL, CHECK_EMAIL, CONFIRM_FORGOT, FORGOT_SUBJECT, FORGOT_TEXT, REGEX_EMAIL }: Val =
+        this.val
+
       const IS_EMAIL_CHECKED: boolean = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL)
 
       if (IS_EMAIL_CHECKED && confirm(CONFIRM_FORGOT)) {
@@ -360,5 +372,5 @@ export default {
       }
     }
   }
-}
+})
 </script>

@@ -87,16 +87,24 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import { mapState, mapActions } from 'vuex'
+import { checkRole, getCats, getItemsByCat, setMeta } from '../assets/services'
+
 import CardElt from '../components/CardElt.vue'
 import ListElt from '../components/ListElt.vue'
 import MediaElt from '../components/MediaElt.vue'
 import NavElt from '../components/NavElt.vue'
 import ProjectSet from '../components/ProjectSet.vue'
 
-import { checkRole, getCats, getItemsByCat, setMeta } from '../assets/services'
-import { mapState, mapActions } from 'vuex'
+interface Val {
+  HEAD_PORTFOLIO: string
+  LOGO_SRC: string
+  META_PORTFOLIO: string
+  UI_URL: string
+}
 
-export default {
+export default defineComponent({
   name: 'PortfolioView',
   components: { CardElt, ListElt, MediaElt, NavElt, ProjectSet },
   props: ['avatar', 'val'],
@@ -107,10 +115,10 @@ export default {
    * * Sets the meta tags.
    */
   async created(): Promise<void> {
-    const { HEAD_PORTFOLIO, LOGO_SRC, META_PORTFOLIO, UI_URL } = this.val
+    const { HEAD_PORTFOLIO, LOGO_SRC, META_PORTFOLIO, UI_URL }: Val = this.val
+    setMeta(HEAD_PORTFOLIO, META_PORTFOLIO, `${UI_URL}/portfolio`, UI_URL + LOGO_SRC)
 
     await this.$store.dispatch('listProjects')
-    setMeta(HEAD_PORTFOLIO, META_PORTFOLIO, `${UI_URL}/portfolio`, UI_URL + LOGO_SRC)
   },
 
   /**
@@ -119,7 +127,7 @@ export default {
    *
    * @returns {void}
    */
-  updated() {
+  updated(): void {
     const descriptionArray: HTMLCollectionOf<Element> = document.getElementsByClassName('figcaption')
 
     for (let descriptionElt of descriptionArray) {
@@ -170,7 +178,7 @@ export default {
       return getItemsByCat(items)
     }
   }
-}
+})
 </script>
 
 <style>

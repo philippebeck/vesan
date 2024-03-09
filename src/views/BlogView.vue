@@ -134,6 +134,10 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import { mapState, mapActions } from 'vuex'
+import { checkRole, getCats, getItemsByCat, putData, setError, setMeta } from '../assets/services'
+
 import ArticleSet from '../components/ArticleSet.vue'
 import BtnElt from '../components/BtnElt.vue'
 import CardElt from '../components/CardElt.vue'
@@ -141,10 +145,28 @@ import ListElt from '../components/ListElt.vue'
 import MediaElt from '../components/MediaElt.vue'
 import NavElt from '../components/NavElt.vue'
 
-import { checkRole, getCats, getItemsByCat, putData, setError, setMeta } from '../assets/services'
-import { mapState, mapActions } from 'vuex'
+interface Article {
+  id: number
+  name: string
+  text: string
+  image: string
+  alt: string
+  url: string
+  likes: any
+  cat: string
+  createdAt: string
+  updatedAt: string
+}
 
-export default {
+interface Val {
+  API_URL: string
+  HEAD_BLOG: string
+  LOGO_SRC: string
+  META_BLOG: string
+  UI_URL: string
+}
+
+export default defineComponent({
   name: 'BlogView',
   components: { BtnElt, CardElt, ListElt, MediaElt, NavElt, ArticleSet },
   props: ['avatar', 'val'],
@@ -156,15 +178,10 @@ export default {
    * @returns {Promise<any>}
    */
   async created(): Promise<any> {
-    const { HEAD_BLOG, LOGO_SRC, META_BLOG, UI_URL } = this.val as {
-      HEAD_BLOG: string
-      LOGO_SRC: string
-      META_BLOG: string
-      UI_URL: string
-    }
+    const { HEAD_BLOG, LOGO_SRC, META_BLOG, UI_URL }: Val = this.val
+    setMeta(HEAD_BLOG, META_BLOG, `${UI_URL}/blog`, UI_URL + LOGO_SRC)
 
     await this.$store.dispatch('listArticles')
-    setMeta(HEAD_BLOG, META_BLOG, `${UI_URL}/blog`, UI_URL + LOGO_SRC)
   },
 
   /**
@@ -173,7 +190,7 @@ export default {
    *
    * @returns {void}
    */
-  updated() {
+  updated(): void {
     const textArray: HTMLCollectionOf<Element> = document.getElementsByClassName('figcaption')
 
     for (let textElt of textArray) {
@@ -232,7 +249,7 @@ export default {
      * @return {boolean} - Returns a boolean indicating whether the ID is present in the likes array.
      */
     checkLikes(id: number): boolean {
-      return this.articles.some((a: { id: number; likes: number[] }) => a.id === id && a.likes.includes(this.id))
+      return this.articles.some((a: Article) => a.id === id && a.likes.includes(this.id))
     },
 
     /**
@@ -243,30 +260,11 @@ export default {
      * @returns {Promise<void>} A promise that resolves when the like is added.
      */
     async addLike(id: number): Promise<void> {
-      const { API_URL }: { API_URL: string } = this.val
-      const article:
-        | {
-            id: number
-            name: string
-            text: string
-            image: string
-            alt: string
-            url: string
-            likes: number[]
-            cat: string
-          }
-        | undefined = this.articles.find((a: { id: number }) => a.id === id)
+      const { API_URL }: Val = this.val
+      const article: Article = this.articles.find((a: Article) => a.id === id)
 
       if (!article) return
-      let {
-        name,
-        text,
-        image,
-        alt,
-        url,
-        likes,
-        cat
-      }: { name: string; text: string; image: string; alt: string; url: string; likes: number[]; cat: string } = article
+      let { name, text, image, alt, url, likes, cat }: Article = article
 
       const index: number = likes.indexOf(this.id)
       index > -1 ? likes.splice(index, 1) : likes.push(this.id)
@@ -289,7 +287,7 @@ export default {
       }
     }
   }
-}
+})
 </script>
 
 <style>

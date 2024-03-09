@@ -121,6 +121,10 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import { mapState, mapActions } from 'vuex'
+import { checkRange, checkRegex, checkRole, deleteData, putData, setError, setMeta } from '../assets/services'
+
 import BtnElt from '../components/BtnElt.vue'
 import CardElt from '../components/CardElt.vue'
 import FieldElt from '../components/FieldElt.vue'
@@ -129,10 +133,33 @@ import MediaElt from '../components/MediaElt.vue'
 import NavElt from '../components/NavElt.vue'
 import UserSet from '../components/UserSet.vue'
 
-import { checkRange, checkRegex, checkRole, deleteData, putData, setError, setMeta } from '../assets/services'
-import { mapState, mapActions } from 'vuex'
+interface User {
+  id: number
+  name: string
+  email: string
+  image: string
+  pass: string
+  role: string
+}
 
-export default {
+interface Val {
+  ALERT_DELETED: string
+  ALERT_LOGOUT: string
+  ALERT_UPDATED: string
+  API_URL: string
+  CHECK_EMAIL: string
+  CHECK_PASS: string
+  CHECK_STRING: string
+  HEAD_PROFILE: string
+  LOGO_SRC: string
+  META_PROFILE: string
+  REGEX_EMAIL: RegExp
+  REGEX_PASS: RegExp
+  TITLE_DELETE: string
+  UI_URL: string
+}
+
+export default defineComponent({
   name: 'ProfileView',
   components: { BtnElt, CardElt, FieldElt, ListElt, MediaElt, NavElt, UserSet },
   props: ['val'],
@@ -144,25 +171,12 @@ export default {
    * @returns {Promise<void>}
    */
   async created(): Promise<void> {
-    const {
-      ALERT_LOGOUT,
-      HEAD_PROFILE,
-      LOGO_SRC,
-      META_PROFILE,
-      UI_URL
-    }: {
-      ALERT_LOGOUT: string
-      HEAD_PROFILE: string
-      LOGO_SRC: string
-      META_PROFILE: string
-      UI_URL: string
-    } = this.val
+    const { ALERT_LOGOUT, HEAD_PROFILE, LOGO_SRC, META_PROFILE, UI_URL }: Val = this.val
+    setMeta(HEAD_PROFILE, META_PROFILE, UI_URL, UI_URL + LOGO_SRC)
 
     if (this.token) {
       await this.$store.dispatch('readUser', this.id)
       await this.$store.dispatch('listUsers')
-
-      setMeta(HEAD_PROFILE, META_PROFILE, UI_URL, UI_URL + LOGO_SRC)
     } else {
       alert(ALERT_LOGOUT)
       this.$router.push('/')
@@ -204,33 +218,30 @@ export default {
      *
      * @returns {Promise<void>}
      */
-    async updateUser(
-      API_URL: string,
-      CHECK_EMAIL: string,
-      CHECK_PASS: string,
-      CHECK_STRING: string,
-      REGEX_EMAIL: RegExp,
-      REGEX_PASS: RegExp
-    ): Promise<void> {
-      const IS_NAME_CHECKED: boolean = checkRange(this.user.name, CHECK_STRING)
-      const IS_EMAIL_CHECKED: boolean = checkRegex(this.user.email, CHECK_EMAIL, REGEX_EMAIL)
+    async updateUser(): Promise<void> {
+      const { ALERT_UPDATED, API_URL, CHECK_EMAIL, CHECK_PASS, CHECK_STRING, REGEX_EMAIL, REGEX_PASS }: Val = this.val
+      const { id, name, email, image, role }: User = this.user
+
+      const IS_NAME_CHECKED: boolean = checkRange(name, CHECK_STRING)
+      const IS_EMAIL_CHECKED: boolean = checkRegex(email, CHECK_EMAIL, REGEX_EMAIL)
       const IS_PASS_CHECKED: boolean = this.pass && checkRegex(this.pass, CHECK_PASS, REGEX_PASS)
 
       if (IS_NAME_CHECKED && IS_EMAIL_CHECKED) {
-        const URL: string = `${API_URL}/users/${this.user.id}`
+        const URL: string = `${API_URL}/users/${id}`
+
         const data: FormData = new FormData()
-        const img: File | string = (document.getElementById('image') as HTMLInputElement)?.files?.[0] ?? this.user.image
+        const img: File | string = (document.getElementById('image') as HTMLInputElement)?.files?.[0] ?? image
 
         if (IS_PASS_CHECKED) data.append('pass', this.pass)
 
-        data.append('name', this.user.name)
-        data.append('email', this.user.email)
+        data.append('name', name)
+        data.append('email', email)
         data.append('image', img)
-        data.append('role', this.user.role)
+        data.append('role', role)
 
         try {
           await putData(URL, data, this.token)
-          alert(this.user.name + this.val.ALERT_UPDATED)
+          alert(this.user.name + ALERT_UPDATED)
         } catch (err) {
           setError(err)
         } finally {
@@ -244,12 +255,12 @@ export default {
      * * Deletes a user from the system.
      * @returns {Promise<void>}
      */
-    async deleteUser(API_URL: string, TITLE_DELETE: string): Promise<void> {
-      const { ALERT_DELETED } = this.val
-      const NAME: string = this.user.name
+    async deleteUser(): Promise<void> {
+      const { ALERT_DELETED, API_URL, TITLE_DELETE }: Val = this.val
+      const { id, name }: User = this.user
 
-      if (confirm(`${TITLE_DELETE} ${NAME} ?`)) {
-        const URL: string = `${API_URL}/users/${this.user.id}`
+      if (confirm(`${TITLE_DELETE} ${name} ?`)) {
+        const URL: string = `${API_URL}/users/${id}`
 
         try {
           await deleteData(URL, this.token)
@@ -257,7 +268,7 @@ export default {
           localStorage.removeItem('userId')
           localStorage.removeItem('userToken')
 
-          alert(NAME + ALERT_DELETED)
+          alert(name + ALERT_DELETED)
         } catch (err) {
           setError(err)
         } finally {
@@ -266,5 +277,5 @@ export default {
       }
     }
   }
-}
+})
 </script>

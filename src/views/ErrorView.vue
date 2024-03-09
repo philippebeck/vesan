@@ -22,13 +22,15 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+
 import BtnElt from '../components/BtnElt.vue'
 import CardElt from '../components/CardElt.vue'
 import MediaElt from '../components/MediaElt.vue'
 
-export default {
+export default defineComponent({
   name: 'ErrorView',
   components: { BtnElt, CardElt, MediaElt },
   props: ['val']
-}
+})
 </script>

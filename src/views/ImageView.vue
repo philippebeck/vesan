@@ -76,6 +76,10 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import { mapState, mapActions } from 'vuex'
+import { checkRole, getData, setError, setMeta } from '../assets/services'
+
 import CardElt from '../components/CardElt.vue'
 import ImageSet from '../components/ImageSet.vue'
 import ListElt from '../components/ListElt.vue'
@@ -83,17 +87,33 @@ import MediaElt from '../components/MediaElt.vue'
 import NavElt from '../components/NavElt.vue'
 import SliderElt from '../components/SliderElt.vue'
 
-import { checkRole, getData, setError, setMeta } from '../assets/services'
-import { mapState, mapActions } from 'vuex'
+interface Gallery {
+  id: number
+  name: string
+  author: string
+  cover: string
+}
 
-export default {
+interface Val {
+  API_URL: string
+  HEAD: string
+  META_IMAGE: string
+  UI_URL: string
+}
+
+export default defineComponent({
   name: 'ImageView',
   components: { CardElt, ListElt, MediaElt, NavElt, SliderElt, ImageSet },
-
   props: ['avatar', 'val'],
+
   data() {
     return {
-      gallery: {}
+      gallery: {
+        id: 0,
+        name: '',
+        author: '',
+        cover: ''
+      } as Gallery
     }
   },
 
@@ -106,20 +126,17 @@ export default {
    * @returns {Promise<void>}
    */
   async created(): Promise<void> {
-    const { API_URL, HEAD, META_IMAGE, UI_URL }: { API_URL: string; HEAD: string; META_IMAGE: string; UI_URL: string } =
-      this.val
+    const { API_URL, HEAD, META_IMAGE, UI_URL }: Val = this.val
 
     try {
-      const gallery: { id: number; name: string; author: string; cover: string } = await getData(
-        `${API_URL}/galleries/${this.$route.params.id}`
-      )
-      this.gallery = gallery
+      this.gallery = await getData(`${API_URL}/galleries/${this.$route.params.id}`)
+      const { id, name, author, cover }: Gallery = this.gallery
 
       setMeta(
-        gallery.name + HEAD,
-        META_IMAGE + gallery.author,
-        `${UI_URL}/gallery/${gallery.id}`,
-        `${UI_URL}/img/thumbnails/galleries/${gallery.cover}`
+        name + HEAD,
+        META_IMAGE + author,
+        `${UI_URL}/gallery/${id}`,
+        `${UI_URL}/img/thumbnails/galleries/${cover}`
       )
     } catch (err) {
       setError(err)
@@ -148,7 +165,7 @@ export default {
       return checkRole(this.avatar.role, role)
     }
   }
-}
+})
 </script>
 
 <style>

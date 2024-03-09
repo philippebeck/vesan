@@ -177,6 +177,11 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import { mapState, mapActions } from 'vuex'
+import { loadScript } from '@paypal/paypal-js'
+import { checkRole, getData, postData, setError, setMeta } from '../assets/services'
+
 import BtnElt from '../components/BtnElt.vue'
 import CardElt from '../components/CardElt.vue'
 import FieldElt from '../components/FieldElt.vue'
@@ -184,20 +189,91 @@ import MediaElt from '../components/MediaElt.vue'
 import OrderSet from '../components/OrderSet.vue'
 import TableElt from '../components/TableElt.vue'
 
-import { checkRole, getData, postData, setError, setMeta } from '../assets/services'
-import { mapState, mapActions } from 'vuex'
-import { loadScript } from '@paypal/paypal-js'
+interface Basket {
+  id: number
+  option: string
+  quantity: number
+}
 
-export default {
+interface Order {
+  id: number
+  name: string
+  image: string
+  option: string
+  quantity: number
+  price: number
+}
+
+interface Product {
+  id: number
+  name: string
+  description: string
+  image: string
+  alt: string
+  price: number
+  options: string
+  cat: string
+}
+
+interface Val {
+  ALERT_ORDER_CREATED: string
+  API_URL: string
+  CONFIRM_BASKET: string
+  CURRENCY_ISO: string
+  HEAD_BASKET: string
+  LOGO_SRC: string
+  META_BASKET: string
+  ORDER_STATUS: string
+  PAYPAL_BTN: string
+  PAYPAL_CANCEL: string
+  PAYPAL_ERROR: string
+  PAYPAL_COLOR: string
+  PAYPAL_ID: string
+  PAYPAL_LABEL: string
+  PAYPAL_NAMESPACE: string
+  PAYPAL_SDK: string
+  PAYPAL_SHAPE: string
+  PAYPAL_STATUS: string
+  PAYPAL_TERMS_ERROR: string
+  UI_URL: string
+}
+
+export default defineComponent({
   name: 'BasketView',
   components: { BtnElt, CardElt, FieldElt, MediaElt, TableElt, OrderSet },
-
   props: ['avatar', 'val'],
+
   data() {
     return {
-      products: [],
-      basket: [],
-      order: [],
+      products: [
+        {
+          id: 0,
+          name: '',
+          description: '',
+          image: '',
+          alt: '',
+          price: 0,
+          options: '',
+          cat: ''
+        } as Product
+      ],
+      basket: [
+        {
+          id: 0,
+          option: '',
+          quantity: 0
+        } as Basket
+      ],
+      order: [
+        {
+          id: 0,
+          name: '',
+          image: '',
+          option: '',
+          quantity: 0,
+          price: 0
+        } as Order
+      ],
       total: 0,
       isTermsAccepted: false
     }
@@ -211,25 +287,12 @@ export default {
    * @return {Promise<void>} A promise that gets "products"
    */
   async created(): Promise<void> {
-    const {
-      API_URL,
-      HEAD_BASKET,
-      META_BASKET,
-      LOGO_SRC,
-      UI_URL
-    }: {
-      API_URL: string
-      HEAD_BASKET: string
-      META_BASKET: string
-      LOGO_SRC: string
-      UI_URL: string
-    } = this.val
+    const { API_URL, HEAD_BASKET, META_BASKET, LOGO_SRC, UI_URL }: Val = this.val
+    setMeta(HEAD_BASKET, META_BASKET, `${UI_URL}/basket`, UI_URL + LOGO_SRC)
 
     try {
-      const res: any = await getData(`${API_URL}/products`) // Replace 'any' with the actual type of 'res'
-      this.products = res
+      this.products = await getData(`${API_URL}/products`)
       this.setBasket()
-      setMeta(HEAD_BASKET, META_BASKET, `${UI_URL}/basket`, UI_URL + LOGO_SRC)
 
       if (this.basket[0] !== undefined) {
         this.setOrder()
@@ -291,9 +354,9 @@ export default {
      * @return {void} None
      */
     setBasket(): void {
-      if (localStorage.getItem('basket') !== null) {
-        this.basket = JSON.parse(localStorage.getItem('basket'))
-      }
+      const basketItem = localStorage.getItem('basket')
+
+      if (basketItem !== null) this.basket = JSON.parse(basketItem)
     },
 
     /**
@@ -307,17 +370,17 @@ export default {
         const product: Product = this.products[i]
 
         for (let j = 0; j < this.basket.length; j++) {
-          const item: BasketItem = this.basket[j]
+          const item: Basket = this.basket[j]
 
           if (product.id === item.id) {
-            let order: Order = {}
-
-            order.id = item.id
-            order.name = product.name
-            order.image = product.image
-            order.option = item.option
-            order.quantity = Number(item.quantity)
-            order.price = Number(product.price)
+            let order: Order = {
+              id: item.id,
+              name: product.name,
+              image: product.image,
+              option: item.option,
+              quantity: Number(item.quantity),
+              price: Number(product.price)
+            }
 
             this.order.push(order)
           }
@@ -329,29 +392,45 @@ export default {
      * ? SET PAYPAL
      * * Sets up the Paypal payment option and renders the Paypal button on the page.
      *
-     * @param {Object} val - The object containing Paypal configuration values.
+     * @param {Val} val - The object containing Paypal configuration values.
      * @param {Function} getTotal - The function to get the total value for the Paypal payment.
      * @param {Function} createOrder - The function to create an order with Paypal.
      * @returns {void}
      */
-    setPaypal(val: Object, getTotal: Function, createOrder: Function): void {
+    setPaypal(val: Val, getTotal: Function, createOrder: Function): void {
+      const {
+        CURRENCY_ISO,
+        PAYPAL_BTN,
+        PAYPAL_CANCEL,
+        PAYPAL_COLOR,
+        PAYPAL_ERROR,
+        PAYPAL_ID,
+        PAYPAL_NAMESPACE,
+        PAYPAL_LABEL,
+        PAYPAL_SDK,
+        PAYPAL_SHAPE,
+        PAYPAL_STATUS,
+        PAYPAL_TERMS_ERROR
+      }: Val = val
+
       loadScript({
-        'client-id': val.PAYPAL_ID,
-        'data-namespace': val.PAYPAL_NAMESPACE,
-        currency: val.CURRENCY_ISO
+        'client-id': PAYPAL_ID,
+        'data-namespace': PAYPAL_NAMESPACE,
+        currency: CURRENCY_ISO
       })
         .then((paypal: any) => {
           paypal
             .Buttons({
               style: {
-                color: val.PAYPAL_COLOR,
-                shape: val.PAYPAL_SHAPE,
-                label: val.PAYPAL_LABEL
+                color: PAYPAL_COLOR,
+                shape: PAYPAL_SHAPE,
+                label: PAYPAL_LABEL
               },
               onInit: function (data: any, actions: any): void {
                 actions.disable()
+                const checkTerms = document.querySelector('#checkTerms')
 
-                document.querySelector('#checkTerms').addEventListener('change', function (event: Event): void {
+                checkTerms?.addEventListener('change', function (event: Event): void {
                   if ((event.target as HTMLInputElement).checked) {
                     actions.enable()
                   } else {
@@ -361,7 +440,7 @@ export default {
               },
               onClick: function (): void {
                 if (!(document.querySelector('#checkTerms') as HTMLInputElement).checked) {
-                  alert(val.PAYPAL_TERMS_ERROR)
+                  alert(PAYPAL_TERMS_ERROR)
                 }
               },
               createOrder: function (data: any, actions: any): any {
@@ -369,7 +448,7 @@ export default {
                   purchase_units: [
                     {
                       amount: {
-                        currency_code: val.CURRENCY_ISO,
+                        currency_code: CURRENCY_ISO,
                         value: getTotal()
                       }
                     }
@@ -378,22 +457,22 @@ export default {
               },
               onApprove: function (data: any, actions: any): any {
                 return actions.order.capture().then((orderData: any) => {
-                  alert(val.PAYPAL_STATUS + orderData.id + ' : ' + orderData.status)
+                  alert(PAYPAL_STATUS + orderData.id + ' : ' + orderData.status)
                   createOrder(orderData.id)
                 })
               },
               onCancel: function (): void {
-                alert(val.PAYPAL_CANCEL)
+                alert(PAYPAL_CANCEL)
               },
               onError: function (err: any): void {
-                alert(val.PAYPAL_ERROR)
+                alert(PAYPAL_ERROR)
                 throw new Error(err)
               }
             })
             .render('#paypal')
-            .catch((error: any) => console.error(val.PAYPAL_BTN, error))
+            .catch((error: any) => console.error(PAYPAL_BTN, error))
         })
-        .catch((error: any) => console.error(val.PAYPAL_SDK, error))
+        .catch((error: any) => console.error(PAYPAL_SDK, error))
     },
 
     /**
@@ -421,7 +500,9 @@ export default {
      * @return {Promise<void>} A promise that resolves when the order is created.
      */
     async createOrder(orderId: number): Promise<void> {
-      const URL: string = `${this.val.API_URL}/orders/`
+      const { ALERT_ORDER_CREATED, API_URL, ORDER_STATUS }: Val = this.val
+      const URL: string = `${API_URL}/orders/`
+
       const order: FormData = new FormData()
       const products: Product[] = []
 
@@ -433,12 +514,12 @@ export default {
       order.append('products', JSON.stringify(products))
       order.append('total', this.total.toString())
       order.append('paymentId', orderId.toString())
-      order.append('status', this.val.ORDER_STATUS)
+      order.append('status', ORDER_STATUS)
       order.append('userId', this.id.toString())
 
       try {
         await postData(URL, order, this.token)
-        alert(this.val.ALERT_ORDER_CREATED)
+        alert(ALERT_ORDER_CREATED)
         localStorage.removeItem('basket')
       } catch (err) {
         setError(err)
@@ -484,11 +565,13 @@ export default {
     deleteProduct(id: number, option: string): void {
       for (let i = 0; i < this.order.length; i++) {
         const element = this.order[i]
+
         if (element.id === id && element.option === option) this.order.splice(i, 1)
       }
 
       for (let i = 0; i < this.basket.length; i++) {
         const item = this.basket[i]
+
         if (item.id === id && item.option === option) this.basket.splice(i, 1)
       }
 
@@ -501,13 +584,15 @@ export default {
      * * Deletes the basket.
      */
     deleteBasket(): void {
-      if (confirm(this.val.CONFIRM_BASKET)) {
+      const { CONFIRM_BASKET }: Val = this.val
+
+      if (confirm(CONFIRM_BASKET)) {
         localStorage.removeItem('basket')
         this.$router.go(0)
       }
     }
   }
-}
+})
 </script>
 
 <style>

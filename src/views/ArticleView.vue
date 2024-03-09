@@ -176,6 +176,10 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import { mapState } from 'vuex'
+import { checkRange, checkRegex, checkRole, deleteData, getData, putData, setError, setMeta } from '../assets/services'
+
 import BtnElt from '../components/BtnElt.vue'
 import CardElt from '../components/CardElt.vue'
 import FieldElt from '../components/FieldElt.vue'
@@ -183,31 +187,53 @@ import ListElt from '../components/ListElt.vue'
 import MediaElt from '../components/MediaElt.vue'
 import Editor from '@tinymce/tinymce-vue'
 
-import { checkRange, checkRegex, checkRole, deleteData, getData, putData, setError, setMeta } from '../assets/services'
+interface Article {
+  id: number
+  name: string
+  text: string
+  image: string
+  alt: string
+  url: string
+  likes: any
+  cat: string
+  createdAt: string
+  updatedAt: string
+}
 
-import { mapState } from 'vuex'
+interface Val {
+  ALERT_DELETED: string
+  API_URL: string
+  ALERT_UPDATED: string
+  CHECK_STRING: string
+  HEAD: string
+  REGEX_URL: RegExp
+  TEXT_MAX: number
+  TEXT_MIN: number
+  TITLE_DELETE: string
+  UI_URL: string
+}
 
-export default {
+export default defineComponent({
   name: 'ArticleView',
   components: { BtnElt, CardElt, FieldElt, ListElt, MediaElt, Editor },
-
   props: ['avatar', 'val'],
+
   data() {
     return {
       id: 0 as number,
       token: '' as string,
       article: {
-        id: 0 as number,
-        name: '' as string,
-        text: '' as string,
-        image: '' as string,
-        alt: '' as string,
-        url: '' as string,
-        likes: [] as number[],
-        cat: '' as string,
-        createdAt: '' as string,
-        updatedAt: '' as string
-      }
+        id: 0,
+        name: '',
+        text: '',
+        image: '',
+        alt: '',
+        url: '',
+        likes: null,
+        cat: '',
+        createdAt: '',
+        updatedAt: ''
+      } as Article
     }
   },
 
@@ -216,24 +242,13 @@ export default {
    * * Retrieves the article from the API
    * * Sets the meta tags
    *
-   * @return {Promise<Article>} A promise that gets an "article"
+   * @return {Promise<void>} A promise that gets an "article"
    */
-  async created(): Promise<any> {
-    const { API_URL, HEAD, UI_URL }: { API_URL: string; HEAD: string; UI_URL: string } = this.val
+  async created(): Promise<void> {
+    const { API_URL, HEAD, UI_URL }: Val = this.val
 
     try {
-      const article: {
-        id: number
-        name: string
-        text: string
-        image: string
-        alt: string
-        url: string
-        likes: number[]
-        cat: string
-        createdAt: string
-        updatedAt: string
-      } = await getData(`${API_URL}/articles/${this.$route.params.id}`)
+      const article: Article = await getData(`${API_URL}/articles/${this.$route.params.id}`)
 
       article.likes = JSON.parse(article.likes)
       this.article = article
@@ -302,27 +317,8 @@ export default {
      * @return {Promise<void>} A promise that resolves when the like is added.
      */
     async addLike(): Promise<void> {
-      const { API_URL }: { API_URL: string } = this.val
-
-      let {
-        id,
-        name,
-        text,
-        image,
-        alt,
-        url,
-        likes,
-        cat
-      }: {
-        id: number
-        name: string
-        text: string
-        image: string
-        alt: string
-        url: string
-        likes: number[]
-        cat: string
-      } = this.article
+      const { API_URL }: Val = this.val
+      let { id, name, text, image, alt, url, likes, cat }: Article = this.article
 
       const index: number = likes.indexOf(this.id)
       index > -1 ? likes.splice(index, 1) : likes.push(this.id)
@@ -352,41 +348,8 @@ export default {
      * @returns {Promise<void>} A promise that resolves when the article is updated.
      */
     async updateArticle(): Promise<void> {
-      const {
-        API_URL,
-        ALERT_UPDATED,
-        CHECK_STRING,
-        REGEX_URL,
-        TEXT_MAX,
-        TEXT_MIN
-      }: {
-        API_URL: string
-        ALERT_UPDATED: string
-        CHECK_STRING: string
-        REGEX_URL: RegExp
-        TEXT_MAX: number
-        TEXT_MIN: number
-      } = this.val
-
-      let {
-        id,
-        name,
-        text,
-        image,
-        alt,
-        url,
-        likes,
-        cat
-      }: {
-        id: number
-        name: string
-        text: string
-        image: string
-        alt: string
-        url: string
-        likes: number[]
-        cat: string
-      } = this.article
+      const { API_URL, ALERT_UPDATED, CHECK_STRING, REGEX_URL, TEXT_MAX, TEXT_MIN }: Val = this.val
+      let { id, name, text, image, alt, url, likes, cat }: Article = this.article
 
       const IS_NAME_CHECKED: boolean = checkRange(name, CHECK_STRING)
       const IS_TEXT_CHECKED: boolean = checkRange(text, CHECK_STRING, TEXT_MIN, TEXT_MAX)
@@ -395,6 +358,7 @@ export default {
 
       if (IS_NAME_CHECKED && IS_TEXT_CHECKED && IS_ALT_CHECKED && IS_URL_CHECKED) {
         const URL: string = `${API_URL}/articles/${id}`
+
         const data: FormData = new FormData()
         const img: File | string = (document.getElementById('image') as HTMLInputElement)?.files?.[0] ?? image
 
@@ -421,15 +385,11 @@ export default {
      * ? DELETE ARTICLE
      * * Deletes an article with the given ID.
      *
-     * @param {number} id - The ID of the article to delete
-     * @param {string} name - The name of the article to be deleted
      * @returns {Promise<void>} A promise that resolves when the article is deleted.
      */
     async deleteArticle(): Promise<void> {
-      const { TITLE_DELETE, API_URL, ALERT_DELETED }: { TITLE_DELETE: string; API_URL: string; ALERT_DELETED: string } =
-        this.val
-
-      let { id, name }: { id: number; name: string } = this.article
+      const { ALERT_DELETED, API_URL, TITLE_DELETE }: Val = this.val
+      let { id, name }: Article = this.article
 
       if (confirm(`${TITLE_DELETE} ${name} ?`)) {
         const URL: string = `${API_URL}/articles/${id}`
@@ -445,7 +405,7 @@ export default {
       }
     }
   }
-}
+})
 </script>
 
 <style>

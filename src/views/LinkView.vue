@@ -57,16 +57,24 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import { mapState, mapActions } from 'vuex'
+import { checkRole, getCats, getItemsByCat, setMeta } from '../assets/services'
+
 import BtnElt from '../components/BtnElt.vue'
 import CardElt from '../components/CardElt.vue'
 import ListElt from '../components/ListElt.vue'
 import LinkSet from '../components/LinkSet.vue'
 import NavElt from '../components/NavElt.vue'
 
-import { checkRole, getCats, getItemsByCat, setMeta } from '../assets/services'
-import { mapState, mapActions } from 'vuex'
+interface Val {
+  HEAD_LINK: string
+  LOGO_SRC: string
+  META_LINK: string
+  UI_URL: string
+}
 
-export default {
+export default defineComponent({
   name: 'LinkView',
   components: { BtnElt, CardElt, ListElt, NavElt, LinkSet },
   props: ['avatar', 'val'],
@@ -77,15 +85,10 @@ export default {
    * * Set the meta tags
    */
   async created(): Promise<void> {
-    const {
-      HEAD_LINK,
-      LOGO_SRC,
-      META_LINK,
-      UI_URL
-    }: { HEAD_LINK: string; LOGO_SRC: string; META_LINK: string; UI_URL: string } = this.val
+    const { HEAD_LINK, LOGO_SRC, META_LINK, UI_URL }: Val = this.val
+    setMeta(HEAD_LINK, META_LINK, `${UI_URL}/link`, UI_URL + LOGO_SRC)
 
     await this.$store.dispatch('listLinks')
-    setMeta(HEAD_LINK, META_LINK, `${UI_URL}/link`, UI_URL + LOGO_SRC)
   },
 
   computed: {
@@ -129,5 +132,5 @@ export default {
       return getItemsByCat(items)
     }
   }
-}
+})
 </script>

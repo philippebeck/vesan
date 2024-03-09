@@ -79,16 +79,24 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import { mapState, mapActions } from 'vuex'
+import { checkRole, getCats, getItemsByCat, setMeta } from '../assets/services'
+
 import CardElt from '../components/CardElt.vue'
 import ListElt from '../components/ListElt.vue'
 import MediaElt from '../components/MediaElt.vue'
 import NavElt from '../components/NavElt.vue'
 import ProductSet from '../components/ProductSet.vue'
 
-import { checkRole, getCats, getItemsByCat, setMeta } from '../assets/services'
-import { mapState, mapActions } from 'vuex'
+interface Val {
+  HEAD_SHOP: string
+  LOGO_SRC: string
+  META_SHOP: string
+  UI_URL: string
+}
 
-export default {
+export default defineComponent({
   name: 'ShopView',
   components: { CardElt, ListElt, MediaElt, NavElt, ProductSet },
   props: ['avatar', 'val'],
@@ -97,17 +105,14 @@ export default {
    * ? CREATED
    * * Retrieves the products from the server.
    * * Sets the meta tags.
+   *
+   * @returns {Promise<void>}
    */
-  created(): void {
-    const { HEAD_SHOP, LOGO_SRC, META_SHOP, UI_URL } = this.val as {
-      HEAD_SHOP: string
-      LOGO_SRC: string
-      META_SHOP: string
-      UI_URL: string
-    }
-
-    this.$store.dispatch('listProducts')
+  async created(): Promise<void> {
+    const { HEAD_SHOP, LOGO_SRC, META_SHOP, UI_URL }: Val = this.val
     setMeta(HEAD_SHOP, META_SHOP, `${UI_URL}/shop`, `${UI_URL}${LOGO_SRC}`)
+
+    await this.$store.dispatch('listProducts')
   },
 
   /**
@@ -167,7 +172,7 @@ export default {
       return getItemsByCat(items)
     }
   }
-}
+})
 </script>
 
 <style>

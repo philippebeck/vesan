@@ -187,6 +187,10 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import { mapState } from 'vuex'
+import { checkRange, checkRole, deleteData, getData, putData, setError, setMeta } from '../assets/services'
+
 import BtnElt from '../components/BtnElt.vue'
 import CardElt from '../components/CardElt.vue'
 import FieldElt from '../components/FieldElt.vue'
@@ -194,29 +198,77 @@ import ListElt from '../components/ListElt.vue'
 import MediaElt from '../components/MediaElt.vue'
 import Editor from '@tinymce/tinymce-vue'
 
-import { checkRange, checkRole, deleteData, getData, putData, setError, setMeta } from '../assets/services'
-import { mapState } from 'vuex'
+interface Basket {
+  id: number
+  option: string
+  quantity: number
+}
 
-export default {
+interface Order {
+  id: number
+  option: string
+  quantity: number
+}
+
+interface Product {
+  id: number
+  name: string
+  description: string
+  image: string
+  alt: string
+  price: number
+  options: any
+  cat: string
+}
+
+interface Val {
+  ALERT_DELETED: string
+  ALERT_UPDATED: string
+  API_URL: string
+  CHECK_NUMBER: string
+  CHECK_STRING: string
+  HEAD: string
+  PRICE_MAX: number
+  PRICE_MIN: number
+  TEXT_MIN: number
+  TEXT_MAX: number
+  TITLE_DELETE: string
+  UI_URL: string
+}
+
+export default defineComponent({
   name: 'ProductView',
   components: { BtnElt, CardElt, FieldElt, ListElt, MediaElt, Editor },
 
   props: ['avatar', 'val'],
-  data(): {
-    basket: Array<{ id: number; option: string; quantity: number }>
-    product: Record<string, unknown>
-    order: { id: number; option: string; quantity: number }
-    option: string
-    quantity: number
-    isInBasket: boolean
-  } {
+  data() {
     return {
-      basket: [],
-      product: {},
-      order: { id: 0, option: '', quantity: 0 },
-      option: '',
-      quantity: 1,
-      isInBasket: false
+      basket: [
+        {
+          id: 0,
+          option: '',
+          quantity: 0
+        } as Basket
+      ],
+      isInBasket: false as boolean,
+      option: '' as string,
+      order: {
+        id: 0,
+        option: '',
+        quantity: 0
+      } as Order,
+      product: {
+        id: 0,
+        name: '',
+        description: '',
+        image: '',
+        alt: '',
+        price: 0,
+        options: '',
+        cat: ''
+      } as Product,
+      quantity: 1 as number,
+      token: '' as string
     }
   },
 
@@ -228,12 +280,10 @@ export default {
    * @return {Promise<void>} a promise that gets a "product"
    */
   async created(): Promise<void> {
-    const { API_URL, HEAD, UI_URL }: { API_URL: string; HEAD: string; UI_URL: string } = this.val
+    const { API_URL, HEAD, UI_URL }: Val = this.val
 
     try {
-      const product: { id: number; name: string; description: string; image: string; options: string } = await getData(
-        `${API_URL}/products/${this.$route.params.id}`
-      )
+      const product: Product = await getData(`${API_URL}/products/${this.$route.params.id}`)
       product.options = product.options.split(',')
       this.product = product
 
@@ -300,13 +350,9 @@ export default {
      * ? CREATE ORDER
      * * Create an order based on the selected product, option & quantity.
      *
-     * @returns { id: number, option: string, quantity: number } - The created order
+     * @returns {Order} - The created order
      */
-    createOrder(): {
-      id: number
-      option: string
-      quantity: number
-    } {
+    createOrder(): Order {
       return {
         id: Number(this.productId),
         option: this.option,
@@ -316,9 +362,9 @@ export default {
 
     /**
      * Retrieves the basket from the local storage.
-     * @returns {string[]} The basket retrieved from local storage.
+     * @returns {Basket[]} The basket retrieved from local storage.
      */
-    getBasket(): string[] {
+    getBasket(): Basket[] {
       let basketItem = localStorage.getItem('basket')
 
       if (basketItem === null) {
@@ -326,7 +372,7 @@ export default {
       }
 
       try {
-        this.basket = JSON.parse(localStorage.getItem('basket')!)
+        this.basket = JSON.parse(localStorage.getItem('basket')!) as Basket[]
       } catch (error) {
         console.error(`Error retrieving basket from local storage: ${error}`)
         localStorage.setItem('basket', JSON.stringify([]))
@@ -362,7 +408,7 @@ export default {
      */
     setBasket(): void {
       if (!this.isInBasket) this.basket.push(this.order)
-      if (this.basket[0] === '') this.basket.shift()
+      if (this.basket[0]) this.basket.shift()
 
       localStorage.setItem('basket', JSON.stringify(this.basket))
       alert(`${this.order.quantity} "${this.product.name}" (${this.order.option}) ${this.val.ALERT_BASKET_ADDED}`)
@@ -372,49 +418,14 @@ export default {
     /**
      * ? UPDATE PRODUCT
      * * Updates the product by sending a PUT request to the API.
-     * @param {void}
+     *
      * @returns {Promise<void>}
      */
     async updateProduct(): Promise<void> {
-      const {
-        CHECK_STRING,
-        TEXT_MIN,
-        TEXT_MAX,
-        CHECK_NUMBER,
-        PRICE_MIN,
-        PRICE_MAX,
-        API_URL,
-        ALERT_UPDATED
-      }: {
-        CHECK_STRING: string
-        TEXT_MIN: number
-        TEXT_MAX: number
-        CHECK_NUMBER: string
-        PRICE_MIN: number
-        PRICE_MAX: number
-        API_URL: string
-        ALERT_UPDATED: string
-      } = this.val
+      const { ALERT_UPDATED, API_URL, CHECK_NUMBER, CHECK_STRING, PRICE_MIN, PRICE_MAX, TEXT_MIN, TEXT_MAX }: Val =
+        this.val
 
-      let {
-        id,
-        name,
-        description,
-        image,
-        alt,
-        price,
-        options,
-        cat
-      }: {
-        id: string
-        name: string
-        description: string
-        image: string
-        alt: string
-        price: number
-        options: string
-        cat: string
-      } = this.product
+      let { id, name, description, image, alt, price, options, cat }: Product = this.product
 
       const IS_NAME_CHECKED: boolean = checkRange(name, CHECK_STRING)
       const IS_DESC_CHECKED: boolean = checkRange(description, CHECK_STRING, TEXT_MIN, TEXT_MAX)
@@ -423,6 +434,7 @@ export default {
 
       if (IS_NAME_CHECKED && IS_DESC_CHECKED && IS_ALT_CHECKED && IS_PRICE_CHECKED) {
         const URL: string = `${API_URL}/products/${id}`
+
         const data: FormData = new FormData()
         const img: File | string = (document.getElementById('image') as HTMLInputElement)?.files?.[0] ?? image
 
@@ -430,7 +442,7 @@ export default {
         data.append('description', description)
         data.append('image', img)
         data.append('alt', alt)
-        data.append('price', price)
+        data.append('price', price.toString())
         data.append('options', options)
         data.append('cat', cat)
 
@@ -450,13 +462,9 @@ export default {
      * * Deletes a product from the system.
      */
     async deleteProduct(): Promise<void> {
-      const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val as {
-        TITLE_DELETE: string
-        API_URL: string
-        ALERT_DELETED: string
-      }
+      const { TITLE_DELETE, API_URL, ALERT_DELETED }: Val = this.val
 
-      let { id, name }: { id: number; name: string } = this.product
+      let { id, name }: Product = this.product
 
       if (confirm(`${TITLE_DELETE} ${name} ?`)) {
         const URL = `${API_URL}/products/${id}`
@@ -472,7 +480,7 @@ export default {
       }
     }
   }
-}
+})
 </script>
 
 <style>

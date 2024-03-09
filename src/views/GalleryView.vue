@@ -53,37 +53,40 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import { mapState, mapActions } from 'vuex'
+import { checkRole, setMeta } from '../assets/services'
+
 import CardElt from '../components/CardElt.vue'
 import GallerySet from '../components/GallerySet.vue'
 import ListElt from '../components/ListElt.vue'
 import MediaElt from '../components/MediaElt.vue'
 import NavElt from '../components/NavElt.vue'
 
-import { checkRole, setMeta } from '../assets/services'
-import { mapState, mapActions } from 'vuex'
+interface Val {
+  HEAD_GALLERY: string
+  LOGO_SRC: string
+  META_GALLERY: string
+  UI_URL: string
+}
 
-export default {
+export default defineComponent({
   name: 'GalleryView',
   components: { CardElt, ListElt, MediaElt, NavElt, GallerySet },
   props: ['avatar', 'val'],
 
   /**
-   * Fetches the list of galleries and images
-   * Sets the meta tags
+   * ? CREATED
+   * * Fetches the list of galleries and images
+   * * Sets the meta tags
    * @returns {Promise<void>}
    */
   async created(): Promise<void> {
-    const { HEAD_GALLERY, LOGO_SRC, META_GALLERY, UI_URL } = this.val as {
-      HEAD_GALLERY: string
-      LOGO_SRC: string
-      META_GALLERY: string
-      UI_URL: string
-    }
+    const { HEAD_GALLERY, LOGO_SRC, META_GALLERY, UI_URL }: Val = this.val
+    setMeta(HEAD_GALLERY, META_GALLERY, `${UI_URL}/galleries`, UI_URL + LOGO_SRC)
 
     await this.$store.dispatch('listGalleries')
     await this.$store.dispatch('listImages')
-
-    setMeta(HEAD_GALLERY, META_GALLERY, `${UI_URL}/galleries`, UI_URL + LOGO_SRC)
   },
 
   computed: {
@@ -95,7 +98,7 @@ export default {
 
     /**
      * ? CHECK SESSION
-     * Checks the session for a given role.
+     * * Checks the session for a given role.
      *
      * @param {string} role - the role to check the session for
      * @return {boolean} the result of the session check
@@ -104,7 +107,7 @@ export default {
       return checkRole(this.avatar.role, role)
     }
   }
-}
+})
 </script>
 
 <style>
