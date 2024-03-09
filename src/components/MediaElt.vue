@@ -11,15 +11,7 @@
   </figure>
 
   <figure v-else-if="type === 'video'" :itemprop="itemprop" itemscope :itemtype="getItemType(type)">
-    <video
-      controls
-      :src="src"
-      :loop="loop"
-      :height="height"
-      :width="width"
-      :title="title"
-      itemprop="contentUrl"
-    >
+    <video controls :src="src" :loop="loop" :height="height" :width="width" :title="title" itemprop="contentUrl">
       <source v-for="(video, index) in medias" :key="index" :src="video.src" :type="video.type" />
       <slot name="video"></slot>
     </video>
@@ -59,15 +51,7 @@
   </figure>
 
   <figure v-else itemprop="image" itemscope :itemtype="getItemType(type)">
-    <img
-      :src="src"
-      :alt="alt"
-      :height="height"
-      :width="width"
-      :title="title"
-      itemprop="contentUrl"
-      loading="lazy"
-    />
+    <img :src="src" :alt="alt" :height="height" :width="width" :title="title" itemprop="contentUrl" loading="lazy" />
 
     <figcaption v-if="hasSlot('figcaption')" itemprop="description">
       <slot name="figcaption"></slot>
@@ -75,7 +59,7 @@
   </figure>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue'
 import { checkSlot } from '../assets/services'
 
@@ -98,23 +82,27 @@ export default defineComponent({
   /**
    * ? SETUP
    * * Setup the component
+   *
    * @param {Object} props - The props of the component.
    * @param {Object} - Object that contains the slots of the component.
+   * @returns {Object} - An object containing the functions getItemType and hasSlot.
    */
   setup(props, { slots }) {
     /**
      * ? HAS SLOT
      * * Checks if the component has a slot
-     * @param {string} name
+     * @param {string} name - The name of the slot to check.
+     * @returns {boolean} - Whether the component has the specified slot.
      */
-    const hasSlot = (name) => checkSlot(slots, name)
+    const hasSlot = (name: string): boolean => checkSlot(slots, name)
 
     /**
      * ? GET ITEM TYPE
      * * Returns the item type for the schema
-     * @param {string} type
+     * @param {string} type - The type of the item.
+     * @returns {string} - The schema type for the specified item type.
      */
-    const getItemType = (type) => {
+    const getItemType = (type: string): string => {
       switch (type) {
         case 'audio':
           return 'https://schema.org/AudioObject'

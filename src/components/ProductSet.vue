@@ -11,12 +11,7 @@
       <form enctype="multipart/form-data">
         <ListElt :items="val.PRODUCT_FORM">
           <template #item-1>
-            <FieldElt
-              id="name"
-              v-model:value="name"
-              @keyup.enter="createProduct()"
-              :info="val.INFO_NAME"
-            >
+            <FieldElt id="name" v-model:value="name" @keyup.enter="createProduct()" :info="val.INFO_NAME">
               <template #legend>{{ val.LEGEND_NAME }}</template>
               <template #label>{{ val.LABEL_NAME }}</template>
             </FieldElt>
@@ -107,7 +102,7 @@
   </CardElt>
 </template>
 
-<script>
+<script lang="ts">
 import BtnElt from './BtnElt.vue'
 import CardElt from './CardElt.vue'
 import FieldElt from './FieldElt.vue'
@@ -127,7 +122,7 @@ export default {
       description: '',
       image: '',
       alt: '',
-      price: null,
+      price: 0,
       options: [],
       cat: ''
     }
@@ -137,31 +132,48 @@ export default {
     /**
      * ? CREATE PRODUCT
      * * Create a product by sending a POST request to the server.
+     *
+     * @returns {Promise<void>} A promise that resolves when the product is created.
      */
-    async createProduct() {
-      const { ALERT_CREATED, ALERT_IMG, API_URL, CAT_PRODUCT, CHECK_STRING, TEXT_MAX, TEXT_MIN } =
-        this.val
+    async createProduct(): Promise<void> {
+      const {
+        ALERT_CREATED,
+        ALERT_IMG,
+        API_URL,
+        CAT_PRODUCT,
+        CHECK_STRING,
+        TEXT_MAX,
+        TEXT_MIN
+      }: {
+        ALERT_CREATED: string
+        ALERT_IMG: string
+        API_URL: string
+        CAT_PRODUCT: string
+        CHECK_STRING: string
+        TEXT_MAX: number
+        TEXT_MIN: number
+      } = this.val
 
-      if (this.price < 1) this.price = 1
+      this.price = this.price ?? 1
       if (this.cat === '') this.cat = CAT_PRODUCT
 
-      const IS_NAME_CHECKED = checkRange(this.name, CHECK_STRING)
-      const IS_DESC_CHECKED = checkRange(this.description, CHECK_STRING, TEXT_MIN, TEXT_MAX)
-      const IS_ALT_CHECKED = checkRange(this.alt, CHECK_STRING)
+      const IS_NAME_CHECKED: boolean = checkRange(this.name, CHECK_STRING)
+      const IS_DESC_CHECKED: boolean = checkRange(this.description, CHECK_STRING, TEXT_MIN, TEXT_MAX)
+      const IS_ALT_CHECKED: boolean = checkRange(this.alt, CHECK_STRING)
 
       if (IS_NAME_CHECKED && IS_DESC_CHECKED && IS_ALT_CHECKED) {
-        const img = document.getElementById('image')?.files[0]
+        const img: File | undefined = (document.getElementById('image') as HTMLInputElement)?.files?.[0]
 
         if (img !== undefined) {
-          const URL = `${API_URL}/products`
-          const data = new FormData()
+          const URL: string = `${API_URL}/products`
+          const data: FormData = new FormData()
 
           data.append('name', this.name)
           data.append('description', this.description)
           data.append('image', img)
           data.append('alt', this.alt)
-          data.append('price', this.price)
-          data.append('options', this.options)
+          data.append('price', this.price.toString())
+          data.append('options', JSON.stringify(this.options))
           data.append('cat', this.cat)
 
           try {
@@ -170,7 +182,7 @@ export default {
           } catch (err) {
             setError(err)
           } finally {
-            this.$router.go()
+            this.$router.go(0)
           }
         } else {
           alert(ALERT_IMG)

@@ -11,12 +11,7 @@
       <form>
         <ListElt :items="val.LINK_FORM">
           <template #item-1>
-            <FieldElt
-              id="name"
-              v-model:value="name"
-              @keyup.enter="createLink()"
-              :info="val.INFO_NAME"
-            >
+            <FieldElt id="name" v-model:value="name" @keyup.enter="createLink()" :info="val.INFO_NAME">
               <template #legend>{{ val.LEGEND_NAME }}</template>
               <template #label>{{ val.LABEL_NAME }}</template>
             </FieldElt>
@@ -160,7 +155,7 @@
   </CardElt>
 </template>
 
-<script>
+<script lang="ts">
 import BtnElt from './BtnElt.vue'
 import CardElt from './CardElt.vue'
 import FieldElt from './FieldElt.vue'
@@ -195,29 +190,48 @@ export default {
     /**
      * ? GET ITEMS BY CATEGORY
      * * Retrieves items by category.
-     * @param {Array} items - The array of items.
-     * @return {Array} The filtered array of items.
+     *
+     * @param {{id: string, name: string, cat: string}[]} items - The array of items.
+     * @return {Record<string, { id: string; name: string }[]>} The items filtered by category.
      */
-    getItemsByCategory: (items) => {
+    getItemsByCategory(
+      items: { id: string; name: string; cat: string }[]
+    ): Record<string, { id: string; name: string }[]> {
       return getItemsByCat(items, 'name')
     },
 
     /**
      * ? CREATE LINK
      * * Creates a link by sending a POST request to the server with the provided data.
+     *
+     * @returns {Promise<void>} A Promise that resolves when the link is created
      */
-    async createLink() {
-      const { ALERT_CREATED, API_URL, CAT_LINK, CHECK_STRING, CHECK_URL, REGEX_URL } = this.val
+    async createLink(): Promise<void> {
+      const {
+        ALERT_CREATED,
+        API_URL,
+        CAT_LINK,
+        CHECK_STRING,
+        CHECK_URL,
+        REGEX_URL
+      }: {
+        ALERT_CREATED: string
+        API_URL: string
+        CAT_LINK: string
+        CHECK_STRING: string
+        CHECK_URL: string
+        REGEX_URL: RegExp
+      } = this.val
 
       if (this.url.startsWith('http')) this.url = this.url.split('//')[1]
       if (this.cat === '') this.cat = CAT_LINK
 
-      const IS_NAME_CHECKED = checkRange(this.name, CHECK_STRING)
-      const IS_URL_CHECKED = checkRegex(this.url, CHECK_URL, REGEX_URL)
+      const IS_NAME_CHECKED: boolean = checkRange(this.name, CHECK_STRING)
+      const IS_URL_CHECKED: boolean = checkRegex(this.url, CHECK_URL, REGEX_URL)
 
       if (IS_NAME_CHECKED && IS_URL_CHECKED) {
-        const URL = `${API_URL}/links`
-        const data = new FormData()
+        const URL: string = `${API_URL}/links`
+        const data: FormData = new FormData()
 
         data.append('name', this.name)
         data.append('url', this.url)
@@ -229,7 +243,7 @@ export default {
         } catch (err) {
           setError(err)
         } finally {
-          this.$router.go()
+          this.$router.go(0)
         }
       }
     },
@@ -237,20 +251,41 @@ export default {
     /**
      * ? UPDATE LINK
      * * Updates a link based on its ID.
+     *
      * @param {number} id - The ID of the link to update.
+     * @param {void} - A Promise that resolves when the link is updated
      */
-    async updateLink(id) {
-      const { CHECK_STRING, REGEX_URL, CHECK_URL, API_URL, ALERT_UPDATED } = this.val
+    async updateLink(id: number): Promise<void> {
+      const {
+        CHECK_STRING,
+        REGEX_URL,
+        CHECK_URL,
+        API_URL,
+        ALERT_UPDATED
+      }: {
+        CHECK_STRING: string
+        REGEX_URL: RegExp
+        CHECK_URL: string
+        API_URL: string
+        ALERT_UPDATED: string
+      } = this.val
 
-      const link = this.links.find((l) => l.id === id)
-      let { name, url, cat } = link
+      const link: { id: number; name: string; url: string; cat: string } | undefined = this.links.find(
+        (l: { id: number }) => l.id === id
+      )
 
-      const IS_NAME_CHECKED = link && checkRange(name, CHECK_STRING)
-      const IS_URL_CHECKED = link && checkRegex(url, CHECK_URL, REGEX_URL)
+      let { name, url, cat }: { name: string; url: string; cat: string } = link || {
+        name: '',
+        url: '',
+        cat: ''
+      }
+
+      const IS_NAME_CHECKED: boolean = link ? checkRange(name, CHECK_STRING) : false
+      const IS_URL_CHECKED: boolean = link ? checkRegex(url, CHECK_URL, REGEX_URL) : false
 
       if (IS_NAME_CHECKED && IS_URL_CHECKED) {
-        const URL = `${API_URL}/links/${id}`
-        const data = new FormData()
+        const URL: string = `${API_URL}/links/${id}`
+        const data: FormData = new FormData()
 
         if (url.startsWith('http')) url = url.split('//')[1]
 
@@ -271,13 +306,16 @@ export default {
      * ? DELETE LINK
      * * Deletes a link based on its ID.
      * @param {number} id - The ID of the link to be deleted.
+     * @returns {Promise<void>}
      */
-    async deleteLink(id) {
-      const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val
-      const NAME = getItemName(id, this.links)
+    async deleteLink(id: number): Promise<void> {
+      const { TITLE_DELETE, API_URL, ALERT_DELETED }: { TITLE_DELETE: string; API_URL: string; ALERT_DELETED: string } =
+        this.val
+
+      const NAME: string | false = getItemName(id, this.links)
 
       if (confirm(`${TITLE_DELETE} ${NAME} ?`)) {
-        const URL = `${API_URL}/links/${id}`
+        const URL: string = `${API_URL}/links/${id}`
 
         try {
           await deleteData(URL, this.token)
@@ -285,7 +323,7 @@ export default {
         } catch (err) {
           setError(err)
         } finally {
-          this.$router.go()
+          this.$router.go(0)
         }
       }
     }

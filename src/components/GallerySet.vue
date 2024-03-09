@@ -11,12 +11,7 @@
       <form>
         <ListElt :items="val.GALLERY_FORM">
           <template #item-1>
-            <FieldElt
-              id="name"
-              v-model:value="name"
-              @keyup.enter="createGallery()"
-              :info="val.INFO_NAME"
-            >
+            <FieldElt id="name" v-model:value="name" @keyup.enter="createGallery()" :info="val.INFO_NAME">
               <template #legend>{{ val.LEGEND_NAME }}</template>
               <template #label>{{ val.LABEL_NAME }}</template>
             </FieldElt>
@@ -126,21 +121,14 @@
   </CardElt>
 </template>
 
-<script>
+<script lang="ts">
 import BtnElt from './BtnElt.vue'
 import CardElt from './CardElt.vue'
 import FieldElt from './FieldElt.vue'
 import ListElt from './ListElt.vue'
 import TableElt from './TableElt.vue'
 
-import {
-  checkRange,
-  deleteData,
-  getItemName,
-  postData,
-  putData,
-  setError
-} from '../assets/services'
+import { checkRange, deleteData, getItemName, postData, putData, setError } from '../assets/services'
 
 export default {
   name: 'GallerySet',
@@ -158,12 +146,12 @@ export default {
     /**
      * ? GET IMAGES
      * * Retrieves the images & transforms them into an array of objects.
-     * @return {Array} An array of objects with the content & value properties.
+     * @return {Array<{content: string, value: number}>} An array of objects with the content & value properties.
      */
-    getImages() {
-      const images = []
+    getImages(): { content: string; value: number }[] {
+      const images: { content: string; value: number }[] = []
 
-      for (let i = 0; i < this.images.length; i++) {
+      for (let i: number = 0; i < this.images.length; i++) {
         images.push({
           content: this.images[i].name,
           value: this.images[i].id
@@ -177,17 +165,27 @@ export default {
   methods: {
     /**
      * ? CREATE GALLERY
-     * * Creates a galleryby sending a POST request to the server.
+     * * Creates a gallery by sending a POST request to the server.
+     *
+     * @returns {Promise<void>} A promise that resolves when the gallery is created.
      */
-    async createGallery() {
-      const { ALERT_CREATED, API_URL, CHECK_STRING } = this.val
+    async createGallery(): Promise<void> {
+      const {
+        ALERT_CREATED,
+        API_URL,
+        CHECK_STRING
+      }: {
+        ALERT_CREATED: string
+        API_URL: string
+        CHECK_STRING: string
+      } = this.val
 
-      const IS_NAME_CHECKED = checkRange(this.name, CHECK_STRING)
-      const IS_AUTHOR_CHECKED = checkRange(this.author, CHECK_STRING)
+      const IS_NAME_CHECKED: boolean = checkRange(this.name, CHECK_STRING)
+      const IS_AUTHOR_CHECKED: boolean = checkRange(this.author, CHECK_STRING)
 
       if (IS_NAME_CHECKED && IS_AUTHOR_CHECKED) {
-        const URL = `${API_URL}/galleries`
-        const data = new FormData()
+        const URL: string = `${API_URL}/galleries`
+        const data: FormData = new FormData()
 
         data.append('name', this.name)
         data.append('author', this.author)
@@ -198,7 +196,7 @@ export default {
         } catch (err) {
           setError(err)
         } finally {
-          this.$router.go()
+          this.$router.go(0)
         }
       }
     },
@@ -206,20 +204,25 @@ export default {
     /**
      * ? UPDATE GALLERY
      * * Update the gallery with the given ID.
+     *
      * @param {number} id - The ID of the gallery to update.
+     * @returns {Promise<void>} A promise that resolves when the gallery is updated.
      */
-    async updateGallery(id) {
-      const { CHECK_STRING, API_URL, ALERT_UPDATED } = this.val
+    async updateGallery(id: number): Promise<void> {
+      const { CHECK_STRING, API_URL, ALERT_UPDATED }: { CHECK_STRING: string; API_URL: string; ALERT_UPDATED: string } =
+        this.val
 
-      const gallery = this.galleries.find((g) => g.id === id)
-      let { name, author, cover } = gallery
+      const gallery: { id: number; name: string; author: string; cover: string } = this.galleries.find(
+        (g: { id: number }) => g.id === id
+      )
+      let { name, author, cover }: { name: string; author: string; cover: string } = gallery
 
-      const IS_NAME_CHECKED = gallery && checkRange(name, CHECK_STRING)
-      const IS_AUTHOR_CHECKED = gallery && checkRange(author, CHECK_STRING)
+      const IS_NAME_CHECKED: boolean = gallery && checkRange(name, CHECK_STRING)
+      const IS_AUTHOR_CHECKED: boolean = gallery && checkRange(author, CHECK_STRING)
 
       if (IS_NAME_CHECKED && IS_AUTHOR_CHECKED) {
-        const URL = `${API_URL}/galleries/${id}`
-        const data = new FormData()
+        const URL: string = `${API_URL}/galleries/${id}`
+        const data: FormData = new FormData()
 
         data.append('name', name)
         data.append('author', author)
@@ -237,14 +240,16 @@ export default {
     /**
      * ? DELETE GALLERY
      * * Deletes a gallery with the specified ID.
+     *
      * @param {number} id - The ID of the gallery to be deleted.
+     * @returns {Promise<void>}
      */
-    async deleteGallery(id) {
+    async deleteGallery(id: number): Promise<void> {
       const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val
-      const NAME = getItemName(id, this.galleries)
+      const NAME: string | false = getItemName(id, this.galleries)
 
       if (confirm(`${TITLE_DELETE} ${NAME} ?`)) {
-        const URL = `${API_URL}/galleries/${id}`
+        const URL: string = `${API_URL}/galleries/${id}`
 
         try {
           await deleteData(URL, this.token)
@@ -252,7 +257,7 @@ export default {
         } catch (err) {
           setError(err)
         } finally {
-          this.$router.go()
+          this.$router.go(0)
         }
       }
     }

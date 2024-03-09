@@ -37,7 +37,7 @@
   </footer>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent, onMounted, onUnmounted, ref } from 'vue'
 import { checkSlot } from '../assets/services'
 
@@ -53,18 +53,35 @@ export default defineComponent({
   /**
    * ? SETUP
    * * Setup the component
+   *
    * @param {Object} props - The props of the component.
-   * @param {Object} - Object that contains the slots of the component.
+   * @param {{ default: any }} slots - Object that contains the slots of the component.
+   * @returns {{
+   *  isMobile: Ref<boolean>,
+   *  handleResize: () => void,
+   *  hasSlot: (name: string) => boolean,
+   *  toggleSide: () => void
+   * }}
    */
-  setup(props, { slots }) {
+  setup(
+    props: Object,
+    { slots }: { default: any }
+  ): {
+    isMobile: Ref<boolean>
+    handleResize: () => void
+    hasSlot: (name: string) => boolean
+    toggleSide: () => void
+  } {
     const isMobile = ref(false)
 
     /**
      * ? HAS SLOT
      * * Checks if the component has a slot
-     * @param {string} name
+     *
+     * @param {string} name - Name of the slot to check.
+     * @returns {boolean} - Whether the component has the specified slot.
      */
-    const hasSlot = (name) => checkSlot(slots, name)
+    const hasSlot = (name: string): boolean => checkSlot(slots, name)
 
     /**
      * ? HANDLE RESIZE

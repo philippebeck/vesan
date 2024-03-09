@@ -28,11 +28,7 @@
       <template #body>
         <ListElt :items="galleries" :dynamic="true" class="grid-2sm-3md-4lg-5xl-6wd content-center">
           <template #items="slotProps">
-            <a
-              :href="`gallery/${slotProps.item.id}`"
-              :title="val.TITLE_WATCH + slotProps.item.name"
-              itemprop="url"
-            >
+            <a :href="`gallery/${slotProps.item.id}`" :title="val.TITLE_WATCH + slotProps.item.name" itemprop="url">
               <MediaElt
                 :id="`${slotProps.item.name.toLowerCase()}`"
                 :src="`/img/thumbnails/galleries/${slotProps.item.cover}`"
@@ -56,28 +52,41 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
+import { mapState, mapActions } from 'vuex'
+import { checkRole, setMeta } from '../assets/services'
+
 import CardElt from '../components/CardElt.vue'
 import GallerySet from '../components/GallerySet.vue'
 import ListElt from '../components/ListElt.vue'
 import MediaElt from '../components/MediaElt.vue'
 import NavElt from '../components/NavElt.vue'
 
-import { checkRole, setMeta } from '../assets/services'
-import { mapState, mapActions } from 'vuex'
+interface Val {
+  HEAD_GALLERY: string
+  LOGO_SRC: string
+  META_GALLERY: string
+  UI_URL: string
+}
 
-export default {
+export default defineComponent({
   name: 'GalleryView',
   components: { CardElt, ListElt, MediaElt, NavElt, GallerySet },
   props: ['avatar', 'val'],
 
-  async created() {
-    const { HEAD_GALLERY, LOGO_SRC, META_GALLERY, UI_URL } = this.val
+  /**
+   * ? CREATED
+   * * Fetches the list of galleries and images
+   * * Sets the meta tags
+   * @returns {Promise<void>}
+   */
+  async created(): Promise<void> {
+    const { HEAD_GALLERY, LOGO_SRC, META_GALLERY, UI_URL }: Val = this.val
+    setMeta(HEAD_GALLERY, META_GALLERY, `${UI_URL}/galleries`, UI_URL + LOGO_SRC)
 
     await this.$store.dispatch('listGalleries')
     await this.$store.dispatch('listImages')
-
-    setMeta(HEAD_GALLERY, META_GALLERY, `${UI_URL}/galleries`, UI_URL + LOGO_SRC)
   },
 
   computed: {
@@ -89,15 +98,16 @@ export default {
 
     /**
      * ? CHECK SESSION
-     * Checks the session for a given role.
-     * @param {type} role - the role to check the session for
-     * @return {type} the result of the session check
+     * * Checks the session for a given role.
+     *
+     * @param {string} role - the role to check the session for
+     * @return {boolean} the result of the session check
      */
-    checkSession(role) {
+    checkSession(role: string): boolean {
       return checkRole(this.avatar.role, role)
     }
   }
-}
+})
 </script>
 
 <style>

@@ -53,12 +53,7 @@
     <template #foot3>
       <ListElt :dynamic="true" :items="val.FOOT3">
         <template #items="slotProps">
-          <a
-            :href="slotProps.item.href"
-            :title="slotProps.item.title"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a :href="slotProps.item.href" :title="slotProps.item.title" target="_blank" rel="noopener noreferrer">
             {{ slotProps.item.content }}
           </a>
         </template>

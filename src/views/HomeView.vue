@@ -32,21 +32,33 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
+import { setMeta } from '../assets/services'
+
 import BtnElt from '../components/BtnElt.vue'
 import CardElt from '../components/CardElt.vue'
 import ListElt from '../components/ListElt.vue'
 
-import { setMeta } from '../assets/services'
+interface Val {
+  HEAD_HOME: string
+  LOGO_SRC: string
+  META_HOME: string
+  UI_URL: string
+}
 
-export default {
+export default defineComponent({
   name: 'HomeView',
   components: { BtnElt, CardElt, ListElt },
   props: ['val'],
 
+  /**
+   * ? CREATED
+   * * Set meta data
+   */
   created() {
-    const { HEAD_HOME, LOGO_SRC, META_HOME, UI_URL } = this.val
+    const { HEAD_HOME, LOGO_SRC, META_HOME, UI_URL }: Val = this.val
     setMeta(HEAD_HOME, META_HOME, UI_URL, UI_URL + LOGO_SRC)
   }
-}
+})
 </script>

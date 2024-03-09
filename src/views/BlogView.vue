@@ -134,6 +134,10 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import { mapState, mapActions } from 'vuex'
+import { checkRole, getCats, getItemsByCat, putData, setError, setMeta } from '../assets/services'
+
 import ArticleSet from '../components/ArticleSet.vue'
 import BtnElt from '../components/BtnElt.vue'
 import CardElt from '../components/CardElt.vue'
@@ -141,10 +145,28 @@ import ListElt from '../components/ListElt.vue'
 import MediaElt from '../components/MediaElt.vue'
 import NavElt from '../components/NavElt.vue'
 
-import { checkRole, getCats, getItemsByCat, putData, setError, setMeta } from '../assets/services'
-import { mapState, mapActions } from 'vuex'
+interface Article {
+  id: number
+  name: string
+  text: string
+  image: string
+  alt: string
+  url: string
+  likes: any
+  cat: string
+  createdAt: string
+  updatedAt: string
+}
 
-export default {
+interface Val {
+  API_URL: string
+  HEAD_BLOG: string
+  LOGO_SRC: string
+  META_BLOG: string
+  UI_URL: string
+}
+
+export default defineComponent({
   name: 'BlogView',
   components: { BtnElt, CardElt, ListElt, MediaElt, NavElt, ArticleSet },
   props: ['avatar', 'val'],
@@ -153,18 +175,13 @@ export default {
    * ? CREATED
    * * A function that retrieves the articles & sets the meta data of the page.
    *
-   * @returns {Promise<Article>}
+   * @returns {Promise<any>}
    */
-  async created(): Promise<Article> {
-    const { HEAD_BLOG, LOGO_SRC, META_BLOG, UI_URL } = this.val as {
-      HEAD_BLOG: string
-      LOGO_SRC: string
-      META_BLOG: string
-      UI_URL: string
-    }
+  async created(): Promise<any> {
+    const { HEAD_BLOG, LOGO_SRC, META_BLOG, UI_URL }: Val = this.val
+    setMeta(HEAD_BLOG, META_BLOG, `${UI_URL}/blog`, UI_URL + LOGO_SRC)
 
     await this.$store.dispatch('listArticles')
-    setMeta(HEAD_BLOG, META_BLOG, `${UI_URL}/blog`, UI_URL + LOGO_SRC)
   },
 
   /**
@@ -174,8 +191,13 @@ export default {
    * @returns {void}
    */
   updated(): void {
-    const textArray = document.getElementsByClassName('figcaption')
-    for (let textElt of textArray) textElt.firstChild.setAttribute('itemprop', 'text')
+    const textArray: HTMLCollectionOf<Element> = document.getElementsByClassName('figcaption')
+
+    for (let textElt of textArray) {
+      if (textElt?.firstChild) {
+        ;(textElt.firstChild as Element).setAttribute('itemprop', 'text')
+      }
+    }
   },
 
   computed: {
@@ -185,9 +207,9 @@ export default {
      * ? GET CATEGORIES
      * * Retrieves the categories of articles.
      *
-     * @return {Array<string>} An array of article categories.
+     * @return {string[]} An array of article categories.
      */
-    getCategories(): Array<string> {
+    getCategories(): string[] {
       return getCats(this.articles)
     }
   },
@@ -208,12 +230,14 @@ export default {
 
     /**
      * ? GET ITEMS BY CATEGORY
-     * Retrieves items based on category.
+     * * Retrieves items by category.
      *
-     * @param {Array<Item>} items - The list of items to filter.
-     * @return {Array<Item>} The filtered list of items.
+     * @param {{id: string, name: string, cat: string}[]} items - The array of items.
+     * @return {Record<string, { id: string; name: string }[]>} The items filtered by category.
      */
-    getItemsByCategory(items: Array<Item>): Array<Item> {
+    getItemsByCategory(
+      items: { id: string; name: string; cat: string }[]
+    ): Record<string, { id: string; name: string }[]> {
       return getItemsByCat(items)
     },
 
@@ -225,7 +249,7 @@ export default {
      * @return {boolean} - Returns a boolean indicating whether the ID is present in the likes array.
      */
     checkLikes(id: number): boolean {
-      return this.articles.some((a) => a.id === id && a.likes.includes(this.id))
+      return this.articles.some((a: Article) => a.id === id && a.likes.includes(this.id))
     },
 
     /**
@@ -236,8 +260,8 @@ export default {
      * @returns {Promise<void>} A promise that resolves when the like is added.
      */
     async addLike(id: number): Promise<void> {
-      const { API_URL }: { API_URL: string } = this.val
-      const article: Article | undefined = this.articles.find((a: Article) => a.id === id)
+      const { API_URL }: Val = this.val
+      const article: Article = this.articles.find((a: Article) => a.id === id)
 
       if (!article) return
       let { name, text, image, alt, url, likes, cat }: Article = article
@@ -258,12 +282,12 @@ export default {
 
       try {
         await putData(URL, data, this.token)
-      } catch (err: any) {
+      } catch (err) {
         setError(err)
       }
     }
   }
-}
+})
 </script>
 
 <style>

@@ -11,12 +11,7 @@
       <form enctype="multipart/form-data">
         <ListElt :items="val.PROJECT_FORM">
           <template #item-1>
-            <FieldElt
-              id="name"
-              v-model:value="name"
-              @keyup.enter="createProject()"
-              :info="val.INFO_NAME"
-            >
+            <FieldElt id="name" v-model:value="name" @keyup.enter="createProject()" :info="val.INFO_NAME">
               <template #legend>{{ val.LEGEND_NAME }}</template>
               <template #label>{{ val.LABEL_NAME }}</template>
             </FieldElt>
@@ -43,25 +38,14 @@
           </template>
 
           <template #item-4>
-            <FieldElt
-              id="alt"
-              type="textarea"
-              v-model:value="alt"
-              @keyup.enter="createProject()"
-              :info="val.INFO_ALT"
-            >
+            <FieldElt id="alt" type="textarea" v-model:value="alt" @keyup.enter="createProject()" :info="val.INFO_ALT">
               <template #legend>{{ val.LEGEND_ALT }}</template>
               <template #label>{{ val.LABEL_ALT }}</template>
             </FieldElt>
           </template>
 
           <template #item-5>
-            <FieldElt
-              id="url"
-              v-model:value="url"
-              @keyup.enter="createProject()"
-              :info="val.INFO_URL"
-            >
+            <FieldElt id="url" v-model:value="url" @keyup.enter="createProject()" :info="val.INFO_URL">
               <template #legend>{{ val.LEGEND_URL }}</template>
               <template #label>{{ val.LABEL_URL }}</template>
             </FieldElt>
@@ -219,7 +203,7 @@
   </CardElt>
 </template>
 
-<script>
+<script lang="ts">
 import BtnElt from './BtnElt.vue'
 import CardElt from './CardElt.vue'
 import FieldElt from './FieldElt.vue'
@@ -227,15 +211,7 @@ import ListElt from './ListElt.vue'
 import MediaElt from './MediaElt.vue'
 import TableElt from './TableElt.vue'
 
-import {
-  checkRange,
-  checkRegex,
-  deleteData,
-  getItemName,
-  postData,
-  putData,
-  setError
-} from '../assets/services'
+import { checkRange, checkRegex, deleteData, getItemName, postData, putData, setError } from '../assets/services'
 
 export default {
   name: 'ProjectSet',
@@ -257,8 +233,10 @@ export default {
     /**
      * ? CREATE PROJECT
      * * Creates a project by sending a POST request to the server with the provided data.
+     *
+     * @returns {Promise<void>} A promise that resolves when the project is created.
      */
-    async createProject() {
+    async createProject(): Promise<void> {
       const {
         ALERT_CREATED,
         ALERT_IMG,
@@ -269,22 +247,32 @@ export default {
         REGEX_URL,
         TEXT_MIN,
         TEXT_MAX
+      }: {
+        ALERT_CREATED: string
+        ALERT_IMG: string
+        API_URL: string
+        CAT_PROJECT: string
+        CHECK_STRING: string
+        CHECK_URL: string
+        REGEX_URL: RegExp
+        TEXT_MIN: number
+        TEXT_MAX: number
       } = this.val
 
       if (this.url.startsWith('http')) this.url = this.url.split('//')[1]
       if (this.cat === '') this.cat = CAT_PROJECT
 
-      const IS_NAME_CHECKED = checkRange(this.name, CHECK_STRING)
-      const IS_DESC_CHECKED = checkRange(this.description, CHECK_STRING, TEXT_MIN, TEXT_MAX)
-      const IS_ALT_CHECKED = checkRange(this.alt, CHECK_STRING)
-      const IS_URL_CHECKED = this.url ? checkRegex(this.url, CHECK_URL, REGEX_URL) : true
+      const IS_NAME_CHECKED: boolean = checkRange(this.name, CHECK_STRING)
+      const IS_DESC_CHECKED: boolean = checkRange(this.description, CHECK_STRING, TEXT_MIN, TEXT_MAX)
+      const IS_ALT_CHECKED: boolean = checkRange(this.alt, CHECK_STRING)
+      const IS_URL_CHECKED: boolean = this.url ? checkRegex(this.url, CHECK_URL, REGEX_URL) : true
 
       if (IS_NAME_CHECKED && IS_DESC_CHECKED && IS_ALT_CHECKED && IS_URL_CHECKED) {
-        const img = document.getElementById('image')?.files[0]
+        const img: File | undefined = (document.getElementById('image') as HTMLInputElement)?.files?.[0]
 
         if (img !== undefined) {
-          const URL = `${API_URL}/projects`
-          const data = new FormData()
+          const URL: string = `${API_URL}/projects`
+          const data: FormData = new FormData()
 
           data.append('name', this.name)
           data.append('description', this.description)
@@ -299,7 +287,7 @@ export default {
           } catch (err) {
             setError(err)
           } finally {
-            this.$router.go()
+            this.$router.go(0)
           }
         } else {
           alert(ALERT_IMG)
@@ -310,22 +298,26 @@ export default {
     /**
      * ? UPDATE PROJECT
      * * Updates the project with the provided data.
-     * @param {type} id - The ID of the project to update.
+     *
+     * @param {number} id - The ID of the project to update.
+     * @param {Promise<void>} - A promise that resolves when the project is updated.
      */
-    async updateProject(id) {
+    async updateProject(id: number): Promise<void> {
       const { API_URL, ALERT_UPDATED, CHECK_STRING, REGEX_URL, TEXT_MAX, TEXT_MIN } = this.val
-      const project = this.projects.find((p) => p.id === id)
+
+      const project = this.projects.find((p: { id: number }) => p.id === id)
       let { name, description, image, alt, url, cat } = project
 
-      const IS_NAME_CHECKED = checkRange(name, CHECK_STRING)
-      const IS_DESC_CHECKED = checkRange(description, CHECK_STRING, TEXT_MIN, TEXT_MAX)
-      const IS_ALT_CHECKED = checkRange(alt, CHECK_STRING)
-      const IS_URL_CHECKED = url ? checkRegex(url, CHECK_STRING, REGEX_URL) : true
+      const IS_NAME_CHECKED: boolean = checkRange(name, CHECK_STRING)
+      const IS_DESC_CHECKED: boolean = checkRange(description, CHECK_STRING, TEXT_MIN, TEXT_MAX)
+      const IS_ALT_CHECKED: boolean = checkRange(alt, CHECK_STRING)
+      const IS_URL_CHECKED: boolean = url ? checkRegex(url, CHECK_STRING, REGEX_URL) : true
 
       if (IS_NAME_CHECKED && IS_DESC_CHECKED && IS_ALT_CHECKED && IS_URL_CHECKED) {
-        const URL = `${API_URL}/projects/${id}`
-        const data = new FormData()
-        const img = document.getElementById(`image-${id}`)?.files[0] ?? image
+        const URL: string = `${API_URL}/projects/${id}`
+
+        const data: FormData = new FormData()
+        const img: File | string = (document.getElementById(`image-${id}`) as HTMLInputElement)?.files?.[0] ?? image
 
         data.append('name', name)
         data.append('description', description)
@@ -340,22 +332,24 @@ export default {
         } catch (err) {
           setError(err)
         } finally {
-          this.$router.go()
+          this.$router.go(0)
         }
       }
     },
 
     /**
      * ? DELETE PROJECT
-     * * Deletes an project with the given ID.
-     * @param {type} id - The ID of the project to delete.
+     * * Deletes a project with the given ID.
+     * @param {number} id - The ID of the project to delete.
+     * @returns {Promise<void>}
      */
-    async deleteProject(id) {
+    async deleteProject(id: number): Promise<void> {
       const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val
-      const NAME = getItemName(id, this.projects)
+
+      const NAME: string | false = getItemName(id, this.projects)
 
       if (confirm(`${TITLE_DELETE} ${NAME} ?`)) {
-        const URL = `${API_URL}/projects/${id}`
+        const URL: string = `${API_URL}/projects/${id}`
 
         try {
           await deleteData(URL, this.token)
@@ -363,7 +357,7 @@ export default {
         } catch (err) {
           setError(err)
         } finally {
-          this.$router.go()
+          this.$router.go(0)
         }
       }
     }

@@ -18,18 +18,31 @@
   </main>
 </template>
 
-<script>
-import CardElt from '../components/CardElt.vue'
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { setMeta } from '../assets/services'
 
-export default {
+import CardElt from '../components/CardElt.vue'
+
+interface Val {
+  HEAD_LEGAL: string
+  LOGO_SRC: string
+  META_LEGAL: string
+  UI_URL: string
+}
+
+export default defineComponent({
   name: 'LegalView',
   components: { CardElt },
   props: ['val'],
 
+  /**
+   * ? CREATED
+   * * Set meta data
+   */
   created() {
-    const { HEAD_LEGAL, LOGO_SRC, META_LEGAL, UI_URL } = this.val
+    const { HEAD_LEGAL, LOGO_SRC, META_LEGAL, UI_URL }: Val = this.val
     setMeta(HEAD_LEGAL, META_LEGAL, `${UI_URL}/legal`, UI_URL + LOGO_SRC)
   }
-}
+})
 </script>

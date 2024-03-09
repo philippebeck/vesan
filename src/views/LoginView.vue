@@ -1,9 +1,7 @@
 <template>
   <main>
     <header>
-      <h1 class="sky-dark">
-        <i class="fa-solid fa-right-to-bracket fa-lg"></i> {{ val.LOGIN_VIEW }}
-      </h1>
+      <h1 class="sky-dark"><i class="fa-solid fa-right-to-bracket fa-lg"></i> {{ val.LOGIN_VIEW }}</h1>
     </header>
 
     <CardElt v-if="type === 'signIn'">
@@ -25,12 +23,7 @@
           </FieldElt>
 
           <vue-recaptcha :sitekey="val.RECAPTCHA_KEY" @verify="onVerify">
-            <BtnElt
-              type="button"
-              class="btn-green"
-              :content="val.CONTENT_ENTER"
-              :title="val.TITLE_SIGNIN"
-            >
+            <BtnElt type="button" class="btn-green" :content="val.CONTENT_ENTER" :title="val.TITLE_SIGNIN">
               <template #btn>
                 <i class="fa-solid fa-door-open fa-lg"></i>
               </template>
@@ -93,12 +86,7 @@
           </FieldElt>
 
           <vue-recaptcha :sitekey="val.RECAPTCHA_KEY" @verify="onVerify">
-            <BtnElt
-              type="button"
-              class="btn-blue"
-              :content="val.CONTENT_SIGNUP"
-              :title="val.TITLE_SIGNUP"
-            >
+            <BtnElt type="button" class="btn-blue" :content="val.CONTENT_SIGNUP" :title="val.TITLE_SIGNUP">
               <template #btn>
                 <i class="fa-solid fa-user-plus fa-lg"></i>
               </template>
@@ -146,12 +134,7 @@
           </FieldElt>
 
           <vue-recaptcha :sitekey="val.RECAPTCHA_KEY" @verify="onVerify">
-            <BtnElt
-              type="button"
-              class="btn-orange"
-              :content="val.CONTENT_SEND"
-              :title="val.TITLE_FORGOT"
-            >
+            <BtnElt type="button" class="btn-orange" :content="val.CONTENT_SEND" :title="val.TITLE_FORGOT">
               <template #btn>
                 <i class="fa-regular fa-paper-plane fa-lg"></i>
               </template>
@@ -187,15 +170,44 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
+import { VueRecaptcha } from 'vue-recaptcha'
+import { checkRange, checkRegex, postData, setError, setMeta } from '../assets/services'
+
 import BtnElt from '../components/BtnElt.vue'
 import CardElt from '../components/CardElt.vue'
 import FieldElt from '../components/FieldElt.vue'
 
-import { checkRange, checkRegex, postData, setError, setMeta } from '../assets/services'
-import { VueRecaptcha } from 'vue-recaptcha'
+interface Login {
+  name: string
+  email: string
+  image: string
+  pass: string
+  type: string
+}
 
-export default {
+interface Val {
+  ALERT_CREATED: string
+  ALERT_IMG: string
+  ALERT_SENDED: string
+  ALERT_SIGNUP: string
+  API_URL: string
+  CHECK_EMAIL: string
+  CHECK_PASS: string
+  CHECK_STRING: string
+  CONFIRM_FORGOT: string
+  FORGOT_SUBJECT: string
+  FORGOT_TEXT: string
+  HEAD_LOGIN: string
+  LOGO_SRC: string
+  META_LOGIN: string
+  REGEX_EMAIL: RegExp
+  REGEX_PASS: RegExp
+  UI_URL: string
+}
+
+export default defineComponent({
   name: 'LoginView',
   components: { BtnElt, CardElt, FieldElt, VueRecaptcha },
 
@@ -207,7 +219,7 @@ export default {
       image: '',
       pass: '',
       type: 'signIn'
-    }
+    } as Login
   },
 
   /**
@@ -215,9 +227,9 @@ export default {
    * * A function that sets the meta data of the page
    * * Redirects to the home page if the user is logged in
    */
-  created() {
-    const { HEAD_LOGIN, LOGO_SRC, META_LOGIN, UI_URL } = this.val
-    setMeta(HEAD_LOGIN, META_LOGIN, `${UI_URL}/login`, UI_URL + LOGO_SRC)
+  created(): void {
+    const { HEAD_LOGIN, LOGO_SRC, META_LOGIN, UI_URL }: Val = this.val
+    setMeta(HEAD_LOGIN, META_LOGIN, `${UI_URL}/login`, `${UI_URL}${LOGO_SRC}`)
 
     if (localStorage.userId) this.$router.push('/')
   },
@@ -226,15 +238,15 @@ export default {
     /**
      * ? ON VERIFY
      * * Asynchronously handles the verification of a response.
-     * @param {type} response - the response to be verified
-     * @return {type} description of return value
+     * @param {string} response - the response to be verified
+     * @return {Promise<void>} a promise that resolves with no value
      */
-    async onVerify(response) {
+    async onVerify(response: string): Promise<void> {
       const { ALERT_RECAPTCHA, API_URL } = this.val
-      const URL = `${API_URL}/auth/recaptcha`
+      const URL: string = `${API_URL}/auth/recaptcha`
 
       try {
-        const { success } = await postData(URL, { response })
+        const { success }: { success: boolean } = await postData(URL, { response })
 
         if (success) {
           switch (this.type) {
@@ -259,9 +271,11 @@ export default {
     /**
      * ? SIGN IN
      * * Signs in the user.
+     *
+     * @returns {Promise<void>} - A promise that resolves when the user is signed in.
      */
-    async signIn() {
-      const { API_URL, CHECK_EMAIL, CHECK_PASS, REGEX_EMAIL, REGEX_PASS } = this.val
+    async signIn(): Promise<void> {
+      const { API_URL, CHECK_EMAIL, CHECK_PASS, REGEX_EMAIL, REGEX_PASS }: Val = this.val
 
       const IS_EMAIL_CHECKED = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL)
       const IS_PASS_CHECKED = checkRegex(this.pass, CHECK_PASS, REGEX_PASS)
@@ -281,7 +295,7 @@ export default {
         } catch (err) {
           setError(err)
         } finally {
-          this.$router.go()
+          this.$router.go(0)
         }
       }
     },
@@ -289,29 +303,24 @@ export default {
     /**
      * ? SIGN UP
      * * Creates a new user.
+     *
+     * @returns {Promise<void>} A Promise that resolves when the new user is successfully created.
      */
-    async signUp() {
-      const {
-        ALERT_CREATED,
-        ALERT_IMG,
-        API_URL,
-        CHECK_EMAIL,
-        CHECK_PASS,
-        CHECK_STRING,
-        REGEX_EMAIL,
-        REGEX_PASS
-      } = this.val
+    async signUp(): Promise<void> {
+      const { ALERT_CREATED, ALERT_IMG, API_URL, CHECK_EMAIL, CHECK_PASS, CHECK_STRING, REGEX_EMAIL, REGEX_PASS }: Val =
+        this.val
 
-      const IS_NAME_CHECKED = checkRange(this.name, CHECK_STRING)
-      const IS_EMAIL_CHECKED = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL)
-      const IS_PASS_CHECKED = checkRegex(this.pass, CHECK_PASS, REGEX_PASS)
+      const IS_NAME_CHECKED: boolean = checkRange(this.name, CHECK_STRING)
+      const IS_EMAIL_CHECKED: boolean = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL)
+      const IS_PASS_CHECKED: boolean = checkRegex(this.pass, CHECK_PASS, REGEX_PASS)
 
       if (IS_NAME_CHECKED && IS_EMAIL_CHECKED && IS_PASS_CHECKED) {
-        const URL = `${API_URL}/users`
-        const data = new FormData()
-        const img = document.querySelector('[type="file"]')?.files[0]
+        const URL: string = `${API_URL}/users`
 
-        if (img !== undefined) {
+        const data: FormData = new FormData()
+        const img: File | undefined = (document.querySelector('[type="file"]') as HTMLInputElement)?.files?.[0]
+
+        if (img) {
           data.append('name', this.name)
           data.append('email', this.email)
           data.append('image', img)
@@ -324,7 +333,7 @@ export default {
           } catch (err) {
             setError(err)
           } finally {
-            this.$router.go()
+            this.$router.go(0)
           }
         } else {
           alert(ALERT_IMG)
@@ -335,22 +344,18 @@ export default {
     /**
      * ? FORGOT PASS
      * * Executes the forgot password functionality.
+     *
+     * @returns {Promise<void>} A Promise that resolves when the forgot password process is completed.
      */
-    async forgotPass() {
-      const {
-        ALERT_SENDED,
-        API_URL,
-        CHECK_EMAIL,
-        CONFIRM_FORGOT,
-        FORGOT_SUBJECT,
-        FORGOT_TEXT,
-        REGEX_EMAIL
-      } = this.val
-      const IS_EMAIL_CHECKED = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL)
+    async forgotPass(): Promise<void> {
+      const { ALERT_SENDED, API_URL, CHECK_EMAIL, CONFIRM_FORGOT, FORGOT_SUBJECT, FORGOT_TEXT, REGEX_EMAIL }: Val =
+        this.val
+
+      const IS_EMAIL_CHECKED: boolean = checkRegex(this.email, CHECK_EMAIL, REGEX_EMAIL)
 
       if (IS_EMAIL_CHECKED && confirm(CONFIRM_FORGOT)) {
-        const URL = `${API_URL}/auth/pass`
-        const data = new FormData()
+        const URL: string = `${API_URL}/auth/pass`
+        const data: FormData = new FormData()
 
         data.append('email', this.email)
         data.append('subject', FORGOT_SUBJECT)
@@ -362,10 +367,10 @@ export default {
         } catch (err) {
           setError(err)
         } finally {
-          this.$router.go()
+          this.$router.go(0)
         }
       }
     }
   }
-}
+})
 </script>

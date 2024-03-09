@@ -87,7 +87,7 @@
   </CardElt>
 </template>
 
-<script>
+<script lang="ts">
 import BtnElt from './BtnElt.vue'
 import CardElt from './CardElt.vue'
 import FieldElt from './FieldElt.vue'
@@ -104,15 +104,18 @@ export default {
     /**
      * ? UPDATE STATUS
      * * Updates the status of an order.
+     *
      * @param {number} id - The ID of the order to update.
+     * @returns {Promise<void>} A promise that resolves when the status is updated.
      */
-    async updateStatus(id) {
-      const { ALERT_ORDER, ALERT_UPDATED, API_URL } = this.val
-      const order = this.orders.find((o) => o.id === id)
+    async updateStatus(id: number): Promise<void> {
+      const { ALERT_ORDER, ALERT_UPDATED, API_URL }: { ALERT_ORDER: string; ALERT_UPDATED: string; API_URL: string } =
+        this.val
+      const order: { id: number; status: string } | undefined = this.orders.find((o: { id: number }) => o.id === id)
 
       if (order) {
-        const URL = `${API_URL}/orders/${id}`
-        const data = new FormData()
+        const URL: string = `${API_URL}/orders/${id}`
+        const data: FormData = new FormData()
 
         data.append('status', order.status)
 
@@ -122,7 +125,7 @@ export default {
         } catch (err) {
           setError(err)
         } finally {
-          this.$router.go()
+          this.$router.go(0)
         }
       }
     },
@@ -130,9 +133,11 @@ export default {
     /**
      * ? DELETE ORDER
      * * Deletes an order from the API.
+     *
      * @param {number} id - the ID of the order to delete
+     * @returns {Promise<void>}
      */
-    async deleteOrder(id) {
+    async deleteOrder(id: number): Promise<void> {
       const { TITLE_DELETE_ORDER, API_URL, ALERT_ORDER, ALERT_DELETED } = this.val
 
       if (confirm(`${TITLE_DELETE_ORDER} ${id} ?`)) {
@@ -144,7 +149,7 @@ export default {
         } catch (err) {
           setError(err)
         } finally {
-          this.$router.go()
+          this.$router.go(0)
         }
       }
     }

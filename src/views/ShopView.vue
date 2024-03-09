@@ -54,11 +54,7 @@
                   >
                   </MediaElt>
 
-                  <p
-                    v-html="slotProps.value.description.split(':')[0]"
-                    itemprop="description"
-                    class="shop"
-                  ></p>
+                  <p v-html="slotProps.value.description.split(':')[0]" itemprop="description" class="shop"></p>
 
                   <p itemprop="offers" itemscope itemtype="https://schema.org/Offer">
                     <b itemprop="price" :content="slotProps.value.price + '.00'">
@@ -82,17 +78,25 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
+import { mapState, mapActions } from 'vuex'
+import { checkRole, getCats, getItemsByCat, setMeta } from '../assets/services'
+
 import CardElt from '../components/CardElt.vue'
 import ListElt from '../components/ListElt.vue'
 import MediaElt from '../components/MediaElt.vue'
 import NavElt from '../components/NavElt.vue'
 import ProductSet from '../components/ProductSet.vue'
 
-import { checkRole, getCats, getItemsByCat, setMeta } from '../assets/services'
-import { mapState, mapActions } from 'vuex'
+interface Val {
+  HEAD_SHOP: string
+  LOGO_SRC: string
+  META_SHOP: string
+  UI_URL: string
+}
 
-export default {
+export default defineComponent({
   name: 'ShopView',
   components: { CardElt, ListElt, MediaElt, NavElt, ProductSet },
   props: ['avatar', 'val'],
@@ -101,23 +105,29 @@ export default {
    * ? CREATED
    * * Retrieves the products from the server.
    * * Sets the meta tags.
+   *
+   * @returns {Promise<void>}
    */
-  created() {
-    const { HEAD_SHOP, LOGO_SRC, META_SHOP, UI_URL } = this.val
+  async created(): Promise<void> {
+    const { HEAD_SHOP, LOGO_SRC, META_SHOP, UI_URL }: Val = this.val
+    setMeta(HEAD_SHOP, META_SHOP, `${UI_URL}/shop`, `${UI_URL}${LOGO_SRC}`)
 
-    this.$store.dispatch('listProducts')
-    setMeta(HEAD_SHOP, META_SHOP, `${UI_URL}/shop`, UI_URL + LOGO_SRC)
+    await this.$store.dispatch('listProducts')
   },
 
   /**
    * ? UPDATED
-   * * Sets the itemprop of the description elements.
+   * * A function that updates the text elements by setting the "itemprop" attribute to "description".
+   *
+   * @returns {void}
    */
-  updated() {
-    const descriptionArray = document.getElementsByClassName('figcaption')
+  updated(): void {
+    const descriptionArray: HTMLCollectionOf<Element> = document.getElementsByClassName('figcaption')
 
     for (let descriptionElt of descriptionArray) {
-      descriptionElt.firstChild.setAttribute('itemprop', 'description')
+      if (descriptionElt?.firstChild) {
+        ;(descriptionElt.firstChild as Element).setAttribute('itemprop', 'description')
+      }
     }
   },
 
@@ -126,10 +136,11 @@ export default {
 
     /**
      * ? GET CATEGORIES
-     * * Retrieves the categories of the products.
-     * @return {type} The categories of the products.
+     * * Retrieves the categories of products.
+     *
+     * @return {string[]} An array of the product categories.
      */
-    getCategories() {
+    getCategories(): string[] {
       return getCats(this.products)
     }
   },
@@ -140,24 +151,28 @@ export default {
     /**
      * ? CHECK SESSION
      * * Check the session for the given role.
+     *
      * @param {string} role - The role to check.
      * @return {boolean} The result of the session check.
      */
-    checkSession(role) {
+    checkSession(role: string): boolean {
       return checkRole(this.avatar.role, role)
     },
 
     /**
      * ? GET ITEMS BY CATEGORY
      * * Retrieves items by category.
-     * @param {Array} items - The array of items.
-     * @return {Array} The items filtered by category.
+     *
+     * @param {{id: string, name: string, cat: string}[]} items - The array of items.
+     * @return {Record<string, { id: string; name: string }[]>} The items filtered by category.
      */
-    getItemsByCategory(items) {
+    getItemsByCategory(
+      items: { id: string; name: string; cat: string }[]
+    ): Record<string, { id: string; name: string }[]> {
       return getItemsByCat(items)
     }
   }
-}
+})
 </script>
 
 <style>

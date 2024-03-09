@@ -1,5 +1,3 @@
-'use strict'
-
 /* eslint-disable */
 
 export default {
@@ -34,8 +32,7 @@ export default {
 
   CHECK_EMAIL: 'Your Email is not a valid address.',
   CHECK_NUMBER: 'The number must be between ',
-  CHECK_PASS:
-    'Your Password must have 8 to 100 characters, with uppercase, lowercase, 1 number minimum & no space.',
+  CHECK_PASS: 'Your Password must have 8 to 100 characters, with uppercase, lowercase, 1 number minimum & no space.',
   CHECK_STRING: 'The number of characters must be between ',
   CHECK_URL: 'This URL is not a valid path.',
 

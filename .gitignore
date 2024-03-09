@@ -1,6 +1,6 @@
 coverage/
 dist/
 node_modules/
-public/img/
+public/
 src/assets/fonts/
 src/assets/values.js

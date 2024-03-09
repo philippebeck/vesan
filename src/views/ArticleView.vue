@@ -24,20 +24,11 @@
 
             <template #item-2>
               <label for="text">{{ val.LEGEND_TEXT }}</label>
-              <Editor
-                id="text"
-                :api-key="val.TINY_KEY"
-                v-model="article.text"
-                :init="val.TINY_INIT"
-              />
+              <Editor id="text" :api-key="val.TINY_KEY" v-model="article.text" :init="val.TINY_INIT" />
             </template>
 
             <template #item-3>
-              <MediaElt
-                v-if="article.image"
-                :src="'/img/thumbnails/articles/' + article.image"
-                :alt="article.alt"
-              />
+              <MediaElt v-if="article.image" :src="'/img/thumbnails/articles/' + article.image" :alt="article.alt" />
 
               <FieldElt id="image" type="file" v-model:value="image" :info="val.INFO_IMAGE">
                 <template #legend>{{ val.LEGEND_IMAGE }}</template>
@@ -59,12 +50,7 @@
             </template>
 
             <template #item-5>
-              <FieldElt
-                id="url"
-                v-model:value="article.url"
-                @keyup.enter="updateArticle()"
-                :info="val.INFO_URL"
-              >
+              <FieldElt id="url" v-model:value="article.url" @keyup.enter="updateArticle()" :info="val.INFO_URL">
                 <template #legend>{{ val.LEGEND_URL }}</template>
                 <template #label>{{ val.LABEL_URL }}</template>
               </FieldElt>
@@ -190,6 +176,10 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import { mapState } from 'vuex'
+import { checkRange, checkRegex, checkRole, deleteData, getData, putData, setError, setMeta } from '../assets/services'
+
 import BtnElt from '../components/BtnElt.vue'
 import CardElt from '../components/CardElt.vue'
 import FieldElt from '../components/FieldElt.vue'
@@ -197,27 +187,53 @@ import ListElt from '../components/ListElt.vue'
 import MediaElt from '../components/MediaElt.vue'
 import Editor from '@tinymce/tinymce-vue'
 
-import {
-  checkRange,
-  checkRegex,
-  checkRole,
-  deleteData,
-  getData,
-  putData,
-  setError,
-  setMeta
-} from '../assets/services'
+interface Article {
+  id: number
+  name: string
+  text: string
+  image: string
+  alt: string
+  url: string
+  likes: any
+  cat: string
+  createdAt: string
+  updatedAt: string
+}
 
-import { mapState } from 'vuex'
+interface Val {
+  ALERT_DELETED: string
+  API_URL: string
+  ALERT_UPDATED: string
+  CHECK_STRING: string
+  HEAD: string
+  REGEX_URL: RegExp
+  TEXT_MAX: number
+  TEXT_MIN: number
+  TITLE_DELETE: string
+  UI_URL: string
+}
 
-export default {
+export default defineComponent({
   name: 'ArticleView',
   components: { BtnElt, CardElt, FieldElt, ListElt, MediaElt, Editor },
-
   props: ['avatar', 'val'],
+
   data() {
     return {
-      article: {}
+      id: 0 as number,
+      token: '' as string,
+      article: {
+        id: 0,
+        name: '',
+        text: '',
+        image: '',
+        alt: '',
+        url: '',
+        likes: null,
+        cat: '',
+        createdAt: '',
+        updatedAt: ''
+      } as Article
     }
   },
 
@@ -226,13 +242,14 @@ export default {
    * * Retrieves the article from the API
    * * Sets the meta tags
    *
-   * @return {Promise<Article>} A promise that gets an "article"
+   * @return {Promise<void>} A promise that gets an "article"
    */
-  async created(): Promise<Article> {
-    const { API_URL, HEAD, UI_URL }: { API_URL: string; HEAD: string; UI_URL: string } = this.val
+  async created(): Promise<void> {
+    const { API_URL, HEAD, UI_URL }: Val = this.val
 
     try {
       const article: Article = await getData(`${API_URL}/articles/${this.$route.params.id}`)
+
       article.likes = JSON.parse(article.likes)
       this.article = article
 
@@ -257,8 +274,11 @@ export default {
    */
   updated(): void {
     if (document.getElementById('figcaption')) {
-      const textElt = document.getElementById('figcaption') as HTMLElement
-      textElt.firstChild.setAttribute('itemprop', 'text')
+      const textElt: HTMLElement | null = document.getElementById('figcaption')
+
+      if (textElt?.firstChild) {
+        ;(textElt.firstChild as HTMLElement).setAttribute('itemprop', 'text')
+      }
     }
   },
 
@@ -280,10 +300,14 @@ export default {
      * ? CHECK LIKES
      * Check if the current user has liked the article.
      *
-     * @returns {boolean} - True if the user has liked the article, false otherwise.
+     * @returns {boolean|false} - True if the user has liked the article, false otherwise.
      */
-    checkLikes(): boolean {
-      return this.article.likes && this.article.likes.includes(this.id)
+    checkLikes(): boolean | false {
+      if (Array.isArray(this.article.likes)) {
+        return this.article.likes.includes(this.id)
+      } else {
+        return false
+      }
     },
 
     /**
@@ -293,27 +317,8 @@ export default {
      * @return {Promise<void>} A promise that resolves when the like is added.
      */
     async addLike(): Promise<void> {
-      const { API_URL }: { API_URL: string } = this.val
-
-      let {
-        id,
-        name,
-        text,
-        image,
-        alt,
-        url,
-        likes,
-        cat
-      }: {
-        id: number
-        name: string
-        text: string
-        image: string
-        alt: string
-        url: string
-        likes: number[]
-        cat: string
-      } = this.article
+      const { API_URL }: Val = this.val
+      let { id, name, text, image, alt, url, likes, cat }: Article = this.article
 
       const index: number = likes.indexOf(this.id)
       index > -1 ? likes.splice(index, 1) : likes.push(this.id)
@@ -340,54 +345,11 @@ export default {
      * ? UPDATE ARTICLE
      * * Updates the article with the provided data.
      *
-     * @param {Object} articleData - The data of the article to be updated.
      * @returns {Promise<void>} A promise that resolves when the article is updated.
      */
-    async updateArticle(articleData: {
-      id: number
-      name: string
-      text: string
-      image: string
-      alt: string
-      url: string
-      likes: number[]
-      cat: string
-    }): Promise<void> {
-      const {
-        API_URL,
-        ALERT_UPDATED,
-        CHECK_STRING,
-        REGEX_URL,
-        TEXT_MAX,
-        TEXT_MIN
-      }: {
-        API_URL: string
-        ALERT_UPDATED: string
-        CHECK_STRING: string
-        REGEX_URL: string
-        TEXT_MAX: number
-        TEXT_MIN: number
-      } = this.val
-
-      const {
-        id,
-        name,
-        text,
-        image,
-        alt,
-        url,
-        likes,
-        cat
-      }: {
-        id: number
-        name: string
-        text: string
-        image: string
-        alt: string
-        url: string
-        likes: number[]
-        cat: string
-      } = articleData
+    async updateArticle(): Promise<void> {
+      const { API_URL, ALERT_UPDATED, CHECK_STRING, REGEX_URL, TEXT_MAX, TEXT_MIN }: Val = this.val
+      let { id, name, text, image, alt, url, likes, cat }: Article = this.article
 
       const IS_NAME_CHECKED: boolean = checkRange(name, CHECK_STRING)
       const IS_TEXT_CHECKED: boolean = checkRange(text, CHECK_STRING, TEXT_MIN, TEXT_MAX)
@@ -396,8 +358,9 @@ export default {
 
       if (IS_NAME_CHECKED && IS_TEXT_CHECKED && IS_ALT_CHECKED && IS_URL_CHECKED) {
         const URL: string = `${API_URL}/articles/${id}`
+
         const data: FormData = new FormData()
-        const img: File | string = document.getElementById('image')?.files[0] ?? image
+        const img: File | string = (document.getElementById('image') as HTMLInputElement)?.files?.[0] ?? image
 
         data.append('name', name)
         data.append('text', text)
@@ -422,16 +385,11 @@ export default {
      * ? DELETE ARTICLE
      * * Deletes an article with the given ID.
      *
-     * @param {number} id - The ID of the article to delete
-     * @param {string} name - The name of the article to be deleted
      * @returns {Promise<void>} A promise that resolves when the article is deleted.
      */
-    async deleteArticle(id: number, name: string): Promise<void> {
-      const {
-        TITLE_DELETE,
-        API_URL,
-        ALERT_DELETED
-      }: { TITLE_DELETE: string; API_URL: string; ALERT_DELETED: string } = this.val
+    async deleteArticle(): Promise<void> {
+      const { ALERT_DELETED, API_URL, TITLE_DELETE }: Val = this.val
+      let { id, name }: Article = this.article
 
       if (confirm(`${TITLE_DELETE} ${name} ?`)) {
         const URL: string = `${API_URL}/articles/${id}`
@@ -447,7 +405,7 @@ export default {
       }
     }
   }
-}
+})
 </script>
 
 <style>

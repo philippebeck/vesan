@@ -129,7 +129,7 @@
   </CardElt>
 </template>
 
-<script>
+<script lang="ts">
 import BtnElt from './BtnElt.vue'
 import CardElt from './CardElt.vue'
 import FieldElt from './FieldElt.vue'
@@ -155,10 +155,11 @@ export default {
     /**
      * ? GET GALLERIES
      * * Retrieves the galleries & transforms them into an array of objects.
-     * @return {Array} An array of objects with the content & value properties.
+     *
+     * @return {Array<{content: string, value: number}>} An array of objects with the content & value properties.
      */
-    getGalleries() {
-      const galleries = []
+    getGalleries(): Array<{ content: string; value: number }> {
+      const galleries: Array<{ content: string; value: number }> = []
 
       for (let i = 0; i < this.galleries.length; i++) {
         galleries.push({
@@ -175,12 +176,14 @@ export default {
     /**
      * ? CREATE IMAGE
      * * Create an image by sending a POST request to the server.
+     *
+     * @returns {Promise<void>}
      */
-    async createImage() {
+    async createImage(): Promise<void> {
       const { CHECK_STRING, API_URL, ALERT_CREATED, ALERT_IMG } = this.val
 
       if (checkRange(this.description, CHECK_STRING)) {
-        const img = document.getElementById('image')?.files[0]
+        const img = (document.getElementById('image') as HTMLInputElement)?.files?.[0]
 
         if (img !== undefined) {
           const URL = API_URL + '/images'
@@ -188,7 +191,7 @@ export default {
 
           data.append('image', img)
           data.append('description', this.description)
-          data.append('galleryId', this.$route.params.id)
+          data.append('galleryId', this.$route.params.id.toString())
 
           try {
             await postData(URL, data, this.token)
@@ -196,7 +199,7 @@ export default {
           } catch (err) {
             setError(err)
           } finally {
-            this.$router.go()
+            this.$router.go(0)
           }
         } else {
           alert(ALERT_IMG)
@@ -207,21 +210,33 @@ export default {
     /**
      * ? UPDATE IMAGE
      * * Updates an image.
+     *
      * @param {number} id - The ID of the image to be updated.
+     * @returns {Promise<void>}
      */
-    async updateImage(id) {
-      const { ALERT_IMAGE, ALERT_UPDATED, API_URL, CHECK_STRING } = this.val
+    async updateImage(id: number): Promise<void> {
+      const {
+        ALERT_IMAGE,
+        ALERT_UPDATED,
+        API_URL,
+        CHECK_STRING
+      }: {
+        ALERT_IMAGE: string
+        ALERT_UPDATED: string
+        API_URL: string
+        CHECK_STRING: string
+      } = this.val
 
-      const image = this.images.find((i) => i.id === id)
+      const image: any = this.images.find((i: any) => i.id === id)
       let { name, description, galleryId } = image
 
-      const IS_NAME_CHECKED = image && checkRange(name, CHECK_STRING)
-      const IS_DESC_CHECKED = image && checkRange(description, CHECK_STRING)
+      const IS_NAME_CHECKED: boolean = image && checkRange(name, CHECK_STRING)
+      const IS_DESC_CHECKED: boolean = image && checkRange(description, CHECK_STRING)
 
       if (IS_NAME_CHECKED && IS_DESC_CHECKED) {
-        const URL = `${API_URL}/images/${id}`
-        const img = document.getElementById(`image-${id}`)?.files[0] ?? name
-        const data = new FormData()
+        const URL: string = `${API_URL}/images/${id}`
+        const img: any = (document.getElementById(`image-${id}`) as HTMLInputElement)?.files?.[0] ?? name
+        const data: FormData = new FormData()
 
         data.append('name', name)
         data.append('image', img)
@@ -234,7 +249,7 @@ export default {
         } catch (err) {
           setError(err)
         } finally {
-          this.$router.go()
+          this.$router.go(0)
         }
       }
     },
@@ -243,12 +258,23 @@ export default {
      * ? DELETE IMAGE
      * * Deletes an image from the server based on the provided ID.
      * @param {number} id - The ID of the image to be deleted.
+     * @returns {Promise<void>}
      */
-    async deleteImage(id) {
-      const { TITLE_DELETE_IMAGE, API_URL, ALERT_IMAGE, ALERT_DELETED } = this.val
+    async deleteImage(id: number): Promise<void> {
+      const {
+        TITLE_DELETE_IMAGE,
+        API_URL,
+        ALERT_IMAGE,
+        ALERT_DELETED
+      }: {
+        TITLE_DELETE_IMAGE: string
+        API_URL: string
+        ALERT_IMAGE: string
+        ALERT_DELETED: string
+      } = this.val
 
       if (confirm(`${TITLE_DELETE_IMAGE} ${id} ?`)) {
-        const URL = `${API_URL}/images/${id}`
+        const URL: string = `${API_URL}/images/${id}`
 
         try {
           await deleteData(URL, this.token)
@@ -256,7 +282,7 @@ export default {
         } catch (err) {
           setError(err)
         } finally {
-          this.$router.go()
+          this.$router.go(0)
         }
       }
     }

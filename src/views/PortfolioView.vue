@@ -86,17 +86,25 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
+import { mapState, mapActions } from 'vuex'
+import { checkRole, getCats, getItemsByCat, setMeta } from '../assets/services'
+
 import CardElt from '../components/CardElt.vue'
 import ListElt from '../components/ListElt.vue'
 import MediaElt from '../components/MediaElt.vue'
 import NavElt from '../components/NavElt.vue'
 import ProjectSet from '../components/ProjectSet.vue'
 
-import { checkRole, getCats, getItemsByCat, setMeta } from '../assets/services'
-import { mapState, mapActions } from 'vuex'
+interface Val {
+  HEAD_PORTFOLIO: string
+  LOGO_SRC: string
+  META_PORTFOLIO: string
+  UI_URL: string
+}
 
-export default {
+export default defineComponent({
   name: 'PortfolioView',
   components: { CardElt, ListElt, MediaElt, NavElt, ProjectSet },
   props: ['avatar', 'val'],
@@ -106,20 +114,27 @@ export default {
    * * Retrieves projects from the API.
    * * Sets the meta tags.
    */
-  async created() {
-    const { HEAD_PORTFOLIO, LOGO_SRC, META_PORTFOLIO, UI_URL } = this.val
+  async created(): Promise<void> {
+    const { HEAD_PORTFOLIO, LOGO_SRC, META_PORTFOLIO, UI_URL }: Val = this.val
+    setMeta(HEAD_PORTFOLIO, META_PORTFOLIO, `${UI_URL}/portfolio`, UI_URL + LOGO_SRC)
 
     await this.$store.dispatch('listProjects')
-    setMeta(HEAD_PORTFOLIO, META_PORTFOLIO, `${UI_URL}/portfolio`, UI_URL + LOGO_SRC)
   },
 
   /**
    * ? UPDATED
    * * A function that updates the text elements by setting the "itemprop" attribute to "description".
+   *
+   * @returns {void}
    */
-  updated() {
-    const textArray = document.getElementsByClassName('figcaption')
-    for (let textElt of textArray) textElt.firstChild.setAttribute('itemprop', 'description')
+  updated(): void {
+    const descriptionArray: HTMLCollectionOf<Element> = document.getElementsByClassName('figcaption')
+
+    for (let descriptionElt of descriptionArray) {
+      if (descriptionElt?.firstChild) {
+        ;(descriptionElt.firstChild as Element).setAttribute('itemprop', 'description')
+      }
+    }
   },
 
   computed: {
@@ -128,9 +143,10 @@ export default {
     /**
      * ? GET CATEGORIES
      * * Retrieves the categories of projects.
-     * @return {Array} An array of project categories.
+     *
+     * @return {string[]} An array of project categories.
      */
-    getCategories() {
+    getCategories(): string[] {
       return getCats(this.projects)
     }
   },
@@ -141,24 +157,28 @@ export default {
     /**
      * ? CHECK SESSION
      * * Checks the session for the specified role.
-     * @param {type} role - the role to check
-     * @return {type} the result of the role check
+     *
+     * @param {string} role - the role to check
+     * @return {boolean} the result of the role check
      */
-    checkSession(role) {
+    checkSession(role: string): boolean {
       return checkRole(this.avatar.role, role)
     },
 
     /**
      * ? GET ITEMS BY CATEGORY
-     * * Retrieves items based on category.
-     * @param {Array} items - The list of items to filter.
-     * @return {Array} The filtered list of items.
+     * * Retrieves items by category.
+     *
+     * @param {{id: string, name: string, cat: string}[]} items - The array of items.
+     * @return {Record<string, { id: string; name: string }[]>} The items filtered by category.
      */
-    getItemsByCategory(items) {
+    getItemsByCategory(
+      items: { id: string; name: string; cat: string }[]
+    ): Record<string, { id: string; name: string }[]> {
       return getItemsByCat(items)
     }
   }
-}
+})
 </script>
 
 <style>
