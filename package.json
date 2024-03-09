@@ -1,6 +1,6 @@
 {
   "name": "vesan",
-  "version": "3.0.0-alpha",
+  "version": "3.0.1-alpha",
   "description": "Frontend Framework with Vue, TypeScript, Vuex, Axios, Sass & Animadio",
   "type": "module",
   "keywords": [
