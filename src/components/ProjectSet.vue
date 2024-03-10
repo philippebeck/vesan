@@ -204,6 +204,9 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import { checkRange, checkRegex, deleteData, getItemName, postData, putData, setError } from '../assets/services'
+
 import BtnElt from './BtnElt.vue'
 import CardElt from './CardElt.vue'
 import FieldElt from './FieldElt.vue'
@@ -211,9 +214,32 @@ import ListElt from './ListElt.vue'
 import MediaElt from './MediaElt.vue'
 import TableElt from './TableElt.vue'
 
-import { checkRange, checkRegex, deleteData, getItemName, postData, putData, setError } from '../assets/services'
+interface Project {
+  id: number
+  name: string
+  description: string
+  image: string
+  alt: string
+  url: string
+  cat: string
+}
 
-export default {
+interface Val {
+  ALERT_CREATED: string
+  ALERT_DELETED: string
+  ALERT_IMG: string
+  ALERT_UPDATED: string
+  API_URL: string
+  CAT_PROJECT: string
+  CHECK_STRING: string
+  CHECK_URL: string
+  REGEX_URL: RegExp
+  TEXT_MIN: number
+  TEXT_MAX: number
+  TITLE_DELETE: string
+}
+
+export default defineComponent({
   name: 'ProjectSet',
   components: { BtnElt, CardElt, FieldElt, ListElt, MediaElt, TableElt },
 
@@ -226,7 +252,7 @@ export default {
       alt: '',
       url: '',
       cat: ''
-    }
+    } as Project
   },
 
   methods: {
@@ -247,17 +273,7 @@ export default {
         REGEX_URL,
         TEXT_MIN,
         TEXT_MAX
-      }: {
-        ALERT_CREATED: string
-        ALERT_IMG: string
-        API_URL: string
-        CAT_PROJECT: string
-        CHECK_STRING: string
-        CHECK_URL: string
-        REGEX_URL: RegExp
-        TEXT_MIN: number
-        TEXT_MAX: number
-      } = this.val
+      }: Val = this.val
 
       if (this.url.startsWith('http')) this.url = this.url.split('//')[1]
       if (this.cat === '') this.cat = CAT_PROJECT
@@ -303,10 +319,10 @@ export default {
      * @param {Promise<void>} - A promise that resolves when the project is updated.
      */
     async updateProject(id: number): Promise<void> {
-      const { API_URL, ALERT_UPDATED, CHECK_STRING, REGEX_URL, TEXT_MAX, TEXT_MIN } = this.val
+      const { ALERT_UPDATED, API_URL, CHECK_STRING, REGEX_URL, TEXT_MAX, TEXT_MIN }: Val = this.val
 
-      const project = this.projects.find((p: { id: number }) => p.id === id)
-      let { name, description, image, alt, url, cat } = project
+      const project: Project = this.projects.find((p: Project) => p.id === id)
+      let { name, description, image, alt, url, cat }: Project = project
 
       const IS_NAME_CHECKED: boolean = checkRange(name, CHECK_STRING)
       const IS_DESC_CHECKED: boolean = checkRange(description, CHECK_STRING, TEXT_MIN, TEXT_MAX)
@@ -344,7 +360,7 @@ export default {
      * @returns {Promise<void>}
      */
     async deleteProject(id: number): Promise<void> {
-      const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val
+      const { ALERT_DELETED, API_URL, TITLE_DELETE }: Val = this.val
 
       const NAME: string | false = getItemName(id, this.projects)
 
@@ -362,5 +378,5 @@ export default {
       }
     }
   }
-}
+})
 </script>

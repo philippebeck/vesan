@@ -65,7 +65,7 @@
           :title="table[0].cat"
           :items="table"
           v-for="table in getItemsByCategory(links)"
-          :key="table"
+          :key="table[0].id"
           :id="table[0].cat"
         >
           <template #title>
@@ -156,11 +156,7 @@
 </template>
 
 <script lang="ts">
-import BtnElt from './BtnElt.vue'
-import CardElt from './CardElt.vue'
-import FieldElt from './FieldElt.vue'
-import ListElt from './ListElt.vue'
-import TableElt from './TableElt.vue'
+import { defineComponent } from 'vue'
 
 import {
   checkRange,
@@ -173,7 +169,32 @@ import {
   setError
 } from '../assets/services'
 
-export default {
+import BtnElt from './BtnElt.vue'
+import CardElt from './CardElt.vue'
+import FieldElt from './FieldElt.vue'
+import ListElt from './ListElt.vue'
+import TableElt from './TableElt.vue'
+
+interface Link {
+  id: number
+  name: string
+  url: string
+  cat: string
+}
+
+interface Val {
+  ALERT_CREATED: string
+  ALERT_DELETED: string
+  ALERT_UPDATED: string
+  API_URL: string
+  CAT_LINK: string
+  CHECK_STRING: string
+  CHECK_URL: string
+  REGEX_URL: RegExp
+  TITLE_DELETE: string
+}
+
+export default defineComponent({
   name: 'LinkSet',
   components: { BtnElt, CardElt, FieldElt, ListElt, TableElt },
 
@@ -183,7 +204,7 @@ export default {
       name: '',
       url: '',
       cat: ''
-    }
+    } as Link
   },
 
   methods: {
@@ -191,12 +212,12 @@ export default {
      * ? GET ITEMS BY CATEGORY
      * * Retrieves items by category.
      *
-     * @param {{id: string, name: string, cat: string}[]} items - The array of items.
-     * @return {Record<string, { id: string; name: string }[]>} The items filtered by category.
+     * @param {{id: number, name: string, cat: string}[]} items - The array of items.
+     * @return {Record<string, { id: number; name: string }[]>} The items filtered by category.
      */
     getItemsByCategory(
-      items: { id: string; name: string; cat: string }[]
-    ): Record<string, { id: string; name: string }[]> {
+      items: { id: number; name: string; cat: string }[]
+    ): Record<string, { id: number; name: string; cat: string }[]> {
       return getItemsByCat(items, 'name')
     },
 
@@ -207,21 +228,7 @@ export default {
      * @returns {Promise<void>} A Promise that resolves when the link is created
      */
     async createLink(): Promise<void> {
-      const {
-        ALERT_CREATED,
-        API_URL,
-        CAT_LINK,
-        CHECK_STRING,
-        CHECK_URL,
-        REGEX_URL
-      }: {
-        ALERT_CREATED: string
-        API_URL: string
-        CAT_LINK: string
-        CHECK_STRING: string
-        CHECK_URL: string
-        REGEX_URL: RegExp
-      } = this.val
+      const { ALERT_CREATED, API_URL, CAT_LINK, CHECK_STRING, CHECK_URL, REGEX_URL }: Val = this.val
 
       if (this.url.startsWith('http')) this.url = this.url.split('//')[1]
       if (this.cat === '') this.cat = CAT_LINK
@@ -256,29 +263,11 @@ export default {
      * @param {void} - A Promise that resolves when the link is updated
      */
     async updateLink(id: number): Promise<void> {
-      const {
-        CHECK_STRING,
-        REGEX_URL,
-        CHECK_URL,
-        API_URL,
-        ALERT_UPDATED
-      }: {
-        CHECK_STRING: string
-        REGEX_URL: RegExp
-        CHECK_URL: string
-        API_URL: string
-        ALERT_UPDATED: string
-      } = this.val
+      const { ALERT_UPDATED, API_URL, CHECK_STRING, CHECK_URL, REGEX_URL }: Val = this.val
 
-      const link: { id: number; name: string; url: string; cat: string } | undefined = this.links.find(
-        (l: { id: number }) => l.id === id
-      )
+      const link: Link = this.links.find((l: Link) => l.id === id)
 
-      let { name, url, cat }: { name: string; url: string; cat: string } = link || {
-        name: '',
-        url: '',
-        cat: ''
-      }
+      let { name, url, cat }: Link = link
 
       const IS_NAME_CHECKED: boolean = link ? checkRange(name, CHECK_STRING) : false
       const IS_URL_CHECKED: boolean = link ? checkRegex(url, CHECK_URL, REGEX_URL) : false
@@ -309,8 +298,7 @@ export default {
      * @returns {Promise<void>}
      */
     async deleteLink(id: number): Promise<void> {
-      const { TITLE_DELETE, API_URL, ALERT_DELETED }: { TITLE_DELETE: string; API_URL: string; ALERT_DELETED: string } =
-        this.val
+      const { TITLE_DELETE, API_URL, ALERT_DELETED }: Val = this.val
 
       const NAME: string | false = getItemName(id, this.links)
 
@@ -328,5 +316,5 @@ export default {
       }
     }
   }
-}
+})
 </script>

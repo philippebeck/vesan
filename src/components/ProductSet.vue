@@ -103,15 +103,37 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import { checkRange, postData, setError } from '../assets/services'
+
 import BtnElt from './BtnElt.vue'
 import CardElt from './CardElt.vue'
 import FieldElt from './FieldElt.vue'
 import ListElt from './ListElt.vue'
 import Editor from '@tinymce/tinymce-vue'
 
-import { checkRange, postData, setError } from '../assets/services'
+interface Product {
+  id: number
+  name: string
+  description: string
+  image: string
+  alt: string
+  price: number
+  options: any
+  cat: string
+}
 
-export default {
+interface Val {
+  ALERT_CREATED: string
+  ALERT_IMG: string
+  API_URL: string
+  CAT_PRODUCT: string
+  CHECK_STRING: string
+  TEXT_MAX: number
+  TEXT_MIN: number
+}
+
+export default defineComponent({
   name: 'ProductSet',
   components: { BtnElt, CardElt, FieldElt, ListElt, Editor },
 
@@ -125,7 +147,7 @@ export default {
       price: 0,
       options: [],
       cat: ''
-    }
+    } as Product
   },
 
   methods: {
@@ -136,23 +158,7 @@ export default {
      * @returns {Promise<void>} A promise that resolves when the product is created.
      */
     async createProduct(): Promise<void> {
-      const {
-        ALERT_CREATED,
-        ALERT_IMG,
-        API_URL,
-        CAT_PRODUCT,
-        CHECK_STRING,
-        TEXT_MAX,
-        TEXT_MIN
-      }: {
-        ALERT_CREATED: string
-        ALERT_IMG: string
-        API_URL: string
-        CAT_PRODUCT: string
-        CHECK_STRING: string
-        TEXT_MAX: number
-        TEXT_MIN: number
-      } = this.val
+      const { ALERT_CREATED, ALERT_IMG, API_URL, CAT_PRODUCT, CHECK_STRING, TEXT_MAX, TEXT_MIN }: Val = this.val
 
       this.price = this.price ?? 1
       if (this.cat === '') this.cat = CAT_PRODUCT
@@ -190,5 +196,5 @@ export default {
       }
     }
   }
-}
+})
 </script>
