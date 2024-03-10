@@ -3,7 +3,7 @@ import { shallowMount, enableAutoUnmount } from '@vue/test-utils'
 import * as services from '../../assets/services'
 import LegalView from '../../views/LegalView.vue'
 
-let wrapper
+let wrapper: any
 
 beforeEach(() => {
   vi.spyOn(services, 'setMeta').mockImplementation(() => {})

@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, test } from 'vitest'
 import { mount, enableAutoUnmount } from '@vue/test-utils'
 import FieldElt from '../../components/FieldElt.vue'
 
-let wrapper
+let wrapper: any
 
 enableAutoUnmount(afterEach)
 

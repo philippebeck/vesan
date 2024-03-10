@@ -113,7 +113,7 @@ export default defineComponent({
      */
     const toggleSide = () => {
       const side = document.getElementById('side')
-      side.classList.replace('show', 'hide') || side.classList.replace('hide', 'show')
+      side?.classList.replace('show', 'hide') || side?.classList.replace('hide', 'show')
     }
 
     /**

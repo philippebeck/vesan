@@ -52,7 +52,7 @@ export default defineComponent({
    * @param {Object} - Object that contains the slots of the component.
    * @returns {{ hasSlot: (name: string) => boolean }} - Object with a function that checks if the component has a slot.
    */
-  setup(props: object, { slots }: { slots: Record<string, unknown> }) {
+  setup(props: object, { slots }: { slots: Record<string, unknown> }): { hasSlot: (name: string) => boolean } {
     /**
      * ? HAS SLOT
      * * Checks if the component has a slot

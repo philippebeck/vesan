@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, test } from 'vitest'
 import { enableAutoUnmount, mount } from '@vue/test-utils'
 import FootElt from '../../components/FootElt.vue'
 
-let wrapper
+let wrapper: any
 
 enableAutoUnmount(afterEach)
 

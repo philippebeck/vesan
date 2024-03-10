@@ -130,6 +130,9 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import { checkRange, deleteData, putData, postData, setError } from '../assets/services'
+
 import BtnElt from './BtnElt.vue'
 import CardElt from './CardElt.vue'
 import FieldElt from './FieldElt.vue'
@@ -137,18 +140,36 @@ import ListElt from './ListElt.vue'
 import MediaElt from './MediaElt.vue'
 import TableElt from './TableElt.vue'
 
-import { checkRange, deleteData, putData, postData, setError } from '../assets/services'
+interface Image {
+  id: number
+  name: string
+  description: string
+  gallery: number
+  image: string
+}
 
-export default {
+interface Val {
+  ALERT_CREATED: string
+  ALERT_DELETED: string
+  ALERT_IMAGE: string
+  ALERT_IMG: string
+  ALERT_UPDATED: string
+  API_URL: string
+  CHECK_STRING: string
+  TITLE_DELETE_IMAGE: string
+}
+
+export default defineComponent({
   name: 'ImageSet',
   components: { BtnElt, CardElt, FieldElt, ListElt, MediaElt, TableElt },
-
   props: ['galleries', 'images', 'token', 'val'],
+
   data() {
     return {
       description: '',
-      gallery: ''
-    }
+      gallery: 1,
+      image: ''
+    } as Image
   },
 
   computed: {
@@ -156,10 +177,10 @@ export default {
      * ? GET GALLERIES
      * * Retrieves the galleries & transforms them into an array of objects.
      *
-     * @return {Array<{content: string, value: number}>} An array of objects with the content & value properties.
+     * @return {{ content: string; value: number }[]} An array of objects with the content & value properties.
      */
-    getGalleries(): Array<{ content: string; value: number }> {
-      const galleries: Array<{ content: string; value: number }> = []
+    getGalleries(): { content: string; value: number }[] {
+      const galleries: { content: string; value: number }[] = []
 
       for (let i = 0; i < this.galleries.length; i++) {
         galleries.push({
@@ -180,7 +201,7 @@ export default {
      * @returns {Promise<void>}
      */
     async createImage(): Promise<void> {
-      const { CHECK_STRING, API_URL, ALERT_CREATED, ALERT_IMG } = this.val
+      const { ALERT_CREATED, ALERT_IMG, API_URL, CHECK_STRING }: Val = this.val
 
       if (checkRange(this.description, CHECK_STRING)) {
         const img = (document.getElementById('image') as HTMLInputElement)?.files?.[0]
@@ -215,17 +236,7 @@ export default {
      * @returns {Promise<void>}
      */
     async updateImage(id: number): Promise<void> {
-      const {
-        ALERT_IMAGE,
-        ALERT_UPDATED,
-        API_URL,
-        CHECK_STRING
-      }: {
-        ALERT_IMAGE: string
-        ALERT_UPDATED: string
-        API_URL: string
-        CHECK_STRING: string
-      } = this.val
+      const { ALERT_IMAGE, ALERT_UPDATED, API_URL, CHECK_STRING }: Val = this.val
 
       const image: any = this.images.find((i: any) => i.id === id)
       let { name, description, galleryId } = image
@@ -261,17 +272,7 @@ export default {
      * @returns {Promise<void>}
      */
     async deleteImage(id: number): Promise<void> {
-      const {
-        TITLE_DELETE_IMAGE,
-        API_URL,
-        ALERT_IMAGE,
-        ALERT_DELETED
-      }: {
-        TITLE_DELETE_IMAGE: string
-        API_URL: string
-        ALERT_IMAGE: string
-        ALERT_DELETED: string
-      } = this.val
+      const { ALERT_DELETED, ALERT_IMAGE, API_URL, TITLE_DELETE_IMAGE }: Val = this.val
 
       if (confirm(`${TITLE_DELETE_IMAGE} ${id} ?`)) {
         const URL: string = `${API_URL}/images/${id}`
@@ -287,5 +288,5 @@ export default {
       }
     }
   }
-}
+})
 </script>

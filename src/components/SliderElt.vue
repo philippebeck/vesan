@@ -129,10 +129,11 @@ export default defineComponent({
      * * Refresh the slide
      */
     const refreshSlide = (): void => {
-      if (randomState.value) index.value = getRandomInteger(0, props.slides.length - 1)
+      if (randomState.value) index.value = getRandomInteger(0, props.slides ? props.slides.length - 1 : 0)
 
-      for (let i = 1; i <= props.slides.length; i++) {
+      for (let i = 1; i <= (props.slides ? props.slides.length : 0); i++) {
         const slide = document.getElementById(`slide-${i}`)
+
         if (slide) slide.classList.remove('show')
       }
 
@@ -173,7 +174,7 @@ export default defineComponent({
      * * Go to the previous slide
      */
     const goPrevious = (): void => {
-      index.value = (index.value - 1 + props.slides.length) % props.slides.length
+      index.value = (index.value - 1 + (props.slides?.length || 0)) % (props.slides?.length || 1)
       refreshSlide()
     }
 
@@ -182,7 +183,7 @@ export default defineComponent({
      * * Go to the next slide
      */
     const goNext = (): void => {
-      index.value = (index.value + 1) % props.slides.length
+      index.value = (index.value + 1) % (props.slides?.length || 0)
       refreshSlide()
     }
 

@@ -3,7 +3,7 @@ import { shallowMount, enableAutoUnmount } from '@vue/test-utils'
 import * as services from '../../assets/services'
 import HomeView from '../../views/HomeView.vue'
 
-let wrapper
+let wrapper: any
 
 /**
  * @vi-environment jsdom

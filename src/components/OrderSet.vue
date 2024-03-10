@@ -88,14 +88,28 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import { deleteData, putData, setError } from '../assets/services'
+
 import BtnElt from './BtnElt.vue'
 import CardElt from './CardElt.vue'
 import FieldElt from './FieldElt.vue'
 import TableElt from './TableElt.vue'
 
-import { deleteData, putData, setError } from '../assets/services'
+interface Order {
+  id: number
+  status: string
+}
 
-export default {
+interface Val {
+  ALERT_DELETED: string
+  ALERT_ORDER: string
+  ALERT_UPDATED: string
+  API_URL: string
+  TITLE_DELETE_ORDER: string
+}
+
+export default defineComponent({
   name: 'OrderSet',
   components: { BtnElt, CardElt, FieldElt, TableElt },
   props: ['orders', 'token', 'val'],
@@ -109,9 +123,9 @@ export default {
      * @returns {Promise<void>} A promise that resolves when the status is updated.
      */
     async updateStatus(id: number): Promise<void> {
-      const { ALERT_ORDER, ALERT_UPDATED, API_URL }: { ALERT_ORDER: string; ALERT_UPDATED: string; API_URL: string } =
-        this.val
-      const order: { id: number; status: string } | undefined = this.orders.find((o: { id: number }) => o.id === id)
+      const { ALERT_ORDER, ALERT_UPDATED, API_URL }: Val = this.val
+
+      const order: Order | undefined = this.orders.find((o: Order) => o.id === id)
 
       if (order) {
         const URL: string = `${API_URL}/orders/${id}`
@@ -138,7 +152,7 @@ export default {
      * @returns {Promise<void>}
      */
     async deleteOrder(id: number): Promise<void> {
-      const { TITLE_DELETE_ORDER, API_URL, ALERT_ORDER, ALERT_DELETED } = this.val
+      const { ALERT_DELETED, ALERT_ORDER, API_URL, TITLE_DELETE_ORDER }: Val = this.val
 
       if (confirm(`${TITLE_DELETE_ORDER} ${id} ?`)) {
         const URL = `${API_URL}/orders/${id}`
@@ -154,5 +168,5 @@ export default {
       }
     }
   }
-}
+})
 </script>

@@ -1,11 +1,14 @@
 # vesan
 
-Vesan is a Frontend Framework made with Vue 3, TypeScript, Vuex, Axios, Sass & Animadio  
-Includes Font-Awesome, Recaptcha, PayPal, TinyMCE, Vitest & Cypress  
+Vesan is a Frontend Framework made with Vue 3, TypeScript & Animadio  
+Includes Axios, Font-Awesome, Recaptcha, PayPal, Sass, TinyMCE, Vitest & Cypress  
 
-Migration from Option API to Composition API in progress (~ 30%)  
-Migration of all scripts from JS to TS in progress (~ 60%)  
-Migration of the tests from Jest to Vitest in progress too (~ 60%)  
+**WARNING**: build is not ready yet on the version 3 *(alpha mode)*
+*For production ready*: use the last version 2
+
+Migration from Option API to Composition API in progress (~ 40%)  
+Migration of all scripts from JS to TS in progress (~ 80%)  
+Migration of the tests from Jest to Vitest in progress too (~ 70%)  
 
 Migration of the store from Vuex to Pinia soon  
 Added e2e tests with Cypress soon too  

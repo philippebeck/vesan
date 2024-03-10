@@ -122,24 +122,41 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import { checkRange, deleteData, getItemName, postData, putData, setError } from '../assets/services'
+
 import BtnElt from './BtnElt.vue'
 import CardElt from './CardElt.vue'
 import FieldElt from './FieldElt.vue'
 import ListElt from './ListElt.vue'
 import TableElt from './TableElt.vue'
 
-import { checkRange, deleteData, getItemName, postData, putData, setError } from '../assets/services'
+interface Gallery {
+  id: number
+  name: string
+  author: string
+  cover: string
+}
 
-export default {
+interface Val {
+  ALERT_CREATED: string
+  ALERT_DELETED: string
+  ALERT_UPDATED: string
+  API_URL: string
+  CHECK_STRING: string
+  TITLE_DELETE: string
+}
+
+export default defineComponent({
   name: 'GallerySet',
   components: { BtnElt, CardElt, FieldElt, ListElt, TableElt },
-
   props: ['galleries', 'images', 'token', 'val'],
+
   data() {
     return {
       name: '',
       author: ''
-    }
+    } as Gallery
   },
 
   computed: {
@@ -170,15 +187,7 @@ export default {
      * @returns {Promise<void>} A promise that resolves when the gallery is created.
      */
     async createGallery(): Promise<void> {
-      const {
-        ALERT_CREATED,
-        API_URL,
-        CHECK_STRING
-      }: {
-        ALERT_CREATED: string
-        API_URL: string
-        CHECK_STRING: string
-      } = this.val
+      const { ALERT_CREATED, API_URL, CHECK_STRING }: Val = this.val
 
       const IS_NAME_CHECKED: boolean = checkRange(this.name, CHECK_STRING)
       const IS_AUTHOR_CHECKED: boolean = checkRange(this.author, CHECK_STRING)
@@ -209,13 +218,12 @@ export default {
      * @returns {Promise<void>} A promise that resolves when the gallery is updated.
      */
     async updateGallery(id: number): Promise<void> {
-      const { CHECK_STRING, API_URL, ALERT_UPDATED }: { CHECK_STRING: string; API_URL: string; ALERT_UPDATED: string } =
-        this.val
+      const { CHECK_STRING, API_URL, ALERT_UPDATED }: Val = this.val
 
       const gallery: { id: number; name: string; author: string; cover: string } = this.galleries.find(
         (g: { id: number }) => g.id === id
       )
-      let { name, author, cover }: { name: string; author: string; cover: string } = gallery
+      let { name, author, cover }: Gallery = gallery
 
       const IS_NAME_CHECKED: boolean = gallery && checkRange(name, CHECK_STRING)
       const IS_AUTHOR_CHECKED: boolean = gallery && checkRange(author, CHECK_STRING)
@@ -245,7 +253,8 @@ export default {
      * @returns {Promise<void>}
      */
     async deleteGallery(id: number): Promise<void> {
-      const { TITLE_DELETE, API_URL, ALERT_DELETED } = this.val
+      const { ALERT_DELETED, API_URL, TITLE_DELETE }: Val = this.val
+
       const NAME: string | false = getItemName(id, this.galleries)
 
       if (confirm(`${TITLE_DELETE} ${NAME} ?`)) {
@@ -262,5 +271,5 @@ export default {
       }
     }
   }
-}
+})
 </script>

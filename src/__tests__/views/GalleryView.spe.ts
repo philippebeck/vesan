@@ -4,10 +4,10 @@ import { createStore } from 'vuex'
 import * as services from '../../assets/services'
 import GalleryView from '../../views/GalleryView.vue'
 
-let wrapper
-let store
-let actions
-let state
+let wrapper: any
+let store: any
+let actions: any
+let state: any
 
 /**
  * @vi-environment jsdom
@@ -66,7 +66,7 @@ describe('GalleryView', () => {
   })
 
   test('wrapper created hook', () => {
-    expect(serve.setMeta).toHaveBeenCalled()
+    expect(services.setMeta).toHaveBeenCalled()
     expect(actions.listGalleries).toHaveBeenCalled()
   })
 

@@ -82,19 +82,45 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import { checkRange, checkRegex, postData, setError } from '../assets/services'
+
 import BtnElt from './BtnElt.vue'
 import CardElt from './CardElt.vue'
 import FieldElt from './FieldElt.vue'
 import ListElt from './ListElt.vue'
 import Editor from '@tinymce/tinymce-vue'
 
-import { checkRange, checkRegex, postData, setError } from '../assets/services'
+interface Article {
+  id: number
+  name: string
+  text: string
+  image: string
+  alt: string
+  url: string
+  likes: any
+  cat: string
+  createdAt: string
+  updatedAt: string
+}
 
-export default {
+interface Val {
+  ALERT_CREATED: string
+  ALERT_IMG: string
+  API_URL: string
+  CAT_ARTICLE: string
+  CHECK_STRING: string
+  CHECK_URL: string
+  REGEX_URL: RegExp
+  TEXT_MIN: number
+  TEXT_MAX: number
+}
+
+export default defineComponent({
   name: 'ArticleSet',
   components: { BtnElt, CardElt, FieldElt, ListElt, Editor },
-
   props: ['token', 'val'],
+
   data() {
     return {
       name: '',
@@ -103,7 +129,7 @@ export default {
       alt: '',
       url: '',
       cat: ''
-    }
+    } as Article
   },
 
   methods: {
@@ -124,17 +150,7 @@ export default {
         REGEX_URL,
         TEXT_MIN,
         TEXT_MAX
-      }: {
-        ALERT_CREATED: string
-        ALERT_IMG: string
-        API_URL: string
-        CAT_ARTICLE: string
-        CHECK_STRING: string
-        CHECK_URL: string
-        REGEX_URL: RegExp
-        TEXT_MIN: number
-        TEXT_MAX: number
-      } = this.val
+      }: Val = this.val
 
       if (this.url.startsWith('http')) this.url = this.url.split('//')[1]
       if (this.cat === '') this.cat = CAT_ARTICLE
@@ -142,7 +158,6 @@ export default {
       const IS_NAME_CHECKED: boolean = checkRange(this.name, CHECK_STRING)
       const IS_TEXT_CHECKED: boolean = checkRange(this.text, CHECK_STRING, TEXT_MIN, TEXT_MAX)
       const IS_ALT_CHECKED: boolean = checkRange(this.alt, CHECK_STRING)
-
       const IS_URL_CHECKED: boolean = this.url ? checkRegex(this.url, CHECK_URL, REGEX_URL) : true
 
       if (IS_NAME_CHECKED && IS_TEXT_CHECKED && IS_ALT_CHECKED && IS_URL_CHECKED) {
@@ -173,5 +188,5 @@ export default {
       }
     }
   }
-}
+})
 </script>

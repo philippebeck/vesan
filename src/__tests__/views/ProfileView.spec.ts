@@ -4,10 +4,10 @@ import { createStore } from 'vuex'
 import * as services from '../../assets/services'
 import ProfileView from '../../views/ProfileView.vue'
 
-let wrapper
-let store
-let actions
-let state
+let wrapper: any
+let store: any
+let actions: any
+let state: any
 
 beforeEach(() => {
   vi.spyOn(services, 'setMeta').mockImplementation(() => {})

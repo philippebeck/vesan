@@ -67,12 +67,12 @@ export default defineComponent({
     props: Object,
     { slots }: { default: any }
   ): {
-    isMobile: Ref<boolean>
+    isMobile: boolean
     handleResize: () => void
     hasSlot: (name: string) => boolean
     toggleSide: () => void
   } {
-    const isMobile = ref(false)
+    const isMobile = ref(true)
 
     /**
      * ? HAS SLOT
@@ -95,7 +95,7 @@ export default defineComponent({
      */
     const toggleSide = () => {
       const foot = document.getElementById('foot')
-      foot.classList.replace('show', 'hide') || foot.classList.replace('hide', 'show')
+      foot?.classList.replace('show', 'hide') || foot?.classList.replace('hide', 'show')
     }
 
     /**
@@ -113,7 +113,7 @@ export default defineComponent({
      */
     onUnmounted(() => window.removeEventListener('resize', handleResize))
 
-    return { isMobile, handleResize, hasSlot, toggleSide }
+    return { isMobile: isMobile.value, handleResize, hasSlot, toggleSide }
   }
 })
 </script>

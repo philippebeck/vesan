@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 import { shallowMount, enableAutoUnmount } from '@vue/test-utils'
 import ImageSet from '../../components/ImageSet.vue'
 
-let wrapper
+let wrapper: any
 
 vi.mock('axios')
 

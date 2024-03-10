@@ -17,10 +17,10 @@ const router = createRouter({
   ]
 })
 
-let wrapper
-let store
-let actions
-let state
+let wrapper: any
+let store: any
+let actions: any
+let state: any
 
 /**
  * @vi-environment jsdom
@@ -44,7 +44,7 @@ beforeEach(() => {
   })
 
   wrapper = shallowMount(App, {
-    data() {
+    data(): any {
       return {
         values: values
       }

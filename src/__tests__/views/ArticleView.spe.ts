@@ -34,10 +34,10 @@ const user = {
   role: role
 }
 
-let wrapper
-let store
-let actions
-let state
+let wrapper: any
+let store: any
+let actions: any
+let state: any
 
 /**
  * @vi-environment jsdom

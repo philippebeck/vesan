@@ -103,26 +103,46 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import { checkRange, checkRegex, deleteData, getItemName, putData, setError } from '../assets/services'
+
 import BtnElt from './BtnElt.vue'
 import CardElt from './CardElt.vue'
 import FieldElt from './FieldElt.vue'
 import MediaElt from './MediaElt.vue'
 import TableElt from './TableElt.vue'
 
-import { checkRange, checkRegex, deleteData, getItemName, putData, setError } from '../assets/services'
+interface User {
+  id: number
+  name: string
+  email: string
+  image: string
+  pass: string
+  role: string
+}
 
-export default {
+interface Val {
+  ALERT_DELETED: string
+  ALERT_UPDATED: string
+  API_URL: string
+  CHECK_EMAIL: string
+  CHECK_STRING: string
+  REGEX_EMAIL: RegExp
+  TITLE_DELETE: string
+}
+
+export default defineComponent({
   name: 'UserSet',
   components: { BtnElt, CardElt, FieldElt, MediaElt, TableElt },
-
   props: ['token', 'users', 'val'],
+
   data() {
     return {
       name: '',
       email: '',
       image: '',
       pass: ''
-    }
+    } as User
   },
 
   methods: {
@@ -134,28 +154,10 @@ export default {
      * @returns {Promise<void>}
      */
     async updateUser(id: number): Promise<void> {
-      const {
-        ALERT_UPDATED,
-        API_URL,
-        CHECK_EMAIL,
-        CHECK_STRING,
-        REGEX_EMAIL
-      }: {
-        ALERT_UPDATED: string
-        API_URL: string
-        CHECK_EMAIL: string
-        CHECK_STRING: string
-        REGEX_EMAIL: RegExp
-      } = this.val
+      const { ALERT_UPDATED, API_URL, CHECK_EMAIL, CHECK_STRING, REGEX_EMAIL }: Val = this.val
 
-      const user: { id: number; name: string; email: string; image: string; role: string } | undefined =
-        this.users.find((u: { id: number }) => u.id === id)
-      let { name, email, image, role }: { name: string; email: string; image: string; role: string } = user || {
-        name: '',
-        email: '',
-        image: '',
-        role: ''
-      }
+      const user: User = this.users.find((u: User) => u.id === id)
+      let { name, email, image, role }: User = user
 
       const IS_NAME_CHECKED: boolean = user ? checkRange(name, CHECK_STRING) : false
       const IS_EMAIL_CHECKED: boolean = user ? checkRegex(email, CHECK_EMAIL, REGEX_EMAIL) : false
@@ -190,8 +192,7 @@ export default {
      * @returns {Promise<void>} A Promise that resolves when the user is successfully deleted.
      */
     async deleteUser(id: number): Promise<void> {
-      const { TITLE_DELETE, API_URL, ALERT_DELETED }: { TITLE_DELETE: string; API_URL: string; ALERT_DELETED: string } =
-        this.val
+      const { TITLE_DELETE, API_URL, ALERT_DELETED }: Val = this.val
 
       const NAME: string | false = getItemName(id, this.users)
 
@@ -209,5 +210,5 @@ export default {
       }
     }
   }
-}
+})
 </script>

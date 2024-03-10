@@ -67,12 +67,27 @@ export default defineComponent({
   name: 'MediaElt',
 
   props: {
-    type: { type: String, default: 'img' },
-    width: { type: Number, default: 300 },
-    loop: { type: Boolean, default: false },
+    type: {
+      type: String,
+      default: 'img'
+    },
+    width: {
+      type: Number,
+      default: 300
+    },
+    loop: {
+      type: Boolean,
+      default: false
+    },
     content: String,
     src: String,
-    medias: Array,
+    medias: [
+      {
+        type: String,
+        src: String,
+        media: String
+      }
+    ],
     alt: String,
     title: String,
     height: Number,
