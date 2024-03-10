@@ -17,7 +17,7 @@ global.fetch = vi.fn(() =>
   })
 )
 
-let wrapper
+let wrapper: any
 
 beforeEach(() => {
   vi.spyOn(services, 'setMeta').mockImplementation(() => {})
@@ -32,7 +32,7 @@ beforeEach(() => {
         email: 'email@test.com'
       }
     },
-    data() {
+    data(): any {
       return {
         basket: [
           {

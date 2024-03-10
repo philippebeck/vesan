@@ -571,31 +571,21 @@ describe('setMeta()', () => {
     setMeta('New Title', 'Description', 'https://example.com')
 
     expect(document.querySelector('title').innerText).toEqual('New Title')
-    expect(document.querySelector('[property="og:title"]').getAttribute('content')).toEqual(
-      'New Title'
-    )
+    expect(document.querySelector('[property="og:title"]').getAttribute('content')).toEqual('New Title')
   })
 
   test('should set the description correctly', () => {
     setMeta('Title', 'New Description', 'https://example.com')
 
-    expect(document.querySelector('[name="description"]').getAttribute('content')).toEqual(
-      'New Description'
-    )
-    expect(document.querySelector('[property="og:description"]').getAttribute('content')).toEqual(
-      'New Description'
-    )
+    expect(document.querySelector('[name="description"]').getAttribute('content')).toEqual('New Description')
+    expect(document.querySelector('[property="og:description"]').getAttribute('content')).toEqual('New Description')
   })
 
   test('should set the url correctly', () => {
     setMeta('Title', 'Description', 'https://example.com/new-url')
 
-    expect(document.querySelector('[property="og:url"]').getAttribute('content')).toEqual(
-      'https://example.com/new-url'
-    )
-    expect(document.querySelector('[rel="canonical"]').getAttribute('href')).toEqual(
-      'https://example.com/new-url'
-    )
+    expect(document.querySelector('[property="og:url"]').getAttribute('content')).toEqual('https://example.com/new-url')
+    expect(document.querySelector('[rel="canonical"]').getAttribute('href')).toEqual('https://example.com/new-url')
   })
 
   test('should set the image correctly', () => {

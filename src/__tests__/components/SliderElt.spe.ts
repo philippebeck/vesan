@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 import { mount, enableAutoUnmount } from '@vue/test-utils'
 import SliderElt from '../../components/SliderElt.vue'
 
-let wrapper
+let wrapper: any
 
 beforeEach(() => {
   wrapper = mount(SliderElt, {
@@ -262,23 +262,13 @@ describe('checkRandom() method', () => {
   test("must call setRandom(false, 'Random', 'fa-random', 'fa-long-arrow-alt-right') method if randomState is true", () => {
     wrapper.vm.randomState = true
     wrapper.vm.checkRandom()
-    expect(wrapper.vm.setRandom).toHaveBeenCalledWith(
-      false,
-      'Random',
-      'fa-random',
-      'fa-long-arrow-alt-right'
-    )
+    expect(wrapper.vm.setRandom).toHaveBeenCalledWith(false, 'Random', 'fa-random', 'fa-long-arrow-alt-right')
   })
 
   test("must call setRandom(true, 'Normal', 'fa-long-arrow-alt-right', 'fa-random') method if randomState is false", () => {
     wrapper.vm.randomState = false
     wrapper.vm.checkRandom()
-    expect(wrapper.vm.setRandom).toHaveBeenCalledWith(
-      true,
-      'Normal',
-      'fa-long-arrow-alt-right',
-      'fa-random'
-    )
+    expect(wrapper.vm.setRandom).toHaveBeenCalledWith(true, 'Normal', 'fa-long-arrow-alt-right', 'fa-random')
   })
 
   test('must call refreshSlide() method', () => {

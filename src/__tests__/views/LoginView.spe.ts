@@ -3,8 +3,8 @@ import { shallowMount, enableAutoUnmount } from '@vue/test-utils'
 import * as services from '../../assets/services'
 import LoginView from '../../views/LoginView.vue'
 
-let wrapper
-let setMetaSpy
+let wrapper: any
+let setMetaSpy: any
 
 /**
  * @vi-environment jsdom
@@ -35,8 +35,7 @@ beforeEach(() => {
         FORGOT_PASS: 'Forgot Password',
         INTRO_SIGNIN: 'Sign in to your account',
         INTRO_SIGNUP: 'Sign up to your account',
-        INTRO_FORGOTPASS:
-          "Enter your email address and we'll send you a link to reset your password."
+        INTRO_FORGOTPASS: "Enter your email address and we'll send you a link to reset your password."
       }
     },
     data() {

@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, test } from 'vitest'
 import { mount, enableAutoUnmount } from '@vue/test-utils'
 import BtnElt from '../../components/BtnElt.vue'
 
-let wrapper
+let wrapper: any
 
 enableAutoUnmount(afterEach)
 

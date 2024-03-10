@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, test } from 'vitest'
 import { shallowMount, enableAutoUnmount } from '@vue/test-utils'
 import ErrorView from '../../views/ErrorView.vue'
 
-let wrapper
+let wrapper: any
 
 beforeEach(() => {
   wrapper = shallowMount(ErrorView, {
