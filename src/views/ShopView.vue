@@ -163,12 +163,12 @@ export default defineComponent({
      * ? GET ITEMS BY CATEGORY
      * * Retrieves items by category.
      *
-     * @param {{id: string, name: string, cat: string}[]} items - The array of items.
-     * @return {Record<string, { id: string; name: string }[]>} The items filtered by category.
+     * @param {{id: number, name: string, cat: string}[]} items - The array of items.
+     * @return {Record<string, { id: number; name: string }[]>} The items filtered by category.
      */
     getItemsByCategory(
-      items: { id: string; name: string; cat: string }[]
-    ): Record<string, { id: string; name: string }[]> {
+      items: { id: number; name: string; cat: string }[]
+    ): Record<string, { id: number; name: string }[]> {
       return getItemsByCat(items)
     }
   }
