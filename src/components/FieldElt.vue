@@ -139,12 +139,12 @@ export default defineComponent({
     props: { type: string },
     { slots, emit }: { slots: any; emit: any }
   ): {
-    fieldType: Ref<string>
+    fieldType: string
     getFieldType: () => void
     hasSlot: (name: string) => boolean
     onInput: (event: Event) => void
   } {
-    const fieldType: Ref<string> = ref('')
+    const fieldType: string = ref('')
 
     /**
      * ? HAS SLOT

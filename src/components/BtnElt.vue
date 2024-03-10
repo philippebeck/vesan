@@ -29,7 +29,7 @@ export default defineComponent({
    * * Setup the component
    *
    * @param {Object} props - The props of the component.
-   * @returns {Object} - The return object containing buttonClass, isBtnTypeButton, and linkClass.
+   * @returns {Object} - The return object containing buttonClass, isBtnTypeButton & linkClass.
    */
   setup(props: { type: string; class: string }): {
     buttonClass: string
