@@ -209,15 +209,15 @@ export const getItemName = (id: number, items: { id: number; name: string }[]): 
  * ? GET ITEMS BY CATEGORY
  * * Groups an array of items by category & sorts each category's item list by id or name
  *
- * @param {{id: string, name: string, cat: string}[]} items - The array of items to group
+ * @param {{id: number, name: string, cat: string}[]} items - The array of items to group
  * @param {string} [sortBy="id"] - The property to sort the items by
- * @return {Record<string, {id: string, name: string}[]>} An object where each key is a category & its value is the array of items belonging to that category
+ * @return {Record<string, {id: number, name: string}[]>} An object where each key is a category & its value is the array of items belonging to that category
  */
 export const getItemsByCat = (
-  items: { id: string; name: string; cat: string }[],
+  items: { id: number; name: string; cat: string }[],
   sortBy: string = 'id'
-): Record<string, { id: string; name: string }[]> => {
-  const itemsByCat: Record<string, { id: string; name: string }[]> = {}
+): Record<string, { id: number; name: string; cat: string }[]> => {
+  const itemsByCat: Record<string, { id: number; name: string; cat: string }[]> = {}
 
   for (const item of items) {
     const cat: string = item.cat
